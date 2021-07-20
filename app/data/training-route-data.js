@@ -123,7 +123,8 @@ let baseRouteData = {
           ],
         value: "9000"
       }
-    ]
+    ],
+    courseDatesAreAmgiguous: true
   },
   "Provider-led (postgrad)": {
     defaultEnabled: true,
@@ -254,7 +255,8 @@ let baseRouteData = {
       "Now teach",
       "Transition to teach"
     ],
-    bursariesAvailable: false
+    bursariesAvailable: false,
+    courseDatesAreAmgiguous: true
   },
   "Opt-in (undergrad)": {
     defaultEnabled: true,
@@ -283,7 +285,8 @@ let baseRouteData = {
           ],
         value: "9000"
       }
-    ]
+    ],
+    courseDatesAreAmgiguous: true
   },
   "Early years (salaried)": {
     defaultEnabled: true,
@@ -391,7 +394,8 @@ let baseRouteData = {
       "EYTS"
     ],
     qualificationsSummary: "EYTS full time",
-    bursariesAvailable: false
+    bursariesAvailable: false,
+    courseDatesAreAmgiguous: true
   }
 }
 

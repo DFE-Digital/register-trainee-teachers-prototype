@@ -1,6 +1,6 @@
 {% extends "_templates/_new-record.html" %}
 
-{% if data.record | isApprenticeship %}
+{% if data.record | courseDatesAreAmbiguous %}
   {% set pageHeading = "ITT start date" %}
 {% else %}
   {% set pageHeading = "Course start date" %}

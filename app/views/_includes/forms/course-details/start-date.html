@@ -2,7 +2,7 @@
 
 {% set startDateHint = "For example, " + "" | today | toDateArray | spaceSeparate %}
 
-{% if record | isApprenticeship %}
+{% if record | courseDatesAreAmbiguous %}
   {% set startDateHint %}
     <p class="govuk-body govuk-hint">
       The start date of the Initial Teacher Training portion of their course.

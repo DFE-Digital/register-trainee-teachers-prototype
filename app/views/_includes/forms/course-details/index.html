@@ -62,8 +62,9 @@
   open: true if hasMultipleSubjects
 }) }}
 
-{# These account for 91% of choices #}
+{# These account for 97.4% of choices #}
 {% set commonAgeRanges = [
+  "3 to 7",
   "3 to 11",
   "5 to 11",
   "11 to 16",
@@ -188,13 +189,14 @@
 
 {% set startDateHint = "For example, " + "" | today | toDateArray | spaceSeparate %}
 
-{% if record | isApprenticeship %}
+{{record | courseDatesAreAmbiguous | log}}
+{% if record | courseDatesAreAmbiguous %}
   {% set startDateLabel = "ITT start date" %}
 {% else %}
   {% set startDateLabel = "Course start date" %}
 {% endif %}
 
-{% if record | isApprenticeship %}
+{% if record | courseDatesAreAmbiguous %}
   {% set startDateHint %}
     <p class="govuk-body govuk-hint">
       The start date of the Initial Teacher Training portion of their course.
@@ -240,13 +242,13 @@
 
 {% set endDateHint = "For example, " + "" | today | moment('add', 1, 'years') | toDateArray | spaceSeparate %}
 
-{% if record | isApprenticeship %}
+{% if record | courseDatesAreAmbiguous %}
   {% set endDateLabel = "ITT end date" %}
 {% else %}
   {% set endDateLabel = "Course end date" %}
 {% endif %}
 
-{% if record | isApprenticeship %}
+{% if record | courseDatesAreAmbiguous %}
   {% set endDateHint %}
     <p class="govuk-body govuk-hint">
       The end date of the Initial Teacher Training portion of their course.

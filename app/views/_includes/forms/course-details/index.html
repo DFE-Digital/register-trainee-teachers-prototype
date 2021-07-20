@@ -189,7 +189,6 @@
 
 {% set startDateHint = "For example, " + "" | today | toDateArray | spaceSeparate %}
 
-{{record | courseDatesAreAmbiguous | log}}
 {% if record | courseDatesAreAmbiguous %}
   {% set startDateLabel = "ITT start date" %}
 {% else %}

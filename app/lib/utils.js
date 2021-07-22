@@ -758,6 +758,18 @@ exports.hasOutstandingActions = function(record, data = false) {
   return hasOutstandingActions
 }
 
+exports.needsStudyMode = record => {
+
+  let allowedStudyModes = [
+    "Full time",
+    "Part time"
+  ]
+  return (!allowedStudyModes.includes(record?.courseDetails?.studyMode))
+}
+
+exports.needsStartDate = record => {
+
+}
 
 // -------------------------------------------------------------------
 // Get records

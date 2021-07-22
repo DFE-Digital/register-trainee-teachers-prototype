@@ -1,0 +1,27 @@
+
+{{ govukRadios({
+  fieldset: {
+    legend: {
+      text: pageHeading,
+      isPageHeading: true,
+      classes: "govuk-fieldset__legend--l"
+    }
+  },
+  hint: {
+    text: ""
+  },
+  items: [
+    {
+      text: "Full time"
+    },
+    {
+      text: "Part time"
+    }
+  ]
+} | decorateAttributes(record, "record.courseDetails.studyMode")) }}
+
+{{ govukButton({
+  text: "Continue"
+}) }}
+
+

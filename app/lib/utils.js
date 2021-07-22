@@ -754,7 +754,7 @@ exports.hasOutstandingActions = function(record, data = false) {
   let hasOutstandingActions = false
   let traineeStarted = record?.trainingDetails?.commencementDate
 
-  if (!trraineeStarted) {
+  if (!traineeStarted) {
     hasOutstandingActions = true
   }
   else if (exports.needsPlacementDetails(record, data)) {

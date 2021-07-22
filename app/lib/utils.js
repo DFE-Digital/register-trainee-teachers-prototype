@@ -758,6 +758,9 @@ exports.hasOutstandingActions = function(record, data = false) {
   return hasOutstandingActions
 }
 
+// Some Publish courses are only `Full time or part time` which isn’t specific enough.
+// TODO: Study mode is not relevant to all routes, this should also check if the route needs
+// study mode
 exports.needsStudyMode = record => {
 
   let allowedStudyModes = [
@@ -767,9 +770,6 @@ exports.needsStudyMode = record => {
   return (!allowedStudyModes.includes(record?.courseDetails?.studyMode))
 }
 
-exports.needsStartDate = record => {
-
-}
 
 // -------------------------------------------------------------------
 // Get records

@@ -113,7 +113,7 @@
       }
     ]
   } if canAmend
-} %}
+} if record | requiresField("studyMode") %}
 
 {% set apprenticeshipStartDateRow = {
   key: {

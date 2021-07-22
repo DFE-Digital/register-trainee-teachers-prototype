@@ -754,7 +754,7 @@ exports.hasOutstandingActions = function(record, data = false) {
   let hasOutstandingActions = false
   let traineeStarted = record?.trainingDetails?.commencementDate
 
-  if (!traineeStarted) {
+  if (!trraineeStarted) {
     hasOutstandingActions = true
   }
   else if (exports.needsPlacementDetails(record, data)) {
@@ -767,6 +767,10 @@ exports.hasOutstandingActions = function(record, data = false) {
 // TODO: Study mode is not relevant to all routes, this should also check if the route needs
 // study mode
 exports.needsStudyMode = record => {
+
+  let routeRequiresStudyMode = exports.requiresField(record, "studyMode")
+
+  if (!routeRequiresStudyMode) return false
 
   let allowedStudyModes = [
     "Full time",

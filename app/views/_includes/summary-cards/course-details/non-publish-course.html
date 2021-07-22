@@ -89,7 +89,7 @@
         }
       ]
     } if canAmend
-  },
+  } if record | requiresField("studyMode"),
   {
     key: {
       text: "Course start date" if not record | courseDatesAreAmbiguous else "ITT start date"

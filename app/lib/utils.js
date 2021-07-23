@@ -1206,10 +1206,6 @@ exports.registerForTRN = (record) => {
     // Set default qualifcation, duration, etc
     // Just in case - this shoudl already be set
     record = exports.setCourseDefaults(record)
-    record.courseDetails = {
-      ...routeDefaults,
-      ...record.courseDetails
-    }
     exports.addEvent(record, "Trainee submitted for TRN")
   }
   return true

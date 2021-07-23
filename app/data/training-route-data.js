@@ -257,6 +257,7 @@ let baseRouteData = {
     fields: [
       "leadSchool",
       'employingSchool',
+      "studyMode"
       // "apprenticeshipStartDate"
     ],
     initiatives: [
@@ -277,6 +278,9 @@ let baseRouteData = {
       'undergraduateQualification',
       // 'placement',
       'funding'
+    ],
+    fields: [
+      "studyMode"
     ],
     initiatives: [
       "Now teach",
@@ -401,6 +405,9 @@ let baseRouteData = {
       'undergraduateQualification',
       // 'placement',
       'funding'
+    ],
+    fields: [
+      "studyMode",
     ],
     qualifications: [
       "EYTS"

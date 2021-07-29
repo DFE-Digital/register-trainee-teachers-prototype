@@ -2,15 +2,15 @@
 
 {% set ukOrNonUkText %}
   {% if isInternational %}
-    Non-UK degree
+    No
   {% else %}
-    UK degree
+    Yes
   {% endif %}
 {% endset %}
 
 {% set ukOrNonUkRow = {
   key: {
-    text: "UK or non-UK degree"
+    text: "UK degree"
   },
   value: {
     text: ukOrNonUkText if (degree.isInternational != undefined) else 'Not provided'

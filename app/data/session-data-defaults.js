@@ -160,5 +160,6 @@ module.exports = {
   ukComparableDegrees,
   withdrawalReasons,
   ugEntryQualifications,
-  years
+  years,
+  primarySubjectOptions: ittSubjectData.primarySubjectOptions
 }

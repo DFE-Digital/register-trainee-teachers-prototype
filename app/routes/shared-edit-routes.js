@@ -529,61 +529,22 @@ module.exports = router => {
     }
   })
 
-  // Confirm that the pubish course is correct. This is shown instead of the regular /confirm
-  // page when selecting a publish course. The regular /confirm page is still shown when 
-  // reviewing from a summary page, or after editing other details.
-  // This route is needed because we need to conditionally pass on to /allocated-place if
-  // the route and subject match certain conditions.
-  // router.post(['/:recordtype/:uuid/course-details/confirm-publish-details','/:recordtype/course-details/confirm-publish-details'], function (req, res) {
-  //   const data = req.session.data
-  //   let record = data.record
-  //   let referrer = utils.getReferrer(req.query.referrer)
-  //   let recordPath = utils.getRecordPath(req)
-  //   // Copy route up to higher level
-  //   delete record.selectedCourseTemp
-  //   delete record.selectedCourseAutocompleteTemp
+  // Picking a level (Primary or Secondary education)
+  router.post(['/:recordtype/:uuid/course-details/level','/:recordtype/course-details/level'], function (req, res) {
+    const data = req.session.data
+    let record = data.record
+    let recordPath = utils.getRecordPath(req)
+    let referrer = utils.getReferrer(req.query.referrer)
+    let level = record?.courseDetails?.level
 
-  //   // For apply records we let them pick a Publish course which 
-  //   // might have a different route
-  //   if (record.route != record.courseDetails.route){
-  //     console.log(`The selected Publish course’s route does not match the draft’s route. Draft route changed to ${record.courseDetails.route}`)
-  //     record.route = record.courseDetails.route
-  //   }
-
-  //   let isAllocated = utils.hasAllocatedPlaces(record)
-
-  //   if (isAllocated) {
-  //     // After /allocated-place the journey will match other course-details routes
-  //     res.redirect(`${recordPath}/course-details/allocated-place${referrer}`)
-  //   }
-  //   else {
-  //     if (req.params.recordtype == 'record'){
-  //       // This is basically the same as the /update route
-  //       utils.updateRecord(data, record)
-  //       utils.deleteTempData(data)
-  //       req.flash('success', 'Trainee record updated')
-  //       // Referrer or non-referrer probably goes to the same place
-  //       if (referrer){
-  //         res.redirect(utils.getReferrerDestination(req.query.referrer))
-  //       }
-  //       else {
-  //         res.redirect(`${recordPath}`)
-  //       }
-  //     }
-  //     else {
-  //       // Implicitly confirm the section by confirming it
-  //       record.courseDetails.status = "Completed"
-  //       if (referrer){
-  //         // Return to check-record page
-  //         res.redirect(utils.getReferrerDestination(req.query.referrer))
-  //       }
-  //       else {
-  //         res.redirect(`${recordPath}/overview`)
-  //       }
-  //     }
-
-  //   }
-  // })
+    // No data, return to page
+    if (!level){
+      res.redirect(`${recordPath}/course-details/level${referrer}`)
+    }
+    else {
+      res.redirect(`${recordPath}/course-details/details${referrer}`)
+    }
+  })
 
    // Branching route
   router.post(['/:recordtype/:uuid/course-details/study-mode','/:recordtype/course-details/study-mode'], function (req, res) {

@@ -464,6 +464,14 @@ let levels = {
       "3 to 7", // 6.51%
       "3 to 11", // 9.76%
       "5 to 11", // 40.97%
+    ], 
+    "otherAgeRanges": [
+      "3 to 8",
+      "3 to 9",
+      "5 to 9",
+      "5 to 14"
+      "7 to 11",
+      "7 to 14"
     ]
   },
   "Middle": {
@@ -475,11 +483,18 @@ let levels = {
     "ageRanges": [
       "11 to 16", // 26.42%
       "11 to 19", // 13.8%
+    ],
+    "otherAgeRanges": [
+      "5 to 14",
+      "7 to 11",
+      "7 to 14",
+      "14 to 19"
     ]
   }
 }
 
 // remainingAgeRanges = [
+// programme and diploma aren't in production
 //   "0 to 5 programme", // 0.99%
 //   "5 to 14 programme", // 0.01%
 //   "7 to 16 programme", // 0.01%

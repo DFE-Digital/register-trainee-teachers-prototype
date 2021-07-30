@@ -1,29 +1,17 @@
-<h1 class="govuk-heading-l">{{pageHeading}}</h1>
 
-{% set hasMultipleSubjects = record.courseDetails.subjects | length > 1 %}
-
-{{ appAutocomplete({
-  label: {
-    text: "Subject",
-    classes: "govuk-label--s"
-  },
-  hint: {
-    text: 'Select the closest matching subject'
-  },
-  id: 'subject_1',
-  minLength: 2,
-  autoSelect: true,
-  showAllValues: false,
-  classes: "app-!-autocomplete--max-width-two-thirds",
-  name: "record[courseDetails][subjects][first]",
-  items: data.ittSubjects,
-  value: record.courseDetails.subjects.first
-  }
-) }}
+{% set isPrimary = false %}
+{% set primarySubjectsToRemove = [
+    "Primary teaching",
+    "Specialist teaching (primary with mathematics)"
+  ]
+%}
+{% set subjectSpecialisms = data.ittSubjects | removeArrayItems(primarySubjectsToRemove) %}
 
 {% set multipleSubjectsHtml %}
-
-  <p class="govuk-body">The first subject is the main one. It represents the bursary or scholarship available if applicable.</p>
+  
+  {% if not isPrimary %}
+    <p class="govuk-body">The first subject is the main one. It represents the bursary or scholarship available if applicable.</p>
+  {% endif %}
 
   {% for item in [2,3] %}
 
@@ -31,7 +19,7 @@
     {% set ordinal = item | getOrdinalName %}
 
     {% set label %}
-      {{ ordinal | sentenceCase }} subject (optional)
+      {{ ordinal | sentenceCase }} subject {{-  " (optional)" if (not isPrimary) or (ordinal == "third") }}
     {% endset %}
 
     {{ appAutocomplete({
@@ -49,18 +37,76 @@
       allowEmpty: true,
       classes: "app-!-autocomplete--max-width-two-thirds",
       name: "record[courseDetails][subjects][" + ordinal + "]",
-      items: data.ittSubjects,
+      items: subjectSpecialisms,
       value: record.courseDetails.subjects[ordinal]
       }
     ) }}
   {% endfor %}
 {% endset %}
 
-{{ govukDetails({
-  summaryText: "Add additional subjects",
-  html: multipleSubjectsHtml,
-  open: true if hasMultipleSubjects
-}) }}
+
+<h1 class="govuk-heading-l">{{pageHeading}}</h1>
+
+{% set primarySubjects = [] %}
+{% for item in data.primarySubjectOptions %}
+  {% set primarySubjects = primarySubjects | push({
+    text: item
+  }) %}
+{% endfor %}
+
+{%  set primarySubjects = primarySubjects | push({
+  divider: "or"
+}) %}
+
+{%  set primarySubjects = primarySubjects | push({
+  text: "Primary with another subject",
+  conditional: {
+    html: multipleSubjectsHtml
+  }
+}) %}
+
+{# Show subject for Primary or Secondary #}
+{% if isPrimary %}
+
+  {{ govukRadios({
+    fieldset: {
+      legend: {
+        text: "Subject",
+        isPageHeading: false,
+        classes: "govuk-fieldset__legend--s"
+      }
+    },
+    items: primarySubjects
+  } | decorateAttributes(record, "record.courseDetails.primarySubjectsCombined")) }}
+
+{% else %}
+  {% set hasMultipleSubjects = record.courseDetails.subjects | length > 1 %}
+
+  {{ appAutocomplete({
+    label: {
+      text: "Subject",
+      classes: "govuk-label--s"
+    },
+    hint: {
+      text: 'Select the closest matching subject'
+    },
+    id: 'subject_1',
+    minLength: 2,
+    autoSelect: true,
+    showAllValues: false,
+    classes: "app-!-autocomplete--max-width-two-thirds",
+    name: "record[courseDetails][subjects][first]",
+    items: subjectSpecialisms,
+    value: record.courseDetails.subjects.first
+    }
+  ) }}
+
+  {{ govukDetails({
+    summaryText: "Add additional subjects",
+    html: multipleSubjectsHtml,
+    open: true if hasMultipleSubjects
+  }) }}
+{% endif %}
 
 {# These account for 97.4% of choices #}
 {% set commonAgeRanges = [

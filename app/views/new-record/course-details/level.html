@@ -1,0 +1,10 @@
+{% extends "_templates/_new-record.html" %}
+
+{% set pageHeading = "What type of course?" %}  
+
+{# {% set formAction = "./course-details/details" %} #}
+
+{% block formContent %}
+  {% include "_includes/forms/course-details/level.html" %}
+{% endblock %}
+

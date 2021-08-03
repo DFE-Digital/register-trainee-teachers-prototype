@@ -155,7 +155,7 @@
 {# Prefil existing answer #}
 {% set ageRangeExistingValue = record.courseDetails.ageRange %}
 
-{% if ageRangeExistingValue in commonAgeRanges %}
+{% if ageRangeExistingValue in commonAgeRanges or ageRangeExistingValue not in otherAgeRanges %}
   {% set ageRangeExistingValue = undefined %}
 {% endif %}
 

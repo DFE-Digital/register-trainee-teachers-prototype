@@ -318,10 +318,12 @@ module.exports = router => {
       if (providerCourses.length) {
         res.redirect(`${recordPath}/course-details/pick-course${referrer}`)
       }
-
+      else if (utils.isEarlyYears(record)) {
+        res.redirect(`${recordPath}/course-details/details${referrer}`)
+      }
       // If no courses, go straight to course details
       else {
-        res.redirect(`${recordPath}/course-details/details${referrer}`)
+        res.redirect(`${recordPath}/course-details/level${referrer}`)
       }
     }
 
@@ -344,7 +346,7 @@ module.exports = router => {
 
     // User shouldn’t have been on this page, send them to details
     if (providerCourses.length == 0){
-      res.redirect(`${recordPath}/course-details/details${referrer}`)
+      res.redirect(`${recordPath}/course-details/level${referrer}`)
     }
     // No data, return to page
     else if (!selectedCourse){
@@ -356,7 +358,7 @@ module.exports = router => {
         // User has swapped from a publish to a non-publish course. Delete existing data
         delete record.courseDetails
       }
-      res.redirect(`${recordPath}/course-details/details${referrer}`)
+      res.redirect(`${recordPath}/course-details/level${referrer}`)
     }
 
     else {
@@ -537,6 +539,19 @@ module.exports = router => {
     let referrer = utils.getReferrer(req.query.referrer)
     let level = record?.courseDetails?.level
 
+    // Handle users going back to change level. If so, clear out existing subjects which are now
+    // invalid
+    let isPrimary = (level == "Primary")
+    if (isPrimary &&  record?.courseDetails?.subjects?.first && 
+        !record?.courseDetails?.subjects?.first.toLowerCase().includes("primary")){
+      delete record.courseDetails.subjects
+    }
+    let isSecondary = (level == "Secondary")
+    if (isSecondary &&  record?.courseDetails?.subjects?.first && 
+        record?.courseDetails?.subjects?.first.toLowerCase().includes("primary")){
+      delete record.courseDetails.subjects
+    }
+
     // No data, return to page
     if (!level){
       res.redirect(`${recordPath}/course-details/level${referrer}`)
@@ -594,39 +609,47 @@ module.exports = router => {
 
 
   // Picking a course
-  router.post(['/:recordtype/:uuid/course-details/pick-route','/:recordtype/course-details/pick-route'], function (req, res) {
-    const data = req.session.data
-    let record = data.record
-    let recordPath = utils.getRecordPath(req)
-    let referrer = utils.getReferrer(req.query.referrer)
-    let enabledRoutes = data.settings.enabledTrainingRoutes
-    let selectedRoute = _.get(data, 'record.route')
-    let isAllocated = utils.hasAllocatedPlaces(record)
+  // router.post(['/:recordtype/:uuid/course-details/pick-route','/:recordtype/course-details/pick-route'], function (req, res) {
+  //   const data = req.session.data
+  //   let record = data.record
+  //   let recordPath = utils.getRecordPath(req)
+  //   let referrer = utils.getReferrer(req.query.referrer)
+  //   let enabledRoutes = data.settings.enabledTrainingRoutes
+  //   let selectedRoute = _.get(data, 'record.route')
+  //   let isAllocated = utils.hasAllocatedPlaces(record)
 
-    // No data, return to page
-    if (!selectedRoute){
-      res.redirect(`${recordPath}/course-details/pick-route${referrer}`)
-    }
-    else if (selectedRoute == "Other"){
-      res.redirect(`/new-record/course-details/route-not-supported${referrer}`)
-    }
-    else {
-      res.redirect(`${recordPath}/course-details/details${referrer}`)
-    }
-  })
+  //   // No data, return to page
+  //   if (!selectedRoute){
+  //     res.redirect(`${recordPath}/course-details/pick-route${referrer}`)
+  //   }
+  //   else if (selectedRoute == "Other"){
+  //     res.redirect(`/new-record/course-details/route-not-supported${referrer}`)
+  //   }
+  //   else {
+  //     res.redirect(`${recordPath}/course-details/details${referrer}`)
+  //   }
+  // })
 
-
+ 
   router.post(['/:recordtype/:uuid/course-details/details','/:recordtype/course-details/details'], function (req, res) {
     const data = req.session.data
     let record = data.record
     let referrer = utils.getReferrer(req.query.referrer)
-
-    let courseDetails = _.get(data, 'record.courseDetails')
     let recordPath = utils.getRecordPath(req)
+    let courseDetails = _.get(data, 'record.courseDetails')
 
     // No data, return to page
     if (!courseDetails){
       res.redirect(`${recordPath}/course-details`)
+    }
+
+    let isPrimary = (record.courseDetails?.level == "Primary")
+
+    if (isPrimary) {
+      // Primary captures subjects using combined radio options - we need to split this in to 
+      // separate subjects. Where 'another' is selected, we'll preserve any second and third subjects.
+      record.courseDetails.subjects = utils.mapPrimarySubjectsToSubjectSpecialisms(courseDetails?.primarySubjectsCombined, courseDetails.subjects)
+      delete record.courseDetails?.primarySubjectsCombined
     }
 
     // Check for autocomplete submitted subject

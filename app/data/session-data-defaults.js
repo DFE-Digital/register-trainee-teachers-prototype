@@ -155,6 +155,7 @@ module.exports = {
   strings,
   subjects,
   trainingRoutes,
+  trainingRouteData,
   publishRoutes,
   nonPublishRoutes,
   ukComparableDegrees,

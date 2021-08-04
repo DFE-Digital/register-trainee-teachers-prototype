@@ -9,8 +9,10 @@
   {% set ukHintText = "For example, BA, BSc, Masters or PhD" %}
 {% endif %}
 
-{#
+
 {# Disabled for now in favour of a link in an error message for invalid data #}
+
+{#
 
 {% set insetTextHtml %}
   <p class="govuk-body">Change this to an <a href="./details?degreeTemp[isInternational]=false{{'' | addReferrer(referrer) }}" class="govuk-link">UK degree</a>.</p>

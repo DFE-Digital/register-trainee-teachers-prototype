@@ -17,9 +17,19 @@
         More settings: <a href="/admin-providers">providers</a>.
       {% endset %}
 
+
       {{ govukInsetText({
         html: insetHtml
       }) }}
+
+      {% set insetHtml %}
+        <a href="/direct-set-data">Directly set data</a>
+      {% endset %}
+
+      {{ govukInsetText({
+        html: insetHtml
+      }) }}
+
 
       {{ govukCheckboxes({
         items: [

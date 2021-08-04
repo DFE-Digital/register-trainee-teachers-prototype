@@ -545,11 +545,13 @@ module.exports = router => {
     if (isPrimary &&  record?.courseDetails?.subjects?.first && 
         !record?.courseDetails?.subjects?.first.toLowerCase().includes("primary")){
       delete record.courseDetails.subjects
+      delete record.courseDetails.ageRange
     }
     let isSecondary = (level == "Secondary")
     if (isSecondary &&  record?.courseDetails?.subjects?.first && 
         record?.courseDetails?.subjects?.first.toLowerCase().includes("primary")){
       delete record.courseDetails.subjects
+      delete record.courseDetails.ageRange
     }
 
     // No data, return to page

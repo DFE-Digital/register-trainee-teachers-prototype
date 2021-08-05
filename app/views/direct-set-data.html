@@ -5,39 +5,41 @@
 {% set pageHeading = 'Direct set prototype data' %}
 
 {% block content %}
-{{super()}}
-{{data | log}}
-    <div class="govuk-grid-row">
-      <div class="govuk-grid-column-two-thirds-from-desktop">
-        <h1 class="govuk-heading-l">{{pageHeading}}</h1>
+  {{super()}}
 
-        <form {{formActionHtml}} method="post" novalidate spellcheck="false">
+  {# For browsing in client console #}
+  {{data | log}}
 
-          {# {{data | log}} #}
-          {{ govukInput({
-            label: {
-              text: "Key to set",
-              classes: "govuk-label--s"
-            },
-            classes: "govuk-!-margin-bottom-9",
-            hint: {
-              text: "For example, ‘record.personalDetails.givenName’"
-            }
-          } | decorateAttributes(data, "data.directSet.key")) }}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+      <h1 class="govuk-heading-l">{{pageHeading}}</h1>
 
-          {{ govukInput({
-            label: {
-              text: "Option A: Value to set",
-              classes: "govuk-label--s"
-            },
-            hint: {
-              text: "For example, ‘Bart’"
-            }
-          } | decorateAttributes(data, "data.directSet.value")) }}
+      <form {{formActionHtml}} method="post" novalidate spellcheck="false">
 
-          <p class="govuk-body">or</p>
+        {{ govukInput({
+          label: {
+            text: "Key to set",
+            classes: "govuk-label--s"
+          },
+          classes: "govuk-!-margin-bottom-9",
+          hint: {
+            text: "For example, ‘record.personalDetails.givenName’"
+          }
+        } | decorateAttributes(data, "data.directSet.key")) }}
 
-          {% set jsonExample %}
+        {{ govukInput({
+          label: {
+            text: "Option A: Value to set",
+            classes: "govuk-label--s"
+          },
+          hint: {
+            text: "For example, ‘Bart’"
+          }
+        } | decorateAttributes(data, "data.directSet.value")) }}
+
+        <p class="govuk-body">or</p>
+
+        {% set jsonExample %}
           <p class="govuk-body">
             To set personal details
             
@@ -64,53 +66,47 @@
   ]
 }
 </pre>
-          {% endset %}
+        {% endset %}
 
-          {% set textAreaHintHtml %}
-            <p class="govuk-body govuk-hint">Needs to use quoted strings</p>
+        {% set textAreaHintHtml %}
+          <p class="govuk-body govuk-hint">Needs to use quoted strings</p>
 
-            {{ govukDetails({
-              summaryText: "Show example",
-              html: jsonExample
-            }) }}
-
-            
-            
-          {% endset %}
-
-          {{ govukTextarea({
-            label: {
-              text: "Option B: JSON value to set",
-              classes: "govuk-label--s",
-              isPageHeading: true
-            },
-            rows: "20",
-            hint: {
-              html: textAreaHintHtml
-            }
-          } | decorateAttributes(data, "data.directSet.valueJson")) }}
-
-          {{ govukCheckboxes({
-            items: [
-              {
-                value: 'true',
-                text: "Merge JSON on to existing data"
-              }
-            ]
-          } | decorateAttributes(data, "data.directSet.mergeJson")) }}
-
-          <input name="successFlash" type="hidden" value="Data set">
-
-
-          {{ govukButton({
-            text: "Update"
+          {{ govukDetails({
+            summaryText: "Show example",
+            html: jsonExample
           }) }}
 
+        {% endset %}
 
-        </form>
+        {{ govukTextarea({
+          label: {
+            text: "Option B: JSON value to set",
+            classes: "govuk-label--s",
+            isPageHeading: true
+          },
+          rows: "20",
+          hint: {
+            html: textAreaHintHtml
+          }
+        } | decorateAttributes(data, "data.directSet.valueJson")) }}
 
-    
+        {{ govukCheckboxes({
+          items: [
+            {
+              value: 'true',
+              text: "Merge JSON on to existing data"
+            }
+          ]
+        } | decorateAttributes(data, "data.directSet.mergeJson")) }}
 
+        <input name="successFlash" type="hidden" value="Data set">
 
+        {{ govukButton({
+          text: "Update"
+        }) }}
+
+      </form>
+    </div>
+  </div>
 
 {% endblock %}

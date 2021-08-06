@@ -33,9 +33,9 @@
   },
   id: 'degree-country',
   name: "degreeTemp[country]",
-  items: data.countries,
+  items: data.countries | removeArrayItem("United Kingdom"),
   classes: "app-!-autocomplete--max-width-two-thirds",
-  value: degreeTemp.country,
+  value: degreeTemp.country if data.country != "United Kingdom",
   minLength: 2,
   autoSelect: true,
   showAllValues: false

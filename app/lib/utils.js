@@ -1468,7 +1468,7 @@ exports.markInput = function(data, params){
   else if (type == 'invalid'){
     message = `${key} is not recognised`
     data.errorMessage = {
-      html: `The trainee entered ‘${valueCleaned}’, which was not recognised. ${params.invalidMessage || 'You need to search for the closest match.'}`
+      html: `The trainee entered ‘${valueCleaned}’${params.invalidMessage || ', which was not recognised. You need to search for the closest match.'}`
     }
     data.classes = (data.classes) ? `${data.classes} app-invalid-answer` : 'app-invalid-answer'
     delete data.value

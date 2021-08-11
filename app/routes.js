@@ -74,6 +74,47 @@ router.post('*', function(req, res, next){
   next()
 })
 
+// For directly setting prototype data in testing
+router.post('/direct-set-data', function(req, res, next){
+  const data = req.session.data
+
+  let theKey = data.directSet?.key
+  let theValue = data.directSet?.value
+  let theValueJson = data.directSet?.valueJson
+  let shouldMerge = data.directSet?.mergeJson == 'true'
+  let parsedJson
+
+  delete data.directSet
+
+  if (theValueJson){
+    try {
+      parsedJson = JSON.parse(theValueJson)
+    } catch (error) {
+      console.error("Couldn't parse Json:", error);
+    }
+  }
+
+  if (parsedJson){
+    theValue = parsedJson
+
+    // Whether to merge in to existing data
+    if (shouldMerge){
+      let currentValue = _.get(data, theKey)
+      if (currentValue){
+        theValue = {...currentValue, ...theValue}
+      }
+    }
+  }
+
+  console.log("Directly setting data")
+  console.log({theKey})
+  console.log({theValue})
+
+  _.set(data, theKey, theValue)
+
+  res.redirect("/direct-set-data")
+})
+
 const getIndex = (f) => {
   fs.readFile('./app/lib/search-index.json', 'utf8', (_, data) => {
     f(JSON.parse(data))

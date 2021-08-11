@@ -1495,7 +1495,8 @@ exports.markSummaryRowMissing = function(row) {
 }
 
 
-exports.markInput = function(data, type){
+exports.markInput = function(data, params){
+  let type = params.type
   // Keys are stored two possible places
   let key = data?.label?.html || data?.label?.text || data?.fieldset?.legend?.html || data?.fieldset?.legend?.text
 
@@ -1519,7 +1520,7 @@ exports.markInput = function(data, type){
   else if (type == 'invalid'){
     message = `${key} is not recognised`
     data.errorMessage = {
-      text: `The trainee entered ‘${valueCleaned}’. You need to search for the closest match.`
+      html: `The trainee entered ‘${valueCleaned}’${params.invalidMessage || ', which was not recognised. You need to search for the closest match.'}`
     }
     data.classes = (data.classes) ? `${data.classes} app-invalid-answer` : 'app-invalid-answer'
     delete data.value
@@ -1530,7 +1531,7 @@ exports.markInput = function(data, type){
     message = `${key} is missing`
     
     data.errorMessage = {
-      text: message
+      html: message
     }
     data.classes = (data.classes) ? `${data.classes} app-invalid-answer` : 'app-invalid-answer'
     delete data.value
@@ -1554,18 +1555,20 @@ exports.markInputMissing = function(data) {
 } 
 // Take in a form object to 
 
-exports.highlightInvalidInputs = function(data){
+exports.highlightInvalidInputs = function(data, params={}){
 
   let value = data.value
 
   if (value && value.includes('**invalid**')) {
+    params.type = 'invalid'
     // Using .apply() to pass on value of 'this'
-    data = exports.markInput.apply(this, [data, 'invalid'])
+    data = exports.markInput.apply(this, [data, params])
   }
 
   if (value && value.includes('**missing**')) {
+    params.type = 'missing'
     // Using .apply() to pass on value of 'this'
-    data = exports.markInput.apply(this, [data, 'missing'])
+    data = exports.markInput.apply(this, [data, params])
   }
 
   return data

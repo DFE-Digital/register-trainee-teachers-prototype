@@ -10,6 +10,21 @@
 {% endif %}
 
 
+{# Disabled for now in favour of a link in an error message for invalid data #}
+
+{#
+
+{% set insetTextHtml %}
+  <p class="govuk-body">Change this to an <a href="./details?degreeTemp[isInternational]=false{{'' | addReferrer(referrer) }}" class="govuk-link">UK degree</a>.</p>
+{% endset %}
+
+{{ govukInsetText({
+  html: insetTextHtml
+}) }} 
+
+#}
+
+
 {# Degree country #}
 {{ appAutocomplete({
   label: {
@@ -18,9 +33,9 @@
   },
   id: 'degree-country',
   name: "degreeTemp[country]",
-  items: data.countries,
+  items: data.countries | removeArrayItem("United Kingdom"),
   classes: "app-!-autocomplete--max-width-two-thirds",
-  value: degreeTemp.country,
+  value: degreeTemp.country if data.country != "United Kingdom",
   minLength: 2,
   autoSelect: true,
   showAllValues: false

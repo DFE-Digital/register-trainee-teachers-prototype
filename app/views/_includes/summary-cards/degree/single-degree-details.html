@@ -1,5 +1,31 @@
 {% set isInternational = degree.isInternational | falsify %}
 
+{% set ukOrNonUkText %}
+  {% if isInternational %}
+    No
+  {% else %}
+    Yes
+  {% endif %}
+{% endset %}
+
+{% set ukOrNonUkRow = {
+  key: {
+    text: "UK degree"
+  },
+  value: {
+    text: ukOrNonUkText if (degree.isInternational != undefined) else 'Not provided'
+  },
+  actions: {
+    items: [
+      {
+        href: recordPath + "/degree/" + loop.index0 + "/type" | addReferrer(referrer),
+        text: "Change",
+        visuallyHiddenText: "UK or non-UK type"
+      }
+    ]
+  } if canAmend
+} %}
+
 {% set subjectRow = {
   key: {
     text: "Subject"
@@ -129,6 +155,7 @@
 
 {% if isInternational %}
   {% set degreeDetailsRows = [
+    ukOrNonUkRow,
     countryRow,
     subjectRow,
     degreeTypeRow,
@@ -137,6 +164,7 @@
   ] %}
 {% else %}
   {% set degreeDetailsRows = [
+    ukOrNonUkRow,
     institutionRow,
     subjectRow,
     degreeTypeRow,

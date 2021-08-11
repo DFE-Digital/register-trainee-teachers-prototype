@@ -13,6 +13,27 @@
     {% set ukHintText = "For example, BA, BSc, Masters or PhD" %}
   {% endif %}
 
+  {% set insetTextHtml %}
+    <p class="govuk-body">If this is not a UK degree you can change it to a <a href="./details?degreeTemp[isInternational]=true{{'' | addReferrer(referrer) }}" class="govuk-link">non-UK degree</a>.</p>
+  {% endset %}
+
+  {# Show toggle for non-UK degree if the insitution is invalid #}
+  {% if degreeTemp.org | includes("**invalid**") %}
+    {{ govukInsetText({
+      html: insetTextHtml
+    }) }} 
+  {% endif %}
+
+  {% set changeDegreeTypeLink %}
+    <a href="./details?degreeTemp[isInternational]=true{{'' | addReferrer(referrer) }}" class="govuk-link">change to a non-UK degree</a>
+  {%- endset %}
+
+  {# {% set institutionNotRecognisedHtml %}
+    Search for the correct institution or {{changeDegreeTypeLink | safe}}.
+  {% endset %}
+ #}
+  {% set institutionNotRecognisedHtml %}, which was not recognised as a UK institution. Search for the correct institution or change to a non-UK degree.
+  {% endset %}
 
   {# Degree institution #}
   {{ appAutocomplete({
@@ -28,7 +49,7 @@
     minLength: 2,
     autoSelect: true,
     showAllValues: false
-  } | highlightInvalidInputs ) }}
+  } | highlightInvalidInputs({invalidMessage: institutionNotRecognisedHtml}) ) }}
 
   {# Degree subject #}
   {{ appAutocomplete({

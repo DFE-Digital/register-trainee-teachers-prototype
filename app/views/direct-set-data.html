@@ -1,0 +1,112 @@
+{% extends "_templates/_page.html" %}
+
+{% set navActive = "home" %}
+{% set backText = 'All records' %}
+{% set pageHeading = 'Direct set prototype data' %}
+
+{% block content %}
+  {{super()}}
+
+  {# For browsing in client console #}
+  {{data | log}}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+      <h1 class="govuk-heading-l">{{pageHeading}}</h1>
+
+      <form {{formActionHtml}} method="post" novalidate spellcheck="false">
+
+        {{ govukInput({
+          label: {
+            text: "Key to set",
+            classes: "govuk-label--s"
+          },
+          classes: "govuk-!-margin-bottom-9",
+          hint: {
+            text: "For example, ‘record.personalDetails.givenName’"
+          }
+        } | decorateAttributes(data, "data.directSet.key")) }}
+
+        {{ govukInput({
+          label: {
+            text: "Option A: Value to set",
+            classes: "govuk-label--s"
+          },
+          hint: {
+            text: "For example, ‘Bart’"
+          }
+        } | decorateAttributes(data, "data.directSet.value")) }}
+
+        <p class="govuk-body">or</p>
+
+        {% set jsonExample %}
+          <p class="govuk-body">
+            To set personal details
+            
+          </p>
+
+          <h3 class="govuk-heading-s">Key to set</h3>
+          <pre>record.personalDetails</pre>
+
+          <h3 class="govuk-heading-s">JSON value to set</h3>
+<pre>
+{
+  "givenName": "Sarah Lilia",
+  "familyName": "Jones",
+  "middleNames": "",
+  "nationality": [
+    "Irish",
+    "American"
+  ],
+  "sex": "Female",
+  "dateOfBirth": [
+    "3",
+    "12",
+    "1987"
+  ]
+}
+</pre>
+        {% endset %}
+
+        {% set textAreaHintHtml %}
+          <p class="govuk-body govuk-hint">Needs to use quoted strings</p>
+
+          {{ govukDetails({
+            summaryText: "Show example",
+            html: jsonExample
+          }) }}
+
+        {% endset %}
+
+        {{ govukTextarea({
+          label: {
+            text: "Option B: JSON value to set",
+            classes: "govuk-label--s",
+            isPageHeading: true
+          },
+          rows: "20",
+          hint: {
+            html: textAreaHintHtml
+          }
+        } | decorateAttributes(data, "data.directSet.valueJson")) }}
+
+        {{ govukCheckboxes({
+          items: [
+            {
+              value: 'true',
+              text: "Merge JSON on to existing data"
+            }
+          ]
+        } | decorateAttributes(data, "data.directSet.mergeJson")) }}
+
+        <input name="successFlash" type="hidden" value="Data set">
+
+        {{ govukButton({
+          text: "Update"
+        }) }}
+
+      </form>
+    </div>
+  </div>
+
+{% endblock %}

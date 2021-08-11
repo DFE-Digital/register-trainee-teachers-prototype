@@ -115,7 +115,13 @@ early years teaching,No,Early years ITT
 hospitality,No,Design and technology
 recreation and leisure studies,No,Business studies
 specialist teaching (primary with mathematics),No,Primary with mathematics
-hair and beauty sciences,No,Other subjects`
+hair and beauty sciences,No,Other subjects
+citizenship,No,Other subjects
+Japanese language,Yes,Modern languages
+design and technology,no,Design and technology
+English as a second language,Yes,Modern languages
+physical education,no,Physical education`
+
 
 let subjectSpecialismsCsvArray = CSV.parse(subjectSpecialismsCsv)
 subjectSpecialismsCsvArray.shift() // remove header row
@@ -266,7 +272,7 @@ art and design,Art and design,
 biology,Biology,
 business studies,Business studies,
 chemistry,Chemistry,
-citizenship,Other subjects,UK government / Parliamentary studies
+citizenship,Other subjects,citizenship
 classics,Classics,
 communication and media studies,Other subjects,media and communication studies
 computing,Computing,
@@ -275,13 +281,14 @@ design and technology,Design and technology,
 drama,Drama,
 economics,Economics,economics
 English,English,English studies
+English as a second or other langauge,Modern languages,english as a second or other language
 French,Modern languages,French language
 geography,Geography,geography
 German,Modern languages,German language
 health and social care,Other subjects,health and social care
 history,History,history
 Italian,Modern languages,Italian language
-Japanese,Modern languages,modern languages
+Japanese,Modern languages,Japanese language
 Mandarin,Modern languages,Chinese languages
 mathematics,Mathematics,
 modern languages (other),Modern languages,modern languages

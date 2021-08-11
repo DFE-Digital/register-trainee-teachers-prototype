@@ -165,7 +165,7 @@ const getSelectedFilters = req => {
 
   if (filters.level) {
     selectedFilters.categories.push({
-      heading: { text: 'Course level' },
+      heading: { text: 'Course type' },
       items: filters.level.map((level) => {
 
         let newQuery = Object.assign({}, query)

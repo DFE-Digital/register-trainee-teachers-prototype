@@ -8,8 +8,10 @@
     "Specialist teaching (primary with mathematics)"
   ]
 %}
+
 {% set subjectSpecialisms = data.ittSubjects | removeArrayItems(primarySubjectsToRemove) %}
 
+{# Autocompletes for subjects 2 and 3 #}
 {% set multipleSubjectsHtml %}
   
   {% if not isPrimary %}
@@ -22,6 +24,7 @@
     {% set ordinal = item | getOrdinalName %}
 
     {% set label %}
+      {# Show '(optional)' if it’s a secondary course or if it’s primary but the third subject #}
       {{ ordinal | sentenceCase }} subject {{-  " (optional)" if (not isPrimary) or (ordinal == "third") }}
     {% endset %}
 
@@ -47,7 +50,6 @@
   {% endfor %}
 {% endset %}
 
-{# TODO: make specialist teaching option work. #}
 <h1 class="govuk-heading-l">{{pageHeading}}</h1>
 
 {% set primarySubjects = [] %}
@@ -57,11 +59,11 @@
 {% set thirdSubject = record.courseDetails.subjects.third %}
 
 {% set namedSubjects = [
-"English studies",
-"Geography",
-"Modern languages",
-"Physical education",
-"General sciences"
+  "English studies",
+  "Geography",
+  "Modern languages",
+  "Physical education",
+  "General sciences"
 ] %}
 
 {% set primarySubjects = [
@@ -128,7 +130,7 @@
       classes: "govuk-label--s"
     },
     hint: {
-      text: 'Select the closest matching subject'
+      text: 'Search for the closest matching subject'
     },
     id: 'subject_1',
     minLength: 2,
@@ -160,6 +162,7 @@
 {% endif %}
 
 {% set ageRangeAutocomplete %}
+  {# Old autocomplete code left here in case we decide to go back #}
   {# {{ appAutocomplete({
     label: {
       text: "Other age range",
@@ -173,8 +176,8 @@
     }
   ) }} #}
 
+  {# Using a select as autocomplete has poor usability for this type of data #}
   {% set selectItems = [] %}
-
   {% set selectItems = selectItems | push({
     vale: "",
     text: "",

@@ -320,7 +320,7 @@ exports.getSectionName = (record, section) => {
       return "Schools"
     }
     else {
-      if (exports.requiresField(record, ['leadSchool', 'employingSchool'])){
+      if (exports.requiresField(record, ['leadSchool', 'employingSchool', 'region'])){
         return "Training details"
       }
       else return "Trainee start date and ID"
@@ -634,7 +634,7 @@ exports.isRecommended = record => {
 }
 
 exports.isAwarded = record => {
-  return record.status.includs("awarded") // EYTS awarded and QTS awarded
+  return record.status.includes("awarded") // EYTS awarded and QTS awarded
 }
 
 exports.isDeferred = record => {

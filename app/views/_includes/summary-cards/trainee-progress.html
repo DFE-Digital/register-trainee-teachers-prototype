@@ -16,6 +16,16 @@
   } if canAmend and false
 } %}
 
+{% set regionRow = {
+  key: {
+    text: "Region"
+  },
+  value: {
+    text: "South East"
+  }
+} %}
+
+
 {% set traineeIdRow = {
   key: {
     text: "Trainee ID"
@@ -233,6 +243,7 @@
 {% set traineeProgressRows = [
   providerRow if data.settings.userProviders | length > 1,
   traineeIdRow,
+  regionRow if record | requiresField("region"),
   startYearRow,
   pendingTrnRow if record | isPendingTrn,
   trnRow if record.trn,

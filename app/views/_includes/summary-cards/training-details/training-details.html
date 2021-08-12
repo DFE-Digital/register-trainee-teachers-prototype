@@ -1,3 +1,16 @@
+{% set regionTextHtml %}
+  <p class="govuk-body">South East</p>
+  <p class="govuk-body govuk-hint">Contact support if you need to change this</p>
+{% endset %}
+
+{% set regionRow = {
+  key: {
+    text: "Region"
+  },
+  value: {
+    html: regionTextHtml
+  }
+} %}
 
 {% set traineeIdRow = {
   key: {
@@ -56,6 +69,7 @@
   } %}
 
 {% set trainingDetailsRows = [
+  regionRow if record | requiresField("region"),
   traineeStartDateRow if record | isDraft,
   traineeIdRow if record | isDraft
 ] %}

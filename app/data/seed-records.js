@@ -386,4 +386,52 @@ seedRecords.push({
   }
 })
 
+// Special bespoke record for HPITT - for developers to compare against
+seedRecords.push({
+  status: "Draft",
+  trainingDetails: {
+    traineeId: "2021/22-075"
+  },
+  route: 'High potential initial teacher training (HPITT)',
+  courseDetails: {
+    isPublishCourse: false,
+    "status": [
+      "Completed"
+    ]
+  },
+  personalDetails: {
+    status: 'Completed'
+  },
+  contactDetails: {
+    status: 'Completed'
+  },
+  diversity: {
+    status: 'Completed'
+  },
+  degree: {
+    status: 'Completed'
+  },
+  diversity: {
+    status: 'Completed'
+  },
+  trainingDetails: {
+    region: "South East and South coast",
+    status: 'Completed'
+  },
+  funding: {
+    status: 'Completed'
+  }
+})
+
+seedRecords.push({
+  status: "TRN received",
+  trainingDetails: {
+    traineeId: "2021/22-076"
+  },
+  route: 'High potential initial teacher training (HPITT)',
+  courseDetails: {
+    isPublishCourse: false
+  }
+})
+
 module.exports = seedRecords

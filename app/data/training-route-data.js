@@ -28,12 +28,13 @@ let nonPublishRoutes = [
   'Provider-led (postgrad)',
   'Provider-led (undergrad)',
   'Assessment only',
-  'Teach First (postgrad)',
+  // 'Teach First (postgrad)',
   'Early years (salaried)',
   'Early years (postgrad)',
   'Early years (assessment only)',
   'Early years (undergrad)',
-  'Opt-in (undergrad)'
+  'Opt-in (undergrad)',
+  'High potential initial teacher training (HPITT)'
 ]
 
 // These sections should have a default status of 'review'
@@ -415,6 +416,22 @@ let baseRouteData = {
     qualificationsSummary: "EYTS full time",
     bursariesAvailable: false,
     courseDatesAreAmgiguous: true
+  },
+  "High potential initial teacher training (HPITT)": {
+    defaultEnabled: false,
+    sections: [
+      'trainingDetails',
+      'courseDetails',
+      'personalDetails',
+      'contactDetails',
+      'diversity',
+      'degree',
+      'funding'
+    ],
+    bursariesAvailable: false,
+    fields: [
+      "region"
+    ]
   }
 }
 

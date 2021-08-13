@@ -1,0 +1,10 @@
+{% extends "_templates/_new-record.html" %}
+
+{% set pageHeading = "Which phase of education will the trainee teach?" %}  
+
+{# {% set formAction = "./course-details/details" %} #}
+
+{% block formContent %}
+  {% include "_includes/forms/course-details/phase.html" %}
+{% endblock %}
+

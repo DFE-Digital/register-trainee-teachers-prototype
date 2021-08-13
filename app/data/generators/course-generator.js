@@ -217,15 +217,15 @@ module.exports = (params) => {
 
   let isEarlyYears = route.includes('Early years')
 
-  let level, qualifications, qualificationsSummary, studyMode
+  let phase, qualifications, qualificationsSummary, studyMode
 
   if (isEarlyYears){
-    level = 'Early years'
+    phase = 'Early years'
   }
-  // else level = faker.helpers.randomize(['Primary', 'Secondary'])
-  else level = weighted.select(['Primary', 'Secondary'], [0.3, 0.7])
+  // else phase = faker.helpers.randomize(['Primary', 'Secondary'])
+  else phase = weighted.select(['Primary', 'Secondary'], [0.3, 0.7])
 
-  let ageRanges = trainingRouteData.levels[level].ageRanges
+  let ageRanges = trainingRouteData.phases[phase].ageRanges
 
   let ageRange = (Array.isArray(ageRanges)) ? faker.helpers.randomize(ageRanges) : null
 
@@ -235,7 +235,7 @@ module.exports = (params) => {
     // This subject isn’t really used or shown - but matches how DTTP handles it
     subjects = 'Early years teaching'
   }
-  else if (level == 'Primary'){
+  else if (phase == 'Primary'){
     if (isPublishCourse){
       publishCourseSubjects = faker.helpers.randomize(primaryPublishSubjects)
     }
@@ -370,7 +370,7 @@ module.exports = (params) => {
       endDate,
       id,
       isPublishCourse,
-      level,
+      phase,
       qualifications,
       qualificationsSummary,
       route,
@@ -391,7 +391,7 @@ module.exports = (params) => {
       duration,
       endDate,
       isPublishCourse,
-      level,
+      phase,
       qualifications,
       qualificationsSummary,
       route,

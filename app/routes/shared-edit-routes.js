@@ -323,7 +323,7 @@ module.exports = router => {
       }
       // If no courses, go straight to course details
       else {
-        res.redirect(`${recordPath}/course-details/level${referrer}`)
+        res.redirect(`${recordPath}/course-details/phase${referrer}`)
       }
     }
 
@@ -346,7 +346,7 @@ module.exports = router => {
 
     // User shouldn’t have been on this page, send them to details
     if (providerCourses.length == 0){
-      res.redirect(`${recordPath}/course-details/level${referrer}`)
+      res.redirect(`${recordPath}/course-details/phase${referrer}`)
     }
     // No data, return to page
     else if (!selectedCourse){
@@ -358,7 +358,7 @@ module.exports = router => {
         // User has swapped from a publish to a non-publish course. Delete existing data
         delete record.courseDetails
       }
-      res.redirect(`${recordPath}/course-details/level${referrer}`)
+      res.redirect(`${recordPath}/course-details/phase${referrer}`)
     }
 
     else {
@@ -531,23 +531,23 @@ module.exports = router => {
     }
   })
 
-  // Picking a level (Primary or Secondary education)
-  router.post(['/:recordtype/:uuid/course-details/level','/:recordtype/course-details/level'], function (req, res) {
+  // Picking a phase (Primary or Secondary education)
+  router.post(['/:recordtype/:uuid/course-details/phase','/:recordtype/course-details/phase'], function (req, res) {
     const data = req.session.data
     let record = data.record
     let recordPath = utils.getRecordPath(req)
     let referrer = utils.getReferrer(req.query.referrer)
-    let level = record?.courseDetails?.level
+    let phase = record?.courseDetails?.phase
 
-    // Handle users going back to change level. If so, clear out existing subjects which are now
+    // Handle users going back to change phase. If so, clear out existing subjects which are now
     // invalid
-    let isPrimary = (level == "Primary")
+    let isPrimary = (phase == "Primary")
     if (isPrimary &&  record?.courseDetails?.subjects?.first && 
         !record?.courseDetails?.subjects?.first.toLowerCase().includes("primary")){
       delete record.courseDetails.subjects
       delete record.courseDetails.ageRange
     }
-    let isSecondary = (level == "Secondary")
+    let isSecondary = (phase == "Secondary")
     if (isSecondary &&  record?.courseDetails?.subjects?.first && 
         record?.courseDetails?.subjects?.first.toLowerCase().includes("primary")){
       delete record.courseDetails.subjects
@@ -555,8 +555,8 @@ module.exports = router => {
     }
 
     // No data, return to page
-    if (!level){
-      res.redirect(`${recordPath}/course-details/level${referrer}`)
+    if (!phase){
+      res.redirect(`${recordPath}/course-details/phase${referrer}`)
     }
     else {
       res.redirect(`${recordPath}/course-details/details${referrer}`)
@@ -645,7 +645,7 @@ module.exports = router => {
       res.redirect(`${recordPath}/course-details`)
     }
 
-    let isPrimary = (record.courseDetails?.level == "Primary")
+    let isPrimary = (record.courseDetails?.phase == "Primary")
 
     if (isPrimary) {
       // Primary captures subjects using combined radio options - we need to split this in to 
@@ -1111,7 +1111,7 @@ module.exports = router => {
     //     res.redirect(`${recordPath}/funding/bursary-selection${referrer}`)
     //   }
     //   else {
-    //     res.redirect(`${recordPath}/funding/level${referrer}`)
+    //     res.redirect(`${recordPath}/funding/phase${referrer}`)
     //   }
     // }
     // else {

@@ -1,7 +1,7 @@
 
-{% set isPrimary = record.courseDetails.level == "Primary" %}
+{% set isPrimary = record.courseDetails.phase == "Primary" %}
 
-{% set level = "Primary" if isPrimary else "Secondary" %}
+{% set phase = "Primary" if isPrimary else "Secondary" %}
 
 {% set primarySubjectsToRemove = [
     "Primary teaching",
@@ -150,9 +150,9 @@
   }) }}
 {% endif %}
 
-{# Age ranges vary depending on level #}
-{% set commonAgeRanges = data.trainingRouteData.levels[level].ageRanges %}
-{% set otherAgeRanges = data.trainingRouteData.levels[level].otherAgeRanges %}
+{# Age ranges vary depending on phase #}
+{% set commonAgeRanges = data.trainingRouteData.phases[phase].ageRanges %}
+{% set otherAgeRanges = data.trainingRouteData.phases[phase].otherAgeRanges %}
 
 {# Prefil existing answer #}
 {% set ageRangeExistingValue = record.courseDetails.ageRange %}

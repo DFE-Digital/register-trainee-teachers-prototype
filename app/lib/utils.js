@@ -150,25 +150,25 @@ exports.requiresSection = (record, sectionNames) => {
 
 // Returns: false / Early years / Primary / Secondary
 // Todo: should this be explicitly set on the record?
-exports.getCourseLevel = record => {
+exports.getCoursePhase = record => {
 
-  let levels = trainingRouteData.levels
+  let phases = trainingRouteData.phases
 
-  let matchedLevel
+  let matchedPhase
 
   // Defer to an explicit level if it exists - not all records have this
-  if (record?.courseDetails?.level) return record?.courseDetails?.level
+  if (record?.courseDetails?.phase) return record?.courseDetails?.phase
 
   // Early years routes don’t have an age range - but they’re all implicitly 'Early years'
   else if (exports.routeIsEarlyYears(record?.route)) return "Early years"
 
-  // Age range can be used to derive the level
+  // Age range can be used to derive the phase
   else if (record?.courseDetails?.ageRange) {
-    matchedLevel = Object.keys(levels).filter(level => Array.isArray(levels[level]?.ageRanges) && levels[level].ageRanges.includes(record.courseDetails.ageRange)).pop()
+    matchedPhase = Object.keys(phases).filter(phase => Array.isArray(phases[phase]?.ageRanges) && phases[phase].ageRanges.includes(record.courseDetails.ageRange)).pop()
   }
   else return false
 
-  return matchedLevel
+  return matchedPhase
 }
 
 // Used to set the right qualification on a record
@@ -715,12 +715,12 @@ exports.courseDatesAreAmbiguous = record => {
   return trainingRoutes?.[record?.route]?.courseDatesAreAmgiguous || false
 }
 
-// Levels
+// Phases
 
-// Unlike the other levels, this is probably reliable - as it checcks the route rather than the age
+// Unlike the other phases, this is probably reliable - as it checcks the route rather than the age
 // ranges of the course
 exports.isEarlyYears = record => {
-  return exports.getCourseLevel(record) == "Early years"
+  return exports.getCoursePhase(record) == "Early years"
 }
 
 // Explicitly test the route only - as
@@ -729,15 +729,15 @@ exports.routeIsEarlyYears = route => {
 }
 
 // TODO: this might not be reliable - need to check all age ranges
-// map to one of the levels
+// map to one of the phases
 exports.isPrimary = record => {
-  return exports.getCourseLevel(record) == "Primary"
+  return exports.getCoursePhase(record) == "Primary"
 }
 
 // TODO: this might not be reliable - need to check all age ranges
-// map to one of the levels
+// map to one of the phases
 exports.isSecondary = record => {
-  return exports.getCourseLevel(record) == "Secondary"
+  return exports.getCoursePhase(record) == "Secondary"
 }
 
 exports.sectionIsComplete = section => {
@@ -886,8 +886,8 @@ exports.filterRecords = (records, data, filters = {}) => {
   }
 
   // Primary / Secondary etc
-  if (filters.level){
-    filteredRecords = filteredRecords.filter(record => filters.level.includes(exports.getCourseLevel(record)))
+  if (filters.phase){
+    filteredRecords = filteredRecords.filter(record => filters.phase.includes(exports.getCoursePhase(record)))
   }
 
   // Full time or Part time

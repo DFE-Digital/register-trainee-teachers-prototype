@@ -453,7 +453,7 @@ let allocatedSubjects = [
   "Physical education"
 ]
 
-let levels = {
+let phases = {
   "Early years": {
     "hint": "ages 0 to 5",
     "ageRanges": null
@@ -469,9 +469,7 @@ let levels = {
       "3 to 8",
       "3 to 9",
       "5 to 9",
-      "5 to 14",
       "7 to 11",
-      "7 to 14"
     ]
   },
   "Middle": {
@@ -519,7 +517,7 @@ module.exports = {
   trainingRoutes,
   allocatedSubjects,
   enabledTrainingRoutes,
-  levels,
+  phases,
   defaultSections: defaultRouteData.sections,
   applyRoutes,
   publishRoutes,

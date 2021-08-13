@@ -1,6 +1,6 @@
 {% extends "_templates/_page.html" %}
 
-{% set pageBaseName = "Registered trainee records" if data.settings.draftsInPrimaryNav | falsify else "Registered trainees" %}
+{% set pageBaseName = "Registered trainees" if data.settings.draftsInPrimaryNav | falsify else "Registered trainees" %}
 
 {% set pageHeading %}
   {{pageBaseName}} ({{filteredRecords | length}} {{ "record" | pluralise(filteredRecords | length) }})
@@ -188,7 +188,7 @@
     <h1 class="govuk-heading-xl">{{pageBaseName}} ({{filteredRecords | length}}<span class="govuk-visually-hidden"> {{ "record" | pluralise(filteredRecords | length)}}</span>)</h1>
 
     {{ govukButton({
-      text: "Add a trainee",
+      text: "Create a trainee record",
       href: "./new-record/new",
       isStartButton: true
     }) }}

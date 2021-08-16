@@ -318,10 +318,12 @@ module.exports = router => {
       if (providerCourses.length) {
         res.redirect(`${recordPath}/course-details/pick-course${referrer}`)
       }
-
+      else if (utils.isEarlyYears(record)) {
+        res.redirect(`${recordPath}/course-details/details${referrer}`)
+      }
       // If no courses, go straight to course details
       else {
-        res.redirect(`${recordPath}/course-details/details${referrer}`)
+        res.redirect(`${recordPath}/course-details/phase${referrer}`)
       }
     }
 
@@ -344,7 +346,7 @@ module.exports = router => {
 
     // User shouldn’t have been on this page, send them to details
     if (providerCourses.length == 0){
-      res.redirect(`${recordPath}/course-details/details${referrer}`)
+      res.redirect(`${recordPath}/course-details/phase${referrer}`)
     }
     // No data, return to page
     else if (!selectedCourse){
@@ -356,7 +358,7 @@ module.exports = router => {
         // User has swapped from a publish to a non-publish course. Delete existing data
         delete record.courseDetails
       }
-      res.redirect(`${recordPath}/course-details/details${referrer}`)
+      res.redirect(`${recordPath}/course-details/phase${referrer}`)
     }
 
     else {
@@ -529,61 +531,37 @@ module.exports = router => {
     }
   })
 
-  // Confirm that the pubish course is correct. This is shown instead of the regular /confirm
-  // page when selecting a publish course. The regular /confirm page is still shown when 
-  // reviewing from a summary page, or after editing other details.
-  // This route is needed because we need to conditionally pass on to /allocated-place if
-  // the route and subject match certain conditions.
-  // router.post(['/:recordtype/:uuid/course-details/confirm-publish-details','/:recordtype/course-details/confirm-publish-details'], function (req, res) {
-  //   const data = req.session.data
-  //   let record = data.record
-  //   let referrer = utils.getReferrer(req.query.referrer)
-  //   let recordPath = utils.getRecordPath(req)
-  //   // Copy route up to higher level
-  //   delete record.selectedCourseTemp
-  //   delete record.selectedCourseAutocompleteTemp
+  // Picking a phase (Primary or Secondary education)
+  router.post(['/:recordtype/:uuid/course-details/phase','/:recordtype/course-details/phase'], function (req, res) {
+    const data = req.session.data
+    let record = data.record
+    let recordPath = utils.getRecordPath(req)
+    let referrer = utils.getReferrer(req.query.referrer)
+    let phase = record?.courseDetails?.phase
 
-  //   // For apply records we let them pick a Publish course which 
-  //   // might have a different route
-  //   if (record.route != record.courseDetails.route){
-  //     console.log(`The selected Publish course’s route does not match the draft’s route. Draft route changed to ${record.courseDetails.route}`)
-  //     record.route = record.courseDetails.route
-  //   }
+    // Handle users going back to change phase. If so, clear out existing subjects which are now
+    // invalid
+    let isPrimary = (phase == "Primary")
+    if (isPrimary &&  record?.courseDetails?.subjects?.first && 
+        !record?.courseDetails?.subjects?.first.toLowerCase().includes("primary")){
+      delete record.courseDetails.subjects
+      delete record.courseDetails.ageRange
+    }
+    let isSecondary = (phase == "Secondary")
+    if (isSecondary &&  record?.courseDetails?.subjects?.first && 
+        record?.courseDetails?.subjects?.first.toLowerCase().includes("primary")){
+      delete record.courseDetails.subjects
+      delete record.courseDetails.ageRange
+    }
 
-  //   let isAllocated = utils.hasAllocatedPlaces(record)
-
-  //   if (isAllocated) {
-  //     // After /allocated-place the journey will match other course-details routes
-  //     res.redirect(`${recordPath}/course-details/allocated-place${referrer}`)
-  //   }
-  //   else {
-  //     if (req.params.recordtype == 'record'){
-  //       // This is basically the same as the /update route
-  //       utils.updateRecord(data, record)
-  //       utils.deleteTempData(data)
-  //       req.flash('success', 'Trainee record updated')
-  //       // Referrer or non-referrer probably goes to the same place
-  //       if (referrer){
-  //         res.redirect(utils.getReferrerDestination(req.query.referrer))
-  //       }
-  //       else {
-  //         res.redirect(`${recordPath}`)
-  //       }
-  //     }
-  //     else {
-  //       // Implicitly confirm the section by confirming it
-  //       record.courseDetails.status = "Completed"
-  //       if (referrer){
-  //         // Return to check-record page
-  //         res.redirect(utils.getReferrerDestination(req.query.referrer))
-  //       }
-  //       else {
-  //         res.redirect(`${recordPath}/overview`)
-  //       }
-  //     }
-
-  //   }
-  // })
+    // No data, return to page
+    if (!phase){
+      res.redirect(`${recordPath}/course-details/phase${referrer}`)
+    }
+    else {
+      res.redirect(`${recordPath}/course-details/details${referrer}`)
+    }
+  })
 
    // Branching route
   router.post(['/:recordtype/:uuid/course-details/study-mode','/:recordtype/course-details/study-mode'], function (req, res) {
@@ -633,39 +611,47 @@ module.exports = router => {
 
 
   // Picking a course
-  router.post(['/:recordtype/:uuid/course-details/pick-route','/:recordtype/course-details/pick-route'], function (req, res) {
-    const data = req.session.data
-    let record = data.record
-    let recordPath = utils.getRecordPath(req)
-    let referrer = utils.getReferrer(req.query.referrer)
-    let enabledRoutes = data.settings.enabledTrainingRoutes
-    let selectedRoute = _.get(data, 'record.route')
-    let isAllocated = utils.hasAllocatedPlaces(record)
+  // router.post(['/:recordtype/:uuid/course-details/pick-route','/:recordtype/course-details/pick-route'], function (req, res) {
+  //   const data = req.session.data
+  //   let record = data.record
+  //   let recordPath = utils.getRecordPath(req)
+  //   let referrer = utils.getReferrer(req.query.referrer)
+  //   let enabledRoutes = data.settings.enabledTrainingRoutes
+  //   let selectedRoute = _.get(data, 'record.route')
+  //   let isAllocated = utils.hasAllocatedPlaces(record)
 
-    // No data, return to page
-    if (!selectedRoute){
-      res.redirect(`${recordPath}/course-details/pick-route${referrer}`)
-    }
-    else if (selectedRoute == "Other"){
-      res.redirect(`/new-record/course-details/route-not-supported${referrer}`)
-    }
-    else {
-      res.redirect(`${recordPath}/course-details/details${referrer}`)
-    }
-  })
+  //   // No data, return to page
+  //   if (!selectedRoute){
+  //     res.redirect(`${recordPath}/course-details/pick-route${referrer}`)
+  //   }
+  //   else if (selectedRoute == "Other"){
+  //     res.redirect(`/new-record/course-details/route-not-supported${referrer}`)
+  //   }
+  //   else {
+  //     res.redirect(`${recordPath}/course-details/details${referrer}`)
+  //   }
+  // })
 
-
+ 
   router.post(['/:recordtype/:uuid/course-details/details','/:recordtype/course-details/details'], function (req, res) {
     const data = req.session.data
     let record = data.record
     let referrer = utils.getReferrer(req.query.referrer)
-
-    let courseDetails = _.get(data, 'record.courseDetails')
     let recordPath = utils.getRecordPath(req)
+    let courseDetails = _.get(data, 'record.courseDetails')
 
     // No data, return to page
     if (!courseDetails){
       res.redirect(`${recordPath}/course-details`)
+    }
+
+    let isPrimary = (record.courseDetails?.phase == "Primary")
+
+    if (isPrimary) {
+      // Primary captures subjects using combined radio options - we need to split this in to 
+      // separate subjects. Where 'another' is selected, we'll preserve any second and third subjects.
+      record.courseDetails.subjects = utils.mapPrimarySubjectsToSubjectSpecialisms(courseDetails?.primarySubjectsCombined, courseDetails.subjects)
+      delete record.courseDetails?.primarySubjectsCombined
     }
 
     // Check for autocomplete submitted subject
@@ -1125,7 +1111,7 @@ module.exports = router => {
     //     res.redirect(`${recordPath}/funding/bursary-selection${referrer}`)
     //   }
     //   else {
-    //     res.redirect(`${recordPath}/funding/level${referrer}`)
+    //     res.redirect(`${recordPath}/funding/phase${referrer}`)
     //   }
     // }
     // else {

@@ -6,8 +6,6 @@
 
 {# {% set canAmend = false %} #}
 
-
-
 {% set courseNameRow = {
   key: {
     text: "Course name"
@@ -43,6 +41,24 @@
   } if canAmend and false
 } if record.status !="Draft" %}
 
+{% set levelRow = {
+  key: {
+    text: "Education phase"
+  },
+  value: {
+    text: courseDetails.phase | sentenceCase or 'Not provided'
+  },
+  actions: {
+    items: [
+      {
+        href: recordPath + "/course-details/phase" | addReferrer(referrer),
+        text: "Change",
+        visuallyHiddenText: "education phase"
+      }
+    ]
+  } if canAmend
+} %}
+
 {% set subjectsRow = {
   key: {
     text: "Subject" | pluralise(record.courseDetails.subjects | length)
@@ -56,24 +72,6 @@
         href: recordPath + "/course-details/details" | addReferrer(referrer),
         text: "Change",
         visuallyHiddenText: "subject"
-      }
-    ]
-  } if canAmend
-} %}
-
-{% set levelRow = {
-  key: {
-    text: "Level"
-  },
-  value: {
-    text: courseDetails.level | sentenceCase or 'Not provided'
-  },
-  actions: {
-    items: [
-      {
-        href: recordPath + "/course-details/details" | addReferrer(referrer),
-        text: "Change",
-        visuallyHiddenText: "level"
       }
     ]
   } if canAmend
@@ -209,8 +207,8 @@
 {% set courseDetailsRows = [
   courseNameRow,
   routeRow,
-  subjectsRow,
   levelRow,
+  subjectsRow,
   ageRangeRow,
   studyModeRow,
   apprenticeshipStartDateRow,

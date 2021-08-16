@@ -35,7 +35,7 @@ const getFilters = req => {
   'filterStatus',
   'filterCompleteStatus',
   'filterSource',
-  'filterLevel',
+  'filterPhase',
   'filterStudyMode',
   'filterCycle',
   'filterUserProviders',
@@ -49,7 +49,7 @@ const getFilters = req => {
     source: query.filterSource,
     completeStatus: query.filterCompleteStatus,
     cycle: query.filterCycle,
-    level: query.filterLevel,
+    phase: query.filterPhase,
     studyMode: query.filterStudyMode,
     providers: query.filterUserProviders,
     trainingRoutes: query.filterTrainingRoutes,
@@ -64,7 +64,7 @@ const getHasFilters = (filters, searchQuery) => {
   return !!(filters.status) 
   || !!(filters.completeStatus)
   || !!(filters.source)
-  || !!(filters.level)
+  || !!(filters.phase)
   || !!(filters.studyMode)
   || !!(searchQuery)
   || !!(filters.subject && filters.subject != 'All subjects')
@@ -163,15 +163,15 @@ const getSelectedFilters = req => {
     })
   }
 
-  if (filters.level) {
+  if (filters.phase) {
     selectedFilters.categories.push({
-      heading: { text: 'Course level' },
-      items: filters.level.map((level) => {
+      heading: { text: 'Education phase' },
+      items: filters.phase.map((phase) => {
 
         let newQuery = Object.assign({}, query)
-        newQuery.filterLevel = filters.level.filter(a => a != level)
+        newQuery.filterPhase = filters.phase.filter(a => a != phase)
         return {
-          text: level,
+          text: phase,
           href: url.format({
             pathname,
             query: newQuery,
@@ -187,7 +187,7 @@ const getSelectedFilters = req => {
       items: filters.studyMode.map((studyMode) => {
 
         let newQuery = Object.assign({}, query)
-        newQuery.filterLevel = filters.studyMode.filter(a => a != studyMode)
+        newQuery.filterPhase = filters.studyMode.filter(a => a != studyMode)
         return {
           text: studyMode,
           href: url.format({

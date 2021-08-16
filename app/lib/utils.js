@@ -150,25 +150,25 @@ exports.requiresSection = (record, sectionNames) => {
 
 // Returns: false / Early years / Primary / Secondary
 // Todo: should this be explicitly set on the record?
-exports.getCourseLevel = record => {
+exports.getCoursePhase = record => {
 
-  let levels = trainingRouteData.levels
+  let phases = trainingRouteData.phases
 
-  let matchedLevel
+  let matchedPhase
 
   // Defer to an explicit level if it exists - not all records have this
-  if (record?.courseDetails?.level) matchedLevel = record?.courseDetails?.level
+  if (record?.courseDetails?.phase) return record?.courseDetails?.phase
 
   // Early years routes don’t have an age range - but they’re all implicitly 'Early years'
-  else if (exports.routeIsEarlyYears(record?.route)) matchedLevel = "Early years"
+  else if (exports.routeIsEarlyYears(record?.route)) return "Early years"
 
-  // Age range can be used to derive the level
+  // Age range can be used to derive the phase
   else if (record?.courseDetails?.ageRange) {
-    matchedLevel = Object.keys(levels).filter(level => Array.isArray(levels[level]?.ageRanges) && levels[level].ageRanges.includes(record.courseDetails.ageRange)).pop()
+    matchedPhase = Object.keys(phases).filter(phase => Array.isArray(phases[phase]?.ageRanges) && phases[phase].ageRanges.includes(record.courseDetails.ageRange)).pop()
   }
   else return false
 
-  return matchedLevel
+  return matchedPhase
 }
 
 // Used to set the right qualification on a record
@@ -452,6 +452,10 @@ exports.prettifySubjects = (subjects, lowercaseFirst=false) => {
     subjects = [...new Set(["Modern languages"].concat(subjects))]
   }
 
+  if (subjects[0] == 'Specialist teaching (primary with mathematics)'){
+    return "Primary with mathematics"
+  }
+
   // A string or just one subject
   // Return straight away so we don’t shorten the string
   if (typeof subjects === 'string' || subjects.length == 1){
@@ -464,6 +468,8 @@ exports.prettifySubjects = (subjects, lowercaseFirst=false) => {
   let subjectsCopy = [...subjects].map(subject => {
     return subject
       .replace('Primary teaching', 'Primary')
+      .replace('Specialist teaching (primary with mathematics)', 'Primary with mathematics')
+      .replace('General sciences', 'Science')
       .replace('Modern languages', '_modern_lang') // Temporarily rename this
       .replace(' languages', '') // Strip out languages from 'Chinese languages' etc
       .replace(' language', '') // Strip out language from 'English language' etc
@@ -519,6 +525,46 @@ exports.publishSubjectToPossibleSpecialisms = subject => {
   else return publishSubjects[subject].subjectSpecialisms || false
 }
 
+ // Split a single string in to multiple subjects
+// Used as Publish and our UI try to simplify common options using radio options
+exports.mapPrimarySubjectsToSubjectSpecialisms = (primaryString, existingSubjects=false) => {
+  let subjects = {}
+
+  // First specialism is always primary teaching
+  subjects.first = "Primary teaching"
+
+  switch(primaryString){
+    case "Primary with English":
+      subjects.second = "English studies"
+      break
+    case "Primary with physical education":
+      subjects.second = "Physical education"
+      break
+    case "Primary with science":
+      subjects.second = "General sciences"
+      break
+    case "Primary with geography and history":
+      subjects.second = "Geography"
+      subjects.third = "History"
+      break
+    case "Primary with mathematics":
+      // Primary with maths is treated specially - override the first subject to set this
+      // specific specialism
+      subjects.first = "Specialist teaching (primary with mathematics)"
+      break
+    case "Primary with modern languages":
+      subjects.second = "Modern languages"
+      break
+    case "Primary with another subject":
+      if (existingSubjects?.second) subjects.second = existingSubjects.second
+      if (existingSubjects?.third) subjects.third = existingSubjects.third
+      break
+  }
+
+  return subjects
+}
+
+
 // Map those Publish subjects that can be mapped unambiguously.
 // TODO: this code is nearly identical to setSubjectSpecialisms() in course-details.js - they
 // should probably be combined together
@@ -535,38 +581,44 @@ exports.mapMappablePublishSubjects = course => {
   let subjects = course.subjects || {}
 
   // Hacky handling for Primary courses. Publish only treats them as having a single 'subject' but
-  // we want to map it to two subjects. For most of them, both subjects can be directly mapped.
+  // we want to map it to up to three specialisms.
   if (firstSubject.includes("Primary")){
-
-    // The first specialism is always 'Primary teaching' (except for Primary with maths)
-    subjects.first = "Primary teaching"
-    switch(firstSubject){
-      case "Primary with English":
-        subjects.second = "English studies"
-        break
-      case "Primary with physical education":
-        // PE can’t be mapped so add it as a second publish subject and let the UI collect it from
-        // the user
-        course.publishSubjects.second = "Physical education"
-        subjects.second = null
-        break
-      case "Primary with science":
-        subjects.second = "General sciences"
-        break
-      case "Primary with geography and history":
-        subjects.second = "Geography"
-        subjects.third = "History"
-        break
-      case "Primary with mathematics":
-        // Primary with maths is treated specially - override the first subject to set this specific
-        subjects.first = "Specialist teaching (primary with mathematics)"
-        break
-      case "Primary with modern languages":
-        course.publishSubjects.second = "Modern languages"
-        subjects.second = null
-        break
-    }
+    subjects = exports.mapPrimarySubjectsToSubjectSpecialisms(firstSubject)
   }
+
+  // // Hacky handling for Primary courses. Publish only treats them as having a single 'subject' but
+  // // we want to map it to two subjects. For most of them, both subjects can be directly mapped.
+  // if (firstSubject.includes("Primary")){
+
+  //   // The first specialism is always 'Primary teaching' (except for Primary with maths)
+  //   subjects.first = "Primary teaching"
+  //   switch(firstSubject){
+  //     case "Primary with English":
+  //       subjects.second = "English studies"
+  //       break
+  //     case "Primary with physical education":
+  //       // PE can’t be mapped so add it as a second publish subject and let the UI collect it from
+  //       // the user
+  //       course.publishSubjects.second = "Physical education"
+  //       subjects.second = null
+  //       break
+  //     case "Primary with science":
+  //       subjects.second = "General sciences"
+  //       break
+  //     case "Primary with geography and history":
+  //       subjects.second = "Geography"
+  //       subjects.third = "History"
+  //       break
+  //     case "Primary with mathematics":
+  //       // Primary with maths is treated specially - override the first subject to set this specific
+  //       subjects.first = "Specialist teaching (primary with mathematics)"
+  //       break
+  //     case "Primary with modern languages":
+  //       course.publishSubjects.second = "Modern languages"
+  //       subjects.second = null
+  //       break
+  //   }
+  // }
 
   // Secondary courses
   else {
@@ -663,12 +715,12 @@ exports.courseDatesAreAmbiguous = record => {
   return trainingRoutes?.[record?.route]?.courseDatesAreAmgiguous || false
 }
 
-// Levels
+// Phases
 
-// Unlike the other levels, this is probably reliable - as it checcks the route rather than the age
+// Unlike the other phases, this is probably reliable - as it checcks the route rather than the age
 // ranges of the course
 exports.isEarlyYears = record => {
-  return exports.getCourseLevel(record) == "Early years"
+  return exports.getCoursePhase(record) == "Early years"
 }
 
 // Explicitly test the route only - as
@@ -677,15 +729,15 @@ exports.routeIsEarlyYears = route => {
 }
 
 // TODO: this might not be reliable - need to check all age ranges
-// map to one of the levels
+// map to one of the phases
 exports.isPrimary = record => {
-  return exports.getCourseLevel(record) == "Primary"
+  return exports.getCoursePhase(record) == "Primary"
 }
 
 // TODO: this might not be reliable - need to check all age ranges
-// map to one of the levels
+// map to one of the phases
 exports.isSecondary = record => {
-  return exports.getCourseLevel(record) == "Secondary"
+  return exports.getCoursePhase(record) == "Secondary"
 }
 
 exports.sectionIsComplete = section => {
@@ -834,8 +886,8 @@ exports.filterRecords = (records, data, filters = {}) => {
   }
 
   // Primary / Secondary etc
-  if (filters.level){
-    filteredRecords = filteredRecords.filter(record => filters.level.includes(exports.getCourseLevel(record)))
+  if (filters.phase){
+    filteredRecords = filteredRecords.filter(record => filters.phase.includes(exports.getCoursePhase(record)))
   }
 
   // Full time or Part time

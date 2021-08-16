@@ -155,10 +155,12 @@ module.exports = {
   strings,
   subjects,
   trainingRoutes,
+  trainingRouteData,
   publishRoutes,
   nonPublishRoutes,
   ukComparableDegrees,
   withdrawalReasons,
   ugEntryQualifications,
-  years
+  years,
+  primarySubjectOptions: ittSubjectData.primarySubjectOptions
 }

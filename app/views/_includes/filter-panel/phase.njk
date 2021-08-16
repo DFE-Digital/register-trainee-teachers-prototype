@@ -2,7 +2,7 @@
   classes: "govuk-checkboxes--small js-auto-submit",
   fieldset: {
     legend: {
-      text: "Course level",
+      text: "Education phase",
       isPageHeading: false,
       classes: "govuk-fieldset__legend--s"
     }
@@ -10,15 +10,15 @@
   items: [
     {
       text: "Early years",
-      checked: checked(query.filterLevel, "Early years")
+      checked: checked(query.filterPhase, "Early years")
     },
     {
       text: "Primary",
-      checked: checked(query.filterLevel, "Primary")
+      checked: checked(query.filterPhase, "Primary")
     },
     {
       text: "Secondary",
-      checked: checked(query.filterLevel, "Secondary")
+      checked: checked(query.filterPhase, "Secondary")
     }
   ]
-} | decorateAttributes(data, "data.filterLevel"))}}
+} | decorateAttributes(data, "data.filterPhase"))}}

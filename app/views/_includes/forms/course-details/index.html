@@ -1,29 +1,22 @@
-<h1 class="govuk-heading-l">{{pageHeading}}</h1>
 
-{% set hasMultipleSubjects = record.courseDetails.subjects | length > 1 %}
+{% set isPrimary = record.courseDetails.phase == "Primary" %}
 
-{{ appAutocomplete({
-  label: {
-    text: "Subject",
-    classes: "govuk-label--s"
-  },
-  hint: {
-    text: 'Search for the closest matching subject'
-  },
-  id: 'subject_1',
-  minLength: 2,
-  autoSelect: true,
-  showAllValues: false,
-  classes: "app-!-autocomplete--max-width-two-thirds",
-  name: "record[courseDetails][subjects][first]",
-  items: data.ittSubjects,
-  value: record.courseDetails.subjects.first
-  }
-) }}
+{% set phase = "Primary" if isPrimary else "Secondary" %}
 
+{% set primarySubjectsToRemove = [
+    "Primary teaching",
+    "Specialist teaching (primary with mathematics)"
+  ]
+%}
+
+{% set subjectSpecialisms = data.ittSubjects | removeArrayItems(primarySubjectsToRemove) %}
+
+{# Autocompletes for subjects 2 and 3 #}
 {% set multipleSubjectsHtml %}
-
-  <p class="govuk-body">The first subject is the main one. It represents the bursary or scholarship available if applicable.</p>
+  
+  {% if not isPrimary %}
+    <p class="govuk-body">The first subject is the main one. It represents the bursary or scholarship available if applicable.</p>
+  {% endif %}
 
   {% for item in [2,3] %}
 
@@ -31,7 +24,8 @@
     {% set ordinal = item | getOrdinalName %}
 
     {% set label %}
-      {{ ordinal | sentenceCase }} subject (optional)
+      {# Show '(optional)' if it’s a secondary course or if it’s primary but the third subject #}
+      {{ ordinal | sentenceCase }} subject {{-  " (optional)" if (not isPrimary) or (ordinal == "third") }}
     {% endset %}
 
     {{ appAutocomplete({
@@ -49,71 +43,184 @@
       allowEmpty: true,
       classes: "app-!-autocomplete--max-width-two-thirds",
       name: "record[courseDetails][subjects][" + ordinal + "]",
-      items: data.ittSubjects,
+      items: subjectSpecialisms,
       value: record.courseDetails.subjects[ordinal]
       }
     ) }}
   {% endfor %}
 {% endset %}
 
-{{ govukDetails({
-  summaryText: "Add additional subjects",
-  html: multipleSubjectsHtml,
-  open: true if hasMultipleSubjects
-}) }}
+<h1 class="govuk-heading-l">{{pageHeading}}</h1>
 
-{# These account for 97.4% of choices #}
-{% set commonAgeRanges = [
-  "3 to 7",
-  "3 to 11",
-  "5 to 11",
-  "11 to 16",
-  "11 to 19"
-  ] %}
+{% set primarySubjects = [] %}
 
-{# Create radio items for each #}
-{% set ageRangeRadioItems = [] %}
-{% for ageRange in commonAgeRanges %}
-  {% set ageRangeRadioItems = ageRangeRadioItems | push({
-    text: ageRange
-  }) %}
-{% endfor %}
+{% set firstSubject = record.courseDetails.subjects.first %}
+{% set secondSubject = record.courseDetails.subjects.second %}
+{% set thirdSubject = record.courseDetails.subjects.third %}
 
-{% set uncommonAgeRanges = data.assessmentOnlyAgeRanges | removeArrayItems(commonAgeRanges) %}
+{% set namedSubjects = [
+  "English studies",
+  "Geography",
+  "Modern languages",
+  "Physical education",
+  "General sciences"
+] %}
+
+{% set primarySubjects = [
+  {
+    text: "Primary",
+    checked: true if firstSubject == "Primary teaching" and not secondSubject and not thirdSubject
+  },
+  {
+    text: "Primary with English",
+    checked: true if firstSubject == "Primary teaching" and secondSubject == "English studies" and not thirdSubject
+  },
+  {
+    text: "Primary with geography and history",
+    checked: true if firstSubject == "Primary teaching" and secondSubject == "Geography" and thirdSubject == "History"
+  },
+  {
+    text: "Primary with mathematics",
+    checked: true if firstSubject == "Specialist teaching (primary with mathematics)" and not secondSubject and not thirdSubject
+  },
+  {
+    text: "Primary with modern languages",
+    checked: true if firstSubject == "Primary teaching" and secondSubject == "Modern languages" and not thirdSubject
+  },
+  {
+    text: "Primary with physical education",
+    checked: true if firstSubject == "Primary teaching" and secondSubject == "Physical education" and not thirdSubject
+  },
+  {
+    text: "Primary with science",
+    checked: true if firstSubject == "Primary teaching" and secondSubject == "General sciences" and not thirdSubject
+  },
+  {
+    divider: "or"
+  },
+  {
+    text: "Primary with another subject",
+    checked: true if firstSubject == "Primary teaching" and secondSubject and not (namedSubjects | includes(secondSubject) ),
+    conditional: {
+      html: multipleSubjectsHtml
+    }
+  }
+] %}
+
+{# Show subject for Primary or Secondary #}
+{% if isPrimary %}
+
+  {{ govukRadios({
+    fieldset: {
+      legend: {
+        text: "Subject",
+        isPageHeading: false,
+        classes: "govuk-fieldset__legend--s"
+      }
+    },
+    items: primarySubjects
+  } | decorateAttributes(record, "record.courseDetails.primarySubjectsCombined")) }}
+
+{% else %}
+  {% set hasMultipleSubjects = record.courseDetails.subjects | length > 1 %}
+
+  {{ appAutocomplete({
+    label: {
+      text: "Subject",
+      classes: "govuk-label--s"
+    },
+    hint: {
+      text: 'Search for the closest matching subject'
+    },
+    id: 'subject_1',
+    minLength: 2,
+    autoSelect: true,
+    showAllValues: false,
+    classes: "app-!-autocomplete--max-width-two-thirds",
+    name: "record[courseDetails][subjects][first]",
+    items: subjectSpecialisms,
+    value: record.courseDetails.subjects.first
+    }
+  ) }}
+
+  {{ govukDetails({
+    summaryText: "Add additional subjects",
+    html: multipleSubjectsHtml,
+    open: true if hasMultipleSubjects
+  }) }}
+{% endif %}
+
+{# Age ranges vary depending on phase #}
+{% set commonAgeRanges = data.trainingRouteData.phases[phase].ageRanges %}
+{% set otherAgeRanges = data.trainingRouteData.phases[phase].otherAgeRanges %}
 
 {# Prefil existing answer #}
 {% set ageRangeExistingValue = record.courseDetails.ageRange %}
-{% if ageRangeExistingValue in commonAgeRanges %}
+
+{% if ageRangeExistingValue in commonAgeRanges or ageRangeExistingValue not in otherAgeRanges %}
   {% set ageRangeExistingValue = undefined %}
 {% endif %}
 
 {% set ageRangeAutocomplete %}
-  {{ appAutocomplete({
+  {# Old autocomplete code left here in case we decide to go back #}
+  {# {{ appAutocomplete({
     label: {
       text: "Other age range",
-      classes: "govuk-label--s"
+      classes: "govuk-visually-hidden"
     },
     id: 'age-range',
     name: "record[courseDetails][ageRangeOther]",
     classes: "app-!-autocomplete--max-width-one-third",
-    items: uncommonAgeRanges,
+    items: otherAgeRanges,
     value: ageRangeExistingValue
     }
-  ) }}
+  ) }} #}
+
+  {# Using a select as autocomplete has poor usability for this type of data #}
+  {% set selectItems = [] %}
+  {% set selectItems = selectItems | push({
+    vale: "",
+    text: "",
+    selected: true if ageRangeExistingValue not in otherAgeRanges
+  }) %}
+
+  {% for item in otherAgeRanges %}
+    {% set selectItems = selectItems | push({
+      text: item,
+      selected: true if ageRangeExistingValue == item
+    }) %}
+  {% endfor %}
+
+  {{ govukSelect({
+    classes: "",
+    label: {
+      text: "Select the age range",
+      classes: ""
+    },
+    items: selectItems,
+    value: ageRangeExistingValue
+  } | decorateAttributes(record, "record.courseDetails.ageRangeOther")) }}
 {% endset %}
 
-{% set ageRangeRadioItems = ageRangeRadioItems | combineArrays(
-  [{
+{% set ageRangeRadios = [] %}
+
+{% for ageRange in commonAgeRanges %}
+  {% set ageRangeRadios = ageRangeRadios | push({
+    text: ageRange
+  }) %}
+{% endfor %}
+
+{% set ageRangeRadios = ageRangeRadios | push({
     divider: 'or'
-  },
-  {
-    text: "Other age range",
-    checked: 'checked' if ageRangeExistingValue,
-    conditional: {
-      html: ageRangeAutocomplete
-    }
-  }]
-) %}
+  }) %}
+
+{% set ageRangeRadios = ageRangeRadios | push({
+  text: "Other age range",
+  checked: 'checked' if ageRangeExistingValue,
+  conditional: {
+    html: ageRangeAutocomplete
+  }
+}) %}
 
 {{ govukRadios({
   fieldset: {
@@ -122,11 +229,9 @@
       classes: "govuk-fieldset__legend--s"
     }
   },
-  hint: {
-    text: ""
-  },
-  items: ageRangeRadioItems
+  items: ageRangeRadios
 } | decorateAttributes(record, "record.courseDetails.ageRange")) }}
+
 
 {% if record | requiresField("studyMode") %}
 

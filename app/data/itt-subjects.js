@@ -345,6 +345,15 @@ corePublishSubjects = upcaseFirstChar([
   "design and technology"
 ])
 
+primarySubjectOptions = [
+  "Primary",
+  "Primary with English",
+  "Primary with geography and history",
+  "Primary with mathematics",
+  "Primary with modern languages",
+  "Primary with physical education",
+  "Primary with science"
+]
 
 module.exports = {
   subjectsObjectArray,
@@ -361,4 +370,5 @@ module.exports = {
   commonSecondarySubjects,
   publishSubjects,
   corePublishSubjects,
+  primarySubjectOptions
 }

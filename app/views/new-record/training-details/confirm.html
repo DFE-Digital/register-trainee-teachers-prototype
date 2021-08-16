@@ -1,6 +1,6 @@
 {% extends "_templates/_new-record.html" %}
 
-{% if data.record | requiresField(['leadSchool', 'employingSchool']) %}
+{% if data.record | requiresField(['leadSchool', 'employingSchool', 'region']) %}
   {% set pageHeading = "Confirm training details" %}
 {% else %}
   {% set pageHeading = "Confirm trainee start date and ID" %}

@@ -37,14 +37,15 @@
       <p class="govuk-body">
         <a class="govuk-link" href="/records?filterCycle=_unchecked">View all registered trainees ({{ registeredTrainees | length }})</a>
       </p>
-      {% set year = "2020 to 2021" %}
-      <h3 class="govuk-heading-m">
-        {{ year }} trainees
-        <span class="govuk-body">
-           —  <a class="govuk-link" href="/records?filterCycle={{ year }}">view all <span class="govuk-visually-hidden">2020 to 2021 trainees</span> ({{ registeredTrainees | filterByYear([ year ]) | length }})
-            </a>
-        </span>
-      </h3>
+      {# Hidden because Production doesn’t have a concept of years #}
+      {# {% set year = "2020 to 2021" %}
+        <h3 class="govuk-heading-m">
+          {{ year }} trainees
+          <span class="govuk-body">
+             —  <a class="govuk-link" href="/records?filterCycle={{ year }}">view all <span class="govuk-visually-hidden">2020 to 2021 trainees</span> ({{ registeredTrainees | filterByYear([ year ]) | length }})
+              </a>
+          </span>
+      </h3> #}
     </div>
   </div>
   <div class="govuk-grid-row">
@@ -66,7 +67,7 @@
               {% else %}
                 {% set recordCount = records | where("status", status) | length %}
             {% endif %}
-              <a href="/records?filterStatus={{ searchStatus }}&filterCycle={{ year }}" class="status-card status-card--{{ status | lower | kebabCase }}">
+              <a href="/records?filterStatus={{ searchStatus }}" class="status-card status-card--{{ status | lower | kebabCase }}">
                 <span class="status-card__count">{{ recordCount }}</span>
                 <span class="status-card__status">{{ statusString }}</span><span class="govuk-visually-hidden"> records. View these records.</span>
               </a>

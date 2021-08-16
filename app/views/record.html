@@ -2,7 +2,7 @@
 {% extends "_templates/_record.html" %}
 
 {% set backLink = '/records' %}
-{% set backText = 'All records' %}
+{% set backText = 'All registered trainees' %}
 {% set pageHeading = record.personalDetails.shortName %}
 {% set activeTab = 'trainee-details' %}
 
@@ -25,7 +25,7 @@
         {% if record.status | getCanRecommendForQts %}
           {% if record | hasOutstandingActions %}
             {{ govukInsetText({
-              text: "This record requires additional details",
+              text: "This trainee record requires additional details",
               classes: "govuk-!-margin-0"
             }) }}
           {% else %}
@@ -37,12 +37,12 @@
           {% endif %}
         {% elseif record.status == "Pending TRN" %}
           {{ govukInsetText({
-            text: "This record is pending a TRN",
+            text: "This trainee is pending a TRN",
             classes: "govuk-!-margin-0"
           }) }}
         {% elseif record.status == "Deferred" %}
           {{ govukInsetText({
-            text: "This record is deferred",
+            text: "This trainee is deferred",
             classes: "govuk-!-margin-0"
           }) }}
         {% endif %}

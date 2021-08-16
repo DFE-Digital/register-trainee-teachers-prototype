@@ -1,7 +1,7 @@
 {% extends "_templates/_page.html" %}
 
 {% set pageHeading %}
-  Draft records ({{filteredRecords | length}} {{ "record" | pluralise(filteredRecords | length) }})
+  Drafts ({{filteredRecords | length}} {{ "record" | pluralise(filteredRecords | length) }})
 {% endset %}
 
 {% set backText = "Home" %}
@@ -254,10 +254,10 @@
   <div class="govuk-grid-column-full">
 
     {# This heading set separately than {{pageHeading}} as it is html #}
-    <h1 class="govuk-heading-xl">Draft records ({{filteredRecords | length}}<span class="govuk-visually-hidden"> {{ "record" | pluralise(filteredRecords | length)}}</span>)</h1>
+    <h1 class="govuk-heading-xl">Draft trainees ({{filteredRecords | length}}<span class="govuk-visually-hidden"> {{ "record" | pluralise(filteredRecords | length)}}</span>)</h1>
 
     {{ govukButton({
-      text: "Add a trainee",
+      text: "Create a trainee record",
       href: "./new-record/new",
       isStartButton: true
     }) }}

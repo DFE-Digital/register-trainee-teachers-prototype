@@ -190,7 +190,7 @@ module.exports = router => {
     }
     utils.deleteTempData(data)
     req.flash('success', 'Draft deleted')
-    res.redirect('/records')
+    res.redirect('/drafts')
   })
 
   // Save a record and put in data store

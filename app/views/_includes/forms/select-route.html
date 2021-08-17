@@ -1,7 +1,9 @@
 
 {% set enabledTrainingRoutes = [] %}
 {% for route in data.settings.enabledTrainingRoutes %}
-  {% set enabledTrainingRoutes = enabledTrainingRoutes | push({text: route}) %}
+  {% if not data.trainingRoutes[route].disableForNewDrafts %}
+    {% set enabledTrainingRoutes = enabledTrainingRoutes | push({text: route}) %}
+  {% endif %}
 {% endfor %}
 
 {% set enabledTrainingRoutes = enabledTrainingRoutes | push({divider: "or"}) %}

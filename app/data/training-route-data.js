@@ -418,6 +418,7 @@ let baseRouteData = {
     courseDatesAreAmgiguous: true
   },
   "High potential initial teacher training (HPITT)": {
+    disableForNewDrafts: true, // we want to show trainees on this route, but not allow new ones
     defaultEnabled: false,
     sections: [
       'trainingDetails',

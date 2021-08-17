@@ -255,12 +255,28 @@ filters.formatDate = (date, format, dateFormat) => {
     }
 }
 
+// Check if date is in last x units
+
+// Usage: {{ date | isInLast(5, "weeks") }}
 filters.isInLast = (date, count, units) => {
+  // Convert to date Object if date is an array (as provided by design system date component)
   if (_.isArray(date)){
     date = filters.arrayToDateObject(date)
   }
   let compareDate = moment().subtract(count, units)
   return moment(date).isAfter(compareDate)
+}
+
+// Check if a date is in the past
+
+// Usage: {{ date | isInPast() }} // true
+filters.isInPast = (date) => {
+  // Convert to date Object if date is an array (as provided by design system date component)
+  if (_.isArray(date)){
+    date = filters.arrayToDateObject(date)
+  }
+  // Compare the end of day so that checks for today’s date don’t return true
+  return moment(date).endOf('day').isBefore()
 }
 
 // Expose moment as a filter

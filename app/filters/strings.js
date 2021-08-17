@@ -15,8 +15,9 @@ filters.slugify = (input) => {
 }
 
 // Split a string using a separator
-filters.split = (input, separator) => {
-  return _.split(input, separator)
+filters.split = (string, separator) => {
+  if (!string || typeof string != "string") return
+  else return string.split(separator)
 }
 
 // Hyphen separate a string

@@ -1,5 +1,8 @@
 <h1 class="govuk-heading-l">{{pageHeading}}</h1>
+
 {% set bursary = record | getBursary %}
+
+{% set scholarshipsApply = record | scholarshipsApply %}
 
 {# We might not always have a bursary value at this stage - so conditionally set it #}
 {% set bursaryValue = record | getBursaryValue %}
@@ -18,8 +21,8 @@
     </a>
   </p>
 
-{# For other courses, bursaries are only available for specific courses #}
 {% else %}
+
   <p class="govuk-body">
     The course you have selected has a bursary available{{ bursaryValueText }} for {{ bursary.subject | dynamicLowercase }}. You need to check if the trainee is eligible for this bursary.
   </p>
@@ -30,7 +33,6 @@
   </p>
 
 {% endif %}
-
 
 {# Tiers apply is just for Early years (postgrad) #}
 {# Will probably want to refactor this section if any other routes have tiers #}
@@ -78,6 +80,8 @@
     items: items
   } | decorateAttributes(record, "record.funding.bursary.selfFunded")) }}
 
+
+{# Non tiered courses with bursaries #}
 {% else %}
 
   {{ govukRadios({
@@ -88,26 +92,29 @@
         classes: "govuk-fieldset__legend--m"
       }
     },
-    hint: {
-      text: ""
-    },
     items: [
       {
         text: "Yes, apply for a bursary",
-        value: "false"
+        value: "bursary"
       },
       {
+        divider: "or"
+      } if scholarshipsApply,
+      {
+        text: "No, the trainee has applied for a scholarship",
+        value: "scholarship"
+      } if scholarshipsApply,
+      {
         text: "No, do not apply for a bursary",
-        value: "true",
+        value: "self-funded",
         hint: {
-          text: "For example, the trainee is not eligible or has applied for a scholarship."
+          text: "For example, the trainee is not eligible or is self-funded."
         }
       }
     ]
-  } | decorateAttributes(record, "record.funding.bursary.selfFunded")) }}
-  
-{% endif %}
+  } | decorateAttributes(record, "record.funding.source")) }}
 
+{% endif %}
 
 {{ govukButton({
   text: "Continue"

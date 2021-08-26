@@ -1091,7 +1091,8 @@ module.exports = router => {
     }
   })
 
-  // Forward on to bursaries or confirm
+  // Forward on to confirm
+  // This route not really needed as we don't always catch errors like this
   router.post(['/:recordtype/:uuid/funding/bursary','/:recordtype/funding/bursary'], function (req, res) {
     let data = req.session.data
     let record = data.record
@@ -1099,24 +1100,12 @@ module.exports = router => {
     let referrer = utils.getReferrer(req.query.referrer)
 
     // No data
-    if (!record?.funding?.bursary?.selfFunded){
+    if (!record?.funding?.source){
       res.redirect(`${recordPath}/funding/bursary${referrer}`)
     }
-
-    // Commented out as we think we can avoid asking about bursary selection
-    // let traineeHasBursary = (record.funding.bursary.selfFunded != 'true')
-    // if (traineeHasBursary){
-    //   let existingDegrees = record?.degree?.items || []
-    //   if (existingDegrees.length > 1){
-    //     res.redirect(`${recordPath}/funding/bursary-selection${referrer}`)
-    //   }
-    //   else {
-    //     res.redirect(`${recordPath}/funding/phase${referrer}`)
-    //   }
-    // }
-    // else {
+    else {
       res.redirect(`${recordPath}/funding/confirm${referrer}`)
-    // }
+    }
   })
 
 

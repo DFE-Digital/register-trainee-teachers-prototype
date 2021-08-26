@@ -150,7 +150,8 @@ let baseRouteData = {
           "Mathematics",
           "Physics"
           ],
-        value: "24000"
+        value: "24000",
+        scholarshipValue: "26000"
       },
       {
         subjects: [
@@ -224,7 +225,8 @@ let baseRouteData = {
           "Mathematics",
           "Physics"
           ],
-        value: "24000"
+        value: "24000",
+        scholarshipValue: "26000"
       },
       {
         subjects: [
@@ -314,7 +316,7 @@ let baseRouteData = {
       'funding'
     ],
     fields: [
-      "employingSchool",
+      // "employingSchool", // probably not a thing
       "studyMode"
     ],
     qualifications: [

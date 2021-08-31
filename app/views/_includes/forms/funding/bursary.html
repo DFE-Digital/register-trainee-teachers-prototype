@@ -102,7 +102,10 @@
       } if scholarshipsApply,
       {
         text: "No, the trainee has applied for a scholarship",
-        value: "scholarship"
+        value: "scholarship",
+        hint: {
+          text: record | getScholarshipValue | currency + " estimated scholarship"
+        }
       } if scholarshipsApply,
       {
         text: "No, do not apply for a bursary",

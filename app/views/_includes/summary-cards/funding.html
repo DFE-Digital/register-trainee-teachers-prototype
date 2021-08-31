@@ -30,9 +30,9 @@
     Not bursary funded
   {% elseif fundingSource == 'scholarship' %}
     Scholarship applied for
-    {# <p class="govuk-hint">
+    <p class="govuk-hint">
       {{record | getScholarshipValue | currency }} estimated scholarship
-    </p> #}
+    </p>
   {% elseif fundingSource == 'bursary' %}
     Bursary applied for
     <p class="govuk-hint">

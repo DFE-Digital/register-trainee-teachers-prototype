@@ -28,7 +28,7 @@
 {# Inset text about the provider and route #}
 {% include "_includes/providerAndRouteInsetText.njk" %}
 
-<h2 class="govuk-heading-m">Personal details and education</h2>
+<h2 class="govuk-heading-m">Personal details{{ " and education" if record | requiresSection("Degree") }}</h2>
 {{ appTaskList({
   classes: "govuk-!-margin-bottom-8",
   items: [{

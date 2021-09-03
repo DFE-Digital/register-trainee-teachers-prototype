@@ -206,6 +206,21 @@ let baseRouteData = {
           "Physics"
           ],
         value: "24000"
+      },
+      {
+        type: "grant",
+        subjects: [
+          "Languages",
+          "Classics"
+          ],
+        value: "10000"
+      },
+      {
+        type: "grant",
+        subjects: [
+          "Biology"
+          ],
+        value: "7000"
       }]
   },
   "School direct (fee funded)": {

@@ -1,0 +1,54 @@
+<h1 class="govuk-heading-l">{{pageHeading}}</h1>
+
+{% set financialSupport = record | getFinancialSupport %}
+
+
+{# We might not always have a bursary value at this stage - so conditionally set it #}
+{% set financialSupportValue = record | getFinancialSupportValue %}
+{% if financialSupportValue | falsify %}
+  {% set financialSupportValueText %} of {{ financialSupportValue | currency }}{% endset %}
+{% endif %}
+
+{# Early years either have a bursary or not - it’s not based on subject #}
+<p class="govuk-body">
+  The course you have selected has a salary grant available{{ financialSupportValueText }} for {{ financialSupport.subject | dynamicLowercase }}. You need to check if the trainee is eligible for this salary grant.
+</p>
+
+<p class="govuk-body">
+  {% if route | isEarlyYears %}
+    <a href="https://www.gov.uk/guidance/early-years-initial-teacher-training-2021-to-2022-funding-guidance" class="govuk-link" rel="noreferrer noopener" target="_blank">Early years initial teacher training: 2021 to 2022 funding guidance (opens in new tab)
+      </a>
+  {% else %}
+    <a href="https://www.gov.uk/government/publications/school-direct-salaried-funding-manual/school-direct-salaried-funding-manual-2021-to-2022-academic-year#trainee-eligibility-criteria" class="govuk-link" rel="noreferrer noopener" target="_blank">School Direct (salaried) funding manual: 2021 to 2022 academic year (opens in new tab)
+      </a>
+  {% endif %}
+</p>
+
+
+{{ govukRadios({
+  fieldset: {
+    legend: {
+      text: "Are you applying for a salary grant for this trainee?",
+      isPageHeading: false,
+      classes: "govuk-fieldset__legend--m"
+    }
+  },
+  items: [
+    {
+      text: "Yes, apply for a salary grant",
+      value: "grant"
+    },
+    {
+      text: "No, do not apply for a salary grant",
+      value: "self-funded",
+      hint: {
+        text: "For example, the trainee is not eligible or is self-funded."
+      }
+    }
+  ]
+} | decorateAttributes(record, "record.funding.source")) }}
+
+
+{{ govukButton({
+  text: "Continue"
+}) }}

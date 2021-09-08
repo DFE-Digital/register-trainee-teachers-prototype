@@ -15,7 +15,7 @@
 {% block formContent %}
 
   {% if bursary.type == "grant" %}
-    {% include "_includes/forms/funding/salary-grant.html" %}
+    {% include "_includes/forms/funding/grant.html" %}
   {% elseif record | isEarlyYears %}
     {% include "_includes/forms/funding/early-years.html" %}
   {% else %}

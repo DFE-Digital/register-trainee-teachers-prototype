@@ -11,7 +11,7 @@
 
 {# Early years either have a bursary or not - it’s not based on subject #}
 <p class="govuk-body">
-  The course you have selected has a salary grant available{{ financialSupportValueText }} for {{ financialSupport.subject | dynamicLowercase }}. You need to check if the trainee is eligible for this salary grant.
+  The course you have selected has a grant available{{ financialSupportValueText }} for {{ financialSupport.subject | dynamicLowercase }}. You need to check if the trainee is eligible for this  grant.
 </p>
 
 <p class="govuk-body">
@@ -21,28 +21,28 @@
   {% else %}
     <a href="https://www.gov.uk/government/publications/school-direct-salaried-funding-manual/school-direct-salaried-funding-manual-2021-to-2022-academic-year#trainee-eligibility-criteria" class="govuk-link" rel="noreferrer noopener" target="_blank">School Direct (salaried) funding manual: 2021 to 2022 academic year (opens in new tab)
       </a>
-  {% endif %}
+  {% endif %}d  
 </p>
 
 
 {{ govukRadios({
   fieldset: {
     legend: {
-      text: "Are you applying for a salary grant for this trainee?",
+      text: "Do you want to apply for a grant for this trainee?",
       isPageHeading: false,
       classes: "govuk-fieldset__legend--m"
     }
   },
   items: [
     {
-      text: "Yes, apply for a salary grant",
+      text: "Yes, apply for a grant",
       value: "grant"
     },
     {
-      text: "No, do not apply for a salary grant",
+      text: "No, do not apply for a grant",
       value: "self-funded",
       hint: {
-        text: "For example, the trainee is not eligible or is self-funded."
+        text: "For example, the trainee is not eligible or is self-funded"
       }
     }
   ]

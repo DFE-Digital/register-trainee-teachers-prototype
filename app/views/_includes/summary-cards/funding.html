@@ -155,23 +155,39 @@
   {# Section not required #}
 {% elseif showIncomplete and not complete %}
 
-  {% set incompleteType = "warning" if errorList %}
-  {% set incompleteId = "funding" %}
-  {% if status == "In progress" %}
-    {% set incompleteText = "Funding section not marked as complete" %}
-    {% set incompleteLink = recordPath + "/funding/confirm" %}
-    {% set incompleteLinkText = "Continue section" %}
-  {% elseif not record | canStartFundingSection %}
-    {% set incompleteText = "Funding section cannot be started yet" %}
-    {% set incompleteLink = recordPath + "/funding" %}
-    {% set incompleteLinkText = "Review section" %}
-  {% else %}
-    {% set incompleteText = "Funding section not started" %}
-    {% set incompleteLink = recordPath + "/funding" %}
-    {% set incompleteLinkText = "Start section" %}
-  {% endif %}
+  {% if record | canStartFundingSection %}
+    {% set incompleteType = "warning" if errorList %}
+    {% set incompleteId = "funding" %}
+    {% if status == "In progress" %}
+      {% set incompleteText = "Funding section not marked as complete" %}
+      {% set incompleteLink = recordPath + "/funding/confirm" %}
+      {% set incompleteLinkText = "Continue section" %}
+    {% else %}
+      {% set incompleteText = "Funding section not started" %}
+      {% set incompleteLink = recordPath + "/funding" %}
+      {% set incompleteLinkText = "Start section" %}
+    {% endif %}
 
   {% include "_includes/incomplete.njk" %}
+
+  {% else %}
+
+    {% set bannerHtml %}
+      <p class="govuk-body" id="missing-{{ incompleteId }}">Funding section cannot be started yet</p>
+      <div class="govuk-body govuk-hint">Complete course details first</div>
+    {% endset %}
+
+    {{ appBanner({
+      classes: "app-banner--missing-section",
+      html: bannerHtml,
+      type: "information",
+      icon: false
+    }) }}
+
+      
+  {% endif %}
+
+
 
 {% else %}
 

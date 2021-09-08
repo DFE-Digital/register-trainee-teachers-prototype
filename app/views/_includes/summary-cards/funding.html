@@ -32,9 +32,9 @@
   {% elseif fundingSource == 'self-funded' %}
     Not bursary funded
   {% elseif fundingSource == 'grant' %}
-    Salary grant applied for
+    Grant applied for
     <p class="govuk-hint">
-      {{record | getFinancialSupportValue | currency }} estimated salary grant
+      {{record | getFinancialSupportValue | currency }} estimated grant
     </p>
   {% elseif fundingSource == 'scholarship' %}
     Scholarship applied for

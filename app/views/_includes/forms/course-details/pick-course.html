@@ -2,7 +2,7 @@
 
 {# For Apply drafts only, we let users pick from all routes #}
 {# Todo: this data should probably be provided to the view #}
-{% if record | sourceIsApply %}
+{% if record | sourceIsApply and record | isDraft %}
   {% set route = false %}
 {% else %}
   {% set route = record.route %}

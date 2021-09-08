@@ -339,6 +339,9 @@ module.exports = (params) => {
 
   let academicYear = `${startYear} to ${startYear + 1}`
 
+  // Assume courses end earlier than they start
+  const endDate = moment(startDate).add(duration, 'years').subtract(3, 'months').toDate()
+
   // Start dates for Publish teaching apprenticeships refer to when the apprenticeship starts, not
   // when the ITT training starts
   let apprenticeshipStartDate
@@ -347,8 +350,7 @@ module.exports = (params) => {
     startDate = null
   }
   
-  // Assume courses end earlier than they start
-  const endDate = moment(startDate).add(duration, 'years').subtract(3, 'months').toDate()
+
 
 
   if (isPublishCourse) {

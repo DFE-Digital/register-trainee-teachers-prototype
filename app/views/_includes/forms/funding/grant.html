@@ -1,0 +1,48 @@
+<h1 class="govuk-heading-l">{{pageHeading}}</h1>
+
+{% set financialSupport = record | getFinancialSupport %}
+
+
+{# We might not always have a bursary value at this stage - so conditionally set it #}
+{% set financialSupportValue = record | getFinancialSupportValue %}
+{% if financialSupportValue | falsify %}
+  {% set financialSupportValueText %} of {{ financialSupportValue | currency }}{% endset %}
+{% endif %}
+
+{# Early years either have a bursary or not - it’s not based on subject #}
+<p class="govuk-body">
+  The course you have selected has a grant available{{ financialSupportValueText }} for {{ financialSupport.subject | dynamicLowercase }}. You need to check if the trainee is eligible for this  grant.
+</p>
+
+<p class="govuk-body">
+  <a href="https://www.gov.uk/government/publications/funding-initial-teacher-training-itt/funding-initial-teacher-training-itt-academic-year-2021-to-2022" class="govuk-link" rel="noreferrer noopener" target="_blank">Funding: initial teacher training (ITT), academic year 2021 to 2022 (opens in new tab)
+  </a>
+</p>
+
+{{ govukRadios({
+  fieldset: {
+    legend: {
+      text: "Do you want to apply for a grant for this trainee?",
+      isPageHeading: false,
+      classes: "govuk-fieldset__legend--m"
+    }
+  },
+  items: [
+    {
+      text: "Yes, apply for a grant",
+      value: "grant"
+    },
+    {
+      text: "No, do not apply for a grant",
+      value: "self-funded",
+      hint: {
+        text: "For example, the trainee is not eligible or is self-funded"
+      }
+    }
+  ]
+} | decorateAttributes(record, "record.funding.source")) }}
+
+
+{{ govukButton({
+  text: "Continue"
+}) }}

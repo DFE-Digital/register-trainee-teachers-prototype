@@ -1,11 +1,11 @@
 <h1 class="govuk-heading-l">{{pageHeading}}</h1>
 
-{% set bursary = record | getBursary %}
+{% set bursary = record | getFinancialSupport %}
 
 {% set scholarshipsApply = record | scholarshipsApply %}
 
 {# We might not always have a bursary value at this stage - so conditionally set it #}
-{% set bursaryValue = record | getBursaryValue %}
+{% set bursaryValue = record | getFinancialSupportValue %}
 {% if bursaryValue | falsify %}
   {% set bursaryValueText %} of {{ bursaryValue | currency }}{% endset %}
 {% endif %}
@@ -16,23 +16,18 @@
     {{ record.route }} has a bursary available{{ bursaryValueText }}. You need to check if the trainee is eligible for this bursary.
   </p>
 
-  <p class="govuk-body">
-    <a href="https://www.gov.uk/guidance/early-years-initial-teacher-training-2021-to-2022-funding-guidance" class="govuk-link" rel="noreferrer noopener" target="_blank">Early years initial teacher training: 2021 to 2022 funding guidance (opens in new tab)
-    </a>
-  </p>
-
 {% else %}
 
   <p class="govuk-body">
     The course you have selected has a bursary available{{ bursaryValueText }} for {{ bursary.subject | dynamicLowercase }}. You need to check if the trainee is eligible for this bursary.
   </p>
 
-  <p class="govuk-body">
-    <a href="https://www.gov.uk/government/publications/initial-teacher-training-itt-bursary-funding-manual/initial-teacher-training-bursaries-funding-manual-2021-to-2022-academic-year#training-bursary-award-and-eligibility" class="govuk-link" rel="noreferrer noopener" target="_blank">DfE bursary guidance for academic year 2021 to 2022 (opens in new tab)
-    </a>
-  </p>
-
 {% endif %}
+
+<p class="govuk-body">
+  <a href="https://www.gov.uk/government/publications/funding-initial-teacher-training-itt/funding-initial-teacher-training-itt-academic-year-2021-to-2022" class="govuk-link" rel="noreferrer noopener" target="_blank">Funding: initial teacher training (ITT), academic year 2021 to 2022 (opens in new tab)
+  </a>
+</p>
 
 {# Tiers apply is just for Early years (postgrad) #}
 {# Will probably want to refactor this section if any other routes have tiers #}
@@ -78,7 +73,7 @@
       text: ""
     },
     items: items
-  } | decorateAttributes(record, "record.funding.bursary.selfFunded")) }}
+  } | decorateAttributes(record, "record.funding.source")) }}
 
 
 {# Non tiered courses with bursaries #}
@@ -87,7 +82,7 @@
   {{ govukRadios({
     fieldset: {
       legend: {
-        text: "Are you applying for a bursary for this trainee?",
+        text: "Do you want to apply for a bursary for this trainee?",
         isPageHeading: false,
         classes: "govuk-fieldset__legend--m"
       }
@@ -111,7 +106,7 @@
         text: "No, do not apply for a bursary",
         value: "self-funded",
         hint: {
-          text: "For example, the trainee is not eligible or is self-funded."
+          text: "For example, the trainee is not eligible or is self-funded"
         }
       }
     ]

@@ -22,12 +22,20 @@
 
 {% set fundingSource = record.funding.source %}
 {% set scholarshipsApply = record | scholarshipsApply %}
+{% set financialSupport = record | getFinancialSupport %}
 
 {% set courseFundingHtml %}
   {% if fundingSource == 'self-funded' and scholarshipsApply %}
     Not bursary or scholarship funded
+  {% elseif fundingSource == 'self-funded' and financialSupport.type =='grant' %}
+    Not grant funded
   {% elseif fundingSource == 'self-funded' %}
     Not bursary funded
+  {% elseif fundingSource == 'grant' %}
+    Grant applied for
+    <p class="govuk-hint">
+      {{record | getFinancialSupportValue | currency }} estimated grant
+    </p>
   {% elseif fundingSource == 'scholarship' %}
     Scholarship applied for
     <p class="govuk-hint">
@@ -36,13 +44,13 @@
   {% elseif fundingSource == 'bursary' %}
     Bursary applied for
     <p class="govuk-hint">
-      {{record | getBursaryValue | currency }} estimated bursary
+      {{record | getFinancialSupportValue | currency }} estimated bursary
     </p>
   {# Anything remaining is an Early Years tiered bursary #}
   {% elseif fundingSource %}
     {# Do a little dance to look up the tier name #}
     {# Really we should be storing the actual bursary or level against the trainee  #}
-    {% set bursaryData = record | getBursary %}
+    {% set bursaryData = record | getFinancialSupport %}
     {% set bursaryTier = bursaryData.tiers | where('name', fundingSource ) | first %}
     Applied for {{bursaryTier.name}}
     <p class="govuk-hint">{{bursaryTier.value | currency }} estimated bursary</p>
@@ -51,7 +59,7 @@
   {% endif %}
 {% endset %}
 
-{% if record | bursariesApply %}
+{% if record | financialSupportApplies %}
 
   {% set courseFundingRow = {
     key: {
@@ -63,7 +71,7 @@
     actions: {
       items: [
         {
-          href: recordPath + "/funding/bursary" | addReferrer(referrer),
+          href: recordPath + "/funding/financial-support" | addReferrer(referrer),
           text: "Change",
           visuallyHiddenText: "funding method details"
         }
@@ -80,7 +88,7 @@
         text: "Funding method"
       },
       value: {
-        text: "No bursaries or scholarships available for this course"
+        text: "Not applicable for this course"
       }
     }
      %}
@@ -136,8 +144,8 @@
   courseFundingRow
 ] %}
 
-{#   bursaryValueRow if routeHasBursaries and not isSelfFunded,
-  bursaryDegreeRow if (routeHasBursaries and not isSelfFunded and bursaryDegreeRow) #}
+{#   bursaryValueRow if routeHasFinancialSupport and not isSelfFunded,
+  bursaryDegreeRow if (routeHasFinancialSupport and not isSelfFunded and bursaryDegreeRow) #}
 
 {% set fundingHtml %}
   {{ govukSummaryList({

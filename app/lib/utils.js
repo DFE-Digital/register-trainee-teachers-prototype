@@ -233,89 +233,89 @@ exports.getAllocationSubject = (input) => {
 
 
 // Internal helper to look up bursary available
-exports.getBursaryByRouteAndSubject = (route, subject) => {
-  let bursary = {}
+exports.getFinancialSupportByRouteAndSubject = (route, subject) => {
+  let financialSupport = {}
 
   if (!route) return false
   let routeData = trainingRoutes[route]
 
-  if (!routeData?.bursariesAvailable) return false
+  if (!routeData?.financialSupportAvailable) return false
 
-  let bursaryMatch = false
+  let financialSupportMatch = false
 
-  bursary.allSubjects = []
+  financialSupport.allSubjects = []
 
-  routeData.bursaries.forEach(bursaryLevel => {
+  routeData.financialSupport.forEach(financialSupportLevel => {
 
-    // Build up an array of subjects that attract a bursary
-    bursary.allSubjects = bursary.allSubjects.concat(bursaryLevel.subjects)
+    // Build up an array of subjects that attract a financialSupport
+    financialSupport.allSubjects = financialSupport.allSubjects.concat(financialSupportLevel.subjects)
 
-    if (subject && bursaryLevel.subjects.includes(subject)) {
-      bursary = Object.assign(bursaryLevel, bursary)
-      bursary.subject = subject
-      bursaryMatch = true
+    if (subject && financialSupportLevel.subjects.includes(subject)) {
+      financialSupport = Object.assign(financialSupportLevel, financialSupport)
+      financialSupport.subject = subject
+      financialSupportMatch = true
       return
     }
     // Early years don’t really have subjects - but we can check the route instead
     // Todo: should we just copy over the entire object?
-    else if (exports.routeIsEarlyYears(route) && bursaryLevel.subjects.includes("Early years")){
-      bursary = Object.assign(bursaryLevel, bursary)
-      bursary.subject = "Early years"
-      bursary.tiersApply = bursaryLevel?.tiersApply || false
-      bursaryMatch = true
+    else if (exports.routeIsEarlyYears(route) && financialSupportLevel.subjects.includes("Early years")){
+      financialSupport = Object.assign(financialSupportLevel, financialSupport)
+      financialSupport.subject = "Early years"
+      financialSupport.tiersApply = financialSupportLevel?.tiersApply || false
+      financialSupportMatch = true
       return
     }
   })
 
-  let output = bursaryMatch ? bursary : false
+  let output = financialSupportMatch ? financialSupport : false
 
   return output
 }
 
-// Look up available bursary for the current record
-exports.getBursary = record => {
+// Look up available financialSupport for the current record
+exports.getFinancialSupport = record => {
   if (!record) return false
 
-  // Allocation subject may be falsy. For some routes this will mean we can’t calulate the bursary
+  // Allocation subject may be falsy. For some routes this will mean we can’t calulate the financialSupport
   // for Early years, it doesn't matter
   let allocationSubject = exports.getAllocationSubject(record) 
-  return exports.getBursaryByRouteAndSubject(record.route, allocationSubject)
+  return exports.getFinancialSupportByRouteAndSubject(record.route, allocationSubject)
 }
 
-// Get bursary value eg, 24000
-exports.getBursaryValue = record => {
-  return exports.getBursary(record).value || false
+// Get financialSupport value eg, 24000
+exports.getFinancialSupportValue = record => {
+  return exports.getFinancialSupport(record).value || false
 }
 
 // Get scholarship value, eg 26000
 exports.getScholarshipValue = record => {
-  return exports.getBursary(record).scholarshipValue || false
+  return exports.getFinancialSupport(record).scholarshipValue || false
 }
 
 // Some routes *never* have bursaries
-exports.routeHasBursaries = route => {
+exports.routeHasFinancialSupport = route => {
   if (!route) return false
-  return trainingRoutes[route]?.bursariesAvailable || false
+  return trainingRoutes[route]?.financialSupportAvailable || false
 }
 
 // Check whether bursaries are available for a given route chosen course
-exports.bursariesApply = (record) => {
-  let bursary = exports.getBursary(record)
-  if (bursary) return true
+exports.financialSupportApplies = (record) => {
+  let financialSupport = exports.getFinancialSupport(record)
+  if (financialSupport) return true
   else return false
 }
 
 // Check whether scholarships are available for a given route chosen course
 exports.scholarshipsApply = (record) => {
-  let bursary = exports.getBursary(record)
-  if (bursary?.scholarshipValue) return true
+  let financialSupport = exports.getFinancialSupport(record)
+  if (financialSupport?.scholarshipValue) return true
   else return false
 }
 
 // Can only start funding section if we know bursaries aren’t a thing or if they are a thing and we
 // have the necessary course information to know if bursaries apply or not
 exports.canStartFundingSection = record => {
-  if (!exports.routeHasBursaries(record?.route)) return true
+  if (!exports.routeHasFinancialSupport(record?.route)) return true
   // Early years routes with bursaries need no extra info
   else if (exports.isEarlyYears(record)) return true
   // Other routes need course details to start bursaries

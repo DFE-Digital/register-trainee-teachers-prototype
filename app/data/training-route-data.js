@@ -19,7 +19,6 @@ let applyRoutes = [
 let publishRoutes = [
   'Teaching apprenticeship (postgrad)',
   'Provider-led (postgrad)',
-  'Provider-led (undergrad)',
   'School direct (salaried)',
   'School direct (fee funded)',
 ]

@@ -13,7 +13,7 @@ module.exports = (params) => {
       location,
       startMonth,
       duration,
-      id: faker.random.uuid()
+      id: faker.datatype.uuid()
     }
   }
 

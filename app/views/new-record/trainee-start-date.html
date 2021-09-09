@@ -1,4 +1,4 @@
-{% extends "_templates/_record-form.html" %}
+{% extends "_templates/_new-record.html" %}
 
 {% set traineeStartDate = data.record.trainingDetails.commencementDate or false %}
 
@@ -16,10 +16,8 @@
   {% endif %}
 {% endif %}
 
-{# {% set formAction = "./trainee-start-date/confirm" | addReferrer(referrer) %} #}
+{% set formAction = "./save-with-date" | addReferrer(referrer) %}
 
 {% block formContent %}
   {% include "_includes/forms/training-details/trainee-start-date.html" %}
 {% endblock %}
-
-

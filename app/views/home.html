@@ -62,7 +62,7 @@
                 {% set searchStatus = "EYTS recommended&filterStatus=QTS recommended" %}
                 {% set recordCount = records | where("status", ["EYTS recommended", "QTS recommended"]) | length %}
                 {% set statusString = "Qualification recommended" %}
-              {% elif status == "Awarded" %}
+              {% elseif status == "Awarded" %}
                 {% set searchStatus = "EYTS awarded&filterStatus=QTS awarded" %}
                 {% set recordCount = records | where("status", ["EYTS awarded", "QTS awarded"]) | length %}
                 {% set statusString = "Qualification awarded" %}

@@ -32,6 +32,14 @@ module.exports = (params) => {
   if (statusesWhereTraineesMustHaveStarted.includes(params?.status)){
     traineeStarted = "true"
   }
+  else if (params?.status == "Draft") {
+    traineeStarted = "false"
+  }
+  // Course that haven’t started, don’t get a start date
+  else if (params?.courseDetails?.startDate && moment(params?.courseDetails?.startDate).isAfter()) {
+    traineeStarted = "false"
+    console.log(params?.courseDetails?.startDate)
+  }
   else {
     traineeStarted = params?.traineeStarted || weighted.select({
       "true": 0.8, // Most students should have commencement dates

@@ -8,10 +8,10 @@ module.exports = (params, application) => {
   
   const item = (faker) => {
     let subject = faker.helpers.randomize(degreeData().subjects)
-    const predicted = faker.random.boolean()
+    const predicted = faker.datatype.boolean()
     const endDate = faker.helpers.randomize(['2020','2019','2018','2017','2016','2015'])
     const startDate = (parseInt(endDate) - 4).toString()
-    const id = faker.random.uuid()
+    const id = faker.datatype.uuid()
     const sectionIsComplete = (params?.degree?.status == "Completed")
     const invalidAllowed = (params?.invalidAllowed === false) ? false : true
 

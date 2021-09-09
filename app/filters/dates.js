@@ -267,9 +267,15 @@ filters.isInLast = (date, count, units) => {
   return moment(date).isAfter(compareDate)
 }
 
-// Check if a date is in the past
+/*
+  ====================================================================
+  isInPast
+  --------------------------------------------------------------------
+  Check if a date is in the past
+  ====================================================================
+*/
 
-// Usage: {{ date | isInPast() }} // true
+// Usage: {{ date | isInPast }} // true
 filters.isInPast = (date) => {
   // Convert to date Object if date is an array (as provided by design system date component)
   if (_.isArray(date)){
@@ -277,6 +283,23 @@ filters.isInPast = (date) => {
   }
   // Compare the end of day so that checks for today’s date don’t return true
   return moment(date).endOf('day').isBefore()
+}
+
+/*
+  ====================================================================
+  isInFuture
+  --------------------------------------------------------------------
+  Check if a date is in the future
+  ====================================================================
+*/
+
+// Usage: {{ date | isInFuture }} // true
+filters.isInFuture = (date) => {
+  // Convert to date Object if date is an array (as provided by design system date component)
+  if (_.isArray(date)){
+    date = filters.arrayToDateObject(date)
+  }
+  return moment(date).isAfter()
 }
 
 // Expose moment as a filter

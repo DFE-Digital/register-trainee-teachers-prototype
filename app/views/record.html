@@ -15,6 +15,11 @@
 
 {% set recordPath = "/record/" + record.id %}
 
+{% set courseNotStartedMessage %}
+  The trainee’s {{ "ITT" if record | courseDatesAreAmbiguous else "course" }} starts on {{ record.courseDetails.startDate | govukDate }}
+{% endset %}
+
+
 <div class="govuk-grid-row">
 
   <div class="govuk-grid-column-full">
@@ -23,7 +28,12 @@
     {% if (record.status | getCanDefer) or (record.status | getCanReinstate) %}
       <div class="record-actions">
         {% if record.status | getCanRecommendForQts %}
-          {% if record | hasOutstandingActions %}
+          {% if record.courseDetails.startDate | isInFuture %}
+            {{ govukInsetText({
+            text: courseNotStartedMessage,
+            classes: "govuk-!-margin-0"
+          }) }}
+          {% elseif record | hasOutstandingActions %}
             {{ govukInsetText({
               text: "This trainee record requires additional details",
               classes: "govuk-!-margin-0"
@@ -49,7 +59,8 @@
 
         <div class="record-actions__links">
           {% if record.status | getCanDefer %}
-            <p class="govuk-body govuk-!-margin-bottom-0"><a href="{{referrer}}/defer" class="govuk-link--no-visited-state">Defer</a> or <a href="{{referrer}}/withdraw" class="govuk-link--no-visited-state">withdraw</a> this trainee</p>
+            <p class="govuk-body govuk-!-margin-bottom-0">
+            <a href="{{referrer}}/defer" class="govuk-link--no-visited-state">Defer</a> or <a href="{{referrer}}/withdraw" class="govuk-link--no-visited-state">withdraw</a> this trainee</p>
           {% elseif record.status | getCanReinstate %}
             <p class="govuk-body govuk-!-margin-bottom-0"><a href="{{referrer}}/reinstate" class="govuk-link--no-visited-state">Reinstate</a> or <a href="{{referrer}}/withdraw" class="govuk-link--no-visited-state">withdraw</a> this trainee</p>
           {% endif %}

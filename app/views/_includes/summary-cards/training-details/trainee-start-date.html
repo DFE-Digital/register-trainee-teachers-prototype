@@ -1,13 +1,14 @@
 {% set traineeStarted = record.trainingDetails.traineeStarted | falsify %}
 
-{% set commencementDateLabel %}
-  {% if traineeStarted %}
-    {{(record.trainingDetails.commencementDate | govukDate) or 'Not provided'}}
+{% set traineeStartDate %}
+  {% if record.trainingDetails.commencementDate %}
+    {{ record.trainingDetails.commencementDate | govukDate }}
+  {% elseif record.trainingDetails.traineeStarted == "trainee-not-started" %}
+    Trainee has not started yet
   {% else %}
-    Trainee yet to start course 
+    Not provided
   {% endif %}
 {% endset %}
-
 
 {% set recordBaseRows = [
   {
@@ -15,7 +16,7 @@
       text: "Trainee’s start date"
     },
     value: {
-      text: commencementDateLabel or "Not provided"
+      text: traineeStartDate
     },
     actions: {
       items: [
@@ -27,8 +28,7 @@
       ]
     } if canAmend
   }
-  ] %}
-
+] %}
 
 {% set recordBaseHtml %}
   {{ govukSummaryList({
@@ -36,12 +36,8 @@
   }) }}
 {% endset %}
 
-
-
-
 {{ appSummaryCard({
   classes: "govuk-!-margin-bottom-6",
   titleText: "Record",
   html: recordBaseHtml
 }) }}
-

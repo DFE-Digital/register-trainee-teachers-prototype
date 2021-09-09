@@ -30,7 +30,7 @@ const generateCourseCode = () => {
   let chars = 'ABCDEFGHGKLMNPQRSTWXYZ' // without I or O
   let code = chars.charAt(Math.floor(Math.random() * chars.length));
   for (var i = 0; i < 3; i++){
-    code += faker.random.number({
+    code += faker.datatype.number({
       'min': 0,
       'max': 9
     })
@@ -355,7 +355,7 @@ module.exports = (params) => {
 
     const code = generateCourseCode() // G568
 
-    const id = faker.random.uuid()
+    const id = faker.datatype.uuid()
 
     // English with biology
     let courseNameShort = `${utils.prettifySubjects(publishCourseSubjects)}`

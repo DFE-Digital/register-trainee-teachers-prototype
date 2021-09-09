@@ -68,7 +68,7 @@ module.exports = () => {
 
     disabledAnswer = faker.helpers.randomize(["Yes", "No", "Not provided"])
 
-    disabilityCount = faker.random.number(1, 3); // up to 3 disabilities
+    disabilityCount = faker.datatype.number(1, 3); // up to 3 disabilities
 
     let disabilityChoices = [
       "Blind",

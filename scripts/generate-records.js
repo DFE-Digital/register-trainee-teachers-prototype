@@ -84,7 +84,7 @@ const generateFakeApplication = (params = {}) => {
   }
 
   application.diversity       = (params.diversity === null) ? undefined : { ...generateDiversity(), ...params.diversity }
-  application.id              = params.id || faker.random.uuid()
+  application.id              = params.id || faker.datatype.uuid()
   application.personalDetails = (params.personalDetails === null) ? undefined : { ...generatePersonalDetails(), ...params.personalDetails }
   application.provider        = params.provider || faker.helpers.randomize(providers)
   application.route           = (params.route === null) ? undefined : (params.route || getRandomRoute(params))
@@ -216,10 +216,10 @@ const generateFakeApplicationsForProvider = (provider, year, count) => {
       count = 30 
     }
     targetCounts = {
-      draft: 0.5,
-      applyEnrolled: 0.5,
-      pendingTrn: 0.00,
-      trnReceived: 0.0,
+      draft: 0.45,
+      applyEnrolled: 0.45,
+      pendingTrn: 0.05,
+      trnReceived: 0.05,
       qualificationRecommended: 0.00,
       qualificationAwarded: 0.00,
       deferred: 0.00,

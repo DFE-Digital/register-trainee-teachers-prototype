@@ -2,6 +2,7 @@ const faker = require('faker')
 const path = require('path')
 const moment = require('moment')
 const filters = require('./../filters.js')()
+const dates = require('./../filters/dates.js').filters
 const _ = require('lodash')
 const utils = require('./../lib/utils')
 const trainingRouteData = require('./../data/training-route-data')
@@ -227,15 +228,50 @@ module.exports = router => {
       else returnQuery = "?errors=true"
       res.redirect(`/new-record/check-record${returnQuery}`)
     }
+    // if the ITT start date is in the past ask for the trainee’s start date
+    else if (dates.isInPast(record?.courseDetails?.startDate)){
+      res.redirect('/new-record/trainee-start-date')
+    }
     else {
       utils.registerForTRN(record)
       utils.deleteTempData(data)
       utils.updateRecord(data, record, false)
       // Temporarily store the id so that we can look it up on the submitted page
-      req.session.data.submittedRecordId = record.id 
+      req.session.data.submittedRecordId = record.id
       res.redirect('/new-record/submitted')
     }
   })
 
+  // Submit for TRN after setting start date
+  router.post('/new-record/save-with-date', (req, res) => {
+    let data = req.session.data
+    let record = data.record
+    let recordPath = utils.getRecordPath(req)
+    let referrer = utils.getReferrer(req.query.referrer)
+    let courseStartDate = record?.courseDetails?.startDate
+    let traineeStarted = record?.trainingDetails?.traineeStarted
+    let commencementDate = record?.trainingDetails?.commencementDate
+    
+    if ((!traineeStarted) || (traineeStarted == 'started-itt-later' && !commencementDate)) {
+      res.redirect('/new-record/trainee-start-date')
+    } else {
+      if (traineeStarted == 'started-itt-on-time') {
+        record.trainingDetails.commencementDate = courseStartDate
+      } else if (traineeStarted == 'trainee-not-started') {
+        delete record?.trainingDetails?.commencementDate
+      }
+      delete record?.trainingDetails?.traineeStarted
+
+      // store the record
+      utils.registerForTRN(record)
+      utils.deleteTempData(data)
+      utils.updateRecord(data, record, false)
+
+      // Temporarily store the id so that we can look it up on the submitted page
+      req.session.data.submittedRecordId = record.id
+
+      res.redirect(`/new-record/submitted`)
+    }
+  })
 
 }

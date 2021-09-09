@@ -10,6 +10,7 @@ const trainingRouteData = require('./../data/training-route-data')
 const trainingRoutes = trainingRouteData.trainingRoutes
 const arrayFilters = require('./../filters/arrays.js').filters
 const ittSubjects = require('./../data/itt-subjects')
+const dates = require('./../filters/dates.js').filters
 
 // -------------------------------------------------------------------
 // General
@@ -321,21 +322,6 @@ exports.canStartFundingSection = record => {
   else {
     let courseDetailsComplete = exports.sectionIsComplete(record.courseDetails)
     return courseDetailsComplete
-  }
-}
-
-// This whole filter is poor and should probably be removed later.
-exports.getSectionName = (record, section) => {
-  if (section == 'trainingDetails'){
-    if (record.status && !exports.isDraft(record)){
-      return "Schools"
-    }
-    else {
-      if (exports.requiresField(record, ['leadSchool', 'employingSchool', 'region'])){
-        return "Training details"
-      }
-      else return "Trainee start date and ID"
-    }
   }
 }
 
@@ -816,8 +802,9 @@ exports.hasOutstandingActions = function(record, data = false) {
   
   let hasOutstandingActions = false
   let traineeStarted = record?.trainingDetails?.commencementDate
+  let ittStartDate = moment(record?.courseDetails?.startDate)
 
-  if (!traineeStarted) {
+  if (!traineeStarted && dates.isInPast(record?.courseDetails?.startDate)) {
     hasOutstandingActions = true
   }
   else if (exports.needsPlacementDetails(record, data)) {
@@ -1209,7 +1196,7 @@ exports.updateRecord = (data, newRecord, timelineMessage) => {
 
   // Must be a new record
   if (!newRecord.id){
-    newRecord.id = faker.random.uuid()
+    newRecord.id = faker.datatype.uuid()
     records.push(newRecord)
   }
   // Is an existing record
@@ -1451,7 +1438,7 @@ exports.markSummaryRow = function(row, type) {
   row.value.html = exports.stripPlaceholders(value) // strip any placeholder tags
 
   // Generate an id so we can anchor to this row
-  let id = `summary-list--row-invalid--${faker.random.uuid()}`
+  let id = `summary-list--row-invalid--${faker.datatype.uuid()}`
 
   let message, linkText, linkTextAppendHidden
 
@@ -1503,7 +1490,7 @@ exports.markInput = function(data, params){
   let valueCleaned = exports.stripPlaceholders(data.value) // strip any placeholder tags
 
   // Generate an id so we can anchor to this row
-  let id = data?.id || `app-input-invalid--${faker.random.uuid()}`
+  let id = data?.id || `app-input-invalid--${faker.datatype.uuid()}`
 
   let message
 

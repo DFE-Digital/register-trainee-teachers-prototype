@@ -215,10 +215,14 @@
 {% set traineeStarted = (record.trainingDetails.commencementDate | length > 1) or record.trainingDetails.traineeStarted | falsify %}
 
 {% set commencementDateLabel %}
-  {% if traineeStarted %}
-    {{(record.trainingDetails.commencementDate | govukDate) or 'Not provided'}}
+  {% if record.courseDetails.startDate | isInFuture %}
+    {{ "ITT has not started" if record | courseDatesAreAmbiguous else "Course has not started" }}
+  {% elseif record.trainingDetails.commencementDate %}
+    {{ record.trainingDetails.commencementDate | govukDate }}
+  {% elseif record.trainingDetails.traineeStarted == "trainee-not-started" %}
+    Trainee has not started yet
   {% else %}
-    Trainee yet to start course
+    Not provided
   {% endif %}
 {% endset %}
 
@@ -237,7 +241,7 @@
         visuallyHiddenText: "trainee’s start date"
       }
     ]
-  } if canAmend
+  } if canAmend and record.courseDetails.startDate | isInPast
 } %}
 
 {% set traineeProgressRows = [

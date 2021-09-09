@@ -95,9 +95,8 @@
   classes: "govuk-!-margin-bottom-8",
   items: [
     {
-      text: "Training details",
+      text: "Trainee ID",
       href: "training-details" | reviewIfInProgress(record.trainingDetails) | addReferrer(referrer),
-      hint: "Start date and trainee ID",
       id: "training-details",
       tag: {
         classes: record.trainingDetails | getStatusText | getStatusClass,

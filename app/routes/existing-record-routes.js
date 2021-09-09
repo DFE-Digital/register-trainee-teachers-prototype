@@ -20,7 +20,7 @@ module.exports = router => {
     else {
       if (newRecord.status == 'Pending TRN'){
         newRecord.status = 'TRN received'
-        newRecord.trn = faker.random.number({
+        newRecord.trn = faker.datatype.number({
           'min': 1000000,
           'max': 9999999
         })
@@ -333,5 +333,22 @@ module.exports = router => {
     }
   })
 
+  // trainee-details
+  router.post('/record/:uuid/trainee-start-date', function (req, res) {
+    let data = req.session.data
+    let record = data.record
+    let referrer = utils.getReferrer(req.query.referrer)
+    let courseStartDate = record?.courseDetails?.startDate
+    let traineeStarted = record?.trainingDetails?.traineeStarted
+    let commencementDate = record?.trainingDetails?.commencementDate
 
+    if (traineeStarted == "started-itt-on-time"){
+      record.trainingDetails.commencementDate = courseStartDate
+      delete record?.trainingDetails?.traineeStarted
+    }
+    else if (traineeStarted == "trainee-not-started"){ // If the answer was explicitly false.
+      delete record?.trainingDetails?.commencementDate
+    }
+    res.redirect(`/record/${req.params.uuid}/trainee-start-date/confirm${referrer}`)
+  })
 }

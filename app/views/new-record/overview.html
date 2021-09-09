@@ -130,7 +130,7 @@
     }
   } if record | requiresSection("courseDetails"),
   {
-    text: record | getSectionName("trainingDetails"),
+    text: "Trainee ID",
     href: "training-details" | reviewIfInProgress(record.trainingDetails),
     id: "training-details",
     tag: {

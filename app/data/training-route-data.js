@@ -584,7 +584,7 @@ module.exports = {
 
 /*
 Publish course age ranges 9/2021
-  * - those that existin DTTP*
+  * - those that exist in DTTP*
 
 Primary
   *"5_to_11"=>1373,*

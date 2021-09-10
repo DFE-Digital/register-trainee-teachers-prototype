@@ -535,12 +535,14 @@ let phases = {
     "hint": "ages 11 to 19",
     "ageRanges": [
       "11 to 16", // 26.42%
-      "11 to 19", // 13.8%
+      "11 to 18", // from Publish
+
     ],
     "otherAgeRanges": [
       "5 to 14",
       "7 to 11",
       "7 to 14",
+      "11 to 19", // 13.8% in dttp
       "14 to 19"
     ]
   }
@@ -579,3 +581,64 @@ module.exports = {
   nonPublishRoutes,
   applyReviewSections
 }
+
+/*
+Publish course age ranges 9/2021
+  * - those that existin DTTP*
+
+Primary
+  *"5_to_11"=>1373,*
+  *"3_to_7"=>316,*
+  *"3_to_11"=>185,*
+  *"7_to_11"=>50,*
+"4_to_11"=>45,
+  *"7_to_14"=>28,*
+  *"3_to_9"=>1,*
+"2_to_7"=>4,
+"2_to_11"=>1,
+
+
+Secondary
+  *"11_to_16"=>6520,*
+"11_to_18"=>3749,
+  *"14_to_19"=>292,*
+  *"11_to_19"=>55,*
+"13_to_18"=>7,
+"14_to_18"=>6,
+"9_to_13"=>2,
+"2_to_19"=>2,
+"3_to_16"=>1,
+"4_to_19"=>2,
+"5_to_18"=>1,
+"7_to_18"=>1,
+
+
+Age ranges DTTP has but no courses use
+3-8
+5-9
+5-14
+7-16
+9-14
+9-16
+
+
+
+Values to add in DTTP
+
+Primary
+4 - 11 (45)
+2 - 7 (4)
+2 - 11 (1)
+
+Secondary
+11 - 18 (3749)
+13 - 18 (7)
+14 - 18 (6)
+9 - 13 (2)
+2 - 19 (2)
+4 - 19 (2)
+3 - 16 (1)
+5 - 18 (1)
+7 - 18 (1)
+
+*/

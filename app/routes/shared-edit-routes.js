@@ -1060,8 +1060,8 @@ module.exports = router => {
     let record = data.record
     let recordPath = utils.getRecordPath(req)
     let referrer = utils.getReferrer(req.query.referrer)
-    if (utils.bursariesApply(record)){
-      res.redirect(`${recordPath}/funding/bursary${referrer}`)
+    if (utils.financialSupportApplies(record)){
+      res.redirect(`${recordPath}/funding/financial-support${referrer}`)
     }
     else {
       res.redirect(`${recordPath}/funding/confirm${referrer}`)
@@ -1070,7 +1070,7 @@ module.exports = router => {
 
   // Forward on to confirm
   // This route not really needed as we don't always catch errors like this
-  router.post(['/:recordtype/:uuid/funding/bursary','/:recordtype/funding/bursary'], function (req, res) {
+  router.post(['/:recordtype/:uuid/funding/financial-support','/:recordtype/funding/financial-support'], function (req, res) {
     let data = req.session.data
     let record = data.record
     let recordPath = utils.getRecordPath(req)
@@ -1078,7 +1078,7 @@ module.exports = router => {
 
     // No data
     if (!record?.funding?.source){
-      res.redirect(`${recordPath}/funding/bursary${referrer}`)
+      res.redirect(`${recordPath}/funding/financial-support${referrer}`)
     }
     else {
       res.redirect(`${recordPath}/funding/confirm${referrer}`)

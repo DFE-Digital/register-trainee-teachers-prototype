@@ -19,7 +19,6 @@ let applyRoutes = [
 let publishRoutes = [
   'Teaching apprenticeship (postgrad)',
   'Provider-led (postgrad)',
-  'Provider-led (undergrad)',
   'School direct (salaried)',
   'School direct (fee funded)',
 ]
@@ -81,7 +80,7 @@ let defaultRouteData = {
     "Now teach",
     "Transition to teach"
   ],
-  bursariesAvailable: false
+  financialSupportAvailable: false
 }
 
 // Data for each route
@@ -97,7 +96,7 @@ let baseRouteData = {
       'degree',
       'funding'
     ],
-    bursariesAvailable: false
+    financialSupportAvailable: false
   },
   "Provider-led (undergrad)": {
     defaultEnabled: true,
@@ -118,9 +117,10 @@ let baseRouteData = {
       "Now teach",
       "Transition to teach"
     ],
-    bursariesAvailable: true,
-    bursaries: [
+    financialSupportAvailable: true,
+    financialSupport: [
       {
+        type: "bursary",
         subjects: [
           "Mathematics",
           "Physics"
@@ -141,9 +141,10 @@ let baseRouteData = {
       "Now teach",
       "Transition to teach"
     ],
-    bursariesAvailable: true,
-    bursaries: [
+    financialSupportAvailable: true,
+    financialSupport: [
       {
+        type: "bursary",
         subjects: [
           "Chemistry",
           "Computing",
@@ -154,6 +155,7 @@ let baseRouteData = {
         scholarshipValue: "26000"
       },
       {
+        type: "bursary",
         subjects: [
           "Languages",
           "Classics"
@@ -161,6 +163,7 @@ let baseRouteData = {
         value: "10000"
       },
       {
+        type: "bursary",
         subjects: [
           "Biology"
           ],
@@ -191,7 +194,33 @@ let baseRouteData = {
       "Now teach",
       "Transition to teach"
     ],
-    bursariesAvailable: false
+    financialSupportAvailable: true,
+    financialSupport: [
+      {
+        type: "grant",
+        subjects: [
+          "Chemistry",
+          "Computing",
+          "Mathematics",
+          "Physics"
+          ],
+        value: "24000"
+      },
+      {
+        type: "grant",
+        subjects: [
+          "Languages",
+          "Classics"
+          ],
+        value: "10000"
+      },
+      {
+        type: "grant",
+        subjects: [
+          "Biology"
+          ],
+        value: "7000"
+      }]
   },
   "School direct (fee funded)": {
     defaultEnabled: true,
@@ -216,9 +245,10 @@ let baseRouteData = {
       "Now teach",
       "Transition to teach"
     ],
-    bursariesAvailable: true,
-    bursaries: [
+    financialSupportAvailable: true,
+    financialSupport: [
       {
+        type: "bursary",
         subjects: [
           "Chemistry",
           "Computing",
@@ -229,6 +259,7 @@ let baseRouteData = {
         scholarshipValue: "26000"
       },
       {
+        type: "bursary",
         subjects: [
           "Languages",
           "Classics"
@@ -236,6 +267,7 @@ let baseRouteData = {
         value: "10000"
       },
       {
+        type: "bursary",
         subjects: [
           "Biology"
           ],
@@ -267,7 +299,7 @@ let baseRouteData = {
       "Now teach",
       "Transition to teach"
     ],
-    bursariesAvailable: false,
+    financialSupportAvailable: false,
     courseDatesAreAmgiguous: true
   },
   "Opt-in (undergrad)": {
@@ -289,9 +321,10 @@ let baseRouteData = {
       "Now teach",
       "Transition to teach"
     ],
-    bursariesAvailable: true,
-    bursaries: [
+    financialSupportAvailable: true,
+    financialSupport: [
       {
+        type: "bursary",
         subjects: [
           "Languages",
           "Computing",
@@ -323,9 +356,10 @@ let baseRouteData = {
       "EYTS"
     ],
     qualificationsSummary: "EYTS full time",
-    bursariesAvailable: true,
-    bursaries: [
+    financialSupportAvailable: true,
+    financialSupport: [
       {
+        type: "grant",
         subjects: [
           "Early years"
           ],
@@ -352,9 +386,10 @@ let baseRouteData = {
       "EYTS"
     ],
     qualificationsSummary: "EYTS full time",
-    bursariesAvailable: true,
-    bursaries: [
+    financialSupportAvailable: true,
+    financialSupport: [
       {
+        type: "bursary",
         subjects: [
           "Early years"
           ],
@@ -395,7 +430,7 @@ let baseRouteData = {
       "EYTS"
     ],
     qualificationsSummary: "EYTS full time",
-    bursariesAvailable: false
+    financialSupportAvailable: false
   },
   "Early years (undergrad)": {
     defaultEnabled: true,
@@ -416,7 +451,7 @@ let baseRouteData = {
       "EYTS"
     ],
     qualificationsSummary: "EYTS full time",
-    bursariesAvailable: false,
+    financialSupportAvailable: false,
     courseDatesAreAmgiguous: true
   },
   "High potential initial teacher training (HPITT)": {
@@ -431,7 +466,7 @@ let baseRouteData = {
       'degree',
       'funding'
     ],
-    bursariesAvailable: false,
+    financialSupportAvailable: false,
     fields: [
       "region"
     ]
@@ -447,11 +482,11 @@ Object.keys(allRoutes).forEach(routeName => {
   routeData.name = routeName
 
   // Expand 'Languages' in to each individual language
-  if (routeData.bursaries){
-    routeData.bursaries.forEach(bursaryLevel => {
-      if (bursaryLevel.subjects.includes('Languages')){
-        _.pull(bursaryLevel.subjects, 'Languages')
-        bursaryLevel.subjects = bursaryLevel.subjects.concat(modernLanguages)
+  if (routeData.financialSupport){
+    routeData.financialSupport.forEach(financialSupportLevel => {
+      if (financialSupportLevel.subjects.includes('Languages')){
+        _.pull(financialSupportLevel.subjects, 'Languages')
+        financialSupportLevel.subjects = financialSupportLevel.subjects.concat(modernLanguages)
       }
     })
   }
@@ -500,12 +535,14 @@ let phases = {
     "hint": "ages 11 to 19",
     "ageRanges": [
       "11 to 16", // 26.42%
-      "11 to 19", // 13.8%
+      "11 to 18", // from Publish
+
     ],
     "otherAgeRanges": [
       "5 to 14",
       "7 to 11",
       "7 to 14",
+      "11 to 19", // 13.8% in dttp
       "14 to 19"
     ]
   }
@@ -544,3 +581,64 @@ module.exports = {
   nonPublishRoutes,
   applyReviewSections
 }
+
+/*
+Publish course age ranges 9/2021
+  * - those that exist in DTTP*
+
+Primary
+  *"5_to_11"=>1373,*
+  *"3_to_7"=>316,*
+  *"3_to_11"=>185,*
+  *"7_to_11"=>50,*
+"4_to_11"=>45,
+  *"7_to_14"=>28,*
+  *"3_to_9"=>1,*
+"2_to_7"=>4,
+"2_to_11"=>1,
+
+
+Secondary
+  *"11_to_16"=>6520,*
+"11_to_18"=>3749,
+  *"14_to_19"=>292,*
+  *"11_to_19"=>55,*
+"13_to_18"=>7,
+"14_to_18"=>6,
+"9_to_13"=>2,
+"2_to_19"=>2,
+"3_to_16"=>1,
+"4_to_19"=>2,
+"5_to_18"=>1,
+"7_to_18"=>1,
+
+
+Age ranges DTTP has but no courses use
+3-8
+5-9
+5-14
+7-16
+9-14
+9-16
+
+
+
+Values to add in DTTP
+
+Primary
+4 - 11 (45)
+2 - 7 (4)
+2 - 11 (1)
+
+Secondary
+11 - 18 (3749)
+13 - 18 (7)
+14 - 18 (6)
+9 - 13 (2)
+2 - 19 (2)
+4 - 19 (2)
+3 - 16 (1)
+5 - 18 (1)
+7 - 18 (1)
+
+*/

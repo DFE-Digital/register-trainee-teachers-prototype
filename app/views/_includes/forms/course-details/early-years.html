@@ -4,25 +4,31 @@
 
 <input name='record[courseDetails][level]' type="hidden" id="subject" value="Early years">
 
-{{ govukRadios({
-  fieldset: {
-    legend: {
-      text: "Full time or part time?",
-      classes: "govuk-fieldset__legend--s"
-    }
-  },
-  hint: {
-    text: ""
-  },
-  items: [
-    {
-      text: "Full time"
+
+{% if record | requiresField("studyMode") %}
+
+  {{ govukRadios({
+    fieldset: {
+      legend: {
+        text: "Full time or part time?",
+        classes: "govuk-fieldset__legend--s"
+      }
     },
-    {
-      text: "Part time"
-    }
-  ]
-} | decorateAttributes(record, "record.courseDetails.studyMode")) }}
+    hint: {
+      text: ""
+    },
+    items: [
+      {
+        text: "Full time"
+      },
+      {
+        text: "Part time"
+      }
+    ]
+  } | decorateAttributes(record, "record.courseDetails.studyMode")) }}
+
+{% endif %}
+
 
 {% set programmeStartDateArray = record.courseDetails.startDate | toDateArray %}
 

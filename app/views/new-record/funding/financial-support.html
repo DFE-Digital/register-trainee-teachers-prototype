@@ -1,0 +1,25 @@
+{% extends "_templates/_new-record.html" %}
+
+{% set bursary = data.record | getFinancialSupport %}
+{% set scholarshipsApply = data.record | scholarshipsApply %}
+{% set pageHeading = "Funding" %}
+
+{% if bursary.type == 'grant' %}
+  {% set pageHeading = "Grant funding" %}
+{% elseif not scholarshipsApply %}
+  {% set pageHeading = "Bursary funding" %}
+{% endif %}
+
+{# {% set formAction = "./confirm" | addReferrer(referrer) %} #}
+
+{% block formContent %}
+
+  {% if bursary.type == "grant" %}
+    {% include "_includes/forms/funding/grant.html" %}
+  {% elseif record | isEarlyYears %}
+    {% include "_includes/forms/funding/early-years.html" %}
+  {% else %}
+    {% include "_includes/forms/funding/bursary-and-scholarship.html" %}
+  {% endif %}
+
+{% endblock %}

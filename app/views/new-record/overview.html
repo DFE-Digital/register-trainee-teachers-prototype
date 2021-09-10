@@ -33,7 +33,7 @@
   classes: "govuk-!-margin-bottom-8",
   items: [{
     text: "Personal details",
-    href: "personal-details" | reviewIfInProgress(record.personalDetails),
+    href: "personal-details/edit" | reviewIfInProgress(record.personalDetails, "personal-details"),
     id: "personal-details",
     tag: {
       classes: record.personalDetails | getStatusText | getStatusClass,

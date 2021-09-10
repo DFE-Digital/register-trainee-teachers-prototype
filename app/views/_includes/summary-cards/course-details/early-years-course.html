@@ -20,7 +20,7 @@
         }
       ]
     } if canAmend and false
-  } if record.status !="Draft",
+  } if record | isNonDraft,
   {
     key: {
       text: "Full time or part time"

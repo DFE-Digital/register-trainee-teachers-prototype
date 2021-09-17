@@ -12,7 +12,6 @@
 
 
 {% block formContent %}
-
 {# Rendered from /new-record/overview #}
 {% set referrer = currentPageUrl %}
 
@@ -50,7 +49,9 @@
 
 {% set courseMissingSpecialisms = record.courseDetails | subjectsAreIncomplete %}
 
-{% set courseDetailsHref = "course-details/publish-minimal" if courseMissingSpecialisms else "course-details/confirm" %}
+{% set courseNeedsToBeConfirmed = record.courseDetails | courseNeedsToBeConfirmed %}
+
+{% set courseDetailsHref = "course-details/confirm-course" if courseNeedsToBeConfirmed else "course-details/confirm" %}
 
 {{ appTaskList({
   classes: "govuk-!-margin-bottom-8",

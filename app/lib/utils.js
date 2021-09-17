@@ -216,6 +216,36 @@ exports.setCourseDatesIfPresent = courseDetails => {
   return courseDetails
 }
 
+// Decision tree of conditional pages for Publish courses
+exports.getNextPublishCourseDetailsUrl = (record, recordPath, referrer) => {
+
+  // Unsure why there's two filters in use here. But it seems to work so not touching for now
+  let hasUnmappedPublishSubjects = exports.hasUnmappedPublishSubjects(record.courseDetails) || exports.subjectsAreIncomplete(record.courseDetails)
+
+  let isMissingStudyMode = exports.needsStudyMode(record)
+  let isMissingDates = exports.needsCourseDates(record)
+  let isAllocated = exports.hasAllocatedPlaces(record)
+
+  if (hasUnmappedPublishSubjects){
+    return `${recordPath}/course-details/choose-specialisms${referrer}`
+  }
+  // Courses can be dual study mode. If so, ask which this trainee is
+  else if (isMissingStudyMode){
+    return `${recordPath}/course-details/study-mode${referrer}`
+  }
+  // Backfill course dates
+  else if (isMissingDates){
+    return `${recordPath}/course-details/dates${referrer}`
+  }
+  else if (isAllocated) {
+    // After /allocated-place the journey will match other course-details routes
+    return `${recordPath}/course-details/allocated-place${referrer}`
+  }
+  else {
+    return `${recordPath}/course-details/confirm${referrer}`
+  }
+}
+
 // -------------------------------------------------------------------
 // Funding - initiatives and bursaries
 // -------------------------------------------------------------------
@@ -727,6 +757,11 @@ exports.hasUnmappedPublishSubjects = course => {
 exports.subjectsAreIncomplete = courseDetails => {
   if (!courseDetails?.subjects) return true
   return Object.values(courseDetails.subjects).some(subject => subject == null)
+}
+
+exports.courseNeedsToBeConfirmed = courseDetails => {
+  if (exports.sectionIsComplete(courseDetails)) return false
+  else return (Boolean(courseDetails.needsConfirming))
 }
 
 // -------------------------------------------------------------------

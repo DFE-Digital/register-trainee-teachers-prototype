@@ -144,6 +144,11 @@ module.exports = (params, application) => {
     // Must use Object.assign or we could accidentally edit the source course
     courseDetails = Object.assign({}, faker.helpers.randomize(limitedCourses))
 
+    // Set a one-time flag to confirm the course
+    if (isApplyDraft && !sectionIsComplete){
+      courseDetails.needsConfirming = true
+    }
+
     // For each Publish subject, set course subjects where they’re mappable.
     // Not all subjects are mappable. Users will use UI to map them. Where we're pretending the data
     // is complete we pick a random subject - as if the user had preivously picked that.

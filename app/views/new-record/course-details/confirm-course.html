@@ -1,0 +1,15 @@
+{% extends "_templates/_new-record.html" %}
+
+{% set pageHeading = "Confirm training course" %}
+{# {% set pageHeading = "Is this the correct course?" %} #}
+{# {% set backLink = './../overview' %}
+{% set backText = "Back to draft record" %} #}
+
+
+{# {% set formAction = "./../overview" | orReferrer(referrer) %} #}
+
+{% block formContent %}
+  {% include "_includes/forms/course-details/confirm-course.html" %}
+{% endblock %}
+
+

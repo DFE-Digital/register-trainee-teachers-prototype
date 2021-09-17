@@ -1,0 +1,17 @@
+{% extends "_templates/_new-record.html" %}
+
+{% if data.record | courseDatesAreAmbiguous %}
+  {% set pageHeading = "ITT start date" %}
+{% else %}
+  {% set pageHeading = "Course start date" %}
+{% endif %}
+
+{% set pageHeading = "Course dates for " + data.record.courseDetails.courseNameLong %}
+
+
+{# {% set formAction = "./confirm" %} #}
+
+{% block formContent %}
+  {% include "_includes/forms/course-details/dates.html" %}
+{% endblock %}
+

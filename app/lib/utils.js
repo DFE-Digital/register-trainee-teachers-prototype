@@ -193,6 +193,29 @@ exports.setCourseDefaults = record => {
   return record
 }
 
+
+// Copy relevant Publish course dates to trainee if they’re set
+// Dates depend on what study mode the trainee is on
+exports.setCourseDatesIfPresent = courseDetails => {
+
+  // If there's already start and end dates, do nothing
+  if (courseDetails.startDate && courseDetails.endDate) return courseDetails
+
+  if (exports.isFullTime(courseDetails)){
+    // console.log("Setting full time course dates")
+    courseDetails.startDate = courseDetails.startDate || courseDetails.startDateFullTime
+    courseDetails.endDate = courseDetails.endDate || courseDetails.endDateFullTime
+  }
+
+  else if (exports.isPartTime(courseDetails)){
+    // console.log("Setting part time course dates")
+    courseDetails.startDate = courseDetails.startDate || courseDetails.startDatePartTime
+    courseDetails.endDate = courseDetails.endDate || courseDetails.endDatePartTime
+  }
+
+  return courseDetails
+}
+
 // -------------------------------------------------------------------
 // Funding - initiatives and bursaries
 // -------------------------------------------------------------------
@@ -371,6 +394,55 @@ exports.getProviderCourses = function(courses, provider, route=false, data=false
   let limitedCourses = filteredCourses.slice(0, data.settings.courseLimit)
   let sortedCourses = exports.sortPublishCourses(limitedCourses)
   return sortedCourses
+}
+
+// Look up a course by the Publish Code
+exports.getCourseByCode = function(code, data=false){
+  data = data || this?.ctx?.data || false
+  let foundCourse
+  // Iterate through each provider and then through each of their courses
+  // This code is a bit awkward. It relies on the first find() breaking as soon as a provider
+  // is found
+  Object.keys(data.courses).find( provider => {
+    foundCourse = data.courses[provider].courses.find(course => course.code == code)
+    return foundCourse
+  })
+  return foundCourse
+}
+
+exports.updatePublishCourse = function(course, data=false){
+  data = data || this?.ctx?.data || false
+
+  // Iterate through each provider and then through each of their courses
+  let foundCourse
+  Object.keys(data.courses).find( provider => {
+
+    foundcourse = data.courses[provider].courses.find(_course => _course.code == course.code)
+    return foundCourse
+
+  })
+
+  foundCourse = course
+}
+
+// Look up a Publish course from the trainee record
+exports.getTraineePublishCourse = function(record, data=false){
+  data = data || this?.ctx?.data || false
+  if (!record.courseDetails || !record.courseDetails.code) return false
+  else return exports.getCourseByCode(record.courseDetails.code, data)
+}
+
+
+exports.updatePublishCourseDates = (courseDetails, data) => {
+  let theCourse = exports.getCourseByCode(courseDetails?.code, data)
+
+  theCourse.startDateFullTime = theCourse.startDateFullTime || courseDetails?.startDateFullTime || undefined
+  theCourse.startDatePartTime = theCourse.startDatePartTime || courseDetails?.startDatePartTime || undefined
+  theCourse.endDateFullTime = theCourse.endDateFullTime || courseDetails?.endDateFullTime || undefined
+  theCourse.endDatePartTime = theCourse.endDatePartTime || courseDetails?.endDatePartTime || undefined
+
+  exports.updatePublishCourse(theCourse, data)
+
 }
 
 // Check if the selected provider offers publish courses for the selected route
@@ -725,8 +797,7 @@ exports.routeIsEarlyYears = route => {
   return route && route.includes("Early years")
 }
 
-// TODO: this might not be reliable - need to check all age ranges
-// map to one of the phases
+
 exports.isPrimary = record => {
   return exports.getCoursePhase(record) == "Primary"
 }
@@ -735,6 +806,23 @@ exports.isPrimary = record => {
 // map to one of the phases
 exports.isSecondary = record => {
   return exports.getCoursePhase(record) == "Secondary"
+}
+
+// Get study mode from record or courseDetails
+exports.getStudyMode = data => {
+  return data?.courseDetails?.studyMode || data?.studyMode
+}
+
+exports.isFullTime = data => {
+  return exports.getStudyMode(data) == "Full time"
+}
+
+exports.isPartTime = data => {
+  return exports.getStudyMode(data) == "Part time"
+}
+
+exports.isFullTimeOrPartTime = data => {
+  return exports.getStudyMode(data) == "Full time or part time"
 }
 
 exports.sectionIsComplete = section => {
@@ -829,6 +917,9 @@ exports.needsStudyMode = record => {
   return (!allowedStudyModes.includes(record?.courseDetails?.studyMode))
 }
 
+exports.needsCourseDates = record => {
+  return !Boolean(record?.courseDetails?.startDate) || !Boolean(record?.courseDetails?.endDate)
+}
 
 // -------------------------------------------------------------------
 // Get records

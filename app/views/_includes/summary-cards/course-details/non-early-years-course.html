@@ -24,7 +24,7 @@
       }
     ]
   } if canAmend and false
-} if record | isNonDraft %}
+} %}
 
 {% set courseNameRow = {
   key: {
@@ -209,7 +209,7 @@
 
 
 {% set courseDetailsRows = [
-  routeRow,
+  routeRow if record | isNonDraft,
   courseNameRow,
   educationPhaseRow,
   subjectsRow,

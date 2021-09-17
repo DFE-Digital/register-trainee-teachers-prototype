@@ -38,7 +38,6 @@ module.exports = (params) => {
   // Course that haven’t started, don’t get a start date
   else if (params?.courseDetails?.startDate && moment(params?.courseDetails?.startDate).isAfter()) {
     traineeStarted = "false"
-    console.log(params?.courseDetails?.startDate)
   }
   else {
     traineeStarted = params?.traineeStarted || weighted.select({

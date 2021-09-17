@@ -372,6 +372,9 @@ module.exports = router => {
         // Fill in specialisms that are mappable
         record.courseDetails = utils.mapMappablePublishSubjects(courseDetails)
 
+        // Set course start and end dates for the trainee if the course has them
+        record.courseDetails = utils.setCourseDatesIfPresent(courseDetails)
+
         // For apply records we let them pick a Publish course which 
         // might have a different route.
         if (record.route != record.courseDetails.route){
@@ -381,18 +384,20 @@ module.exports = router => {
 
         let isAllocated = utils.hasAllocatedPlaces(record)
         let isMissingStudyMode = utils.needsStudyMode(record)
-        let isMissingStartDate = !Boolean(courseDetails?.startDate)
+        let isMissingDates = utils.needsCourseDates(record)
 
         // Not all specialisms are mappable, so for those, send the user to a followup page
         if (utils.hasUnmappedPublishSubjects(record.courseDetails)){
           console.log("Course has unmapped subjects")
           res.redirect(`${recordPath}/course-details/choose-specialisms${referrer}`)
         }
+        // Courses can be dual study mode. If so, ask which this trainee is
         else if (isMissingStudyMode){
           res.redirect(`${recordPath}/course-details/study-mode${referrer}`)
         }
-        else if (isMissingStartDate){
-          res.redirect(`${recordPath}/course-details/start-date${referrer}`)
+        // Backfill course dates
+        else if (isMissingDates){
+          res.redirect(`${recordPath}/course-details/dates${referrer}`)
         }
         else if (isAllocated) {
           // After /allocated-place the journey will match other course-details routes
@@ -416,7 +421,8 @@ module.exports = router => {
     let referrer = utils.getReferrer(req.query.referrer)
     let isAllocated = utils.hasAllocatedPlaces(record)
     let isMissingStudyMode = utils.needsStudyMode(record)
-    let isMissingStartDate = !Boolean(record?.courseDetails?.startDate)
+    let isMissingDates = utils.needsCourseDates(record)
+
 
 
     if (utils.hasUnmappedPublishSubjects(record.courseDetails) || utils.subjectsAreIncomplete(record.courseDetails)){
@@ -425,8 +431,8 @@ module.exports = router => {
     else if (isMissingStudyMode){
       res.redirect(`${recordPath}/course-details/study-mode${referrer}`)
     }
-    else if (isMissingStartDate){
-      res.redirect(`${recordPath}/course-details/start-date${referrer}`)
+    else if (isMissingDates){
+      res.redirect(`${recordPath}/course-details/dates${referrer}`)
     }
     else if (isAllocated) {
       // After /allocated-place the journey will match other course-details routes
@@ -446,7 +452,8 @@ module.exports = router => {
     let referrer = utils.getReferrer(req.query.referrer)
     let isAllocated = utils.hasAllocatedPlaces(record)
     let isMissingStudyMode = utils.needsStudyMode(record)
-    let isMissingStartDate = !Boolean(record?.courseDetails?.startDate)
+    let isMissingDates = utils.needsCourseDates(record)
+
 
     let courseDetails = record?.courseDetails
 
@@ -495,8 +502,8 @@ module.exports = router => {
     else if (isMissingStudyMode){
       res.redirect(`${recordPath}/course-details/study-mode${referrer}`)
     }
-    else if (isMissingStartDate){
-      res.redirect(`${recordPath}/course-details/start-date${referrer}`)
+    else if (isMissingDates){
+      res.redirect(`${recordPath}/course-details/dates${referrer}`)
     }
     else if (isAllocated) {
       // After /allocated-place the journey will match other course-details routes
@@ -549,14 +556,16 @@ module.exports = router => {
 
     let isAllocated = utils.hasAllocatedPlaces(record)
     let isMissingStudyMode = utils.needsStudyMode(record)
-    let isMissingStartDate = !Boolean(record?.courseDetails?.startDate)
 
+    // Now that we have study mode, we might be able to set course dates
+    record.courseDetails = utils.setCourseDatesIfPresent(record?.courseDetails)
+    let isMissingDates = utils.needsCourseDates(record)
 
     if (isMissingStudyMode){
       res.redirect(`${recordPath}/course-details/study-mode${referrer}`)
     }
-    else if (isMissingStartDate){
-      res.redirect(`${recordPath}/course-details/start-date${referrer}`)
+    else if (isMissingDates){
+      res.redirect(`${recordPath}/course-details/dates${referrer}`)
     }
     else if (isAllocated) {
       // After /allocated-place the journey will match other course-details routes
@@ -566,18 +575,26 @@ module.exports = router => {
   })
 
   // Branching route
-  router.post(['/:recordtype/:uuid/course-details/start-date','/:recordtype/course-details/start-date'], function (req, res) {
+  router.post(['/:recordtype/:uuid/course-details/dates','/:recordtype/course-details/dates'], function (req, res) {
     const data = req.session.data
     let record = data.record
     let recordPath = utils.getRecordPath(req)
     let referrer = utils.getReferrer(req.query.referrer)
 
     let isAllocated = utils.hasAllocatedPlaces(record)
-    let isMissingStartDate = !Boolean(record?.courseDetails?.startDate)
+    
+    // Sets start date and end date if they're captured
+    record.courseDetails = utils.setCourseDatesIfPresent(record?.courseDetails)
+    let isMissingDates = utils.needsCourseDates(record)
 
+    if (!isMissingDates){
+      // If we have dates, we can save those back to the Publish course for use in the future
+      // NB: this copies the trainee's course dates - perhaps we should directly use the form values
+      utils.updatePublishCourseDates(record.courseDetails, data)
+    }
 
-    if (isMissingStartDate){
-      res.redirect(`${recordPath}/course-details/start-date${referrer}`)
+    if (isMissingDates){
+      res.redirect(`${recordPath}/course-details/dates${referrer}`)
     }
     else if (isAllocated) {
       // After /allocated-place the journey will match other course-details routes
@@ -585,7 +602,6 @@ module.exports = router => {
     }
     else res.redirect(`${recordPath}/course-details/confirm${referrer}`)
   })
-
 
   // Picking a course
   // router.post(['/:recordtype/:uuid/course-details/pick-route','/:recordtype/course-details/pick-route'], function (req, res) {

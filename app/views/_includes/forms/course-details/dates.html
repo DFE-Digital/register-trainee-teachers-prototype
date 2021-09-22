@@ -7,9 +7,9 @@
 
 {{ record | log}}
 
-<p class="govuk-body">{{record.courseDetails.courseNameLong}} is recorded in Publish as starting in {{publishCourse.startDateVague | formatDate("MMMM YYYY")}} - but we do 
+{# <p class="govuk-body">{{record.courseDetails.courseNameLong}} is recorded in Publish as starting in {{publishCourse.startDateVague | formatDate("MMMM YYYY")}} - but we do 
   not have complete start and end dates for it.
-</p>
+</p> #}
 
 {% set courseIsDualStudyMode = true if (publishCourse.studyMode == "Full time or part time") else false %}
 
@@ -17,7 +17,7 @@
 {% set studyMode = record.courseDetails.studyMode %}
 {% set studyModeConcatinated = studyMode | title | replace(" ", "") %}
 
-<p class="govuk-body">Dates you enter on this page will be used for future {{ record.courseDetails.studyMode | lower }} trainees on this course.</p>
+{# <p class="govuk-body">Dates you enter on this page will be used for future {{ record.courseDetails.studyMode | lower }} trainees on this course.</p> #}
 
 {% if record | isFullTime %}
   {% set startDateArray = record.courseDetails.startDateFullTime | toDateArray %}
@@ -46,7 +46,7 @@
   namePrefix: "record[courseDetails][startDate" + studyModeConcatinated + "]",
   fieldset: {
     legend: {
-      text: "Course start date for " + (studyMode | lower) + " trainees",
+      text: "Course start date for all " + (studyMode | lower) + " trainees",
       isPageHeading: false,
       classes: "govuk-fieldset__legend--m"
     }
@@ -92,7 +92,7 @@
   namePrefix: "record[courseDetails][endDate" + studyModeConcatinated + "]",
   fieldset: {
     legend: {
-      text: "Course end date for " + (studyMode | lower) + " trainees",
+      text: "Course end date for all " + (studyMode | lower) + " trainees",
       isPageHeading: false,
       classes: "govuk-fieldset__legend--m"
     }

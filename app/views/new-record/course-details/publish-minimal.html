@@ -1,6 +1,7 @@
 {% extends "_templates/_new-record.html" %}
 
 {% set pageHeading = "Review course" %}
+{# {% set pageHeading = "Is this the correct course?" %} #}
 {# {% set backLink = './../overview' %}
 {% set backText = "Back to draft record" %} #}
 {% set gridColumn = 'govuk-grid-column-full' %}
@@ -19,7 +20,7 @@
   {% include "_includes/summary-cards/course-details/non-early-years-course.html" %}
 
   {{ govukButton({
-    text: "Select the trainee’s specialisms",
+    text: "Choose specialisms",
     href: "./choose-specialisms"
   }) }}
   

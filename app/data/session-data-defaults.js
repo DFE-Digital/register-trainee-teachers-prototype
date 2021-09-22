@@ -30,7 +30,8 @@ let trainingRouteData          = require('./training-route-data')
 let trainingRoutes = trainingRouteData.trainingRoutes
 let publishRoutes = trainingRouteData.publishRoutes
 let nonPublishRoutes = trainingRouteData.nonPublishRoutes
-let allTrainingRoutes       = Object.values(trainingRoutes).map(route => route.name)
+
+let allTrainingRoutes       = Object.keys(trainingRoutes)
 
 let courses                 = require('./courses.json')
 // let schools                 = require('./gis-schools.js') // too big to load in to session

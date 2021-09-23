@@ -464,12 +464,17 @@ exports.getTraineePublishCourse = function(record, data=false){
 
 
 exports.updatePublishCourseDates = (courseDetails, data) => {
+
   let theCourse = exports.getCourseByCode(courseDetails?.code, data)
 
-  theCourse.startDateFullTime = theCourse.startDateFullTime || courseDetails?.startDateFullTime || undefined
-  theCourse.startDatePartTime = theCourse.startDatePartTime || courseDetails?.startDatePartTime || undefined
-  theCourse.endDateFullTime = theCourse.endDateFullTime || courseDetails?.endDateFullTime || undefined
-  theCourse.endDatePartTime = theCourse.endDatePartTime || courseDetails?.endDatePartTime || undefined
+  if (exports.isFullTime(courseDetails)){
+    theCourse.startDateFullTime = theCourse.startDateFullTime || courseDetails?.startDate || undefined
+    theCourse.endDateFullTime = theCourse.endDateFullTime || courseDetails?.endDate || undefined
+  }
+  else if (exports.isPartTime(courseDetails)){
+    theCourse.startDatePartTime = theCourse.startDatePartTime || courseDetails?.startDate || undefined
+    theCourse.endDatePartTime = theCourse.endDatePartTime || courseDetails?.endDate || undefined
+  }
 
   exports.updatePublishCourse(theCourse, data)
 

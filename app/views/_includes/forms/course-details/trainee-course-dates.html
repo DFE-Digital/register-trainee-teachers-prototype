@@ -1,0 +1,142 @@
+{# <span class="govuk-caption-xl">{{record.courseDetails.courseNameLong}}</span> #}
+<h1 class="govuk-heading-l">{{pageHeading}}</h1>
+
+{% set publishCourse = record | getTraineePublishCourse %}
+
+{{ publishCourse  | log}}
+
+
+<p class="govuk-body">{{record.courseDetails.courseNameLong}} is recorded in Publish as starting in {{publishCourse.startDateVague | formatDate("MMMM YYYY")}} - but we do 
+  not have complete start and end dates for it.
+</p>
+
+{% set courseIsDualStudyMode = true if (publishCourse.studyMode == "Full time or part time") else false %}
+
+{{courseIsDualStudyMode | log}}
+{% set studyMode = record.courseDetails.studyMode %}
+{% set studyModeConcatinated = studyMode | title | replace(" ", "") %}
+
+{# <p class="govuk-body">Dates you enter on this page will be used for future {{ record.courseDetails.studyMode | lower }} trainees on this course.</p> #}
+
+{% if record | isFullTime %}
+  {% set startDateArray = record.courseDetails.startDateFullTime | toDateArray %}
+  {% set endDateArray = record.courseDetails.endDateFullTime | toDateArray %}
+{% elseif record | isPartTime %}
+   {% set startDateArray = record.courseDetails.startDatePartTime | toDateArray %}
+   {% set endDateArray = record.courseDetails.endDatePartTime | toDateArray %}
+{% endif %}
+
+
+{% set startDateHint = "For example, " + "" | today | toDateArray | spaceSeparate %}
+
+{% if record | courseDatesAreAmbiguous %}
+  {% set startDateHint %}
+    <p class="govuk-body govuk-hint">
+      The start date of the Initial Teacher Training part of their course.
+    </p>
+    <p class="govuk-body govuk-hint">
+      {{startDateHint | safe }}
+    </p>
+  {% endset %}
+{% endif %}
+
+{{ govukDateInput({
+  id: "start-start-date",
+  namePrefix: "record[courseDetails][startDate]",
+  fieldset: {
+    legend: {
+      text: "Course start date",
+      isPageHeading: false,
+      classes: "govuk-fieldset__legend--s"
+    }
+  },
+  hint: {
+    html: startDateHint
+  },
+  items: [
+      {
+        name: "day",
+        classes: "govuk-input--width-2",
+        value: startDateArray["0"]
+      },
+      {
+        name: "month",
+        classes: "govuk-input--width-2",
+        value: startDateArray["1"]
+      },
+      {
+        name: "year",
+        classes: "govuk-input--width-4",
+        value: startDateArray["2"]
+      }
+    ]
+}) }}
+
+
+{% set endDateHint = "For example, " + "" | today | moment('add', 1, 'years') | toDateArray | spaceSeparate %}
+
+{% if record | courseDatesAreAmbiguous %}
+  {% set endDateHint %}
+    <p class="govuk-body govuk-hint">
+      The start date of the Initial Teacher Training part of their course.
+    </p>
+    <p class="govuk-body govuk-hint">
+      {{endDateHint | safe }}
+    </p>
+  {% endset %}
+{% endif %}
+
+{{ govukDateInput({
+  id: "start-start-date",
+  namePrefix: "record[courseDetails][endDate]",
+  fieldset: {
+    legend: {
+      text: "Course end date",
+      isPageHeading: false,
+      classes: "govuk-fieldset__legend--s"
+    }
+  },
+  hint: {
+    html: endDateHint
+  },
+  items: [
+      {
+        name: "day",
+        classes: "govuk-input--width-2",
+        value: endDateArray["0"]
+      },
+      {
+        name: "month",
+        classes: "govuk-input--width-2",
+        value: endDateArray["1"]
+      },
+      {
+        name: "year",
+        classes: "govuk-input--width-4",
+        value: endDateArray["2"]
+      }
+    ]
+}) }}
+
+{{ govukCheckboxes({
+  fieldset: {
+    legend: {
+      text: "Save dates for other trainees",
+      text: "Save dates for " + record.courseDetails.courseNameLong,
+      classes: "govuk-fieldset__legend--s"
+    }
+  },
+  items: [
+    {
+      text: "Remember these dates all " + studyMode | lower + " trainees on " + record.courseDetails.courseNameLong,
+      value: "true"
+    }
+  ]
+} | decorateAttributes(record, "record.courseDetails.saveDatesBackToCourse"))}}
+
+
+{{ govukButton({
+  text: "Continue"
+}) }}
+
+

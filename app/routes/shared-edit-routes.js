@@ -265,12 +265,10 @@ module.exports = router => {
   })
 
   // =============================================================================
-  // Course details
+  // Course details - general
   // =============================================================================
 
-  // Show pick-course or pick-route depending on if current provider has courses
-  // on Publish
-
+  // Decide whether to go down Publish pick-course journey or directly to manual course details
   router.get(['/:recordtype/:uuid/course-details','/:recordtype/course-details'], function (req, res) {
     const data = req.session.data
     const record = data.record
@@ -306,6 +304,10 @@ module.exports = router => {
 
   })
 
+  // =============================================================================
+  // Course details - Apply
+  // =============================================================================
+
   // Apply drafts: start by confirming the course is correct
   // This question exists because we have conditional questions to ask (specialisms, course dates),
   // but the provider may want to change the course - so we double check the course is correct
@@ -333,6 +335,10 @@ module.exports = router => {
     }
 
   })
+
+  // =============================================================================
+  // Course details - Publish journey
+  // =============================================================================
 
   // Picking a Publish course
   router.post(['/:recordtype/:uuid/course-details/pick-course','/:recordtype/course-details/pick-course'], function (req, res) {
@@ -411,6 +417,10 @@ module.exports = router => {
         record.courseDetails = utils.mapMappablePublishSubjects(courseDetails)
 
         // Set course start and end dates for the trainee if the course has them
+        // We don’t get full course dates from Publish, but once a user has added a trainee on a 
+        // particular course we ask if the dates they add for that trainee should be saved back to the 
+        // course - if so we’ll now have them and can apply them to future trainees on that course
+        // and study mode.
         record.courseDetails = utils.setCourseDatesIfPresent(courseDetails)
 
         // For apply records we let them pick a Publish course which 
@@ -420,6 +430,7 @@ module.exports = router => {
           record.route = record.courseDetails.route
         }
 
+        // Send to next conditional page or confirm page
         res.redirect(utils.getNextPublishCourseDetailsUrl(record, recordPath,referrer))
       }
     }
@@ -434,12 +445,14 @@ module.exports = router => {
     let recordPath = utils.getRecordPath(req)
     let referrer = utils.getReferrer(req.query.referrer)
 
+    // Unsure why we have two filters for this. Too scared to remove now
     let hasUnmappedPublishSubjects = utils.hasUnmappedPublishSubjects(record.courseDetails) || utils.subjectsAreIncomplete(record.courseDetails)
 
     // We loop through this page up to 3 times. When done, we'll redirect away
     if (hasUnmappedPublishSubjects){
       res.render(`${req.params.recordtype}/course-details/choose-specialisms`)
     }
+    // Send to next conditional page or confirm page
     else res.redirect(utils.getNextPublishCourseDetailsUrl(record, recordPath,referrer))
   })
 
@@ -491,9 +504,57 @@ module.exports = router => {
 
     }
 
+    // Send to next conditional page or confirm page
     res.redirect(utils.getNextPublishCourseDetailsUrl(record, recordPath,referrer))
 
   })
+
+  // Shown for Publish courses that are dual study mode.
+  router.post(['/:recordtype/:uuid/course-details/study-mode','/:recordtype/course-details/study-mode'], function (req, res) {
+    const data = req.session.data
+    let record = data.record
+    let recordPath = utils.getRecordPath(req)
+    let referrer = utils.getReferrer(req.query.referrer)
+
+    // Now that we have study mode, we might be able to set course dates
+    record.courseDetails = utils.setCourseDatesIfPresent(record?.courseDetails)
+
+    // Send to next conditional page or confirm page
+    res.redirect(utils.getNextPublishCourseDetailsUrl(record, recordPath,referrer))
+
+  })
+
+  // Optionally save the trainee's course dates back to the course for that study mode
+  router.post(['/:recordtype/:uuid/course-details/dates-answer','/:recordtype/course-details/dates-answer'], function (req, res) {
+    const data = req.session.data
+    let record = data.record
+    let recordPath = utils.getRecordPath(req)
+    let referrer = utils.getReferrer(req.query.referrer)
+
+    let hasDates = !utils.needsCourseDates(record)
+    let copyDatesToCourse = Boolean(record?.courseDetails?.saveDatesBackToCourse == "true")
+    delete record?.courseDetails?.saveDatesBackToCourse
+
+    // No dates provided
+    if (!hasDates){
+      res.redirect(`${recordPath}/course-details/dates${referrer}`)
+    }
+
+    // Save these dates back on the course for reuse by other trainees
+    if (hasDates && copyDatesToCourse){
+      // If we have dates, we can save those back to the Publish course for use in the future
+      // NB: this copies the trainee's course dates - perhaps we should directly use the form values
+      utils.updatePublishCourseDates(record.courseDetails, data)
+    }
+
+    // Send to next conditional page or confirm page
+    res.redirect(utils.getNextPublishCourseDetailsUrl(record, recordPath, referrer))
+
+  })
+
+  // =============================================================================
+  // Course details - manual journey / editing a publish course
+  // =============================================================================
 
   // Picking a phase (Primary or Secondary education)
   router.post(['/:recordtype/:uuid/course-details/phase','/:recordtype/course-details/phase'], function (req, res) {
@@ -526,64 +587,6 @@ module.exports = router => {
       res.redirect(`${recordPath}/course-details/details${referrer}`)
     }
   })
-
-   // Branching route
-  router.post(['/:recordtype/:uuid/course-details/study-mode','/:recordtype/course-details/study-mode'], function (req, res) {
-    const data = req.session.data
-    let record = data.record
-    let recordPath = utils.getRecordPath(req)
-    let referrer = utils.getReferrer(req.query.referrer)
-
-    // Now that we have study mode, we might be able to set course dates
-    record.courseDetails = utils.setCourseDatesIfPresent(record?.courseDetails)
-
-    res.redirect(utils.getNextPublishCourseDetailsUrl(record, recordPath,referrer))
-
-  })
-
-  // Branching route
-  router.post(['/:recordtype/:uuid/course-details/dates','/:recordtype/course-details/dates'], function (req, res) {
-    const data = req.session.data
-    let record = data.record
-    let recordPath = utils.getRecordPath(req)
-    let referrer = utils.getReferrer(req.query.referrer)
-
-    // Sets start date and end date if they're captured
-    record.courseDetails = utils.setCourseDatesIfPresent(record?.courseDetails)
-    let hasDates = !utils.needsCourseDates(record)
-
-    if (hasDates){
-      // If we have dates, we can save those back to the Publish course for use in the future
-      // NB: this copies the trainee's course dates - perhaps we should directly use the form values
-      utils.updatePublishCourseDates(record.courseDetails, data)
-    }
-
-    res.redirect(utils.getNextPublishCourseDetailsUrl(record, recordPath,referrer))
-
-  })
-
-  // Picking a course
-  // router.post(['/:recordtype/:uuid/course-details/pick-route','/:recordtype/course-details/pick-route'], function (req, res) {
-  //   const data = req.session.data
-  //   let record = data.record
-  //   let recordPath = utils.getRecordPath(req)
-  //   let referrer = utils.getReferrer(req.query.referrer)
-  //   let enabledRoutes = data.settings.enabledTrainingRoutes
-  //   let selectedRoute = _.get(data, 'record.route')
-  //   let isAllocated = utils.hasAllocatedPlaces(record)
-
-  //   // No data, return to page
-  //   if (!selectedRoute){
-  //     res.redirect(`${recordPath}/course-details/pick-route${referrer}`)
-  //   }
-  //   else if (selectedRoute == "Other"){
-  //     res.redirect(`/new-record/course-details/route-not-supported${referrer}`)
-  //   }
-  //   else {
-  //     res.redirect(`${recordPath}/course-details/details${referrer}`)
-  //   }
-  // })
-
  
   router.post(['/:recordtype/:uuid/course-details/details','/:recordtype/course-details/details'], function (req, res) {
     const data = req.session.data

@@ -1,17 +1,19 @@
 {% extends "_templates/_record-form.html" %}
 
 {% if data.record | courseDatesAreAmbiguous %}
-  {% set pageHeading = "ITT start date" %}
+  {% set pageHeading = "ITT dates" %}
 {% else %}
-  {% set pageHeading = "Course start date" %}
+  {% set pageHeading = "Course dates" %}
 {% endif %}
 
-{% set pageHeading = "Course dates for " + data.record.courseDetails.courseNameLong %}
-
-
-{# {% set formAction = "./confirm" %} #}
+{% set formAction = "./dates-answer" %}
 
 {% block formContent %}
-  {% include "_includes/forms/course-details/dates.html" %}
-{% endblock %}
 
+  {% if data.directSetCourseDates %}
+    {% include "_includes/forms/course-details/course-dates.html" %}
+  {% else %}
+    {% include "_includes/forms/course-details/trainee-course-dates.html" %}
+  {% endif %}
+
+{% endblock %}

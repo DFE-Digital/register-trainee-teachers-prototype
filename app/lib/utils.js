@@ -428,6 +428,7 @@ exports.getProviderCourses = function(courses, provider, route=false, data=false
 exports.getCourseByCode = function(code, data=false){
   data = data || this?.ctx?.data || false
   let foundCourse
+
   // Iterate through each provider and then through each of their courses
   // This code is a bit awkward. It relies on the first find() breaking as soon as a provider
   // is found
@@ -435,6 +436,9 @@ exports.getCourseByCode = function(code, data=false){
     foundCourse = data.courses[provider].courses.find(course => course.code == code)
     return foundCourse
   })
+
+  if (!foundCourse) console.log(`Error: course ${code} not found`)
+
   return foundCourse
 }
 
@@ -444,12 +448,16 @@ exports.updatePublishCourse = function(course, data=false){
   // Iterate through each provider and then through each of their courses
   // Avoiding using getCourseByCode() as we want a reference to the course not a copy.
   let foundCourse
-  Object.keys(data.courses).find( provider => {
 
-    foundcourse = data.courses[provider].courses.find(_course => _course.code == course.code)
+  Object.keys(data.courses).find( provider => {
+    foundCourse = data.courses[provider].courses.find(_course => _course.code == course.code)
+    return foundCourse
   })
 
-  // This overwrites the one we found as it should be a reference. There's probably a cleaner way of
+  if (!foundCourse) console.log(`Error: course ${course?.courseNameLong} not found, so couldn’t be 
+    updated`)
+
+  // This overwrites the one we found by reference. There's probably a cleaner way of
   // doing this
   foundCourse = course
 }

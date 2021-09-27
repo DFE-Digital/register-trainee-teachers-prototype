@@ -3,18 +3,16 @@
 
 {% set publishCourse = record | getTraineePublishCourse %}
 
-{{ publishCourse  | log}}
-
-
 <p class="govuk-body">{{record.courseDetails.courseNameLong}} is recorded in Publish as starting in {{publishCourse.startDateVague | formatDate("MMMM YYYY")}} - but we do 
   not have complete start and end dates for it.
 </p>
 
 {% set courseIsDualStudyMode = true if (publishCourse.studyMode == "Full time or part time") else false %}
 
-{{courseIsDualStudyMode | log}}
 {% set studyMode = record.courseDetails.studyMode %}
-{% set studyModeConcatinated = studyMode | title | replace(" ", "") %}
+
+{# part time > PartTime (hacky!) #}
+{% set studyModeConcatinated = studyMode | title | replace(" ", "") %} 
 
 {# <p class="govuk-body">Dates you enter on this page will be used for future {{ record.courseDetails.studyMode | lower }} trainees on this course.</p> #}
 
@@ -128,7 +126,7 @@
   },
   items: [
     {
-      text: "Remember these dates all " + studyMode | lower + " trainees on " + record.courseDetails.courseNameLong,
+      text: "Use these dates all " + studyMode | lower + " trainees on " + record.courseDetails.courseNameLong,
       value: "true"
     }
   ]

@@ -202,13 +202,11 @@ exports.setCourseDatesIfPresent = courseDetails => {
   if (courseDetails.startDate && courseDetails.endDate) return courseDetails
 
   if (exports.isFullTime(courseDetails)){
-    // console.log("Setting full time course dates")
     courseDetails.startDate = courseDetails.startDate || courseDetails.startDateFullTime
     courseDetails.endDate = courseDetails.endDate || courseDetails.endDateFullTime
   }
 
   else if (exports.isPartTime(courseDetails)){
-    // console.log("Setting part time course dates")
     courseDetails.startDate = courseDetails.startDate || courseDetails.startDatePartTime
     courseDetails.endDate = courseDetails.endDate || courseDetails.endDatePartTime
   }
@@ -444,14 +442,15 @@ exports.updatePublishCourse = function(course, data=false){
   data = data || this?.ctx?.data || false
 
   // Iterate through each provider and then through each of their courses
+  // Avoiding using getCourseByCode() as we want a reference to the course not a copy.
   let foundCourse
   Object.keys(data.courses).find( provider => {
 
     foundcourse = data.courses[provider].courses.find(_course => _course.code == course.code)
-    return foundCourse
-
   })
 
+  // This overwrites the one we found as it should be a reference. There's probably a cleaner way of
+  // doing this
   foundCourse = course
 }
 
@@ -764,6 +763,9 @@ exports.subjectsAreIncomplete = courseDetails => {
   return Object.values(courseDetails.subjects).some(subject => subject == null)
 }
 
+// For Apply drafts, ask users to confirm the course is correct before proceeding.
+// This allows us to launch in to a flow to backfill missing data *or* let them swap to a different
+// course
 exports.courseNeedsToBeConfirmed = courseDetails => {
   if (exports.sectionIsComplete(courseDetails)) return false
   else return (Boolean(courseDetails.needsConfirming))

@@ -4,10 +4,6 @@
 
 <p class="govuk-body">The trainee is being registered on {{course.courseNameLong}}, {{course.route}}</p>
 
-
-
-{{course | log}}
-
 {% set courseItems = [] %}
 
 {% set courseHint %}
@@ -18,23 +14,6 @@
     {{ course.qualificationsSummary }}, {{ course.route }}
   {% endif %}
 {% endset %}
-
-{# {% set courseItems = courseItems | push({
-  text: course.courseNameLong,
-  value: course.id,
-  checked: checked(selectedCourse, course.id),
-  hint: {
-    text: courseHint
-  }
-}) %} #}
-
-{# {% set courseItems = courseItems | push({divider: 'or'}) %} #}
-
-{# {% set courseItems = courseItems | push({
-  value: "Other",
-  text: "Yes, register the trainee on this course",
-  checked: checked(selectedCourse, "Other")
-}) %} #}
 
 {% set courseItems = courseItems | push({
   value: "course-confirmed",

@@ -184,9 +184,9 @@ module.exports = router => {
   router.get('/new-record/delete-draft/delete', (req, res) => {
     const data = req.session.data
     const records = data.records
-    let record = data.record
-    if (record.id){
-      let recordIndex = records.findIndex(record => record.id == record.id)
+    let theRecord = data.record
+    if (theRecord.id){
+      let recordIndex = records.findIndex(record => record.id == theRecord.id)
       _.pullAt(records, [recordIndex]) // delete item at index
     }
     utils.deleteTempData(data)

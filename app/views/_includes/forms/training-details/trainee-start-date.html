@@ -41,6 +41,10 @@
   }) }}
 {% endset %}
 
+<h1 class="govuk-heading-l govuk-!-margin-bottom-0">
+  <span class="govuk-caption-l">{{pageHeadingTraineeName}}</span>
+</h1>
+
 {% if not traineeStartDate %}
   {{ govukRadios({
     fieldset: {
@@ -64,11 +68,11 @@
       },
       {
         divider: "or"
-      },
+      } if not startConfirmed,
       {
         value: "trainee-not-started",
         text: "They have not started yet"
-      }
+      } if not startConfirmed
     ]
   } | decorateAttributes(record, "record.trainingDetails.traineeStarted")) }}
 
@@ -86,7 +90,7 @@
     id: commencementDateID,
     namePrefix: "record[trainingDetails][commencementDate]",
     hint: {
-      html: commencementDateHint + "<br>" + hintHtml
+      html: commencementDateHint
     },
     items: [
         {

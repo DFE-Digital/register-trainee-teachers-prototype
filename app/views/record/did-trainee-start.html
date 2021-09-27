@@ -1,0 +1,15 @@
+{% extends "_templates/_record-form.html" %}
+
+{% set pageHeading %}
+  Did the trainee start their {{ "ITT" if record | courseDatesAreAmbiguous else "course" }}?
+{% endset %}
+
+{% set pageHeadingTraineeName = data.record.personalDetails | getShortName %}
+
+{% set formAction = "./did-trainee-start-answer" %}
+
+{% block formContent %}
+
+  {% include "_includes/forms/did-trainee-start.html" %}
+
+{% endblock %}

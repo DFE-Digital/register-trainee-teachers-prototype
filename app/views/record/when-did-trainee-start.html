@@ -1,0 +1,16 @@
+{% extends "_templates/_record-form.html" %}
+
+{% set pageHeading %}
+  Did the trainee start their {{ "ITT" if data.record | courseDatesAreAmbiguous else "course" }} on time?
+{% endset %}
+
+{% set startConfirmed = true %}
+
+{% set pageHeadingTraineeName = data.record.personalDetails | getShortName %}
+{% set formAction = "./" | addReferrer(referrer) %}
+
+{% block formContent %}
+
+  {% include "_includes/forms/training-details/trainee-start-date.html" %}
+
+{% endblock %}

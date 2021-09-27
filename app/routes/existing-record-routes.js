@@ -152,6 +152,7 @@ module.exports = router => {
   router.post('/record/:uuid/defer', (req, res) => {
     const data = req.session.data
     const newRecord = data.record
+    let referrer = utils.getReferrer(req.query.referrer)
 
     // Update failed or no data
     if (!newRecord){
@@ -165,7 +166,7 @@ module.exports = router => {
       if (radioChoice == "Yesterday") {
         newRecord.deferredDate = filters.toDateArray(moment().subtract(1, "days"))
       } 
-      res.redirect(`/record/${req.params.uuid}/defer/confirm`)
+      res.redirect(`/record/${req.params.uuid}/defer/confirm${referrer}`)
     }
   })
 
@@ -173,6 +174,7 @@ module.exports = router => {
   router.post('/record/:uuid/defer/update', (req, res) => {
     const data = req.session.data
     const newRecord = data.record
+    let referrer = utils.getReferrer(req.query.referrer)
 
     // Update failed or no data
     if (!newRecord){
@@ -185,7 +187,13 @@ module.exports = router => {
       utils.deleteTempData(data)
       utils.updateRecord(data, newRecord, "Trainee deferred")
       req.flash('success', 'Trainee deferred')
-      res.redirect(`/record/${req.params.uuid}`)
+      if (referrer){
+        res.redirect(utils.getReferrerDestination(req.query.referrer))
+      }
+      else {
+        // More likely we've come from this tab where most things are on
+        res.redirect(`/record/${req.params.uuid}`)
+      }
     }
   })
 
@@ -227,7 +235,6 @@ module.exports = router => {
       res.redirect(`/record/${req.params.uuid}`)
     }
   })
-
 
 
   // Copy withdraw data back to real record
@@ -317,6 +324,154 @@ module.exports = router => {
     res.render(`record/timeline`, {timeline})
   })
 
+  /*
+    =========================================================================
+
+    Deleting, deferring and withdrawing trainees
+
+    =========================================================================
+  */
+
+  // Delete route
+  // If course start date is in the past, ask user if the trainee started
+  router.post('/record/:uuid/delete/did-trainee-start-answer', (req, res) => {
+    const data = req.session.data
+    let record = data.record
+    let traineeStarted = record?.trainingDetails?.traineeStarted
+    let referrer = utils.getReferrer(req.query.referrer)
+
+    if (traineeStarted == "true") {
+      res.redirect(`/record/${req.params.uuid}/delete/when-did-trainee-start${referrer}`)
+    } else if (traineeStarted == "false") {
+      res.redirect(`/record/${req.params.uuid}/delete/confirm${referrer}`)
+    } else {
+      res.redirect(`/record/${req.params.uuid}/delete/did-trainee-start${referrer}`)
+    }
+  })
+
+  // Delete route
+  // If trainee started 'on time', set trainee start date to same as course start date
+  router.post('/record/:uuid/delete/when-did-the-trainee-start-answer', (req, res) => {
+    let data = req.session.data
+    let record = data.record
+    let courseStartDate = record?.courseDetails?.startDate
+    let traineeStarted = record?.trainingDetails?.traineeStarted
+    let referrer = utils.getReferrer(req.query.referrer)
+
+    if (traineeStarted == "started-itt-on-time"){
+      record.trainingDetails.commencementDate = courseStartDate
+    }
+    utils.updateRecord(data, record, false)
+    res.redirect(`/record/${req.params.uuid}/delete/cannot-delete${referrer}`)
+  })
+
+  // Delete route
+  // If trainee has started, options for how to continue
+  router.post('/record/:uuid/delete/cannot-delete-answer/', (req, res) => {
+    const data = req.session.data
+    let record = data.record
+    let referrer = utils.getReferrer(req.query.referrer)
+    let deferOrWithdraw = record?.deferOrWithdrawTemp
+    
+    delete record.deferOrWithdrawTemp
+    if (!deferOrWithdraw) {
+      res.redirect(`/record/${req.params.uuid}/delete/cannot-delete${referrer}`)
+    } else if (deferOrWithdraw == "defer") {
+      res.redirect(`/record/${req.params.uuid}/defer${referrer}`)
+    } else if (deferOrWithdraw == "withdraw") {
+      res.redirect(`/record/${req.params.uuid}/withdraw${referrer}`)
+    } else if (deferOrWithdraw === "cancel") {
+      res.redirect(utils.getReferrerDestination(req.query.referrer) || `/record/${req.params.uuid}/` )
+    }
+  })
+
+  // Delete route
+  // Deletes record
+  router.get('/record/:uuid/delete/', (req, res) => {
+    const data = req.session.data
+    const records = data.records
+    let theRecord = data.record
+    if (theRecord.id){
+      let recordIndex = records.findIndex(record => record.id == theRecord.id)
+      _.pullAt(records, [recordIndex]) // delete item at index
+    }
+    utils.deleteTempData(data)
+    req.flash('success', 'Record deleted')
+    res.redirect('/records')
+  })
+
+
+  // Defer route
+  // If trainee has not started, tell user they cannot defer the trainee
+  router.post('/record/:uuid/defer/did-trainee-start-answer', (req, res) => {
+    const data = req.session.data
+    let record = data.record
+    let traineeStarted = record?.trainingDetails?.traineeStarted
+    let referrer = utils.getReferrer(req.query.referrer)
+
+    if (traineeStarted == "true") {
+      res.redirect(`/record/${req.params.uuid}/defer/when-did-trainee-start${referrer}`)
+    } else if (traineeStarted == "false") {
+      res.redirect(`/record/${req.params.uuid}/defer/cannot-defer${referrer}`)
+    } else {
+      res.redirect(`/record/${req.params.uuid}/defer/did-trainee-start${referrer}`)
+    }
+  })
+
+  // Defer route
+  // If trainee started 'on time', set trainee start date to same as course start date
+  router.post('/record/:uuid/defer/when-did-the-trainee-start-answer', (req, res) => {
+    let data = req.session.data
+    let record = data.record
+    let courseStartDate = record?.courseDetails?.startDate
+    let traineeStarted = record?.trainingDetails?.traineeStarted
+    let commencementDate = record?.trainingDetails?.commencementDate
+    let referrer = utils.getReferrer(req.query.referrer)
+
+    if (traineeStarted == "started-itt-on-time"){
+      record.trainingDetails.commencementDate = courseStartDate
+    }
+    res.redirect(`/record/${req.params.uuid}/defer${referrer}`)
+  })
+
+
+  // Withdraw route
+  // If trainee has not started, tell user they cannot defer the trainee
+  router.post('/record/:uuid/withdraw/did-trainee-start-answer', (req, res) => {
+    const data = req.session.data
+    let record = data.record
+    let traineeStarted = record?.trainingDetails?.traineeStarted
+    let referrer = utils.getReferrer(req.query.referrer)
+
+    if (traineeStarted == "true") {
+      res.redirect(`/record/${req.params.uuid}/withdraw/when-did-trainee-start${referrer}`)
+    } else if (traineeStarted == "false") {
+      res.redirect(`/record/${req.params.uuid}/withdraw/cannot-withdraw${referrer}`)
+    } else {
+      res.redirect(`/record/${req.params.uuid}/withdraw/did-trainee-start${referrer}`)
+    }
+  })
+
+  // Withdraw route
+  // If trainee started 'on time', set trainee start date to same as course start date
+  router.post('/record/:uuid/withdraw/when-did-the-trainee-start-answer', (req, res) => {
+    let data = req.session.data
+    let record = data.record
+    let courseStartDate = record?.courseDetails?.startDate
+    let traineeStarted = record?.trainingDetails?.traineeStarted
+    let commencementDate = record?.trainingDetails?.commencementDate
+    let referrer = utils.getReferrer(req.query.referrer)
+
+    if (traineeStarted == "started-itt-on-time"){
+      record.trainingDetails.commencementDate = courseStartDate
+      res.redirect(`/record/${req.params.uuid}/withdraw${referrer}`)
+    }
+    res.redirect(`/record/${req.params.uuid}/withdraw${referrer}`)
+  })
+
+  // end of delete, defer, withdraw routes
+  // =========================================================================
+
   // Existing record pages
   router.get('/record/:uuid/:page*', function (req, res, next) {
     let records = req.session.data.records
@@ -344,7 +499,6 @@ module.exports = router => {
 
     if (traineeStarted == "started-itt-on-time"){
       record.trainingDetails.commencementDate = courseStartDate
-      delete record?.trainingDetails?.traineeStarted
     }
     else if (traineeStarted == "trainee-not-started"){ // If the answer was explicitly false.
       delete record?.trainingDetails?.commencementDate

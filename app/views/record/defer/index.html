@@ -2,9 +2,10 @@
 
 {% set pageHeading = 'When did the trainee defer?' %}
 {% set pageHeadingTraineeName = data.record.personalDetails | getShortName %}
-{# {% set formAction = "./defer/confirm" %} #}
+{# {% set formAction = "./" | addReferrer(referrer) %} #}
   
 {% block formContent %}
+
 
   <h1 class="govuk-heading-l govuk-!-margin-bottom-0">
     <span class="govuk-caption-l">{{pageHeadingTraineeName}}</span>

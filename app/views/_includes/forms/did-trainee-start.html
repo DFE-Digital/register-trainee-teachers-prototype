@@ -1,0 +1,28 @@
+
+<h1 class="govuk-heading-l govuk-!-margin-bottom-0">
+  <span class="govuk-caption-l">{{pageHeadingTraineeName}}</span>
+</h1>
+
+{{ govukRadios({
+  fieldset: {
+    legend: {
+      isPageHeading: true,
+      text: pageHeading,
+      classes: "govuk-fieldset__legend--l govuk-!-margin-bottom-6"
+    }
+  },
+  items: [
+    {
+      value: true,
+      text: "Yes, they started"
+    },
+    {
+      value: false,
+      text: "No, they did not start"
+    }
+  ]
+} | decorateAttributes(record, "record.trainingDetails.traineeStarted")) }}
+
+{{ govukButton({
+  text: "Continue"
+}) }}

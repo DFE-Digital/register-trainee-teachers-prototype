@@ -1,0 +1,13 @@
+
+{% extends "_templates/_record-form.html" %}
+
+{% set pageHeading = 'You cannot withdraw this trainee' %}
+{% set pageHeadingTraineeName = data.record.personalDetails | getShortName %}
+
+{% set recordTask = "withdraw" %}
+
+{% block formContent %}
+
+  {% include "_includes/cannot-defer-or-withdraw-content.html" %}
+
+{% endblock %}

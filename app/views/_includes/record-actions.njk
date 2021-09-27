@@ -1,0 +1,23 @@
+{% if record | needTraineeStartDate %}
+  {% set deleteUrl    = recordPath + "/delete/did-trainee-start"   | addReferrer(referrer) %}
+  {% set deferUrl     = recordPath + "/defer/did-trainee-start"    | addReferrer(referrer) %}
+  {% set withdrawUrl  = recordPath + "/withdraw/did-trainee-start" | addReferrer(referrer) %}
+{% else %}
+  {% set deleteUrl    = recordPath + "/delete/confirm"             | addReferrer(referrer) %}
+  {% set deferUrl     = recordPath + "/defer"                      | addReferrer(referrer) %}
+  {% set withdrawUrl  = recordPath + "/withdraw"                   | addReferrer(referrer) %}
+{% endif %}
+
+<div class="record-actions__links">
+  <p class="govuk-body govuk-!-margin-bottom-0">
+    {% if (record | showDelete) and not (record | showDeferAndWithdraw ) %}
+      <a href="{{ deleteUrl }}" class="govuk-link--no-visited-state">Delete this record</a>
+    {% elseif (record | showDelete) and (record | showDeferAndWithdraw ) %}
+      <a href="{{ deleteUrl }}" class="govuk-link--no-visited-state">Delete this record</a>, or <a href="{{ deferUrl }}" class="govuk-link--no-visited-state">defer</a> or <a href="{{withdrawUrl}}" class="govuk-link--no-visited-state">withdraw</a> this trainee
+    {% elseif (not record | showDelete) and (record | showDeferAndWithdraw ) %}
+      <a href="{{ deferUrl }}" class="govuk-link--no-visited-state">Defer</a> or <a href="{{ withdrawUrl }}" class="govuk-link--no-visited-state">withdraw</a> this trainee
+    {% elseif (record.status | canReinstate) %}
+      <a href="{{referrer}}/reinstate" class="govuk-link--no-visited-state">Reinstate</a> or <a href="{{ withdrawUrl }}" class="govuk-link--no-visited-state">withdraw</a> this trainee
+    {% endif %}
+    </p>
+</div>

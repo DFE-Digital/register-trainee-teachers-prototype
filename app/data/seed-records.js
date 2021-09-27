@@ -319,6 +319,7 @@ seedRecords.push({
   status: "TRN received",
   trainingDetails: {
     traineeId: "2020/21-074",
+    traineeStarted: null,
     commencementDate: null
   },
   submittedDate: "2020-06-28T12:37:21.384Z",

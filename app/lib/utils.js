@@ -9,8 +9,8 @@ const url = require('url')
 const trainingRouteData = require('./../data/training-route-data')
 const trainingRoutes = trainingRouteData.trainingRoutes
 const arrayFilters = require('./../filters/arrays.js').filters
-const ittSubjects = require('./../data/itt-subjects')
 const dates = require('./../filters/dates.js').filters
+const ittSubjects = require('./../data/itt-subjects')
 
 // -------------------------------------------------------------------
 // General
@@ -962,6 +962,76 @@ exports.needsCourseDates = record => {
 }
 
 // -------------------------------------------------------------------
+// Existing record actions
+// -------------------------------------------------------------------
+
+  /*
+  ====================================================================
+  showDelete
+  --------------------------------------------------------------------
+  true if:
+  - course start date is in the future
+  - the course has started but there is no trainee start date
+    (but we need to check if trainee started - see
+    needsTraineeStarDate)
+  ====================================================================
+
+  Usage:
+
+  record | showDelete // true, false
+
+*/
+
+exports.showDelete = (record) => {
+  let courseStartDate = record?.courseDetails?.startDate
+  let traineeStartDate = record?.trainingDetails?.commencementDate
+
+  if (dates.isInFuture(courseStartDate) || !traineeStartDate) {
+    return true
+  } else {
+    return false
+  }
+}
+
+/*
+  ====================================================================
+  showDeferAndWithdraw
+  --------------------------------------------------------------------
+  - true if course start date is in the past and status is 
+    'Pending TRN' or 'TRN recieved'
+  ====================================================================
+*/
+
+exports.showDeferAndWithdraw = (record) => {
+  let courseStartDate = record?.courseDetails?.startDate
+  let status = record?.status
+
+  if ((dates.isInPast(courseStartDate)) && (status == "Pending TRN" || status == "TRN received")) {
+    return true 
+  } else {
+    return false
+  }
+}
+
+/*
+  ====================================================================
+  needsTraineeStartDate
+  --------------------------------------------------------------------
+  - true if trainee start date is missing
+  ====================================================================
+*/
+
+exports.needTraineeStartDate = (record) => {
+  let courseStartDate = record?.courseDetails?.startDate
+  let traineeStartDate = record?.trainingDetails?.commencementDate
+  if (dates.isInPast(courseStartDate) && !traineeStartDate) {
+    return true
+  } else {
+    return false
+  }
+}
+
+// -------------------------------------------------------------------
 // Get records
 // -------------------------------------------------------------------
 
@@ -1841,3 +1911,4 @@ exports.getRecordPath = req => {
   let recordType = req.params.recordtype
   return (recordType == 'record') ? (`/record/${req.params.uuid}`) : '/new-record'
 }
+

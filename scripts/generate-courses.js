@@ -19,7 +19,7 @@ const generateCourseDetails = require('../app/data/generators/course-generator')
 // Thus we generate one more year of courses than trainees
 // Todo: grab these from the years.js file?
 const yearsToGenerate = [2019, 2020, 2021, 2022]
-const currentYear     = 2020
+const currentYear     = 2021
 
 // Volumes loosely based on number of courses per provider as seen on Publish
 // Most have 1-3, but then about 1/3 have up to 80

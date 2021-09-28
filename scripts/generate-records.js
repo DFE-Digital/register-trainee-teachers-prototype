@@ -24,7 +24,7 @@ let simpleGcseGrades    = true //output pass/fail rather than full detail
 
 // Todo: get this from the years.js file?
 const yearsToGenerate = [2019, 2020, 2021]
-const currentYear     = 2020
+const currentYear     = 2021
 
 const sortBySubmittedDate = (x, y) => {
   return new Date(y.submittedDate) - new Date(x.submittedDate);

@@ -10,6 +10,7 @@ let modernLanguages = ittSubjects.modernLanguagesSubjects
 // Publish and non publish can overlap
 
 let applyRoutes = [
+  'Teaching apprenticeship (postgrad)',
   'Provider-led (postgrad)',
   'School direct (salaried)',
   'School direct (fee funded)',

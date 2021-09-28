@@ -117,16 +117,9 @@
 }) }}
 
 {{ govukCheckboxes({
-  fieldset: {
-    legend: {
-      text: "Save dates for other trainees",
-      text: "Save dates for " + record.courseDetails.courseNameLong,
-      classes: "govuk-fieldset__legend--s"
-    }
-  },
   items: [
     {
-      text: "Use these dates all " + studyMode | lower + " trainees on " + record.courseDetails.courseNameLong,
+      text: "Use these dates for all " + studyMode | lower + " trainees on " + record.courseDetails.courseNameLong,
       value: "true"
     }
   ]

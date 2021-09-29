@@ -2,7 +2,13 @@
 {% set enabledTrainingRoutes = [] %}
 {% for route in data.settings.enabledTrainingRoutes %}
   {% if not data.trainingRoutes[route].disableForNewDrafts %}
-    {% set enabledTrainingRoutes = enabledTrainingRoutes | push({text: route}) %}
+    {% set enabledTrainingRoutes = enabledTrainingRoutes | push({
+      text: route,
+      hint: {
+        text: "Training run by higher education institutions (HEIs) or school centred
+          initial teacher training (SCITT) providers"
+      } if route | includes("Provider-led")
+    }) %}
   {% endif %}
 {% endfor %}
 

@@ -64,6 +64,8 @@ settings.userProviders = [
   // "University of Buckingham"
 ]
 
+settings.viewAsAdmin = 'false'
+
 // The ‘active’ provider for the current user if using hat model
 // Must be one of the ones in settings.userProviders
 settings.userActiveProvider = "Coventry University"

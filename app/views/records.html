@@ -52,9 +52,14 @@
 {% set filterOptionsHtml %}
 
   {% set showDefaultVisibleYears = true %}
+
+  {% include "_includes/filter-panel/all-providers.njk" %}
+  
   {% include "_includes/filter-panel/cycles.njk" %}
 
   {% include "_includes/filter-panel/phase.njk" %}
+
+
 
   {% include "_includes/filter-panel/signed-in-providers.njk" %}
 

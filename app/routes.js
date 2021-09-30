@@ -29,6 +29,7 @@ router.all('*', function(req, res, next){
   data.isHatModel = (data.settings.providerModel == 'hat-model') ? true : false
   data.isBlendedModel = (data.settings.providerModel == 'blended-model') ? true : false
   data.signedInProviders = (data.isBlendedModel) ? data.settings.userProviders : [data.settings.userActiveProvider]
+  data.isAdmin = (data.settings.viewAsAdmin == "true") ? true : false
 
   // Filter records by provider, enabled routes, apply enabled
   data.filteredRecords = utils.filterRecords(data.records, data)

@@ -1065,8 +1065,11 @@ exports.filterRecords = (records, data, filters = {}) => {
   let filteredRecords = records
   let applyEnabled = data.settings.enableApplyIntegration
 
-  // Only allow records for the signed-in providers
-  filteredRecords = exports.filterBySignedIn(filteredRecords, data)
+  if (data?.settings?.viewAsAdmin != "true"){
+    // Only allow records for the signed-in providers
+    filteredRecords = exports.filterBySignedIn(filteredRecords, data)
+  }
+
 
   // Only show records for training routes that are enabled
   let enabledTrainingRoutes = data.settings.enabledTrainingRoutes
@@ -1112,6 +1115,11 @@ exports.filterRecords = (records, data, filters = {}) => {
   // List of providers if signed in as multiple
   if (filters.providers){
     filteredRecords = filteredRecords.filter(record => filters.providers.includes(record.provider))
+  }
+
+  // Admin only filter for picking from all providers
+  if (filters.allProviders && filters.allProviders != "All providers"){
+    filteredRecords = filteredRecords.filter(record => filters.allProviders.includes(record.provider))
   }
 
   if (filters.trainingRoutes){

@@ -29,6 +29,7 @@ $govuk-assets-path: '/govuk/assets/';
 @import "utils";
 
 // Components that aren't in Frontend
+@import "components/admin-feature";
 @import "components/application-card";
 @import "components/all-records-header";
 @import "components/all-records-search";

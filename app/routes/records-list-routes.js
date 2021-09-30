@@ -39,6 +39,7 @@ const getFilters = req => {
   'filterStudyMode',
   'filterCycle',
   'filterUserProviders',
+  'filterAllProviders',
   'filterTrainingRoutes']
   filtersToClean.forEach(filter => query[filter] = cleanInputData(query[filter]))
 
@@ -52,6 +53,7 @@ const getFilters = req => {
     phase: query.filterPhase,
     studyMode: query.filterStudyMode,
     providers: query.filterUserProviders,
+    allProviders: query.filterAllProviders,
     trainingRoutes: query.filterTrainingRoutes,
     subject: query.filterSubject
   }
@@ -76,6 +78,7 @@ const getHasFilters = (filters, searchQuery) => {
 
   || !!(filters.trainingRoutes)
   || !!(filters.providers)
+  || !!(filters.allProviders && filters.allProviders != 'All providers')
 }
 
 // Make object to hold details of selected filters with appropriate links to clear each one
@@ -126,6 +129,21 @@ const getSelectedFilters = req => {
   //     })
   //   })
   // }
+
+  if (filters.allProviders && filters.allProviders != 'All providers') {
+    let newQuery = Object.assign({}, query)
+    delete newQuery.filterAllProviders
+    selectedFilters.categories.push({
+      heading: { text: "Provider" },
+      items: [{
+        text: filters.allProviders,
+        href: url.format({
+          pathname,
+          query: newQuery,
+        })
+      }]
+    })
+  }
 
   if (filters.completeStatus) {
     selectedFilters.categories.push({
@@ -217,6 +235,8 @@ const getSelectedFilters = req => {
       })
     })
   }
+
+
 
   if (filters.trainingRoutes) {
     selectedFilters.categories.push({
@@ -312,6 +332,9 @@ module.exports = router => {
 
     // Sort records by sortOrder, defaulting to updatedDate
     filteredRecords = utils.sortRecordsBy(filteredRecords, (req?.query?.sortOrder || 'updatedDate'))
+
+    // Truncate records in case there's lots - and as we don't have working pagination
+    filteredRecords = filteredRecords.slice(0, 204)
 
     res.render('records', {
       filteredRecords,

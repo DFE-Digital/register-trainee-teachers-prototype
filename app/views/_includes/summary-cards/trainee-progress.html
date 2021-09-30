@@ -245,7 +245,7 @@
 } %}
 
 {% set traineeProgressRows = [
-  providerRow if data.settings.userProviders | length > 1,
+  providerRow if data.isAdmin or data.settings.userProviders | length > 1,
   traineeIdRow,
   regionRow if record | requiresField("region"),
   startYearRow,

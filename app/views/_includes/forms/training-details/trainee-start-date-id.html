@@ -7,7 +7,7 @@
 {% set commencementStartDateArray = record.trainingDetails.commencementDate | toDateArray %}
 
 {% set commencementDateLabel = "What is the trainee’s start date?" %}
-{% set commencementDateHint = "This is the date the trainee starts on the course. This can be different from the course start date." %}
+{% set commencementDateHint = "This is the date the trainee starts on the course. This can be different from the ITT start date." %}
 
 
 {% set commencementDateInputHtml %}
@@ -51,7 +51,7 @@
   }) }}
 {% endset %}
 
-{# If we have a course start date, offer radio choice betwen that and manual  #}
+{# If we have a ITT start date, offer radio choice betwen that and manual  #}
 {% if courseStartDate %}
 
   {{ govukRadios({
@@ -67,7 +67,7 @@
     items: [
       {
         value: "use-course-start-date",
-        text: "Use the course start date – " + record.courseDetails.startDate | govukDate
+        text: "Use the ITT start date – " + record.courseDetails.startDate | govukDate
       } if record.courseDetails.startDate,
       {
         value: "true",
@@ -86,7 +86,7 @@
     ]
   } | decorateAttributes(record, "record.trainingDetails.traineeStarted")) }}
 
-{# If we don’t have a course start date, just show an input to collect date. This means they don’t
+{# If we don’t have a ITT start date, just show an input to collect date. This means they don’t
 have to do course details before starting this section. #}
 {% else %}
   {{ commencementDateInputHtml | safe }}

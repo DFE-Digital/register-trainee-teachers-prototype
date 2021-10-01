@@ -975,8 +975,8 @@ exports.needsCourseDates = record => {
   showDelete
   --------------------------------------------------------------------
   true if:
-  - course start date is in the future
-  - the course has started but there is no trainee start date
+  - ITT start date is in the future
+  - the ITT has started but there is no trainee start date
     (but we need to check if trainee started - see
     needsTraineeStarDate)
   ====================================================================
@@ -1002,7 +1002,7 @@ exports.showDelete = (record) => {
   ====================================================================
   showDeferAndWithdraw
   --------------------------------------------------------------------
-  - true if course start date is in the past and status is 
+  - true if ITT start date is in the past and status is 
     'Pending TRN' or 'TRN recieved'
   ====================================================================
 */

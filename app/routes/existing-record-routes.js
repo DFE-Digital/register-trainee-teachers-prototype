@@ -333,7 +333,7 @@ module.exports = router => {
   */
 
   // Delete route
-  // If course start date is in the past, ask user if the trainee started
+  // If ITT start date is in the past, ask user if the trainee started
   router.post('/record/:uuid/delete/did-trainee-start-answer', (req, res) => {
     const data = req.session.data
     let record = data.record
@@ -350,7 +350,7 @@ module.exports = router => {
   })
 
   // Delete route
-  // If trainee started 'on time', set trainee start date to same as course start date
+  // If trainee started 'on time', set trainee start date to same as ITT start date
   router.post('/record/:uuid/delete/when-did-the-trainee-start-answer', (req, res) => {
     let data = req.session.data
     let record = data.record
@@ -419,7 +419,7 @@ module.exports = router => {
   })
 
   // Defer route
-  // If trainee started 'on time', set trainee start date to same as course start date
+  // If trainee started 'on time', set trainee start date to same as ITT start date
   router.post('/record/:uuid/defer/when-did-the-trainee-start-answer', (req, res) => {
     let data = req.session.data
     let record = data.record
@@ -453,7 +453,7 @@ module.exports = router => {
   })
 
   // Withdraw route
-  // If trainee started 'on time', set trainee start date to same as course start date
+  // If trainee started 'on time', set trainee start date to same as ITT start date
   router.post('/record/:uuid/withdraw/when-did-the-trainee-start-answer', (req, res) => {
     let data = req.session.data
     let record = data.record

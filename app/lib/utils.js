@@ -829,11 +829,6 @@ exports.isApprenticeship = record => {
   return record?.route == "Teaching apprenticeship (postgrad)"
 }
 
-// For some courses, the the wider course might be longer than the itt bit we’re interested in
-exports.courseDatesAreAmbiguous = record => {
-  return trainingRoutes?.[record?.route]?.courseDatesAreAmbiguous || false
-}
-
 // Phases
 
 // Unlike the other phases, this is probably reliable - as it checcks the route rather than the age

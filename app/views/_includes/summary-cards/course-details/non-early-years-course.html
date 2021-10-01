@@ -137,7 +137,7 @@
 
 {% set startDateRow = {
   key: {
-    text: "Course start date" if not record | courseDatesAreAmbiguous else "ITT start date"
+    text: "ITT start date"
   },
   value: {
     text: courseDetails.startDate | govukDate or 'Not provided'
@@ -147,7 +147,7 @@
       {
         href: recordPath + "/course-details/details" | addReferrer(referrer),
         text: "Change",
-        visuallyHiddenText: "course start date" if not record | courseDatesAreAmbiguous else "ITT start date"
+        visuallyHiddenText: "ITT start date"
       }
     ]
   } if canAmend
@@ -155,7 +155,7 @@
 
 {% set endDateRow = {
   key: {
-    text: "Course end date" if not record | courseDatesAreAmbiguous else "ITT end date"
+    text: "ITT end date"
   },
   value: {
     text: courseDetails.endDate | govukDate or 'Not provided'
@@ -165,7 +165,7 @@
       {
         href: recordPath + "/course-details/details" | addReferrer(referrer),
         text: "Change",
-        visuallyHiddenText: "course end date" if not record | courseDatesAreAmbiguous else "ITT end date"
+        visuallyHiddenText: "ITT end date"
       }
     ]
   } if canAmend

@@ -216,7 +216,7 @@
 
 {% set commencementDateLabel %}
   {% if record.courseDetails.startDate | isInFuture %}
-    {{ "ITT has not started" if record | courseDatesAreAmbiguous else "Course has not started" }}
+    {{ "ITT has not started" }}
   {% elseif record.trainingDetails.commencementDate %}
     {{ record.trainingDetails.commencementDate | govukDate }}
   {% elseif record.trainingDetails.traineeStarted == "trainee-not-started" %}

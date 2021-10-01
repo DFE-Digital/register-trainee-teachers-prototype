@@ -3,7 +3,7 @@
 {% set traineeStartDate = record.trainingDetails.commencementDate or false %}
 
 {% set commencementDateHint %}
-  Their {{ "ITT" if record | courseDatesAreAmbiguous else "course" }} started on {{ record.courseDetails.startDate | toDateArray | spaceSeparate }}
+  Their ITT started on {{ record.courseDetails.startDate | toDateArray | spaceSeparate }}
 {% endset %}
 
 {% set legendText = "Trainee start date" %}

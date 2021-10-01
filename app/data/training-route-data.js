@@ -128,8 +128,7 @@ let baseRouteData = {
           ],
         value: "9000"
       }
-    ],
-    courseDatesAreAmbiguous: true
+    ]
   },
   "Provider-led (postgrad)": {
     defaultEnabled: true,
@@ -300,8 +299,7 @@ let baseRouteData = {
       "Now teach",
       "Transition to teach"
     ],
-    financialSupportAvailable: false,
-    courseDatesAreAmbiguous: true
+    financialSupportAvailable: false
   },
   "Opt-in (undergrad)": {
     defaultEnabled: true,
@@ -334,8 +332,7 @@ let baseRouteData = {
           ],
         value: "9000"
       }
-    ],
-    courseDatesAreAmbiguous: true
+    ]
   },
   "Early years (salaried)": {
     defaultEnabled: true,
@@ -452,8 +449,7 @@ let baseRouteData = {
       "EYTS"
     ],
     qualificationsSummary: "EYTS full time",
-    financialSupportAvailable: false,
-    courseDatesAreAmbiguous: true
+    financialSupportAvailable: false
   },
   "High potential initial teacher training (HPITT)": {
     disableForNewDrafts: true, // we want to show trainees on this route, but not allow new ones

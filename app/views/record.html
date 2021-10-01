@@ -16,7 +16,7 @@
 {% set recordPath = "/record/" + record.id %}
 
 {% set courseNotStartedMessage %}
-  The trainee’s {{ "ITT" if record | courseDatesAreAmbiguous else "course" }} starts on {{ record.courseDetails.startDate | govukDate }}
+  The trainee’s ITT starts on {{ record.courseDetails.startDate | govukDate }}
 {% endset %}
 
 

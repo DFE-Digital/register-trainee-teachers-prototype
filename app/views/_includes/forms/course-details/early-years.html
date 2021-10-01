@@ -34,22 +34,7 @@
 
 {% set startDateHint = "For example, " + "" | today | toDateArray | spaceSeparate %}
 
-{% if record | courseDatesAreAmbiguous %}
-  {% set startDateLabel = "ITT start date" %}
-{% else %}
-  {% set startDateLabel = "Course start date" %}
-{% endif %}
-
-{% if record | courseDatesAreAmbiguous %}
-  {% set startDateHint %}
-    <p class="govuk-body govuk-hint">
-      The start date of the Initial Teacher Training part of their course.
-    </p>
-    <p class="govuk-body govuk-hint">
-      {{startDateHint | safe }}
-    </p>
-  {% endset %}
-{% endif %}
+{% set startDateLabel = "ITT start date" %}
 
 {{ govukDateInput({
   id: "programme-start-date",
@@ -84,22 +69,7 @@
 
 {% set endDateHint = "For example, " + "" | today | moment('add', 1, 'years') | toDateArray | spaceSeparate %}
 
-{% if record | courseDatesAreAmbiguous %}
-  {% set endDateLabel = "ITT end date" %}
-{% else %}
-  {% set endDateLabel = "Course end date" %}
-{% endif %}
-
-{% if record | courseDatesAreAmbiguous %}
-  {% set endDateHint %}
-    <p class="govuk-body govuk-hint">
-      The end date of the Initial Teacher Training part of their course.
-    </p>
-    <p class="govuk-body govuk-hint">
-      {{ endDateHint | safe }}
-    </p>
-  {% endset %}
-{% endif %}
+{% set endDateLabel = "ITT end date" %}
 
 {% set programmeEndDateArray = record.courseDetails.endDate | toDateArray %}
 {{ govukDateInput({

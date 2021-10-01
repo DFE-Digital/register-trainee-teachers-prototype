@@ -3,17 +3,9 @@
 {% set traineeStartDate = data.record.trainingDetails.commencementDate or false %}
 
 {% if traineeStartDate %}
-  {% if record | courseDatesAreAmbiguous %}
-    {% set pageHeading = "When did the trainee start their ITT?" %}
-  {% else %}
-    {% set pageHeading = "When did the trainee start their course?" %}
-  {% endif %}
+  {% set pageHeading = "When did the trainee start their ITT?" %}
 {% else %}
-  {% if record | courseDatesAreAmbiguous %}
-    {% set pageHeading = "Did the trainee start their ITT on time?" %}
-  {% else %}
-    {% set pageHeading = "Did the trainee start their course on time?" %}
-  {% endif %}
+  {% set pageHeading = "Did the trainee start their ITT on time?" %}
 {% endif %}
 
 {% set formAction = "./save-with-date" | addReferrer(referrer) %}

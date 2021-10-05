@@ -38,12 +38,15 @@
   {# Degree institution #}
   {{ appAutocomplete({
     label: {
-      text: "Institution",
+      text: "Awarding institution",
       classes: "govuk-label--s"
     },
     id: 'degree-organisations',
     name: "degreeTemp[org]",
     items: data.degreeOrganisations,
+    hint: {
+      text: "This may be different than where the trainee studied"
+    },
     classes: "app-!-autocomplete--max-width-two-thirds",
     value: degreeTemp.org,
     minLength: 2,

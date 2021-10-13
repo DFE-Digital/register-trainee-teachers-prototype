@@ -2,8 +2,12 @@
 {# Lead school name #}
 {% if record.schools.leadSchool %}
   {% set leadSchoolHtml %}
-    <p class="govuk-body">{{record.schools.leadSchool.schoolName}}</p>
-    <span class="govuk-hint">{{record.schools.leadSchool | getSchoolHint}}</span>
+    {% if record.schools.leadSchool.notApplicable | falsify %}
+      Not applicable
+    {% else %}
+      <p class="govuk-body">{{record.schools.leadSchool.schoolName}}</p>
+      <span class="govuk-hint">{{record.schools.leadSchool | getSchoolHint}}</span>
+    {% endif %}
   {% endset %}
 {% endif %}
 
@@ -27,8 +31,12 @@
 
 {% if record.schools.employingSchool %}
   {% set employingSchoolHtml %}
+    {% if record.schools.employingSchool.notApplicable | falsify %}
+      Not applicable
+    {% else %}
     <p class="govuk-body">{{record.schools.employingSchool.schoolName}}</p>
     <span class="govuk-hint">{{record.schools.employingSchool | getSchoolHint}}</span>
+    {% endif %}
   {% endset %}
 {% endif %}
 

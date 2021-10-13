@@ -96,6 +96,12 @@ module.exports = router => {
     let referrer = utils.getReferrer(req.query.referrer)
     const schools = getSchools()
 
+    // default to applicable unless checkbox set
+    let leadSchoolApplicable = true
+    if (record?.schools?.leadSchool?.notApplicable && record?.schools?.leadSchool?.notApplicable.includes('true') ){
+      leadSchoolApplicable = false
+    }
+
     // Input added with js by the autocomplete
     let autocompleteRawValue = req.body?._autocomplete_raw_value_school_picker
 
@@ -129,25 +135,27 @@ module.exports = router => {
     delete record?.schools?.leadSchoolIsEmployingSchool // Checkbox no longer needed
 
     // Search again
-    if (schoolSearchTerm && !schoolUuid){
+    if (schoolSearchTerm && !schoolUuid && leadSchoolApplicable){
       let queryParams = utils.addQueryParam(referrer, `_schoolSearch=${schoolSearchTerm}`)
       res.redirect(`${recordPath}/schools/lead-school${queryParams}`)
     }
     // No answer given and no search term
-    else if (!schoolUuid){
+    else if (!schoolUuid && leadSchoolApplicable){
       res.redirect(`${recordPath}/schools/lead-school${referrer}`)
     }
     else {
-      let selectedSchool = schools.find(school => school.uuid == schoolUuid)
+      if (leadSchoolApplicable){
+        let selectedSchool = schools.find(school => school.uuid == schoolUuid)
 
-      // Seed records might have schools that aren't in our schools list
-      // This may happen if a user tries to edit an existing seed record
-      if (!selectedSchool) {
-        console.log(`School not found - you probably need to update the seed records`)
-      }
-      else {
-        // Using _.set as lead school might not exist yet
-        _.set(record, 'schools.leadSchool', selectedSchool)
+        // Seed records might have schools that aren't in our schools list
+        // This may happen if a user tries to edit an existing seed record
+        if (!selectedSchool) {
+          console.log(`School not found - you probably need to update the seed records`)
+        }
+        else {
+          // Using _.set as lead school might not exist yet
+          _.set(record, 'schools.leadSchool', selectedSchool)
+        }
       }
 
       // Some routes have a conditional next question
@@ -207,6 +215,12 @@ module.exports = router => {
     let referrer = utils.getReferrer(req.query.referrer)
     const schools = getSchools()
 
+    // default to applicable unless checkbox set
+    let employingSchoolApplicable = true
+    if (record?.schools?.employingSchool?.notApplicable && record?.schools?.employingSchool?.notApplicable.includes('true') ){
+      employingSchoolApplicable = false
+    }
+
     // Input added with js by the autocomplete
     let autocompleteRawValue = req.body?._autocomplete_raw_value_school_picker
 
@@ -238,25 +252,27 @@ module.exports = router => {
     let schoolUuid = autocompleteUuid || schoolResultUuid || false
 
     // Search again
-    if (schoolSearchTerm && !schoolUuid){
+    if (schoolSearchTerm && !schoolUuid && employingSchoolApplicable){
       let queryParams = utils.addQueryParam(referrer, `_schoolSearch=${schoolSearchTerm}`)
       res.redirect(`${recordPath}/schools/employing-school${queryParams}`)
     }
     // No answer given and no search term
-    else if (!schoolUuid){
+    else if (!schoolUuid && employingSchoolApplicable){
       res.redirect(`${recordPath}/schools/employing-school${referrer}`)
     }
     else {
-      let selectedSchool = schools.find(school => school.uuid == schoolUuid)
+      if (employingSchoolApplicable){
+        let selectedSchool = schools.find(school => school.uuid == schoolUuid)
 
-      // Seed records might have schools that aren't in our schools list
-      // This may happen if a user tries to edit an existing seed record
-      if (!selectedSchool) {
-        console.log(`School not found - you probably need to update the seed records`)
-      }
-      else {
-        // Using _.set as lead school might not exist yet
-        _.set(record, 'schools.employingSchool', selectedSchool)
+        // Seed records might have schools that aren't in our schools list
+        // This may happen if a user tries to edit an existing seed record
+        if (!selectedSchool) {
+          console.log(`School not found - you probably need to update the seed records`)
+        }
+        else {
+          // Using _.set as lead school might not exist yet
+          _.set(record, 'schools.employingSchool', selectedSchool)
+        }
       }
 
       res.redirect(`${recordPath}/schools/confirm${referrer}`)

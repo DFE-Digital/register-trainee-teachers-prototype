@@ -28,6 +28,34 @@
   }) }}
 </div>
 
+
+  
+
+
+{% set detailsHtml %}
+
+  <p class="govuk-body">
+    If the lead school is missing from the list, contact us at <a class="govuk-link" href="mailto:becomingateacher@digital.education.gov.uk">becomingateacher<wbr>@digital.education.gov.uk</a>
+  </p>
+
+  <p class="govuk-body">Lead school is not applicable for trainees who are employed and funded by private schools.</p>
+
+  {{ govukCheckboxes({
+    items: [
+      {
+        value: "true",
+        text: "Lead school is not applicable"
+      }
+    ]
+    } | decorateAttributes(record, "record.schools.leadSchool.notApplicable")) }}
+{% endset %}
+
+{{ govukDetails({
+  summaryText: "Lead school is not applicable for this trainee or is not listed",
+  html: detailsHtml,
+  open: true if record.schools.leadSchool.notApplicable == "true"
+}) }}
+
 {# Commented out for now as not sure about this #}
 {# Only show the checkbox where we're using the autocomplete and we've not already got results #}
 {# <div class="app-js-only">

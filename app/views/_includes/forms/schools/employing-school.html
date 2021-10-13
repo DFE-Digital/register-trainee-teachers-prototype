@@ -26,6 +26,30 @@
   }) }}
 </div>
 
+{% set detailsHtml %}
+
+  <p class="govuk-body">
+    If the employing school is missing from the list, contact us at <a class="govuk-link" href="mailto:becomingateacher@digital.education.gov.uk">becomingateacher<wbr>@digital.education.gov.uk</a>
+  </p>
+
+  <p class="govuk-body">Employing school is not applicable for trainees who are employed and funded by private schools.</p>
+
+  {{ govukCheckboxes({
+    items: [
+      {
+        value: "true",
+        text: "Employing school is not applicable"
+      }
+    ]
+    } | decorateAttributes(record, "record.schools.employingSchool.notApplicable")) }}
+{% endset %}
+
+{{ govukDetails({
+  summaryText: "Employing school is not applicable for this trainee or is not listed",
+  html: detailsHtml,
+  open: true if record.schools.employingSchool.notApplicable == "true"
+}) }}
+
 {{ govukButton({
   text: "Continue"
 }) }}

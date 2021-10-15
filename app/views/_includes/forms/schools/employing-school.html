@@ -29,10 +29,10 @@
 {% set detailsHtml %}
 
   <p class="govuk-body">
-    If the employing school is missing from the list, contact us at <a class="govuk-link" href="mailto:becomingateacher@digital.education.gov.uk">becomingateacher@digital.education.gov.uk</a>
+    If the employing school is missing from the list, contact <a class="govuk-link" href="mailto:becomingateacher@digital.education.gov.uk">becomingateacher@digital.education.gov.uk</a>
   </p>
 
-  <p class="govuk-body">Employing school is not applicable for trainees who are employed or funded privately</p>
+  <p class="govuk-body">You only need to provide an employing school if the trainee is employed or funded by a state school</p>
 
   {{ govukCheckboxes({
     items: [
@@ -45,7 +45,7 @@
 {% endset %}
 
 {{ govukDetails({
-  summaryText: "Employing school is not applicable for this trainee or is not listed",
+  summaryText: "Trainee is not at a state school or employing school is not listed",
   html: detailsHtml,
   open: true if record.schools.employingSchool.notApplicable == "true"
 }) }}

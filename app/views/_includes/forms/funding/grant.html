@@ -9,10 +9,15 @@
   {% set financialSupportValueText %} of {{ financialSupportValue | currency }}{% endset %}
 {% endif %}
 
-{# Early years either have a bursary or not - it’s not based on subject #}
-<p class="govuk-body">
-  The course you have selected has a grant available{{ financialSupportValueText }} for {{ financialSupport.subject | dynamicLowercase }}. You need to check if the trainee is eligible for this  grant.
-</p>
+{% if record | isEarlyYears %}
+  <p class="govuk-body">
+    {{ record.route }} has a grant available{{ financialSupportValueText }}. You need to check if the trainee is eligible for this grant.
+  </p>
+{% else %}
+  <p class="govuk-body">
+    The course you have selected has a grant available{{ financialSupportValueText }} for {{ financialSupport.subject | dynamicLowercase }}. You need to check if the trainee is eligible for this grant.
+  </p> 
+{% endif %}
 
 <p class="govuk-body">
   <a href="https://www.gov.uk/government/publications/funding-initial-teacher-training-itt/funding-initial-teacher-training-itt-academic-year-2021-to-2022" class="govuk-link" rel="noreferrer noopener" target="_blank">Funding: initial teacher training (ITT), academic year 2021 to 2022 (opens in new tab)

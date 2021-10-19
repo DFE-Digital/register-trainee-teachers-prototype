@@ -51,6 +51,13 @@
     </div>
 
     <div>
+      {% if record | isDraft and not record | recordIsComplete %}
+        {{govukTag({
+          text: "Incomplete",
+          classes: "app-tag--record-incomplete"
+        })}}
+      {% endif %}
+
       <p class="govuk-body govuk-!-font-size-16 govuk-!-margin-bottom-1">
         {# If subject spcialisms are incomplete, prefer course name. Else prefer the specialisms. #}
         {% set subjects %}

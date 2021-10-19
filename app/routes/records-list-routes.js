@@ -145,9 +145,11 @@ const getSelectedFilters = req => {
     })
   }
 
+  let completeFilterLabel = (pathname == '/drafts') ? "Draft completion" : "Record completion"
+
   if (filters.completeStatus) {
     selectedFilters.categories.push({
-      heading: { text: 'Draft completion' },
+      heading: { text: completeFilterLabel },
       items: filters.completeStatus.map((completeStatus) => {
 
         let newQuery = Object.assign({}, query)

@@ -3,6 +3,7 @@
 // -------------------------------------------------------------------
 const _ = require('lodash')
 const faker = require('faker')
+const weighted = require('weighted')
 const moment = require('moment')
 const path = require('path')
 const url = require('url')
@@ -877,6 +878,9 @@ exports.sectionIsComplete = section => {
 // Check if all sections are complete
 exports.recordIsComplete = record => {
   if (!record || !_.get(record, "route")) return false
+
+  // Pretend 20% of submitted records are incomplete
+  if (exports.isNonDraft(record)) return weighted.select([true, false], [0.8, 0.2])
 
   let requiredSections = _.get(trainingRoutes, `${record.route}.sections`)
   let applyReviewSections = trainingRouteData.applyReviewSections

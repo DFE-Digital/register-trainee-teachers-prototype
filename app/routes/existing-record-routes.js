@@ -253,8 +253,13 @@ module.exports = router => {
       if (newRecord.withdrawalReason != "For another reason") {
         delete newRecord.withdrawalReasonOther
       }
+
+      let withdrawalReasonText = `Date of withdrawal: ${filters.govukDate(newRecord.withdrawalDate)}<br>`
+      withdrawalReasonText += `Reason for withdrawal: ${newRecord?.withdrawalReasonOther || newRecord?.withdrawalReason}`
+
       utils.deleteTempData(data)
-      utils.updateRecord(data, newRecord, 'Trainee withdrawn')
+      utils.updateRecord(data, newRecord, false)
+      utils.addEvent(newRecord, "Trainee withdrawn", withdrawalReasonText)
       req.flash('success', 'Trainee withdrawn')
       res.redirect('/record/' + req.params.uuid)
     }
@@ -320,7 +325,6 @@ module.exports = router => {
       res.redirect('/record/:uuid')
     }
     let timeline = utils.getTimeline(record)
-    console.log({timeline})
     res.render(`record/timeline`, {timeline})
   })
 

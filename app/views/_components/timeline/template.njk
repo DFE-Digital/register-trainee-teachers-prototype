@@ -19,6 +19,10 @@
     </div>
 
     <div class="app-timeline__description">
+      {% if item.description %}
+        <p class="app-timeline__body-text">{{item.description | safe}}</p>
+      {% endif %}
+
       {% if item.link %}
         <a href="{{item.link.href}}">{{item.link.text}}</a>
       {% endif %}

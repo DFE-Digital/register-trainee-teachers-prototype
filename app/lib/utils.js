@@ -1126,7 +1126,7 @@ exports.filterRecords = (records, data, filters = {}) => {
   }
 
   if (filters.status){
-    filteredRecords = filteredRecords.filter(record =>  exports.isDraft(record))
+    filteredRecords = filteredRecords.filter(record =>  filters.status.includes(record.status))
   }
 
   // Filter by the specialism or allocation subject

@@ -13,11 +13,12 @@ module.exports = (application) => {
     faker.date.past()
   ])
 
-  const addEvent = (content) => {
+  const addEvent = (content, description) => {
     events.items.push({
       title: content,
       user: 'Provider',
-      date: date
+      date: date,
+      ...( description? { description } : {})
     })
   }
 
@@ -69,10 +70,12 @@ if (application.status == 'Deferred'){
   addEvent("Trainee deferred")
 }
 
+let withdrawalTextHtml = `Date of withdrawal: 1 September 2021<br>Reason for withdrawal: Did not pass the assessment`
+
 if (application.status == 'Withdrawn'){
   addEvent("Trainee submitted for TRN")
   addEvent("TRN received")
-  addEvent("Trainee withdrawn")
+  addEvent("Trainee withdrawn", withdrawalTextHtml)
 }
 
 

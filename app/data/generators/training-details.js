@@ -49,7 +49,7 @@ module.exports = (params) => {
   commencementDate = (traineeStarted == "true") ? commencementDate : undefined
 
   return {
-    ...(weighted.select([true, false],[0.3,0.7]) ? traineeId : {}),
+    ...(weighted.select([true, false],[0.3,0.7]) ? traineeId : {}), // 30% with trainee ID
     traineeStarted,
     commencementDate
   }

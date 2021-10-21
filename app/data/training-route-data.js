@@ -68,7 +68,7 @@ let defaultRouteData = {
   qualificationsSummary: "QTS",
   duration: 1,
   sections: [
-    'trainingDetails',
+    // 'trainingDetails',
     'courseDetails',
     'personalDetails',
     'contactDetails',
@@ -89,7 +89,7 @@ let baseRouteData = {
   "Assessment only": {
     defaultEnabled: true,
     sections: [
-      'trainingDetails',
+      // 'trainingDetails',
       'courseDetails',
       'personalDetails',
       'contactDetails',
@@ -102,7 +102,7 @@ let baseRouteData = {
   "Provider-led (undergrad)": {
     defaultEnabled: true,
     sections: [
-      'trainingDetails',
+      // 'trainingDetails',
       'courseDetails',
       'personalDetails',
       'contactDetails',
@@ -174,7 +174,7 @@ let baseRouteData = {
   "School direct (salaried)": {
     defaultEnabled: true,
     sections: [
-      'trainingDetails',
+      // 'trainingDetails',
       'courseDetails',
       'personalDetails',
       'contactDetails',
@@ -227,7 +227,7 @@ let baseRouteData = {
     defaultEnabled: true,
     hasAllocatedPlaces: true,
     sections: [
-      'trainingDetails',
+      // 'trainingDetails',
       'courseDetails',
       'personalDetails',
       'contactDetails',
@@ -280,7 +280,7 @@ let baseRouteData = {
   "Teaching apprenticeship (postgrad)": {
     defaultEnabled: true,
     sections: [
-      'trainingDetails',
+      // 'trainingDetails',
       'courseDetails',
       'personalDetails',
       'contactDetails',
@@ -305,7 +305,7 @@ let baseRouteData = {
   "Opt-in (undergrad)": {
     defaultEnabled: true,
     sections: [
-      'trainingDetails',
+      // 'trainingDetails',
       'courseDetails',
       'personalDetails',
       'contactDetails',
@@ -338,7 +338,7 @@ let baseRouteData = {
   "Early years (salaried)": {
     defaultEnabled: true,
     sections: [
-      'trainingDetails',
+      // 'trainingDetails',
       'courseDetails',
       'personalDetails',
       'contactDetails',
@@ -369,7 +369,7 @@ let baseRouteData = {
   "Early years (postgrad)": {
     defaultEnabled: true,
     sections: [
-      'trainingDetails',
+      // 'trainingDetails',
       'courseDetails',
       'personalDetails',
       'contactDetails',
@@ -417,7 +417,7 @@ let baseRouteData = {
   "Early years (assessment only)": {
     defaultEnabled: true,
     sections: [
-      'trainingDetails',
+      // 'trainingDetails',
       'courseDetails',
       'personalDetails',
       'contactDetails',
@@ -434,7 +434,7 @@ let baseRouteData = {
   "Early years (undergrad)": {
     defaultEnabled: true,
     sections: [
-      'trainingDetails',
+      // 'trainingDetails',
       'courseDetails',
       'personalDetails',
       'contactDetails',
@@ -456,7 +456,7 @@ let baseRouteData = {
     disableForNewDrafts: true, // we want to show trainees on this route, but not allow new ones
     defaultEnabled: false,
     sections: [
-      'trainingDetails',
+      // 'trainingDetails',
       'courseDetails',
       'personalDetails',
       'contactDetails',

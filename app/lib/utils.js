@@ -3,7 +3,6 @@
 // -------------------------------------------------------------------
 const _ = require('lodash')
 const faker = require('faker')
-const weighted = require('weighted')
 const moment = require('moment')
 const path = require('path')
 const url = require('url')
@@ -12,6 +11,7 @@ const trainingRoutes = trainingRouteData.trainingRoutes
 const arrayFilters = require('./../filters/arrays.js').filters
 const dates = require('./../filters/dates.js').filters
 const ittSubjects = require('./../data/itt-subjects')
+const generateReference = require('./../data/generators/reference-number')
 
 // -------------------------------------------------------------------
 // General
@@ -879,9 +879,6 @@ exports.sectionIsComplete = section => {
 exports.recordIsComplete = record => {
   if (!record || !_.get(record, "route")) return false
 
-  // Pretend 20% of submitted records are incomplete
-  if (exports.isNonDraft(record)) return weighted.select([true, false], [0.8, 0.2])
-
   let requiredSections = _.get(trainingRoutes, `${record.route}.sections`)
   let applyReviewSections = trainingRouteData.applyReviewSections
 
@@ -1457,6 +1454,7 @@ exports.registerForTRN = (record) => {
   else {
     record.status = 'Pending TRN'
     record.source = record.source || "Manual" // just in case
+    record.reference = record.reference || generateReference()
     delete record?.placement?.status
     record.submittedDate = new Date()
     record.updatedDate = new Date()

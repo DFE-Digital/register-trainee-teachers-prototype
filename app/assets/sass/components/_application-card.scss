@@ -2,17 +2,32 @@
   margin-bottom: govuk-spacing(3);
   padding-bottom: govuk-spacing(3);
   border-bottom: 1px solid govuk-colour('mid-grey');
-  
-  @include govuk-media-query($from: 401px) {
-    display: flex;
-    // Ensure columns evenly distributed, with no gap at the start or end
-    justify-content: space-between;
-  }
 }
 
 .app-application-card:first-of-type {
   border-top: 1px solid govuk-colour('mid-grey');
   padding-top: govuk-spacing(3);
+}
+
+.app-application-card_row {
+  min-width: 100%;
+}
+
+.app-application-card_row--header {
+  display: inline-grid;
+  .govuk-tag {
+    margin-left: govuk-spacing(3);
+  }
+}
+
+.app-application-card_row--body {
+    margin-top: govuk-spacing(2);
+    @include govuk-media-query($from: 401px) {
+      display: flex;
+      // Ensure columns evenly distributed, with no gap at the start or end
+      justify-content: space-between;
+    }
+  }
 }
 
 // Checkbox column
@@ -27,10 +42,6 @@
 // Trainee + Course details columns
 .app-application-card_col:nth-last-child(2) {
  
-  .govuk-tag {
-    margin-bottom: govuk-spacing(2);
-  }
-
   div:nth-child(1) {
     margin-bottom: govuk-spacing(2);
   }
@@ -107,11 +118,6 @@
   hyphens: auto;
 }
 
-.app-application-card .govuk-tag {
-  // Stops elements in flex containers to try and fill available space
-  align-self: flex-end;
-}
-
 .app-application-card__provider {
   overflow-wrap: break-word;
 }
@@ -124,5 +130,3 @@
     }
   }
 }
-
-

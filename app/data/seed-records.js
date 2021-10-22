@@ -7,6 +7,7 @@ seedRecords.push({
     "items": []
   },
   "route": "Provider-led (postgrad)",
+  "reference": "LK5849",
   trainingDetails: null,
   courseDetails: null,
   "personalDetails": {
@@ -86,6 +87,7 @@ seedRecords.push({
 // Partially complete apply draft with one piece of invalid data, course is eligible for a bursary
 seedRecords.push({
   status: 'Draft',
+  "reference": "LD9987",
   personalDetails: {
     givenName: "Samantha",
     familyName: "Koch",
@@ -155,6 +157,7 @@ seedRecords.push({
 // Fully complete draft - ready to submit
 seedRecords.push({
   status: 'Draft',
+  "reference": "YY5889",
   personalDetails: {
     givenName: "Jill",
     familyName: "Bachmann",
@@ -196,6 +199,7 @@ seedRecords.push({
 
 seedRecords.push({
   status: 'Draft',
+  "reference": "MA3203",
   personalDetails: {
     givenName: "Rachel",
     familyName: "Laverty",
@@ -239,6 +243,7 @@ seedRecords.push({
 
 seedRecords.push({
   status: 'Draft',
+  "reference": "WK4201",
   personalDetails: {
     givenName: "George",
     familyName: "Briggs",
@@ -276,6 +281,7 @@ seedRecords.push({
 
 seedRecords.push({
   status: 'Pending TRN',
+  "reference": "GJ8729",
   submittedDate: new Date(),
   personalDetails: {
     givenName: "Becky",
@@ -297,6 +303,7 @@ seedRecords.push({
 
 seedRecords.push({
   status: "TRN received",
+  "reference": "MM4938",
   trainingDetails: {
     traineeId: "2020/21-023"
   },
@@ -317,6 +324,7 @@ seedRecords.push({
 
 seedRecords.push({
   status: "TRN received",
+  "reference": "YW1442",
   trainingDetails: {
     traineeId: "2020/21-074",
     traineeStarted: null,
@@ -338,6 +346,7 @@ seedRecords.push({
 
 seedRecords.push({
   status: "TRN received",
+  "reference": "KG4872",
   trainingDetails: {
     traineeId: "2020/21-092"
   },
@@ -357,6 +366,7 @@ seedRecords.push({
 
 seedRecords.push({
   status: "TRN received",
+  "reference": "RN3219",
   trainingDetails: {
     traineeId: "2020/21-092"
   },
@@ -393,6 +403,7 @@ seedRecords.push({
 // Special bespoke record for HPITT - for developers to compare against
 seedRecords.push({
   status: "Draft",
+  "reference": "RM3522",
   trainingDetails: {
     traineeId: "2021/22-075"
   },
@@ -429,6 +440,7 @@ seedRecords.push({
 
 seedRecords.push({
   status: "TRN received",
+  "reference": "RJ3112",
   trainingDetails: {
     traineeId: "2021/22-076"
   },

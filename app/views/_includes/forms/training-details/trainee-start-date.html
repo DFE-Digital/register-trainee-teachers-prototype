@@ -80,36 +80,36 @@
 
     {# If the trainee start exists, use date input for editing #}
     {{ govukDateInput({
-    fieldset: {
-    legend: {
-      text: pageHeading,
-      isPageHeading: true,
-      classes: "govuk-label--l"
-      }
-    },
-    id: commencementDateID,
-    namePrefix: "record[trainingDetails][commencementDate]",
-    hint: {
-      html: commencementDateHint
-    },
-    items: [
-        {
-          name: "day",
-          classes: "govuk-input--width-2",
-          value: commencementStartDateArray["0"]
-        },
-        {
-          name: "month",
-          classes: "govuk-input--width-2",
-          value: commencementStartDateArray["1"]
-        },
-        {
-          name: "year",
-          classes: "govuk-input--width-4",
-          value: commencementStartDateArray["2"]
+      fieldset: {
+      legend: {
+        text: pageHeading,
+        isPageHeading: true,
+        classes: "govuk-fieldset__legend--l"
         }
-      ]
-  }) }}
+      },
+      id: commencementDateID,
+      namePrefix: "record[trainingDetails][commencementDate]",
+      hint: {
+        html: commencementDateHint
+      },
+      items: [
+          {
+            name: "day",
+            classes: "govuk-input--width-2",
+            value: commencementStartDateArray["0"]
+          },
+          {
+            name: "month",
+            classes: "govuk-input--width-2",
+            value: commencementStartDateArray["1"]
+          },
+          {
+            name: "year",
+            classes: "govuk-input--width-4",
+            value: commencementStartDateArray["2"]
+          }
+        ]
+    }) }}
 
 {% endif %}
 

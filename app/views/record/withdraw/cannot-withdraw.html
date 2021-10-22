@@ -4,10 +4,21 @@
 {% set pageHeading = 'You cannot withdraw this trainee' %}
 {% set pageHeadingTraineeName = data.record.personalDetails | getShortName %}
 
-{% set recordTask = "withdraw" %}
-
 {% block formContent %}
 
-  {% include "_includes/cannot-defer-or-withdraw-content.html" %}
+  <h1 class="govuk-heading-l">
+    <span class="govuk-caption-l">{{ pageHeadingTraineeName }}</span>
+    {{ pageHeading }}
+  </h1>
+
+  <p class="govuk-body">
+    You can only withdraw a trainee after they have started their ITT.
+  </p>
+  <p class="govuk-body">
+    You can <a href="{{ "./../delete/confirm" | addReferrer(referrer) }}">delete this trainee record</a>.
+  </p>
+  <p class="govuk-body">
+    If you need more help, email us at <a class="govuk-link" href="mailto:becomingateacher@digital.education.gov.uk?subject=withdraw%20a%20trainee">becomingateacher@digital.education.gov.uk</a>.
+  </p>
 
 {% endblock %}

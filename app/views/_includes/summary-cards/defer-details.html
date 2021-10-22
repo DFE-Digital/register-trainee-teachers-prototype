@@ -1,15 +1,50 @@
+{% set deferralDateText %}
+  {% if record | ittInTheFuture or record | ittStartedButNoCommencementDate %}
+    The trainee deferred before starting their ITT
+  {% elseif record | traineeStarted %}
+    {{ record.deferredDate | govukDate }}
+  {% else %}
+    Not provided
+  {% endif %}
+{% endset %}
+
+{% set deferralRoute %}
+  {%- if record | traineeStarted -%}
+    /defer
+  {%- else -%}
+    /defer/did-trainee-start
+  {%- endif -%}
+{% endset %}
+
 {% set deferDetailsRows = [
+  {
+    key: {
+      text: "Trainee start date"
+    },
+    value: {
+      text: record.trainingDetails.commencementDate | govukDate
+    },
+    actions: {
+      items: [
+        {
+          href: recordPath + "/defer/did-trainee-start" | addReferrer(referrer),
+          text: "Change",
+          visuallyHiddenText: "trainee start date"
+        }
+      ]
+    }
+  } if record | traineeStarted,
   {
     key: {
       text: "Date of deferral"
     },
     value: {
-      text: record.deferredDate | govukDate or 'Not provided'
+      text: deferralDateText
     },
     actions: {
       items: [
         {
-          href: recordPath + "/defer" | addReferrer(referrer),
+          href: recordPath + deferralRoute | addReferrer(referrer),
           text: "Change",
           visuallyHiddenText: "deferral date"
         }

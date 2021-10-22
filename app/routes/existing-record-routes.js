@@ -213,7 +213,7 @@ module.exports = router => {
       }
       if (radioChoice == "Yesterday") {
         newRecord.reinstateDate = filters.toDateArray(moment().subtract(1, "days"))
-      } 
+      }
       res.redirect(`/record/${req.params.uuid}/reinstate/confirm`)
     }
   })
@@ -222,6 +222,15 @@ module.exports = router => {
   router.post('/record/:uuid/reinstate/update', (req, res) => {
     const data = req.session.data
     const newRecord = data.record
+
+    let traineeStarted = newRecord?.trainingDetails?.traineeStarted
+
+    // Set trainee deferred date as start date if trainee deferred before starting
+    if (traineeStarted == "false") {
+      newRecord.trainingDetails.commencementDate = newRecord.reinstateDate
+      newRecord.trainingDetails.traineeStarted = "true"
+    }
+
     // Update failed or no data
     if (!newRecord){
       res.redirect('/record/:uuid')
@@ -406,7 +415,7 @@ module.exports = router => {
 
 
   // Defer route
-  // If trainee has not started, tell user they cannot defer the trainee
+  // If trainee has not started, skip deferred date
   router.post('/record/:uuid/defer/did-trainee-start-answer', (req, res) => {
     const data = req.session.data
     let record = data.record
@@ -416,7 +425,8 @@ module.exports = router => {
     if (traineeStarted == "true") {
       res.redirect(`/record/${req.params.uuid}/defer/when-did-trainee-start${referrer}`)
     } else if (traineeStarted == "false") {
-      res.redirect(`/record/${req.params.uuid}/defer/cannot-defer${referrer}`)
+      delete record?.trainingDetails?.commencementDate
+      res.redirect(`/record/${req.params.uuid}/defer/confirm${referrer}`)
     } else {
       res.redirect(`/record/${req.params.uuid}/defer/did-trainee-start${referrer}`)
     }
@@ -424,6 +434,7 @@ module.exports = router => {
 
   // Defer route
   // If trainee started 'on time', set trainee start date to same as ITT start date
+  // And skip deferal date question if value (so ‘Change’ loop doesn't ask again)
   router.post('/record/:uuid/defer/when-did-the-trainee-start-answer', (req, res) => {
     let data = req.session.data
     let record = data.record
@@ -435,12 +446,16 @@ module.exports = router => {
     if (traineeStarted == "started-itt-on-time"){
       record.trainingDetails.commencementDate = courseStartDate
     }
-    res.redirect(`/record/${req.params.uuid}/defer${referrer}`)
+    if (record.deferredDateRadio) {
+      res.redirect(`/record/${req.params.uuid}/defer/confirm${referrer}`)
+    } else {
+      res.redirect(`/record/${req.params.uuid}/defer${referrer}`)
+    }
   })
 
 
   // Withdraw route
-  // If trainee has not started, tell user they cannot defer the trainee
+  // If trainee has not started, tell user they cannot withdraw the trainee
   router.post('/record/:uuid/withdraw/did-trainee-start-answer', (req, res) => {
     const data = req.session.data
     let record = data.record

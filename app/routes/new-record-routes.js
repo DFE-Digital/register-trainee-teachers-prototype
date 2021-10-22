@@ -31,7 +31,7 @@ module.exports = router => {
     record.events = { items: []}
     record.reference = generateReference()
     data.record = record
-    // If multiple providers, users must pick one as thier first action
+    // If multiple providers, users must pick one as their first action
     if (data.signedInProviders.length > 1){
       res.redirect('/new-record/pick-provider')
     }

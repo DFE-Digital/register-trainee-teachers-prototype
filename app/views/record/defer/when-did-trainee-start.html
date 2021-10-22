@@ -1,8 +1,10 @@
 {% extends "_templates/_record-form.html" %}
 
-{% set pageHeading %}
-  Did the trainee start their ITT on time?
-{% endset %}
+{% if traineeStartDate %}
+  {% set pageHeading = "When did the trainee start their ITT?" %}
+{% else %}
+  {% set pageHeading = "Did the trainee start their ITT on time?" %}
+{% endif %}
 
 {% set startConfirmed = true %}
 

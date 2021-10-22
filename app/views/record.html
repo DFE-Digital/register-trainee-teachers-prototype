@@ -15,22 +15,15 @@
 
 {% set recordPath = "/record/" + record.id %}
 
-{% set courseNotStartedMessage %}
-  The trainee’s ITT starts on {{ record.courseDetails.startDate | govukDate }}
-{% endset %}
-
-
 <div class="govuk-grid-row">
 
   <div class="govuk-grid-column-full">
 
-    {# Hide the record actions ui if it's empty #}
-    {% if (record | showDelete) or (record | showDeferAndWithdraw) or (record.status | canReinstate) %}
       <div class="record-actions">
         {% if record.status | canRecommendForQts %}
-          {% if record.courseDetails.startDate | isInFuture %}
+          {% if record | ittInTheFuture %}
             {{ govukInsetText({
-            text: courseNotStartedMessage,
+            text: "The trainee’s ITT starts on" + (record.courseDetails.startDate | govukDate),
             classes: "govuk-!-margin-0"
           }) }}
           {% elseif record | hasOutstandingActions %}
@@ -56,14 +49,11 @@
             classes: "govuk-!-margin-0"
           }) }}
         {% endif %}
-
         {% include "_includes/record-actions.njk" %}
-
       </div>
 
       <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
 
-    {% endif %}
 
     <h2 class="govuk-heading-s">Trainee progress</h2>
     {% include "_includes/summary-cards/trainee-progress.html" %}

@@ -138,7 +138,11 @@
     text: "Deferred",
     classes: record.status | getStatusClass + " govuk-!-margin-bottom-2"
   })}} <br>
-  Deferral date: {{record.deferredDate | govukDate}}
+  {% if record.deferredDate %}
+    Deferral date: {{record.deferredDate | govukDate}}
+  {% else %}
+    The trainee deferred before starting their ITT
+  {% endif %}
 {% endset %}
 
 {% set deferredRow = {
@@ -253,7 +257,7 @@
         visuallyHiddenText: "trainee’s start date"
       }
     ]
-  } if canAmend and record.courseDetails.startDate | isInPast
+  } if canAmend and record.courseDetails.startDate | isInPast and not record | isDeferred
 } %}
 
 {% set traineeProgressRows = [

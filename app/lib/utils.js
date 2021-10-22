@@ -938,7 +938,7 @@ exports.hasOutstandingActions = function(record, data = false) {
   let traineeStarted = record?.trainingDetails?.commencementDate
   let ittStartDate = moment(record?.courseDetails?.startDate)
 
-  if (!traineeStarted && dates.isInPast(record?.courseDetails?.startDate)) {
+  if (!traineeStarted && dates.isInPast(record?.courseDetails?.startDate) && record.status != "Deferred") {
     hasOutstandingActions = true
   }
   else if (exports.needsPlacementDetails(record, data)) {
@@ -968,73 +968,52 @@ exports.needsCourseDates = record => {
 }
 
 // -------------------------------------------------------------------
-// Existing record actions
+// Existing record states
 // -------------------------------------------------------------------
 
-  /*
+/*
   ====================================================================
-  showDelete
+  ittInTheFuture
   --------------------------------------------------------------------
-  true if:
-  - ITT start date is in the future
-  - the ITT has started but there is no trainee start date
-    (but we need to check if trainee started - see
-    needsTraineeStarDate)
+  true if itt start date is in the future
   ====================================================================
-
-  Usage:
-
-  record | showDelete // true, false
-
 */
 
-exports.showDelete = (record) => {
-  let courseStartDate = record?.courseDetails?.startDate
+exports.ittInTheFuture = (record) => {
+  return dates.isInFuture(record?.courseDetails?.startDate)
+}
+
+
+/*
+  ====================================================================
+  ittStartedButNoCommencementDate
+  --------------------------------------------------------------------
+  true if itt start is in the past AND
+  trainee does not have a commencement date
+  ====================================================================
+*/
+
+exports.ittStartedButNoCommencementDate = (record) => {
+  let ittStartDate = record?.courseDetails?.startDate
   let traineeStartDate = record?.trainingDetails?.commencementDate
 
-  if (dates.isInFuture(courseStartDate) || !traineeStartDate) {
-    return true
-  } else {
-    return false
-  }
+  return (dates.isInPast(ittStartDate) && !traineeStartDate)
 }
 
 /*
   ====================================================================
-  showDeferAndWithdraw
+  traineeStarted
   --------------------------------------------------------------------
-  - true if ITT start date is in the past and status is 
-    'Pending TRN' or 'TRN recieved'
+  true if itt start is in the past AND
+  trainee has a commencement date
   ====================================================================
 */
 
-exports.showDeferAndWithdraw = (record) => {
-  let courseStartDate = record?.courseDetails?.startDate
-  let status = record?.status
-
-  if ((dates.isInPast(courseStartDate)) && (status == "Pending TRN" || status == "TRN received")) {
-    return true 
-  } else {
-    return false
-  }
-}
-
-/*
-  ====================================================================
-  needsTraineeStartDate
-  --------------------------------------------------------------------
-  - true if trainee start date is missing
-  ====================================================================
-*/
-
-exports.needTraineeStartDate = (record) => {
-  let courseStartDate = record?.courseDetails?.startDate
+exports.traineeStarted = (record) => {
+  let ittStartDate = record?.courseDetails?.startDate
   let traineeStartDate = record?.trainingDetails?.commencementDate
-  if (dates.isInPast(courseStartDate) && !traineeStartDate) {
-    return true
-  } else {
-    return false
-  }
+
+  return (dates.isInPast(ittStartDate) && traineeStartDate)
 }
 
 // -------------------------------------------------------------------

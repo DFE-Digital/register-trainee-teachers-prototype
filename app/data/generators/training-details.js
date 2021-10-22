@@ -19,7 +19,7 @@ const statusesWhereTraineesMustHaveStarted = [
 module.exports = (params) => {
 
   // Todo: make traineeId closer to what Providers user (20/21-1234, etc)
-  const traineeId = faker.random.alphaNumeric(8).toUpperCase()
+  const traineeIdNumber = faker.random.alphaNumeric(8).toUpperCase()
 
   // Much better to use submitted date
   let commencementDate = params?.submittedDate || faker.date.between(
@@ -48,8 +48,12 @@ module.exports = (params) => {
 
   commencementDate = (traineeStarted == "true") ? commencementDate : undefined
 
+  // Estimate 30% of records with Trainee IDs
+  let hasTraineeId = weighted.select([true, false],[0.3,0.7])
+  let traineeId = (hasTraineeId) ? traineeIdNumber : undefined
+
   return {
-    ...(weighted.select([true, false],[0.3,0.7]) ? traineeId : {}), // 30% with trainee ID
+    traineeId,
     traineeStarted,
     commencementDate
   }

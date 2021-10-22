@@ -38,12 +38,16 @@
         </a>
       </h3>
 
-      {% if record.trainingDetails.traineeId %}
-        <p class="govuk-caption-m govuk-!-font-size-16 govuk-!-margin-bottom-1">Trainee ID: {{record.trainingDetails.traineeId}}</p>
-      {% endif %}
       {% if record.trn %}
-        <p class="govuk-caption-m govuk-!-font-size-16 govuk-!-margin-bottom-0">TRN: {{record.trn}}</p>
+        <p class="govuk-caption-m govuk-!-font-size-16 govuk-!-margin-bottom-1">TRN: {{record.trn}}</p>
       {% endif %}
+      {% if record.reference %}
+        <p class="govuk-caption-m govuk-!-font-size-16 govuk-!-margin-bottom-1">Reference: {{record.reference}}</p>
+      {% endif %}
+      {% if record.trainingDetails.traineeId %}
+        <p class="govuk-caption-m govuk-!-font-size-16 govuk-!-margin-bottom-0">Trainee ID: {{record.trainingDetails.traineeId}}</p>
+      {% endif %}
+
       {% if data.isAdmin or data.signedInProviders | length > 1 %}
         <p class="govuk-caption-m govuk-!-font-size-16 app-application-card__provider govuk-!-margin-bottom-0 govuk-!-margin-top-2">
           <span class="govuk-visually-hidden">Provider: </span>{{record.provider}}</p>

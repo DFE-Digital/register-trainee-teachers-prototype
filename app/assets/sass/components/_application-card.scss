@@ -21,12 +21,11 @@
 }
 
 .app-application-card_row--body {
-    margin-top: govuk-spacing(2);
-    @include govuk-media-query($from: 401px) {
-      display: flex;
-      // Ensure columns evenly distributed, with no gap at the start or end
-      justify-content: space-between;
-    }
+  margin-top: govuk-spacing(2);
+  @include govuk-media-query($from: 401px) {
+    display: flex;
+    // Ensure columns evenly distributed, with no gap at the start or end
+    justify-content: space-between;
   }
 }
 

@@ -23,7 +23,7 @@
         </a>
       </h3>
       <span class="app-application-card_tag-container">
-        {% if record | isDraft and not record | recordIsComplete %}
+        {% if not record | recordIsComplete %}
           {{govukTag({
             text: "Incomplete",
             classes: "app-tag--record-incomplete"

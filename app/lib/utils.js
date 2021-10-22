@@ -1166,11 +1166,12 @@ exports.filterRecordsBySearchTerm = (records, searchQuery=false) => {
     let searchParts = searchQueryLowercase.split(' ')
     let nameMatch = searchParts.every(part => fullName.includes(part))
 
+    let referenceMatch = searchParts.some(part => (record?.reference || "").toLowerCase().includes(part))
     let traineeIdMatch = searchParts.some(part => (record?.trainingDetails?.traineeId || "").toLowerCase().includes(part))
 
     let trnMatch = searchParts.some(part => (record?.trn || "").toString().includes(part))
 
-    return traineeIdMatch || trnMatch || nameMatch
+    return referenceMatch || traineeIdMatch || trnMatch || nameMatch
   })
 
   return filteredRecords

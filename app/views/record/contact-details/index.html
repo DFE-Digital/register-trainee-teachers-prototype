@@ -5,6 +5,7 @@
 {% set formAction = "./contact-details/confirm" | addReferrer(referrer) %}
 
 {% block formContent %}
+  {{ headingCaption(record.personalDetails.shortName) }}
   {% include "_includes/forms/contact-details.html" %}
 {% endblock %}
 

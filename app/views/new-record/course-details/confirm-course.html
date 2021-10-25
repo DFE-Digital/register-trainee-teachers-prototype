@@ -9,6 +9,7 @@
 {# {% set formAction = "./../overview" | orReferrer(referrer) %} #}
 
 {% block formContent %}
+  {{ headingCaption(record.personalDetails.shortName) }}
   {% include "_includes/forms/course-details/confirm-course.html" %}
 {% endblock %}
 

@@ -9,6 +9,7 @@
 {# {% set formAction = "./assessment-details/confirm" %} #}
 
 {% block formContent %}
+  {{ headingCaption(record.personalDetails.shortName) }}
   {% include "_includes/forms/course-details/pick-course.html" %}
 {% endblock %}
 

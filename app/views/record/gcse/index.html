@@ -5,6 +5,7 @@
 {% set formAction = "./gcse/confirm" | addReferrer(referrer) %}
 
 {% block formContent %}
+  {{ headingCaption(record.personalDetails.shortName) }}
   {% include "_includes/forms/gcse-details.html" %}
 {% endblock %}
 

@@ -7,5 +7,6 @@
 {% set formAction = "./details" | addReferrer(referrer) %}
 
 {% block formContent %}
+  {{ headingCaption(record.personalDetails.shortName) }}
   {% include "_includes/forms/degree/type.html" %}
 {% endblock %}

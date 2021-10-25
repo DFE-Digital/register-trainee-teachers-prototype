@@ -4,5 +4,6 @@
 {% set schoolType = 'employing' %}
 
 {% block formContent %}
+  {{ headingCaption(record.personalDetails.shortName) }}
   {% include "_includes/forms/schools/school-search-results.html" %}
 {% endblock %}

@@ -5,6 +5,7 @@
 {# {% set formAction = "disabilities" %} #}
 
 {% block formContent %}
+  {{ headingCaption(record.personalDetails.shortName) }}
   {% include "_includes/forms/disabilities.html" %}
 {% endblock %}
 

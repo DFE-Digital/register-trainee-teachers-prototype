@@ -3,5 +3,6 @@
 {% set pageHeading = "Lead school" %}
 
 {% block formContent %}
+  {{ headingCaption(record.personalDetails.shortName) }}
   {% include "_includes/forms/schools/lead-school.html" %}
 {% endblock %}

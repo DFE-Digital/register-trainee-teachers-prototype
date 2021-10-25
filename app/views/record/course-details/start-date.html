@@ -5,6 +5,7 @@
 {# {% set formAction = "./confirm" %} #}
 
 {% block formContent %}
+  {{ headingCaption(record.personalDetails.shortName) }}
   {% include "_includes/forms/course-details/start-date.html" %}
 {% endblock %}
 

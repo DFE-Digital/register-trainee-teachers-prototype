@@ -11,6 +11,7 @@
 {# {% set formAction = "./trainee-start-date/confirm" | addReferrer(referrer) %} #}
 
 {% block formContent %}
+  {{ headingCaption(record.personalDetails.shortName) }}
   {% include "_includes/forms/training-details/trainee-start-date.html" %}
 {% endblock %}
 

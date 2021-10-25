@@ -7,6 +7,7 @@
 {% set formAction = "./confirm" | addReferrer(referrer) %}
 
 {% block formContent %}
+  {{ headingCaption(record.personalDetails.shortName) }}
   {% include "_includes/forms/degree/bursary-selection.html" %}
 {% endblock %}
 

@@ -9,6 +9,7 @@
 {% endif %}
 
 {% block formContent %}
+  {{ headingCaption(record.personalDetails.shortName) }}
   {% include "_includes/forms/trainee-disabilities.html" %}
 {% endblock %}
 

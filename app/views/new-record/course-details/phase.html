@@ -5,6 +5,7 @@
 {# {% set formAction = "./course-details/details" %} #}
 
 {% block formContent %}
+  {{ headingCaption(record.personalDetails.shortName) }}
   {% include "_includes/forms/course-details/phase.html" %}
 {% endblock %}
 

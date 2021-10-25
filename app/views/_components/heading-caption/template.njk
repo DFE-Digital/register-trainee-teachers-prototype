@@ -1,9 +1,11 @@
-<span class="
-{% if size %}
-  govuk-caption-{{ size }}
-{% else %}
-  govuk-caption-m
-{% endif %}
-{{ classes }}
-">{{ content }}
-</span>
+{%- if content -%}
+  <span class="
+  {% if size %}
+    govuk-caption-{{ size }}
+  {% else %}
+    govuk-caption-l
+  {% endif %}
+  {{ classes }}
+  ">{{ content }}
+  </span>
+{%- endif -%}

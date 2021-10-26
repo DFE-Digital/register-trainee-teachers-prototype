@@ -417,6 +417,10 @@ exports.getProviderCourses = function(courses, provider, route=false, data=false
   if (!provider) {
     console.log('Error: no provider given')
   }
+  if (!data?.courses?.[provider]?.courses){
+    console.log('Error: no courses. The kit has likely been reset.')
+    return false
+  }
   let filteredCourses = data.courses[provider].courses
   if (route) {
     filteredCourses = filteredCourses.filter(course => route == course.route)
@@ -493,7 +497,7 @@ exports.updatePublishCourseDates = (courseDetails, data) => {
 exports.routeHasPublishCourses = function(record){
   if (!record) return false
   const data = Object.assign({}, this.ctx.data)
-  let providerCourses = exports.getProviderCourses(data.courses, record?.provider, record.route, data)
+  let providerCourses = exports.getProviderCourses(data?.courses, record?.provider, record.route, data)
   return (providerCourses.length > 0)
 }
 
@@ -778,7 +782,7 @@ exports.subjectsAreIncomplete = courseDetails => {
 // course
 exports.courseNeedsToBeConfirmed = courseDetails => {
   if (exports.sectionIsComplete(courseDetails)) return false
-  else return (Boolean(courseDetails.needsConfirming))
+  else return (Boolean(courseDetails?.needsConfirming))
 }
 
 // -------------------------------------------------------------------
@@ -894,7 +898,8 @@ exports.recordIsComplete = function(record, data=false ) {
       'Withdrawn'
     ]
     if (statusesThatMustBeComplete.includes(record?.status)) return true
-      else return !exports.hasOutstandingActions(record, data)
+      else
+    return !exports.hasOutstandingActions(record, data)
   }
 
   let requiredSections = _.get(trainingRoutes, `${record.route}.sections`)

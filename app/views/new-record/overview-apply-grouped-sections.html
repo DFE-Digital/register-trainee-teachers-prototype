@@ -24,34 +24,27 @@
 <span class="govuk-caption-l">Draft</span>
 <h1 class="govuk-heading-l govuk-!-margin-bottom-8">{{pageHeading}}</h1>
 
-{% set insetTextHtml %}
-  {% if record.courseDetails %}
-    <p class="govuk-body">All conditions met and trainee recruited to {{ record.courseDetails.courseNameLong }}, {{record.route}}</p>
-  {% else %}
-    No data to show
-  {% endif %}
-{% endset %}
-
-{{ govukInsetText({
-  html: insetTextHtml
-}) }}
-
 {# Inset text about the provider and route #}
-{# {% include "_includes/providerAndRouteInsetText.njk" %} #}
+{% include "_includes/providerAndRouteInsetText.njk" %}
 
 <h2 class="govuk-heading-m">Registration data from Apply</h2>
-{# <p class="govuk-body">
-  Application submitted on {{ record.applyData.applicationDate | govukDate }}
-</p> #}
-{#<p class="govuk-body">
-  Met all conditions on {{ record.applyData.recruitedDate | govukDate }}
-</p>#}
 
 {% set courseMissingSpecialisms = record.courseDetails | subjectsAreIncomplete %}
 
 {% set courseNeedsToBeConfirmed = record.courseDetails | courseNeedsToBeConfirmed %}
 
-{% set courseDetailsHref = "course-details/confirm-course" if courseNeedsToBeConfirmed else "course-details/confirm" %}
+{# User has changed route, so course details have been wiped - start as if fresh #}
+{% if not record.courseDetails %}
+  {% set courseDetailsHref = "course-details" %}
+
+{# Fresh Apply draft - course needs confirming, then specialisms / dates, etc #}
+{% elseif courseNeedsToBeConfirmed %}
+  {% set courseDetailsHref = "course-details/confirm-course" %}
+
+{# Returning to existing section #}
+{% else %}
+  {% set courseDetailsHref = "course-details/confirm" %}
+{% endif %}
 
 {{ appTaskList({
   classes: "govuk-!-margin-bottom-8",

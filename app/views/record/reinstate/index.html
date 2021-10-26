@@ -7,7 +7,7 @@
 
   {% set headingHtml %}
     <h1 class="govuk-heading-l govuk-!-margin-bottom-0">
-      <span class="govuk-caption-l">{{ record.personalDetails | getShortName }}</span>
+      <span class="govuk-caption-l">{{ record | getShortName }}</span>
       {{pageHeading}}
     </h1>
   {% endset %}

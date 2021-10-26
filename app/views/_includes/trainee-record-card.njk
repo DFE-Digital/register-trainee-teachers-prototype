@@ -11,7 +11,7 @@
             {% if query.sortOrder == "lastName" %}
               {{ record.personalDetails | getShortNameReversed }}
             {% else %}
-              {{ record.personalDetails | getShortName }}
+              {{ record | getShortName }}
             {% endif %} 
           {% else %}
             {% if record.status | isDraft %}

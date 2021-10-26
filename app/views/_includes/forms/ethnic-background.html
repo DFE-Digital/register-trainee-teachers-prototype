@@ -46,6 +46,8 @@
   } | decorateAttributes(record, "record.diversity.ethnicBackgroundOther"))}}
 {% endset -%}
 
+{% include "_includes/trainee-name-caption.njk" %}
+
 {% if ethnicGroup == "Asian or Asian British" %}
 
   {{ govukRadios({

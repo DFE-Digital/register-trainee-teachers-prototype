@@ -1,0 +1,5 @@
+{% if record | hasName %}
+  <span class="govuk-caption-l">{{ record | getShortName }}</span>
+{% elseif record | isDraft %}
+  <span class="govuk-caption-l">Draft</span>
+{% endif %}

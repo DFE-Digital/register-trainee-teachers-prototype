@@ -1,11 +1,5 @@
 {% extends "_templates/_record-form.html" %}
 
-{% set pageHeading %}
-  Did the trainee start their ITT?
-{% endset %}
-
-{% set pageHeadingTraineeName = data.record.personalDetails | getShortName %}
-
 {% set formAction = "./did-trainee-start-answer" | addReferrer(referrer) %}
 
 {% block formContent %}

@@ -1,6 +1,9 @@
 {% set course = record | getTraineePublishCourse  %}
 
-<h1 class="govuk-heading-l">{{pageHeading}}</h1>
+<h1 class="govuk-heading-l">
+  {% include "_includes/trainee-name-caption.njk" %}
+  {{pageHeading}}
+</h1>
 
 <p class="govuk-body">The trainee is being registered on {{course.courseNameLong}}, {{course.route}}</p>
 

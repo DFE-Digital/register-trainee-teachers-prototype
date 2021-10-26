@@ -7,6 +7,8 @@
   } | decorateAttributes(record, "record.diversity.disabilitiesOther"))}}
 {% endset -%}
 
+{% include "_includes/trainee-name-caption.njk" %}
+
 {{ govukCheckboxes({
     idPrefix: "disabilities",
     name: "record[diversity][disabilities]",

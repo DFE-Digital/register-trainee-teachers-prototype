@@ -2,6 +2,7 @@
 
 {% set startDateHint = "For example, " + "" | today | toDateArray | spaceSeparate %}
 
+{% include "_includes/trainee-name-caption.njk" %}
 
 {{ govukDateInput({
   id: "start-start-date",

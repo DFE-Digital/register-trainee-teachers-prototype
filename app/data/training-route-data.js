@@ -300,7 +300,27 @@ let baseRouteData = {
       "Now teach",
       "Transition to teach"
     ],
-    financialSupportAvailable: false
+    financialSupportAvailable: true,
+    financialSupport: [
+      {
+        type: "grant",
+        subjects: [
+          "Chemistry",
+          "Computing",
+          "Mathematics",
+          "Physics"
+          ],
+        value: "15000"
+      },
+      {
+        type: "grant",
+        subjects: [
+          "Languages",
+          "Classics"
+          ],
+        value: "1000"
+      }
+    ]
   },
   "Opt-in (undergrad)": {
     defaultEnabled: true,

@@ -15,9 +15,8 @@
 
 {% set referrer = recordPath + "/overview" %}
 
-
 {% set draftRecordName %}
-  {% if record | getShortName %}
+  {% if record | hasName %}
    for {{ record | getShortName }}
   {% endif %}
 {% endset %}

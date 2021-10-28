@@ -9,12 +9,6 @@
 {% set legendText = "Trainee start date" %}
 {% set hintHtml = "For example, " + today() | toDateArray | spaceSeparate %}
 
-{% if traineeStartDate %}
-  {% set pageHeading = "When did the trainee start their ITT?" %}
-{% else %}
-  {% set pageHeading = "Did the trainee start their ITT on time?" %}
-{% endif %}
-
 {% set commencementDateInputHtml %}
   {{ govukDateInput({
     id: commencementDateID,

@@ -11,7 +11,7 @@
 {% block formContent %}
 
   <h1 class="govuk-heading-l">
-    <span class="govuk-caption-l">{{ record | getShortName }}</span>
+    {% include "_includes/trainee-name-caption.njk" %}
     {{pageHeading}}
   </h1>
 

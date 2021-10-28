@@ -16,8 +16,8 @@
 {% set referrer = currentPageUrl %}
 
 {% set draftRecordName %}
-  {% if record.personalDetails.shortName %}
-   for {{record.personalDetails.shortName | safe}}
+  {% if record | getShortName %}
+   for {{ record | getShortName }}
   {% endif %}
 {% endset %}
 

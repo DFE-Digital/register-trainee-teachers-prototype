@@ -17,8 +17,8 @@
 
 
 {% set draftRecordName %}
-  {% if record.personalDetails.shortName %}
-   for {{record.personalDetails.shortName}}
+  {% if record | getShortName %}
+   for {{ record | getShortName }}
   {% endif %}
 {% endset %}
 

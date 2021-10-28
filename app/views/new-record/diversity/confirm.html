@@ -7,8 +7,8 @@
 {% set formAction = "./../overview" | orReferrer(referrer) %}
 
 {% block formContent %}
+  {% include "_includes/trainee-name-caption.njk" %}
   <h1 class="govuk-heading-l">
-    {% include "_includes/trainee-name-caption.njk" %}
     {{pageHeading}}
   </h1>
   {% include "_includes/summary-cards/diversity.html" %}

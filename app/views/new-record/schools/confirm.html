@@ -1,3 +1,4 @@
+
 {% extends "_templates/_new-record.html" %}
 
 
@@ -11,9 +12,9 @@
 
 {% block formContent %}
   <h1 class="govuk-heading-l">
-  {% include "_includes/trainee-name-caption.njk" %}
-  {{pageHeading}}
- </h1>
+    {% include "_includes/trainee-name-caption.njk" %}
+    {{pageHeading}}
+  </h1>
   {% include "_includes/summary-cards/schools.html" %}
 
   {{ govukCheckboxes({

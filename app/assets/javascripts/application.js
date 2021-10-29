@@ -24,3 +24,7 @@ if ($('.js-bulk-menu').length){
     _menuClasses: 'moj-button-menu__wrapper--right'
   });
 }
+
+$(document).ready(function () {
+  initAutocompletes()
+})

@@ -47,6 +47,7 @@ const accessibleAutocompleteFromSelect = (input, autocompleteOptions = {}) => {
 
   // Copy over aria-describedBy so the hints are associated correctly
   const newAutocomplete = document.getElementById(inputId)
+
   if (describedBy){
     newAutocomplete.setAttribute('aria-describedby', describedBy)
   }

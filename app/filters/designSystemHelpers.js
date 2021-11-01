@@ -2,6 +2,7 @@
 // Imports and setup
 // -------------------------------------------------------------------
 var CSV = require('csv-string')
+const _ = require('lodash');
 // Leave this filters line
 var filters = {}
 
@@ -190,6 +191,48 @@ filters.csvToSummaryList = (csvString) => {
   arr = CSV.parse(csvString);
   let arrData = filters.arrayToSummaryList(arr)
   return arrData;
+}
+
+// Map a flat array, nested array to Object array that GOV.UK Selects use
+
+// input: 
+//   ['one', 'two', 'three']
+
+// output:
+//   [ 
+//     {
+//       text: 'one',
+//       value: 'one'
+//     },
+//     {
+//       text: 'two',
+//       value: 'two'
+//     },
+//     {
+//       text: 'three',
+//       value: 'three'
+//     }
+//   ]
+filters.toSelectItems = (array) => {
+
+  return array.map(item => {
+    if (Array.isArray(item)){
+      return {
+        text: item[0],
+        value: item[1]
+      }
+    }
+    else if (_.isString(item)){
+      return {
+          text: item,
+          value: item
+        }
+    }
+    else if (item instanceof Object){
+      return item
+    }
+  })
+
 }
 
 

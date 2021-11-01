@@ -66,7 +66,7 @@ module.exports = () => {
     level: 6
   }, {
     short: 'BAcc',
-    text: 'BAcc - Bachelor of Accountancy',
+    text: 'Bachelor of Accountancy',
     full: 'BAcc - Bachelor of Accountancy',
     level: 6
   }, {
@@ -390,10 +390,30 @@ module.exports = () => {
     full: 'First Degree',
     type: 'other'
   }, {
-    short: 'Higher Degree',
-    text: 'Higher Degree',
-    full: 'Higher Degree',
-    type: 'other'
+    short: 'Higher degree or equivalent',
+    text: 'Higher degree or equivalent',
+    full: 'Higher degree or equivalent',
+    type: 'other',
+    synonyms: [
+      "Other",
+      "Integrated master",
+      "Integrated masters",
+      "Integrated master's degree",
+      "Level 7 award",
+      "Level 7 certificate",
+      "Level 7 national diploma",
+      "Level 7 NVQ",
+      "Postgraduate certificate",
+      "Postgraduate certificate in education",
+      "PGCE",
+      "Postgraduate diploma",
+      "Master degree",
+      "Masters degree",
+      "Level 8 award",
+      "Level 8 certificate",
+      "Level 8 diploma"
+    ],
+    hint: "Including level 7, level 8, masters, postgraduate certificates and diplomas"
   }, {
     short: 'Degree equivalent',
     text: 'Degree equivalent',

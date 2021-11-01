@@ -113,7 +113,7 @@ for *each* autocomplete
   //   {% endif %}
   // }
 
-  var inputValue = (result) => {
+  var inputValue2 = (result) => {
       if (result) {
         const name = result.split(' | ')
 
@@ -125,7 +125,7 @@ for *each* autocomplete
       return result && result
     }
 
-  var suggestion = (result) => {
+  var suggestion2 = (result) => {
       const name = result.split(' | ')
       if (name[1]) {
         // Display second part in bold
@@ -152,8 +152,8 @@ for *each* autocomplete
     defaultValue: defaultValue,
     name: rawName,
     templates: {
-      inputValue,
-      suggestion
+      inputValue2,
+      suggestion2
     }
 
   });

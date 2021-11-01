@@ -787,35 +787,35 @@ exports.courseNeedsToBeConfirmed = courseDetails => {
 
 // Statuses
 exports.isDraft = record => {
-  return record.status == "Draft"
+  return record?.status == "Draft"
 }
 
 exports.isNonDraft = record => {
-  return record.status != "Draft"
+  return record?.status != "Draft"
 }
 
 exports.isPendingTrn = record => {
-  return record.status == "Pending TRN"
+  return record?.status == "Pending TRN"
 }
 
 exports.isTrnReceived = record => {
-  return record.status == "TRN received"
+  return record?.status == "TRN received"
 }
 
 exports.isRecommended = record => {
-  return record.status.includes("recommended") //EYTS recommended and QTS recommended
+  return record?.status.includes("recommended") //EYTS recommended and QTS recommended
 }
 
 exports.isAwarded = record => {
-  return record.status.includes("awarded") // EYTS awarded and QTS awarded
+  return record?.status.includes("awarded") // EYTS awarded and QTS awarded
 }
 
 exports.isDeferred = record => {
-  return record.status == "Deferred"
+  return record?.status == "Deferred"
 }
 
 exports.isWithdrawn = record => {
-  return record.status == "Withdrawn"
+  return record?.status == "Withdrawn"
 }
 
 // Source types

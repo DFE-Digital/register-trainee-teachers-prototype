@@ -109,7 +109,7 @@ const setupAutocomplete = (component) => {
   const showAllValues       = element.getAttribute('data-showAllValues') || false
   const showNoOptionsFound  = element.getAttribute('data-show-no-options-found') || false
   let values                = JSON.parse(element.getAttribute('data-autocomplete-values') || "[]")
-  const value               = element.getAttribute('data-value') || false
+  const value               = element.getAttribute('data-value') || null
 
   // If enhancing a select and values not provided, fall back to options from select
   if (!values.length && elementType == 'select'){
@@ -140,7 +140,7 @@ const setupAutocomplete = (component) => {
     showAllValues,
     showNoOptionsFound,
     source: filter,
-    defaultValue: value
+    ...(value ? {defaultValue: value} : {})
   }
 
   if (selectElement){

@@ -67,7 +67,7 @@ seedRecords.push({
       {
         "isInternational": "false",
         "subject": "Sport and exercise sciences",
-        "org": "The University of Manchester",
+        "institution": "The University of Manchester",
         "endDate": "2016",
         "type": "Bachelor of Science",
         "grade": "First-class honours",
@@ -126,7 +126,7 @@ seedRecords.push({
     "items": [
       {
         "isInternational": "false",
-        "org": "Brunel University London",
+        "institution": "Brunel University London",
         "subject": "Mathematics",
         "endDate": "2014",
         "id": "a24f59d5-7e0c-4ee5-b7db-f0d192c6fe05",
@@ -137,7 +137,7 @@ seedRecords.push({
         "type": "**invalid**Masters",
         "subject": "Civil engineering",
         "isInternational": "false",
-        "org": "Heythrop College",
+        "institution": "Heythrop College",
         "country": "United Kingdom",
         "grade": "Distinction",
         "predicted": false,

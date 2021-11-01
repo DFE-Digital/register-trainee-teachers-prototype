@@ -1,6 +1,7 @@
 const faker   = require('faker')
 const weighted = require('weighted')
 const degreeData = require('../degree')
+const degreeInstitutions = require('../degree-instituions')
 
 module.exports = (params, application) => {
 
@@ -28,7 +29,7 @@ module.exports = (params, application) => {
         type: 'Bachelor degree', // ENIC equivalent
         subject,
         isInternational: "true",
-        org: 'University of Paris',
+        institution: 'University of Paris',
         country: 'France',
         // grade: 'Pass',
         predicted,
@@ -42,16 +43,16 @@ module.exports = (params, application) => {
       }
     } else {
       let type = faker.helpers.randomize(degreeData().types.all).text
-      let org = faker.helpers.randomize(degreeData().orgs)
+      let institution = faker.helpers.randomize(degreeInstitutions).name
 
-      // Make 1/3rd of types and orgs be invalid responses
+      // Make 1/3rd of types and institutions be invalid responses
       // But don’t spit out invalid data if the section is marked as completed
       if (isApplyDraft && !sectionIsComplete  && invalidAllowed){
         let randomInvalidType = `**invalid**${faker.helpers.randomize(degreeData().invalidTypes)}`
         type = weighted.select([type, randomInvalidType], [0.9, 0.1])
 
-        let randomInvalidOrg = `**invalid**${faker.helpers.randomize(degreeData().invalidInstitutions)}`
-        org = weighted.select([org, randomInvalidOrg], [0.9, 0.1])
+        let randomInvalidInstitution = `**invalid**${faker.helpers.randomize(degreeData().invalidInstitutions)}`
+        institution = weighted.select([institution, randomInvalidInstitution], [0.9, 0.1])
       }
 
       const level = type.level
@@ -71,7 +72,7 @@ module.exports = (params, application) => {
         type,
         subject,
         isInternational: "false",
-        org,
+        institution,
         // country: 'United Kingdom',
         grade,
         predicted,

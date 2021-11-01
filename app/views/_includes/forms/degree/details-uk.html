@@ -3,6 +3,7 @@
 
 
 {% set formContent %}
+
   {# Set up data #}
   {% set degreeCount = record.degree.items | length %}
   {% if degreeCount < 1 %}
@@ -18,7 +19,7 @@
   {% endset %}
 
   {# Show toggle for non-UK degree if the insitution is invalid #}
-  {% if degreeTemp.org | includes("**invalid**") %}
+  {% if degreeTemp.institution | includes("**invalid**") %}
     {{ govukInsetText({
       html: insetTextHtml
     }) }} 
@@ -35,27 +36,39 @@
   {% set institutionNotRecognisedHtml %}, which was not recognised as a UK institution. Search for the correct institution or change to a non-UK degree.
   {% endset %}
 
+  {% set degreeInstitutions = [] %}
+  {% for institution in data.degreeInstitutions %}
+    {% set degreeInstitutions = degreeInstitutions | push({
+      text: institution.name,
+      value: institution.name
+    }) %}
+  {% endfor %}
+
   {# Degree institution #}
-  {{ appAutocomplete({
+  {{ appAutocompleteFromSelect({
     label: {
       text: "Awarding institution",
       classes: "govuk-label--s"
     },
-    id: 'degree-organisations',
-    name: "degreeTemp[org]",
-    items: data.degreeOrganisations,
+    id: 'degree-institutions',
+    name: "degreeTemp[institution]",
+    items: degreeInstitutions,
     hint: {
       text: "This may be different than where the trainee studied"
     },
-    classes: "app-!-autocomplete--max-width-two-thirds",
-    value: degreeTemp.org,
-    minLength: 2,
-    autoSelect: true,
-    showAllValues: false
+    classes: "govuk-!-width-two-thirds",
+    value: degreeTemp.institution,
+    autocompleteOptions: {
+      minLength: 2,
+      autoselect: true,
+      showAllValues: false,
+      showSuggestionsBanner: true,
+      values: data.degreeInstitutions
+    }
   } | highlightInvalidInputs({invalidMessage: institutionNotRecognisedHtml}) ) }}
 
   {# Degree subject #}
-  {{ appAutocomplete({
+  {{ appAutocompleteFromSelect({
     label: {
       text: "Degree subject",
       classes: "govuk-label--s"
@@ -64,19 +77,29 @@
       text: 'Search for the closest matching subject'
     },
     id: 'subject',
-    autoSelect: true,
-    showAllValues: false,
-    minLength: 2,
     name: "degreeTemp[subject]",
-    items: data.subjects,
-    classes: "app-!-autocomplete--max-width-two-thirds",
-    value: degreeTemp.subject
+    items: data.subjects | toSelectItems,
+    classes: "govuk-!-width-two-thirds",
+    value: degreeTemp.subject,
+    autocompleteOptions: {
+      autoselect: true,
+      showAllValues: false,
+      minLength: 2
+    }
   } | highlightInvalidInputs ) }}
+
+  <div class="govuk-form-group">
+    {{ govukButton({
+      text: "Add another subject",
+      classes: "govuk-button--secondary govuk-!-margin-bottom-1",
+      href: "#"
+    }) }}
+  </div>
 
   {# Degree types #}
   {% set degreeTypesAutocomplete = data.degreeTypes | getDegreeTypesForAutocomplete | sort(attribute='value') %}
 
-  {{ appAutocomplete({
+  {{ appAutocompleteFromSelect({
     label: {
       text: "Type of degree",
       classes: "govuk-label--s"
@@ -86,14 +109,15 @@
     },
     id: 'degreeTypeUK',
     name: "degreeTemp[typeUK]",
-    items: data.degreeTypesSimple,
-    itemsAutocomplete: degreeTypesAutocomplete,
-    displayStyle: "bold",
-    minLength: 2,
-    autoSelect: true,
-    showAllValues: false,
-    classes: "app-!-autocomplete--max-width-two-thirds",
-    value: (degreeTemp.type or degreeTemp.typeUK) if not isInternational
+    items: data.degreeTypesSimple | toSelectItems,
+    classes: "govuk-!-width-two-thirds",
+    value: (degreeTemp.type or degreeTemp.typeUK) if not isInternational,
+    autocompleteOptions: {
+      minLength: 2,
+      autoselect: false,
+      showSuggestionsBanner: true,
+      values: degreeTypesAutocomplete
+    }
   } | highlightInvalidInputs ) }}
 
   {# Degree grade #}

@@ -11,7 +11,23 @@ let degreeTypes             = degreeData.types.all
 let degreeTypesSimple             = degreeData.types.all.map(type => type.text).sort()
 let subjects                = degreeData.subjects
 let ukComparableDegrees     = degreeData.ukComparableDegrees
-let degreeOrganisations     = degreeData.orgs
+
+// Sort two things alphabetically, not case-sensitive
+const sortAlphabetical = (x, y) => {
+  if(x.toLowerCase() !== y.toLowerCase()) {
+    x = x.toLowerCase();
+    y = y.toLowerCase();
+  }
+  return x > y ? 1 : (x < y ? -1 : 0);
+}
+
+let degreeInstitutions      = require('./degree-instituions')
+  .map(degreeInstitution => {
+    // Merge the synonyms into a single list
+    degreeInstitution.synonyms = degreeInstitution.suggestion_synonyms.concat(degreeInstitution.match_synonyms)
+    return degreeInstitution
+  })
+  .sort((a, b) => sortAlphabetical(a.name,b.name))
 
 // Undergraduate qualification
 let ugEntryQualifications   = require('./undergraduate-qualifications')
@@ -140,7 +156,7 @@ module.exports = {
   awards,
   countries,
   courses,
-  degreeOrganisations,
+  degreeInstitutions,
   degreeTypes,
   degreeTypesSimple,
   ethnicities,

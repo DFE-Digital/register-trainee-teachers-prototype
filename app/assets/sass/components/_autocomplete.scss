@@ -163,3 +163,19 @@
     color: govuk-colour("white");
   }
 }
+
+// Overrides
+.app-autocomplete--with-suggestions .autocomplete__menu {
+  top: govuk-spacing(4);
+  border-top: 2px solid black;
+  margin-bottom: govuk-spacing(7);
+}
+
+.app-autocomplete--with-suggestions .autocomplete__wrapper ul::before {
+  content: 'Suggestions';
+  padding: 4px 8px;
+  border-bottom: 2px solid govuk-colour("black");
+  background-color: govuk-colour("light-grey");
+  width: 100%;
+  display: block;
+}

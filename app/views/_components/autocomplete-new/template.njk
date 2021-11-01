@@ -7,7 +7,7 @@
   "data-showAllValues": params.autocompleteOptions.showAllValues,
   "data-show-no-options-found": params.autocompleteOptions['show-no-options-found'],
   "data-autocomplete-values": params.autocompleteOptions.values | dump,
-  "data-value": params.value
+  "data-value": params.value if (params.value | falsify)
 } | deleteBlankAttributes %}
 
 {% set showSuggestions = params.autocompleteOptions.showSuggestionsBanner %}

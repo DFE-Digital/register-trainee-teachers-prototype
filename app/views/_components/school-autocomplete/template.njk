@@ -126,11 +126,11 @@
     }
   }
 
-  var inputValue = (result) => {
+  var inputValueSchools = (result) => {
     if (result) { return result.name }
   }
 
-  var suggestion = (result) => {
+  var suggestionSchools = (result) => {
     if (result) {
       var name
       if (debug){
@@ -155,8 +155,8 @@
     defaultValue: `{{params.value}}`,
     name: '_autocomplete_raw_value_school_picker',
     templates: {
-      inputValue,
-      suggestion
+      inputValue: inputValueSchools,
+      suggestion: suggestionSchools
     },
     tNoResults: function () { return statusMessage }
   })

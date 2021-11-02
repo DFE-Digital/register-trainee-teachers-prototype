@@ -84,7 +84,8 @@
     autocompleteOptions: {
       autoselect: true,
       showAllValues: false,
-      minLength: 2
+      minLength: 2,
+      showSuggestionsBanner: true
     }
   } | highlightInvalidInputs ) }}
 
@@ -114,7 +115,7 @@
     value: (degreeTemp.type or degreeTemp.typeUK) if not isInternational,
     autocompleteOptions: {
       minLength: 2,
-      autoselect: false,
+      autoselect: true,
       showSuggestionsBanner: true,
       values: degreeTypesAutocomplete
     }

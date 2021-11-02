@@ -408,11 +408,14 @@ module.exports = () => {
       "PGCE",
       "Postgraduate diploma",
       "Master degree",
+      "Master of",
+      "Masters in",
       "Masters degree",
       "Level 8 award",
       "Level 8 certificate",
       "Level 8 diploma"
     ],
+    boost: 0.5, // reduced boost so this appears below more specific options
     hint: "Including level 7, level 8, masters, postgraduate certificates and diplomas"
   }, {
     short: 'Degree equivalent',

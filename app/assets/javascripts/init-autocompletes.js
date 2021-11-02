@@ -1,15 +1,23 @@
+const debug = true
+
 // What should get set in the input once a value is selected
-const inputValue = (result) => {
-  return result && result.name
+const valueForInput = (result) => {
+  if (!result) return ''
+  else return result.name
 }
 
 // What gets displayed for each option
-const suggestion = (result) => {
+const menuResultItem = (result) => {
   if (result) {
-    let output = result.append ? `<span>${result.name}</span> ${result.append}` : `<span>${result.name}</span>`
+    let name = (debug) ? `${result.name} (${result.weight})` : result.name
+    let output = result.append ? `<span>${name}</span> ${result.append}` : `<span>${name}</span>`
     return result.hint ? `${output}<span class="autocomplete__option--hint">${result.hint}</span>` : output
   }
 }
+
+const onConfirm = (selected) => {
+  // console.log(`Selected:`, selected)
+};
 
 // Extract data attributes from select options
 const enhanceSelectOption = (option) => {
@@ -36,9 +44,10 @@ const accessibleAutocompleteFromSelect = (input, autocompleteOptions = {}) => {
     name: input.name,
     defaultValue: input.value,
     templates: {
-      inputValue,
-      suggestion
+      inputValue: valueForInput,
+      suggestion: menuResultItem
     },
+    onConfirm,
     ...autocompleteOptions
   })
 

@@ -112,7 +112,8 @@ filters.getDegreeTypesForAutocomplete = (degreeTypes) => {
       value: type.value,
       synonyms: [type.short].concat(type.synonyms).filter(Boolean),
       append: append,
-      hint: type.hint
+      hint: type.hint,
+      boost: type.boost
     }
   })
 }

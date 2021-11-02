@@ -7,6 +7,81 @@ const _ = require('lodash');
 // Leave this filters line
 var filters = {}
 
+
+/*
+  ====================================================================
+  govukDate
+  --------------------------------------------------------------------
+  Process a date and return it in GOV.UK format
+  Accepts arrays (as provided by design system date inputs) as 
+  well as javascript dates
+  ====================================================================
+
+  Usage:
+
+    {{ [1,1,1970] | govukDate }}
+
+  = 1 January 1970
+
+*/
+
+filters.govukDate = (date, format) => {
+  if (Array.isArray(date)){
+    return filters.arrayToGovukDate(date, format)
+  }
+  else return filters.dateToGovukDate(date, format)
+}
+
+/*
+  ====================================================================
+  arrayToGovukDate
+  --------------------------------------------------------------------
+  Convert array to govuk date
+  Useful for converting the arrays provided by the govukDate input
+  pattern to a real date. Primarly an internal function to be used by 
+  the govukDate filter.
+  ====================================================================
+
+  Usage:
+
+  {{ [1, 2, 2020] | arrayToGovukDate }}
+
+  = 1 February 2020
+
+*/
+
+filters.arrayToGovukDate = (array, format) => {
+  let dateObject = filters.arrayToDateObject(array)
+  let govukDate = filters.dateToGovukDate(dateObject, format)
+  return govukDate
+}
+
+/*
+  ====================================================================
+  dateToGovukDate
+  --------------------------------------------------------------------
+  Convert js date object to govuk date (1 February 2020)
+  Internal function to be used by govukDate filter
+  ====================================================================
+
+  Usage:
+
+  {{ date | dateToGovukDate }}
+
+  = 1 February 2020
+
+*/
+
+filters.dateToGovukDate = (date, format=false) => {
+  if (date){
+    let theDate = moment(date)
+    if (theDate.isValid()){
+      return theDate.format(format || 'D MMMM YYYY')
+    }
+  }
+  return ''
+}
+
 /*
   ====================================================================
   arrayToDateObject
@@ -26,14 +101,6 @@ filters.arrayToDateObject = (array) => {
   return new Date(array[2], array[1] -1, array[0])
 }
 
-// Output date array - for use in design system macros macros
-filters.toDateArray = (date) => {
-  if (!date) return []
-  if (_.isArray(date)) return date
-  else {
-    return [moment(date).date(), moment(date).month() + 1, moment(date).year()]
-  }
-}
 /*
   ====================================================================
   today
@@ -55,9 +122,9 @@ filters.today = () => {
 
 /*
   ====================================================================
-  todayGovuk
+  todayGovuk | yesterdayGovuk
   --------------------------------------------------------------------
-  Today's date GOV.UK formatted
+  Today’s or yesterday's date GOV.UK formatted
   ====================================================================
 
   Usage:
@@ -72,59 +139,33 @@ filters.todayGovuk = () => {
   return moment().format('D MMMM YYYY')
 }
 
+filters.yesterdayGovuk = () => {
+  return moment().subtract(1, 'days').format('D MMMM YYYY')
+}
+
 /*
   ====================================================================
-  dateToGovukDate
+  toDateArray
   --------------------------------------------------------------------
-  Convert date object to govuk date (1 February 2020)
+  Convert a date in to an array of three numbers - useful for sending
+  dates to govuk date inputs
   ====================================================================
 
   Usage:
 
-  {{ date | dateToGovukDate }}
+    {{ "1 January 2021" | toDateArray }}
 
-  = 1 February 2020
-
-*/
-
-filters.dateToGovukDate = (date, format=false) => {
-  if (date){
-    let theDate = moment(date)
-    if (theDate.isValid()){
-      return theDate.format(format || 'D MMMM YYYY')
-    }
-  }
-  return ''
-}
-
-filters.govukDate = (date, format) => {
-  if (_.isArray(date)){
-    return filters.arrayToGovukDate(date, format)
-  }
-  else return filters.dateToGovukDate(date, format)
-}
-
-
-
-/*
-  ====================================================================
-  arrayToGovukDate
-  --------------------------------------------------------------------
-  Convert array to govuk date
-  ====================================================================
-
-  Usage:
-
-  {{ [1, 2, 2020] | arrayToGovukDate }}
-
-  = 1 February 2020
+  = [1, 1, 2021]
 
 */
 
-filters.arrayToGovukDate = (array, format) => {
-  let dateObject = filters.arrayToDateObject(array)
-  let govukDate = filters.dateToGovukDate(dateObject, format)
-  return govukDate
+// Output date array - for use in design system macros macros
+filters.toDateArray = (date) => {
+  if (!date) return []
+  if (_.isArray(date)) return date
+  else {
+    return [moment(date).date(), moment(date).month() + 1, moment(date).year()]
+  }
 }
 
 /*
@@ -313,7 +354,20 @@ filters.moment = (date, name, ...args) => {
   return moment(date)[name](...args)
 }
 
+/*
+  ====================================================================
+  time
+  --------------------------------------------------------------------
+  Pretty format a timestamp
+  ====================================================================
 
+  Usage:
+
+    {{ 2021-05-28T17:21:36.307Z | time }}
+
+  = 6:21pm
+
+*/
 filters.time = (str) => {
   var m = moment(str)
   if (m.minutes() > 0) {

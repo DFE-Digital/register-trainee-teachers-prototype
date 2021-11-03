@@ -1,9 +1,18 @@
+{% set providerText %}
+  {% if record.provider %}
+    {{record.provider}} (C85)
+  {% else %}
+    Not provided
+  {% endif %}
+{% endset %}
+
+
 {% set providerRow = {
   key: {
     text: "Provider"
   },
   value: {
-    text: record.provider or "Not provided"
+    text: providerText
   },
   actions: {
     items: [

@@ -24,15 +24,19 @@
       </h3>
       <span class="app-application-card_tag-container">
         {% if not record | recordIsComplete %}
-          {{govukTag({
-            text: "Incomplete",
-            classes: "app-tag--record-incomplete"
-          })}}
+          <span style="display: inline-block;">
+            {{govukTag({
+              text: "Incomplete",
+              classes: "app-tag--record-incomplete"
+            })}}
+          </span>
         {% endif %}
-        {{govukTag({
-          text: record | getStatusText,
-          classes: record.status | getStatusClass
-        })}}
+        <span style="display: inline-block;">
+          {{govukTag({
+            text: record | getStatusText,
+            classes: record.status | getStatusClass
+          })}}
+        </span>
       </span>
   </div>
   

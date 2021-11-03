@@ -327,7 +327,7 @@ app.post(/^\/([^.]+)$/, function (req, res) {
   // res.redirect('/' + req.params[0])
   res.redirect(url.format({
     pathname: '/' + req.params[0],
-    query:req.query,
+    query: req.query
     })
    )
 })

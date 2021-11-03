@@ -1,4 +1,4 @@
-const debug = true
+const debug = false
 
 // What should get set in the input once a value is selected
 const valueForInput = (result) => {

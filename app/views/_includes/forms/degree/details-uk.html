@@ -60,7 +60,7 @@
     value: degreeTemp.institution,
     autocompleteOptions: {
       minLength: 2,
-      autoselect: true,
+      autoselect: false,
       showAllValues: false,
       showSuggestionsBanner: true,
       values: data.degreeInstitutions
@@ -79,20 +79,20 @@
     classes: "govuk-!-width-two-thirds",
     value: degreeTemp.subject,
     autocompleteOptions: {
-      autoselect: true,
+      autoselect: false,
       showAllValues: false,
       minLength: 2,
       showSuggestionsBanner: true
     }
   } | highlightInvalidInputs ) }}
 
-  <div class="govuk-form-group">
+{#   <div class="govuk-form-group">
     {{ govukButton({
       text: "Add another subject",
       classes: "govuk-button--secondary govuk-!-margin-bottom-1",
       href: "#"
     }) }}
-  </div>
+  </div> #}
 
   {# Degree types #}
   {% set degreeTypesAutocomplete = data.degreeTypes | getDegreeTypesForAutocomplete | sort(attribute='value') %}

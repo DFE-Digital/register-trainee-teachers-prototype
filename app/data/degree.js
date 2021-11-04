@@ -561,7 +561,7 @@ module.exports = () => {
     'British Sign Language studies',
     'Broadcast engineering',
     'Broadcast journalism',
-    'BrontÃ«s studies',
+    'Brontës studies',
     'Bronze Age',
     'Buddhism',
     'Building services engineering',

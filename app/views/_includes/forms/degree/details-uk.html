@@ -67,11 +67,18 @@
     }
   } | highlightInvalidInputs({invalidMessage: institutionNotRecognisedHtml}) ) }}
 
+  {% set degreeHint %}
+    Choose from suggestions<span class="app-js-only"> or enter a new subject</span>
+  {% endset %}
+
   {# Degree subject #}
   {{ appAutocompleteFromSelect({
     label: {
       text: "Degree subject",
       classes: "govuk-label--s"
+    },
+    hint: {
+      html: degreeHint
     },
     id: 'subject',
     name: "degreeTemp[subject]",

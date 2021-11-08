@@ -112,6 +112,49 @@ exports.render = (path, res, next, ...args) => {
 // Course / route / programme
 // -------------------------------------------------------------------
 
+// "2022" -> "2022 to 2023"
+exports.yearToAcademicYearString = year => {
+  let yearInt = parseInt(year)
+  return `${year} to ${yearInt + 1}`
+}
+
+// "2022 to 2023" -> "2022"
+exports.academicYearStringToYear = string => {
+  if (string) return string.substring(0, 4)
+  else return false
+}
+
+// Return the academic year that a date falls in
+exports.dateToAcademicYear = date => {
+  let theDate = moment(date)
+  if (!theDate.isValid()){
+    console.log("Error in dateToAcademicYear: provided date is invalid")
+    return false
+  }
+  let theYear = theDate.year()
+  let testDate = moment(`${theYear}-09-01`)
+
+  if (theDate.isBefore(testDate)){
+    return exports.yearToAcademicYearString(theYear -1)
+  }
+  else return exports.yearToAcademicYearString(theYear)
+}
+
+exports.setAcademicYearFromCourseStart = record => {
+  let startDate = record?.courseDetails?.startDate
+  if (!startDate){
+    return record
+  }
+  else {
+    if (Array.isArray(startDate)) startDate = dates.arrayToDateObject(startDate)
+    let academicYear = exports.dateToAcademicYear(startDate)
+    if (academicYear) {
+      record.academicYear = academicYear
+    }
+    return record
+  }
+}
+
 // Check if the course has allocated places
 exports.hasAllocatedPlaces = (record) => {
   let routeHasAllocatedPlaces = trainingRoutes[record.route]?.hasAllocatedPlaces || false
@@ -409,25 +452,40 @@ exports.sortPublishCourses = courses => {
 // Return courses run by the current provider
 // If run as a filter, data comes via Nunjucks context. If run from elsewhere,
 // we need to explicitly pass in data.
-exports.getProviderCourses = function(courses, provider, route=false, data=false){
-  data = data || this?.ctx?.data || false
-  if (!data) {
-    console.log("Error with getProviderCourses: session data not provided")
-  }
+exports.getProviderCourses = function({ courses, provider, route = false, year = false }){
   if (!provider) {
     console.log('Error: no provider given')
+    return []
   }
-  if (!data?.courses?.[provider]?.courses){
+  if (!courses?.[provider]?.courses){
     console.log('Error: no courses. The kit has likely been reset.')
-    return false
+    return []
   }
-  let filteredCourses = data.courses[provider].courses
+  let filteredCourses = courses[provider].courses
   if (route) {
     filteredCourses = filteredCourses.filter(course => route == course.route)
   }
-  let limitedCourses = filteredCourses.slice(0, data.settings.courseLimit)
-  let sortedCourses = exports.sortPublishCourses(limitedCourses)
+  if (year) {
+    filteredCourses = filteredCourses.filter(course => course.academicYear.startsWith(year))
+  }
+  let sortedCourses = exports.sortPublishCourses(filteredCourses)
   return sortedCourses
+}
+
+// Group courses by academic year
+exports.groupCoursesByYear = function(courses){
+
+  let output = {}
+
+  courses.forEach(course => {
+    let startYear = course.academicYear.substring(0, 4)
+    if (!output[startYear]){
+      output[startYear] = []
+    }
+    output[startYear].push(course)
+  })
+
+  return output
 }
 
 // Look up a course by the Publish Code

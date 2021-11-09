@@ -11,7 +11,8 @@
     {%- endif %}
   {% endset %}
 
-  {% set yearDefault = record.academicYear or (data.years.defaultCourseYear | yearToAcademicYearString) %}
+  {% set yearDefault = record.courseDetails.academicYear or (data.years.defaultCourseYear | yearToAcademicYearString) %}
+
   {% set items = items | push({
     text: itemText,
     value: year,
@@ -29,7 +30,7 @@
     }
   },
   items: items
-} | decorateAttributes(record, "record.academicYear")) }}
+} | decorateAttributes(record, "record.courseDetails.academicYear")) }}
 
 {{ govukButton({
   text: "Continue"

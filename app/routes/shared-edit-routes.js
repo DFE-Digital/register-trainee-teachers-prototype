@@ -329,7 +329,7 @@ module.exports = router => {
           res.redirect(`${recordPath}/course-details/pick-course/${defaultYear}${referrer}`)
         }
         else {
-          res.redirect(`${recordPath}/course-details/academic-year${referrer}`)
+          res.redirect(`${recordPath}/course-details/course-cycle-year${referrer}`)
         }
       }
 
@@ -338,7 +338,7 @@ module.exports = router => {
   })
 
     // Decide whether to go down Publish pick-course journey or directly to manual course details
-  router.post(['/:recordtype/:uuid/course-details/academic-year-answer','/:recordtype/course-details/academic-year-answer'], function (req, res) {
+  router.post(['/:recordtype/:uuid/course-details/course-cycle-year-answer','/:recordtype/course-details/course-cycle-year-answer'], function (req, res) {
     const data = req.session.data
     const record = data.record
     let recordPath = utils.getRecordPath(req)
@@ -348,7 +348,7 @@ module.exports = router => {
 
     // No data, return to page
     if (!academicYear){
-      res.redirect(`${recordPath}/course-details/academic-year${referrer}`)
+      res.redirect(`${recordPath}/course-details/course-cycle-year${referrer}`)
     }
     else {
       let providerCourses = utils.getProviderCourses({
@@ -385,7 +385,7 @@ module.exports = router => {
     // Year is invalid
     if (isInvalidCourseYear){
       console.log(`Error: provided year (${courseStartYear}) is not a valid course year`)
-      res.redirect(`${recordPath}/course-details/academic-year`)
+      res.redirect(`${recordPath}/course-details/course-cycle-year`)
     }
     else {
       // Look up courses offered by this provider
@@ -534,7 +534,9 @@ module.exports = router => {
         // and study mode.
         record.courseDetails = utils.setCourseDatesIfPresent(courseDetails)
 
-        record = utils.setAcademicYearFromCourseStart(record)
+        if (utils.isDraft(record)){
+          record = utils.setAcademicYear(record)
+        }
 
         record.academicYear = courseDetails.academicYear
 
@@ -663,7 +665,9 @@ module.exports = router => {
     }
 
     // Use the course start date to set the academic year for the trainee
-    record = utils.setAcademicYearFromCourseStart(record)
+    if (utils.isDraft(record)){
+      record = utils.setAcademicYear(record)
+    }
 
     // Send to next conditional page or confirm page
     res.redirect(utils.getNextPublishCourseDetailsUrl(record, recordPath, referrer))
@@ -768,7 +772,9 @@ module.exports = router => {
     // Save back to record
     record.courseDetails = courseDetails
 
-    record = utils.setAcademicYearFromCourseStart(record)
+    if (utils.isDraft(record)){
+      record = utils.setAcademicYear(record)
+    }
 
     // Set qualification and duration as per selected route
     record = utils.setCourseDefaults(record)

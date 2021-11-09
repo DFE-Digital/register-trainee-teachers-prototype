@@ -140,14 +140,17 @@ exports.dateToAcademicYear = date => {
   else return exports.yearToAcademicYearString(theYear)
 }
 
-exports.setAcademicYearFromCourseStart = record => {
-  let startDate = record?.courseDetails?.startDate
-  if (!startDate){
+exports.setAcademicYear = record => {
+  let courseStartDate = record?.courseDetails?.courseStartDate
+  let traineeStartDate = record?.trainingDetails?.commencementDate
+  if (!courseStartDate){
     return record
   }
   else {
-    if (Array.isArray(startDate)) startDate = dates.arrayToDateObject(startDate)
-    let academicYear = exports.dateToAcademicYear(startDate)
+    let compareDate = traineeStartDate || courseStartDate
+    if (Array.isArray(compareDate)) compareDate = dates.arrayToDateObject(compareDate)
+
+    let academicYear = exports.dateToAcademicYear(compareDate)
     if (academicYear) {
       record.academicYear = academicYear
     }

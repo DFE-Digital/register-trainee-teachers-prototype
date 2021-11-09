@@ -137,17 +137,18 @@ defer to an id if one exists. #}
 {% endset %}
 
 {% include "_includes/trainee-name-caption.njk" %}
+
 {% if providerCourses | length %}
 
   <h1 class="govuk-heading-l">{{pageHeading}}</h1>
 
   {% set insetHtml %}
-    <a href="./academic-year" class="govuk-link">Change to a different year</a> for trainees in other recruitment cycles.
+    <a href="./academic-year" class="govuk-link govuk-link--no-visited-state">Change to a different year</a> for courses from other cycles.
   {% endset %}
 
   {{ govukInsetText({
-  html: insetHtml
-}) }}
+    html: insetHtml
+  }) }}
 
   {# Always in this route until we design a better journey for many courses #}
   {% if providerCourses | length < 1000 %}
@@ -157,12 +158,16 @@ defer to an id if one exists. #}
   {% else %}
 
     {{ providerHasManyPublishCourses | safe }}
+
   {% endif %}
 
+{# No courses #}
 {% else %}
+
   {# Something has gone wrong if this section is rendering #}
   <h1 class="govuk-heading-l">No courses found{{ (" for ${courseStartYear}" | stringLiteral) if courseStartYear }}</h1>
   <p class="govuk-body">You shouldn’t be seeing this page</p>
+
 {% endif %}
 
 {{ govukButton({

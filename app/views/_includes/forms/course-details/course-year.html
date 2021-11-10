@@ -5,7 +5,7 @@
 {% for year in data.years.academicYears %}
   {% set itemText %}
     {% if year == data.years.currentAcademicYear -%}
-      {{ year }} (current cycle)
+      {{ year }} (current year)
     {%- else -%}
       {{ year }}
     {%- endif %}

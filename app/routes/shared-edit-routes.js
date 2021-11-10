@@ -329,7 +329,7 @@ module.exports = router => {
           res.redirect(`${recordPath}/course-details/pick-course/${defaultYear}${referrer}`)
         }
         else {
-          res.redirect(`${recordPath}/course-details/course-cycle-year${referrer}`)
+          res.redirect(`${recordPath}/course-details/course-year${referrer}`)
         }
       }
 
@@ -338,17 +338,17 @@ module.exports = router => {
   })
 
     // Decide whether to go down Publish pick-course journey or directly to manual course details
-  router.post(['/:recordtype/:uuid/course-details/course-cycle-year-answer','/:recordtype/course-details/course-cycle-year-answer'], function (req, res) {
+  router.post(['/:recordtype/:uuid/course-details/course-year-answer','/:recordtype/course-details/course-year-answer'], function (req, res) {
     const data = req.session.data
     const record = data.record
     let recordPath = utils.getRecordPath(req)
     let referrer = utils.getReferrer(req.query.referrer)
     let route = record?.route
-    let academicYear = utils.academicYearStringToYear(record.academicYear)
+    let academicYear = utils.academicYearStringToYear(record?.courseDetails?.academicYear)
 
     // No data, return to page
     if (!academicYear){
-      res.redirect(`${recordPath}/course-details/course-cycle-year${referrer}`)
+      res.redirect(`${recordPath}/course-details/course-year${referrer}`)
     }
     else {
       let providerCourses = utils.getProviderCourses({
@@ -358,9 +358,10 @@ module.exports = router => {
       })
       let coursesByYear = utils.groupCoursesByYear(providerCourses)
       // If there are courses for that academic year, show course picker page
-      if (academicYear && coursesByYear[academicYear] && coursesByYear[academicYear].length > 0){
+      if (coursesByYear[academicYear] && coursesByYear[academicYear].length > 0){
         res.redirect(`${recordPath}/course-details/pick-course/${academicYear}${referrer}`)
       }
+      // If there are no courses, assume manual entry for course details
       else {
         res.redirect(`${recordPath}/course-details/phase${referrer}`)
       }
@@ -385,7 +386,7 @@ module.exports = router => {
     // Year is invalid
     if (isInvalidCourseYear){
       console.log(`Error: provided year (${courseStartYear}) is not a valid course year`)
-      res.redirect(`${recordPath}/course-details/course-cycle-year`)
+      res.redirect(`${recordPath}/course-details/course-year`)
     }
     else {
       // Look up courses offered by this provider

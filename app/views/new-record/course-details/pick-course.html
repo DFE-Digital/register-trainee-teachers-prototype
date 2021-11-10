@@ -1,7 +1,7 @@
 {% extends "_templates/_new-record.html" %}
 
 {% set pageHeading %}
-  Your courses ({{courseStartYear | yearToAcademicYearString }} cycle)
+  Your courses starting in {{courseStartYear | yearToAcademicYearString }}
 {% endset %}
 
 {% set formAction = "./../pick-course-answer" %}

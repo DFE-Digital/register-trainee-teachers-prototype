@@ -15,7 +15,7 @@ let defaultVisibleYears = [
 let currentAcademicYear = "2021 to 2022"
 
 let defaultCourseYear = "2022"
-defaultCourseYear = null
+// defaultCourseYear = null
 
 // The first year in the range
 let academicYearsShort = academicYears.map(year => year.substring(0, 4))

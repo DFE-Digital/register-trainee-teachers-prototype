@@ -1,0 +1,12 @@
+{% extends "_templates/_new-record.html" %}
+
+
+{% set pageHeading = "Which year’s courses do you want to choose from?" %}
+
+
+{% set formAction = "./course-year-answer" %}
+
+{% block formContent %}
+  {% include "_includes/forms/course-details/course-year.html" %}
+{% endblock %}
+

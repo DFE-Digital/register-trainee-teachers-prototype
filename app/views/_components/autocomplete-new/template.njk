@@ -2,9 +2,11 @@
 {# Prepend each autocomplete option with 'data-' #}
 {% set attributes = {
   "data-autoselect": params.autocompleteOptions.autoselect,
+  "data-classes": params.autocompleteOptions.classes,
   "data-min-length": params.autocompleteOptions.minLength,
   "data-placeholder": params.autocompleteOptions.placeholder,
   "data-showAllValues": params.autocompleteOptions.showAllValues,
+  "data-showSuggestions": params.autocompleteOptions.showSuggestionsBanner,
   "data-show-no-options-found": params.autocompleteOptions['show-no-options-found'],
   "data-autocomplete-values": params.autocompleteOptions.values | dump,
   "data-value": params.value if (params.value | falsify)
@@ -19,9 +21,8 @@
 {% set params = params | deleteAttribute("autocompleteOptions") %}
 
 {# Check if one of the classes is a govuk-!-width class 
-  If so, generate an autocomplete specific class that can be applied
-to the parent
-#}
+If so, generate an autocomplete specific class that can be applied
+to the parent #}
 {% set widthClass = false %}
 {% if params.classes %}
   {% set classes = params.classes | split(" ") %}
@@ -32,7 +33,7 @@ to the parent
   {% endfor %}
 {% endif %}
 
-<div data-module="app-autocomplete" class="{{ 'app-autocomplete--with-suggestions' if showSuggestions}} {{params.parentClasses}}">
+<div data-module="app-autocomplete" class="{{ 'app-autocomplete--with-suggestions' if showSuggestions}} {{params.autocompleteOptions.classes}} {{widthClass if widthClass}}">
 
   {% if autocompleteType == "input" %}
 

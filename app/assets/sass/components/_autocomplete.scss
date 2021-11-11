@@ -171,9 +171,10 @@
   margin-bottom: govuk-spacing(7);
 }
 
-.app-autocomplete--with-suggestions .autocomplete__wrapper ul::before {
+.app-autocomplete--with-suggestions:not(.app-autocomplete--with-suggestions-no-results) .autocomplete__wrapper ul::before {
   content: 'Suggestions';
   padding: 4px 8px;
+  @include govuk-font(16, $weight: regular);
   border-bottom: 2px solid govuk-colour("black");
   background-color: govuk-colour("light-grey");
   width: 100%;

@@ -31,75 +31,6 @@ const enhanceSelectOption = (option) => {
   }
 }
 
-// Enhance a select
-const accessibleAutocompleteFromSelect = (input, autocompleteOptions = {}) => {
-
-  // Save the id as we will delete this input later but need the id still
-  const inputId = input.id
-  const describedBy = input.getAttribute('aria-describedby') || false
-
-  accessibleAutocomplete.enhanceSelectElement({
-    selectElement: input,
-    id: input.id,
-    name: input.name,
-    defaultValue: input.value,
-    templates: {
-      inputValue: valueForInput,
-      suggestion: menuResultItem
-    },
-    onConfirm,
-    ...autocompleteOptions
-  })
-
-  // Remove the select
-  input.remove()
-
-  // Copy over aria-describedBy so the hints are associated correctly
-  const newAutocomplete = document.getElementById(inputId)
-
-  if (describedBy){
-    newAutocomplete.setAttribute('aria-describedby', describedBy)
-  }
-
-}
-
-// Enhance a text input
-const accessibleAutocompleteFromInput = (input, autocompleteOptions = {}) =>{
-
-  // Save the id as we will delete this input later but need the id still
-  const inputId = input.id
-  const describedBy = input.getAttribute('aria-describedby') || false
-  const autocompleteContainer = document.getElementById(`${input.id}-autocomplete-container`)
-
-  // Move autocomplete to the form group containing the input to be replaced
-  const inputFormGroup = autocompleteContainer.previousElementSibling
-  if (inputFormGroup.contains(input)) {
-    inputFormGroup.appendChild(autocompleteContainer)
-  }
-
-  accessibleAutocomplete({
-    element: autocompleteContainer,
-    id: input.id,
-    name: input.name,
-    defaultValue: input.value,
-    templates: {
-      inputValue,
-      suggestion
-    },
-    ...autocompleteOptions
-  })
-
-  // Delete the source input
-  input.remove()
-
-  // Copy over aria-describedBy so the hints are associated correctly
-  const newAutocomplete = document.getElementById(inputId)
-  if (describedBy){
-    newAutocomplete.setAttribute('aria-describedby', describedBy)
-  }
-}
-
-
 const setupAutocomplete = (component) => {
 
   // Locate the elements
@@ -109,16 +40,27 @@ const setupAutocomplete = (component) => {
   // We might be enhancing a select or an input
   const elementType = (selectElement) ? 'select' : 'input'
   const element = selectElement || inputElement || false
-  // console.log(`Accessible autocomplete: enhancing ${elementType}`)
 
   // Get config for autocomplete
   const autoselect          = element.getAttribute('data-autoselect') || false
+  const classes             = element.getAttribute('data-classes') || false
+  const describedById       = element.getAttribute('aria-describedby') || false
   const minLength           = element.getAttribute('data-min-length') || 2
   const placeholder         = element.getAttribute('data-placeholder') || false
   const showAllValues       = element.getAttribute('data-showAllValues') || false
-  const showNoOptionsFound  = element.getAttribute('data-show-no-options-found') || false
-  let values                = JSON.parse(element.getAttribute('data-autocomplete-values') || "[]")
+  const showNoOptionsFound  = element.getAttribute('data-show-no-options-found') || true
+  const showSuggestions     = element.getAttribute('data-showSuggestions') || false
   const value               = element.getAttribute('data-value') || null
+  let values                = JSON.parse(element.getAttribute('data-autocomplete-values') || "[]")
+
+  // If the enhanced element has aria-describedBy, grab the description to pass
+  // to the autocomplete
+  let describedBy = null
+  if (describedById){
+    describedBy = document.getElementById(describedById).innerText
+    // Add a full stop if the hint didn't have one.
+    describedBy = (describedBy.endsWith(".")) ? describedBy : `${describedBy}.`
+  }
 
   // If enhancing a select and values not provided, fall back to options from select
   if (!values.length && elementType == 'select'){
@@ -137,27 +79,74 @@ const setupAutocomplete = (component) => {
     console.log(`Autocomplete error: no values found for ${element?.id}`)
   }
 
+  const describedByHint = () => {
+    return `${describedBy} When autocomplete results are available use up and down arrows to review and enter to select. Touch device users, explore by touch or with swipe gestures.`
+  }
+
   const filter = (query, populateResults) => {
     let results = autocompleteSort(query, values)
+
+    // If in suggestions mode we don’t want to show a 'suggestions' banner when there are no results
+    if (showSuggestions){
+      if (results.length == 0) component.classList.add('app-autocomplete--with-suggestions-no-results')
+      else {
+        component.classList.remove('app-autocomplete--with-suggestions-no-results')
+      }
+    }
+    
     populateResults(results)
   }
 
+  // Alternate strings to use when in suggestions mode
+  const suggestionNoResults = () => 'No suggestions found. Enter your own answer'
+  const suggestionStatusNoResults = () => "No suggestions found"
+
   let autocompleteOptions = {
+    id: element.id,
+    name: element.name,
+    defaultValue: element.value,
+    templates: {
+      inputValue: valueForInput,
+      suggestion: menuResultItem
+    },
+    onConfirm,
     autoselect,
     minLength,
     placeholder,
     showAllValues,
     showNoOptionsFound,
     source: filter,
-    ...(value ? {defaultValue: value} : {})
+    ...(describedBy ? { tAssistiveHint: describedByHint } : {}),
+    ...(showSuggestions ? { tNoResults: suggestionNoResults } : {}), // conditional
+    ...(showSuggestions ? { tStatusNoResults: suggestionStatusNoResults } : {}), // conditional
+    ...(value ? {defaultValue: value} : {}) // conditional
   }
 
   if (selectElement){
-    accessibleAutocompleteFromSelect(element, autocompleteOptions)
+    accessibleAutocomplete.enhanceSelectElement({
+      selectElement: element,
+      ...autocompleteOptions
+    })
   }
   else if (inputElement){
-    accessibleAutocompleteFromInput(element, autocompleteOptions)
+
+    const autocompleteContainer = document.getElementById(`${element.id}-autocomplete-container`)
+
+    // Because of the govuk macros, the container for the autocomplete is initially
+    // placed _after_ the input. We now move the container within the input container.
+    const inputFormGroup = autocompleteContainer.previousElementSibling
+    if (inputFormGroup.contains(input)) {
+      inputFormGroup.appendChild(autocompleteContainer)
+    }
+
+    accessibleAutocomplete({
+      element: autocompleteContainer,
+      ...autocompleteOptions
+    })
   }
+
+  // Remove the original input
+  element.remove()
 
 }
 

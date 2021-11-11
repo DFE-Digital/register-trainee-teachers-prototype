@@ -49,9 +49,7 @@
   // Set on govuk-selects and autocompletes (clear and non-clear)
   // There is no one selector currently we can target, so we target
   // both, then unset where we don't need.
-  .govuk-select,
-  .govuk-input,
-  .autocomplete__wrapper,
+  .autocomplete__input,
   .autocomplete-select-with-clear {
     max-width: $max-width !important;
   }

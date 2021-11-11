@@ -11,7 +11,7 @@
             {% if query.sortOrder == "lastName" %}
               {{ record.personalDetails | getShortNameReversed }}
             {% else %}
-              {{ record.personalDetails | getShortName }}
+              {{ record | getShortName }}
             {% endif %} 
           {% else %}
             {% if record.status | isDraft %}
@@ -24,16 +24,20 @@
       </h3>
 
       <span class="app-application-card_tag-container">
-        {% if record | isDraft and not record | recordIsComplete %}
-          {{govukTag({
-            text: "Incomplete",
-            classes: "app-tag--record-incomplete"
-          })}}
+        {% if not record | recordIsComplete %}
+          <span style="display: inline-block;">
+            {{govukTag({
+              text: "Incomplete",
+              classes: "app-tag--record-incomplete"
+            })}}
+          </span>
         {% endif %}
-        {{govukTag({
-          text: record | getStatusText,
-          classes: record.status | getStatusClass
-        })}}
+        <span style="display: inline-block;">
+          {{govukTag({
+            text: record | getStatusText,
+            classes: record.status | getStatusClass
+          })}}
+        </span>
       </span>
   </div>
   

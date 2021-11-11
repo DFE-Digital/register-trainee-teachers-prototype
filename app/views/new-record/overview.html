@@ -15,10 +15,9 @@
 
 {% set referrer = recordPath + "/overview" %}
 
-
 {% set draftRecordName %}
-  {% if record.personalDetails.shortName %}
-   for {{record.personalDetails.shortName}}
+  {% if record | hasName %}
+   for {{ record | getShortName }}
   {% endif %}
 {% endset %}
 

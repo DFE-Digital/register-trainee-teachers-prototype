@@ -1,3 +1,4 @@
+
 {% extends "_templates/_new-record.html" %}
 
 
@@ -10,7 +11,10 @@
 {% set formAction = "./../overview" | orReferrer(referrer) %}
 
 {% block formContent %}
-  <h1 class="govuk-heading-l">{{pageHeading}}</h1>
+  {% include "_includes/trainee-name-caption.njk" %}
+  <h1 class="govuk-heading-l">
+    {{pageHeading}}
+  </h1>
   {% include "_includes/summary-cards/schools.html" %}
 
   {{ govukCheckboxes({

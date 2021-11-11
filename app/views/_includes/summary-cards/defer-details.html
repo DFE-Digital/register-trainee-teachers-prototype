@@ -49,7 +49,7 @@
           visuallyHiddenText: "deferral date"
         }
       ]
-    } if canAmend
+    } if canAmend and not record | ittInTheFuture
   }
 ] %}
 

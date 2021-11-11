@@ -17,8 +17,24 @@
   display: flex;
   justify-content: space-between;
   .app-application-card_tag-container {
+    display: flex;
+    justify-content: right;
+    flex-direction: column;
+    @include govuk-media-query($from: tablet) {
+      flex-direction: row;
+    }
     .govuk-tag {
+      display: inline-block;
+      float: right;
       margin-left: govuk-spacing(3);
+      &:first-child { 
+        margin-bottom: govuk-spacing(1);
+      }
+      @include govuk-media-query($from: tablet) {
+        &:first-child { 
+          margin-bottom: govuk-spacing(0);
+        }
+      }
     }
   }
 }

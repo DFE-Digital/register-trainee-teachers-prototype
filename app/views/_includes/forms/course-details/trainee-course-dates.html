@@ -1,5 +1,8 @@
 {# <span class="govuk-caption-xl">{{record.courseDetails.courseNameLong}}</span> #}
-<h1 class="govuk-heading-l">{{pageHeading}}</h1>
+{% include "_includes/trainee-name-caption.njk" %}
+<h1 class="govuk-heading-l">
+  {{pageHeading}}
+</h1>
 
 {% set publishCourse = record | getTraineePublishCourse %}
 

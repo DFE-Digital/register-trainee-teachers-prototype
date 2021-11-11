@@ -2,12 +2,11 @@
 {% extends "_templates/_record-form.html" %}
 
 {% set pageHeading = 'You cannot withdraw this trainee' %}
-{% set pageHeadingTraineeName = data.record.personalDetails | getShortName %}
 
 {% block formContent %}
 
+  {% include "_includes/trainee-name-caption.njk" %}
   <h1 class="govuk-heading-l">
-    <span class="govuk-caption-l">{{ pageHeadingTraineeName }}</span>
     {{ pageHeading }}
   </h1>
 

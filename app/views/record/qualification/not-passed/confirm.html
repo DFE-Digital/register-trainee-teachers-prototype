@@ -1,5 +1,4 @@
 {% extends "_templates/_record-form.html" %}
-{% set pageHeadingTraineeName = data.record.personalDetails.shortName %}
 {% set pageHeading = "Check outcome details" %}
 
 {% set backLink = ("/record/" + data.record.id) | orReferrer(referrer) %}
@@ -9,8 +8,8 @@
 {% set formAction = "./update" %}
 
 {% block formContent %}
+  {% include "_includes/trainee-name-caption.njk" %}
   <h1 class="govuk-heading-l">
-    <span class="govuk-caption-l">{{pageHeadingTraineeName}}</span>
     {{pageHeading}}
   </h1>
   {% include "_includes/summary-cards/qts-assessment-not-passed-details.html" %}
@@ -39,4 +38,3 @@
   {% endif %}
 
 {% endblock %}
-

@@ -71,6 +71,13 @@ filters.currency = input => {
   else return ''
 }
 
+// Emulate support for string literals in Nunjucks
+// Usage:
+// {{ 'The count is ${count}' | stringLiteral }}
+filters.stringLiteral = function(str) {
+    return (new Function('with (this) { return `' + str + '` }')).call(this.ctx)
+}
+
 // -------------------------------------------------------------------
 // keep the following line to return your filters to the app
 // -------------------------------------------------------------------

@@ -13,6 +13,7 @@ const dates = require('./../filters/dates.js').filters
 const ittSubjects = require('./../data/itt-subjects')
 const generateReference = require('./../data/generators/reference-number')
 
+
 // -------------------------------------------------------------------
 // General
 // -------------------------------------------------------------------
@@ -416,6 +417,10 @@ exports.getProviderCourses = function(courses, provider, route=false, data=false
   if (!provider) {
     console.log('Error: no provider given')
   }
+  if (!data?.courses?.[provider]?.courses){
+    console.log('Error: no courses. The kit has likely been reset.')
+    return false
+  }
   let filteredCourses = data.courses[provider].courses
   if (route) {
     filteredCourses = filteredCourses.filter(course => route == course.route)
@@ -492,7 +497,7 @@ exports.updatePublishCourseDates = (courseDetails, data) => {
 exports.routeHasPublishCourses = function(record){
   if (!record) return false
   const data = Object.assign({}, this.ctx.data)
-  let providerCourses = exports.getProviderCourses(data.courses, record?.provider, record.route, data)
+  let providerCourses = exports.getProviderCourses(data?.courses, record?.provider, record.route, data)
   return (providerCourses.length > 0)
 }
 
@@ -777,7 +782,7 @@ exports.subjectsAreIncomplete = courseDetails => {
 // course
 exports.courseNeedsToBeConfirmed = courseDetails => {
   if (exports.sectionIsComplete(courseDetails)) return false
-  else return (Boolean(courseDetails.needsConfirming))
+  else return (Boolean(courseDetails?.needsConfirming))
 }
 
 // -------------------------------------------------------------------
@@ -876,8 +881,26 @@ exports.sectionIsComplete = section => {
 }
 
 // Check if all sections are complete
-exports.recordIsComplete = record => {
+exports.recordIsComplete = function(record, data=false ) {
+
+  data = Object.assign({}, (data || this?.ctx?.data || false))
+
   if (!record || !_.get(record, "route")) return false
+
+  // Pretend 20% of submitted records are incomplete
+  if (exports.isNonDraft(record)){
+    let statusesThatMustBeComplete = [
+      'EYTS recommended',
+      'EYTS awarded',
+      'QTS recommended',
+      'QTS awarded',
+      // 'Deferred',
+      'Withdrawn'
+    ]
+    if (statusesThatMustBeComplete.includes(record?.status)) return true
+      else
+    return !exports.hasOutstandingActions(record, data)
+  }
 
   let requiredSections = _.get(trainingRoutes, `${record.route}.sections`)
   let applyReviewSections = trainingRouteData.applyReviewSections
@@ -919,7 +942,7 @@ exports.needsPlacementDetails = function(record, data = false) {
 
   let needsPlacementDetails = false
   let placementCount = (record?.placement?.items) ? record.placement.items.length : 0
-  let minPlacementsRequired = data.settings.minPlacementsRequired
+  let minPlacementsRequired = data?.settings?.minPlacementsRequired || 2
 
   if (exports.requiresSection(record, 'placement')) {
     if ((record?.placement?.status != 'Complete') || (placementCount < minPlacementsRequired)) {
@@ -1062,7 +1085,7 @@ exports.filterRecords = (records, data, filters = {}) => {
 
   if (filters.completeStatus){
     filteredRecords = filteredRecords.filter(record => {
-      let completeStatus = (exports.recordIsComplete(record)) ? 'Complete' : 'Incomplete'
+      let completeStatus = (exports.recordIsComplete(record, data)) ? 'Complete' : 'Incomplete'
       return filters.completeStatus.includes(completeStatus)
     })
   }
@@ -1201,7 +1224,7 @@ exports.filterByProvider = (records, array) => {
 // Filter records for currently signed in providers
 // Can’t be an arrow function because we need access to the Nunjucks context
 exports.filterBySignedIn = function(records, data=false){
-  data = data || this?.ctx?.data || false
+  data = Object.assign({}, (data || this.ctx.data || false))
   if (!data) {
     console.log('Error with filterBySignedIn: session data not provided')
     return []
@@ -1225,13 +1248,15 @@ exports.filterByStatus = (records, array, invert) => {
 }
 
 // For use on drafts only?
-exports.filterByComplete = records => {
-  return records.filter(record => exports.recordIsComplete(record))
+exports.filterByComplete = function(records, data=false) {
+  data = Object.assign({}, (data || this?.ctx?.data || false))
+  return records.filter(record => exports.recordIsComplete(record, data))
 }
 
 // For use on drafts only?
-exports.filterByIncomplete = records => {
-  return records.filter(record => !exports.recordIsComplete(record))
+exports.filterByIncomplete = function(records, data=false) {
+  data = Object.assign({}, (data || this?.ctx?.data || false))
+  return records.filter(record => !exports.recordIsComplete(record, data))
 }
 
 exports.filterByQualification = (records, qualification) => {

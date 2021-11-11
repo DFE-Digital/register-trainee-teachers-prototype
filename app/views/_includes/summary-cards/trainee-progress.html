@@ -25,6 +25,15 @@
   } if canAmend and false
 } %}
 
+{% set trnRow = {
+  key: {
+    text: "TRN"
+  },
+  value: {
+    text: record.trn or 'Not provided'
+  }
+} %}
+
 {% set regionRow = {
   key: {
     text: "Region"
@@ -34,10 +43,20 @@
   }
 } %}
 
+{% set referenceRow = {
+  key: {
+    text: "Reference"
+  },
+  value: {
+    text: record.reference or 'Not provided',
+    html: referenceHtml
+  }
+} %}
+
 
 {% set traineeIdRow = {
   key: {
-    text: "Trainee ID"
+    text: "Provider trainee ID"
   },
   value: {
     text: record.trainingDetails.traineeId or 'Not provided'
@@ -47,7 +66,7 @@
       {
         href: recordPath + "/trainee-id" | addReferrer(referrer),
         text: "Change",
-        visuallyHiddenText: "trainee ID"
+        visuallyHiddenText: "provider trainee ID"
       }
     ]
   } if canAmend
@@ -85,14 +104,7 @@
   }
 } %}
 
-{% set trnRow = {
-  key: {
-    text: "TRN"
-  },
-  value: {
-    text: record.trn or 'Not provided'
-  }
-} %}
+
 
 {% set recommendedForAwardContentHtml %}
   {{govukTag({
@@ -259,11 +271,12 @@
 
 {% set traineeProgressRows = [
   providerRow if data.isAdmin or data.settings.userProviders | length > 1,
+  trnRow if record.trn,
+  referenceRow,
   traineeIdRow,
   regionRow if record | requiresField("region"),
   startYearRow,
   pendingTrnRow if record | isPendingTrn,
-  trnRow if record.trn,
   recommendedForAwardRow if record | isRecommended,
   awardRow if record | isAwarded,
   deferredRow if record | isDeferred,

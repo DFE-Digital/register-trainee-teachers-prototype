@@ -3,7 +3,6 @@
 // -------------------------------------------------------------------
 const _ = require('lodash')
 const faker = require('faker')
-const weighted = require('weighted')
 const moment = require('moment')
 const path = require('path')
 const url = require('url')
@@ -12,6 +11,7 @@ const trainingRoutes = trainingRouteData.trainingRoutes
 const arrayFilters = require('./../filters/arrays.js').filters
 const dates = require('./../filters/dates.js').filters
 const ittSubjects = require('./../data/itt-subjects')
+const generateReference = require('./../data/generators/reference-number')
 
 
 // -------------------------------------------------------------------
@@ -1250,11 +1250,12 @@ exports.filterRecordsBySearchTerm = (records, searchQuery=false) => {
     let searchParts = searchQueryLowercase.split(' ')
     let nameMatch = searchParts.every(part => fullName.includes(part))
 
+    let referenceMatch = searchParts.some(part => (record?.reference || "").toLowerCase().includes(part))
     let traineeIdMatch = searchParts.some(part => (record?.trainingDetails?.traineeId || "").toLowerCase().includes(part))
 
     let trnMatch = searchParts.some(part => (record?.trn || "").toString().includes(part))
 
-    return traineeIdMatch || trnMatch || nameMatch
+    return referenceMatch || traineeIdMatch || trnMatch || nameMatch
   })
 
   return filteredRecords
@@ -1519,6 +1520,7 @@ exports.registerForTRN = (record) => {
   else {
     record.status = 'Pending TRN'
     record.source = record.source || "Manual" // just in case
+    record.reference = record.reference || generateReference()
     delete record?.placement?.status
     record.submittedDate = new Date()
     record.updatedDate = new Date()

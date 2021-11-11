@@ -55,6 +55,7 @@ const getRandomRoute = (params) => {
 // Generators
 const generateTrainingDetails = require('../app/data/generators/training-details')
 const generateDates = require('../app/data/generators/dates')
+const generateReference = require('../app/data/generators/reference-number')
 const generateTrn = require('../app/data/generators/trn')
 const generateCourseDetails = require('../app/data/generators/course-details')
 const generatePersonalDetails = require('../app/data/generators/personal-details')
@@ -99,6 +100,9 @@ const generateFakeApplication = (params = {}) => {
   // Dates
   application                  = { ...application, ...generateDates(params, application) }
   // Training
+
+  // Reference numbers like Apply
+  application.reference              = (params.reference === null) ? undefined : (params.reference || generateReference())
   application.trn              = (params.trn === null) ? undefined : (params.trn || generateTrn(application))
 
   application.source          = (params.source) ? params.source : generateSource(application)

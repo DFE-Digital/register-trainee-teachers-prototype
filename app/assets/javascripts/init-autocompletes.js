@@ -3,16 +3,30 @@ const debug = false
 // What should get set in the input once a value is selected
 const valueForInput = (result) => {
   if (!result) return ''
-  else return result.name
+  else if (typeof result == 'string'){
+    return result
+  }
+  else if (typeof result == 'object'){
+    return result.name
+  }
 }
 
 // What gets displayed for each option
 const menuResultItem = (result) => {
   if (result) {
-    let name = (debug) ? `${result.name} (${result.weight})` : result.name
-    let output = result.append ? `<span>${name}</span> ${result.append}` : `<span>${name}</span>`
-    return result.hint ? `${output}<span class="autocomplete__option--hint">${result.hint}</span>` : output
+    // If using DefaultValue, result can be a string - bug with autcomplete  https://github.com/alphagov/accessible-autocomplete/issues/424
+    if (typeof result == 'string'){
+      return result
+    }
+    // What our sort function returns
+    else if (typeof result == 'object'){
+      let name = (debug) ? `${result.name} (${result.weight})` : result.name
+      let output = result.append ? `<span>${name}</span> ${result.append}` : `<span>${name}</span>`
+      return result.hint ? `${output}<span class="autocomplete__option--hint">${result.hint}</span>` : output
+
+    }
   }
+  else return ''
 }
 
 const onConfirm = (selected) => {
@@ -47,10 +61,11 @@ const setupAutocomplete = (component) => {
   const describedById       = element.getAttribute('aria-describedby') || false
   const minLength           = element.getAttribute('data-min-length') || 2
   const placeholder         = element.getAttribute('data-placeholder') || false
-  const showAllValues       = element.getAttribute('data-showAllValues') || false
+  const showAllValues       = element.getAttribute('data-show-all-values') || false
   const showNoOptionsFound  = element.getAttribute('data-show-no-options-found') || true
-  const showSuggestions     = element.getAttribute('data-showSuggestions') || false
+  const showSuggestions     = element.getAttribute('data-show-suggestions') || false
   const value               = element.getAttribute('data-value') || null
+
   let values                = JSON.parse(element.getAttribute('data-autocomplete-values') || "[]")
 
   // If the enhanced element has aria-describedBy, grab the description to pass
@@ -104,7 +119,7 @@ const setupAutocomplete = (component) => {
   let autocompleteOptions = {
     id: element.id,
     name: element.name,
-    defaultValue: element.value,
+    defaultValue: value,
     templates: {
       inputValue: valueForInput,
       suggestion: menuResultItem

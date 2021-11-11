@@ -5,11 +5,12 @@
   "data-classes": params.autocompleteOptions.classes,
   "data-min-length": params.autocompleteOptions.minLength,
   "data-placeholder": params.autocompleteOptions.placeholder,
-  "data-showAllValues": params.autocompleteOptions.showAllValues,
-  "data-showSuggestions": params.autocompleteOptions.showSuggestionsBanner,
+  "data-show-all-values": params.autocompleteOptions.showAllValues,
+  "data-show-suggestions": params.autocompleteOptions.showSuggestionsBanner,
   "data-show-no-options-found": params.autocompleteOptions['show-no-options-found'],
-  "data-autocomplete-values": params.autocompleteOptions.values | dump,
-  "data-value": params.value if (params.value | falsify)
+  "data-value": params.value if (params.value | falsify),
+  "data-autocomplete-values": params.autocompleteOptions.values | dump
+  
 } | deleteBlankAttributes %}
 
 {% set showSuggestions = params.autocompleteOptions.showSuggestionsBanner %}

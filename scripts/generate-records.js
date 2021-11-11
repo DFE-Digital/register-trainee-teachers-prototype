@@ -23,8 +23,8 @@ const providers         = providerData.selectedProviders
 let simpleGcseGrades    = true //output pass/fail rather than full detail
 
 // Todo: get this from the years.js file?
-const yearsToGenerate = [2019, 2020, 2021]
-const currentYear     = 2020
+const yearsToGenerate = [2020, 2021, 2022]
+const currentYear     = 2021
 
 const sortBySubmittedDate = (x, y) => {
   return new Date(y.submittedDate) - new Date(x.submittedDate);
@@ -55,6 +55,7 @@ const getRandomRoute = (params) => {
 // Generators
 const generateTrainingDetails = require('../app/data/generators/training-details')
 const generateDates = require('../app/data/generators/dates')
+const generateReference = require('../app/data/generators/reference-number')
 const generateTrn = require('../app/data/generators/trn')
 const generateCourseDetails = require('../app/data/generators/course-details')
 const generatePersonalDetails = require('../app/data/generators/personal-details')
@@ -84,7 +85,7 @@ const generateFakeApplication = (params = {}) => {
   }
 
   application.diversity       = (params.diversity === null) ? undefined : { ...generateDiversity(), ...params.diversity }
-  application.id              = params.id || faker.random.uuid()
+  application.id              = params.id || faker.datatype.uuid()
   application.personalDetails = (params.personalDetails === null) ? undefined : { ...generatePersonalDetails(), ...params.personalDetails }
   application.provider        = params.provider || faker.helpers.randomize(providers)
   application.route           = (params.route === null) ? undefined : (params.route || getRandomRoute(params))
@@ -99,6 +100,9 @@ const generateFakeApplication = (params = {}) => {
   // Dates
   application                  = { ...application, ...generateDates(params, application) }
   // Training
+
+  // Reference numbers like Apply
+  application.reference              = (params.reference === null) ? undefined : (params.reference || generateReference())
   application.trn              = (params.trn === null) ? undefined : (params.trn || generateTrn(application))
 
   application.source          = (params.source) ? params.source : generateSource(application)
@@ -216,10 +220,10 @@ const generateFakeApplicationsForProvider = (provider, year, count) => {
       count = 30 
     }
     targetCounts = {
-      draft: 0.5,
-      applyEnrolled: 0.5,
-      pendingTrn: 0.00,
-      trnReceived: 0.0,
+      draft: 0.45,
+      applyEnrolled: 0.45,
+      pendingTrn: 0.05,
+      trnReceived: 0.05,
       qualificationRecommended: 0.00,
       qualificationAwarded: 0.00,
       deferred: 0.00,

@@ -1,0 +1,40 @@
+{% if data.isAdmin %}
+
+  {% set providerItems = [] %}
+
+  {# Default state - first value is 'all' #}
+  {% set providerItems = providerItems | push({
+    value: "All providers",
+    text: "All providers",
+    selected: true if (not query.filterAllProviders or query.filterAllProviders ==  "All providers")
+  }) %}
+
+  {% set allProviders = data.allProviders %}
+
+  {% for provider in allProviders %}
+    {% set providerItems = providerItems | push({
+      value: provider,
+      text: provider,
+      selected: true if (provider == query.filterAllProviders)
+    }) %}
+  {% endfor %}
+
+  {% set selectHtml %}
+    {{ govukSelect({
+      id: "all-provider-select",
+      name: "filterAllProviders",
+      classes: "js-auto-submit",
+      label: {
+        text: "Provider",
+        classes: "govuk-label--s"
+      },
+      items: providerItems
+    }) }}
+  {% endset %}
+
+  {{ appAdminFeature({
+    classes: "app-status-box--filter-outdent",
+    html: selectHtml
+  }) }}
+
+{% endif %}

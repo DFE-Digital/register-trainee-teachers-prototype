@@ -9,7 +9,10 @@ const url = require('url')
 const trainingRouteData = require('./../data/training-route-data')
 const trainingRoutes = trainingRouteData.trainingRoutes
 const arrayFilters = require('./../filters/arrays.js').filters
+const dates = require('./../filters/dates.js').filters
 const ittSubjects = require('./../data/itt-subjects')
+const generateReference = require('./../data/generators/reference-number')
+
 
 // -------------------------------------------------------------------
 // General
@@ -192,6 +195,57 @@ exports.setCourseDefaults = record => {
   return record
 }
 
+
+// Copy relevant Publish course dates to trainee if they’re set
+// Dates depend on what study mode the trainee is on
+exports.setCourseDatesIfPresent = courseDetails => {
+
+  // If there's already start and end dates, do nothing
+  if (courseDetails.startDate && courseDetails.endDate) return courseDetails
+
+  if (exports.isFullTime(courseDetails)){
+    courseDetails.startDate = courseDetails.startDate || courseDetails.startDateFullTime
+    courseDetails.endDate = courseDetails.endDate || courseDetails.endDateFullTime
+  }
+
+  else if (exports.isPartTime(courseDetails)){
+    courseDetails.startDate = courseDetails.startDate || courseDetails.startDatePartTime
+    courseDetails.endDate = courseDetails.endDate || courseDetails.endDatePartTime
+  }
+
+  return courseDetails
+}
+
+// Decision tree of conditional pages for Publish courses
+exports.getNextPublishCourseDetailsUrl = (record, recordPath, referrer) => {
+
+  // Unsure why there's two filters in use here. But it seems to work so not touching for now
+  let hasUnmappedPublishSubjects = exports.hasUnmappedPublishSubjects(record.courseDetails) || exports.subjectsAreIncomplete(record.courseDetails)
+
+  let isMissingStudyMode = exports.needsStudyMode(record)
+  let isMissingDates = exports.needsCourseDates(record)
+  let isAllocated = exports.hasAllocatedPlaces(record)
+
+  if (hasUnmappedPublishSubjects){
+    return `${recordPath}/course-details/choose-specialisms${referrer}`
+  }
+  // Courses can be dual study mode. If so, ask which this trainee is
+  else if (isMissingStudyMode){
+    return `${recordPath}/course-details/study-mode${referrer}`
+  }
+  // Backfill course dates
+  else if (isMissingDates){
+    return `${recordPath}/course-details/dates${referrer}`
+  }
+  else if (isAllocated) {
+    // After /allocated-place the journey will match other course-details routes
+    return `${recordPath}/course-details/allocated-place${referrer}`
+  }
+  else {
+    return `${recordPath}/course-details/confirm${referrer}`
+  }
+}
+
 // -------------------------------------------------------------------
 // Funding - initiatives and bursaries
 // -------------------------------------------------------------------
@@ -232,110 +286,95 @@ exports.getAllocationSubject = (input) => {
 
 
 // Internal helper to look up bursary available
-exports.getBursaryByRouteAndSubject = (route, subject) => {
-  let bursary = {}
+exports.getFinancialSupportByRouteAndSubject = (route, subject) => {
+  let financialSupport = {}
 
   if (!route) return false
   let routeData = trainingRoutes[route]
 
-  if (!routeData?.bursariesAvailable) return false
+  if (!routeData?.financialSupportAvailable) return false
 
-  let bursaryMatch = false
+  let financialSupportMatch = false
 
-  bursary.allSubjects = []
+  financialSupport.allSubjects = []
 
-  routeData.bursaries.forEach(bursaryLevel => {
+  routeData.financialSupport.forEach(financialSupportLevel => {
 
-    // Build up an array of subjects that attract a bursary
-    bursary.allSubjects = bursary.allSubjects.concat(bursaryLevel.subjects)
+    // Build up an array of subjects that attract a financialSupport
+    financialSupport.allSubjects = financialSupport.allSubjects.concat(financialSupportLevel.subjects)
 
-    if (subject && bursaryLevel.subjects.includes(subject)) {
-      bursary = Object.assign(bursaryLevel, bursary)
-      bursary.subject = subject
-      bursaryMatch = true
+    if (subject && financialSupportLevel.subjects.includes(subject)) {
+      financialSupport = Object.assign(financialSupportLevel, financialSupport)
+      financialSupport.subject = subject
+      financialSupportMatch = true
       return
     }
     // Early years don’t really have subjects - but we can check the route instead
     // Todo: should we just copy over the entire object?
-    else if (exports.routeIsEarlyYears(route) && bursaryLevel.subjects.includes("Early years")){
-      bursary = Object.assign(bursaryLevel, bursary)
-      bursary.subject = "Early years"
-      bursary.tiersApply = bursaryLevel?.tiersApply || false
-      bursaryMatch = true
+    else if (exports.routeIsEarlyYears(route) && financialSupportLevel.subjects.includes("Early years")){
+      financialSupport = Object.assign(financialSupportLevel, financialSupport)
+      financialSupport.subject = "Early years"
+      financialSupport.tiersApply = financialSupportLevel?.tiersApply || false
+      financialSupportMatch = true
       return
     }
   })
 
-  let output = bursaryMatch ? bursary : false
+  let output = financialSupportMatch ? financialSupport : false
 
   return output
 }
 
-// Look up available bursary for the current record
-exports.getBursary = record => {
+// Look up available financialSupport for the current record
+exports.getFinancialSupport = record => {
   if (!record) return false
 
-  // Allocation subject may be falsy. For some routes this will mean we can’t calulate the bursary
+  // Allocation subject may be falsy. For some routes this will mean we can’t calulate the financialSupport
   // for Early years, it doesn't matter
   let allocationSubject = exports.getAllocationSubject(record) 
-  return exports.getBursaryByRouteAndSubject(record.route, allocationSubject)
+  return exports.getFinancialSupportByRouteAndSubject(record.route, allocationSubject)
 }
 
-// Get bursary value eg, 24000
-exports.getBursaryValue = record => {
-  return exports.getBursary(record).value || false
+// Get financialSupport value eg, 24000
+exports.getFinancialSupportValue = record => {
+  return exports.getFinancialSupport(record).value || false
 }
 
 // Get scholarship value, eg 26000
 exports.getScholarshipValue = record => {
-  return exports.getBursary(record).scholarshipValue || false
+  return exports.getFinancialSupport(record).scholarshipValue || false
 }
 
 // Some routes *never* have bursaries
-exports.routeHasBursaries = route => {
+exports.routeHasFinancialSupport = route => {
   if (!route) return false
-  return trainingRoutes[route]?.bursariesAvailable || false
+  return trainingRoutes[route]?.financialSupportAvailable || false
 }
 
 // Check whether bursaries are available for a given route chosen course
-exports.bursariesApply = (record) => {
-  let bursary = exports.getBursary(record)
-  if (bursary) return true
+exports.financialSupportApplies = (record) => {
+  let financialSupport = exports.getFinancialSupport(record)
+  if (financialSupport) return true
   else return false
 }
 
 // Check whether scholarships are available for a given route chosen course
 exports.scholarshipsApply = (record) => {
-  let bursary = exports.getBursary(record)
-  if (bursary?.scholarshipValue) return true
+  let financialSupport = exports.getFinancialSupport(record)
+  if (financialSupport?.scholarshipValue) return true
   else return false
 }
 
 // Can only start funding section if we know bursaries aren’t a thing or if they are a thing and we
 // have the necessary course information to know if bursaries apply or not
 exports.canStartFundingSection = record => {
-  if (!exports.routeHasBursaries(record?.route)) return true
+  if (!exports.routeHasFinancialSupport(record?.route)) return true
   // Early years routes with bursaries need no extra info
   else if (exports.isEarlyYears(record)) return true
   // Other routes need course details to start bursaries
   else {
     let courseDetailsComplete = exports.sectionIsComplete(record.courseDetails)
     return courseDetailsComplete
-  }
-}
-
-// This whole filter is poor and should probably be removed later.
-exports.getSectionName = (record, section) => {
-  if (section == 'trainingDetails'){
-    if (record.status && !exports.isDraft(record)){
-      return "Schools"
-    }
-    else {
-      if (exports.requiresField(record, ['leadSchool', 'employingSchool', 'region'])){
-        return "Training details"
-      }
-      else return "Trainee start date and ID"
-    }
   }
 }
 
@@ -378,6 +417,10 @@ exports.getProviderCourses = function(courses, provider, route=false, data=false
   if (!provider) {
     console.log('Error: no provider given')
   }
+  if (!data?.courses?.[provider]?.courses){
+    console.log('Error: no courses. The kit has likely been reset.')
+    return false
+  }
   let filteredCourses = data.courses[provider].courses
   if (route) {
     filteredCourses = filteredCourses.filter(course => route == course.route)
@@ -387,11 +430,74 @@ exports.getProviderCourses = function(courses, provider, route=false, data=false
   return sortedCourses
 }
 
+// Look up a course by the Publish Code
+exports.getCourseByCode = function(code, data=false){
+  data = data || this?.ctx?.data || false
+  let foundCourse
+
+  // Iterate through each provider and then through each of their courses
+  // This code is a bit awkward. It relies on the first find() breaking as soon as a provider
+  // is found
+  Object.keys(data.courses).find( provider => {
+    foundCourse = data.courses[provider].courses.find(course => course.code == code)
+    return foundCourse
+  })
+
+  if (!foundCourse) console.log(`Error: course ${code} not found`)
+
+  return foundCourse
+}
+
+exports.updatePublishCourse = function(course, data=false){
+  data = data || this?.ctx?.data || false
+
+  // Iterate through each provider and then through each of their courses
+  // Avoiding using getCourseByCode() as we want a reference to the course not a copy.
+  let foundCourse
+
+  Object.keys(data.courses).find( provider => {
+    foundCourse = data.courses[provider].courses.find(_course => _course.code == course.code)
+    return foundCourse
+  })
+
+  if (!foundCourse) console.log(`Error: course ${course?.courseNameLong} not found, so couldn’t be 
+    updated`)
+
+  // This overwrites the one we found by reference. There's probably a cleaner way of
+  // doing this
+  foundCourse = course
+}
+
+// Look up a Publish course from the trainee record
+exports.getTraineePublishCourse = function(record, data=false){
+  data = data || this?.ctx?.data || false
+  if (!record.courseDetails || !record.courseDetails.code) return false
+  else return exports.getCourseByCode(record.courseDetails.code, data)
+}
+
+
+exports.updatePublishCourseDates = (courseDetails, data) => {
+
+  let theCourse = exports.getCourseByCode(courseDetails?.code, data)
+
+  if (exports.isFullTime(courseDetails)){
+    theCourse.startDateFullTime = theCourse.startDateFullTime || courseDetails?.startDate || undefined
+    theCourse.endDateFullTime = theCourse.endDateFullTime || courseDetails?.endDate || undefined
+  }
+  else if (exports.isPartTime(courseDetails)){
+    theCourse.startDatePartTime = theCourse.startDatePartTime || courseDetails?.startDate || undefined
+    theCourse.endDatePartTime = theCourse.endDatePartTime || courseDetails?.endDate || undefined
+  }
+
+  exports.updatePublishCourse(theCourse, data)
+
+}
+
 // Check if the selected provider offers publish courses for the selected route
 exports.routeHasPublishCourses = function(record){
   if (!record) return false
   const data = Object.assign({}, this.ctx.data)
-  let providerCourses = exports.getProviderCourses(data.courses, record?.provider, record.route, data)
+  let providerCourses = exports.getProviderCourses(data?.courses, record?.provider, record.route, data)
   return (providerCourses.length > 0)
 }
 
@@ -671,6 +777,14 @@ exports.subjectsAreIncomplete = courseDetails => {
   return Object.values(courseDetails.subjects).some(subject => subject == null)
 }
 
+// For Apply drafts, ask users to confirm the course is correct before proceeding.
+// This allows us to launch in to a flow to backfill missing data *or* let them swap to a different
+// course
+exports.courseNeedsToBeConfirmed = courseDetails => {
+  if (exports.sectionIsComplete(courseDetails)) return false
+  else return (Boolean(courseDetails?.needsConfirming))
+}
+
 // -------------------------------------------------------------------
 // Records
 // -------------------------------------------------------------------
@@ -721,11 +835,6 @@ exports.isApprenticeship = record => {
   return record?.route == "Teaching apprenticeship (postgrad)"
 }
 
-// For some courses, the the wider course might be longer than the itt bit we’re interested in
-exports.courseDatesAreAmbiguous = record => {
-  return trainingRoutes?.[record?.route]?.courseDatesAreAmgiguous || false
-}
-
 // Phases
 
 // Unlike the other phases, this is probably reliable - as it checcks the route rather than the age
@@ -739,8 +848,7 @@ exports.routeIsEarlyYears = route => {
   return route && route.includes("Early years")
 }
 
-// TODO: this might not be reliable - need to check all age ranges
-// map to one of the phases
+
 exports.isPrimary = record => {
   return exports.getCoursePhase(record) == "Primary"
 }
@@ -751,13 +859,48 @@ exports.isSecondary = record => {
   return exports.getCoursePhase(record) == "Secondary"
 }
 
+// Get study mode from record or courseDetails
+exports.getStudyMode = data => {
+  return data?.courseDetails?.studyMode || data?.studyMode
+}
+
+exports.isFullTime = data => {
+  return exports.getStudyMode(data) == "Full time"
+}
+
+exports.isPartTime = data => {
+  return exports.getStudyMode(data) == "Part time"
+}
+
+exports.isFullTimeOrPartTime = data => {
+  return exports.getStudyMode(data) == "Full time or part time"
+}
+
 exports.sectionIsComplete = section => {
   return section?.status == "Completed" || (section?.status && section.status.includes("Completed"))
 }
 
 // Check if all sections are complete
-exports.recordIsComplete = record => {
+exports.recordIsComplete = function(record, data=false ) {
+
+  data = Object.assign({}, (data || this?.ctx?.data || false))
+
   if (!record || !_.get(record, "route")) return false
+
+  // Pretend 20% of submitted records are incomplete
+  if (exports.isNonDraft(record)){
+    let statusesThatMustBeComplete = [
+      'EYTS recommended',
+      'EYTS awarded',
+      'QTS recommended',
+      'QTS awarded',
+      // 'Deferred',
+      'Withdrawn'
+    ]
+    if (statusesThatMustBeComplete.includes(record?.status)) return true
+      else
+    return !exports.hasOutstandingActions(record, data)
+  }
 
   let requiredSections = _.get(trainingRoutes, `${record.route}.sections`)
   let applyReviewSections = trainingRouteData.applyReviewSections
@@ -799,7 +942,7 @@ exports.needsPlacementDetails = function(record, data = false) {
 
   let needsPlacementDetails = false
   let placementCount = (record?.placement?.items) ? record.placement.items.length : 0
-  let minPlacementsRequired = data.settings.minPlacementsRequired
+  let minPlacementsRequired = data?.settings?.minPlacementsRequired || 2
 
   if (exports.requiresSection(record, 'placement')) {
     if ((record?.placement?.status != 'Complete') || (placementCount < minPlacementsRequired)) {
@@ -816,8 +959,9 @@ exports.hasOutstandingActions = function(record, data = false) {
   
   let hasOutstandingActions = false
   let traineeStarted = record?.trainingDetails?.commencementDate
+  let ittStartDate = moment(record?.courseDetails?.startDate)
 
-  if (!traineeStarted) {
+  if (!traineeStarted && dates.isInPast(record?.courseDetails?.startDate) && record.status != "Deferred") {
     hasOutstandingActions = true
   }
   else if (exports.needsPlacementDetails(record, data)) {
@@ -842,6 +986,58 @@ exports.needsStudyMode = record => {
   return (!allowedStudyModes.includes(record?.courseDetails?.studyMode))
 }
 
+exports.needsCourseDates = record => {
+  return !Boolean(record?.courseDetails?.startDate) || !Boolean(record?.courseDetails?.endDate)
+}
+
+// -------------------------------------------------------------------
+// Existing record states
+// -------------------------------------------------------------------
+
+/*
+  ====================================================================
+  ittInTheFuture
+  --------------------------------------------------------------------
+  true if itt start date is in the future
+  ====================================================================
+*/
+
+exports.ittInTheFuture = (record) => {
+  return dates.isInFuture(record?.courseDetails?.startDate)
+}
+
+
+/*
+  ====================================================================
+  ittStartedButNoCommencementDate
+  --------------------------------------------------------------------
+  true if itt start is in the past AND
+  trainee does not have a commencement date
+  ====================================================================
+*/
+
+exports.ittStartedButNoCommencementDate = (record) => {
+  let ittStartDate = record?.courseDetails?.startDate
+  let traineeStartDate = record?.trainingDetails?.commencementDate
+
+  return (dates.isInPast(ittStartDate) && !traineeStartDate)
+}
+
+/*
+  ====================================================================
+  traineeStarted
+  --------------------------------------------------------------------
+  true if itt start is in the past AND
+  trainee has a commencement date
+  ====================================================================
+*/
+
+exports.traineeStarted = (record) => {
+  let ittStartDate = record?.courseDetails?.startDate
+  let traineeStartDate = record?.trainingDetails?.commencementDate
+
+  return (dates.isInPast(ittStartDate) && traineeStartDate)
+}
 
 // -------------------------------------------------------------------
 // Get records
@@ -867,8 +1063,11 @@ exports.filterRecords = (records, data, filters = {}) => {
   let filteredRecords = records
   let applyEnabled = data.settings.enableApplyIntegration
 
-  // Only allow records for the signed-in providers
-  filteredRecords = exports.filterBySignedIn(filteredRecords, data)
+  if (data?.settings?.viewAsAdmin != "true"){
+    // Only allow records for the signed-in providers
+    filteredRecords = exports.filterBySignedIn(filteredRecords, data)
+  }
+
 
   // Only show records for training routes that are enabled
   let enabledTrainingRoutes = data.settings.enabledTrainingRoutes
@@ -886,7 +1085,7 @@ exports.filterRecords = (records, data, filters = {}) => {
 
   if (filters.completeStatus){
     filteredRecords = filteredRecords.filter(record => {
-      let completeStatus = (exports.recordIsComplete(record)) ? 'Complete' : 'Incomplete'
+      let completeStatus = (exports.recordIsComplete(record, data)) ? 'Complete' : 'Incomplete'
       return filters.completeStatus.includes(completeStatus)
     })
   }
@@ -916,12 +1115,17 @@ exports.filterRecords = (records, data, filters = {}) => {
     filteredRecords = filteredRecords.filter(record => filters.providers.includes(record.provider))
   }
 
+  // Admin only filter for picking from all providers
+  if (filters.allProviders && filters.allProviders != "All providers"){
+    filteredRecords = filteredRecords.filter(record => filters.allProviders.includes(record.provider))
+  }
+
   if (filters.trainingRoutes){
     filteredRecords = filteredRecords.filter(record => filters.trainingRoutes.includes(record.route))
   }
 
   if (filters.status){
-    filteredRecords = filteredRecords.filter(record =>  exports.isDraft(record))
+    filteredRecords = filteredRecords.filter(record =>  filters.status.includes(record.status))
   }
 
   // Filter by the specialism or allocation subject
@@ -985,11 +1189,12 @@ exports.filterRecordsBySearchTerm = (records, searchQuery=false) => {
     let searchParts = searchQueryLowercase.split(' ')
     let nameMatch = searchParts.every(part => fullName.includes(part))
 
+    let referenceMatch = searchParts.some(part => (record?.reference || "").toLowerCase().includes(part))
     let traineeIdMatch = searchParts.some(part => (record?.trainingDetails?.traineeId || "").toLowerCase().includes(part))
 
     let trnMatch = searchParts.some(part => (record?.trn || "").toString().includes(part))
 
-    return traineeIdMatch || trnMatch || nameMatch
+    return referenceMatch || traineeIdMatch || trnMatch || nameMatch
   })
 
   return filteredRecords
@@ -1019,7 +1224,7 @@ exports.filterByProvider = (records, array) => {
 // Filter records for currently signed in providers
 // Can’t be an arrow function because we need access to the Nunjucks context
 exports.filterBySignedIn = function(records, data=false){
-  data = data || this?.ctx?.data || false
+  data = Object.assign({}, (data || this.ctx.data || false))
   if (!data) {
     console.log('Error with filterBySignedIn: session data not provided')
     return []
@@ -1043,13 +1248,15 @@ exports.filterByStatus = (records, array, invert) => {
 }
 
 // For use on drafts only?
-exports.filterByComplete = records => {
-  return records.filter(record => exports.recordIsComplete(record))
+exports.filterByComplete = function(records, data=false) {
+  data = Object.assign({}, (data || this?.ctx?.data || false))
+  return records.filter(record => exports.recordIsComplete(record, data))
 }
 
 // For use on drafts only?
-exports.filterByIncomplete = records => {
-  return records.filter(record => !exports.recordIsComplete(record))
+exports.filterByIncomplete = function(records, data=false) {
+  data = Object.assign({}, (data || this?.ctx?.data || false))
+  return records.filter(record => !exports.recordIsComplete(record, data))
 }
 
 exports.filterByQualification = (records, qualification) => {
@@ -1119,11 +1326,12 @@ exports.sortRecordsByDateUpdated = records => {
 
 
 // Add an event to a record’s timeline
-exports.addEvent = (record, content) => {
+exports.addEvent = (record, title, description) => {
   record.events.items.push({
-    title: content,
+    title: title,
     user: 'Provider',
-    date: new Date()
+    date: new Date(),
+    ...(description ? {description} : {}) // conditionally pass description
   })
 }
 
@@ -1148,7 +1356,8 @@ exports.getTimeline = (record) => {
       },
       byline: {
         text: item.user
-      }
+      },
+      ...(item.description ? {description: item.description} : {})
       // link: getLink(item, record)
     }
   }).reverse()
@@ -1209,7 +1418,7 @@ exports.updateRecord = (data, newRecord, timelineMessage) => {
 
   // Must be a new record
   if (!newRecord.id){
-    newRecord.id = faker.random.uuid()
+    newRecord.id = faker.datatype.uuid()
     records.push(newRecord)
   }
   // Is an existing record
@@ -1250,6 +1459,7 @@ exports.registerForTRN = (record) => {
   else {
     record.status = 'Pending TRN'
     record.source = record.source || "Manual" // just in case
+    record.reference = record.reference || generateReference()
     delete record?.placement?.status
     record.submittedDate = new Date()
     record.updatedDate = new Date()
@@ -1451,7 +1661,7 @@ exports.markSummaryRow = function(row, type) {
   row.value.html = exports.stripPlaceholders(value) // strip any placeholder tags
 
   // Generate an id so we can anchor to this row
-  let id = `summary-list--row-invalid--${faker.random.uuid()}`
+  let id = `summary-list--row-invalid--${faker.datatype.uuid()}`
 
   let message, linkText, linkTextAppendHidden
 
@@ -1503,7 +1713,7 @@ exports.markInput = function(data, params){
   let valueCleaned = exports.stripPlaceholders(data.value) // strip any placeholder tags
 
   // Generate an id so we can anchor to this row
-  let id = data?.id || `app-input-invalid--${faker.random.uuid()}`
+  let id = data?.id || `app-input-invalid--${faker.datatype.uuid()}`
 
   let message
 
@@ -1723,3 +1933,4 @@ exports.getRecordPath = req => {
   let recordType = req.params.recordtype
   return (recordType == 'record') ? (`/record/${req.params.uuid}`) : '/new-record'
 }
+

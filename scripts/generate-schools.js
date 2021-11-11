@@ -108,10 +108,10 @@ const generateSchool = (params = {}) => {
   let selectedGenerator = weighted.select(schoolNameMix)
 
   let schoolName = params.schoolName || generators[selectedGenerator]()
-  let uuid = params.uuid || faker.random.uuid()
+  let uuid = params.uuid || faker.datatype.uuid()
   
   // 5 or 6 digits
-  let urn = params.urn || faker.random.number({
+  let urn = params.urn || faker.datatype.number({
     'min': 100000,
     'max': 9999999
   })
@@ -126,7 +126,7 @@ const generateSchool = (params = {}) => {
     let fakePostcode = faker.address.zipCode()
     if (town == "London"){
       fakePostcode = fakePostcode.split(" ").pop()
-      fakePostcode = `${faker.helpers.randomize(cardinalDirections)}${faker.random.number({'min': 1, 'max': 20})} ${fakePostcode}`
+      fakePostcode = `${faker.helpers.randomize(cardinalDirections)}${faker.datatype.number({'min': 1, 'max': 20})} ${fakePostcode}`
     }
     postcode = params.postcode || fakePostcode
   }

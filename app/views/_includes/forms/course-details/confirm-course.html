@@ -1,0 +1,54 @@
+{% set course = record | getTraineePublishCourse  %}
+
+{% include "_includes/trainee-name-caption.njk" %}
+<h1 class="govuk-heading-l">
+  {{pageHeading}}
+</h1>
+
+<p class="govuk-body">The trainee is being registered on {{course.courseNameLong}}, on the {{record.route}} route.</p>
+
+{% set courseItems = [] %}
+
+{% set courseHint %}
+  {% if route %}
+    {{ course.qualificationsSummary }}
+  {% else %}
+    {# Not filtered by route, so display the route in addition #}
+    {{ course.qualificationsSummary }}, {{ course.route }}
+  {% endif %}
+{% endset %}
+
+{% set courseItems = courseItems | push({
+  value: "course-confirmed",
+  text: "Yes, register on " + course.courseNameLong,
+  checked: checked(selectedCourse, "Other")
+}) %}
+
+
+{# Advance to route selection page #}
+{% set courseItems = courseItems | push({
+  value: "change-course",
+  text: "No, change the course",
+  hint: {
+    text: "For trainees who have changed courses since applying"
+  },
+  checked: checked(selectedCourse, "Other")
+}) %}
+
+{{ govukRadios({
+    fieldset: {
+      legend: {
+        text: "Is this the correct course?",
+        isPageHeading: false,
+        classes: "govuk-fieldset__legend--m"
+      }
+    },
+    hint: {
+      text: hintText
+    },
+    items: courseItems
+  } | decorateAttributes(record, "record.courseDetails.confirmedCourse")) }}
+
+{{ govukButton({
+  text: "Continue"
+}) }}

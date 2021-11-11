@@ -99,14 +99,12 @@ const setSubjectSpecialisms = (courseDetails, pickRandom) => {
 }
 
 
-
-
-
 module.exports = (params, application) => {
 
+  const isDraft = utils.isDraft(application)
   const isNonDraft = utils.isNonDraft(application)
-  const isApplyDraft = (application.source == 'Apply' && application.status == "Draft")
-  const isManualDraft = (application.source == 'Manual' && application.status == "Draft")
+  const isApplyDraft = utils.sourceIsApply(application) && isDraft
+  const isManualDraft = utils.sourceIsManual(application) && isDraft
   
   const sectionIsComplete = (params?.courseDetails?.status == "Completed")
 
@@ -130,8 +128,6 @@ module.exports = (params, application) => {
     // Narrow down to just a single year’s courses
     let providerCoursesByYear = courses[application.provider].courses.filter(course => course.academicYear == application.academicYear)
 
-    // console.log('length:', providerCoursesByYear.length, application.academicYear)
-
     // Grab course details from seed courses
     let routeCourses = providerCoursesByYear.filter(course => course.route == application.route)
 
@@ -145,18 +141,35 @@ module.exports = (params, application) => {
     let limitedCourses = routeCourses.slice(0, 12) // to match data.settings.courseLimit
 
     // Pick a random course for this trainee
-    courseDetails = faker.helpers.randomize(limitedCourses)
+    // Must use Object.assign or we could accidentally edit the source course
+    courseDetails = Object.assign({}, faker.helpers.randomize(limitedCourses))
+
+    // Set a one-time flag to confirm the course
+    if (isApplyDraft && !sectionIsComplete){
+      courseDetails.needsConfirming = true
+    }
 
     // For each Publish subject, set course subjects where they’re mappable.
     // Not all subjects are mappable. Users will use UI to map them. Where we're pretending the data
     // is complete we pick a random subject - as if the user had preivously picked that.
     courseDetails = setSubjectSpecialisms(courseDetails, pretendDataIsComplete)
 
-    // The ITT bit of apprenticeship training happens a bit after the apprenticeship starts
-    // When users pick a course we'll ask them for the ITT start date. Here we just assume it’s
-    // 2 months after the apprenticeship started
-    if (pretendDataIsComplete && courseDetails.route == "Teaching apprenticeship (postgrad)"){
-      courseDetails.startDate = moment(courseDetails.apprenticeshipStartDate).add(2, 'months').toDate()
+    // Backfill course dates
+    // Publish courses only have a start month - not a full start and end date. When a user first adds
+    // a trainee on a course, we'll collect these dates, then save them for all future trainees on that
+    // course. Here, for any trainees which are 'complete' we implicitly should have start and end dates
+    // for them. We're not saving these back to the course though (awkward to do) as we are probably
+    // more interested in the new user journey.
+    if (pretendDataIsComplete){
+      let randomDay = faker.datatype.number({
+        'min': 1,
+        'max': 28
+      })
+      let startDateVague = moment(courseDetails.startDateVague).toDate()
+      let startMonth = startDateVague.getMonth() + 1 // Month 0 is Jan
+      let startYear = startDateVague.getFullYear()
+      courseDetails.startDate = moment(`${startYear}-${startMonth}-${randomDay}`, "YYYY-MM-DD").toDate()
+      courseDetails.endDate = moment(courseDetails.startDate).add(courseDetails.duration, 'years').subtract(3, 'months').toDate()
     }
 
     // Some Pubish courses are set to `Full time or part time` - when a user adds one of these

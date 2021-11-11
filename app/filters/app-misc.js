@@ -17,12 +17,10 @@ filters.hasName = (record) => {
 
 // Return "Firstname Lastname"
 // Likely no longer needed - done with a getter now
-filters.getShortName = ({
-  givenName="",
-  familyName=""} = false) => {
+filters.getShortName = record => {
   let names = []
-  names.push(givenName)
-  names.push(familyName)
+  names.push(record?.personalDetails?.givenName)
+  names.push(record?.personalDetails?.familyName)
   return names.filter(Boolean).join(' ')
 }
 

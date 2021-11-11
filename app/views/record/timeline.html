@@ -7,11 +7,11 @@
 
 {% block tabContent %}
 
-  {% set referrer = recordPath + "/details-and-education" %}
-
-
   <h2 class="govuk-heading-m">Timeline</h2>
 
-  {{ appTimeline({items: timeline})}}
+  {{ appTimeline({
+    headingLevel: 3,
+    items: timeline
+  })}}
 
 {% endblock %}

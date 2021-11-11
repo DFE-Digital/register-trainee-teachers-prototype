@@ -1,9 +1,18 @@
+{% set providerText %}
+  {% if record.provider %}
+    {{record.provider}} (C85)
+  {% else %}
+    Not provided
+  {% endif %}
+{% endset %}
+
+
 {% set providerRow = {
   key: {
-    text: "Provider"
+    text: "Accrediting provider"
   },
   value: {
-    text: record.provider or "Not provided"
+    text: providerText
   },
   actions: {
     items: [
@@ -16,6 +25,15 @@
   } if canAmend and false
 } %}
 
+{% set trnRow = {
+  key: {
+    text: "TRN"
+  },
+  value: {
+    text: record.trn or 'Not provided'
+  }
+} %}
+
 {% set regionRow = {
   key: {
     text: "Region"
@@ -25,10 +43,20 @@
   }
 } %}
 
+{% set referenceRow = {
+  key: {
+    text: "Reference"
+  },
+  value: {
+    text: record.reference or 'Not provided',
+    html: referenceHtml
+  }
+} %}
+
 
 {% set traineeIdRow = {
   key: {
-    text: "Trainee ID"
+    text: "Provider trainee ID"
   },
   value: {
     text: record.trainingDetails.traineeId or 'Not provided'
@@ -38,7 +66,7 @@
       {
         href: recordPath + "/trainee-id" | addReferrer(referrer),
         text: "Change",
-        visuallyHiddenText: "trainee ID"
+        visuallyHiddenText: "provider trainee ID"
       }
     ]
   } if canAmend
@@ -76,14 +104,7 @@
   }
 } %}
 
-{% set trnRow = {
-  key: {
-    text: "TRN"
-  },
-  value: {
-    text: record.trn or 'Not provided'
-  }
-} %}
+
 
 {% set recommendedForAwardContentHtml %}
   {{govukTag({
@@ -126,7 +147,11 @@
     text: "Deferred",
     classes: record.status | getStatusClass + " govuk-!-margin-bottom-2"
   })}} <br>
-  Deferral date: {{record.deferredDate | govukDate}}
+  {% if record.deferredDate %}
+    Deferral date: {{record.deferredDate | govukDate}}
+  {% else %}
+    The trainee deferred before starting their ITT
+  {% endif %}
 {% endset %}
 
 {% set deferredRow = {
@@ -215,10 +240,14 @@
 {% set traineeStarted = (record.trainingDetails.commencementDate | length > 1) or record.trainingDetails.traineeStarted | falsify %}
 
 {% set commencementDateLabel %}
-  {% if traineeStarted %}
-    {{(record.trainingDetails.commencementDate | govukDate) or 'Not provided'}}
+  {% if record.courseDetails.startDate | isInFuture %}
+    {{ "ITT has not started" }}
+  {% elseif record.trainingDetails.commencementDate %}
+    {{ record.trainingDetails.commencementDate | govukDate }}
+  {% elseif record.trainingDetails.traineeStarted == "trainee-not-started" %}
+    Trainee has not started yet
   {% else %}
-    Trainee yet to start course
+    Not provided
   {% endif %}
 {% endset %}
 
@@ -237,16 +266,17 @@
         visuallyHiddenText: "trainee’s start date"
       }
     ]
-  } if canAmend
+  } if canAmend and record.courseDetails.startDate | isInPast and not record | isDeferred
 } %}
 
 {% set traineeProgressRows = [
-  providerRow if data.settings.userProviders | length > 1,
+  providerRow if data.isAdmin or data.settings.userProviders | length > 1,
+  trnRow if record.trn,
+  referenceRow,
   traineeIdRow,
   regionRow if record | requiresField("region"),
   startYearRow,
   pendingTrnRow if record | isPendingTrn,
-  trnRow if record.trn,
   recommendedForAwardRow if record | isRecommended,
   awardRow if record | isAwarded,
   deferredRow if record | isDeferred,

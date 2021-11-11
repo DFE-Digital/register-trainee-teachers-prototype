@@ -2,16 +2,7 @@
 
 {% set startDateHint = "For example, " + "" | today | toDateArray | spaceSeparate %}
 
-{% if record | courseDatesAreAmbiguous %}
-  {% set startDateHint %}
-    <p class="govuk-body govuk-hint">
-      The start date of the Initial Teacher Training part of their course.
-    </p>
-    <p class="govuk-body govuk-hint">
-      {{startDateHint | safe }}
-    </p>
-  {% endset %}
-{% endif %}
+{% include "_includes/trainee-name-caption.njk" %}
 
 {{ govukDateInput({
   id: "start-start-date",

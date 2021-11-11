@@ -64,7 +64,7 @@
 
 {% set institutionRow = {
   key: {
-    text: "Institution"
+    text: "Awarding institution"
   },
   value: {
     text: degree.org or 'Not provided'
@@ -74,7 +74,7 @@
       {
         href: recordPath + "/degree/" + loop.index0 + "/details" | addReferrer(referrer),
         text: "Change",
-        visuallyHiddenText: "degree institution"
+        visuallyHiddenText: "degree awarding institution"
       }
     ]
   } if canAmend

@@ -19,7 +19,7 @@ const statusesWhereTraineesMustHaveStarted = [
 module.exports = (params) => {
 
   // Todo: make traineeId closer to what Providers user (20/21-1234, etc)
-  const traineeId = faker.random.alphaNumeric(8).toUpperCase()
+  const traineeIdNumber = faker.random.alphaNumeric(8).toUpperCase()
 
   // Much better to use submitted date
   let commencementDate = params?.submittedDate || faker.date.between(
@@ -32,6 +32,13 @@ module.exports = (params) => {
   if (statusesWhereTraineesMustHaveStarted.includes(params?.status)){
     traineeStarted = "true"
   }
+  else if (params?.status == "Draft") {
+    traineeStarted = "false"
+  }
+  // Course that haven’t started, don’t get a start date
+  else if (params?.courseDetails?.startDate && moment(params?.courseDetails?.startDate).isAfter()) {
+    traineeStarted = "false"
+  }
   else {
     traineeStarted = params?.traineeStarted || weighted.select({
       "true": 0.8, // Most students should have commencement dates
@@ -40,6 +47,10 @@ module.exports = (params) => {
   }
 
   commencementDate = (traineeStarted == "true") ? commencementDate : undefined
+
+  // Estimate 30% of records with Trainee IDs
+  let hasTraineeId = weighted.select([true, false],[0.3,0.7])
+  let traineeId = (hasTraineeId) ? traineeIdNumber : undefined
 
   return {
     traineeId,

@@ -9,8 +9,8 @@ module.exports = (params) => {
 
   let routeData = trainingRoutes[params.route]
 
-  // Only some routes have bursaries possible
-  let availableBursary = utils.getBursary(params)
+  // Only some routes have financial support possible
+  let availableFinancialSupport = utils.getFinancialSupport(params)
 
   let initiatives = routeData?.initiatives || []
   let randomInitiative = faker.helpers.randomize(initiatives)
@@ -27,38 +27,32 @@ module.exports = (params) => {
   }
 
   // Only generate bursary data for routes that have bursaries
-  let bursary = false
-  if (availableBursary){
+  let source = false
+  if (availableFinancialSupport){
     bursary = {}
 
-    bursary.selfFunded = weighted.select(['true', 'false'], [0.1, 0.9])
+    let isUsingFinancialSupport = weighted.select([true, false], [0.9, 0.1])
+
+    if (isUsingFinancialSupport){
+      source = availableFinancialSupport.type
+
+      // If scholarships are available, pick them 70% of the time
+      if (availableFinancialSupport.scholarshipValue){
+        source = weighted.select([source, "scholarship"], [0.3, 0.7])
+      }
+    }
+    else source = "self-funded"
 
     // Special handling for Early years (postgrad)
-    if (bursary.selfFunded == 'false' && availableBursary.tiersApply){
-      let selectedTier = faker.helpers.randomize(availableBursary.tiers)
-      bursary.selfFunded = selectedTier.name
+    if (source == 'bursary' && availableFinancialSupport.tiersApply){
+      let selectedTier = faker.helpers.randomize(availableFinancialSupport.tiers)
+      source = selectedTier.name
     }
-
-    // let degreeItems = params?.degree?.items
-
-    // Commented out for now as we'll dynamically look it up
-    // if (bursary.selfFunded == 'false'){
-
-    //   // Value depends on subject chosen
-    //   bursary.bursaryValue = availableBursary.value
-
-    //   // If a person has a bursary and multiple degrees, they need to pick which
-    //   // degree the bursary is for
-    //   if (degreeItems && degreeItems.length > 1){
-    //     bursary.degreeToBeUsedForBursaries = faker.helpers.randomize(degreeItems).id
-    //   }
-
-    // }
 
   }
 
   return  {
     initiative,
-    ...(bursary ? {bursary} : {}) // conditional
+    ...(source ? {source} : {}) // conditional
   }
 }

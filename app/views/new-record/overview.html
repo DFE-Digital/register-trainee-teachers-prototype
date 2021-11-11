@@ -15,10 +15,9 @@
 
 {% set referrer = recordPath + "/overview" %}
 
-
 {% set draftRecordName %}
-  {% if record.personalDetails.shortName %}
-   for {{record.personalDetails.shortName}}
+  {% if record | hasName %}
+   for {{ record | getShortName }}
   {% endif %}
 {% endset %}
 
@@ -130,7 +129,7 @@
     }
   } if record | requiresSection("courseDetails"),
   {
-    text: record | getSectionName("trainingDetails"),
+    text: "Trainee ID",
     href: "training-details" | reviewIfInProgress(record.trainingDetails),
     id: "training-details",
     tag: {

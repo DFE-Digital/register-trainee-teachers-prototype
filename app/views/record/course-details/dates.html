@@ -1,0 +1,15 @@
+{% extends "_templates/_record-form.html" %}
+
+{% set pageHeading = "ITT dates" %}
+
+{% set formAction = "./dates-answer" %}
+
+{% block formContent %}
+
+  {% if data.directSetCourseDates %}
+    {% include "_includes/forms/course-details/course-dates.html" %}
+  {% else %}
+    {% include "_includes/forms/course-details/trainee-course-dates.html" %}
+  {% endif %}
+
+{% endblock %}

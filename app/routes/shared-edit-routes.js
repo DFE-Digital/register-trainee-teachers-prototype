@@ -41,29 +41,6 @@ module.exports = router => {
     }
   })
 
-
-  // =============================================================================
-  // Training details - details specific to this trainee
-  // =============================================================================
-
-  // Clear commencement date if trainee hasn’t started
-  router.post(['/:recordtype/:uuid/training-details','/:recordtype/training-details'], function (req, res) {
-    let data = req.session.data
-    let record = data.record
-    let recordPath = utils.getRecordPath(req)
-    let referrer = utils.getReferrer(req.query.referrer)
-    let courseStartDate = record?.courseDetails?.startDate
-
-    let traineeStarted = record?.trainingDetails?.traineeStarted
-    if (courseStartDate && traineeStarted == "use-course-start-date"){
-      record.trainingDetails.commencementDate = courseStartDate
-    }
-    else if (traineeStarted == "false"){ // If the answer was explicitly false.
-      delete record?.trainingDetails?.commencementDate
-    }
-    res.redirect(`${recordPath}/training-details/confirm${referrer}`)
-  })
-
   // =============================================================================
   // Schools
   // =============================================================================
@@ -119,6 +96,12 @@ module.exports = router => {
     let referrer = utils.getReferrer(req.query.referrer)
     const schools = getSchools()
 
+    // default to applicable unless checkbox set
+    let leadSchoolApplicable = true
+    if (record?.schools?.leadSchool?.notApplicable && record?.schools?.leadSchool?.notApplicable.includes('true') ){
+      leadSchoolApplicable = false
+    }
+
     // Input added with js by the autocomplete
     let autocompleteRawValue = req.body?._autocomplete_raw_value_school_picker
 
@@ -152,25 +135,27 @@ module.exports = router => {
     delete record?.schools?.leadSchoolIsEmployingSchool // Checkbox no longer needed
 
     // Search again
-    if (schoolSearchTerm && !schoolUuid){
+    if (schoolSearchTerm && !schoolUuid && leadSchoolApplicable){
       let queryParams = utils.addQueryParam(referrer, `_schoolSearch=${schoolSearchTerm}`)
       res.redirect(`${recordPath}/schools/lead-school${queryParams}`)
     }
     // No answer given and no search term
-    else if (!schoolUuid){
+    else if (!schoolUuid && leadSchoolApplicable){
       res.redirect(`${recordPath}/schools/lead-school${referrer}`)
     }
     else {
-      let selectedSchool = schools.find(school => school.uuid == schoolUuid)
+      if (leadSchoolApplicable){
+        let selectedSchool = schools.find(school => school.uuid == schoolUuid)
 
-      // Seed records might have schools that aren't in our schools list
-      // This may happen if a user tries to edit an existing seed record
-      if (!selectedSchool) {
-        console.log(`School not found - you probably need to update the seed records`)
-      }
-      else {
-        // Using _.set as lead school might not exist yet
-        _.set(record, 'schools.leadSchool', selectedSchool)
+        // Seed records might have schools that aren't in our schools list
+        // This may happen if a user tries to edit an existing seed record
+        if (!selectedSchool) {
+          console.log(`School not found - you probably need to update the seed records`)
+        }
+        else {
+          // Using _.set as lead school might not exist yet
+          _.set(record, 'schools.leadSchool', selectedSchool)
+        }
       }
 
       // Some routes have a conditional next question
@@ -230,6 +215,12 @@ module.exports = router => {
     let referrer = utils.getReferrer(req.query.referrer)
     const schools = getSchools()
 
+    // default to applicable unless checkbox set
+    let employingSchoolApplicable = true
+    if (record?.schools?.employingSchool?.notApplicable && record?.schools?.employingSchool?.notApplicable.includes('true') ){
+      employingSchoolApplicable = false
+    }
+
     // Input added with js by the autocomplete
     let autocompleteRawValue = req.body?._autocomplete_raw_value_school_picker
 
@@ -261,25 +252,27 @@ module.exports = router => {
     let schoolUuid = autocompleteUuid || schoolResultUuid || false
 
     // Search again
-    if (schoolSearchTerm && !schoolUuid){
+    if (schoolSearchTerm && !schoolUuid && employingSchoolApplicable){
       let queryParams = utils.addQueryParam(referrer, `_schoolSearch=${schoolSearchTerm}`)
       res.redirect(`${recordPath}/schools/employing-school${queryParams}`)
     }
     // No answer given and no search term
-    else if (!schoolUuid){
+    else if (!schoolUuid && employingSchoolApplicable){
       res.redirect(`${recordPath}/schools/employing-school${referrer}`)
     }
     else {
-      let selectedSchool = schools.find(school => school.uuid == schoolUuid)
+      if (employingSchoolApplicable){
+        let selectedSchool = schools.find(school => school.uuid == schoolUuid)
 
-      // Seed records might have schools that aren't in our schools list
-      // This may happen if a user tries to edit an existing seed record
-      if (!selectedSchool) {
-        console.log(`School not found - you probably need to update the seed records`)
-      }
-      else {
-        // Using _.set as lead school might not exist yet
-        _.set(record, 'schools.employingSchool', selectedSchool)
+        // Seed records might have schools that aren't in our schools list
+        // This may happen if a user tries to edit an existing seed record
+        if (!selectedSchool) {
+          console.log(`School not found - you probably need to update the seed records`)
+        }
+        else {
+          // Using _.set as lead school might not exist yet
+          _.set(record, 'schools.employingSchool', selectedSchool)
+        }
       }
 
       res.redirect(`${recordPath}/schools/confirm${referrer}`)
@@ -288,12 +281,10 @@ module.exports = router => {
   })
 
   // =============================================================================
-  // Course details
+  // Course details - general
   // =============================================================================
 
-  // Show pick-course or pick-route depending on if current provider has courses
-  // on Publish
-
+  // Decide whether to go down Publish pick-course journey or directly to manual course details
   router.get(['/:recordtype/:uuid/course-details','/:recordtype/course-details'], function (req, res) {
     const data = req.session.data
     const record = data.record
@@ -329,7 +320,43 @@ module.exports = router => {
 
   })
 
-  // Picking a course
+  // =============================================================================
+  // Course details - Apply
+  // =============================================================================
+
+  // Apply drafts: start by confirming the course is correct
+  // This question exists because we have conditional questions to ask (specialisms, course dates),
+  // but the provider may want to change the course - so we double check the course is correct
+  // before asking those conditional questions
+  router.post(['/:recordtype/:uuid/course-details/confirm-course','/:recordtype/course-details/confirm-course'], function (req, res) {
+    const data = req.session.data
+    let record = data.record
+    let recordPath = utils.getRecordPath(req)
+    let referrer = utils.getReferrer(req.query.referrer)
+
+    let confirmed = record.courseDetails.confirmedCourse
+    delete record.courseDetails.confirmedCourse
+
+    if (!confirmed){
+      res.redirect(`${recordPath}/course-details/confirm-course${referrer}`)
+    }
+    else if (confirmed == 'course-confirmed'){
+      delete record?.courseDetails?.needsConfirming
+      res.redirect(utils.getNextPublishCourseDetailsUrl(record, recordPath,referrer))
+      // res.redirect(`${recordPath}/course-details/choose-specialisms${referrer}`)
+    }
+    else if (confirmed == 'change-course'){
+      delete record?.courseDetails?.needsConfirming
+      res.redirect(`${recordPath}/course-details/course-details${referrer}`)
+    }
+
+  })
+
+  // =============================================================================
+  // Course details - Publish journey
+  // =============================================================================
+
+  // Picking a Publish course
   router.post(['/:recordtype/:uuid/course-details/pick-course','/:recordtype/course-details/pick-course'], function (req, res) {
     const data = req.session.data
     let record = data.record
@@ -344,7 +371,7 @@ module.exports = router => {
     let providerCourses = utils.getProviderCourses(data.courses, record.provider, route, data)
     let selectedCourse = _.get(data, 'record.selectedCourseTemp')
 
-    // User shouldn’t have been on this page, send them to details
+    // User shouldn’t have been on this page, send them to manual course details journey
     if (providerCourses.length == 0){
       res.redirect(`${recordPath}/course-details/phase${referrer}`)
     }
@@ -354,15 +381,23 @@ module.exports = router => {
     }
     // They’ve chosen to enter details manually
     else if (selectedCourse == "Other"){
-      if (_.get(record, 'courseDetails.isPublishCourse')){
-        // User has swapped from a publish to a non-publish course. Delete existing data
+
+      // User has swapped from a publish to a non-publish course. Delete existing data 
+      if (record?.courseDetails?.isPublishCourse){
         delete record.courseDetails
       }
+
+      // Send them down the manual course details journey
       res.redirect(`${recordPath}/course-details/phase${referrer}`)
     }
 
+    // A publish course was selected
     else {
-      // selectedCourse could be an id of a course or a radio that contains an autocomplete
+
+      // UI supports picking courses via radios or via an autocomplete
+      // So we have to check different sorts of values to work out which we might have gotten
+
+      // Course selected via Autocomplete
       if (selectedCourse == "publish-course") {
 
         // Default value from select (used by defualt for no-js)
@@ -381,6 +416,8 @@ module.exports = router => {
           })?.id
         }
       }
+
+      // From here, course selected is either via radio, or we've looked it up above
       // Assume everything else is a course id
       let courseIndex = (selectedCourse) ? providerCourses.findIndex(course => course.id == selectedCourse) : false
       if (courseIndex < 0){
@@ -395,6 +432,13 @@ module.exports = router => {
         // Fill in specialisms that are mappable
         record.courseDetails = utils.mapMappablePublishSubjects(courseDetails)
 
+        // Set course start and end dates for the trainee if the course has them
+        // We don’t get full course dates from Publish, but once a user has added a trainee on a 
+        // particular course we ask if the dates they add for that trainee should be saved back to the 
+        // course - if so we’ll now have them and can apply them to future trainees on that course
+        // and study mode.
+        record.courseDetails = utils.setCourseDatesIfPresent(courseDetails)
+
         // For apply records we let them pick a Publish course which 
         // might have a different route.
         if (record.route != record.courseDetails.route){
@@ -402,29 +446,8 @@ module.exports = router => {
           record.route = record.courseDetails.route
         }
 
-        let isAllocated = utils.hasAllocatedPlaces(record)
-        let isMissingStudyMode = utils.needsStudyMode(record)
-        let isMissingStartDate = !Boolean(courseDetails?.startDate)
-
-        // Not all specialisms are mappable, so for those, send the user to a followup page
-        if (utils.hasUnmappedPublishSubjects(record.courseDetails)){
-          console.log("Course has unmapped subjects")
-          res.redirect(`${recordPath}/course-details/choose-specialisms${referrer}`)
-        }
-        else if (isMissingStudyMode){
-          res.redirect(`${recordPath}/course-details/study-mode${referrer}`)
-        }
-        else if (isMissingStartDate){
-          res.redirect(`${recordPath}/course-details/start-date${referrer}`)
-        }
-        else if (isAllocated) {
-          // After /allocated-place the journey will match other course-details routes
-          res.redirect(`${recordPath}/course-details/allocated-place${referrer}`)
-        }
-        else {
-          res.redirect(`${recordPath}/course-details/confirm${referrer}`)
-        }
-
+        // Send to next conditional page or confirm page
+        res.redirect(utils.getNextPublishCourseDetailsUrl(record, recordPath,referrer))
       }
     }
   })
@@ -437,39 +460,26 @@ module.exports = router => {
     let record = data.record
     let recordPath = utils.getRecordPath(req)
     let referrer = utils.getReferrer(req.query.referrer)
-    let isAllocated = utils.hasAllocatedPlaces(record)
-    let isMissingStudyMode = utils.needsStudyMode(record)
-    let isMissingStartDate = !Boolean(record?.courseDetails?.startDate)
 
+    // Unsure why we have two filters for this. Too scared to remove now
+    let hasUnmappedPublishSubjects = utils.hasUnmappedPublishSubjects(record.courseDetails) || utils.subjectsAreIncomplete(record.courseDetails)
 
-    if (utils.hasUnmappedPublishSubjects(record.courseDetails) || utils.subjectsAreIncomplete(record.courseDetails)){
+    // We loop through this page up to 3 times. When done, we'll redirect away
+    if (hasUnmappedPublishSubjects){
       res.render(`${req.params.recordtype}/course-details/choose-specialisms`)
     }
-    else if (isMissingStudyMode){
-      res.redirect(`${recordPath}/course-details/study-mode${referrer}`)
-    }
-    else if (isMissingStartDate){
-      res.redirect(`${recordPath}/course-details/start-date${referrer}`)
-    }
-    else if (isAllocated) {
-      // After /allocated-place the journey will match other course-details routes
-      res.redirect(`${recordPath}/course-details/allocated-place${referrer}`)
-    }
-
-    else res.redirect(`${recordPath}/course-details/confirm${referrer}`)
+    // Send to next conditional page or confirm page
+    else res.redirect(utils.getNextPublishCourseDetailsUrl(record, recordPath,referrer))
   })
 
   // Deal with specialisms data as it comes in
   // Users can loop through this page, so if there are remaining unmapped subjects
-  // we send them back to the page to do the next one.
+  // we send them back to the same page to do the next one.
   router.post(['/:recordtype/:uuid/course-details/choose-specialisms','/:recordtype/course-details/choose-specialisms'], function (req, res) {
     const data = req.session.data
     let record = data.record
     let recordPath = utils.getRecordPath(req)
     let referrer = utils.getReferrer(req.query.referrer)
-    let isAllocated = utils.hasAllocatedPlaces(record)
-    let isMissingStudyMode = utils.needsStudyMode(record)
-    let isMissingStartDate = !Boolean(record?.courseDetails?.startDate)
 
     let courseDetails = record?.courseDetails
 
@@ -479,7 +489,6 @@ module.exports = router => {
       // Grab first 3 subjects as that’s all we support
       // In production we’ll throw a validation error if more are picked
       let subjectsArray = courseDetails.subjectsArrayTemp.slice(0, 3)
-
 
       // If there are two Publish subjects, that means we can only have
       // two languages
@@ -511,25 +520,57 @@ module.exports = router => {
 
     }
 
-    if (utils.hasUnmappedPublishSubjects(record.courseDetails) || utils.subjectsAreIncomplete(record.courseDetails)){
-      console.log("Course has unmapped subjects")
-      res.redirect(`${recordPath}/course-details/choose-specialisms${referrer}`)
-    }
-    else if (isMissingStudyMode){
-      res.redirect(`${recordPath}/course-details/study-mode${referrer}`)
-    }
-    else if (isMissingStartDate){
-      res.redirect(`${recordPath}/course-details/start-date${referrer}`)
-    }
-    else if (isAllocated) {
-      // After /allocated-place the journey will match other course-details routes
-      res.redirect(`${recordPath}/course-details/allocated-place${referrer}`)
-    }
-    else {
-      console.log("Course does not have unmapped subjects")
-      res.redirect(`${recordPath}/course-details/confirm${referrer}`)
-    }
+    // Send to next conditional page or confirm page
+    res.redirect(utils.getNextPublishCourseDetailsUrl(record, recordPath,referrer))
+
   })
+
+  // Shown for Publish courses that are dual study mode.
+  router.post(['/:recordtype/:uuid/course-details/study-mode','/:recordtype/course-details/study-mode'], function (req, res) {
+    const data = req.session.data
+    let record = data.record
+    let recordPath = utils.getRecordPath(req)
+    let referrer = utils.getReferrer(req.query.referrer)
+
+    // Now that we have study mode, we might be able to set course dates
+    record.courseDetails = utils.setCourseDatesIfPresent(record?.courseDetails)
+
+    // Send to next conditional page or confirm page
+    res.redirect(utils.getNextPublishCourseDetailsUrl(record, recordPath,referrer))
+
+  })
+
+  // Optionally save the trainee's course dates back to the course for that study mode
+  router.post(['/:recordtype/:uuid/course-details/dates-answer','/:recordtype/course-details/dates-answer'], function (req, res) {
+    const data = req.session.data
+    let record = data.record
+    let recordPath = utils.getRecordPath(req)
+    let referrer = utils.getReferrer(req.query.referrer)
+
+    let hasDates = !utils.needsCourseDates(record)
+    let copyDatesToCourse = Boolean(record?.courseDetails?.saveDatesBackToCourse == "true")
+    delete record?.courseDetails?.saveDatesBackToCourse
+
+    // No dates provided
+    if (!hasDates){
+      res.redirect(`${recordPath}/course-details/dates${referrer}`)
+    }
+
+    // Save these dates back on the course for reuse by other trainees
+    if (hasDates && copyDatesToCourse){
+      // If we have dates, we can save those back to the Publish course for use in the future
+      // NB: this copies the trainee's course dates - perhaps we should directly use the form values
+      utils.updatePublishCourseDates(record.courseDetails, data)
+    }
+
+    // Send to next conditional page or confirm page
+    res.redirect(utils.getNextPublishCourseDetailsUrl(record, recordPath, referrer))
+
+  })
+
+  // =============================================================================
+  // Course details - manual journey / editing a publish course
+  // =============================================================================
 
   // Picking a phase (Primary or Secondary education)
   router.post(['/:recordtype/:uuid/course-details/phase','/:recordtype/course-details/phase'], function (req, res) {
@@ -562,76 +603,6 @@ module.exports = router => {
       res.redirect(`${recordPath}/course-details/details${referrer}`)
     }
   })
-
-   // Branching route
-  router.post(['/:recordtype/:uuid/course-details/study-mode','/:recordtype/course-details/study-mode'], function (req, res) {
-    const data = req.session.data
-    let record = data.record
-    let recordPath = utils.getRecordPath(req)
-    let referrer = utils.getReferrer(req.query.referrer)
-
-    let isAllocated = utils.hasAllocatedPlaces(record)
-    let isMissingStudyMode = utils.needsStudyMode(record)
-    let isMissingStartDate = !Boolean(record?.courseDetails?.startDate)
-
-
-    if (isMissingStudyMode){
-      res.redirect(`${recordPath}/course-details/study-mode${referrer}`)
-    }
-    else if (isMissingStartDate){
-      res.redirect(`${recordPath}/course-details/start-date${referrer}`)
-    }
-    else if (isAllocated) {
-      // After /allocated-place the journey will match other course-details routes
-      res.redirect(`${recordPath}/course-details/allocated-place${referrer}`)
-    }
-    else res.redirect(`${recordPath}/course-details/confirm${referrer}`)
-  })
-
-  // Branching route
-  router.post(['/:recordtype/:uuid/course-details/start-date','/:recordtype/course-details/start-date'], function (req, res) {
-    const data = req.session.data
-    let record = data.record
-    let recordPath = utils.getRecordPath(req)
-    let referrer = utils.getReferrer(req.query.referrer)
-
-    let isAllocated = utils.hasAllocatedPlaces(record)
-    let isMissingStartDate = !Boolean(record?.courseDetails?.startDate)
-
-
-    if (isMissingStartDate){
-      res.redirect(`${recordPath}/course-details/start-date${referrer}`)
-    }
-    else if (isAllocated) {
-      // After /allocated-place the journey will match other course-details routes
-      res.redirect(`${recordPath}/course-details/allocated-place${referrer}`)
-    }
-    else res.redirect(`${recordPath}/course-details/confirm${referrer}`)
-  })
-
-
-  // Picking a course
-  // router.post(['/:recordtype/:uuid/course-details/pick-route','/:recordtype/course-details/pick-route'], function (req, res) {
-  //   const data = req.session.data
-  //   let record = data.record
-  //   let recordPath = utils.getRecordPath(req)
-  //   let referrer = utils.getReferrer(req.query.referrer)
-  //   let enabledRoutes = data.settings.enabledTrainingRoutes
-  //   let selectedRoute = _.get(data, 'record.route')
-  //   let isAllocated = utils.hasAllocatedPlaces(record)
-
-  //   // No data, return to page
-  //   if (!selectedRoute){
-  //     res.redirect(`${recordPath}/course-details/pick-route${referrer}`)
-  //   }
-  //   else if (selectedRoute == "Other"){
-  //     res.redirect(`/new-record/course-details/route-not-supported${referrer}`)
-  //   }
-  //   else {
-  //     res.redirect(`${recordPath}/course-details/details${referrer}`)
-  //   }
-  // })
-
  
   router.post(['/:recordtype/:uuid/course-details/details','/:recordtype/course-details/details'], function (req, res) {
     const data = req.session.data
@@ -839,7 +810,7 @@ module.exports = router => {
     delete data.degreeTemp
     let referrer = utils.getReferrer(req.query.referrer)
 
-    newDegree.id = faker.random.uuid()
+    newDegree.id = faker.datatype.uuid()
 
     let existingDegrees = _.get(data, "record.degree.items") || []
     let degreeIndex = req.params.index
@@ -970,7 +941,7 @@ module.exports = router => {
     const data = req.session.data
     let recordPath = utils.getRecordPath(req)
     let referrer = utils.getReferrer(req.query.referrer)
-    let placementUuid = faker.random.uuid()
+    let placementUuid = faker.datatype.uuid()
     
     // delete data.placementTemp
     
@@ -1083,8 +1054,8 @@ module.exports = router => {
     let record = data.record
     let recordPath = utils.getRecordPath(req)
     let referrer = utils.getReferrer(req.query.referrer)
-    if (utils.bursariesApply(record)){
-      res.redirect(`${recordPath}/funding/bursary${referrer}`)
+    if (utils.financialSupportApplies(record)){
+      res.redirect(`${recordPath}/funding/financial-support${referrer}`)
     }
     else {
       res.redirect(`${recordPath}/funding/confirm${referrer}`)
@@ -1093,7 +1064,7 @@ module.exports = router => {
 
   // Forward on to confirm
   // This route not really needed as we don't always catch errors like this
-  router.post(['/:recordtype/:uuid/funding/bursary','/:recordtype/funding/bursary'], function (req, res) {
+  router.post(['/:recordtype/:uuid/funding/financial-support','/:recordtype/funding/financial-support'], function (req, res) {
     let data = req.session.data
     let record = data.record
     let recordPath = utils.getRecordPath(req)
@@ -1101,7 +1072,7 @@ module.exports = router => {
 
     // No data
     if (!record?.funding?.source){
-      res.redirect(`${recordPath}/funding/bursary${referrer}`)
+      res.redirect(`${recordPath}/funding/financial-support${referrer}`)
     }
     else {
       res.redirect(`${recordPath}/funding/confirm${referrer}`)

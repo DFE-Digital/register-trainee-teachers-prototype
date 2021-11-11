@@ -20,7 +20,7 @@
         }
       ]
     } if canAmend and false
-  } if record.status !="Draft",
+  } if record | isNonDraft,
   {
     key: {
       text: "Full time or part time"
@@ -40,7 +40,7 @@
   } if record | requiresField("studyMode"),
   {
     key: {
-      text: "Course start date"
+      text: "ITT start date"
     },
     value: {
       text: record.courseDetails.startDate | govukDate or 'Not provided'
@@ -50,14 +50,14 @@
         {
           href: recordPath + "/course-details/details" | addReferrer(referrer),
           text: "Change",
-          visuallyHiddenText: "programme start date"
+          visuallyHiddenText: "ITT start date"
         }
       ]
     } if canAmend
   },
   {
     key: {
-      text: "Course end date"
+      text: "ITT end date"
     },
     value: {
       text: record.courseDetails.endDate | govukDate or 'Not provided'
@@ -67,7 +67,7 @@
         {
           href: recordPath + "/course-details/details" | addReferrer(referrer),
           text: "Change",
-          visuallyHiddenText: "programme end date"
+          visuallyHiddenText: "ITT end date"
         }
       ]
     } if canAmend

@@ -1,4 +1,7 @@
-<h1 class="govuk-heading-l">{{pageHeading}}</h1>
+{% include "_includes/trainee-name-caption.njk" %}
+<h1 class="govuk-heading-l">
+  {{pageHeading}}
+</h1>
 
 {% set ukAddressHtml %}
 
@@ -147,7 +150,7 @@
     classes: "govuk-label--s"
   },
   hint: {
-    text: ""
+    text: "Use the trainee’s personal email address. This is so they can access their ongoing teaching records with DfE."
   }
 }) }}
 

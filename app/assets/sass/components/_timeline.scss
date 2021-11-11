@@ -67,6 +67,10 @@
   margin: 0;
 }
 
+.app-timeline__body-text {
+  @include govuk-font($size: 19);
+}
+
 .app-timeline__date {
   @include govuk-font($size: 16);
   margin-top: govuk-spacing(1);

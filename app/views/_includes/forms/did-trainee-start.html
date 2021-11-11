@@ -1,0 +1,26 @@
+
+{% include "_includes/trainee-name-caption.njk" %}
+
+{{ govukRadios({
+  fieldset: {
+    legend: {
+      isPageHeading: true,
+      text: pageHeading,
+      classes: "govuk-fieldset__legend--l"
+    }
+  },
+  items: [
+    {
+      value: true,
+      text: "Yes, they started"
+    },
+    {
+      value: false,
+      text: "No, they did not start"
+    }
+  ]
+} | decorateAttributes(record, "record.trainingDetails.traineeStarted")) }}
+
+{{ govukButton({
+  text: "Continue"
+}) }}

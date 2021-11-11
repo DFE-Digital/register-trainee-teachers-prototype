@@ -3,6 +3,43 @@
 {% endif %}
 
 <div class="app-application-card {{justNowClass}}">
+
+  <div class="app-application-card_row app-application-card_row--header">
+      <h3 class="app-application-card__trainee-name govuk-heading-m govuk-!-margin-bottom-0">
+        <a href="/record/{{ record.id }}" class="govuk-link govuk-link--no-visited-state">
+          {% if record | hasName %}
+            {% if query.sortOrder == "lastName" %}
+              {{ record.personalDetails | getShortNameReversed }}
+            {% else %}
+              {{ record | getShortName }}
+            {% endif %} 
+          {% else %}
+            {% if record.status | isDraft %}
+              Draft record
+            {% else %}
+              Name not known {# Shouldn't be possible - non drafts should always have a name #}
+            {% endif %}
+          {% endif %}
+        </a>
+      </h3>
+
+      <span class="app-application-card_tag-container">
+        {% if not record | recordIsComplete %}
+          <span style="display: inline-block;">
+            {{govukTag({
+              text: "Incomplete",
+              classes: "app-tag--record-incomplete"
+            })}}
+          </span>
+        {% endif %}
+        <span style="display: inline-block;">
+          {{govukTag({
+            text: record | getStatusText,
+            classes: record.status | getStatusClass
+          })}}
+        </span>
+      </span>
+  </div>
   
   {% if data.settings.showBulkLinks %}
     <div class="app-application-card_col">
@@ -16,70 +53,55 @@
       </div>
     </div>
   {% endif %}
+  <div class="app-application-card_row app-application-card_row--body">
+    <div class="app-application-card_col">
 
-  <div class="app-application-card_col">
+      <div>
 
-    <div>
-      <h3 class="app-application-card__trainee-name govuk-heading-m govuk-!-margin-bottom-1">
-        <a href="/record/{{ record.id }}" class="govuk-link govuk-link--no-visited-state">
-          {% if record | hasName %}
-            {% if query.sortOrder == "lastName" %}
-              {{ record.personalDetails | getShortNameReversed }}
+        {% if record.trn %}
+          <p class="govuk-caption-m govuk-!-font-size-16 govuk-!-margin-bottom-1">TRN: {{record.trn}}</p>
+        {% endif %}
+        {% if record.reference %}
+          <p class="govuk-caption-m govuk-!-font-size-16 govuk-!-margin-bottom-1">Reference: {{record.reference}}</p>
+        {% endif %}
+        {% if record.trainingDetails.traineeId %}
+          <p class="govuk-caption-m govuk-!-font-size-16 govuk-!-margin-bottom-0">Trainee ID: {{record.trainingDetails.traineeId}}</p>
+        {% endif %}
+
+        {% if data.isAdmin or data.signedInProviders | length > 1 %}
+          <p class="govuk-caption-m govuk-!-font-size-16 app-application-card__provider govuk-!-margin-bottom-0 govuk-!-margin-top-2">
+            <span class="govuk-visually-hidden">Provider: </span>{{record.provider}}</p>
+        {% endif %}
+      </div>
+
+      <div>
+
+        <p class="govuk-body govuk-!-font-size-16 govuk-!-margin-bottom-1">
+          {# If subject spcialisms are incomplete, prefer course name. Else prefer the specialisms. #}
+          {% set subjects %}
+            {% if record.courseDetails | subjectsAreIncomplete %}
+              {{ record.courseDetails.courseNameShort or record.courseDetails.subjects | prettifySubjects }}
             {% else %}
-              {{ record.personalDetails | getShortName }}
-            {% endif %} 
-          {% else %}
-            {% if record.status | isDraft %}
-              Draft record
-            {% else %}
-              Name not known {# Shouldn't be possible - non drafts should always have a name #}
+              {{ (record.courseDetails.subjects | prettifySubjects | falsify ) or record.courseDetails.courseNameShort }}
             {% endif %}
-          {% endif %}
-        </a>
-      </h3>
+          {% endset %}
+          
+          <span class="govuk-visually-hidden">Course: </span>{{ subjects }}</p>
+        <p class="govuk-body govuk-!-font-size-16 govuk-hint govuk-!-margin-bottom-0">
+          <span class="govuk-visually-hidden">Route: </span>{{ record.route }}</p>
+      </div>
 
-      {% if record.trainingDetails.traineeId %}
-        <p class="govuk-caption-m govuk-!-font-size-16 govuk-!-margin-bottom-1">Trainee ID: {{record.trainingDetails.traineeId}}</p>
-      {% endif %}
-      {% if record.trn %}
-        <p class="govuk-caption-m govuk-!-font-size-16 govuk-!-margin-bottom-0">TRN: {{record.trn}}</p>
-      {% endif %}
-      {% if data.signedInProviders | length > 1 %}
-        <p class="govuk-caption-m govuk-!-font-size-16 app-application-card__provider govuk-!-margin-bottom-0 govuk-!-margin-top-2">
-          <span class="govuk-visually-hidden">Provider: </span>{{record.provider}}</p>
-      {% endif %}
     </div>
 
-    <div>
-      <p class="govuk-body govuk-!-font-size-16 govuk-!-margin-bottom-1">
-        {# If subject spcialisms are incomplete, prefer course name. Else prefer the specialisms. #}
-        {% set subjects %}
-          {% if record.courseDetails | subjectsAreIncomplete %}
-            {{ record.courseDetails.courseNameShort or record.courseDetails.subjects | prettifySubjects }}
-          {% else %}
-            {{ (record.courseDetails.subjects | prettifySubjects | falsify ) or record.courseDetails.courseNameShort }}
-          {% endif %}
-        {% endset %}
-        
-        <span class="govuk-visually-hidden">Course: </span>{{ subjects }}</p>
-      <p class="govuk-body govuk-!-font-size-16 govuk-hint govuk-!-margin-bottom-0">
-        <span class="govuk-visually-hidden">Route: </span>{{ record.route }}</p>
+    <div class="app-application-card_col">
+      <p class="govuk-caption-m govuk-!-font-size-16 govuk-!-margin-bottom-0 app-application-card__submitted">
+        {% if query.sortOrder == "dateAdded" %}
+          Added: <span>{{record.submittedDate | govukDate}}
+        {% else %}
+          Updated: <span>{{record.updatedDate | govukDate}}
+        {% endif %}
+        </span></p>
     </div>
-
-  </div>
-
-  <div class="app-application-card_col">
-    {{govukTag({
-      text: record | getStatusText,
-      classes: record.status | getStatusClass
-    })}}
-    <p class="govuk-caption-m govuk-!-font-size-16 govuk-!-margin-top-2 govuk-!-margin-bottom-0 app-application-card__submitted">
-      {% if query.sortOrder == "dateAdded" %}
-        Added: <span>{{record.submittedDate | govukDate}}
-      {% else %}
-        Updated: <span>{{record.updatedDate | govukDate}}
-      {% endif %}
-      </span></p>
   </div>
 
 </div>

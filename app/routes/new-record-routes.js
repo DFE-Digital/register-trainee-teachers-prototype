@@ -2,10 +2,12 @@ const faker = require('faker')
 const path = require('path')
 const moment = require('moment')
 const filters = require('./../filters.js')()
+const dates = require('./../filters/dates.js').filters
 const _ = require('lodash')
 const utils = require('./../lib/utils')
 const trainingRouteData = require('./../data/training-route-data')
 const trainingRoutes = trainingRouteData.trainingRoutes
+const generateReference = require("./../data/generators/reference-number.js")
 
 module.exports = router => {
 
@@ -27,8 +29,9 @@ module.exports = router => {
     record.status = "Draft"
     record.source = "Manual"
     record.events = { items: []}
+    record.reference = generateReference()
     data.record = record
-    // If multiple providers, users must pick one as thier first action
+    // If multiple providers, users must pick one as their first action
     if (data.signedInProviders.length > 1){
       res.redirect('/new-record/pick-provider')
     }
@@ -107,7 +110,9 @@ module.exports = router => {
       // route to one that doesn’t have publish courses. If they do this, we delete the
       // course details section
       if (existingCourseDetails?.isPublishCourse && route != existingCourseDetails?.route){
-        delete record.courseDetails
+        // delete record.courseDetails
+        console.log("Changing to a route that doesn’t match the selected Publish course")
+        // In the future, this could send to a confirm page checking if this is the right course
       }
 
       // TODO Make course details not complete if route is changed from Early years to a non Early years
@@ -183,9 +188,9 @@ module.exports = router => {
   router.get('/new-record/delete-draft/delete', (req, res) => {
     const data = req.session.data
     const records = data.records
-    let record = data.record
-    if (record.id){
-      let recordIndex = records.findIndex(record => record.id == record.id)
+    let theRecord = data.record
+    if (theRecord.id){
+      let recordIndex = records.findIndex(record => record.id == theRecord.id)
       _.pullAt(records, [recordIndex]) // delete item at index
     }
     utils.deleteTempData(data)
@@ -205,6 +210,7 @@ module.exports = router => {
     else {
       record.status = record.status || "Draft" // just in case
       record.source = record.source || "Manual" // just in case
+      record.reference = record.reference || generateReference() // just in case
       utils.deleteTempData(data)
       utils.updateRecord(data, record)
       // req.flash('success', 'Record saved as draft')
@@ -227,15 +233,50 @@ module.exports = router => {
       else returnQuery = "?errors=true"
       res.redirect(`/new-record/check-record${returnQuery}`)
     }
+    // if the ITT start date is in the past ask for the trainee’s start date
+    else if (dates.isInPast(record?.courseDetails?.startDate)){
+      res.redirect('/new-record/trainee-start-date')
+    }
     else {
       utils.registerForTRN(record)
       utils.deleteTempData(data)
       utils.updateRecord(data, record, false)
       // Temporarily store the id so that we can look it up on the submitted page
-      req.session.data.submittedRecordId = record.id 
+      req.session.data.submittedRecordId = record.id
       res.redirect('/new-record/submitted')
     }
   })
 
+  // Submit for TRN after setting start date
+  router.post('/new-record/save-with-date', (req, res) => {
+    let data = req.session.data
+    let record = data.record
+    let recordPath = utils.getRecordPath(req)
+    let referrer = utils.getReferrer(req.query.referrer)
+    let courseStartDate = record?.courseDetails?.startDate
+    let traineeStarted = record?.trainingDetails?.traineeStarted
+    let commencementDate = record?.trainingDetails?.commencementDate
+    
+    if ((!traineeStarted) || (traineeStarted == 'started-itt-later' && !commencementDate)) {
+      res.redirect('/new-record/trainee-start-date')
+    } else {
+      if (traineeStarted == 'started-itt-on-time') {
+        record.trainingDetails.commencementDate = courseStartDate
+      } else if (traineeStarted == 'trainee-not-started') {
+        delete record?.trainingDetails?.commencementDate
+      }
+      delete record?.trainingDetails?.traineeStarted
+
+      // store the record
+      utils.registerForTRN(record)
+      utils.deleteTempData(data)
+      utils.updateRecord(data, record, false)
+
+      // Temporarily store the id so that we can look it up on the submitted page
+      req.session.data.submittedRecordId = record.id
+
+      res.redirect(`/new-record/submitted`)
+    }
+  })
 
 }

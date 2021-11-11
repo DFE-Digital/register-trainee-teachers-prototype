@@ -1,3 +1,8 @@
+{% include "_includes/trainee-name-caption.njk" %}
+<h1 class="govuk-heading-l">
+  {{pageHeading}}
+</h1>
+
 {% set customWithdrawalDateArray = record.withdrawalDate | toDateArray %}
 {% if record.withdrawalDate | isInLast(2, "days") and record.withdrawalDateRadio != "On another day" %}
   {% set customWithdrawalDateArray = undefined %}

@@ -101,22 +101,14 @@ filters.canBeAmended = status => {
   return statusesThatCanAmend.includes(status)
 }
 
-filters.getCanRecommendForQts = status => {
+filters.canRecommendForQts = status => {
   let statusesThatShowQtsTabs = [
     'TRN received'
   ]
   return statusesThatShowQtsTabs.includes(status)
 }
 
-filters.getCanDefer = status => {
-  let statusesThatAllowDeferral = [
-    'Pending TRN',
-    'TRN received'
-  ]
-  return statusesThatAllowDeferral.includes(status)
-}
-
-filters.getCanReinstate = status => {
+filters.canReinstate = status => {
   let statusesThatAllowReinstating = [
     'Deferred'
   ]

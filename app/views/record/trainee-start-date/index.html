@@ -1,8 +1,14 @@
 {% extends "_templates/_record-form.html" %}
 
-{% set pageHeading = "What is the trainee’s start date?" %}
+{% set traineeStartDate = data.record.trainingDetails.commencementDate or false %}
 
-{% set formAction = "./trainee-start-date/confirm" | addReferrer(referrer) %}
+{% if traineeStartDate %}
+  {% set pageHeading = "When did the trainee start their ITT?" %}
+{% else %}
+  {% set pageHeading = "Did the trainee start their ITT on time?" %}
+{% endif %}
+
+{# {% set formAction = "./trainee-start-date/confirm" | addReferrer(referrer) %} #}
 
 {% block formContent %}
   {% include "_includes/forms/training-details/trainee-start-date.html" %}

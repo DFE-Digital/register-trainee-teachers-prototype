@@ -12,45 +12,39 @@
 
 
 {% block formContent %}
-
 {# Rendered from /new-record/overview #}
 {% set referrer = currentPageUrl %}
 
 {% set draftRecordName %}
-  {% if record.personalDetails.shortName %}
-   for {{record.personalDetails.shortName | safe}}
+  {% if record | hasName %}
+   for {{ record | getShortName }}
   {% endif %}
 {% endset %}
 
 <span class="govuk-caption-l">Draft</span>
 <h1 class="govuk-heading-l govuk-!-margin-bottom-8">{{pageHeading}}</h1>
 
-{% set insetTextHtml %}
-  {% if record.courseDetails %}
-    <p class="govuk-body">All conditions met and trainee recruited to {{ record.courseDetails.courseNameLong }}, {{record.route}}</p>
-  {% else %}
-    No data to show
-  {% endif %}
-{% endset %}
-
-{{ govukInsetText({
-  html: insetTextHtml
-}) }}
-
 {# Inset text about the provider and route #}
-{# {% include "_includes/providerAndRouteInsetText.njk" %} #}
+{% include "_includes/providerAndRouteInsetText.njk" %}
 
 <h2 class="govuk-heading-m">Registration data from Apply</h2>
-{# <p class="govuk-body">
-  Application submitted on {{ record.applyData.applicationDate | govukDate }}
-</p> #}
-{#<p class="govuk-body">
-  Met all conditions on {{ record.applyData.recruitedDate | govukDate }}
-</p>#}
 
 {% set courseMissingSpecialisms = record.courseDetails | subjectsAreIncomplete %}
 
-{% set courseDetailsHref = "course-details/publish-minimal" if courseMissingSpecialisms else "course-details/confirm" %}
+{% set courseNeedsToBeConfirmed = record.courseDetails | courseNeedsToBeConfirmed %}
+
+{# User has changed route, so course details have been wiped - start as if fresh #}
+{% if not record.courseDetails %}
+  {% set courseDetailsHref = "course-details" %}
+
+{# Fresh Apply draft - course needs confirming, then specialisms / dates, etc #}
+{% elseif courseNeedsToBeConfirmed %}
+  {% set courseDetailsHref = "course-details/confirm-course" %}
+
+{# Returning to existing section #}
+{% else %}
+  {% set courseDetailsHref = "course-details/confirm" %}
+{% endif %}
 
 {{ appTaskList({
   classes: "govuk-!-margin-bottom-8",
@@ -94,9 +88,8 @@
   classes: "govuk-!-margin-bottom-8",
   items: [
     {
-      text: "Training details",
+      text: "Trainee ID",
       href: "training-details" | reviewIfInProgress(record.trainingDetails) | addReferrer(referrer),
-      hint: "Start date and trainee ID",
       id: "training-details",
       tag: {
         classes: record.trainingDetails | getStatusText | getStatusClass,

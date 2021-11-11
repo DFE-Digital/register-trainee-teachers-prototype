@@ -1,0 +1,107 @@
+
+{% include "_includes/trainee-name-caption.njk" %}
+<h1 class="govuk-heading-l">
+  {{pageHeading}}
+</h1>
+
+{% set publishCourse = record | getTraineePublishCourse %}
+
+
+{# <p class="govuk-body">{{record.courseDetails.courseNameLong}} is recorded in Publish as starting in {{publishCourse.startDateVague | formatDate("MMMM YYYY")}} - but we do 
+  not have complete start and end dates for it.
+</p> #}
+
+{% set courseIsDualStudyMode = true if (publishCourse.studyMode == "Full time or part time") else false %}
+
+{% set studyMode = record.courseDetails.studyMode %}
+
+{# part time > PartTime (hacky!) #}
+{% set studyModeConcatinated = studyMode | title | replace(" ", "") %}
+
+{# <p class="govuk-body">Dates you enter on this page will be used for future {{ record.courseDetails.studyMode | lower }} trainees on this course.</p> #}
+
+{% if record | isFullTime %}
+  {% set startDateArray = record.courseDetails.startDateFullTime | toDateArray %}
+  {% set endDateArray = record.courseDetails.endDateFullTime | toDateArray %}
+{% elseif record | isPartTime %}
+   {% set startDateArray = record.courseDetails.startDatePartTime | toDateArray %}
+   {% set endDateArray = record.courseDetails.endDatePartTime | toDateArray %}
+{% endif %}
+
+
+{% set startDateHint = "For example, " + "" | today | toDateArray | spaceSeparate %}
+
+{{ govukDateInput({
+  id: "start-start-date",
+  namePrefix: "record[courseDetails][startDate" + studyModeConcatinated + "]",
+  fieldset: {
+    legend: {
+      text: "ITT start date for all " + (studyMode | lower) + " trainees",
+      isPageHeading: false,
+      classes: "govuk-fieldset__legend--m"
+    }
+  },
+  hint: {
+    html: startDateHint
+  },
+  items: [
+      {
+        name: "day",
+        classes: "govuk-input--width-2",
+        value: startDateArray["0"]
+      },
+      {
+        name: "month",
+        classes: "govuk-input--width-2",
+        value: startDateArray["1"]
+      },
+      {
+        name: "year",
+        classes: "govuk-input--width-4",
+        value: startDateArray["2"]
+      }
+    ]
+}) }}
+
+
+{% set endDateHint = "For example, " + "" | today | moment('add', 1, 'years') | toDateArray | spaceSeparate %}
+
+{{ govukDateInput({
+  id: "start-start-date",
+  namePrefix: "record[courseDetails][endDate" + studyModeConcatinated + "]",
+  fieldset: {
+    legend: {
+      text: "ITT end date for all " + (studyMode | lower) + " trainees",
+      isPageHeading: false,
+      classes: "govuk-fieldset__legend--m"
+    }
+  },
+  hint: {
+    html: endDateHint
+  },
+  items: [
+      {
+        name: "day",
+        classes: "govuk-input--width-2",
+        value: endDateArray["0"]
+      },
+      {
+        name: "month",
+        classes: "govuk-input--width-2",
+        value: endDateArray["1"]
+      },
+      {
+        name: "year",
+        classes: "govuk-input--width-4",
+        value: endDateArray["2"]
+      }
+    ]
+}) }}
+
+<input name='record[courseDetails][saveDatesBackToCourse]' type="hidden" value="true">
+
+{{ govukButton({
+  text: "Continue"
+}) }}
+
+

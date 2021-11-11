@@ -2,8 +2,6 @@
 {% set hasCommencementDate = record.trainingDetails.commencementDate | length > 0 %}
 {% set minPlacementsRequired = data.settings.minPlacementsRequired %}
 
-{{ hasCommencementDate | log }}
-
 {% if record | hasOutstandingActions and canAmend %}
 
     {{ appNoticeBanner({
@@ -14,7 +12,7 @@
           href: recordPath + "/placements/confirm" | addReferrer(referrer) if placementCount >= minPlacementsRequired else recordPath + "/placements/add" | addReferrer(referrer)
         } if record | needsPlacementDetails,
         {
-          text: "Provide a start date",
+          text: "Provide a trainee start date",
           href: recordPath + "/trainee-start-date" | addReferrer(referrer)
         } if not hasCommencementDate
       ]

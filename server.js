@@ -222,7 +222,7 @@ if (useAutoStoreData === 'true') {
 // Clear all data in session if you open /prototype-admin/clear-data
 app.post('/admin/clear-data', function (req, res) {
   req.session.data = {}
-  res.render('admin/clear-data-success')
+  res.redirect('/start-page')
 })
 
 // Redirect root to /docs when in promo mode.
@@ -327,7 +327,7 @@ app.post(/^\/([^.]+)$/, function (req, res) {
   // res.redirect('/' + req.params[0])
   res.redirect(url.format({
     pathname: '/' + req.params[0],
-    query:req.query,
+    query: req.query
     })
    )
 })

@@ -3,6 +3,7 @@ const path = require('path')
 const moment = require('moment')
 const utils = require('./../lib/utils')
 const _ = require('lodash')
+const years = require('../data/years')
 
 // In function because this is too big to pass around in session
 const getSchools = () => {
@@ -299,26 +300,116 @@ module.exports = router => {
       res.redirect("/records")
     }
     else {
-      // If it’s an Apply draft we let users pick from all providers
+      // If it’s an Apply draft we let users pick from all routes
       if (utils.sourceIsApply(record)) route = false
 
       // Look up courses offered by this provider
-      let providerCourses = utils.getProviderCourses(data.courses, record.provider, route, data)
+      let providerCourses = utils.getProviderCourses({
+        courses: data.courses,
+        provider: record.provider,
+        route
+      })
 
-      // Some courses for selected route
-      if (providerCourses.length) {
-        res.redirect(`${recordPath}/course-details/pick-course${referrer}`)
+      if (!providerCourses.length){
+        // Early years can skip phase question
+        if (utils.isEarlyYears(record)) {
+          res.redirect(`${recordPath}/course-details/details${referrer}`)
+        }
+        // All other routes need phase
+        else {
+          res.redirect(`${recordPath}/course-details/phase${referrer}`)
+        }
       }
-      else if (utils.isEarlyYears(record)) {
-        res.redirect(`${recordPath}/course-details/details${referrer}`)
+      else {
+        let coursesByYear = utils.groupCoursesByYear(providerCourses)
+        let defaultYear = (utils.academicYearStringToYear(record.academicYear)) || years.defaultCourseYear
+
+        // If we have a default year and there's courses
+        if (defaultYear && coursesByYear[defaultYear] && coursesByYear[defaultYear].length > 0){
+          res.redirect(`${recordPath}/course-details/pick-course/${defaultYear}${referrer}`)
+        }
+        else {
+          res.redirect(`${recordPath}/course-details/course-year${referrer}`)
+        }
       }
-      // If no courses, go straight to course details
+
+    }
+
+  })
+
+    // Decide whether to go down Publish pick-course journey or directly to manual course details
+  router.post(['/:recordtype/:uuid/course-details/course-year-answer','/:recordtype/course-details/course-year-answer'], function (req, res) {
+    const data = req.session.data
+    const record = data.record
+    let recordPath = utils.getRecordPath(req)
+    let referrer = utils.getReferrer(req.query.referrer)
+    let route = record?.route
+    let academicYear = utils.academicYearStringToYear(record?.courseDetails?.academicYear)
+
+    // No data, return to page
+    if (!academicYear){
+      res.redirect(`${recordPath}/course-details/course-year${referrer}`)
+    }
+    else {
+      let providerCourses = utils.getProviderCourses({
+        courses: data.courses,
+        provider: record.provider,
+        route
+      })
+      let coursesByYear = utils.groupCoursesByYear(providerCourses)
+      // If there are courses for that academic year, show course picker page
+      if (coursesByYear[academicYear] && coursesByYear[academicYear].length > 0){
+        res.redirect(`${recordPath}/course-details/pick-course/${academicYear}${referrer}`)
+      }
+      // If there are no courses, assume manual entry for course details
       else {
         res.redirect(`${recordPath}/course-details/phase${referrer}`)
       }
     }
 
   })
+
+    // Decide whether to go down Publish pick-course journey or directly to manual course details
+  router.get(['/:recordtype/:uuid/course-details/pick-course/:courseStartYear','/:recordtype/course-details/pick-course/:courseStartYear'], function (req, res) {
+    const data = req.session.data
+    const record = data.record
+    let recordPath = utils.getRecordPath(req)
+    let referrer = utils.getReferrer(req.query.referrer)
+    let courseStartYear = req.params.courseStartYear
+    let route = data.record?.route
+
+    // If it’s an Apply draft we let users pick from all routes
+    if (utils.sourceIsApply(record)) route = false
+
+    let isInvalidCourseYear = !years.academicYearsShort.includes(courseStartYear)
+
+    // Year is invalid
+    if (isInvalidCourseYear){
+      console.log(`Error: provided year (${courseStartYear}) is not a valid course year`)
+      res.redirect(`${recordPath}/course-details/course-year`)
+    }
+    else {
+      // Look up courses offered by this provider
+      let providerCourses = utils.getProviderCourses({
+        courses: data.courses,
+        provider: record?.provider,
+        route,
+        year: courseStartYear
+      })
+      if (providerCourses.length == 0){
+        res.redirect(`${recordPath}/course-details/phase${referrer}`)
+      }
+      else {
+        res.render(`${req.params.recordtype}/course-details/pick-course`, {
+          providerCourses,
+          courseStartYear,
+          filteredRoute: route
+        })
+      }
+    }
+
+  })
+
 
   // =============================================================================
   // Course details - Apply
@@ -357,7 +448,7 @@ module.exports = router => {
   // =============================================================================
 
   // Picking a Publish course
-  router.post(['/:recordtype/:uuid/course-details/pick-course','/:recordtype/course-details/pick-course'], function (req, res) {
+  router.post(['/:recordtype/:uuid/course-details/pick-course-answer','/:recordtype/course-details/pick-course-answer'], function (req, res) {
     const data = req.session.data
     let record = data.record
     let recordPath = utils.getRecordPath(req)
@@ -365,10 +456,15 @@ module.exports = router => {
 
     let enabledRoutes = data.settings.enabledTrainingRoutes
     let route = record?.route
+    let academicYear = utils.academicYearStringToYear(record.academicYear)
 
     // Set route to false so that provider courses doesn’t filter by route
     if (utils.sourceIsApply(record)) route = false
-    let providerCourses = utils.getProviderCourses(data.courses, record.provider, route, data)
+    let providerCourses = utils.getProviderCourses({
+      courses: data.courses,
+      provider: record.provider,
+      route
+    })
     let selectedCourse = _.get(data, 'record.selectedCourseTemp')
 
     // User shouldn’t have been on this page, send them to manual course details journey
@@ -377,7 +473,7 @@ module.exports = router => {
     }
     // No data, return to page
     else if (!selectedCourse){
-      res.redirect(`${recordPath}/course-details/pick-course${referrer}`)
+      res.redirect(`${recordPath}/course-details/pick-course/${academicYear}${referrer}`)
     }
     // They’ve chosen to enter details manually
     else if (selectedCourse == "Other"){
@@ -423,7 +519,7 @@ module.exports = router => {
       if (courseIndex < 0){
         // Nothing found for current provider (something has gone wrong)
         console.log(`Provider course ${selectedCourse} not recognised`)
-        res.redirect(`${recordPath}/course-details/pick-course${referrer}`)
+        res.redirect(`${recordPath}/course-details/pick-course/${academicYear}${referrer}`)
       }
       else {
         // Copy over that provider’s course data
@@ -438,6 +534,12 @@ module.exports = router => {
         // course - if so we’ll now have them and can apply them to future trainees on that course
         // and study mode.
         record.courseDetails = utils.setCourseDatesIfPresent(courseDetails)
+
+        if (utils.isDraft(record)){
+          record = utils.setAcademicYear(record)
+        }
+
+        record.academicYear = courseDetails.academicYear
 
         // For apply records we let them pick a Publish course which 
         // might have a different route.
@@ -563,6 +665,11 @@ module.exports = router => {
       utils.updatePublishCourseDates(record.courseDetails, data)
     }
 
+    // Use the course start date to set the academic year for the trainee
+    if (utils.isDraft(record)){
+      record = utils.setAcademicYear(record)
+    }
+
     // Send to next conditional page or confirm page
     res.redirect(utils.getNextPublishCourseDetailsUrl(record, recordPath, referrer))
 
@@ -665,6 +772,10 @@ module.exports = router => {
 
     // Save back to record
     record.courseDetails = courseDetails
+
+    if (utils.isDraft(record)){
+      record = utils.setAcademicYear(record)
+    }
 
     // Set qualification and duration as per selected route
     record = utils.setCourseDefaults(record)

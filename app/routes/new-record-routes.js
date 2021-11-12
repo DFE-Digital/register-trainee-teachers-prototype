@@ -7,6 +7,7 @@ const _ = require('lodash')
 const utils = require('./../lib/utils')
 const trainingRouteData = require('./../data/training-route-data')
 const trainingRoutes = trainingRouteData.trainingRoutes
+const generateReference = require("./../data/generators/reference-number.js")
 
 module.exports = router => {
 
@@ -28,6 +29,7 @@ module.exports = router => {
     record.status = "Draft"
     record.source = "Manual"
     record.events = { items: []}
+    record.reference = generateReference()
     data.record = record
     // If multiple providers, users must pick one as their first action
     if (data.signedInProviders.length > 1){
@@ -108,7 +110,9 @@ module.exports = router => {
       // route to one that doesn’t have publish courses. If they do this, we delete the
       // course details section
       if (existingCourseDetails?.isPublishCourse && route != existingCourseDetails?.route){
-        delete record.courseDetails
+        // delete record.courseDetails
+        console.log("Changing to a route that doesn’t match the selected Publish course")
+        // In the future, this could send to a confirm page checking if this is the right course
       }
 
       // TODO Make course details not complete if route is changed from Early years to a non Early years
@@ -206,6 +210,7 @@ module.exports = router => {
     else {
       record.status = record.status || "Draft" // just in case
       record.source = record.source || "Manual" // just in case
+      record.reference = record.reference || generateReference() // just in case
       utils.deleteTempData(data)
       utils.updateRecord(data, record)
       // req.flash('success', 'Record saved as draft')

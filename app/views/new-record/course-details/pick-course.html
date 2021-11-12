@@ -1,12 +1,10 @@
 {% extends "_templates/_new-record.html" %}
 
-{% if data.courses | getProviderCourses(data.record.provider, data.record.route) | length < 25 %}
-  {% set pageHeading = "What course are they doing?" %}
-{% else %}
-  {% set pageHeading = "Are the course details stored on Publish?" %}
-{% endif %}
+{% set pageHeading %}
+  Your courses starting in {{courseStartYear | yearToAcademicYearString }}
+{% endset %}
 
-{# {% set formAction = "./assessment-details/confirm" %} #}
+{% set formAction = "./../pick-course-answer" %}
 
 {% block formContent %}
   {% include "_includes/forms/course-details/pick-course.html" %}

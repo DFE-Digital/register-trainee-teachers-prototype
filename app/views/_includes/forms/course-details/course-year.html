@@ -1,0 +1,37 @@
+{% include "_includes/trainee-name-caption.njk" %}
+
+{% set items = [] %}
+
+{% for year in data.years.academicYears %}
+  {% set itemText %}
+    {% if year == data.years.currentAcademicYear -%}
+      {{ year }} (current year)
+    {%- else -%}
+      {{ year }}
+    {%- endif %}
+  {% endset %}
+
+  {% set yearDefault = record.courseDetails.academicYear or (data.years.defaultCourseYear | yearToAcademicYearString) %}
+
+  {% set items = items | push({
+    text: itemText,
+    value: year,
+    checked: true if (year == yearDefault)
+  }) %}
+  
+{% endfor %}
+
+{{ govukRadios({
+  fieldset: {
+    legend: {
+      text: pageHeading,
+      isPageHeading: true,
+      classes: "govuk-fieldset__legend--l"
+    }
+  },
+  items: items
+} | decorateAttributes(record, "record.courseDetails.academicYear")) }}
+
+{{ govukButton({
+  text: "Continue"
+}) }}

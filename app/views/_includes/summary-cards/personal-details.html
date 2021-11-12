@@ -9,7 +9,7 @@
     },
     actions: {
       items: [{
-        href: recordPath + "/personal-details" | addReferrer(referrer),
+        href: recordPath + "/personal-details/edit" | addReferrer(referrer),
         text: "Change",
         visuallyHiddenText: "name"
       }]
@@ -24,7 +24,7 @@
     },
     actions: {
       items: [{
-        href: recordPath + "/personal-details" | addReferrer(referrer),
+        href: recordPath + "/personal-details/edit" | addReferrer(referrer),
         text: "Change",
         visuallyHiddenText: "date of birth"
       }]
@@ -40,7 +40,7 @@
     actions: {
       items: [
         {
-          href: recordPath + "/personal-details" | addReferrer(referrer),
+          href: recordPath + "/personal-details/edit" | addReferrer(referrer),
           text: "Change",
           visuallyHiddenText: "gender"
         }
@@ -57,7 +57,7 @@
     actions: {
       items: [
         {
-          href: recordPath + "/personal-details" | addReferrer(referrer),
+          href: recordPath + "/personal-details/edit" | addReferrer(referrer),
           text: "Change",
           visuallyHiddenText: "nationality"
         }
@@ -93,7 +93,7 @@
     {% set incompleteLinkText = "Continue section" %}
   {% else %}
     {% set incompleteText = "Personal details not started" %}
-    {% set incompleteLink = recordPath + "/personal-details" %}
+    {% set incompleteLink = recordPath + "/personal-details/edit" %}
     {% set incompleteLinkText = "Start section" %}
   {% endif %}
 

@@ -8,9 +8,9 @@
     active: (activeTab == "trainee-details")
   },
   {
-    text: 'Personal details and education',
-    href: recordPath + '/details-and-education',
-    active: (activeTab == "details-education")
+    text: 'Personal details and education' if record | requiresSection("degree") else 'Personal details',
+    href: recordPath + '/personal-details',
+    active: (activeTab == "personal-details")
   },
   {
     text: "Timeline",

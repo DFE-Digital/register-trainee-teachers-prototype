@@ -3,11 +3,11 @@
 {% set backLink = '/records' %}
 {% set backText = 'All registered trainees' %}
 {% set pageHeading = data.record.personalDetails.shortName %}
-{% set activeTab = 'details-education' %}
+{% set activeTab = 'personal-details' %}
 
 {% block tabContent %}
 
-  {% set referrer = recordPath + "/details-and-education" %}
+  {% set referrer = recordPath + "/personal-details" %}
 
   {% include "_includes/summary-cards/personal-details.html" %}
 

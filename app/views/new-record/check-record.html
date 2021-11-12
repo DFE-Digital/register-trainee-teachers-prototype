@@ -63,7 +63,7 @@
 </div>
 
 
-<h2 class="govuk-heading-m">Personal details and education</h2>
+<h2 class="govuk-heading-m">Personal details{{ " and education" if record | requiresSection("degree") }}</h2>
 
 {% include "_includes/summary-cards/personal-details.html" %}
 

@@ -97,12 +97,17 @@
     ]
 }) }}
 
+{% set checkboxText %}
+Use these dates for all {{ studyMode | lower }} trainees on {{ record.courseDetails.courseNameLong }} for the {{record.courseDetails.academicYear}} cycle
+{% endset %}
+
 
   {{ govukCheckboxes({
   classes: "govuk-!-margin-top-7 govuk-!-margin-bottom-7",
   items: [
     {
       text: "Use these dates for all " + studyMode | lower + " trainees on " + record.courseDetails.courseNameLong,
+      text: checkboxText,
       value: "true"
     }
   ]

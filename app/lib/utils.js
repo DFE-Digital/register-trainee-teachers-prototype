@@ -3,7 +3,6 @@
 // -------------------------------------------------------------------
 const _ = require('lodash')
 const faker = require('faker')
-const weighted = require('weighted')
 const moment = require('moment')
 const path = require('path')
 const url = require('url')
@@ -12,6 +11,7 @@ const trainingRoutes = trainingRouteData.trainingRoutes
 const arrayFilters = require('./../filters/arrays.js').filters
 const dates = require('./../filters/dates.js').filters
 const ittSubjects = require('./../data/itt-subjects')
+const generateReference = require('./../data/generators/reference-number')
 
 
 // -------------------------------------------------------------------
@@ -111,6 +111,52 @@ exports.render = (path, res, next, ...args) => {
 // -------------------------------------------------------------------
 // Course / route / programme
 // -------------------------------------------------------------------
+
+// "2022" -> "2022 to 2023"
+exports.yearToAcademicYearString = year => {
+  let yearInt = parseInt(year)
+  return `${year} to ${yearInt + 1}`
+}
+
+// "2022 to 2023" -> "2022"
+exports.academicYearStringToYear = string => {
+  if (string) return string.substring(0, 4)
+  else return false
+}
+
+// Return the academic year that a date falls in
+exports.dateToAcademicYear = date => {
+  let theDate = moment(date)
+  if (!theDate.isValid()){
+    console.log("Error in dateToAcademicYear: provided date is invalid")
+    return false
+  }
+  let theYear = theDate.year()
+  let testDate = moment(`${theYear}-09-01`)
+
+  if (theDate.isBefore(testDate)){
+    return exports.yearToAcademicYearString(theYear -1)
+  }
+  else return exports.yearToAcademicYearString(theYear)
+}
+
+exports.setAcademicYear = record => {
+  let courseStartDate = record?.courseDetails?.courseStartDate
+  let traineeStartDate = record?.trainingDetails?.commencementDate
+  if (!courseStartDate){
+    return record
+  }
+  else {
+    let compareDate = traineeStartDate || courseStartDate
+    if (Array.isArray(compareDate)) compareDate = dates.arrayToDateObject(compareDate)
+
+    let academicYear = exports.dateToAcademicYear(compareDate)
+    if (academicYear) {
+      record.academicYear = academicYear
+    }
+    return record
+  }
+}
 
 // Check if the course has allocated places
 exports.hasAllocatedPlaces = (record) => {
@@ -409,21 +455,40 @@ exports.sortPublishCourses = courses => {
 // Return courses run by the current provider
 // If run as a filter, data comes via Nunjucks context. If run from elsewhere,
 // we need to explicitly pass in data.
-exports.getProviderCourses = function(courses, provider, route=false, data=false){
-  data = data || this?.ctx?.data || false
-  if (!data) {
-    console.log("Error with getProviderCourses: session data not provided")
-  }
+exports.getProviderCourses = function({ courses, provider, route = false, year = false }){
   if (!provider) {
     console.log('Error: no provider given')
+    return []
   }
-  let filteredCourses = data.courses[provider].courses
+  if (!courses?.[provider]?.courses){
+    console.log('Error: no courses. The kit has likely been reset.')
+    return []
+  }
+  let filteredCourses = courses[provider].courses
   if (route) {
     filteredCourses = filteredCourses.filter(course => route == course.route)
   }
-  let limitedCourses = filteredCourses.slice(0, data.settings.courseLimit)
-  let sortedCourses = exports.sortPublishCourses(limitedCourses)
+  if (year) {
+    filteredCourses = filteredCourses.filter(course => course.academicYear.startsWith(year))
+  }
+  let sortedCourses = exports.sortPublishCourses(filteredCourses)
   return sortedCourses
+}
+
+// Group courses by academic year
+exports.groupCoursesByYear = function(courses){
+
+  let output = {}
+
+  courses.forEach(course => {
+    let startYear = course.academicYear.substring(0, 4)
+    if (!output[startYear]){
+      output[startYear] = []
+    }
+    output[startYear].push(course)
+  })
+
+  return output
 }
 
 // Look up a course by the Publish Code
@@ -493,7 +558,7 @@ exports.updatePublishCourseDates = (courseDetails, data) => {
 exports.routeHasPublishCourses = function(record){
   if (!record) return false
   const data = Object.assign({}, this.ctx.data)
-  let providerCourses = exports.getProviderCourses(data.courses, record?.provider, record.route, data)
+  let providerCourses = exports.getProviderCourses(data?.courses, record?.provider, record.route, data)
   return (providerCourses.length > 0)
 }
 
@@ -778,7 +843,7 @@ exports.subjectsAreIncomplete = courseDetails => {
 // course
 exports.courseNeedsToBeConfirmed = courseDetails => {
   if (exports.sectionIsComplete(courseDetails)) return false
-  else return (Boolean(courseDetails.needsConfirming))
+  else return (Boolean(courseDetails?.needsConfirming))
 }
 
 // -------------------------------------------------------------------
@@ -894,7 +959,8 @@ exports.recordIsComplete = function(record, data=false ) {
       'Withdrawn'
     ]
     if (statusesThatMustBeComplete.includes(record?.status)) return true
-      else return !exports.hasOutstandingActions(record, data)
+      else
+    return !exports.hasOutstandingActions(record, data)
   }
 
   let requiredSections = _.get(trainingRoutes, `${record.route}.sections`)
@@ -1184,11 +1250,12 @@ exports.filterRecordsBySearchTerm = (records, searchQuery=false) => {
     let searchParts = searchQueryLowercase.split(' ')
     let nameMatch = searchParts.every(part => fullName.includes(part))
 
+    let referenceMatch = searchParts.some(part => (record?.reference || "").toLowerCase().includes(part))
     let traineeIdMatch = searchParts.some(part => (record?.trainingDetails?.traineeId || "").toLowerCase().includes(part))
 
     let trnMatch = searchParts.some(part => (record?.trn || "").toString().includes(part))
 
-    return traineeIdMatch || trnMatch || nameMatch
+    return referenceMatch || traineeIdMatch || trnMatch || nameMatch
   })
 
   return filteredRecords
@@ -1453,6 +1520,7 @@ exports.registerForTRN = (record) => {
   else {
     record.status = 'Pending TRN'
     record.source = record.source || "Manual" // just in case
+    record.reference = record.reference || generateReference()
     delete record?.placement?.status
     record.submittedDate = new Date()
     record.updatedDate = new Date()

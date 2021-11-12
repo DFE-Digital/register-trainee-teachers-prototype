@@ -1,0 +1,39 @@
+// Import settings first so we can override them before importing all of GOV.UK Frontend
+// If you need to enable compatibility mode or the legacy palette, do that *before* this import.
+// @import "node_modules/govuk-frontend/govuk/settings/all";
+// #unbranded.scss
+// Override the default GOV.UK Frontend font stack
+// $govuk-font-family: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
+
+// Override the canvas background colour, which is normally grey to blend with the GOV.UK footer.
+// $govuk-canvas-background-colour: $govuk-body-background-colour;
+
+div[class^="govuk-grid-column-"] {
+    outline: 1px solid rgba(0,0,0,0.5);
+    background: linear-gradient(to top left, rgba(0,0,0,0) 0%, 
+      rgba(0,0,0,0) calc(50% - 0.8px), 
+      rgba(0,0,0,0.5) 50%, 
+      rgba(0,0,0,0) calc(50% + 0.8px), 
+      rgba(0,0,0,0) 100%), 
+    linear-gradient(to top right, 
+      rgba(0,0,0,0) 0%, 
+      rgba(0,0,0,0) calc(50% - 0.8px), 
+      rgba(0,0,0,0.5) 50%, 
+      rgba(0,0,0,0) calc(50% + 0.8px), 
+      rgba(0,0,0,0) 100%);
+}
+
+
+body { 
+  filter: grayscale(1); 
+  // text-transform: uppercase;
+}
+
+
+$govuk-secondary-text-colour: black;
+$govuk-border-colour: black;
+$govuk-brand-colour: grey;
+$govuk-link-colour: black;
+$govuk-link-hover-colour: black;
+$govuk-link-visited-colour: black;
+$govuk-link-active-colour: black;

@@ -27,12 +27,12 @@
 {# Inset text about the provider and route #}
 {% include "_includes/providerAndRouteInsetText.njk" %}
 
-<h2 class="govuk-heading-m">Personal details and education</h2>
+<h2 class="govuk-heading-m">Personal details{{ " and education" if record | requiresSection("degree") }}</h2>
 {{ appTaskList({
   classes: "govuk-!-margin-bottom-8",
   items: [{
     text: "Personal details",
-    href: "personal-details" | reviewIfInProgress(record.personalDetails),
+    href: "personal-details/edit" | reviewIfInProgress(record.personalDetails, "personal-details"),
     id: "personal-details",
     tag: {
       classes: record.personalDetails | getStatusText | getStatusClass,

@@ -1,4 +1,4 @@
-const debug = false
+const debugAutocomplete = false
 
 // What should get set in the input once a value is selected
 const valueForInput = (result) => {
@@ -20,7 +20,7 @@ const menuResultItem = (result) => {
     }
     // What our sort function returns
     else if (typeof result == 'object'){
-      let name = (debug) ? `${result.name} (${result.weight})` : result.name
+      let name = (debugAutocomplete) ? `${result.name} (${result.weight})` : result.name
       let output = result.append ? `<span>${name}</span> ${result.append}` : `<span>${name}</span>`
       return result.hint ? `${output}<span class="autocomplete__option--hint">${result.hint}</span>` : output
 
@@ -54,6 +54,7 @@ const setupAutocomplete = (component) => {
   // We might be enhancing a select or an input
   const elementType = (selectElement) ? 'select' : 'input'
   const element = selectElement || inputElement || false
+  const id = element.id
 
   // Get config for autocomplete
   const autoselect          = element.getAttribute('data-autoselect') || false
@@ -64,7 +65,9 @@ const setupAutocomplete = (component) => {
   const showAllValues       = element.getAttribute('data-show-all-values') || false
   const showNoOptionsFound  = element.getAttribute('data-show-no-options-found') || true
   const showSuggestions     = element.getAttribute('data-show-suggestions') || false
-  const value               = element.getAttribute('data-value') || null
+  // Default value should be set to '' if there's no item or else the autocomplete will display the 
+  // initial value of the select 'please select'
+  const defaultValue               = element.getAttribute('data-value') || ''
 
   let values                = JSON.parse(element.getAttribute('data-autocomplete-values') || "[]")
 
@@ -117,13 +120,13 @@ const setupAutocomplete = (component) => {
   const suggestionStatusNoResults = () => "No suggestions found"
 
   let autocompleteOptions = {
-    id: element.id,
+    id,
     name: element.name,
-    defaultValue: value,
     templates: {
       inputValue: valueForInput,
       suggestion: menuResultItem
     },
+    // defaultValue, disabled due to bug in autocomplete - see below
     onConfirm,
     autoselect,
     minLength,
@@ -134,7 +137,6 @@ const setupAutocomplete = (component) => {
     ...(describedBy ? { tAssistiveHint: describedByHint } : {}),
     ...(showSuggestions ? { tNoResults: suggestionNoResults } : {}), // conditional
     ...(showSuggestions ? { tStatusNoResults: suggestionStatusNoResults } : {}), // conditional
-    ...(value ? {defaultValue: value} : {}) // conditional
   }
 
   if (selectElement){
@@ -162,6 +164,12 @@ const setupAutocomplete = (component) => {
 
   // Remove the original input
   element.remove()
+
+  // If there should be a default value, set this manually after the autocomplete input is 
+  // created. This avoids the issue documented at https://github.com/alphagov/accessible-autocomplete/issues/424
+  if (defaultValue) {
+    document.getElementById(id).value = defaultValue
+  }
 
 }
 

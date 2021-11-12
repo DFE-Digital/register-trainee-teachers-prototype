@@ -65,7 +65,7 @@ function autocompleteSort (query, options) {
   let results = options.filter(o => o.weight > 0)
     .sort(byWeightThenAlphabetically)
 
-  if (debug){
+  if (debugAutocomplete){
     console.log(results)
   }
   return results

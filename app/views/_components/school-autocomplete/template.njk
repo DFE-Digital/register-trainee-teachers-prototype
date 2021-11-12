@@ -127,11 +127,21 @@
   }
 
   var inputValueSchools = (result) => {
-    if (result) { return result.name }
+    if (result) {
+      if (typeof result == 'object'){
+        return result.name
+      }
+      else return result
+    }
   }
 
   var suggestionSchools = (result) => {
     if (result) {
+      // Autocomplete has a bug where defaultValue will get passed to this suggestion template as a 
+      // result without sending it through the source filter. In that case it will be just a string
+      if (typeof result == 'string') {
+        return result
+      }
       var name
       if (debug){
         name = `${result.score}: ${result.name}`
@@ -152,7 +162,7 @@
     showAllValues: false,
     autoselect: false,
     minLength: 2,
-    defaultValue: `{{params.value}}`,
+    // defaultValue: `{{params.value}}`, // disabled due to bug in autocomplete - see below
     name: '_autocomplete_raw_value_school_picker',
     templates: {
       inputValue: inputValueSchools,
@@ -160,6 +170,15 @@
     },
     tNoResults: function () { return statusMessage }
   })
+
+  let autocompleteContainer = document.getElementById("school-picker")
+
+  // If there should be a default value, set this manually after the autocomplete input is 
+  // created. This avoids the issue documented at https://github.com/alphagov/accessible-autocomplete/issues/424
+  let defaultValue = `{{params.value}}` || false
+  if (defaultValue) {
+    autocompleteContainer.querySelector(".autocomplete__input").value = defaultValue
+  }
 
   fetchSearchIndex(function () { renderResults() })
 

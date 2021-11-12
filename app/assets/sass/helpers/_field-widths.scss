@@ -50,6 +50,7 @@
   // There is no one selector currently we can target, so we target
   // both, then unset where we don't need.
   .autocomplete__input,
+  &:not(.app-autocomplete--with-suggestions) .autocomplete__wrapper,
   .autocomplete-select-with-clear {
     max-width: $max-width !important;
   }

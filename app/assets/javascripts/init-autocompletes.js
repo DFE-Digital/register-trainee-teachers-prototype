@@ -167,9 +167,7 @@ const setupAutocomplete = (component) => {
 
   // If there should be a default value, set this manually after the autocomplete input is 
   // created. This avoids the issue documented at https://github.com/alphagov/accessible-autocomplete/issues/424
-  if (defaultValue) {
-    document.getElementById(id).value = defaultValue
-  }
+  document.getElementById(id).value = defaultValue
 
 }
 

@@ -28,7 +28,7 @@ const onQuit = () => {
   process.exit(0)
 }
 
-gulp.task('server', function () {
+gulp.task('server', function () {!
   nodemon({
     watch: ['.env', '**/*.js', '**/*.json'],
     script: 'listen-on-port.js',

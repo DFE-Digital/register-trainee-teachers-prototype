@@ -29,9 +29,65 @@ const menuResultItem = (result) => {
   else return ''
 }
 
-const onConfirm = (selected) => {
-  // console.log(`Selected:`, selected)
-};
+const onConfirm = function(selected) {
+
+  // Create a hidden input and use this to submit the value or the name
+  
+  // Visible input that user interacts with
+  let autocompleteInput = document.getElementById(this.id)
+  let autocompleteId = autocompleteInput.id
+
+  // Hidden input to store value / submit data
+  let autocompleteValueId = `${autocompleteId}-value`
+  let autocompleteValueInput = document.getElementById(autocompleteValueId)
+
+  // Create hidden input if it doesn’t already exist
+  if (!autocompleteValueInput){
+    let hiddenInput = document.createElement('input')
+    hiddenInput.setAttribute("type", "hidden");
+
+    // Copy over attributes from visible input
+    hiddenInput.setAttribute("id", autocompleteValueId);
+    hiddenInput.setAttribute("name", `${this.name}`);
+    hiddenInput.value = autocompleteInput.value
+
+    // Save the string from the input so we can compare it later
+    hiddenInput.setAttribute("data-text", autocompleteInput.value)
+
+    // Clear the original input's name, so it doesn't get submitted
+    autocompleteInput.setAttribute("name", '')
+
+    // Append after the visible input
+    autocompleteInput.parentElement.append(hiddenInput)
+
+    // Save reference to new input
+    autocompleteValueInput = document.getElementById(autocompleteValueId)
+  }
+
+  // onConfirm gets called once an item is picked *and* on blur. When called on blur,
+  // selected is undefined.
+  // If we have a selected item we co
+  if (selected){
+    autocompleteValueInput.value = selected.value || selected.name
+    autocompleteValueInput.setAttribute("data-text", selected.name)
+  }
+  // Probably running on blur
+  else {
+    // If the source input is blank, our value should be too
+    if (autocompleteInput.value == ''){
+      autocompleteValueInput.value = ''
+      autocompleteValueInput.setAttribute("data-text", '')
+    }
+    // If the value is not blank and doesn’t match the stored data-text, then the user
+    // must have typed something in the autocomplete without picking an option. Therefore we
+    // need to store the current typed text.
+    else if (autocompleteInput.value != autocompleteValueInput.getAttribute('data-text') ){
+      autocompleteValueInput.value = autocompleteInput.value
+      autocompleteVAlueInput.setAttribute('data-text', autocompleteInput.value)
+    }
+  }
+
+ };
 
 // Extract data attributes from select options
 const enhanceSelectOption = (option) => {

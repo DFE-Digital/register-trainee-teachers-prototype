@@ -81,7 +81,7 @@ to the parent #}
 
     {# Loop through items and check if any should be selected #}
     {% for item in params.items %}
-      {% if params.value == item.value %}
+      {% if (params.value == item.value) or (params.value == item.text) %}
         {% set item = item | setAttribute('selected', true) %}
       {% endif %}
       {% set selectItems = selectItems | push(item) %}

@@ -81,7 +81,10 @@ filters.getSchoolNamesForAutocomplete = (schools) => {
 // Biology (J482)
 filters.getCourseNamesForSelect = (courses) => {
   return courses.map(course => {
-    return [course.courseNameLong, course.id]
+    return {
+      text: course.courseNameLong,
+      value: course.id
+    }
   })
 }
 

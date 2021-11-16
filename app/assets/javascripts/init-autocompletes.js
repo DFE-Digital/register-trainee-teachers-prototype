@@ -126,7 +126,7 @@ const setupAutocomplete = (component) => {
       inputValue: valueForInput,
       suggestion: menuResultItem
     },
-    // defaultValue, disabled due to bug in autocomplete - see below
+    ...(defaultValue ? { defaultValue } : {}),
     onConfirm,
     autoselect,
     minLength,
@@ -139,20 +139,24 @@ const setupAutocomplete = (component) => {
     ...(showSuggestions ? { tStatusNoResults: suggestionStatusNoResults } : {}), // conditional
   }
 
-  if (selectElement){
-    accessibleAutocomplete.enhanceSelectElement({
-      selectElement: element,
-      ...autocompleteOptions
-    })
-  }
-  else if (inputElement){
+  // Select mode commented out, because of bug https://github.com/alphagov/accessible-autocomplete/issues/495 - where the select's default 'Please select' would get pre-filled as if it's a valid option, and then render as an option when you focus the field.
+
+  // Have tried using js to clear the input, but this expands the menu and it can't then be collapsed. By avoiding the enhanceSelectElement entirely, the result is more usable.
+
+  // if (selectElement){
+  //   accessibleAutocomplete.enhanceSelectElement({
+  //     selectElement: element,
+  //     ...autocompleteOptions
+  //   })
+  // }
+  // else if (inputElement){
 
     const autocompleteContainer = document.getElementById(`${element.id}-autocomplete-container`)
 
     // Because of the govuk macros, the container for the autocomplete is initially
     // placed _after_ the input. We now move the container within the input container.
     const inputFormGroup = autocompleteContainer.previousElementSibling
-    if (inputFormGroup.contains(input)) {
+    if (inputFormGroup.contains(element)) {
       inputFormGroup.appendChild(autocompleteContainer)
     }
 
@@ -160,14 +164,16 @@ const setupAutocomplete = (component) => {
       element: autocompleteContainer,
       ...autocompleteOptions
     })
-  }
+  // }
 
   // Remove the original input
   element.remove()
 
   // If there should be a default value, set this manually after the autocomplete input is 
   // created. This avoids the issue documented at https://github.com/alphagov/accessible-autocomplete/issues/424
-  document.getElementById(id).value = defaultValue
+  if (defaultValue){
+    document.getElementById(id).value = defaultValue
+  }
 
 }
 

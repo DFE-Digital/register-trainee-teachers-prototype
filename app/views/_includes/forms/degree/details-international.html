@@ -29,42 +29,49 @@
 
 
 {# Degree country #}
-{{ appAutocomplete({
+{{ appAutocompleteFromSelect({
   label: {
     text: "In which country is the degree institution based?",
     classes: "govuk-label--s"
   },
   id: 'degree-country',
   name: "degreeTemp[country]",
-  items: data.countries | removeArrayItem("United Kingdom"),
-  classes: "app-!-autocomplete--max-width-two-thirds",
+  items: data.countries | removeArrayItem("United Kingdom") | toSelectItems,
+  classes: "govuk-!-width-two-thirds",
   value: degreeTemp.country if data.country != "United Kingdom",
-  minLength: 2,
-  autoSelect: true,
-  showAllValues: false
+  autocompleteOptions: {
+    minLength: 2,
+    autoselect: true,
+    showAllValues: false
   }
-) }}
+} ) }}
+
 
 {# Degree subject #}
+{% set degreeHint %}
+  Choose from suggestions<span class="app-js-only"> or enter a new subject</span>
+{% endset %}
 
-{{ appAutocomplete({
+{{ appAutocompleteFromSelect({
   label: {
     text: "Degree subject",
     classes: "govuk-label--s"
   },
   hint: {
-    text: 'Search for the closest matching subject'
+    html: degreeHint
   },
-  id: 'subject',
-  autoSelect: true,
-  showAllValues: false,
-  minLength: 2,
+  id: 'degree-subject',
   name: "degreeTemp[subject]",
-  items: data.subjects,
-  classes: "app-!-autocomplete--max-width-two-thirds",
-  value: degreeTemp.subject
-  } | highlightInvalidInputs
-) }}
+  items: data.subjects | toSelectItems,
+  classes: "govuk-!-width-two-thirds",
+  value: degreeTemp.subject,
+  autocompleteOptions: {
+    autoselect: false,
+    showAllValues: false,
+    minLength: 2,
+    showSuggestionsBanner: true
+  }
+} | highlightInvalidInputs ) }}
 
 
 {# Degree type / ENIC #}

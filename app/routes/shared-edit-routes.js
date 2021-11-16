@@ -732,35 +732,9 @@ module.exports = router => {
       delete record.courseDetails?.primarySubjectsCombined
     }
 
-    // Check for autocomplete submitted subject
-    let subjectAutocomplete1 = req.body?._autocompleteRawValue_subject_1
-
     // Make an array of subjects data - easier to work with
     let subjectsArray = record?.courseDetails?.subjects && Object.values(record.courseDetails.subjects).filter(Boolean) || []
 
-    // Special handling to cope with users deleting values from autocompletes.
-    // Autocompletes make it hard to clear a value when used as an enhanced select.
-    // Clearing the answer does not correctly select the empty select item. Instead,
-    // we submit the raw autocomplete values and prefer them if they exist.
-    if (subjectAutocomplete1){
-      let subjectsTemp = [subjectAutocomplete1]
-        .concat(req.body?._autocompleteRawValue_subject_2)
-        .concat(req.body?._autocompleteRawValue_subject_3)
-        .filter(Boolean)
-      // Now need to compare the values we got from the autocompletes with the values already stored
-      // They have different casing, so need to check caselessly
-      if (subjectsArray){
-        // Filter subjects for only those that were also present in the autocompletes
-        subjectsArray = subjectsArray.filter(subject => {
-          return subjectsTemp.map(autocompleteSubject => autocompleteSubject.toLowerCase()).includes(subject.toLowerCase())
-        })
-      }
-
-    }
-
-    // Clean up subjects data
-    // Remove empty and force in to array
-    subjectsArray = [].concat(subjectsArray.filter(Boolean))
     // Map back to cardinal object
     courseDetails.subjects = utils.arrayToOrdinalObject(subjectsArray)
 

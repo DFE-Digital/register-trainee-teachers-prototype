@@ -103,16 +103,17 @@
 
   {% for nationality in otherNationalities %}
     {% set nationalityIndex = loop.index0 + 3 %}
-    {{ appAutocomplete({
+    {{ appAutocompleteFromSelect({
       label: {
         text: "Other nationality",
         classes: "govuk-label--s"
       },
       id: 'nationality-other-' + nationalityIndex,
       name: "record[personalDetails][nationality][" + nationalityIndex + "]",
-      items: data.nationalities,
-      classes: "app-!-autocomplete--max-width-one-half",
-      value: nationality
+      items: data.nationalities | toSelectItems,
+      classes: "govuk-!-max-width-one-half",
+      value: nationality,
+      autocompleteOptions: {}
       }
     ) }}
   {% endfor %}

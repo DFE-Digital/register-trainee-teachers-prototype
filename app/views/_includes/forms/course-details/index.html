@@ -28,7 +28,7 @@
       {{ ordinal | sentenceCase }} subject {{-  " (optional)" if (not isPrimary) or (ordinal == "third") }}
     {% endset %}
 
-    {{ appAutocomplete({
+    {{ appAutocompleteFromSelect({
       label: {
         text: label,
         classes: "_govuk-label--s"
@@ -37,18 +37,20 @@
         text: 'Search for the closest matching subject'
       },
       id: 'subject_' + (loop.index + 1),
-      minLength: 2,
-      autoSelect: true,
-      showAllValues: false,
-      allowEmpty: true,
-      classes: "app-!-autocomplete--max-width-two-thirds",
+      classes: "govuk-!-width-two-thirds",
       name: "record[courseDetails][subjects][" + ordinal + "]",
-      items: subjectSpecialisms,
-      value: record.courseDetails.subjects[ordinal]
+      items: subjectSpecialisms | toSelectItems,
+      value: record.courseDetails.subjects[ordinal],
+      autocompleteOptions: {
+        autoselect: true,
+        showAllValues: false,
+        allowEmpty: true
       }
+    }
     ) }}
   {% endfor %}
 {% endset %}
+
 
 {% include "_includes/trainee-name-caption.njk" %}
 <h1 class="govuk-heading-l">
@@ -127,7 +129,7 @@
 {% else %}
   {% set hasMultipleSubjects = record.courseDetails.subjects | length > 1 %}
 
-  {{ appAutocomplete({
+  {{ appAutocompleteFromSelect({
     label: {
       text: "Subject",
       classes: "govuk-label--s"
@@ -136,14 +138,15 @@
       text: 'Search for the closest matching subject'
     },
     id: 'subject_1',
-    minLength: 2,
-    autoSelect: true,
-    showAllValues: false,
-    classes: "app-!-autocomplete--max-width-two-thirds",
+    classes: "govuk-!-width-two-thirds",
     name: "record[courseDetails][subjects][first]",
-    items: subjectSpecialisms,
-    value: record.courseDetails.subjects.first
+    items: subjectSpecialisms | toSelectItems,
+    value: record.courseDetails.subjects.first,
+    autocompleteOptions: {
+      autoselect: true,
+      showAllValues: false
     }
+  }
   ) }}
 
   {{ govukDetails({
@@ -164,20 +167,7 @@
   {% set ageRangeExistingValue = undefined %}
 {% endif %}
 
-{% set ageRangeAutocomplete %}
-  {# Old autocomplete code left here in case we decide to go back #}
-  {# {{ appAutocomplete({
-    label: {
-      text: "Other age range",
-      classes: "govuk-visually-hidden"
-    },
-    id: 'age-range',
-    name: "record[courseDetails][ageRangeOther]",
-    classes: "app-!-autocomplete--max-width-one-third",
-    items: otherAgeRanges,
-    value: ageRangeExistingValue
-    }
-  ) }} #}
+{% set ageRangeSelect %}
 
   {# Using a select as autocomplete has poor usability for this type of data #}
   {% set selectItems = [] %}
@@ -221,7 +211,7 @@
   text: "Other age range",
   checked: 'checked' if ageRangeExistingValue,
   conditional: {
-    html: ageRangeAutocomplete
+    html: ageRangeSelect
   }
 }) %}
 

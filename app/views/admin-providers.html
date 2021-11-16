@@ -40,22 +40,25 @@
         ]
       } | decorateAttributes(data, "data.settings.providerModel")) }}
 
-      {{ appAutocomplete({
+      {{ appAutocompleteFromSelect({
         label: {
-          text: "Active provider (hat model only)",
+          text: "Active provider (hat moddel only)",
           classes: "govuk-label--s"
         },
         hint: {
           text: 'The currently active provider. Must match one of the enabled providers below.'
         },
         id: 'active-provider',
-        showAllValues: true,
         name: "settings[userActiveProvider]",
-        items: data.settings.userProviders,
-        classes: "app-!-autocomplete--max-width-two-thirds",
-        value: data.settings.userActiveProvider
+        items: data.settings.userProviders | toSelectItems,
+        classes: "govuk-!-width-two-thirds",
+        value: data.settings.userActiveProvider,
+        autocompleteOptions: {
+          minLength: 2,
+          autoselect: false,
+          showAllValues: true
         }
-      ) }}
+      } ) }}
 
 
       {% set providerItems = [] %}

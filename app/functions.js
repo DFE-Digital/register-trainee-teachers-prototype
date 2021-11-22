@@ -38,6 +38,29 @@ module.exports = function (env) {
   functions.lodash = _
 
 
+  // 
+  functions.canAddTrainees = function(){
+    const ctx = this.ctx
+
+    let isLeadSchool = ctx?.data?.settings?.providerType == 'lead-school'
+    let isAdmin = ctx?.data?.settings?.viewAsAdmin == 'true'
+    if (isAdmin || !isLeadSchool){
+      return true
+    }
+    else return false
+  }
+
+  functions.canRecommendForAward = function(){
+    const ctx = this.ctx
+
+    let isLeadSchool = ctx?.data?.settings?.providerType == 'lead-school'
+    let isAdmin = ctx?.data?.settings?.viewAsAdmin == 'true'
+    if (isAdmin || !isLeadSchool){
+      return true
+    }
+    else return false
+  }
+
   // Config - set upstream variables
   // Function adapted from:
   // https://github.com/LotusTM/Kotsu/blob/4558ca79c58eadb14554e92deb68b276855d4502/modules/nunjucks-extensions.js#L66
@@ -47,7 +70,7 @@ module.exports = function (env) {
   functions.config = function (prop, value, merge = true) {
     const ctxValue = _.get(this.ctx, prop)
 
-    // Get current contenxt value if no `value` provided
+    // Get current context value if no `value` provided
     if (value === undefined) return ctxValue
 
     if (!merge || !ctxValue) {

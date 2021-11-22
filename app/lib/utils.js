@@ -1277,9 +1277,38 @@ exports.filterRecordsBy = (records, key, array, invert=false) => {
   return filtered
 }
 
+exports.filterByProvider = function(records, array, data=false){
+  data = Object.assign({}, (data || this.ctx.data || false))
+
+  array = [].concat(array) // force to array
+
+  return records.filter(record => {
+
+    // Enrich provider data
+    let providerData = exports.getProviderData(array, data)
+
+    // Check if any of the providers match
+    return providerData.some(provider => {
+      if (provider.type == "accreditingProvider"){
+        return record.provider == provider.name
+      }
+      else if (provider.type == "leadSchool"){
+        return provider.name == record?.schools?.leadSchool?.schoolName
+      }
+      else return false
+    })
+
+  })
+}
+
 // Filter records for particular providers
-exports.filterByProvider = (records, array) => {
+exports.filterByAccreditingProvider = (records, array) => {
   return exports.filterRecordsBy(records, 'provider', array)
+}
+
+// Filter records for particular providers
+exports.filterByLeadSchool = (records, array) => {
+  return exports.filterRecordsBy(records, 'schools.leadSchool.schoolName', array)
 }
 
 // Filter records for currently signed in providers
@@ -1294,7 +1323,7 @@ exports.filterBySignedIn = function(records, data=false){
     console.log('Error with filterBySignedIn: user doesn’t appear to be signed in to any providers')
     return []
   }
-  return exports.filterByProvider(records, data.signedInProviders)
+  return exports.filterByProvider(records, data.signedInProviders, data)
 }
 
 // Only records from a specific academic year or years
@@ -1380,6 +1409,46 @@ exports.sortRecordsByLastName = records => {
 exports.sortRecordsByDateUpdated = records => {
   return exports.sortRecordsByDate(records, 'updatedDate')
 }
+
+// -------------------------------------------------------------------
+// Providers
+// -------------------------------------------------------------------
+
+exports.getProviderData = function(input, data=false){
+  data = data || this?.ctx?.data || false
+
+  const lookUpProvider = provider => {
+
+    let item = data.providers.all.find(item => item.name == provider) || false
+    if (!item) console.log(`Error with getProvider data: ${provider} not found.`)
+    return item
+  }
+
+  if (Array.isArray(input)){
+    return input.map(provider => lookUpProvider(provider) ).filter(Boolean)
+  }
+  else return lookUpProvider(input)
+}
+
+exports.getProviderType = function(provider, data=false){
+  data = data || this?.ctx?.data || false
+
+  let found = data.providers.all.find(item => item.name == provider)
+  return found?.type || false
+}
+
+exports.providerIsAccrediting = function(provider, data=false){
+  data = data || this?.ctx?.data || false
+  return exports.getProviderType(provider, data) == 'accreditingProvider'
+}
+
+exports.providerIsLeadSchool = function(provider, data=false){
+  data = data || this?.ctx?.data || false
+  return exports.getProviderType(provider, data) == 'leadSchool'
+}
+
+
+
 
 // -------------------------------------------------------------------
 // Misc

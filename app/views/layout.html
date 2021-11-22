@@ -87,7 +87,7 @@
 
   {% set rightHandSideNavHtml %}
     {# Only show provider link if there’s more than one #}
-    {% if data.isHatModel and data.signedInProviders | length > 1 %}
+    {% if data.isHatModel and data.settings.userProviders | length > 1 %}
 
       <nav class="moj-primary-navigation">
         <ul class="moj-primary-navigation__list">

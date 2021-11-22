@@ -6,6 +6,7 @@ const path = require('path')
 const router = express.Router()
 const url = require('url')
 const utils = require('./lib/utils')
+const permissions = require('./filters/permissions.js')
 const fs = require('fs')
 
 // =============================================================================
@@ -23,6 +24,7 @@ router.all('*', function(req, res, next){
   res.locals.query = req.query
   res.locals.flash = req.flash('success') // pass through 'success' messages only
   res.locals.currentPageUrl = url.parse(req.url).pathname
+
 
   // Todo - move this stuff to middleware?
   // Need to also save to locals as saving to data at this point won’t be available to the view unless refreshed
@@ -46,6 +48,9 @@ router.all('*', function(req, res, next){
   }
   // Also save to locals so that the data is available immediately
   res.locals.data.filteredRecords = data.filteredRecords
+
+  res.locals.accessLevel = permissions.filters.getAccessLevel(data?.signedInProviders, data)
+  res.locals.recordAccessLevel = permissions.filters.recordAccessLevel(data?.record, data)
 
   next()
 })

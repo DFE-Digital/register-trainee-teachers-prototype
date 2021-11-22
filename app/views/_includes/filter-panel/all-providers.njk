@@ -9,13 +9,13 @@
     selected: true if (not query.filterAllProviders or query.filterAllProviders ==  "All providers")
   }) %}
 
-  {% set allProviders = data.allProviders %}
+  {% set allProviders = data.providers.accreditingProviders.all %}
 
   {% for provider in allProviders %}
     {% set providerItems = providerItems | push({
-      value: provider,
-      text: provider,
-      selected: true if (provider == query.filterAllProviders)
+      value: provider.name,
+      text: provider.name,
+      selected: true if (provider.name == query.filterAllProviders)
     }) %}
   {% endfor %}
 

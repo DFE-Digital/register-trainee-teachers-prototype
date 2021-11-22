@@ -56,9 +56,20 @@ let courses                 = require('./courses.json')
 // pretend to be the provider's recently used schools
 // let schoolsTop5             = schools.slice(1200).filter((school, index ) => (index % 330 == 0)).slice(0, 5)
 
-let providerData            = require('./providers.js')
-let providers               = providerData.selectedProviders
-let allProviders            = providerData.allProviders
+
+
+let providers = {}
+
+providers.accreditingProviders    = require('./accrediting-providers')
+
+providers.leadSchools = require('./lead-schools')
+
+providers.all = providers.accreditingProviders.all.concat(providers.leadSchools.selected)
+
+providers.selected = providers.accreditingProviders.selected.concat(providers.leadSchools.selected)
+
+// console.log(providers.all)
+
 
 let years                   = require('./years')
 
@@ -72,19 +83,24 @@ let settings = {}
 settings.enabledTrainingRoutes = Object.values(trainingRoutes).filter(route => route.defaultEnabled == true).map(route => route.name).sort()
 
 // One of `blended-model` or `hat-model`
-settings.providerModel = "blended-model"
+settings.providerModel = "hat-model"
 
 // The providers the signed-in user belongs to
 settings.userProviders = [
   "Coventry University",
-  // "University of Buckingham"
+  "The University of Buckingham",
+  "West Park Primary School",
+  "Beam Primary School"
 ]
 
 settings.viewAsAdmin = 'false'
 
 // The ‘active’ provider for the current user if using hat model
 // Must be one of the ones in settings.userProviders
-settings.userActiveProvider = "Coventry University"
+// settings.userActiveProvider = "Coventry University"
+settings.userActiveProvider = "Beam Primary School"
+
+settings.providerType = "accrediting-provider"
 
 // Enable timeline on records
 settings.includeTimeline = 'true'
@@ -165,7 +181,6 @@ module.exports = {
   nationalities,
   notPassedReasons,
   providers,
-  allProviders,
   records,
   // schools,
   // schoolsTop5,

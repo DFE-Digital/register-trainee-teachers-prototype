@@ -20,7 +20,7 @@ module.exports = (params, application) => {
     // But don’t spit out invalid data if the section is marked as completed
     if (isApplyDraft && !sectionIsComplete && invalidAllowed){
       let invalidSubject = `**invalid**${faker.helpers.randomize(degreeData().invalidSubjects)}`
-      subject = weighted.select([subject, invalidSubject], [0.9, 0.1])
+      subject = weighted.select([subject, invalidSubject], [0.7, 0.3])
     }
 
     if (application.isInternationalTrainee) {
@@ -49,10 +49,10 @@ module.exports = (params, application) => {
       // But don’t spit out invalid data if the section is marked as completed
       if (isApplyDraft && !sectionIsComplete  && invalidAllowed){
         let randomInvalidType = `**invalid**${faker.helpers.randomize(degreeData().invalidTypes)}`
-        type = weighted.select([type, randomInvalidType], [0.9, 0.1])
+        type = weighted.select([type, randomInvalidType], [0.7, 0.3])
 
         let randomInvalidInstitution = `**invalid**${faker.helpers.randomize(degreeData().invalidInstitutions)}`
-        institution = weighted.select([institution, randomInvalidInstitution], [0.9, 0.1])
+        institution = weighted.select([institution, randomInvalidInstitution], [0.7, 0.3])
       }
 
       const level = type.level

@@ -1,8 +1,8 @@
 
 {% extends "_templates/_page.html" %}
 
-{% set backLink = '/records' %}
-{% set backText = 'All registered trainees' %}
+{% set backLink = '/admin' %}
+{% set backText = 'Prototype settings' %}
 {% set pageHeading = 'Provider settings' %}
 
 {% block content %}
@@ -42,7 +42,7 @@
 
       {{ appAutocompleteFromSelect({
         label: {
-          text: "Active provider (hat moddel only)",
+          text: "Active provider (hat model only)",
           classes: "govuk-label--s"
         },
         hint: {
@@ -69,10 +69,10 @@
         }) %}
       {% endfor %}
 
-      {% for provider in data.providers %}
-        {% if not data.settings.userProviders.includes(provider)  %}
+      {% for provider in data.providers.selected %}
+        {% if not data.settings.userProviders.includes(provider.name)  %}
           {% set providerItems = providerItems | push({
-            text: provider
+            text: provider.name
           }) %}
         {% endif %}
       {% endfor %}
@@ -96,6 +96,22 @@
         summaryText: "Enabled providers",
         html: providersHtml
       }) }}
+
+      {{ govukSelect({
+        label: {
+          text: "Provider type"
+        },
+        items: [
+          {
+            value: "accrediting-provider",
+            text: "Accrediting provider"
+          },
+          {
+            value: "lead-school",
+            text: "Lead school"
+          }
+        ]
+      } | decorateAttributes(data, "data.settings.providerType"))  }}
 
 
       {{ govukButton({

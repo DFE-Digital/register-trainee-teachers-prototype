@@ -28,15 +28,39 @@
       <div class="govuk-grid-column-two-thirds">
         <h1 class="govuk-heading-l">{{pageHeading}}</h1>
 
-        <ul class="govuk-list">
-          {% for provider in data.settings.userProviders %}
-            <li>
-              {# TODO: make real stles for this element #}
-              <a href="/home?settings[userActiveProvider]={{provider}}&clearQuery=true" class="govuk-heading-m govuk-link govuk-link--no-visited-state">{{provider}}</a>
-            </li>
-          {% endfor %}
-        </ul>
-        
+        {{data.settings.userProviders | log}}
+
+        {% set userProviders = data.settings.userProviders | getProviderData %}
+        {% set providersByType = userProviders | groupby("type") %}
+
+        {{providersByType | log}}
+
+        {% if providersByType.accreditingProvider %}
+          <h2 class="govuk-heading-m">Accrediting providers</h2>
+
+          <ul class="govuk-list">
+            {% for provider in providersByType.accreditingProvider %}
+              <li>
+                {# TODO: make real stles for this element #}
+                <a href="/home?settings[userActiveProvider]={{provider.name}}&clearQuery=true" class="govuk-heading-m govuk-link govuk-link--no-visited-state">{{provider.name}}</a>
+              </li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+
+        {% if providersByType.leadSchool %}
+          <h2 class="govuk-heading-m">Lead schools</h2>
+
+          <ul class="govuk-list">
+            {% for provider in providersByType.leadSchool %}
+              <li>
+                {# TODO: make real stles for this element #}
+                <a href="/home?settings[userActiveProvider]={{provider.name}}&clearQuery=true" class="govuk-heading-m govuk-link govuk-link--no-visited-state">{{provider.name}}</a>
+              </li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+
 
       </div>
     </div>

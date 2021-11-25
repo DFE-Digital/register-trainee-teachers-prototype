@@ -300,7 +300,7 @@ seedRecords.push({
   route: 'Teaching apprenticeship (postgrad)',
   courseDetails: {
     isPublishCourse: true,
-    startDate: "2021-11-01T00:00:00.000Z"
+    startDate: "2021-12-06T00:00:00.000Z"
   },
   trainingDetails: {
     commencementDate: null
@@ -347,7 +347,8 @@ seedRecords.push({
   trn: "8594837",
   route: 'Provider-led (postgrad)',
   courseDetails: {
-    isPublishCourse: 'false'
+    isPublishCourse: 'false',
+    startDate: "2021-09-01T00:00:00.000Z"
   },
   trainingDetails: {
     commencementDate: null
@@ -368,10 +369,14 @@ seedRecords.push({
   },
   route: 'Provider-led (postgrad)',
   courseDetails: {
-    isPublishCourse: false
+    isPublishCourse: false,
+    startDate: "2021-09-01T00:00:00.000Z"
   },
-  submittedDate: "2020-05-28T12:37:21.384Z",
-  updatedDate: "2020-07-15T04:26:19.269Z",
+  trainingDetails: {
+    commencementDate: null
+  },
+  // submittedDate: "2020-05-28T12:37:21.384Z",
+  // updatedDate: "2020-07-15T04:26:19.269Z",
   trn: "8694898",
   personalDetails: {
     givenName: "Martin",
@@ -388,10 +393,14 @@ seedRecords.push({
   },
   route: 'Early years (postgrad)',
   courseDetails: {
-    isPublishCourse: false
+    isPublishCourse: false,
+    startDate: "2021-09-01T00:00:00.000Z"
   },
-  submittedDate: "2020-05-28T12:37:21.384Z",
-  updatedDate: "2020-07-15T04:26:19.269Z",
+  trainingDetails: {
+    commencementDate: null
+  },
+  // submittedDate: "2020-05-28T12:37:21.384Z",
+  // updatedDate: "2020-07-15T04:26:19.269Z",
   trn: "7785421",
   personalDetails: {
     givenName: "Delia",
@@ -414,6 +423,78 @@ seedRecords.push({
       }
     ],
   }
+})
+
+seedRecords.push({
+  status: "TRN received",
+  personalDetails: {
+    givenName: "Lana",
+    familyName: "Cardno",
+    sex: "Female"
+  },
+  route: 'Provider-led (postgrad)',
+  trainingDetails: {
+    commencementDate: null
+  },
+  courseDetails: {
+    isPublishCourse: true,
+    startDate: "2021-09-01T00:00:00.000Z"
+  },
+  id: "2a4f4dc6-8653-4499-ae5c-22d2cdb5a3de"
+})
+
+seedRecords.push({
+  status: "TRN received",
+  personalDetails: {
+    givenName: "Darren",
+    familyName: "Perry",
+    sex: "Male"
+  },
+  route: 'Provider-led (postgrad)',
+  trainingDetails: {
+    commencementDate: null
+  },
+  courseDetails: {
+    isPublishCourse: true,
+    startDate: "2021-12-12T00:00:00.000Z"
+  },
+  id: "04ad18c1-4cc2-4d3d-a979-0dc1f07fc6b4"
+})
+
+seedRecords.push({
+  status: "TRN received",
+  personalDetails: {
+    givenName: "Jodie",
+    familyName: "Fletcher",
+    sex: "Female"
+  },
+  route: 'Provider-led (postgrad)',
+  trainingDetails: {
+    commencementDate: null
+  },
+  courseDetails: {
+    isPublishCourse: true,
+    startDate: "2021-12-12T00:00:00.000Z"
+  },
+  id: "e8ebf77e-cd81-4b31-8111-5c38b1277184"
+})
+
+seedRecords.push({
+  status: "TRN received",
+  personalDetails: {
+    givenName: "Angela",
+    familyName: "Scholz",
+    sex: "Female"
+  },
+  route: 'Provider-led (postgrad)',
+  trainingDetails: {
+    commencementDate: null
+  },
+  courseDetails: {
+    isPublishCourse: true,
+    startDate: "2021-12-12T00:00:00.000Z"
+  },
+  id: "0e74f2b2-a597-46a9-993c-ecbb6d81c4bf"
 })
 
 // Special bespoke record for HPITT - for developers to compare against

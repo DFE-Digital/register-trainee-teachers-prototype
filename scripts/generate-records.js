@@ -220,10 +220,10 @@ const generateFakeApplicationsForProvider = (provider, year, count) => {
       count = 30 
     }
     targetCounts = {
-      draft: 0.45,
-      applyEnrolled: 0.45,
-      pendingTrn: 0.05,
-      trnReceived: 0.05,
+      draft: 0.40,
+      applyEnrolled: 0.40,
+      pendingTrn: 0.1,
+      trnReceived: 0.1,
       qualificationRecommended: 0.00,
       qualificationAwarded: 0.00,
       deferred: 0.00,

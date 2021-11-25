@@ -1620,7 +1620,7 @@ This is very hacky - but works. It avoids us needing to know much about the data
 or program errors per field. We just reivew the summary list to decide if something
 is wrong.
 */
-exports.highlightInvalidRows = function(rows) {
+exports.highlightInvalidRows = function(rows, params=false) {
   let ctx = Object.assign({}, this.ctx)
 
   // We need to add to any existing answers from previous times
@@ -1631,23 +1631,33 @@ exports.highlightInvalidRows = function(rows) {
   if (rows) {
     // Loop through each row
     rows.map(row => {
+      if (!row) return row
 
       // Values are stored two possible places
-      let value = row?.value?.html || row?.value?.text
+      let value = row?.value?.html || row?.value?.text || ""
+      if (_.isString(value)) value = value.trim()
       
       if (featureEnabled){
 
-        // We preface invalid answers with **invalid** but technically it sohuld work anywhere
+        if (params?.treatEmptyAsMissing && (!value || value == "")) {
+          // Using .apply() to pass on value of 'this'
+          row = exports.markSummaryRowMissing.apply(this, [row])
+        }
+
+        console.log(value, typeof value)
+        if (value && value.includes('**missing**')) {
+          // Using .apply() to pass on value of 'this'
+          row = exports.markSummaryRowMissing.apply(this, [row])
+        }
+
+        // We preface invalid answers with **invalid** but technically it should work anywhere
         // Probably might not work for dates / values that get transformed before display
         if (value && value.includes('**invalid**')) {
           // Using .apply() to pass on value of 'this'
           row = exports.markSummaryRowInvalid.apply(this, [row])
         }
 
-        if (value && value.includes('**missing**')) {
-          // Using .apply() to pass on value of 'this'
-          row = exports.markSummaryRowMissing.apply(this, [row])
-        }
+
 
       }
       // If feature not enabled, we still need to strip placeholders
@@ -1717,9 +1727,9 @@ exports.markSummaryRow = function(row, type) {
   let key = row?.key?.html || row?.key?.text
 
   // Values are stored two possible places
-  let value = row?.value?.html || row?.value?.text
+  let value = row?.value?.html || row?.value?.text || ""
   delete row?.value?.text // we’ll use row.value.html instead
-  row.value.html = exports.stripPlaceholders(value) // strip any placeholder tags
+  _.set(row, "value.html", exports.stripPlaceholders(value))// strip any placeholder tags
 
   // Generate an id so we can anchor to this row
   let id = `summary-list--row-invalid--${faker.datatype.uuid()}`

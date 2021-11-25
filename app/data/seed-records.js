@@ -279,6 +279,8 @@ seedRecords.push({
   }
 })
 
+// Registered records
+
 seedRecords.push({
   status: 'Pending TRN',
   "reference": "GJ8729",
@@ -295,10 +297,15 @@ seedRecords.push({
     "ethnicGroupSpecific": "Caribbean",
     "disabledAnswer": "Not provided"
   },
-  route: 'Assessment only',
+  route: 'Teaching apprenticeship (postgrad)',
   courseDetails: {
-    isPublishCourse: false
-  }
+    isPublishCourse: true,
+    startDate: "2021-11-01T00:00:00.000Z"
+  },
+  trainingDetails: {
+    commencementDate: null
+  },
+  id: "f202cc6d-3a97-4353-be40-6cd5f3b0a6d9"
 })
 
 seedRecords.push({
@@ -307,12 +314,16 @@ seedRecords.push({
   trainingDetails: {
     traineeId: "2020/21-023"
   },
-  submittedDate: "2020-05-28T12:37:21.384Z",
-  updatedDate: "2020-08-04T04:26:19.269Z",
-  trn: 8405624,
-  route: 'Provider-led (postgrad)',
+  // submittedDate: "2021-05-28T12:37:21.384Z",
+  // updatedDate: "2021-08-04T04:26:19.269Z",
+  trn: "8405624",
+  route: 'Assessment only',
   courseDetails: {
-    isPublishCourse: false
+    isPublishCourse: false,
+    startDate: "2021-09-01T00:00:00.000Z"
+  },
+  trainingDetails: {
+    commencementDate: null
   },
   personalDetails: {
     givenName: "Bea",
@@ -320,6 +331,7 @@ seedRecords.push({
     sex: "Female",
     nationality: ["French"]
   },
+  id: "7461a519-4acc-4635-a1e9-d9ad55d24f3f"
 })
 
 seedRecords.push({
@@ -330,18 +342,22 @@ seedRecords.push({
     traineeStarted: null,
     commencementDate: null
   },
-  submittedDate: "2020-06-28T12:37:21.384Z",
-  updatedDate: "2020-07-04T04:26:19.269Z",
-  trn: 8594837,
+  // submittedDate: "2020-06-28T12:37:21.384Z",
+  // updatedDate: "2020-07-04T04:26:19.269Z",
+  trn: "8594837",
   route: 'Provider-led (postgrad)',
   courseDetails: {
     isPublishCourse: 'false'
+  },
+  trainingDetails: {
+    commencementDate: null
   },
   personalDetails: {
     givenName: "Janine",
     familyName: "Newman",
     sex: "Female"
   },
+  id: "e432974c-e719-4ab0-96a2-a144532cec80"
 })
 
 seedRecords.push({
@@ -356,7 +372,7 @@ seedRecords.push({
   },
   submittedDate: "2020-05-28T12:37:21.384Z",
   updatedDate: "2020-07-15T04:26:19.269Z",
-  trn: 8694898,
+  trn: "8694898",
   personalDetails: {
     givenName: "Martin",
     familyName: "Cable",
@@ -376,7 +392,7 @@ seedRecords.push({
   },
   submittedDate: "2020-05-28T12:37:21.384Z",
   updatedDate: "2020-07-15T04:26:19.269Z",
-  trn: 7785421,
+  trn: "7785421",
   personalDetails: {
     givenName: "Delia",
     familyName: "Klein",

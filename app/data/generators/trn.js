@@ -16,5 +16,5 @@ module.exports = application => {
     })
   }
 
-  return trn
+  return String(trn)
 }

@@ -63,10 +63,12 @@ filters.providerIsAuthorised = function(providers, action){
 
   const accreditingProviderActions = [
     'addTrainees',
+    'bulkActions',
     'editRecords',
     'exportRecords',
     'recommendForAward',
     'viewDiversity',
+    'viewDrafts',
     'viewRecords',
   ]
 

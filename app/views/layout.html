@@ -113,7 +113,7 @@
       text: 'Draft trainees',
       href: '/drafts',
       active: true if navActive == 'drafts'
-    } if data.settings.draftsInPrimaryNav == 'true',
+    } if isAuthorised('viewDrafts'),
     {
       text: 'Registered trainees',
       href: '/records',
@@ -123,7 +123,7 @@
       text: 'Bulk actions',
       href: '/bulk-action/new',
       active: true if navActive == 'bulk'
-    },
+    } if isAuthorised('bulkActions'),
     {
       text: 'Courses',
       href: '/root/case-list',

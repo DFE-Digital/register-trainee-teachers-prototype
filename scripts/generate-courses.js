@@ -10,8 +10,8 @@ faker.locale  = 'en_GB'
 const weighted = require('weighted')
 const moment  = require('moment')
 const _       = require('lodash')
-const providerData = require('../app/data/providers')
-const providers = providerData.selectedProviders
+const providerData = require('../app/data/accrediting-providers')
+const providers = providerData.selected
 
 const generateCourseDetails = require('../app/data/generators/course-generator')
 
@@ -52,7 +52,7 @@ const generateFakeCourses = () => {
     
     // Hardcode lots courses our default providers
     // A separate setting limits this later so that we can quickly change the number of courses offered in the ui
-    if (provider == "Coventry University" || provider == "University of Buckingham") courseCount = 100
+    if (provider.name == "Coventry University" || provider.name == "University of Buckingham") courseCount = 100
 
     for (var i = 0; i < courseCount; i++){
       yearsToGenerate.forEach(year => {
@@ -62,8 +62,8 @@ const generateFakeCourses = () => {
         }))
       })
     }
-    courses[provider] = {
-      name: provider,
+    courses[provider.name] = {
+      name: provider.name,
       courses: providerCourses
     }
   })

@@ -1,6 +1,6 @@
 const weighted = require('weighted')
 const faker   = require('faker')
-const placementSchools = require('../providers.js').all
+const placementSchools = require('../accrediting-providers.js').all
 
 module.exports = (params) => {
 

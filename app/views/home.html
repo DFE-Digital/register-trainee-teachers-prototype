@@ -15,6 +15,7 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds-from-desktop">
       <span class="govuk-caption-l">{{ data.signedInProviders | andSeparate }}</span>
+
       <h1 class="govuk-heading-xl">{{ pageHeading }}</h1>
       <h2 class="govuk-heading-l">Draft trainees</h2>
       <ul class="govuk-list govuk-list--spaced govuk-!-margin-bottom-0">
@@ -24,7 +25,13 @@
         {% if applyDraftCount > 0 %}
           <li><a class="govuk-link" href="/drafts?filterSource=Apply">View draft trainees imported from Apply ({{applyDraftCount}})</a></li>
         {% endif %}
-        <li class="govuk-!-margin-bottom-0"><a class="govuk-link" href="/new-record/new">Create a trainee record</a></li>
+
+        {% if isAuthorised('addTrainees') %}
+          <li class="govuk-!-margin-bottom-0">
+            <a class="govuk-link" href="/new-record/new">Create a trainee record</a>
+          </li>
+        {% endif %}
+
       </ul>
     </div>
   </div>

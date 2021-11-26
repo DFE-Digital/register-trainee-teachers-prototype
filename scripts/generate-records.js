@@ -16,8 +16,8 @@ const trainingRouteData = require('../app/data/training-route-data')
 const seedRecords       = require('../app/data/seed-records')
 const statuses          = require('../app/data/status')
 const courses           = require('../app/data/courses.json')
-const providerData      = require('../app/data/providers.js')
-const providers         = providerData.selectedProviders
+const accreditingProviderData      = require('../app/data/accrediting-providers.js')
+const providers         = accreditingProviderData.selected
 
 // Settings
 let simpleGcseGrades    = true //output pass/fail rather than full detail
@@ -185,13 +185,13 @@ const generateFakeApplications = () => {
     // Approximate size of provider
     // TODO: store provider size somewhere so it can be used here and
     // by the course generator
-    let providerSize = getRandomInt(30) 
+    let providerSize = getRandomInt(50)
 
     yearsToGenerate.forEach((year) => {
       // Years can be ±10% in size
       let traineeCount = getRandomArbitrary((providerSize * 0.9), (providerSize * 1.1))
       if (provider == "Coventry University") traineeCount = 130
-      applications = applications.concat(generateFakeApplicationsForProvider(provider, year, traineeCount))
+      applications = applications.concat(generateFakeApplicationsForProvider(provider.name, year, traineeCount))
     })
 
   })

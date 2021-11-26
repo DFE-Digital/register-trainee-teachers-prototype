@@ -314,7 +314,7 @@ const getSelectedProviders = (providers, permanentProviders) => {
     return (index % 50 === 0)
   })
   
-  reducedProviders = reducedProviders.concat(permanentProviders).sort()
+  reducedProviders = reducedProviders.concat(permanentAccreditingProviders).sort()
   return [...new Set(reducedProviders)] // Uniq
 }
 

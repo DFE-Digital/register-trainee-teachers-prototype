@@ -6,7 +6,7 @@ const path = require('path')
 const router = express.Router()
 const url = require('url')
 const utils = require('./lib/utils')
-const permissions = require('./filters/permissions.js')
+const permissions = require('./filters/permissions.js').filters
 const fs = require('fs')
 
 // =============================================================================
@@ -48,9 +48,8 @@ router.all('*', function(req, res, next){
   }
   // Also save to locals so that the data is available immediately
   res.locals.data.filteredRecords = data.filteredRecords
-
-  res.locals.accessLevel = permissions.filters.getAccessLevel(data?.signedInProviders, data)
-  res.locals.recordAccessLevel = permissions.filters.recordAccessLevel(data?.record, data)
+  res.locals.accessLevel = permissions.getAccessLevel(data?.signedInProviders, data)
+  res.locals.recordAccessLevel = permissions.recordAccessLevel(data?.record, data)
 
   next()
 })

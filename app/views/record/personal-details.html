@@ -13,7 +13,9 @@
 
   {% include "_includes/summary-cards/contact-details.html" %}
 
-  {% include "_includes/summary-cards/diversity.html" %}
+  {% if isAuthorised('viewDiversity') %}
+    {% include "_includes/summary-cards/diversity.html" %}
+  {% endif %}
 
   {% include "_includes/summary-cards/gcse-details.html" %}
 

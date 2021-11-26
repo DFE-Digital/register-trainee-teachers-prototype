@@ -37,11 +37,7 @@
   {% set record = {} %}
 {% endif %}
 
-
-
-{% set canAmend = record.status | canBeAmended %}
-{# {% set showIncomplete = true %} #}
-
+{% set canAmend = isAuthorised("editRecords") and (record.status | canBeAmended) %}
 
 {# Used by summary cards #}
 {% set recordPath = "/record/" + record.id %}

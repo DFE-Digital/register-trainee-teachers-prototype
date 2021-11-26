@@ -9,8 +9,6 @@
 {% block tabContent %}
 {% set referrer = recordPath %}
 
-{% set canAmend = record.status | canBeAmended %}
-
 {% set hasCommencementDate = record.trainingDetails.traineeStarted | falsify %}
 
 {% set recordPath = "/record/" + record.id %}

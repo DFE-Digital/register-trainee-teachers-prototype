@@ -90,7 +90,8 @@ settings.userProviders = [
   "Coventry University",
   "The University of Buckingham",
   "West Park Primary School",
-  "Beam Primary School"
+  "Beam Primary School",
+  "Hope Academy"
 ]
 
 settings.viewAsAdmin = 'false'

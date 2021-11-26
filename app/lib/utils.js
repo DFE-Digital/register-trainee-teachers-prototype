@@ -1285,7 +1285,7 @@ exports.filterByProvider = function(records, array, data=false){
   return records.filter(record => {
 
     // Enrich provider data
-    let providerData = exports.getProviderData(array, data)
+    let providerData = exports.getProviderData.apply(this, [array, data])
 
     // Check if any of the providers match
     return providerData.some(provider => {
@@ -1417,9 +1417,16 @@ exports.sortRecordsByDateUpdated = records => {
 exports.getProviderData = function(input, data=false){
   data = data || this?.ctx?.data || false
 
-  const lookUpProvider = provider => {
+  if (!data){
+    console.log("Error with getProviderData: no data!")
+    return false
+  }
 
-    let item = data.providers.all.find(item => item.name == provider) || false
+  const lookUpProvider = provider => {
+    let item
+    if (data?.providers?.all){
+      item = data.providers.all.find(item => item.name == provider) || false
+    }
     if (!item) console.log(`Error with getProvider data: ${provider} not found.`)
     return item
   }
@@ -1433,18 +1440,18 @@ exports.getProviderData = function(input, data=false){
 exports.getProviderType = function(provider, data=false){
   data = data || this?.ctx?.data || false
 
-  let found = data.providers.all.find(item => item.name == provider)
+  let found = data?.providers?.all && data.providers.all.find(item => item.name == provider)
   return found?.type || false
 }
 
 exports.providerIsAccrediting = function(provider, data=false){
   data = data || this?.ctx?.data || false
-  return exports.getProviderType(provider, data) == 'accreditingProvider'
+  return exports.getProviderType.apply(this, [provider, data]) == 'accreditingProvider'
 }
 
 exports.providerIsLeadSchool = function(provider, data=false){
   data = data || this?.ctx?.data || false
-  return exports.getProviderType(provider, data) == 'leadSchool'
+  return exports.getProviderType.apply(this, [provider, data]) == 'leadSchool'
 }
 
 

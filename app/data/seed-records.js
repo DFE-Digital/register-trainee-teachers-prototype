@@ -282,7 +282,7 @@ seedRecords.push({
 // Registered records
 
 seedRecords.push({
-  status: 'Pending TRN',
+  status: 'TRN received',
   "reference": "GJ8729",
   submittedDate: new Date(),
   personalDetails: {

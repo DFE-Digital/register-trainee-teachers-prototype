@@ -1414,6 +1414,14 @@ exports.sortRecordsByDateUpdated = records => {
 // Providers
 // -------------------------------------------------------------------
 
+// Look up provider data using the provider name.
+// Works with strings and arrays of strings
+// eg
+// "Coventry University" => 
+// {
+//   name: 'Coventry University',
+//   type: 'accreditingProvider'
+// }
 exports.getProviderData = function(input, data=false){
   data = data || this?.ctx?.data || false
 
@@ -1437,6 +1445,7 @@ exports.getProviderData = function(input, data=false){
   else return lookUpProvider(input)
 }
 
+// Gets the type of a provider - currently `accreditingProvider` or `leadSchool`
 exports.getProviderType = function(provider, data=false){
   data = data || this?.ctx?.data || false
 

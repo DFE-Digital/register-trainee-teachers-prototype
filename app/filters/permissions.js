@@ -7,9 +7,11 @@ var filters = {}
 
 let utils = require("./../lib/utils.js")
 
+// Pick the highest access level from array of access levels
 filters.getHighestLevel = array => {
-  if (array.includes("admin")) return "admin"
-  if (array.includes("accreditingProvider")) return "accreditingProvider"
+  if (!array || !Array.isArray(array)) return false
+  else if (array.includes("admin")) return "admin"
+  else if (array.includes("accreditingProvider")) return "accreditingProvider"
   else if (array.includes("leadSchool")) return "leadSchool"
   else return false
 }
@@ -28,7 +30,6 @@ filters.getAccessLevels = function(providers, data){
   // Loop through each signed-in provider and get their type
   let accessLevels = providers.map(provider => utils.getProviderType.apply(this, [provider, data]))
   if (data?.settings?.viewAsAdmin == 'true') accessLevels.push("admin")
-  console.log('getAccessLevels', accessLevels)
   return accessLevels
 }
 
@@ -42,6 +43,7 @@ filters.getAccessLevel = function(providers, data){
 }
 
 // Check if a provider (or providers) have auth to do an action
+// Usually this will be called via the `isAuthorised(action)` function
 filters.providerIsAuthorised = function(providers, action){
   const data = this?.ctx?.data || false
 
@@ -52,10 +54,13 @@ filters.providerIsAuthorised = function(providers, action){
     return false
   }
 
-  // Admin / Accrediting / Lead school
+  // `admin` / `accreditingProvider` / `leadSchool`
   const providerType = filters.getAccessLevel.apply(this, [providers])
 
-  // Our access on a record might be different
+  // Access on a record might be different - for instance might be signed in as
+  // an accrediting provider *and* a lead school, but viewing the record only as the
+  // lead school - in which case their access level for that record is as a lead 
+  // school only.
   const recordAccessLevel = filters.recordAccessLevel.apply(this, [record])
 
   // If viewing a record, get our record access, else our provider type will do

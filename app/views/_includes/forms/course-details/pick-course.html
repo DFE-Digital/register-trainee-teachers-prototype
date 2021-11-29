@@ -149,7 +149,7 @@ defer to an id if one exists. #}
   }) }}
 
   {# Always in this route until we design a better journey for many courses #}
-  {% if providerCourses | length < 25 %}
+  {% if providerCourses | length < 100 %}
 
     {{ providerHasFewPublishCourses | safe }}
 

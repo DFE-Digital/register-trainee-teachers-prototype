@@ -67,7 +67,9 @@
 
 {% set schoolsHtml %}
   {{ govukSummaryList({
-    rows: schoolsRows
+    rows: schoolsRows | highlightInvalidRows({
+      treatEmptyAsMissing: true
+    })
   }) }}
 {% endset %}
 

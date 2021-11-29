@@ -344,19 +344,35 @@ module.exports = router => {
     let recordPath = utils.getRecordPath(req)
     let referrer = utils.getReferrer(req.query.referrer)
     let route = record?.route
-    let academicYear = utils.academicYearStringToYear(record?.courseDetails?.academicYear)
+    let academicYearString = record?.courseDetails?.academicYear
+    let academicYear = utils.academicYearStringToYear(academicYearString)
 
     // No data, return to page
     if (!academicYear){
       res.redirect(`${recordPath}/course-details/course-year${referrer}`)
     }
     else {
+
       let providerCourses = utils.getProviderCourses({
         courses: data.courses,
         provider: record.provider,
         route
       })
       let coursesByYear = utils.groupCoursesByYear(providerCourses)
+
+      // Check if we already have a stored course - if so, we may need to wipe it if it's for
+      // a different year than was just chosen.
+      if (record.courseDetails.isPublishCourse){
+        let existingCourse = utils.getCourseByCode(record?.courseDetails?.code, data)
+        // Check if the academic years match. If not, clear out the course details.
+        if (existingCourse?.academicYear != academicYearString){
+          delete record.courseDetails
+          record.courseDetails = {
+            academicYear: academicYearString
+          }
+        }
+      }
+
       // If there are courses for that academic year, show course picker page
       if (coursesByYear[academicYear] && coursesByYear[academicYear].length > 0){
         res.redirect(`${recordPath}/course-details/pick-course/${academicYear}${referrer}`)

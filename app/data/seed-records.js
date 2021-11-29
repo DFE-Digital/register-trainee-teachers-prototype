@@ -279,8 +279,10 @@ seedRecords.push({
   }
 })
 
+// Registered records
+
 seedRecords.push({
-  status: 'Pending TRN',
+  status: 'TRN received',
   "reference": "GJ8729",
   submittedDate: new Date(),
   personalDetails: {
@@ -295,10 +297,15 @@ seedRecords.push({
     "ethnicGroupSpecific": "Caribbean",
     "disabledAnswer": "Not provided"
   },
-  route: 'Assessment only',
+  route: 'Teaching apprenticeship (postgrad)',
   courseDetails: {
-    isPublishCourse: false
-  }
+    isPublishCourse: true,
+    startDate: "2021-12-06T00:00:00.000Z"
+  },
+  trainingDetails: {
+    commencementDate: null
+  },
+  id: "f202cc6d-3a97-4353-be40-6cd5f3b0a6d9"
 })
 
 seedRecords.push({
@@ -307,12 +314,16 @@ seedRecords.push({
   trainingDetails: {
     traineeId: "2020/21-023"
   },
-  submittedDate: "2020-05-28T12:37:21.384Z",
-  updatedDate: "2020-08-04T04:26:19.269Z",
-  trn: 8405624,
-  route: 'Provider-led (postgrad)',
+  // submittedDate: "2021-05-28T12:37:21.384Z",
+  // updatedDate: "2021-08-04T04:26:19.269Z",
+  trn: "8405624",
+  route: 'Assessment only',
   courseDetails: {
-    isPublishCourse: false
+    isPublishCourse: false,
+    startDate: "2021-09-01T00:00:00.000Z"
+  },
+  trainingDetails: {
+    commencementDate: null
   },
   personalDetails: {
     givenName: "Bea",
@@ -320,6 +331,7 @@ seedRecords.push({
     sex: "Female",
     nationality: ["French"]
   },
+  id: "7461a519-4acc-4635-a1e9-d9ad55d24f3f"
 })
 
 seedRecords.push({
@@ -330,18 +342,23 @@ seedRecords.push({
     traineeStarted: null,
     commencementDate: null
   },
-  submittedDate: "2020-06-28T12:37:21.384Z",
-  updatedDate: "2020-07-04T04:26:19.269Z",
-  trn: 8594837,
+  // submittedDate: "2020-06-28T12:37:21.384Z",
+  // updatedDate: "2020-07-04T04:26:19.269Z",
+  trn: "8594837",
   route: 'Provider-led (postgrad)',
   courseDetails: {
-    isPublishCourse: 'false'
+    isPublishCourse: 'false',
+    startDate: "2021-09-01T00:00:00.000Z"
+  },
+  trainingDetails: {
+    commencementDate: null
   },
   personalDetails: {
     givenName: "Janine",
     familyName: "Newman",
     sex: "Female"
   },
+  id: "e432974c-e719-4ab0-96a2-a144532cec80"
 })
 
 seedRecords.push({
@@ -352,11 +369,15 @@ seedRecords.push({
   },
   route: 'Provider-led (postgrad)',
   courseDetails: {
-    isPublishCourse: false
+    isPublishCourse: false,
+    startDate: "2021-09-01T00:00:00.000Z"
   },
-  submittedDate: "2020-05-28T12:37:21.384Z",
-  updatedDate: "2020-07-15T04:26:19.269Z",
-  trn: 8694898,
+  trainingDetails: {
+    commencementDate: null
+  },
+  // submittedDate: "2020-05-28T12:37:21.384Z",
+  // updatedDate: "2020-07-15T04:26:19.269Z",
+  trn: "8694898",
   personalDetails: {
     givenName: "Martin",
     familyName: "Cable",
@@ -372,11 +393,15 @@ seedRecords.push({
   },
   route: 'Early years (postgrad)',
   courseDetails: {
-    isPublishCourse: false
+    isPublishCourse: false,
+    startDate: "2021-09-01T00:00:00.000Z"
   },
-  submittedDate: "2020-05-28T12:37:21.384Z",
-  updatedDate: "2020-07-15T04:26:19.269Z",
-  trn: 7785421,
+  trainingDetails: {
+    commencementDate: null
+  },
+  // submittedDate: "2020-05-28T12:37:21.384Z",
+  // updatedDate: "2020-07-15T04:26:19.269Z",
+  trn: "7785421",
   personalDetails: {
     givenName: "Delia",
     familyName: "Klein",
@@ -398,6 +423,78 @@ seedRecords.push({
       }
     ],
   }
+})
+
+seedRecords.push({
+  status: "TRN received",
+  personalDetails: {
+    givenName: "Lana",
+    familyName: "Cardno",
+    sex: "Female"
+  },
+  route: 'Provider-led (postgrad)',
+  trainingDetails: {
+    commencementDate: null
+  },
+  courseDetails: {
+    isPublishCourse: true,
+    startDate: "2021-09-01T00:00:00.000Z"
+  },
+  id: "2a4f4dc6-8653-4499-ae5c-22d2cdb5a3de"
+})
+
+seedRecords.push({
+  status: "TRN received",
+  personalDetails: {
+    givenName: "Darren",
+    familyName: "Perry",
+    sex: "Male"
+  },
+  route: 'Provider-led (postgrad)',
+  trainingDetails: {
+    commencementDate: null
+  },
+  courseDetails: {
+    isPublishCourse: true,
+    startDate: "2021-12-12T00:00:00.000Z"
+  },
+  id: "04ad18c1-4cc2-4d3d-a979-0dc1f07fc6b4"
+})
+
+seedRecords.push({
+  status: "TRN received",
+  personalDetails: {
+    givenName: "Jodie",
+    familyName: "Fletcher",
+    sex: "Female"
+  },
+  route: 'Provider-led (postgrad)',
+  trainingDetails: {
+    commencementDate: null
+  },
+  courseDetails: {
+    isPublishCourse: true,
+    startDate: "2021-12-12T00:00:00.000Z"
+  },
+  id: "e8ebf77e-cd81-4b31-8111-5c38b1277184"
+})
+
+seedRecords.push({
+  status: "TRN received",
+  personalDetails: {
+    givenName: "Angela",
+    familyName: "Scholz",
+    sex: "Female"
+  },
+  route: 'Provider-led (postgrad)',
+  trainingDetails: {
+    commencementDate: null
+  },
+  courseDetails: {
+    isPublishCourse: true,
+    startDate: "2021-12-12T00:00:00.000Z"
+  },
+  id: "0e74f2b2-a597-46a9-993c-ecbb6d81c4bf"
 })
 
 // Special bespoke record for HPITT - for developers to compare against

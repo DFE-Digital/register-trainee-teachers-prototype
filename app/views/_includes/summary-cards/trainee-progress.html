@@ -1,6 +1,6 @@
 {% set providerText %}
   {% if record.provider %}
-    {{record.provider}} (C85)
+    {{record.provider | safe}} (C85)
   {% else %}
     Not provided
   {% endif %}

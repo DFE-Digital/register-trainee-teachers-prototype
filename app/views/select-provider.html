@@ -40,8 +40,8 @@
 
           <ul class="govuk-list">
             {% for provider in providersByType.accreditingProvider %}
-              <li>
-                {# TODO: make real stles for this element #}
+              <li class="govuk-!-margin-bottom-2">
+                {# TODO: make real styles for this element #}
                 <a href="/home?settings[userActiveProvider]={{provider.name}}&clearQuery=true" class="govuk-!-font-size-24 govuk-!-font-weight-bold govuk-link govuk-link--no-visited-state">{{provider.name}}</a>
               </li>
             {% endfor %}
@@ -53,8 +53,8 @@
 
           <ul class="govuk-list">
             {% for provider in providersByType.leadSchool %}
-              <li>
-                {# TODO: make real stles for this element #}
+              <li class="govuk-!-margin-bottom-2">
+                {# TODO: make real styles for this element #}
                 <a href="/home?settings[userActiveProvider]={{provider.name}}&clearQuery=true" class="govuk-!-font-size-24 govuk-!-font-weight-bold govuk-link govuk-link--no-visited-state">{{provider.name}}</a>
               </li>
             {% endfor %}

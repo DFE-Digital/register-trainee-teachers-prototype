@@ -14,7 +14,8 @@ module.exports = application => {
       'min': 1000000,
       'max': 9999999
     })
+    trn = String(trn)
   }
 
-  return String(trn)
+  return trn
 }

@@ -14,7 +14,7 @@ let defaultVisibleYears = [
 
 let currentAcademicYear = "2021 to 2022"
 
-let defaultCourseYear = "2022"
+let defaultCourseYear = "2021"
 // defaultCourseYear = null
 
 // The first year in the range

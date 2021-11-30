@@ -1708,54 +1708,55 @@ is wrong.
 exports.highlightInvalidRows = function(rows, params=false) {
   let ctx = Object.assign({}, this.ctx)
 
+  let returnRows = [...rows] //duplicate array - not sure this is needed
+
   // We need to add to any existing answers from previous times
   // this filter has run on this page
   // let invalidAnswers = ctx.data?.temp?.invalidAnswers || []
-  let featureEnabled = ctx.data?.settings?.highlightInvalidAnswers == "true"
+  let featureEnabled = ctx?.data?.settings?.highlightInvalidAnswers == "true"
 
-  if (rows) {
+  if (returnRows) {
     // Loop through each row
-    rows.map(row => {
+    returnRows = returnRows.map(row => {
       if (!row) return row
 
+      let theRow = Object.assign({}, row)
+
       // Values are stored two possible places
-      let value = row?.value?.html || row?.value?.text || ""
+      let value = theRow?.value?.html || theRow?.value?.text || ""
       if (_.isString(value)) value = value.trim()
       
       if (featureEnabled){
 
         if (params?.treatEmptyAsMissing && (!value || value == "")) {
           // Using .apply() to pass on value of 'this'
-          row = exports.markSummaryRowMissing.apply(this, [row])
+          theRow = Object.assign({}, exports.markSummaryRowMissing.apply(this, [theRow]))
+          console.log("here", theRow)
         }
 
-        console.log(value, typeof value)
-        if (value && value.includes('**missing**')) {
+        else if (value && value.includes('**missing**')) {
           // Using .apply() to pass on value of 'this'
-          row = exports.markSummaryRowMissing.apply(this, [row])
+          theRow = Object.assign({}, exports.markSummaryRowMissing.apply(this, [theRow]))
         }
 
         // We preface invalid answers with **invalid** but technically it should work anywhere
         // Probably might not work for dates / values that get transformed before display
-        if (value && value.includes('**invalid**')) {
+        else if (value && value.includes('**invalid**')) {
           // Using .apply() to pass on value of 'this'
-          row = exports.markSummaryRowInvalid.apply(this, [row])
+          theRow = Object.assign({}, exports.markSummaryRowInvalid.apply(this, [theRow]))
         }
-
-
-
       }
       // If feature not enabled, we still need to strip placeholders
       else {
-        row.value.html = exports.stripPlaceholders(value)
-        delete row.value?.text // not needed any more
+        theRow.value.html = exports.stripPlaceholders(value)
+        delete theRow.value?.text // not needed any more
       }
 
-      return row
+      return theRow
     })
   }
 
-  return rows
+  return returnRows
 }
 
 // Internal utility function to add markup to summary row to show visually inset styles
@@ -1808,6 +1809,8 @@ const styleSummaryRowAsInset = (row, params) => {
 // Type can be `invalid` or `missing`
 exports.markSummaryRow = function(row, type) {
 
+  row = Object.assign({}, row)
+
   // Keys are stored two possible places
   let key = row?.key?.html || row?.key?.text
 
@@ -1839,12 +1842,25 @@ exports.markSummaryRow = function(row, type) {
     }
   }
 
-  row = styleSummaryRowAsInset(row, {
-    id,
-    message,
-    linkText,
-    linkTextAppendHidden
-  })
+  // If there are no actions, style text grey instead of blue inset
+  if (!row?.actions?.items ||  !row?.actions?.items.length || !row?.actions?.items[0].href){
+    console.log("no link")
+    row = {
+      ...row,
+      value: {
+        html: `<div class="govuk-hint">${message}</div>`
+      }
+    }
+  }
+
+  else {
+    row = styleSummaryRowAsInset(row, {
+      id,
+      message,
+      linkText,
+      linkTextAppendHidden
+    })
+  }
 
   return row
 }

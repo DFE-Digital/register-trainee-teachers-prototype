@@ -46,7 +46,7 @@
         }
       ]
     } if canAmend
-  },
+  } if isAuthorised('viewDiversity'),
   {
     key: {
       text: "Nationality"
@@ -63,8 +63,8 @@
         }
       ]
     } if canAmend
-  } 
-] %}
+  } if isAuthorised('viewDiversity')
+] | removeEmpty %}
 
 {% set personalDetailsHtml %}
   {{ govukSummaryList({

@@ -50,7 +50,7 @@
   <div class="record-header">
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-0">
       {{pageHeading}}
-      {% if not record | recordIsComplete %}
+      {% if not record | recordIsComplete and isAuthorised('showIncomplete') %}
           <span style="display: inline-block;">
             {{govukTag({
               text: "Incomplete",

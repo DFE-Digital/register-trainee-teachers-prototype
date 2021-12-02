@@ -57,7 +57,9 @@
   
   {% include "_includes/filter-panel/cycles.njk" %}
 
-  {% include "_includes/filter-panel/completeStatus.njk" %}
+  {% if isAuthorised('showIncomplete') %}
+    {% include "_includes/filter-panel/completeStatus.njk" %}
+  {% endif %}
 
   {% include "_includes/filter-panel/phase.njk" %}
 

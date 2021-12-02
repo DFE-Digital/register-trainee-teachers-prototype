@@ -326,14 +326,19 @@ module.exports = router => {
     // console.log(req.query)
     // if (!hasFilters) filteredRecords = filteredRecords.filter(record => record.academicYear == "2021 to 2022")
 
-    // All records except drafts
-    filteredRecords = objectFilters.removeWhere(filteredRecords, 'status', "Draft")
+    // Sort records by sortOrder, defaulting to updatedDate
+    filteredRecords = utils.sortRecordsBy(filteredRecords, (req?.query?.sortOrder || 'updatedDate'))
 
     // Search traineeId and full name
     filteredRecords = utils.filterRecordsBySearchTerm(filteredRecords, searchQuery)
 
-    // Sort records by sortOrder, defaulting to updatedDate
-    filteredRecords = utils.sortRecordsBy(filteredRecords, (req?.query?.sortOrder || 'updatedDate'))
+
+    // All records except drafts
+    let draftRecords = utils.filterRecordsBy(filteredRecords, 'status', "Draft")
+    let registeredRecords = objectFilters.removeWhere(filteredRecords, 'status', "Draft")
+    let draftRecordsCount = draftRecords.length
+
+
 
     // Truncate records in case there's lots - and as we don't have working pagination
     filteredRecords = filteredRecords.slice(0, 204)
@@ -341,7 +346,8 @@ module.exports = router => {
     res.render('records', {
       filteredRecords,
       hasFilters,
-      selectedFilters
+      selectedFilters,
+      draftRecordsCount
     })
   })
 
@@ -365,20 +371,22 @@ module.exports = router => {
     let filteredRecords = utils.filterRecords(data.records, data, filters)
 
     // Only drafts
-    filteredRecords = utils.filterRecordsBy(filteredRecords, 'status', "Draft")
-
-    // Search traineeId and full name
-    filteredRecords = utils.filterRecordsBySearchTerm(filteredRecords, searchQuery)
 
     // Sort records by sortOrder, defaulting to updatedDate
     filteredRecords = utils.sortRecordsBy(filteredRecords, (req?.query?.sortOrder || 'updatedDate'))
 
+    // Search traineeId and full name
+    filteredRecords = utils.filterRecordsBySearchTerm(filteredRecords, searchQuery)
 
+    let draftRecords = utils.filterRecordsBy(filteredRecords, 'status', "Draft")
+    let registeredRecords = objectFilters.removeWhere(filteredRecords, 'status', "Draft")
+    let registeredRecordsCount = registeredRecords.length
 
     res.render('drafts', {
-      filteredRecords,
+      filteredRecords: draftRecords,
       hasFilters,
-      selectedFilters
+      selectedFilters,
+      registeredRecordsCount,
     })
   })
 

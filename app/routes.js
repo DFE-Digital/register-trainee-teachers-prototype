@@ -22,6 +22,9 @@ router.all('*', function(req, res, next){
     res.locals.referrer = req.query.referrer.split(',')
   }
   res.locals.query = req.query
+  res.locals.queryString = url.format({
+            query: req.query,
+          })
   res.locals.flash = req.flash('success') // pass through 'success' messages only
   res.locals.currentPageUrl = url.parse(req.url).pathname
 

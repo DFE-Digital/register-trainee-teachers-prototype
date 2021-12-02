@@ -231,8 +231,23 @@
     {% include "_includes/pagination.njk" %}
 
   {% else %}
-    <h2 class="govuk-heading-m">No records found</h2>
+    <h2 class="govuk-heading-m">No draft records found</h2>
     <p class="govuk-body">Try <a href="/records">clearing your search and filters</a>.</p>
+  {% endif %}
+
+  {% if registeredRecordsCount %}
+    {% set insetHtml %}
+      <p class="govuk-body">
+        <a href="/records{{queryString}}">
+          There {{ "are" | pluralise(registeredRecordsCount) }} {{registeredRecordsCount}}{{ " more" if filteredRecords | length}} {{ "result" | pluralise(registeredRecordsCount) }} in your registered trainees.
+        </a>
+      </p>
+    {% endset %}
+
+    {{ govukInsetText({
+      html: insetHtml
+    }) }}
+
   {% endif %}
 {% endset %}
 

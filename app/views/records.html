@@ -167,6 +167,21 @@
     <h2 class="govuk-heading-m">No records found</h2>
     <p class="govuk-body">Try <a href="/records">clearing your search and filters</a>.</p>
   {% endif %}
+
+  {% if draftRecordsCount and isAuthorised('viewDrafts') %}
+    {% set insetHtml %}
+      <p class="govuk-body">
+        <a href="/drafts{{queryString}}">
+          There {{ "are" | pluralise(draftRecordsCount) }} {{draftRecordsCount}}{{ " more" if filteredRecords | length}} {{ "result" | pluralise(draftRecordsCount) }} in your registered trainees.
+        </a>
+      </p>
+    {% endset %}
+
+    {{ govukInsetText({
+      html: insetHtml
+    }) }}
+
+  {% endif %}
 {% endset %}
 
 

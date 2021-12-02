@@ -50,6 +50,14 @@
   <div class="record-header">
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-0">
       {{pageHeading}}
+      {% if not record | recordIsComplete %}
+          <span style="display: inline-block;">
+            {{govukTag({
+              text: "Incomplete",
+              classes: "app-tag--record-incomplete"
+            })}}
+          </span>
+        {% endif %}
       {{govukTag({
           text: record.status,
           classes: record.status | getStatusClass

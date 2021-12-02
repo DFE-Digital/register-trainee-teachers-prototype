@@ -5,6 +5,8 @@
 
 <p class="govuk-body">The lead school is the main organisation and point of contact for training providers, placements and partner schools in the school direct partnership.</p>
 
+<p class="govuk-body">The lead school you select will be able to view the trainee’s record.</p>
+
 {% set label = "Search for a school by its unique reference number (URN), name or postcode" %}
 
 {# Todo - this could probably be the default that the autocomplete progressively enhances #}
@@ -37,7 +39,7 @@
     If the lead school is missing from the list, contact <a class="govuk-link" href="mailto:becomingateacher@digital.education.gov.uk">becomingateacher@digital.education.gov.uk</a>
   </p>
 
-  <p class="govuk-body">You do not need to provide a lead school if the trainee is employed or funded privately.</p>
+  <p class="govuk-body">You do not need to provide a lead school if the trainee is funded or employed privately.</p>
 
   {{ govukCheckboxes({
     items: [
@@ -50,7 +52,7 @@
 {% endset %}
 
 {{ govukDetails({
-  summaryText: "Lead school is not listed, or the trainee is employed or funded privately",
+  summaryText: "Lead school is not listed, or the trainee is funded or employed privately",
   html: detailsHtml,
   open: true if record.schools.leadSchool.notApplicable == "true"
 }) }}

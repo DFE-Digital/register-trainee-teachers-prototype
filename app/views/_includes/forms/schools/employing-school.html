@@ -35,7 +35,7 @@
     If the employing school is missing from the list, contact <a class="govuk-link" href="mailto:becomingateacher@digital.education.gov.uk">becomingateacher@digital.education.gov.uk</a>
   </p>
 
-  <p class="govuk-body">You do not need to provide an employing school if the trainee is employed or funded privately.</p>
+  <p class="govuk-body">You do not need to provide an employing school if the trainee is funded or employed privately.</p>
 
   {{ govukCheckboxes({
     items: [
@@ -48,7 +48,7 @@
 {% endset %}
 
 {{ govukDetails({
-  summaryText: "Employing school is not listed, or the trainee is employed or funded privately",
+  summaryText: "Employing school is not listed, or the trainee is funded or employed privately",
   html: detailsHtml,
   open: true if record.schools.employingSchool.notApplicable == "true"
 }) }}

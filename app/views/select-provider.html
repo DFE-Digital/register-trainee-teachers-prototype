@@ -6,7 +6,7 @@
   {% set hidePrimaryNav = true %}
 {% endif %}
 
-{% set pageHeading = 'Choose provider' %}
+{% set pageHeading = 'Choose organisation' %}
 
 {% set navActive = 'provider' %}
 
@@ -33,7 +33,13 @@
         {% set userProviders = data.settings.userProviders | getProviderData %}
         {% set providersByType = userProviders | groupby("type") %}
 
-        {{providersByType | log}}
+        {% set insetHtml %}
+          If you need to access a different organisation’s records, contact us at <a href="" class="govuk-link">becomingateacher@digital.education.gov.uk</a>.
+        {% endset %}
+
+        {{ govukInsetText({
+          html: insetHtml
+        }) }}
 
         {% if providersByType.accreditingProvider %}
           <h2 class="govuk-heading-m">Accrediting providers</h2>
@@ -50,6 +56,8 @@
 
         {% if providersByType.leadSchool %}
           <h2 class="govuk-heading-m">Lead schools</h2>
+
+          <p class="govuk-body">As a lead school you can only view records. You cannot change them.<p>
 
           <ul class="govuk-list">
             {% for provider in providersByType.leadSchool %}

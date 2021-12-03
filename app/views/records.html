@@ -172,7 +172,7 @@
     {% set insetHtml %}
       <p class="govuk-body">
         <a href="/drafts{{queryString}}">
-          There {{ "are" | pluralise(draftRecordsCount) }} {{draftRecordsCount}}{{ " more" if filteredRecords | length}} {{ "result" | pluralise(draftRecordsCount) }} in your registered trainees.
+          There {{ "are" | pluralise(draftRecordsCount) }} {{draftRecordsCount}}{{ " more" if filteredRecords | length}} {{ "result" | pluralise(draftRecordsCount) }} in your draft trainees.
         </a>
       </p>
     {% endset %}

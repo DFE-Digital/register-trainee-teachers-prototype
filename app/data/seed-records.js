@@ -300,7 +300,7 @@ seedRecords.push({
   route: 'Teaching apprenticeship (postgrad)',
   courseDetails: {
     isPublishCourse: true,
-    startDate: "2021-12-06T00:00:00.000Z"
+    startDate: "2021-12-18T00:00:00.000Z"
   },
   trainingDetails: {
     commencementDate: null
@@ -474,7 +474,7 @@ seedRecords.push({
   },
   courseDetails: {
     isPublishCourse: true,
-    startDate: "2021-12-12T00:00:00.000Z"
+    startDate: "2021-12-18T00:00:00.000Z"
   },
   id: "e8ebf77e-cd81-4b31-8111-5c38b1277184"
 })
@@ -492,7 +492,7 @@ seedRecords.push({
   },
   courseDetails: {
     isPublishCourse: true,
-    startDate: "2021-12-12T00:00:00.000Z"
+    startDate: "2021-12-18T00:00:00.000Z"
   },
   id: "0e74f2b2-a597-46a9-993c-ecbb6d81c4bf"
 })

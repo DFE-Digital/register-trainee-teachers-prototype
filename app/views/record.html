@@ -17,7 +17,7 @@
 
   <div class="govuk-grid-column-full">
 
-    {% if canEdit %}
+    {% if canAmend %}
       <div class="record-actions">
         {% if record.status | canRecommendForQts %}
           {% if record | ittInTheFuture %}

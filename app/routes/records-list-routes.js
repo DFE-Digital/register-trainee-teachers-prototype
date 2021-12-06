@@ -344,7 +344,7 @@ module.exports = router => {
     filteredRecords = filteredRecords.slice(0, 204)
 
     res.render('records', {
-      filteredRecords,
+      filteredRecords: registeredRecords,
       hasFilters,
       selectedFilters,
       draftRecordsCount

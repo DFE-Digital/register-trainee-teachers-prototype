@@ -901,6 +901,15 @@ exports.isApprenticeship = record => {
   return record?.route == "Teaching apprenticeship (postgrad)"
 }
 
+// Course levels
+
+exports.isUndergraduate = data => {
+  return exports.getCourseLevel(data) == "Undergraduate"
+}
+
+exports.isPostgraduate= data => {
+  return exports.getCourseLevel(data) == "Postgraduate"
+}
 // Phases
 
 // Unlike the other phases, this is probably reliable - as it checcks the route rather than the age

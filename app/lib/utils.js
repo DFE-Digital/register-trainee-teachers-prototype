@@ -220,6 +220,11 @@ exports.getCoursePhase = record => {
   return matchedPhase
 }
 
+// Undergraduate / Postgraduate
+exports.getCourseLevel = record => {
+  return trainingRoutes?.[record.route]?.courseLevel || false
+}
+
 // Used to set the right qualification on a record
 exports.setCourseDefaults = record => {
   let route = record?.route
@@ -1149,6 +1154,10 @@ exports.filterRecords = (records, data, filters = {}) => {
       let completeStatus = (exports.recordIsComplete(record, data)) ? 'Complete' : 'Incomplete'
       return filters.completeStatus.includes(completeStatus)
     })
+  }
+
+  if (filters.courseLevel){
+    filteredRecords = filteredRecords.filter(record => filters.courseLevel.includes(exports.getCourseLevel(record)))
   }
 
   // Apply or manual

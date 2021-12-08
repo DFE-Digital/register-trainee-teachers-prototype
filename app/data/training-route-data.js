@@ -88,6 +88,7 @@ let defaultRouteData = {
 let baseRouteData = {
   "Assessment only": {
     defaultEnabled: true,
+    courseLevel: "Postgraduate",
     sections: [
       // 'trainingDetails',
       'courseDetails',
@@ -101,6 +102,7 @@ let baseRouteData = {
   },
   "Provider-led (undergrad)": {
     defaultEnabled: true,
+    courseLevel: "Undergraduate",
     sections: [
       // 'trainingDetails',
       'courseDetails',
@@ -132,6 +134,7 @@ let baseRouteData = {
   },
   "Provider-led (postgrad)": {
     defaultEnabled: true,
+    courseLevel: "Postgraduate",
     hasAllocatedPlaces: true,
     fields: [
       "studyMode",
@@ -173,6 +176,7 @@ let baseRouteData = {
   },
   "School direct (salaried)": {
     defaultEnabled: true,
+    courseLevel: "Postgraduate",
     sections: [
       // 'trainingDetails',
       'courseDetails',
@@ -225,6 +229,7 @@ let baseRouteData = {
   },
   "School direct (fee funded)": {
     defaultEnabled: true,
+    courseLevel: "Postgraduate",
     hasAllocatedPlaces: true,
     sections: [
       // 'trainingDetails',
@@ -279,6 +284,7 @@ let baseRouteData = {
   "Teach first (postgrad)": {},
   "Teaching apprenticeship (postgrad)": {
     defaultEnabled: true,
+    courseLevel: "Postgraduate",
     sections: [
       // 'trainingDetails',
       'courseDetails',
@@ -325,6 +331,7 @@ let baseRouteData = {
   },
   "Opt-in (undergrad)": {
     defaultEnabled: true,
+    courseLevel: "Undergraduate",
     sections: [
       // 'trainingDetails',
       'courseDetails',
@@ -358,6 +365,7 @@ let baseRouteData = {
   },
   "Early years (salaried)": {
     defaultEnabled: true,
+    courseLevel: "Postgraduate",
     sections: [
       // 'trainingDetails',
       'courseDetails',
@@ -389,6 +397,7 @@ let baseRouteData = {
   },
   "Early years (postgrad)": {
     defaultEnabled: true,
+    courseLevel: "Postgraduate",
     sections: [
       // 'trainingDetails',
       'courseDetails',
@@ -437,6 +446,7 @@ let baseRouteData = {
   },
   "Early years (assessment only)": {
     defaultEnabled: true,
+    courseLevel: "Postgraduate",
     sections: [
       // 'trainingDetails',
       'courseDetails',
@@ -454,6 +464,7 @@ let baseRouteData = {
   },
   "Early years (undergrad)": {
     defaultEnabled: true,
+    courseLevel: "Undergraduate",
     sections: [
       // 'trainingDetails',
       'courseDetails',
@@ -475,6 +486,7 @@ let baseRouteData = {
   },
   "High potential initial teacher training (HPITT)": {
     disableForNewDrafts: true, // we want to show trainees on this route, but not allow new ones
+    courseLevel: "Postgraduate",
     defaultEnabled: false,
     sections: [
       // 'trainingDetails',

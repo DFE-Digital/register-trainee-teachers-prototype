@@ -955,6 +955,10 @@ exports.sectionIsComplete = section => {
   return section?.status == "Completed" || (section?.status && section.status.includes("Completed"))
 }
 
+exports.academicQualificationsApply = record => {
+  return trainingRoutes?.[record?.route]?.academicQualificationsApply
+}
+
 // Check if all sections are complete
 exports.recordIsComplete = function(record, data=false ) {
 

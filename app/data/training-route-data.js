@@ -66,6 +66,7 @@ let defaultRouteData = {
     "QTS"
   ],
   qualificationsSummary: "QTS",
+  academicQualificationsApply: true,
   duration: 1,
   sections: [
     // 'trainingDetails',
@@ -89,6 +90,7 @@ let baseRouteData = {
   "Assessment only": {
     defaultEnabled: true,
     courseLevel: "Postgraduate",
+    academicQualificationsApply: false,
     sections: [
       // 'trainingDetails',
       'courseDetails',
@@ -447,6 +449,7 @@ let baseRouteData = {
   "Early years (assessment only)": {
     defaultEnabled: true,
     courseLevel: "Postgraduate",
+    academicQualificationsApply: false,
     sections: [
       // 'trainingDetails',
       'courseDetails',

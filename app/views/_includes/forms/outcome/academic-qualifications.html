@@ -1,0 +1,54 @@
+{# <h1 class="govuk-heading-l">{{pageHeading}}</h1> #}
+
+{# Degree institution #}
+{# 
+{{ appAutocompleteFromSelect({
+  label: {
+    text: "Other academic qualifications",
+    classes: "govuk-label--s"
+  },
+  id: 'degree-institutions',
+  name: "degreeTemp[institution]",
+  items: degreeInstitutions,
+  hint: {
+    text: "This may be different than where the trainee studied"
+  },
+  classes: "govuk-!-width-two-thirds",
+  value: degreeTemp.institution,
+  autocompleteOptions: {
+    minLength: 2,
+    autoselect: false,
+    showAllValues: false,
+    showSuggestionsBanner: true,
+    values: data.degreeInstitutions
+  }
+} | highlightInvalidInputs({invalidMessage: institutionNotRecognisedHtml}) ) }} #}
+
+{{data.academicQualifications.all | log}}
+{% set items = [] %}
+
+{% for qualification in data.academicQualifications.all %}
+  {% set items = items | push({
+    text: qualification.short
+  }) %}
+  
+{% endfor %}
+
+{{ govukRadios({
+  fieldset: {
+    legend: {
+      text: pageHeading,
+      isPageHeading: true,
+      classes: "govuk-fieldset__legend--l"
+    }
+  },
+  hint: {
+    text: ""
+  },
+  items: items
+} | decorateAttributes(record, "record.outcome.academicQualification")) }}
+
+{{ govukButton({
+  text: "Continue"
+}) }}
+

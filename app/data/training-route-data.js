@@ -160,17 +160,19 @@ let baseRouteData = {
       {
         type: "bursary",
         subjects: [
+          "Design and technology",
+          "Geography",
           "Languages",
-          "Classics"
+          "Ancient languages"
           ],
-        value: "10000"
+        value: "15000"
       },
       {
         type: "bursary",
         subjects: [
           "Biology"
           ],
-        value: "7000"
+        value: "10000"
       }
     ]
   },
@@ -202,7 +204,7 @@ let baseRouteData = {
     financialSupportAvailable: true,
     financialSupport: [
       {
-        type: "grant",
+        type: "bursary",
         subjects: [
           "Chemistry",
           "Computing",
@@ -212,20 +214,23 @@ let baseRouteData = {
         value: "24000"
       },
       {
-        type: "grant",
+        type: "bursary",
         subjects: [
+          "Design and technology",
+          "Geography",
           "Languages",
-          "Classics"
+          "Ancient languages"
           ],
-        value: "10000"
+        value: "15000"
       },
       {
-        type: "grant",
+        type: "bursary",
         subjects: [
           "Biology"
           ],
-        value: "7000"
-      }]
+        value: "10000"
+      }
+    ]
   },
   "School direct (fee funded)": {
     defaultEnabled: true,
@@ -267,17 +272,19 @@ let baseRouteData = {
       {
         type: "bursary",
         subjects: [
+          "Design and technology",
+          "Geography",
           "Languages",
-          "Classics"
+          "Ancient languages"
           ],
-        value: "10000"
+        value: "15000"
       },
       {
         type: "bursary",
         subjects: [
           "Biology"
           ],
-        value: "7000"
+        value: "10000"
       }
     ]
   },
@@ -322,9 +329,17 @@ let baseRouteData = {
       {
         type: "grant",
         subjects: [
+          "Design and technology",
+          "Geography",
           "Languages",
-          "Classics",
           "Ancient languages"
+          ],
+        value: "6000"
+      },
+      {
+        type: "grant",
+        subjects: [
+          "Biology"
           ],
         value: "1000"
       }
@@ -356,6 +371,7 @@ let baseRouteData = {
         type: "bursary",
         subjects: [
           "Languages",
+          "Ancient languages",
           "Computing",
           "Mathematics",
           "Physics"

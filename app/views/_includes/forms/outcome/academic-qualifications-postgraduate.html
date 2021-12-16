@@ -13,18 +13,19 @@
   
 {% endfor %}
 
-{% set items = items | push({
+{# {% set items = items | push({
   text: "Yes – another qualification",
   value: "Other",
   conditional: {
     html: academicQualificationAutocomplete
   }
-}) %}
+}) %} #}
 
 {% set items = items | push({divider: 'or'}) %}
 
 {% set items = items | push({
-  text: "No, just QTS"
+  text: "No, just QTS",
+  value: "None"
 }) %}
 
 

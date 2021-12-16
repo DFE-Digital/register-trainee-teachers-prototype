@@ -18,7 +18,7 @@
   },
   {
     key: {
-      text: "Academic qualification in addition to QTS"
+      text: "Academic qualification in addition to " + record | getQualificationText
     },
     value: {
       text: record.outcome.academicQualification or 'Not provided'

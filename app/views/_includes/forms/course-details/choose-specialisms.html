@@ -47,7 +47,7 @@ first umampped subject #}
     {% set possibleSpecialisms = subject | publishSubjectToPossibleSpecialisms | sort %}
 
     {# Special handling for languages, where we want checkboxes rather than radios #}
-    {% if subject == "Modern languages" %}
+    {% if subject == "Modern languages" or subject == "Ancient languages" %}
 
       {% for specialism in possibleSpecialisms %}
 
@@ -62,7 +62,11 @@ first umampped subject #}
       {% endfor %}
 
       {% set legendText %}
-        Which language specialisms has the trainee chosen to study?
+        {% if subject == "Modern languages" %}
+          Which languages has the trainee chosen to study?
+        {% else %}
+          Which ancient languages has the trainee chosen to study?
+        {% endif %}
       {% endset %}
 
       {# They can select as many languages as they like up to the specialisms limit. If the publish
@@ -76,7 +80,7 @@ first umampped subject #}
 
           {# In nearly all cases modern languages is on its own #}
           {% if record.courseDetails.publishSubjects | length == 1 -%}
-            Choose up to three.
+            Choose up to three
           {%- else %}
             {# Get the opposite subject to the current one - if this one is first, the other is second
             if this one is second, the other is first #}
@@ -88,7 +92,7 @@ first umampped subject #}
                 {{ (record.courseDetails.subjects.first or record.courseDetails.publishSubjects.first) }}
               {% endif %}
             {% endset %}
-            Choose up to two as specialisms with {{ subjectName | trim | dynamicLowercase}}.
+            Choose up to two as specialisms with {{ subjectName | trim | dynamicLowercase}}
           {%- endif %}
 
         </p>

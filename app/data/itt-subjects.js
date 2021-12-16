@@ -57,11 +57,8 @@ retail management,No,Business studies
 chemistry,Yes,Chemistry
 applied chemistry,Yes,Chemistry
 UK government / Parliamentary studies,No,Other subjects
-Ancient Hebrew,Yes,Classics
 classical studies,Yes,Classics
-classical Greek studies,Yes,Classics
 historical linguistics,No,Classics
-Latin language,Yes,Classics
 media and communication studies,No,Other subjects
 applied computing,No,Computing
 computer science,Yes,Computing
@@ -120,7 +117,10 @@ citizenship,No,Other subjects
 Japanese language,Yes,Modern languages
 design and technology,no,Design and technology
 English as a second language,Yes,Modern languages
-physical education,no,Physical education`
+physical education,no,Physical education
+Ancient Hebrew,no,Ancient languages
+classical Greek studies,no,Ancient languages
+Latin,no,Ancient languages`
 
 
 let subjectSpecialismsCsvArray = CSV.parse(subjectSpecialismsCsv)
@@ -241,6 +241,7 @@ commonSecondarySubjects = upcaseFirstChar([
   "geography",
   "health and social care",
   "history",
+  "Latin",
   "mathematics",
   "modern languages",
   "music education and teaching",
@@ -309,7 +310,11 @@ Russian,Modern languages,Russian languages
 science,Biology,general sciences
 social sciences,Other subjects,social sciences
 Spanish,Modern languages,Spanish language
-modern languages,Modern languages`
+modern languages,Modern languages,
+ancient languages,Ancient languages,
+Latin,Ancient languages,Latin
+Ancient Hebrew,Ancient languages,Ancient Hebrew
+classical Greek studies,Ancient languages,classical Greek studies`
 
 let publishSubjectsCsvArray = CSV.parse(publishSubjectsCsv)
 publishSubjectsCsvArray.shift() // remove header row

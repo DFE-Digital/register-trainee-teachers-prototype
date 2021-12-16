@@ -323,7 +323,8 @@ let baseRouteData = {
         type: "grant",
         subjects: [
           "Languages",
-          "Classics"
+          "Classics",
+          "Ancient languages"
           ],
         value: "1000"
       }

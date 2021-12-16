@@ -148,7 +148,7 @@ const getSecondarySubjects = (subjectCount) => {
   return subjects
 }
 
-// Return some realistic-osh subjects a secondary teacher might train in
+// Return some realistic-ish subjects a secondary teacher might train in
 // This uses Publish’s list of subjects which is different than Register and DTTP’s list.
 const getSecondaryPublishSubjects = (subjectCount) => {
   let subjects
@@ -158,13 +158,20 @@ const getSecondaryPublishSubjects = (subjectCount) => {
     return publishSubjects[subject].allocationSubject == "Modern languages"
   })
 
+  // Pull out languages (derived from where the allocation subject is Ancient languages)
+  let ancientLanguageSubjects = Object.keys(publishSubjects).filter(subject => {
+    return publishSubjects[subject].allocationSubject == "Ancient languages"
+  })
+
   // All subjects that don't include 'Primary' and are not a language
   let nonPrimaryPublishSubjects = Object.keys(publishSubjects).filter(subject => {
     return !subject.includes("Primary") && publishSubjects[subject].allocationSubject != "Modern languages"
+    && publishSubjects[subject].allocationSubject != "Ancient languages"
   })
 
   // Shuffle our data so we can get n values from them by slicing
   let randomisedLanguages = faker.helpers.shuffle(modernLanguagesSubjects)
+  let randomisedAncientLanguages = faker.helpers.shuffle(ancientLanguageSubjects)
   let randomisedSecondarySubjects = faker.helpers.shuffle(nonPrimaryPublishSubjects)
   let randomisedScienceSubjects = faker.helpers.shuffle(['Physics', 'Chemistry', 'Biology'])
 
@@ -178,6 +185,8 @@ const getSecondaryPublishSubjects = (subjectCount) => {
       // 'Modern languages' and the ui will ask which language. We do include single languages though.
       "Modern languages",
       randomisedLanguages.slice(0,1), // One language
+      "Latin",
+      "Ancient languages",
       "Design and technology", // good example with lots of specialisms
       "Physical education" // common example that should be a specialism
     ])

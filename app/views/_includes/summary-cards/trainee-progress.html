@@ -142,12 +142,20 @@
   }
 } %}
 
+{% set academicOutcomeDefaultText %}
+  {% if record | academicQualificationsApply %}
+    {{record.outcome.academicQualifiaction or "Not provided" }}
+  {% else %}
+    Not applicable
+  {% endif %}
+{% endset %}
+
 {% set academicOutcomeRow = {
   key: {
-    text: "Academic outcome"
+    text: "Qualification gained whilst gaining " + record | getQualificationText
   },
   value: {
-    text: record.outcome.academicQualification
+    text: record.outcome.academicQualification or academicOutcomeDefaultText
   }
 } %}
 
@@ -286,7 +294,7 @@
   pendingTrnRow if record | isPendingTrn,
   recommendedForAwardRow if record | isRecommended,
   awardRow if record | isAwarded,
-  academicOutcomeRow if record | academicQualificationsApply and record.outcome.academicQualification,
+  academicOutcomeRow if record | isRecommended or record | isAwarded,
   deferredRow if record | isDeferred,
   withdrawnRow if record | isWithdrawn,
   updatedDate,

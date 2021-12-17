@@ -20,9 +20,13 @@ let monthlyFundingScitts = []
 monthlyFundingScittsArray.forEach(row => {
   let description = row[3]
   let monthlyPayments = row.slice(5, 17).map(value => parseInt(value))
+  let cumulativeMonthlyPayments = monthlyPayments.map((payment, index, array) => {
+    return array.slice(0, index + 1).reduce((a, b) => a + b, 0)
+  })
   monthlyFundingScitts.push({
     description,
-    monthlyPayments
+    monthlyPayments,
+    cumulativeMonthlyPayments
   })
 })
 
@@ -176,9 +180,13 @@ let monthlyFundingLeadSchools = []
 monthlyFundingLeadSchoolsArray.forEach(row => {
   let description = row[5]
   let monthlyPayments = row.slice(7, 19).map(value => parseInt(value))
+  let cumulativeMonthlyPayments = monthlyPayments.map((payment, index, array) => {
+    return array.slice(0, index + 1).reduce((a, b) => a + b, 0)
+  })
   monthlyFundingLeadSchools.push({
     description,
-    monthlyPayments
+    monthlyPayments,
+    cumulativeMonthlyPayments
   })
 })
 

@@ -16,7 +16,6 @@
   {% endif %}
   {% set dataSource = dataSource | sort(attribute = "description") %}
 
-  {# TODO #}
   {% if dataSource.length > 4 %}
     {% set tableClasses = "govuk-!-font-size-16" %}
   {% endif %}
@@ -100,6 +99,7 @@
     {% set summaryRows = summaryRows | push(summaryRowItems) %}
   {% endif %}
 
+
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds-from-desktop">
       <h2 class="govuk-heading-l">
@@ -135,25 +135,139 @@
     </div>
   </div>
   <hr class="govuk-section-break govuk-section-break--m">
-  {{ govukTable({
-    caption: "Payments to " + currentMonth("nameOfMonth") + " " + currentYear(),
-    captionClasses: "govuk-table__caption--m",
-    classes: tableClasses,
-    head: headRow,
-    rows: rowsPast
-  }) }}
+  <div class="govuk-grid-row">
+    {% if dataSource.length < 6 %}
+      <div class="govuk-grid-column-full">
 
-  {# 11th month = July (12 months of the Academic year 0 indexed) #}
+        {# Single table showing all months #}
+        {{ govukTable({
+          caption: "Payments to " + currentMonth("nameOfMonth") + " " + currentYear(),
+          captionClasses: "govuk-table__caption--m",
+          classes: tableClasses,
+          head: headRow,
+          rows: rowsPast
+        }) }}
 
-  {% if thisMonth != 11 %}
-    <hr class="govuk-section-break govuk-section-break--m">
-    {{ govukTable({
-      caption: "Predicted payments",
-      captionClasses: "govuk-table__caption--m",
-      classes: tableClasses,
-      head: headRow,
-      rows: rowsFuture
-    }) }}
-  {% endif %}
+        {# 11th month = July (12 months of the Academic year 0 indexed) #}
+
+        {% if thisMonth != 11 %}
+          <hr class="govuk-section-break govuk-section-break--m">
+          {{ govukTable({
+            caption: "Predicted payments",
+            captionClasses: "govuk-table__caption--m",
+            classes: tableClasses,
+            head: headRow,
+            rows: rowsFuture
+          }) }}
+        {% endif %}
+      </div>
+    {% else %}
+      <div class="govuk-grid-column-two-thirds-from-desktop">
+        {% set pastTables = [] %}
+        {% set futureTables = [] %}
+
+        {% for item in months %}
+          {% set monthTableRows  = [] %}
+          {% set monthIndex = loop.index0 %}
+          {% set monthTableCaption = months[monthIndex] %}
+          {% set monthTotal = 0 %}
+          {% set cumulativeMonthTotal = 0 %}
+          {% for item in dataSource %}
+            {% set rowIndex = loop.index0 %}
+            {% set paymentDescription = item.description | fixNamesFromFunding | sentenceCase | formatYearRange %}
+            {% set monthTotal = monthTotal + item.monthlyPayments[monthIndex] %}
+            {% set cumulativeMonthTotal = cumulativeMonthTotal + item.cumulativeMonthlyPayments[monthIndex] %}
+            {% if item.monthlyPayments[monthIndex] != "" %}
+              {% set amount = item.monthlyPayments[monthIndex] | currency %}
+            {% else %}
+              {% set amount = "–" %}
+            {% endif %}
+            {% if item.cumulativeMonthlyPayments[monthIndex] != "" %}
+              {% set cumulativeAmount = item.cumulativeMonthlyPayments[monthIndex] | currency %}
+            {% else %}
+              {% set cumulativeAmount = "–" %}
+            {% endif %}
+            {% set row = [
+              { text: paymentDescription | safe },
+              { text: amount, format: "numeric" },
+              { text: cumulativeAmount, format: "numeric" }
+            ] %}
+            {% set monthTableRows = monthTableRows | push(row) %}
+          {% endfor %}
+          {% set monthTableRows = monthTableRows | push([
+            { text: "Total", classes: "govuk-!-font-weight-bold" }, 
+            { text: monthTotal | currency, format: "numeric", classes: "govuk-!-font-weight-bold" },
+            { text: cumulativeMonthTotal | currency, format: "numeric", classes: "govuk-!-font-weight-bold" }
+          ])%}
+          {% if loop.index0 <= thisMonth and cumulativeMonthTotal != 0 %}
+            {% set monthTableHtml %}
+              {{ govukTable({
+                caption: monthTableCaption,
+                captionClasses: "govuk-table__caption--m",
+                classes: tableClasses,
+                head: [
+                  {
+                    text: "Payment type"
+                  },
+                  {
+                    text: "Amount",
+                    format: "numeric",
+                    classes: "app-table__column-15"
+                  },
+                  {
+                    text: "Total for payment type",
+                    format: "numeric",
+                    classes: "app-table__column-15"
+                  }
+                ],
+                rows: monthTableRows
+              }) }}
+            {% endset %}
+            {% set pastTables = pastTables | push(monthTableHtml) %}
+          {% elseif cumulativeMonthTotal != 0 %}
+            {% set monthTableHtml %}
+              {{ govukTable({
+                caption: monthTableCaption,
+                captionClasses: "govuk-table__caption--m",
+                classes: tableClasses,
+                head: [
+                  {
+                    text: "Payment type"
+                  },
+                  {
+                    text: "Amount",
+                    format: "numeric",
+                    classes: "app-table__column-15"
+                  },
+                  {
+                    text: "Total for payment type",
+                    format: "numeric",
+                    classes: "app-table__column-15"
+                  }
+                ],
+                rows: monthTableRows
+              }) }}
+            {% endset %}
+            {% set futureTables = futureTables | push(monthTableHtml) %}
+          {% endif %}
+        {% endfor %}
+
+
+
+        {# Table per month #}
+        <h3 class="govuk-heading-m">Payments to {{ currentMonth("nameOfMonth") }} {{ currentYear() }}</h3>
+        {% for item in pastTables %}
+          {{ item | safe }}
+        {% endfor %}
+        {% if thisMonth != 11 %}
+          <hr class="govuk-section-break govuk-section-break--m">
+          <h3 class="govuk-heading-m">Predicted payments</h3>
+          {% for item in futureTables %}
+            {{ item | safe }}
+          {% endfor %}
+        {% endif %}
+      {% endif %}
+    </div>
+  </div>
 
 {% endblock %}

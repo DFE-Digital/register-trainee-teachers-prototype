@@ -115,6 +115,17 @@ filters.canReinstate = status => {
   return statusesThatAllowReinstating.includes(status)
 }
 
+filters.isRecommendedOrAwarded = status => {
+  let statuses = [
+    'EYTS recommended',
+    'EYTS awarded',
+    'QTS recommended',
+    'QTS awarded',
+  ]
+
+  return statuses.includes(status)
+}
+
 // -------------------------------------------------------------------
 // keep the following line to return your filters to the app
 // -------------------------------------------------------------------

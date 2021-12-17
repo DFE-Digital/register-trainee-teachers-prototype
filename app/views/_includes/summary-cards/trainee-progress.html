@@ -294,7 +294,7 @@
   pendingTrnRow if record | isPendingTrn,
   recommendedForAwardRow if record | isRecommended,
   awardRow if record | isAwarded,
-  academicOutcomeRow if record | isRecommended or record | isAwarded,
+  academicOutcomeRow if record.status | isRecommendedOrAwarded,
   deferredRow if record | isDeferred,
   withdrawnRow if record | isWithdrawn,
   updatedDate,

@@ -62,10 +62,6 @@ allRoutesArray.forEach(route => {
 // Sensible defaults for route data
 let defaultRouteData = {
   defaultEnabled: false,
-  qualifications: [
-    "QTS"
-  ],
-  qualificationsSummary: "QTS",
   duration: 1,
   sections: [
     // 'trainingDetails',
@@ -89,6 +85,10 @@ let baseRouteData = {
   "Assessment only": {
     defaultEnabled: true,
     courseLevel: "Postgraduate",
+    qualifications: [
+      "QTS"
+    ],
+    qualificationsSummary: "QTS",
     sections: [
       // 'trainingDetails',
       'courseDetails',
@@ -103,6 +103,10 @@ let baseRouteData = {
   "Provider-led (undergrad)": {
     defaultEnabled: true,
     courseLevel: "Undergraduate",
+    qualifications: [
+      "QTS"
+    ],
+    qualificationsSummary: "QTS",
     sections: [
       // 'trainingDetails',
       'courseDetails',
@@ -110,7 +114,7 @@ let baseRouteData = {
       'contactDetails',
       'diversity',
       // 'undergraduateQualification',
-      // 'placement',
+      'placement',
       'funding'
     ],
     fields: [
@@ -135,6 +139,10 @@ let baseRouteData = {
   "Provider-led (postgrad)": {
     defaultEnabled: true,
     courseLevel: "Postgraduate",
+    qualifications: [
+      "QTS"
+    ],
+    qualificationsSummary: "QTS",
     hasAllocatedPlaces: true,
     fields: [
       "studyMode",
@@ -179,6 +187,10 @@ let baseRouteData = {
   "School direct (salaried)": {
     defaultEnabled: true,
     courseLevel: "Postgraduate",
+    qualifications: [
+      "QTS"
+    ],
+    qualificationsSummary: "QTS",
     sections: [
       // 'trainingDetails',
       'courseDetails',
@@ -235,6 +247,10 @@ let baseRouteData = {
   "School direct (fee funded)": {
     defaultEnabled: true,
     courseLevel: "Postgraduate",
+    qualifications: [
+      "QTS"
+    ],
+    qualificationsSummary: "QTS",
     hasAllocatedPlaces: true,
     sections: [
       // 'trainingDetails',
@@ -292,6 +308,10 @@ let baseRouteData = {
   "Teaching apprenticeship (postgrad)": {
     defaultEnabled: true,
     courseLevel: "Postgraduate",
+    qualifications: [
+      "QTS"
+    ],
+    qualificationsSummary: "QTS",
     sections: [
       // 'trainingDetails',
       'courseDetails',
@@ -348,6 +368,10 @@ let baseRouteData = {
   "Opt-in (undergrad)": {
     defaultEnabled: true,
     courseLevel: "Undergraduate",
+    qualifications: [
+      "QTS"
+    ],
+    qualificationsSummary: "QTS",
     sections: [
       // 'trainingDetails',
       'courseDetails',
@@ -422,7 +446,7 @@ let baseRouteData = {
       'contactDetails',
       'diversity',
       'degree',
-      // 'placement',
+      'placement',
       'funding'
     ],
     fields: [
@@ -489,7 +513,7 @@ let baseRouteData = {
       'contactDetails',
       'diversity',
       // 'undergraduateQualification',
-      // 'placement',
+      'placement',
       'funding'
     ],
     fields: [
@@ -504,6 +528,10 @@ let baseRouteData = {
   "High potential initial teacher training (HPITT)": {
     disableForNewDrafts: true, // we want to show trainees on this route, but not allow new ones
     courseLevel: "Postgraduate",
+    qualifications: [
+      "QTS"
+    ],
+    qualificationsSummary: "QTS",
     defaultEnabled: false,
     sections: [
       // 'trainingDetails',

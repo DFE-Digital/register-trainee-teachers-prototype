@@ -1,10 +1,20 @@
+{% set reinstateDateText %}
+  {% if record | ittInTheFuture %}
+    Trainee returned before their ITT started
+  {% elseif record | traineeStarted %}
+    {{ record.reinstateDate | govukDate }}
+  {% else %}
+    Not provided
+  {% endif %}
+{% endset %}
+
 {% set reinstateDetailsRows = [
   {
     key: {
       text: "Date of return"
     },
     value: {
-      text: record.reinstateDate | govukDate or 'Not provided'
+      text: reinstateDateText
     },
     actions: {
       items: [
@@ -29,5 +39,3 @@
   titleText: "Reinstatement details",
   html: reinstateDetailsHtml
 }) }}
-  
-

@@ -5,9 +5,9 @@ items:
   - date: '2021-12-10'
     title: How Register collects initial teacher training (ITT) start dates has changed
     content: >-
-      When registering a trainee, we were always asking for an estimated start date. Now, we will only ask for a start date after a trainee has started.
-      You’ll need to provide a start date before you can  recommend a trainee for QTS or EYTS.
+      When registering a trainee we were always when the trainee had started their ITT, even if the ITT had not started. Now, we will only ask when the trainee started after their ITT has started.
 
+      You’ll need to provide a start date before you can recommend a trainee for QTS or EYTS.
 
   - date: '2021-12-03'
     title: The Department for Education (DfE) has published the provisional data for the 2021 initial teacher training (ITT) census

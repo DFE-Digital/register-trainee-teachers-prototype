@@ -62,7 +62,7 @@
       Latest news and updates
     </h2>
     {% for update in data.serviceUpdates.items -%}
-      {%- if (update.date | isInLast(1, "month")) or (loop.index == 1) -%}
+      {%- if loop.index == 1 -%}
         {% include "_includes/app-service-updates.html" %}
       {%- endif -%}
     {%- endfor %}

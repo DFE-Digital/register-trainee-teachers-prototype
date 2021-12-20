@@ -163,41 +163,50 @@ filters.includes = (route, string) =>{
 }
 
 // work out what types of funding the org is getting to give tab name
-// eg "Bursaries, scholarships and grants"
-// eg "Bursaries and grants"
-filters.getFundingStreams = () => {
-  let fundingStreams = []
-  
+// eg "[bursaries]"
+// eg "[bursaries, grants]"
+filters.typesOfFunding = () => {
+  let typesOfFunding = []
+
   let bursaryTrainees = 0
-  funding.bursaryPayments.forEach(element => {
-    bursaryTrainees += element.numberOfTrainees
-  })
-  
-  funding.eyIttBursaries.forEach(element => {
-    bursaryTrainees += element.numberOfTrainees
+  funding.annualFundingScitts.forEach(element => {
+    bursaryTrainees += bursaryTrainees 
+    + element.numberOfTtraineesPgIttOrTier1EyItt
+    + element.numberOfTtraineesTier2EyItt
+    + element.numberOfTtraineesTier3EyItt
+    + element.numberOfTtraineesUGIttOrTier4EyItt
   })
 
   if(bursaryTrainees > 0){
-    fundingStreams.push("bursaries")
+    typesOfFunding.push("bursaries")
   }
 
   let scholarshipTrainnees = 0
-  funding.scholarshipPayments.forEach(element => {
-    scholarshipTrainnees += element.numberOfTrainees
+  funding.annualFundingScitts.forEach(element => {
+    scholarshipTrainnees += element.numberOfTtraineesScholarship
   })
   if(scholarshipTrainnees > 0){
-    fundingStreams.push("scholarships")
+    typesOfFunding.push("scholarships")
   }
-
-  let grantTrainees = 0
-  funding.eyIttGrants.forEach(element => {
-    grantTrainees += element.numberOfTrainees
-  })
-  if(grantTrainees > 0){
-    fundingStreams.push("grants")
-  }
-
-  return fundingStreams
+  return typesOfFunding
 }
+
+// Attempt to fix the names from funding
+filters.fixNamesFromFunding = (string) => {
+  return string.toLowerCase().replace(/ ay /g," ").replace(/ & /g," and ").replace(/in-year/g,"").replace(/adjs |adj /g,"adjustment ").replace(/annex g/g,"").replace(/fe/g, "further education").replace(/itt/g, "ITT").replace(/ey /g, "early years ")
+}
+
+/*
+  Takes year ranges and makes them consistnent
+  - eg "19/20" ----> "2019 to 20"
+  - eg "2019/20" --> "2019 to 20"
+*/
+filters.formatYearRange = (string) => {
+  return string
+    .replace(/(\d{4})\/(\d{2})/, '$1&nbsp;to&nbsp;$2')
+    .replace(/(\d{2})\/(\d{2})/, '20$1&nbsp;to&nbsp;$2');
+}
+
+
 
 exports.filters = filters

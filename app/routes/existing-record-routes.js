@@ -2,6 +2,7 @@ const faker = require('faker')
 const path = require('path')
 const moment = require('moment')
 const filters = require('./../filters.js')()
+const dates = require('./../filters/dates.js').filters
 const _ = require('lodash')
 const utils = require('./../lib/utils')
 
@@ -284,6 +285,7 @@ module.exports = router => {
   router.post('/record/:uuid/withdraw', (req, res) => {
     const data = req.session.data
     const newRecord = data.record
+    let referrer = utils.getReferrer(req.query.referrer)
 
     // Update failed or no data
     if (!newRecord){
@@ -304,7 +306,7 @@ module.exports = router => {
         }
       }
 
-      res.redirect('/record/' + req.params.uuid + '/withdraw/confirm')
+      res.redirect(`/record/${req.params.uuid}/withdraw/confirm${referrer}`)
     }
   })
 
@@ -440,7 +442,8 @@ module.exports = router => {
 
   // Defer route
   // If trainee started 'on time', set trainee start date to same as ITT start date
-  // And skip deferal date question if value (so ‘Change’ loop doesn't ask again)
+  // And skip deferal date question if deferral date is set (so ‘Change’ loop doesn't ask again)
+  // unless new start date is after deferral date
   router.post('/record/:uuid/defer/when-did-the-trainee-start-answer', (req, res) => {
     let data = req.session.data
     let record = data.record
@@ -452,7 +455,8 @@ module.exports = router => {
     if (traineeStarted == "started-itt-on-time"){
       record.trainingDetails.commencementDate = courseStartDate
     }
-    if (record.deferredDateRadio) {
+
+    if (moment(dates.toDateObject(record?.deferredDate)).isAfter(dates.toDateObject(commencementDate))) {
       res.redirect(`/record/${req.params.uuid}/defer/confirm${referrer}`)
     } else {
       res.redirect(`/record/${req.params.uuid}/defer${referrer}`)
@@ -479,6 +483,8 @@ module.exports = router => {
 
   // Withdraw route
   // If trainee started 'on time', set trainee start date to same as ITT start date
+  // And skip withdrawal question if withdrawal date is set (so ‘Change’ loop doesn't ask again)
+  // unless new start date is after deferral date
   router.post('/record/:uuid/withdraw/when-did-the-trainee-start-answer', (req, res) => {
     let data = req.session.data
     let record = data.record
@@ -489,9 +495,13 @@ module.exports = router => {
 
     if (traineeStarted == "started-itt-on-time"){
       record.trainingDetails.commencementDate = courseStartDate
+    }
+    if (moment(dates.toDateObject(record?.withdrawalDate)).isAfter(dates.toDateObject(commencementDate))) {
+      res.redirect(`/record/${req.params.uuid}/withdraw/confirm${referrer}`)
+    } else {
+      delete record?.withdrawalDate
       res.redirect(`/record/${req.params.uuid}/withdraw${referrer}`)
     }
-    res.redirect(`/record/${req.params.uuid}/withdraw${referrer}`)
   })
 
   // end of delete, defer, withdraw routes

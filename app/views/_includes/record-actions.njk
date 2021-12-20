@@ -1,7 +1,7 @@
 <div class="record-actions__links">
   <p class="govuk-body govuk-!-margin-bottom-0">
-    {% if (record | isDeferred) %}
-      <a href="{{referrer}}/reinstate" class="govuk-link--no-visited-state">Reinstate</a> or <a href="{{ referrer + '/withdraw' | addReferrer(referrer) }}" class="govuk-link--no-visited-state"> withdraw</a> this trainee
+    {% if (record | isDeferred ) %}
+      <a {% if (record | ittInTheFuture ) %}href="{{referrer}}/reinstate/confirm" {% else %}href="{{referrer}}/reinstate" {% endif %} class="govuk-link--no-visited-state">Reinstate</a> or <a href="{{ referrer + '/withdraw' | addReferrer(referrer) }}" class="govuk-link--no-visited-state"> withdraw</a> this trainee
     {% elseif (record | ittInTheFuture) %}
       <a href="{{ referrer + '/delete/confirm' | addReferrer(referrer) }}" class="govuk-link--no-visited-state">Delete this record</a>, or <a href="{{ referrer + '/defer/confirm'  | addReferrer(referrer) }}" class="govuk-link--no-visited-state">defer this trainee</a>
     {% elseif (record | ittStartedButNoCommencementDate) %}

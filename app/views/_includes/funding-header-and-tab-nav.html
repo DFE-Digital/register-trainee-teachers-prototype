@@ -1,0 +1,26 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <span class="govuk-caption-xl">{{ data.signedInProviders | andSeparate }}</span>
+    <h1 class="govuk-heading-xl">{{ pageHeading }}</h1>
+  </div>
+</div>
+
+{{ appSubNavigation({
+  label: 'Sub navigation',
+  classes: 'govuk-!-margin-bottom-4',
+  items: [{
+    text: 'Monthly payments',
+    href: "/funding/monthly-payments",
+    active: activeTabMonthly
+  },
+  {
+    text: yearPaymentsTabName,
+    href: '/funding/annual-payments-scitt',
+    active: activeTabYearlyScitt
+  } if accessLevel == 'accreditingProvider',
+  {
+    text: "Salaries and grants",
+    href: '/funding/annual-payments-lead-school',
+    active: activeTabYearlyLeadSchool
+  } if accessLevel == 'leadSchool'
+]}) }}

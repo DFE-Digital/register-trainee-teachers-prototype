@@ -1,150 +1,103 @@
 {% extends "layout.html" %}
-
 {% set navActive = "funding" %}
-{% set pageHeading = "Funding 2021 to 2022" %}
 
 {% block content %}
 
-  {% set yearPaymentsTabName = "" | getFundingStreams | joinify  | sentenceCase %}
+  {% set pageHeading = "Funding 2021 to 2022" %}
 
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds-from-desktop">
-      <span class="govuk-caption-xl">{{ data.signedInProviders | andSeparate }}</span>
-      <h1 class="govuk-heading-xl">{{ pageHeading }}</h1>
-    </div>
-  </div>
+  {% set yearPaymentsTabName = "" | typesOfFunding | joinify  | sentenceCase %}
+  {% set activeTabMonthly = true %}
+  {% include "_includes/funding-header-and-tab-nav.html" %}
 
-  {{ appSubNavigation({
-    label: 'Sub navigation',
-    classes: 'govuk-!-margin-bottom-4',
-    items: [{
-      text: 'Monthly payments',
-      href: '/funding/monthly-payments',
-      active: true
-    },
-    {
-      text: yearPaymentsTabName,
-      href: '/funding/academic-year-payments',
-      active: false
-    }
-    ]
-  }) }}
+  {% if accessLevel == 'accreditingProvider' %}
+    {% set dataSource = data.funding.monthlyFundingScitts %}
+  {% else %}
+    {% set dataSource = data.funding.monthlyFundingLeadSchools %}
+  {% endif %}
+  {% set dataSource = dataSource | sort(attribute = "description") %}
 
+  {# TODO #}
+  {% if dataSource.length > 4 %}
+    {% set tableClasses = "govuk-!-font-size-16" %}
+  {% endif %}
 
-  {# only show most recent month’s update #}
-  {% set monthlyPaymentUpdates = data.funding.monthlyFunding | groupby("dateUpdated") %}
-  {% set latestUpdate = [] %}
-  {% for month, updates in monthlyPaymentUpdates %}
-    {% if loop.first %}
-      {% set latestUpdate = updates %}
-    {% endif %}
+  {% set headRow = [{ text: "Month" }] %}
+  {% for item in dataSource %}
+    {% set headRow = headRow | push({ text: item.description | fixNamesFromFunding | sentenceCase | formatYearRange | safe }) %}
   {% endfor %}
+  {% set headRow = headRow | push({ text: "Total" }) %}
 
-  {# sort columns alphabetically #}
-  {% set latestUpdate = latestUpdate | sort(attribute = "description") %}
+  {% set rowsPast = [] %}
+  {% set pastTotal = 0 %}
 
-  {% set headItems = [ { text: "Month" } ] %}
-  {% for item in latestUpdate %}
-    {% set headItems = headItems | push({ text: item.description }) %}
-  {% endfor %}
-  {% set headItems = headItems | push({ text: "Total" }) %}
+  {% set rowsFuture = [] %}
+  {% set futureTotal = 0 %}
 
-
-  {# This starts in August because the data we have from Funding contains August payments #}
   {% set months  = [
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July"
-    ]
-  %}
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July"
+  ]%}
 
-  {% set pastMonths = [] %}
-  {% set futureMonths = [] %}
-
-  {# {% set thisMonth = currentMonth(7) %} #}
   {% set thisMonth = currentMonth() %}
-
-  {# 
-    Make calendar months align with academic year
-    eg August = 0, Jan = 5, July = 12
-
-   #}
   {% if thisMonth >= 8 %}
     {% set thisMonth = thisMonth - 8 %}
   {% else %}
     {% set thisMonth = thisMonth + 4 %}
   {% endif %}
 
-  {% for month in months %}
-    {% if loop.index0 <= thisMonth %}
-      {% set pastMonths = pastMonths | push(month) %}
+  {% for item in months %}
+    {% set monthIndex = loop.index0 %}
+    {% set monthTotal = 0 %}
+    {% set row = [{ text: months[monthIndex]}] %}
+    {% for paymentType in dataSource %}
+      {% if paymentType.monthlyPayments[monthIndex] == 0 %}
+        {% set amount = "–" %}
+      {% else %}
+        {% set amount = paymentType.monthlyPayments[monthIndex] | currency %}
+      {% endif %}
+      {% set monthTotal = monthTotal + paymentType.monthlyPayments[monthIndex] %}
+      {% set row = row | push({ text: amount, format: "numeric" }) %}
+    {% endfor %}
+    {% if monthTotal != 0 %}
+      {% set row = row | push({ text: monthTotal | currency, format: "numeric" }) %}
     {% else %}
-      {% set futureMonths = futureMonths | push(month) %}
+      {% set row = row | push({ text: "–", format: "numeric" }) %}
+    {% endif %}
+    {% if thisMonth >= loop.index0 %}
+      {% set pastTotal = pastTotal + monthTotal %}
+      {% set rowsPast = rowsPast | push(row) %}
+    {% else %}
+      {% set futureTotal = futureTotal + monthTotal %}
+      {% set rowsFuture = rowsFuture | push(row) %}
     {% endif %}
   {% endfor %}
 
-  {% set pastPaymentsTotal = 0 %}
-  {% set futurePaymentsTotal = 0 %}
-
-  {% set rowsPast = [] %}
-  {% for month in pastMonths %}
-    {% set row = [{ text: month }] %}
-    {% set monthIndex = loop.index0 %}
-    {% set monthTotal = 0 %}
-    {% for paymentType in latestUpdate %}
-      {% set amount = paymentType.monthlyPayments[monthIndex] %}
-      {% set monthTotal = monthTotal + amount %}
-      {% if amount == 0 %}
-          {% set amount = "–" %}
-        {% else %}
-          {% set amount = amount | currency %}
-      {% endif %}
-      {% set row = row | push({ text: amount, format: "numeric" }) %}
-    {% endfor %}
-    {% set pastPaymentsTotal = pastPaymentsTotal + monthTotal %}
-    {% set row = row | push({ text: monthTotal | currency, format: "numeric" }) %}
-    {% set rowsPast = rowsPast | push(row) %}
-  {% endfor %}
-
-  {% set rowsFuture = [] %}
-  {% for month in futureMonths %}
-    {% set row = [{ text: month }] %}
-    {% set monthIndex = loop.index0 + thisMonth %}
-    {% set monthTotal = 0 %}
-    {% for paymentType in latestUpdate %}
-      {% set amount = paymentType.monthlyPayments[monthIndex] %}
-      {% set monthTotal = monthTotal + amount %}
-      {% if amount == 0 %}
-          {% set amount = "–" %}
-        {% else %}
-          {% set amount = amount | currency %}
-      {% endif %}
-      {% set row = row | push({ text: amount, format: "numeric" }) %}
-    {% endfor %}
-    {% set futurePaymentsTotal = futurePaymentsTotal + monthTotal %}
-    {% set row = row | push({ text: monthTotal | currency, format: "numeric" }) %}
-    {% set rowsFuture = rowsFuture | push(row) %}
-  {% endfor %}
-
   {% set summaryRows = [] %}
-  {% if futurePaymentsTotal != 0 %}
-    {% set summaryRowItems = [{ text: "Payments to " + currentMonth("word") + " " + currentYear() }, { text: pastPaymentsTotal | currency, format: "numeric" }] %}
+  {% if thisMonth != 11 %}
+    {% set summaryRowItems = [
+      { text: "Payments to " + currentMonth("nameOfMonth") + " " + currentYear() }, 
+      { text: pastTotal | currency, format: "numeric" }] 
+    %}
     {% set summaryRows = summaryRows | push(summaryRowItems) %}
-    {% set summaryRowItems = [{ text: "Predicted payments" }, { text: futurePaymentsTotal | currency, format: "numeric" }] %}
+    {% set summaryRowItems = [
+      { text: "Predicted payments" }, 
+      { text: futureTotal | currency, format: "numeric" }] 
+    %}
     {% set summaryRows = summaryRows | push(summaryRowItems) %}
-    {% set summaryRowItems = [{ text: "Predicted total" }, { text: (pastPaymentsTotal + futurePaymentsTotal) | currency, format: "numeric" }] %}
+    {% set summaryRowItems = [{ text: "Predicted total" }, { text: (pastTotal + futureTotal) | currency, format: "numeric" }] %}
     {% set summaryRows = summaryRows | push(summaryRowItems) %}
   {% else %}
-    {% set summaryRowItems = [{ text: "Total for year" }, { text: pastPaymentsTotal | currency, format: "numeric" }] %}
+    {% set summaryRowItems = [{ text: "Total for year" }, { text: pastTotal | currency, format: "numeric" }] %}
     {% set summaryRows = summaryRows | push(summaryRowItems) %}
   {% endif %}
 
@@ -161,9 +114,11 @@
       </p>
     </div>
   </div>
+
   <hr class="govuk-section-break govuk-section-break--m">
+
   <div class="govuk-grid-row">
-    <div class="govuk-grid-column-one-half-from-desktop govuk-!-margin-top-2">
+    <div class="govuk-grid-column-one-half-from-desktop">
       {{ govukTable({
         caption: "Summary",
         captionClasses: "govuk-table__caption--m",
@@ -182,18 +137,22 @@
   </div>
   <hr class="govuk-section-break govuk-section-break--m">
   {{ govukTable({
-    caption: "Payments to " + currentMonth("word") + " " + currentYear(),
+    caption: "Payments to " + currentMonth("nameOfMonth") + " " + currentYear(),
     captionClasses: "govuk-table__caption--m",
-    head: headItems,
+    classes: tableClasses,
+    head: headRow,
     rows: rowsPast
   }) }}
 
-  {% if futurePaymentsTotal != 0 %}
+  {# 11th month = July (12 months of the Academic year 0 indexed) #}
+
+  {% if thisMonth != 11 %}
     <hr class="govuk-section-break govuk-section-break--m">
     {{ govukTable({
       caption: "Predicted payments",
       captionClasses: "govuk-table__caption--m",
-      head: headItems,
+      classes: tableClasses,
+      head: headRow,
       rows: rowsFuture
     }) }}
   {% endif %}

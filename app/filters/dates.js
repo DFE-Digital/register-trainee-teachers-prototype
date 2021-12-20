@@ -170,6 +170,31 @@ filters.toDateArray = (date) => {
 
 /*
   ====================================================================
+  toDateObject
+  --------------------------------------------------------------------
+  Convert an array to date
+  ====================================================================
+
+  Usage:
+
+  {{ "[05, 06, 2021]" | toDateObject }}
+  = Sat Jun 05 2021 00:00:00 GMT+0100 (British Summer Time)
+
+  {{ "2021-06-05T19:21:48.168Z" | toDateObject }}
+  = Sat Jun 05 2021 20:21:48 GMT+0100 (British Summer Time)
+
+*/
+
+filters.toDateObject = (date) => {
+  if (!date) return false
+  if (_.isArray(date)) return filters.arrayToDateObject(date)
+  else {
+    return moment(date).toDate()
+  }
+}
+
+/*
+  ====================================================================
   prettyMonth
   --------------------------------------------------------------------
   Return month names from numbers.

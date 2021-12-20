@@ -20,6 +20,23 @@
 {% set withdrawDetailsRows = [
   {
     key: {
+      text: "Trainee start date"
+    },
+    value: {
+      text: record.trainingDetails.commencementDate | govukDate
+    },
+    actions: {
+      items: [
+        {
+          href: recordPath + "/withdraw/did-trainee-start" | addReferrer(referrer),
+          text: "Change",
+          visuallyHiddenText: "trainee start date"
+        }
+      ]
+    }
+  },
+  {
+    key: {
       text: "Date of withdrawal"
     },
     value: {

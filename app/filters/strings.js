@@ -65,10 +65,14 @@ filters.prependWithAOrAn = string => {
 
 // Format a number as £x,xxx
 filters.currency = input => {
+  let inputAsInt = parseInt(input, 10)
   function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
-  if (input) return `£${numberWithCommas(input)}`
+  if ( inputAsInt > 0 ) { return `£${numberWithCommas(inputAsInt)}` }
+
+  // makes negative number positive and puts minus sign in front of £
+  else if ( inputAsInt < 0 ) { return `–£${numberWithCommas(inputAsInt * -1 )}` }
   else return ''
 }
 
@@ -85,6 +89,15 @@ filters.markDown = input => {
   marked.setOptions({
   })
   return marked(input)
+}
+
+// Checks if a string starts with something
+filters.startsWith = (string, target) => {
+  if (typeof string == "string"){
+    return string.startsWith(target)
+  } else {
+    return false
+  }
 }
 
 // -------------------------------------------------------------------

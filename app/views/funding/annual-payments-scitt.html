@@ -1,0 +1,300 @@
+{% extends "layout.html" %}
+{% set navActive = "funding" %}
+
+{% block content %}
+
+  {% set pageHeading = "Funding 2021 to 2022" %}
+
+  {% set yearPaymentsTabName = "" | typesOfFunding | joinify  | sentenceCase %}
+  {% set activeTabYearlyScitt = true %}
+  {% include "_includes/funding-header-and-tab-nav.html" %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+      <h2 class="govuk-heading-l">
+        {{ yearPaymentsTabName | sentenceCase }}
+      </h2>
+      <p class="govuk-body govuk-!-margin-bottom-1">
+        Last updated: {{ "" | yesterdayGovuk }}
+      </p>
+      <p>
+        <a href="#" class="govuk-link--no-visited-state">Export {{ yearPaymentsTabName | lower }}</a>
+      </p>
+    </div>
+  </div>
+
+  {% set dataSource = data.funding.annualFundingScitts %}
+  {% set dataSource = dataSource | sort(attribute = "subject") %}
+
+  {# ITT Bursaries #}
+
+  {% set ittHeadItems = [
+    { text: "Subject and route",
+      classes: "app-table__column-35" },
+    { text: "Lead school",
+      classes: "app-table__column-35" },
+    { text: "Trainees",
+      classes: "app-table__column-10"
+     },
+    { text: "Amount per trainee",
+      classes: "app-table__column-10"
+     },
+    { text: "Total",
+      classes: "app-table__column-10"
+     }
+  ] %}
+  {% set ittBursaryTotal = 0 %}
+  {% set ittBursaryRows = [] %}
+  {% set ittBursaryData = dataSource | whereDoesNotInclude("route", "EYITT") %}
+
+  {% for item in ittBursaryData %}
+    {% if item.numberOfTtraineesPgIttOrTier1EyItt > 0 %}
+      {% if item.leadSchool == "" %}
+        {% set leadSchool = "–" %}
+      {% else %}
+        {% set leadSchool = item.leadSchool %}
+      {% endif %}
+      {% set subjectAndRoute = item.subject + '<br><span class="app-nowrap">' + item.route | lower | sentenceCase + '</span>' %}
+      {% set amount = item.amountPgIttOrTier1EyItt | currency %}
+      {% set total = item.numberOfTtraineesPgIttOrTier1EyItt * item.amountPgIttOrTier1EyItt %}
+      {% set ittBursaryTotal = ittBursaryTotal + total %}
+      {% set row = [
+        { text: subjectAndRoute | safe },
+        { text: leadSchool },
+        { text: item.numberOfTtraineesPgIttOrTier1EyItt,
+          format: "numeric" },
+        { text: amount,
+          format: "numeric" },
+        { text: total | currency,
+          format: "numeric" }
+      ] %}
+      {% set ittBursaryRows = ittBursaryRows | push(row) %}
+    {% endif %}
+  {% endfor %}
+
+  {# Scholarships data #}
+  {% set ittScholarshipTotal = 0 %}
+  {% set ittScholarshipRows = [] %}
+  {% set ittScholarshipRows = dataSource | whereDoesNotInclude("route", "EYITT") %}
+
+  {% for item in ittScholarshipRows %}
+    {% if item.numberOfTtraineesScholarship > 0 %}
+        {% if item.leadSchool == "" %}
+        {% set leadSchool = "–" %}
+      {% else %}
+        {% set leadSchool = item.leadSchool %}
+      {% endif %}
+      {% set subjectAndRoute %}
+        {{ item.subject }}<br>
+        <span class="app-nowrap">{{ item.route | lower | sentenceCase }}</span>
+      {% endset %}
+      {% set amount = item.amountScholarship %}
+      {% set total = item.numberOfTtraineesScholarship * item.amountScholarship %}
+      {% set row = [
+        { text: subjectAndRoute | safe },
+        { text: leadSchool },
+        { text: item.numberOfTtraineesScholarship,
+          format: "numeric" },
+        { text: amount | currency,
+          format: "numeric" },
+        { text: total  | currency,
+          format: "numeric" }
+      ] %}
+      {% set ittScholarshipTotal = ittScholarshipTotal + total %}
+      {% set ittScholarshipRows = ittScholarshipRows | push(row) %}
+    {% endif %}
+  {% endfor %}
+
+  {# EY ITT bursary data #}
+  {% set eyIttTotal = 0 %}
+  {% set eyIttBursaryRows = [] %}
+  {% set eyIttData = dataSource | whereIncludes("route", "EYITT") %}
+
+  {% for item in eyIttData %}
+    {% if item.numberOfTtraineesPgIttOrTier1EyItt > 0 %}
+        {% set total = item.numberOfTtraineesPgIttOrTier1EyItt * item.amountPgIttOrTier1EyItt %}
+      {% set row = [
+        { text: "Tier " + loop.index }, 
+        { text: item.numberOfTtraineesPgIttOrTier1EyItt,
+          format: "numeric" },
+        { text: item.amountPgIttOrTier1EyItt | currency,
+          format: "numeric" },
+        { text: total | currency,
+          format: "numeric" }
+      ]%}
+      {% set eyIttTotal = eyIttTotal + total %}
+    {% endif %}
+    {% set eyIttBursaryRows = eyIttBursaryRows | push(row) %}
+  {% endfor %}
+
+  {# EY ITT Grants #}
+  {# Not using this for now as it’s inferred #}
+  {# {% set numberOfEYTrainees = 0 %}
+  {% set eyIttGrantValue  = 7000 %}
+  {% set totalEyIttGrant = 0 %}
+
+  {% for item in eyIttData %}
+    {% set numberOfEYTrainees = numberOfEYTrainees 
+      + item.numberOfTtraineesPgIttOrTier1EyItt
+      + item.numberOfTtraineesTier2EyItt
+      + item.numberOfTtraineesTier3EyItt
+      + item.numberOfTtraineesUGIttOrTier4EyItt
+      + item.numberOfTtraineesNoBursaryAwarded
+     %}
+     {% set totalEyIttGrant = numberOfEYTrainees * eyIttGrantValue %}
+  {% endfor %}
+  {% set eyIttGrantRow = [[
+    { text: numberOfEYTrainees }, 
+    { text: eyIttGrantValue | currency,
+      format: "numeric" },
+    { text: totalEyIttGrant | currency,
+      format: "numeric" }
+  ]] %} #}
+
+  {# Summary data #}
+
+  {% set annualSummaryRows = [] %}
+  {% if ittBursaryTotal > 0 %}
+    {% set annualSummaryRows = annualSummaryRows | push([
+      { text: "ITT bursaries" },
+      { text: ittBursaryTotal | currency,
+        format: "numeric"
+      }]) %}
+  {% endif %}
+  {% if ittScholarshipTotal > 0 %}
+    {% set annualSummaryRows = annualSummaryRows | push([
+      { text: "ITT scholarships" },
+      { text: ittScholarshipTotal | currency,
+        format: "numeric"
+      }]) %}
+  {% endif %}
+  {% if eyIttTotal > 0 %}
+    {% set annualSummaryRows = annualSummaryRows | push([
+      { text: "Early years ITT bursaries" },
+      { text: eyIttTotal | currency,
+        format: "numeric"
+      }]
+    ) %}
+  {% endif %}
+  {% set annualTotal = ittBursaryTotal + ittScholarshipTotal + eyIttTotal %}
+  {% set annualSummaryRows = annualSummaryRows | push([
+    { text: "Total" },
+    { text: annualTotal | currency,
+      format: "numeric",
+      classes: "app-table__column-20"
+    }]) %}
+
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-half-from-desktop">
+
+      <hr class="govuk-section-break govuk-section-break--m">
+
+      {{ govukTable({
+          caption: "Summary",
+          captionClasses: "govuk-table__caption--m",
+          head: [
+            { text: "Payment type" },
+            { text: "Total" }
+          ],
+          rows: annualSummaryRows
+        }) }}
+
+    </div>
+  </div>
+
+  {% if ittBursaryTotal > 0 %}
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+
+        <hr class="govuk-section-break govuk-section-break--m">
+
+        {{ govukTable({
+          caption: "ITT bursaries",
+          captionClasses: "govuk-table__caption--m",
+          head: ittHeadItems,
+          rows: ittBursaryRows
+        }) }}
+
+      </div>
+    </div>
+  {% endif %}
+
+  {% if ittScholarshipTotal > 0 %}
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+
+        <hr class="govuk-section-break govuk-section-break--m">
+
+        {# ITT Scholarships #}
+        {{ govukTable({
+          caption: "ITT scholarships",
+          captionClasses: "govuk-table__caption--m",
+          head: ittHeadItems,
+          rows: ittScholarshipRows
+        }) }}
+
+      </div>
+    </div>
+  {% endif %}
+  
+  {% if eyIttTotal > 0 %}
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds-from-desktop">
+
+        <hr class="govuk-section-break govuk-section-break--m">
+
+        {{ govukTable({
+          caption: "Early years ITT bursaries",
+          captionClasses: "govuk-table__caption--m",
+          head: [
+            { text: "Tier"
+            },
+            { text: "Trainees",
+              classes: "app-table__column-15"
+            },
+            { text: "Amount per trainee",
+              classes: "app-table__column-15"
+            },
+            { text: "Total",
+              classes: "app-table__column-15"
+            }
+          ],
+          rows: eyIttBursaryRows
+        }) }}
+
+      </div>
+    </div>
+
+    {# Not showing this for now as it’s inferred #}
+{#     <div class="govuk-grid-row">
+      <div class="govuk-grid-column-one-half">
+
+        <hr class="govuk-section-break govuk-section-break--m">
+
+        {{ govukTable({
+          caption: "Early years ITT grants",
+          captionClasses: "govuk-table__caption--m",
+          head: [
+            { text: "Trainees",
+              classes: "app-table__column-20"
+            },
+            { text: "Amount per trainee",
+              classes: "app-table__column-20"
+            },
+            { text: "Total",
+              classes: "app-table__column-20"
+            }
+          ],
+          rows: eyIttGrantRow
+        }) }}
+
+      </div>
+    </div> #}
+
+  {% endif %}
+
+
+
+{% endblock %}

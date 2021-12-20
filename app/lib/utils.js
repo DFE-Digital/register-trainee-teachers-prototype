@@ -431,7 +431,10 @@ exports.canStartFundingSection = record => {
 
 // Check if qualifications array contains an item
 exports.qualificationIs = (record, qualification) => {
-  return (record?.courseDetails?.qualifications) ? record.courseDetails.qualifications.includes(qualification) : false
+
+  let qualifications = record?.courseDetails?.qualifications || trainingRoutes?.[record?.route]?.qualifications || []
+
+  return qualifications.includes(qualification)
 }
 
 exports.qualificationIsQTS = record => exports.qualificationIs(record, "QTS")
@@ -445,7 +448,7 @@ exports.qualificationIsPGDE = record => exports.qualificationIs(record, "PGDE")
 exports.getQualificationText = record => {
   if (exports.qualificationIsEYTS(record)) return "EYTS"
   else if (exports.qualificationIsQTS(record)) return "QTS"
-  else return "Unknown"
+  else return "unknown"
 }
 
 // Sort by subject, including course code
@@ -1610,7 +1613,7 @@ exports.registerForTRN = (record) => {
 
   // Only draft records can be submitted for TRN
   if (!exports.isDraft(record)){
-    console.log(`Submit a group of records and request TRNs failed: ${record.id} (${record?.personalDetails?.shortName}) has the wrong status (${record.status})`)
+    console.log(`registerForTRN failed: ${record.id} (${record?.personalDetails?.shortName}) has the wrong status (${record.status})`)
     return false
   }
 

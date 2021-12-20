@@ -11,14 +11,14 @@ const trainingRouteData = require('../training-route-data')
 const qualifications = {
   postgraduate: [
     "None",
-    "PGCE",
-    "PGDE"
+    "Postgraduate certificate in education",
+    "Postgraduate diploma in education"
     ],
   // Only including a subset of possible undergraduate stuff
   undergraduate: [
     "None",
-    "BA",
-    "BSC"
+    "Bachelor of Arts",
+    "Bachelor of Science"
   ]
 }
 

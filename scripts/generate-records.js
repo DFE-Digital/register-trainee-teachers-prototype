@@ -213,17 +213,17 @@ const generateFakeApplicationsForProvider = (provider, year, count) => {
   let applications = []
   let targetCounts
 
-  // Current year should be mostly trn recieved
+  // Future years should probably be nearly all drafts, mostly Apply drafts
   if (year > currentYear){
     // Limit no more than 30 future draft trainees
     if (count > 30) {
       count = 30 
     }
     targetCounts = {
-      draft: 0.40,
-      applyEnrolled: 0.40,
-      pendingTrn: 0.1,
-      trnReceived: 0.1,
+      draft: 0.20,
+      applyEnrolled: 0.70,
+      pendingTrn: 0.05,
+      trnReceived: 0.05,
       qualificationRecommended: 0.00,
       qualificationAwarded: 0.00,
       deferred: 0.00,
@@ -232,10 +232,10 @@ const generateFakeApplicationsForProvider = (provider, year, count) => {
   }
   else if (year == currentYear){
     targetCounts = {
-      draft: 0.05,
+      draft: 0.15,
       applyEnrolled: 0.0,
       pendingTrn: 0.05,
-      trnReceived: 0.71,
+      trnReceived: 0.61,
       qualificationRecommended: 0.05,
       qualificationAwarded: 0.05,
       deferred: 0.02,
@@ -250,7 +250,7 @@ const generateFakeApplicationsForProvider = (provider, year, count) => {
       trnReceived: 0,
       qualificationRecommended: 0,
       qualificationAwarded: 0.95,
-      deferred: (year == 2019) ? 0.05 : 0, // allow for a couple deferred students from previous year
+      deferred: (year == (currentYear -1)) ? 0.05 : 0, // allow for a couple deferred students from previous year
       withdrawn: 0.05,
     }
   }

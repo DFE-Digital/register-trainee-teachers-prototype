@@ -70,7 +70,7 @@ let defaultRouteData = {
     'contactDetails',
     'diversity',
     'degree',
-    // 'placement',
+    'placement',
     'funding'
   ],
   initiatives: [
@@ -199,7 +199,7 @@ let baseRouteData = {
       'diversity',
       'degree',
       'schools',
-      // 'placement',
+      'placement',
       'funding'
     ],
     fields: [
@@ -260,7 +260,7 @@ let baseRouteData = {
       'diversity',
       'degree',
       'schools',
-      // 'placement',
+      'placement',
       'funding'
     ],
     fields: [
@@ -320,7 +320,7 @@ let baseRouteData = {
       'diversity',
       'degree',
       'schools',
-      // 'placement',
+      'placement',
       'funding'
     ],
     fields: [
@@ -379,7 +379,7 @@ let baseRouteData = {
       'contactDetails',
       'diversity',
       // 'undergraduateQualification',
-      // 'placement',
+      'placement',
       'funding'
     ],
     fields: [
@@ -414,7 +414,7 @@ let baseRouteData = {
       'contactDetails',
       'diversity',
       'degree',
-      // 'placement',
+      'placement',
       'funding'
     ],
     fields: [

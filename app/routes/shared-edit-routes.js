@@ -1083,9 +1083,9 @@ module.exports = router => {
     if (!data.record?.placement){
       res.redirect(`${recordPath}/placements/can-add-placement${referrer}`)
     } 
-    else if (referrer){
-      res.redirect(utils.getReferrerDestination(req.query.referrer))
-    }
+    // else if (referrer){
+    //   res.redirect(utils.getReferrerDestination(req.query.referrer))
+    // }
     else {
       res.redirect(`${recordPath}/placements/confirm${referrer}`)
     }

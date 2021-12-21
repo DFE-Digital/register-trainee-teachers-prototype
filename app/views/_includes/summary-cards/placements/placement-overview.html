@@ -2,7 +2,7 @@
 {% set placementCount = record.placement.items | length %}
 
 {% set placementsList %}
-  <ul class="govuk-list">
+  <ul class="govuk-list govuk-list--bullet">
     {% for placement in placements %}
     <li>
       {{placement.location}}

@@ -18,21 +18,25 @@ module.exports = (params) => {
   }
 
   let count = weighted.select({
-    0: 0.5,
+    0: 0.1,
     1: 0.3,
-    2: 0.2
+    2: 0.6
   })
 
   let status
 
   if (params?.status.includes('recommended') || params?.status.includes('awarded')) {
     count = 2
-    status = 'Complete'
   }
 
   const items = []
   for (var i = 0; i < count; i++) {
     items.push(item())
+  }
+
+  // Mark section as complete once we have two placements
+  if (count == 2){
+    status = 'Complete'
   }
 
   if (params?.placement?.hasPlacements == 'Not yet') {

@@ -1,6 +1,21 @@
 {% extends "_templates/_new-record.html" %}
 
-{% set pageHeading = "Placement details" %}
+{% set placements = data.record.placement.items or [] %}
+
+{# Default ordinal position is one greater than the count of items (assume we’re adding a new item) #}
+{% set ordinalCount = (placements | length) + 1 %}
+
+{# If we’re editing an existing placement, work out the ordinal position #}
+{% for placement in placements %}
+  {% if placement.id == placementUuid %}
+    {% set ordinalCount = loop.index %}
+  {% endif %}
+{% endfor %}
+
+{# First / Second / Third #}
+{% set ordinalName = ordinalCount | getOrdinalName | sentenceCase %}
+
+{% set pageHeading = ordinalName + " placement school" %}
 
 {% set formAction = "./confirm" | addReferrer(referrer) %}
 

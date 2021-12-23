@@ -1102,20 +1102,27 @@ module.exports = router => {
   // Save placement data from temporary store
   router.post(['/:recordtype/:uuid/placements/:placementUuid/confirm','/:recordtype/placements/:placementUuid/confirm'], function (req, res) {
     const data = req.session.data
-    let placement = data.placementTemp
-    delete data.placementTemp
+    let placementUuid = req.params.placementUuid
+    let placement = data.placementTemp || {}
     let referrer = utils.getReferrer(req.query.referrer)
     let record = data.record
+    const schools = getSchools()
+
+    delete data.placementTemp
+
+    // Look up school using uuid
+    placement.school = Object.assign({}, schools.find(school => school.uuid == placement?.school?.uuid)) 
     
-    let placementUuid = req.params.placementUuid
     let existingPlacements = record?.placement?.items || []
     let placementIndex = existingPlacements.findIndex(placement => placement.id == placementUuid)
     let recordPath = utils.getRecordPath(req)
 
+    // Update existing placement
     if (existingPlacements.length && existingPlacements[placementIndex]) {
       // Might be a partial update, so merge the new with the old
       existingPlacements[placementIndex] = Object.assign({}, existingPlacements[placementIndex], placement)
     }
+    // Create a new placement
     else {
       placement.id = placementUuid
       existingPlacements.push(placement)

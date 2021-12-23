@@ -1,18 +1,19 @@
 const weighted = require('weighted')
 const faker   = require('faker')
-const placementSchools = require('../accrediting-providers.js').all
+
+const allSchools = require('../gis-schools.js')
 
 module.exports = (params) => {
 
   const item = () => {
-    const location = faker.helpers.randomize(placementSchools).name
-    const startMonth = faker.helpers.randomize(['1','2','3','4','5','6','7','8','9','10','11','12'])
-    const duration = faker.helpers.randomize(['1','2','4','8','10','12'])
+    const school = faker.helpers.randomize(allSchools)
+    // const startMonth = faker.helpers.randomize(['1','2','3','4','5','6','7','8','9','10','11','12'])
+    // const duration = faker.helpers.randomize(['1','2','4','8','10','12'])
 
     return {
-      location,
-      startMonth,
-      duration,
+      school,
+      // startMonth,
+      // duration,
       id: faker.datatype.uuid()
     }
   }

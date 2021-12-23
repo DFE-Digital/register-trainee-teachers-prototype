@@ -1,15 +1,25 @@
 {% set placements = record.placement.items %}
 {% set placementCount = record.placement.items | length %}
 
+{% macro renderPlacement(placement) %}
+  {% if placement.notApplicable | falsify %}
+      Not applicable
+    {% else %}
+      <p class="govuk-body govuk-!-margin-bottom-2">{{placement.school.schoolName}}</p>
+      <span class="govuk-hint">{{placement.school | getSchoolHint}}</span>
+    {% endif %}
+{% endmacro %}
+
 {% set placementsList %}
 
   {% if placements | length == 1 %}
-    {{placements[0].location}}
+    {{ renderPlacement(placements[0])}}
   {% elseif placements | length > 1 %}
     <ul class="govuk-list govuk-list--bullet">
       {% for placement in placements %}
       <li>
-        {{placement.location}}
+        {{placement | log }}
+        {{ renderPlacement(placement) }}
       </li>
       {% endfor %}
     </ul>

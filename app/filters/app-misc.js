@@ -64,9 +64,9 @@ filters.prettifyDegreeGrade = grade => {
 // Metadata about a school as a string
 // URN 1234567, City, Postcode
 filters.getSchoolHint = (school) => {
-  let hint = `URN ${school.urn}`
-  if (school.town) hint += `, ${school.town}` // Not all schools have cities
-  if (school.postcode) hint += `, ${school.postcode}` // Not all schools have postcodes
+  let hint = `URN ${school?.urn}`
+  if (school?.town) hint += `, ${school?.town}` // Not all schools have cities
+  if (school?.postcode) hint += `, ${school?.postcode}` // Not all schools have postcodes
   return hint
 }
 

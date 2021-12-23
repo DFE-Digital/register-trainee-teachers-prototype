@@ -18,7 +18,6 @@
     <ul class="govuk-list govuk-list--bullet">
       {% for placement in placements %}
       <li>
-        {{placement | log }}
         {{ renderPlacement(placement) }}
       </li>
       {% endfor %}

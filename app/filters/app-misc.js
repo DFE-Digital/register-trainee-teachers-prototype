@@ -7,6 +7,7 @@ const trainingRoutes = trainingRouteData.trainingRoutes
 const utils = require('./../lib/utils')
 const arrayFilters = require('./arrays.js').filters
 const funding = require('../data/funding')
+const moment = require("moment")
 
 // Leave this filters line
 var filters = {}
@@ -234,10 +235,31 @@ filters.fixNamesFromFunding = (string) => {
 */
 filters.formatYearRange = (string) => {
   return string
-    .replace(/(\d{4})\/(\d{2})/, '$1&nbsp;to&nbsp;$2')
-    .replace(/(\d{2})\/(\d{2})/, '20$1&nbsp;to&nbsp;$2');
+    .replace(/(\d{4})\/(\d{2})/, '$1&nbsp;to&nbsp;20$2')
+    .replace(/(\d{2})\/(\d{2})/, '20$1&nbsp;to&nbsp;20$2');
 }
 
+/*
+  ====================================================================
+  prettyMonthFromAugust
+  --------------------------------------------------------------------
+  Return month names from numbers, but August is 1
+  ====================================================================
 
+  Usage:
+
+  {{ 1 | prettyMonthFromAugust }}
+
+  = August
+
+*/
+
+filters.prettyMonthFromAugust = (monthNumber) => {
+  if (monthNumber <= 6) {
+    return moment().month(monthNumber - 6).format("MMMM");
+  } else {
+    return moment().month(monthNumber + 6).format("MMMM");
+  }
+}
 
 exports.filters = filters

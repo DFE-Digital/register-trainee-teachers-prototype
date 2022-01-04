@@ -33,15 +33,9 @@
       classes: "app-table__column-35" },
     { text: "Lead school",
       classes: "app-table__column-35" },
-    { text: "Trainees",
-      classes: "app-table__column-10"
-     },
-    { text: "Amount per trainee",
-      classes: "app-table__column-10"
-     },
-    { text: "Total",
-      classes: "app-table__column-10"
-     }
+    { text: "Trainees" },
+    { text: "Amount per trainee" },
+    { text: "Total" }
   ] %}
   {% set ittBursaryTotal = 0 %}
   {% set ittBursaryRows = [] %}
@@ -194,7 +188,9 @@
           caption: "Summary",
           captionClasses: "govuk-table__caption--m",
           head: [
-            { text: "Payment type" },
+            { text: "Payment type",
+              classes: "app-table__column-70"
+             },
             { text: "Total" }
           ],
           rows: annualSummaryRows
@@ -249,16 +245,14 @@
           caption: "Early years ITT bursaries",
           captionClasses: "govuk-table__caption--m",
           head: [
-            { text: "Tier"
+            { text: "Tier",
+            classes: "app-table__column-53"
             },
-            { text: "Trainees",
-              classes: "app-table__column-15"
+            { text: "Trainees"
             },
-            { text: "Amount per trainee",
-              classes: "app-table__column-15"
+            { text: "Amount per trainee"
             },
-            { text: "Total",
-              classes: "app-table__column-15"
+            { text: "Total"
             }
           ],
           rows: eyIttBursaryRows

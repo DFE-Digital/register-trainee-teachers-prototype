@@ -73,7 +73,7 @@ filters.currency = input => {
 
   // makes negative number positive and puts minus sign in front of £
   else if ( inputAsInt < 0 ) { return `–£${numberWithCommas(inputAsInt * -1 )}` }
-  else return ''
+  else return '–'
 }
 
 // Emulate support for string literals in Nunjucks

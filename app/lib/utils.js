@@ -13,6 +13,7 @@ const dates = require('./../filters/dates.js').filters
 const ittSubjects = require('./../data/itt-subjects')
 const generateReference = require('./../data/generators/reference-number')
 const academicQualifications = require('./../data/academic-qualifications.js')
+const years = require('./../data/years.js')
 
 // -------------------------------------------------------------------
 // General
@@ -912,6 +913,18 @@ exports.isWithdrawn = record => {
   return record?.status == "Withdrawn"
 }
 
+// Active statuses – trainee hasn’t finished their training
+// (not ‘qualified’ or ‘withdrawn’)
+exports.isActiveStatus = record => {
+  return [
+    "Pending TRN", 
+    "TRN received", 
+    "QTS recommended", 
+    "EYTS recommended", 
+    "Deferred"
+  ].includes(record.status)
+}
+
 // Source types
 exports.sourceIsApply = record => {
   return record?.source == "Apply"
@@ -923,6 +936,48 @@ exports.sourceIsManual = record => {
 
 exports.isApprenticeship = record => {
   return record?.route == "Teaching apprenticeship (postgrad)"
+}
+
+// Active, Future, Historic
+
+exports.isActive = record => {
+  return exports.isCurrentYear(record) || (exports.isPreviousYears(record) && exports.isActiveStatus(record))
+}
+
+exports.isPreviousYears = record => {
+  return !exports.isCurrentYear(record) && !exports.isFutureYear(record)
+}
+
+
+// trainees who:
+// - started this year
+// - are on a course that finishes, or in the future
+exports.isCurrentYear = record => {
+  let isStartingThisYear = record?.academicYear == years.currentAcademicYear
+  let endAcademicYear = exports.dateToAcademicYear(record?.courseDetails?.endDate)
+  let isFinishingThisYearOrGreater = (endAcademicYear == years.currentAcademicYear) || (endAcademicYear == years.nextAcademicYear)
+  return isStartingThisYear || (isFinishingThisYearOrGreater && !exports.isFutureYear) || !record?.academicYear
+}
+
+exports.isFutureYear = record => {
+  return record?.academicYear == years.nextAcademicYear
+}
+
+exports.isHistoric = record => {
+  return !exports.isCurrentYear(record) && !exports.isFutureYear(record) && !exports.isActiveStatus(record)
+}
+
+exports.getCohortFilter = record => {
+  if (exports.isActive(record)) {
+    return "Current"
+  } else if (exports.isFutureYear(record)) {
+    return "Next year’s"
+  } else if (exports.isHistoric(record)) {
+    return "Historic"
+  } else {
+    console.log("error in getCohortFilter")
+    return "Unknown"
+  }
 }
 
 // Course levels
@@ -1190,7 +1245,11 @@ exports.filterRecords = (records, data, filters = {}) => {
     filteredRecords = filteredRecords.filter(record => exports.sourceIsManual(record))
   }
 
-  if (filters.cycle){
+  if (filters.cohortFilter){
+    filteredRecords = filteredRecords.filter(record => filters.cohortFilter.includes(exports.getCohortFilter(record)))
+  }
+
+  if (filters.cycle && filters.cycle != "All years"){
     filteredRecords = filteredRecords.filter(record => filters.cycle.includes(record.academicYear))
   }
 
@@ -1385,7 +1444,16 @@ exports.filterByYear = (records, array) => {
   return exports.filterRecordsBy(records, 'academicYear', array)
 }
 
-// Only records from a specific academic year or years
+// Filter records by status
+exports.filterByActive = (records) => {
+  return records.filter(record => exports.isActive(record) )
+}
+
+exports.filterByFuture = (records) => {
+  return records.filter(record => exports.isFutureYear(record) )
+}
+
+// Filter records by status
 exports.filterByStatus = (records, array, invert) => {
   array = [].concat(array)
   return exports.filterRecordsBy(records, 'status', array, invert)
@@ -1404,7 +1472,7 @@ exports.filterByIncomplete = function(records, data=false) {
 }
 
 exports.filterByQualification = (records, qualification) => {
- return records.filter(record => {
+  return records.filter(record => {
     let courseQualifications = record?.courseDetails?.qualifications
     let courseQualificationMatches = courseQualifications && courseQualifications.includes(qualification)
     return courseQualificationMatches

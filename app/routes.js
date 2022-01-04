@@ -21,10 +21,16 @@ router.all('*', function(req, res, next){
     // structured data to work with in our views
     res.locals.referrer = req.query.referrer.split(',')
   }
-  res.locals.query = req.query
-  res.locals.queryString = url.format({
-            query: req.query,
-          })
+
+  // Only search by the query if there is one
+  // (and get "undefined" instead of "{}" if there is no query)
+  let hasQuery = !_.isEmpty(req.query)
+  if (hasQuery) {
+    res.locals.query = req.query
+    res.locals.queryString = url.format({
+              query: req.query,
+            })
+  }
   res.locals.flash = req.flash('success') // pass through 'success' messages only
   res.locals.currentPageUrl = url.parse(req.url).pathname
 

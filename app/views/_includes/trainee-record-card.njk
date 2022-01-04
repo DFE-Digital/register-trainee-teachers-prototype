@@ -65,7 +65,14 @@
           <p class="govuk-caption-m govuk-!-font-size-16 govuk-!-margin-bottom-1">Reference: {{record.reference}}</p>
         {% endif %}
         {% if record.trainingDetails.traineeId %}
-          <p class="govuk-caption-m govuk-!-font-size-16 govuk-!-margin-bottom-0">Trainee ID: {{record.trainingDetails.traineeId}}</p>
+          <p class="govuk-caption-m govuk-!-font-size-16 govuk-!-margin-bottom-1">Trainee ID: {{record.trainingDetails.traineeId}}</p>
+        {% endif %}
+
+        {%  if record.courseDetails.academicYear %}
+          <p class="govuk-caption-m govuk-!-font-size-16">
+            Start year:
+            <span class="app-nowrap">{{ record.courseDetails.academicYear }}</span>
+          </p>
         {% endif %}
 
         {% if data.isAdmin or (data.signedInProviders | length > 1) or (accessLevel == 'leadSchool') %}
@@ -94,7 +101,7 @@
     </div>
 
     <div class="app-application-card_col">
-      <p class="govuk-caption-m govuk-!-font-size-16 govuk-!-margin-bottom-0 app-application-card__submitted">
+      <p class="govuk-caption-m govuk-!-font-size-16 govuk-!-margin-bottom-1 app-application-card__submitted">
         {% if query.sortOrder == "dateAdded" %}
           Added: <span>{{record.submittedDate | govukDate}}
         {% else %}

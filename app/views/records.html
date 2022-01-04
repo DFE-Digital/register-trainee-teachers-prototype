@@ -1,9 +1,9 @@
 {% extends "_templates/_page.html" %}
 
-{% set pageBaseName = "Registered trainees" if data.settings.draftsInPrimaryNav | falsify else "Registered trainees" %}
+{% set traineesPageHeading = "Registered trainees" if data.settings.draftsInPrimaryNav | falsify else "Registered trainees" %}
 
 {% set pageHeading %}
-  {{pageBaseName}} ({{filteredRecords | length}} {{ "record" | pluralise(filteredRecords | length) }})
+  {{ traineesPageHeading }} ({{filteredRecords | length}} {{ "record" | pluralise(filteredRecords | length) }})
 {% endset %}
 
 {% set backText = "Home" %}
@@ -51,10 +51,10 @@
 
 {% set filterOptionsHtml %}
 
-  {% set showDefaultVisibleYears = true %}
-
   {% include "_includes/filter-panel/all-providers.njk" %}
   
+  {% include "_includes/filter-panel/cohort-filter.njk" %}
+
   {% include "_includes/filter-panel/cycles.njk" %}
 
   {% if isAuthorised('showIncomplete') %}
@@ -213,7 +213,7 @@
 
     <span class="govuk-caption-l">{{ data.signedInProviders | andSeparate }}</span>
     {# This heading set separately than {{pageHeading}} as it uses html #}
-    <h1 class="govuk-heading-xl">{{pageBaseName}} ({{filteredRecords | length}}<span class="govuk-visually-hidden"> {{ "record" | pluralise(filteredRecords | length)}}</span>)</h1>
+    {% include "_includes/trainee-count.njk" %}
 
     {% if isAuthorised('addTrainees') %}
       {{ govukButton({

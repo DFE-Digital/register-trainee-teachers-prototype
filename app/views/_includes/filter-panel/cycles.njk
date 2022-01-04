@@ -1,29 +1,37 @@
 {% set years = [] %}
 
-{% for year in data.years.academicYears %}
+{% set allYears = data.years.academicYears %}
 
-  {% if showDefaultVisibleYears and year in data.years.defaultVisibleYears %}
-    {% set isChecked = checked(query.filterCycle, year) if query.filterCycle else 'checked' %}
+{# Default state - first value is 'all' #}
+{% set years = years | push({
+  value: "All years",
+  text: "All years",
+  selected: true if (not query.filterCycle or query.filterCycle == "All years")
+}) %}
+
+{% for year in allYears %}
+  {% if year == data.years.currentAcademicYear %}
+    {% set years = years | push({
+      value: year,
+      text: year + " (current year)",
+      selected: true if (year == query.filterCycle)
+    }) %}
   {% else %}
-    {% set isChecked = checked(query.filterCycle, year) %}
+    {% set years = years | push({
+      value: year,
+      text: year,
+      selected: true if (year == query.filterCycle)
+    }) %}
   {% endif %}
-
-  {% set years = years | push({
-    text: year,
-    checked: isChecked
-  }) %}
-
 {% endfor %}
 
-
-{{ govukCheckboxes({
-  classes: "govuk-checkboxes--small js-auto-submit",
-  fieldset: {
-    legend: {
-      text: "Start year",
-      isPageHeading: false,
-      classes: "govuk-fieldset__legend--s"
-    }
+{{ govukSelect({
+  id: "cycle-select",
+  name: "filterCycle",
+  classes: "js-auto-submit govuk-!-width-full",
+  label: {
+    text: "Start year",
+    classes: "govuk-label--s"
   },
   items: years
-} | decorateAttributes(data, "data.filterCycle"))}}
+}) }}

@@ -4,12 +4,9 @@ let academicYears = [
   "2022 to 2023",
   "2021 to 2022",
   "2020 to 2021",
-  // "2019 to 2020"
-]
-
-let defaultVisibleYears = [
-  "2021 to 2022",
-  "2020 to 2021"
+  "2019 to 2020",
+  "2018 to 2019",
+  "2017 to 2018"
 ]
 
 let currentAcademicYear = "2021 to 2022"
@@ -27,7 +24,6 @@ let previousAcademicYear = academicYears[yearIndex + 1]
 module.exports = {
     academicYears,
     academicYearsShort,
-    defaultVisibleYears,
     defaultCourseYear,
     currentAcademicYear,
     nextAcademicYear,

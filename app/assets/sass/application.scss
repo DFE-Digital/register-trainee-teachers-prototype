@@ -236,3 +236,11 @@ $sizes: 40, 35, 20, 15, 10;
 .app-markdown > ul {
   @extend #{ '.govuk-list', '.govuk-list--bullet'};
 }
+
+// tighten letter spacing in select
+// so "2021 to 2022 (current year) fits"
+.govuk-select {
+  @include govuk-media-query($from: desktop) {
+    letter-spacing: -0.05px
+  }
+}

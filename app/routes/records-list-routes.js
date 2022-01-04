@@ -33,6 +33,7 @@ const getFilters = req => {
   // Needed because this is coming via query string and not auto-data store
   // And these values may contain '_unchecked'
   let filtersToClean = [
+  'filterCohortFilter',
   'filterAllProviders',
   'filterCompleteStatus',
   'filterCourseLevel',
@@ -48,6 +49,7 @@ const getFilters = req => {
   // Remap to an object so we can pass it to the filterRecords function
   // that is shared by the
   let filters = {
+    cohortFilter: query.filterCohortFilter,
     status: query.filterStatus,
     source: query.filterSource,
     completeStatus: query.filterCompleteStatus,
@@ -61,12 +63,22 @@ const getFilters = req => {
     subject: query.filterSubject
   }
 
+  // if (filters?.cycle) {
+  //   delete filters?.cohortFilter
+  // }
+
+  // if (filters?.cohortFilter) {
+  //   delete filters?.cycle
+  // }
+
   return filters
+
 }
 
 // Todo: this could probably be simpler
 const getHasFilters = (filters, searchQuery) => {
   return !!(filters.status) 
+  || !!(filters.cohortFilter)
   || !!(filters.completeStatus)
   || !!(filters.courseLevel)
   || !!(filters.source)
@@ -75,10 +87,7 @@ const getHasFilters = (filters, searchQuery) => {
   || !!(searchQuery)
   || !!(filters.subject && filters.subject != 'All subjects')
 
-  // Cycles / start year disabled as we default select specific years if no filters are selected
-  // This means that 'historic' trainees are excluded by default. With this 'default' state it looked
-  // weird to have the 'selected' area on by default.
-  // || !!(filters.cycle)
+  || !!(filters.cycle && filters.cycle != 'All years')
 
   || !!(filters.trainingRoutes)
   || !!(filters.providers)
@@ -116,23 +125,38 @@ const getSelectedFilters = req => {
     })
   }
 
-  // if (filters.cycle) {
-  //   selectedFilters.categories.push({
-  //     heading: { text: 'Training year' },
-  //     items: filters.cycle.map((cycle) => {
+  if (filters.cohortFilter) {
+    selectedFilters.categories.push({
+      heading: { text: "Cohorts" },
+      items: filters.cohortFilter.map((cohortFilter) => {
 
-  //       let newQuery = Object.assign({}, query)
-  //       newQuery.filterCycle = filters.cycle.filter(a => a != cycle)
-  //       return {
-  //         text: cycle,
-  //         href: url.format({
-  //           pathname,
-  //           query: newQuery,
-  //         })
-  //       }
-  //     })
-  //   })
-  // }
+        let newQuery = Object.assign({}, query)
+        newQuery.filterCohortFilter = filters.cohortFilter.filter(a => a != cohortFilter)
+        return {
+          text: cohortFilter,
+          href: url.format({
+            pathname,
+            query: newQuery,
+          })
+        }
+      })
+    })
+  }
+
+  if (filters.cycle && filters.cycle != 'All years') {
+    let newQuery = Object.assign({}, query)
+    delete newQuery.filterCycle
+    selectedFilters.categories.push({
+      heading: { text: "Start year" },
+      items: [{
+        text: filters.cycle,
+        href: url.format({
+          pathname,
+          query: newQuery,
+        })
+      }]
+    })
+  }
 
   if (filters.allProviders && filters.allProviders != 'All providers') {
     let newQuery = Object.assign({}, query)
@@ -333,8 +357,9 @@ module.exports = router => {
 
     // If there’s no query string at all, we want to apply some defaults
     let hasQueryString = Boolean(Object.keys(req.query).length)
-    // if (!hasQueryString) filters.cycle = ["2020 to 2021"]
-    if (!hasQueryString) filters.cycle = years.defaultVisibleYears
+
+    // by default set search results to show "Current" trainees
+    if (!hasQueryString) filters.cohortFilter = ["Current"]
 
     let searchQuery = getSearchQuery(req)
 

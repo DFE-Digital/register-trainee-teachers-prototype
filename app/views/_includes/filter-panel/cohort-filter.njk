@@ -1,0 +1,33 @@
+
+{% set checkedStatus -%}
+  {%- if not query -%}
+    checked
+  {%- else -%}
+    {{- checked(query.filterCohortFilter, "Current") -}}
+  {%- endif -%}
+{%- endset %}
+
+{{ govukCheckboxes({
+  classes: "govuk-checkboxes--small js-auto-submit",
+  fieldset: {
+    legend: {
+      text: "Cohorts",
+      isPageHeading: false,
+      classes: "govuk-fieldset__legend--s"
+    }
+  },
+  items: [
+    {
+      text: "Current",
+      checked: checkedStatus
+    },
+    {
+      text: "Next year’s",
+      checked: checked(query.filterCohortFilter, "Next year’s")
+    },
+    {
+      text: "Past",
+      checked: checked(query.filterCohortFilter, "Past")
+    } if navActive !== "drafts"
+  ]
+} | decorateAttributes(data, "data.filterCohortFilter"))}}

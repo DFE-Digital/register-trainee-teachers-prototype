@@ -1,0 +1,14 @@
+
+{% if navActive == "drafts" %}
+  {% set totalTrainees = data.filteredRecords | filterByStatus("Draft") | length %}
+{% else %}
+  {% set totalTrainees = data.filteredRecords | filterByStatus("Draft", true) | length %}
+{% endif %}
+
+<h1 class="govuk-heading-xl">
+  {{ traineesPageHeading }} 
+  <span class="govuk-!-font-weight-regular">
+    ({{ filteredRecords | length}}{% if (filteredRecords | length) != (totalTrainees) %} of {{ totalTrainees }}{% endif %}<span class="govuk-visually-hidden">{{ "record" | pluralise(filteredRecords | length )}}</span>)
+  </span>
+</h1>
+

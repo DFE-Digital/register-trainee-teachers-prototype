@@ -152,7 +152,7 @@
 
 {% set academicOutcomeRow = {
   key: {
-    text: "Academic qualification gained with " + record | getQualificationText
+    text: "Qualification with " + record | getQualificationText
   },
   value: {
     text: record.outcome.academicQualification or academicOutcomeDefaultText

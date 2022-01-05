@@ -1,3 +1,20 @@
+{% set academicQualification = record.outcome.academicQualification %}
+
+{# Look up the qualification and combine the abbreviation and long name #}
+{% if academicQualification %}
+  {% set academicQualificationText = false %}
+  {% for qualification in data.academicQualifications.all %}
+    {% if qualification.long == academicQualification %}
+      {% set academicQualificationText -%}
+        {{ qualification.short }} ({{qualification.long}})
+      {%- endset %}
+    {% endif %}
+  {% endfor %}
+  {% if academicQualification == "None" %}
+    {% set academicQualificationText = "None" %}
+  {% endif %}
+{% endif %}
+
 {% set qualificationDetailsRows = [
   {
     key: {
@@ -18,10 +35,10 @@
   },
   {
     key: {
-      text: "Academic qualification in addition to " + record | getQualificationText
+      text: "Qualification with " + record | getQualificationText
     },
     value: {
-      text: record.outcome.academicQualification or 'Not provided'
+      text: academicQualificationText or 'Not provided'
     },
     actions: {
       items: [

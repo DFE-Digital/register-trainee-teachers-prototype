@@ -10,6 +10,13 @@
       text: qualification.long
     }
   }) %}
+
+  {% if loop.first %}
+    {% set items = items | push({
+      text: "No, just " + record | getQualificationText,
+      value: "None"
+    }) %}
+  {% endif %}
   
 {% endfor %}
 
@@ -21,12 +28,12 @@
   }
 }) %} #}
 
-{% set items = items | push({divider: 'or'}) %}
+{# {% set items = items | push({divider: 'or'}) %} #}
 
-{% set items = items | push({
+{# {% set items = items | push({
   text: "No, just QTS",
   value: "None"
-}) %}
+}) %} #}
 
 
 {{ govukRadios({

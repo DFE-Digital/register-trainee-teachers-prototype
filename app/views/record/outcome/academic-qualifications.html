@@ -8,7 +8,9 @@
   {% endif %}
 {% endset %} #}
 
-{% set pageHeading = "Are they getting a qualification in addition to QTS?" %}
+{% set pageHeading -%}
+Will they get a qualification with their {{ data.record | getQualificationText }}?
+{%- endset %}
 
 {% set formAction = "./../qualification/passed/confirm" %}
   

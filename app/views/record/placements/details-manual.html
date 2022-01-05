@@ -1,0 +1,37 @@
+{% extends "_templates/_record-form.html" %}
+
+{% set placements = data.record.placement.items or [] %}
+
+{# Default ordinal position is one greater than the count of items (assume we’re adding a new item) #}
+{% set ordinalCount = (placements | length) + 1 %}
+
+{# If we’re editing an existing placement, work out the ordinal position #}
+{% for placement in placements %}
+  {% if placement.id == placementUuid %}
+    {% set ordinalCount = loop.index %}
+  {% endif %}
+{% endfor %}
+
+{# First / Second / Third #}
+{% set ordinalName = ordinalCount | getOrdinalName | sentenceCase %}
+
+{% set pageHeading = ordinalName + " placement school" %}
+
+{% set formAction = "./confirm" | addReferrer(referrer) %}
+
+{% block formContent %}
+
+  {% set isManualEntry = true %}
+
+  {# Heading included here as the form itself is used within another page #}
+  {% include "_includes/trainee-name-caption.njk" %}
+  <h1 class="govuk-heading-l">
+    {{pageHeading}}
+  </h1>
+
+  {% include "_includes/forms/placements/details-manual.html" %}
+
+  {{ govukButton({
+    text: "Continue"
+  }) }}
+{% endblock %}

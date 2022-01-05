@@ -43,47 +43,19 @@
   }) }}
 </div>
 
+{# Manual entry #}
 {% set detailsHtml %}
-
-  <p class="govuk-body">
-    If the lead school is missing from the list, contact <a class="govuk-link" href="mailto:becomingateacher@digital.education.gov.uk">becomingateacher@digital.education.gov.uk</a>
-  </p>
-
-  <p class="govuk-body">You do not need to provide a lead school if the trainee is funded or employed privately.</p>
-
-  {{ govukCheckboxes({
-    items: [
-      {
-        value: "true",
-        text: "Lead school is not applicable"
-      }
-    ]
-    } | decorateAttributes(placementTemp, "placementTemp.notApplicable")) }}
+  {# {% set isManualEntry = (placementTemp.school.manualEntry | falsify) == true %} #}
+  {% include "_includes/forms/placements/details-manual.html" %}
 {% endset %}
 
-{# {{ govukDetails({
-  summaryText: "Lead school is not listed, or the trainee is funded or employed privately",
-  html: detailsHtml,
-  open: true if record.schools.leadSchool.notApplicable == "true"
-}) }} #}
-
-{# Commented out for now as not sure about this #}
-{# Only show the checkbox where we're using the autocomplete and we've not already got results #}
-{# <div class="app-js-only">
-  Show a checkbox only if employing school isn’t already set and we’re on a route that has employing school
-  {% if record | requiresField("employingSchool") and not record.schools.employingSchool %}
-    No fieldset as this is a single checkbox item
-    {{ govukCheckboxes({
-      items: [
-        {
-          value: "true",
-          text: "This school is also the employing school"
-        }
-      ]
-    } | decorateAttributes(record, "record.schools.leadSchoolIsEmployingSchool")) }}
-  {% endif %}
-</div> #}
-
+<div class="app-js-only">
+  {{ govukDetails({
+    summaryText: "Placement school is not listed, or the school is an Early years setting",
+    html: detailsHtml,
+    open: true if placementTemp.school.manualEntry == "true"
+  }) }}
+</div>
 
 {{ govukButton({
   text: "Continue"

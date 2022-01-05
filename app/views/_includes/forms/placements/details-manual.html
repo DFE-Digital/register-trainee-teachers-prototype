@@ -1,0 +1,60 @@
+{# Get placement (if it exists) from existing data #}
+{% set placement = {} %}
+
+{% if record.placement.items %}
+  {% set placement = record.placement.items | getRecordById(placementUuid) %}
+{% endif %}
+
+{# Merge with temp store #}
+{% set placementTemp = placement | mergeObjects(data.placementTemp) %}
+
+{% set isManualEntry = isManualEntry or (placementTemp.school.manualEntry | falsify) %}
+
+{{ govukInput({
+  label: {
+    text: "School name",
+    classes: "govuk-label--s"
+  },
+  classes: "govuk-!-width-two-thirds",
+  value: placementTemp.school.schoolName if isManualEntry
+} | decorateAttributes(placementTemp, "placementTemp.school.schoolName"))}}
+
+{{ govukInput({
+  label: {
+    text: "School unique reference number (URN) (if available)",
+    classes: "govuk-label--s"
+  },
+  classes: "govuk-!-width-one-third",
+  value: placementTemp.school.urn if isManualEntry
+} | decorateAttributes(placementTemp, "placementTemp.school.urn"))}}
+
+{# Addresses stored in two ways - this maps between them #}
+{% set address -%}
+  {%- if placementTemp.school.address -%}
+    {{- placementTemp.school.address -}}
+  {%- else -%}
+    {{ [
+    placementTemp.school.addressLine1,
+    placementTemp.school.addressLine2,
+    placementTemp.school.town
+    ] | removeEmpty | separateLines }}
+  {%- endif -%}
+{%- endset %}
+
+{{ govukTextarea({
+  label: {
+    text: "Address",
+    classes: "govuk-label--s"
+  },
+  classes: "govuk-!-width-two-thirds",
+  value: address if isManualEntry
+} | decorateAttributes(placementTemp, "placementTemp.school.address"))}}
+
+{{ govukInput({
+  label: {
+    text: "Postcode",
+    classes: "govuk-label--s"
+  },
+  classes: "govuk-input--width-10 app-!-uppercase",
+  value: placementTemp.school.postcode if isManualEntry
+} | decorateAttributes(placementTemp, "placementTemp.school.postcode"))}}

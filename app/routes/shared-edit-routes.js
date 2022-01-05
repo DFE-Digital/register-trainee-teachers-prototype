@@ -1043,11 +1043,30 @@ module.exports = router => {
     let recordPath = utils.getRecordPath(req)
     let referrer = utils.getReferrer(req.query.referrer)
     let placementUuid = faker.datatype.uuid()
-    
-    // delete data.placementTemp
-    
+    let record = data.record
+
     res.redirect(`${recordPath}/placements/${placementUuid}/details${referrer}`)
-  }) 
+  })
+
+   // Add a placement - generate a UUID and send the user to it
+  router.get(['/:recordtype/:uuid/placements/:placementUuid/details','/:recordtype/placements/:placementUuid/details'], function (req, res) {
+    const data = req.session.data
+    let recordPath = utils.getRecordPath(req)
+    let referrer = utils.getReferrer(req.query.referrer)
+    let placementUuid = req.params.placementUuid
+    let record = data.record
+
+    // Use manual entry form for Early Years
+    let isEarlyYears = utils.isEarlyYears(record)
+    if (isEarlyYears) {
+      res.render(`${req.params.recordtype}/placements/details-manual`)
+    }
+    else {
+      res.render(`${req.params.recordtype}/placements/details`)
+    }
+
+  })
+
 
   // Delete placement at a given UUID
   router.get(['/:recordtype/:uuid/placements/:placementUuid/delete','/:recordtype/placements/:placementUuid/delete'], function (req, res) {
@@ -1105,32 +1124,57 @@ module.exports = router => {
     let placementUuid = req.params.placementUuid
     let placement = data.placementTemp || {}
     let referrer = utils.getReferrer(req.query.referrer)
+    let recordPath = utils.getRecordPath(req)
     let record = data.record
-    const schools = getSchools()
+    let schools
 
-    delete data.placementTemp
+    let placementSchoolUuid = placement?.school?.uuid
+    let schoolName = placement?.school?.schoolName
 
-    // Look up school using uuid
-    placement.school = Object.assign({}, schools.find(school => school.uuid == placement?.school?.uuid)) 
-    
+    let isManualEntry = placement?.school?.isManualEntry || (schoolName && !placementSchoolUuid)
+
+    if (isManualEntry == "true") isManualEntry = true
+
+    if (isManualEntry){
+      // Pretty postcodes
+      if (placement?.school?.postcode){
+        placement.school.postcode = placement.school.postcode.toUpperCase()
+      }
+      // Manual uses a textarea, so split this in to lines to match GIAS
+      if (placement?.school?.address){
+        let addressLines = placement.school.address.split('\n').map(item => item.trim())
+        placement.school.addressLine1 = addressLines[0]
+        placement.school.addressLine2 = addressLines[1]
+      }
+      placement.school.isManualEntry = true
+    }
+    else {
+      const schools = getSchools() // deferred to here so we don't load schools if it's a manual entry
+      // Look up school using uuid
+      placement.school = Object.assign({}, schools.find(school => school.uuid == placement?.school?.uuid))
+    }
+
     let existingPlacements = record?.placement?.items || []
     let placementIndex = existingPlacements.findIndex(placement => placement.id == placementUuid)
-    let recordPath = utils.getRecordPath(req)
 
     // Update existing placement
     if (existingPlacements.length && existingPlacements[placementIndex]) {
+      console.log("Updating existing placement")
       // Might be a partial update, so merge the new with the old
-      existingPlacements[placementIndex] = Object.assign({}, existingPlacements[placementIndex], placement)
+      // Using Lodash merge as Object.assign will overwrite school object, and we want to merge it
+      existingPlacements[placementIndex] = _.merge({}, existingPlacements[placementIndex], placement)
     }
     // Create a new placement
     else {
+      console.log("Saving new placement")
       placement.id = placementUuid
       existingPlacements.push(placement)
     }
 
     delete record?.placement?.hasPlacements
     delete record?.placement?.placementsNotRequiredReason
-    
+    delete data.placementTemp
+
     _.set(record, 'placement.items', existingPlacements)
 
     res.redirect(`${recordPath}/placements/confirm${referrer}`)

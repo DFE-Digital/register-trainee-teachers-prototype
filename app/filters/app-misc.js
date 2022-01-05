@@ -62,12 +62,13 @@ filters.prettifyDegreeGrade = grade => {
 }
 
 // Metadata about a school as a string
-// URN 1234567, City, Postcode
+// Does a bit of fiddling as we don't always have the same data available to show
+// URN 1234567, Address, Postcode
 filters.getSchoolHint = (school) => {
-  let hint = `URN ${school?.urn}`
-  if (school?.town) hint += `, ${school?.town}` // Not all schools have cities
-  if (school?.postcode) hint += `, ${school?.postcode}` // Not all schools have postcodes
-  return hint
+  let urn = school.urn ? `URN ${school.urn}` : false
+  let address = school.town ? school.town : [school.addressLine1, school.addressLine2].filter(Boolean).join(', ')
+  let items = [urn, address, school?.postcode].filter(Boolean)
+  return items.join(', ')
 }
 
 // Map school names so we get the hint in grey on a second line

@@ -142,20 +142,12 @@
   }
 } %}
 
-{% set academicOutcomeDefaultText %}
-  {% if record | academicQualificationsApply %}
-    {{record.outcome.academicQualifiaction or "Not provided" }}
-  {% else %}
-    Not applicable
-  {% endif %}
-{% endset %}
-
 {% set academicOutcomeRow = {
   key: {
     text: "Qualification with " + record | getQualificationText
   },
   value: {
-    text: record.outcome.academicQualification or academicOutcomeDefaultText
+    text: record.outcome.academicQualification | getAcademicQualificationText
   }
 } %}
 

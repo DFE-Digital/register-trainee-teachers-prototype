@@ -11,7 +11,7 @@
     {% endif %}
   {% endfor %}
   {% if academicQualification == "None" %}
-    {% set academicQualificationText = "None" %}
+    {% set academicQualificationText = "None – " + record | getQualificationText + " only" %}
   {% endif %}
 {% endif %}
 

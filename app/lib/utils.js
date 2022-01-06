@@ -956,7 +956,7 @@ exports.sectionIsComplete = section => {
 }
 
 exports.academicQualificationsApply = record => {
-  return trainingRoutes?.[record?.route]?.academicQualificationsApply
+  return trainingRoutes?.[record?.route]?.academicQualificationsApply && exports.isPostgraduate(record)
 }
 
 // Check if all sections are complete

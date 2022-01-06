@@ -80,7 +80,7 @@ module.exports = router => {
     else {
 
       // Check if we should ask about academic qualifications - some routes don’t have them.
-      if (utils.academicQualificationsApply(record)){
+      if (utils.academicQualificationsApply(record) && !record?.outcome?.academicQualification){
         res.redirect(`/record/${req.params.uuid}/outcome/academic-qualifications`)
       }
       else {

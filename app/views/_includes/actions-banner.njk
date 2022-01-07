@@ -9,7 +9,7 @@
       itemList: [
         {
           text: "Confirm training placement details are complete" if placementCount >= minPlacementsRequired else "Add placement details",
-          href: recordPath + "/placements/confirm" | addReferrer(referrer) if placementCount >= minPlacementsRequired else recordPath + "/placements/add" | addReferrer(referrer)
+          href: recordPath + "/placements/confirm" | addReferrer(referrer)
         } if record | needsPlacementDetails,
         {
           text: "Provide a trainee start date",

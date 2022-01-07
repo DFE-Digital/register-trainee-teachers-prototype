@@ -1083,9 +1083,9 @@ module.exports = router => {
     if (!data.record?.placement){
       res.redirect(`${recordPath}/placements/can-add-placement${referrer}`)
     } 
-    else if (referrer){
-      res.redirect(utils.getReferrerDestination(req.query.referrer))
-    }
+    // else if (referrer){
+    //   res.redirect(utils.getReferrerDestination(req.query.referrer))
+    // }
     else {
       res.redirect(`${recordPath}/placements/confirm${referrer}`)
     }
@@ -1105,9 +1105,10 @@ module.exports = router => {
     let placement = data.placementTemp
     delete data.placementTemp
     let referrer = utils.getReferrer(req.query.referrer)
+    let record = data.record
     
     let placementUuid = req.params.placementUuid
-    let existingPlacements = data.record?.placement?.items || []
+    let existingPlacements = record?.placement?.items || []
     let placementIndex = existingPlacements.findIndex(placement => placement.id == placementUuid)
     let recordPath = utils.getRecordPath(req)
 
@@ -1120,10 +1121,10 @@ module.exports = router => {
       existingPlacements.push(placement)
     }
 
-    delete data.record.placement.hasPlacements
-    delete data.record.placement.placementsNotRequiredReason
+    delete record?.placement?.hasPlacements
+    delete record?.placement?.placementsNotRequiredReason
     
-    _.set(data, 'record.placement.items', existingPlacements)
+    _.set(record, 'placement.items', existingPlacements)
 
     res.redirect(`${recordPath}/placements/confirm${referrer}`)
   })

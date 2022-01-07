@@ -17,22 +17,35 @@ module.exports = (params) => {
     }
   }
 
-  let count = weighted.select({
-    0: 0.5,
-    1: 0.3,
-    2: 0.2
-  })
+  let count = 0
 
   let status
 
-  if (params?.status.includes('recommended') || params?.status.includes('awarded')) {
-    count = 2
-    status = 'Complete'
+  // Assume all pending TRN applications have 0 or 1 placements provided
+  if (params?.status == "Pending TRN") {
+    count = weighted.select([0,1],[0.3,0.7])
   }
+
+  // Implicitly recommended or awarded should have had two placements
+  else if (params?.status.includes('recommended') || params?.status.includes('awarded')) {
+    count = 2
+  }
+
+  // Remaining: TRN received, Withdrawn, Deferred
+  else count = weighted.select({
+    0: 0.1,
+    1: 0.3,
+    2: 0.6
+  })
 
   const items = []
   for (var i = 0; i < count; i++) {
     items.push(item())
+  }
+
+  // Mark section as complete once we have two placements
+  if (count == 2){
+    status = 'Complete'
   }
 
   if (params?.placement?.hasPlacements == 'Not yet') {

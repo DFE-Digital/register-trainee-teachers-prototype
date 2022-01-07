@@ -15,7 +15,10 @@
     },
     {
       value: "Not yet",
-      text: "No, I’ll add them later"
+      text: "No, I’ll add them later",
+      _hint: {
+        text: "You will need to add placement details before you can recommend for " + record | getQualificationText
+      }
     }
   ]
 } | decorateAttributes(record, "record.placement.hasPlacements"))}}

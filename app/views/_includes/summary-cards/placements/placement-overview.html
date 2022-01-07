@@ -2,13 +2,19 @@
 {% set placementCount = record.placement.items | length %}
 
 {% set placementsList %}
-  <ul class="govuk-list">
-    {% for placement in placements %}
-    <li>
-      {{placement.location}}
-    </li>
-    {% endfor %}
-  </ul>
+
+  {% if placements | length == 1 %}
+    {{placements[0].location}}
+  {% elseif placements | length > 1 %}
+    <ul class="govuk-list govuk-list--bullet">
+      {% for placement in placements %}
+      <li>
+        {{placement.location}}
+      </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
 {% endset %}
 
 {% set placementLocationRow = {

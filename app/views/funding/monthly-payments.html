@@ -48,11 +48,10 @@
     "July"
   ]%}
 
-  {% set thisMonth = currentMonth() %}
-  {% if thisMonth >= 8 %}
-    {% set thisMonth = thisMonth - 8 %}
+  {% if currentMonth() >= 8 %}
+    {% set thisMonth = currentMonth() - 8 %}
   {% else %}
-    {% set thisMonth = thisMonth + 4 %}
+    {% set thisMonth = currentMonth() + 4 %}
   {% endif %}
 
   {% for item in months %}

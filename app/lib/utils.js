@@ -69,6 +69,10 @@ exports.getOrdinalName = integer => {
   }
 }
 
+// As above, but offset by 1. So a zeroth element in an erray is 'first'
+exports.getOrdinalNameIndex0 = integer => exports.getOrdinalName(integer + 1)
+
+
 // ['Foo', 'Bar', null] => { first: 'Foo', second: 'Bar', third: null }
 exports.arrayToOrdinalObject = array => {
   let output = {}
@@ -76,6 +80,13 @@ exports.arrayToOrdinalObject = array => {
     output[exports.getOrdinalName(index + 1)] = item
   })
   return output
+}
+
+// Test a string to see if it’s a UUID
+exports.isUuid = testString => {
+  testString = "" + testString
+  let result = testString.match('^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$')
+  return Boolean(result)
 }
 
 
@@ -1752,7 +1763,6 @@ exports.highlightInvalidRows = function(rows, params=false) {
         if (params?.treatEmptyAsMissing && (!value || value == "")) {
           // Using .apply() to pass on value of 'this'
           theRow = Object.assign({}, exports.markSummaryRowMissing.apply(this, [theRow]))
-          console.log("here", theRow)
         }
 
         else if (value && value.includes('**missing**')) {

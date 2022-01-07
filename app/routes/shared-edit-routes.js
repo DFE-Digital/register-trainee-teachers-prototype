@@ -72,9 +72,9 @@ module.exports = router => {
     let recordPath = utils.getRecordPath(req)
     let referrer = utils.getReferrer(req.query.referrer)
     let schoolSearchTerm = req.query?._schoolSearch
-    const schools = getSchools()
 
     if (schoolSearchTerm){
+      const schools = getSchools()
       let results = false
       let resultsCount = 0
       results = utils.searchSchools(schools, schoolSearchTerm)
@@ -1055,14 +1055,39 @@ module.exports = router => {
     let referrer = utils.getReferrer(req.query.referrer)
     let placementUuid = req.params.placementUuid
     let record = data.record
+    let schoolSearchTerm = req.query?._schoolSearch
 
     // Use manual entry form for Early Years
     let isEarlyYears = utils.isEarlyYears(record)
-    if (isEarlyYears) {
-      res.render(`${req.params.recordtype}/placements/details-manual`)
+
+    let existingPlacement
+    if (record.placement.items){
+      existingPlacement = record.placement.items.find(placement => placement.id == placementUuid)
+    }
+
+    let existingIsManual = existingPlacement?.school?.isManualEntry
+
+    if (isEarlyYears || existingIsManual) {
+      res.render(`${req.params.recordtype}/placements/details-manual`, {
+        placementUuid
+      })
+    }
+    else if (schoolSearchTerm){
+      const schools = getSchools()
+      let results = false
+      let resultsCount = 0
+      results = utils.searchSchools(schools, schoolSearchTerm)
+      resultsCount = results.length
+      results = results.slice(0, 15) // truncate results
+      res.render(`${req.params.recordtype}/placements/placement-results`, { 
+        searchResults: results, 
+        resultsCount,
+        placementUuid })
     }
     else {
-      res.render(`${req.params.recordtype}/placements/details`)
+      res.render(`${req.params.recordtype}/placements/details`, {
+        placementUuid
+      })
     }
 
   })
@@ -1114,29 +1139,106 @@ module.exports = router => {
   router.get(['/:recordtype/:uuid/placements/:placementUuid/:page','/:recordtype/placements/:placementUuid/:page'], function (req, res) {
     let recordPath = utils.getRecordPath(req)
     let referrer = utils.getReferrer(req.query.referrer)
+    let placementUuid = req.params.placementUuid
 
-    res.render(`${req.params.recordtype}/placements/${req.params.page}`, {placementUuid: req.params.placementUuid})
+    res.render(`${req.params.recordtype}/placements/${req.params.page}`, {
+      placementUuid
+    })
   })
 
   // Save placement data from temporary store
-  router.post(['/:recordtype/:uuid/placements/:placementUuid/confirm','/:recordtype/placements/:placementUuid/confirm'], function (req, res) {
+  router.post(['/:recordtype/:uuid/placements/:placementUuid/details-answer','/:recordtype/placements/:placementUuid/details-answer'], function (req, res) {
     const data = req.session.data
-    let placementUuid = req.params.placementUuid
     let placement = data.placementTemp || {}
     let referrer = utils.getReferrer(req.query.referrer)
     let recordPath = utils.getRecordPath(req)
     let record = data.record
-    let schools
 
-    let placementSchoolUuid = placement?.school?.uuid
-    let schoolName = placement?.school?.schoolName
+    // Identify the placement we’re editing
+    let placementUuid = req.params.placementUuid
+    if (!utils.isUuid(placementUuid)){
+      console.log("Error: no valid placement UUID")
+    }
+    if (!placement.id){
+      placement.id = placementUuid
+    }
 
-    let isManualEntry = placement?.school?.isManualEntry || (schoolName && !placementSchoolUuid)
+    const savePlacement = thePlacement => {
+      let existingPlacements = record?.placement?.items || []
+      let placementIndex = existingPlacements.findIndex(item => item.id == thePlacement.id)
 
+      // Update existing placement
+      if (existingPlacements.length && existingPlacements[placementIndex]) {
+        console.log("Updating existing placement")
+        // Might be a partial update, so merge the new with the old
+        // Using Lodash merge as Object.assign will overwrite school object, and we want to merge it
+        existingPlacements[placementIndex] = _.merge({}, existingPlacements[placementIndex], thePlacement)
+      }
+      // Create a new placement
+      else {
+        console.log("Saving new placement")
+        existingPlacements.push(thePlacement)
+      }
+
+      delete record?.placement?.hasPlacements
+      delete record?.placement?.placementsNotRequiredReason
+      delete data.placementTemp
+
+      _.set(record, 'placement.items', existingPlacements)
+    }
+
+    // Look up school using uuid
+    const lookUpSchool = (item, schoolUuid) => {
+      const schools = getSchools() // deferred to here so we don't load schools if it's a manual entry
+      
+      let foundSchool = schools.find(school => school.uuid == schoolUuid)
+      if (foundSchool){
+        item.school = Object.assign({}, foundSchool)
+      }
+      else {
+        console.log("Error: no placement school match - something went wrong")
+      }
+      return item
+    }
+
+    // Used for no-js results page
+    let searchResultRadios = req.body?._searchResultRadios
+
+    let searchQuery = req.body?._schoolSearch
+
+    console.log(searchQuery, searchResultRadios)
+
+    // Autocomplete page has two inputs that get submitted - we need to filter out
+    // the one we don't need.
+    if (Array.isArray(searchQuery)){
+      searchQuery = searchQuery.filter(Boolean)
+      if (searchQuery.length == 1) searchQuery = searchQuery[0]
+      else if (searchQuery.length == 0 && req.body?._autocomplete_raw_value_school_picker){
+        searchQuery = req.body?._autocomplete_raw_value_school_picker
+      }
+      else if (searchQuery.length > 0) {
+        console.log("Too many search queries!", searchQuery)
+      }
+      else searchQuery = false
+    }
+
+    let queryIsAUuid = utils.isUuid(searchQuery)
+    let radiosAreAUuid = utils.isUuid(searchResultRadios)
+
+    let isManualEntry = placement?.school?.isManualEntry || (placement?.school?.schoolName && !searchQuery)
     if (isManualEntry == "true") isManualEntry = true
 
-    if (isManualEntry){
-      // Pretty postcodes
+    // Search failed, go to manual
+    if (searchResultRadios == 'manualEntry') {
+      res.redirect(`${recordPath}/placements/${placementUuid}/details-manual${referrer}`)
+    }
+    // Search failed, search again
+    // Autocomplete failed, search no-js
+    else if ((searchResultRadios == 'searchAgain') || (searchQuery && !queryIsAUuid &&!radiosAreAUuid)) {
+      let queryParams = utils.addQueryParam(referrer, `_schoolSearch=${searchQuery}`)
+      res.redirect(`${recordPath}/placements/${placementUuid}/details${queryParams}`)
+    }
+    else if (isManualEntry){
       if (placement?.school?.postcode){
         placement.school.postcode = placement.school.postcode.toUpperCase()
       }
@@ -1147,37 +1249,18 @@ module.exports = router => {
         placement.school.addressLine2 = addressLines[1]
       }
       placement.school.isManualEntry = true
-    }
-    else {
-      const schools = getSchools() // deferred to here so we don't load schools if it's a manual entry
-      // Look up school using uuid
-      placement.school = Object.assign({}, schools.find(school => school.uuid == placement?.school?.uuid))
-    }
 
-    let existingPlacements = record?.placement?.items || []
-    let placementIndex = existingPlacements.findIndex(placement => placement.id == placementUuid)
-
-    // Update existing placement
-    if (existingPlacements.length && existingPlacements[placementIndex]) {
-      console.log("Updating existing placement")
-      // Might be a partial update, so merge the new with the old
-      // Using Lodash merge as Object.assign will overwrite school object, and we want to merge it
-      existingPlacements[placementIndex] = _.merge({}, existingPlacements[placementIndex], placement)
+      savePlacement(placement)
+      res.redirect(`${recordPath}/placements/confirm${referrer}`)
     }
-    // Create a new placement
-    else {
-      console.log("Saving new placement")
-      placement.id = placementUuid
-      existingPlacements.push(placement)
+    else if (queryIsAUuid || utils.isUuid(searchResultRadios)){
+      let schoolUuid = queryIsAUuid ? searchQuery : searchResultRadios
+
+      placement = lookUpSchool(placement, schoolUuid)
+      savePlacement(placement)
+      res.redirect(`${recordPath}/placements/confirm${referrer}`)
     }
 
-    delete record?.placement?.hasPlacements
-    delete record?.placement?.placementsNotRequiredReason
-    delete data.placementTemp
-
-    _.set(record, 'placement.items', existingPlacements)
-
-    res.redirect(`${recordPath}/placements/confirm${referrer}`)
   })
 
   // =============================================================================

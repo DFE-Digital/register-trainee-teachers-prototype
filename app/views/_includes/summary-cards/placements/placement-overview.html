@@ -1,47 +1,65 @@
 {% set placements = record.placement.items %}
 {% set placementCount = record.placement.items | length %}
 
-{% macro renderPlacement(placement) %}
-  {% if placement.notApplicable | falsify %}
+{% set placementRows = [] %}
+
+{% for placement in placements %}
+
+  {% set placementSchoolHtml %}
+    {% if placement.notApplicable | falsify %}
       Not applicable
     {% else %}
-      <p class="govuk-body govuk-!-margin-bottom-2">{{placement.school.schoolName}}</p>
+      <p class="govuk-body">{{placement.school.schoolName}}</p>
       <span class="govuk-hint">{{placement.school | getSchoolHint}}</span>
     {% endif %}
-{% endmacro %}
+  {% endset %}
 
-{% set placementsList %}
+  {% set placementRows = placementRows | push({
+    key: {
+      text: (loop.index | getOrdinalName | sentenceCase) + " placement"
+    },
+    value: {
+      text: placementSchoolHtml | safe or 'Not provided'
+    },
+    actions: {
+      items: [
+        {
+          href: recordPath + "/placements/" + placement.id + "/details" | addReferrer(referrer),
+          text: "Change",
+          visuallyHiddenText: "placement location URN"
+        }
+      ]
+    } if canAmend and false
+  }) %}
 
   {% if placements | length == 1 %}
-    {{ renderPlacement(placements[0])}}
-  {% elseif placements | length > 1 %}
-    <ul class="govuk-list govuk-list--bullet">
-      {% for placement in placements %}
-      <li>
-        {{ renderPlacement(placement) }}
-      </li>
-      {% endfor %}
-    </ul>
+    {% set placementRows = placementRows | push({
+    key: {
+      text: "Second placement"
+    },
+    value: {
+      text: ''
+    },
+    actions: {
+      items: [
+        {
+          href: recordPath + "/placements/" + placement.id + "/details" | addReferrer(referrer),
+          text: "Change",
+          visuallyHiddenText: "placement location URN"
+        }
+      ]
+    } if canAmend and false
+  }) %}
+    
   {% endif %}
+  
+{% endfor %}
 
-{% endset %}
 
-{% set placementLocationRow = {
-  key: {
-    text: "Placements"
-  },
-  value: {
-    html: placementsList
-  }
-} %}
-
-{% set placementLocationRows = [
-  placementLocationRow
-] %}
 
 {% set placementDetailsHtml %}
   {{ govukSummaryList({
-      rows: placementLocationRows
+      rows: placementRows | highlightInvalidRows({ treatEmptyAsMissing: true})
   }) }}
 {% endset %}
 
@@ -57,7 +75,7 @@
 {% else %}
   {{ appSummaryCard({
     classes: "govuk-!-margin-bottom-6",
-    titleText: 'Placement details',
+    _titleText: 'Placement details',
     actions: {
       items: [{
         href: recordPath + "/placements/confirm" | addReferrer(referrer),

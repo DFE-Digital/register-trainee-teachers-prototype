@@ -60,6 +60,13 @@
     }
   }) %}
 
+  {% if showManualOption %}
+    {% set schools = schools | push({
+      value: "manualEntry",
+      text: "Enter school details manually"
+    }) %}
+  {% endif %}
+
   {{ govukRadios({
     idPrefix: "schoolSelection",
     name: "_searchResultRadios",

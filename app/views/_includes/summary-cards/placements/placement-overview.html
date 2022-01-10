@@ -56,14 +56,15 @@
 {% endfor %}
 
 
-
 {% set placementDetailsHtml %}
   {{ govukSummaryList({
       rows: placementRows | highlightInvalidRows({ treatEmptyAsMissing: true})
   }) }}
 {% endset %}
 
-{% if placementCount == 0 %}
+{% if placementCount == 6 %}
+      {% include "_includes/summary-cards/placements/no-placement-details.html" %}
+{# {% elseif placementCount == 0 %}
   <p class="govuk-body">You have not added any placements yet.</p>
   <div class="govuk-form-group">
     {{ govukButton({
@@ -71,11 +72,11 @@
       href: recordPath + '/placements/add' | addReferrer(referrer),
       classes: "govuk-button--secondary govuk-!-margin-bottom-0"
     }) }}
-  </div>
+  </div> #}
 {% else %}
   {{ appSummaryCard({
     classes: "govuk-!-margin-bottom-6",
-    _titleText: 'Placement details',
+    titleText: 'Placement details' if record | isDraft,
     actions: {
       items: [{
         href: recordPath + "/placements/confirm" | addReferrer(referrer),

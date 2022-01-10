@@ -1,0 +1,57 @@
+{% extends "_templates/_record-form.html" %}
+
+{# {% set pageHeading %}
+  {% if data.record.qtsDetails.standardsAssessedOutcome == "Yes" %}
+    When did they meet the standards? 
+  {% else %} 
+    When should they be recorded as having not met the standards?
+  {% endif %}
+{% endset %} #}
+
+{% set pageHeading -%}
+Will they get a qualification with their {{ data.record | getQualificationText }}?
+{%- endset %}
+
+{% set formAction = "./../qualification/passed/confirm" %}
+  
+{% block formContent %}
+
+
+  {% set courseLevel = record | getCourseLevel | lower%}
+
+  {% set academicQualifications = data.academicQualifications[courseLevel] %}
+
+  {% set degreeTypesAutocomplete = academicQualifications | getDegreeTypesForAutocomplete | sort(attribute='value') %}
+
+  {% set academicQualificationAutocomplete %}
+    {{ appAutocompleteFromSelect({
+      label: {
+        text: "Other qualification",
+        classes: "govuk-label--s"
+      },
+      id: 'nationality-other-' + nationalityIndex,
+      name: "record[personalDetails][nationality][" + nationalityIndex + "]",
+      items: data.academicQualifications.all | toSelectItems,
+      classes: "govuk-!-max-width-one-half",
+      value: nationality,
+      autocompleteOptions: {}
+      }
+    ) }}
+
+    {# <div class="govuk-form-group">
+      {{ govukButton({
+        text: "Add another qualification",
+        classes: "govuk-button--secondary govuk-!-margin-bottom-1",
+        href: "#"
+      }) }}
+    </div> #}
+  {% endset %}
+
+  {% if record | isPostgraduate %}
+    {% include "_includes/forms/outcome/academic-qualifications-postgraduate.html" %}
+
+  {% elseif record | isUndergraduate %}
+    {% include "_includes/forms/outcome/academic-qualifications-undergraduate.html" %}
+  {% endif %}
+
+{% endblock %}

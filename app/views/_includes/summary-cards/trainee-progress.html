@@ -142,6 +142,15 @@
   }
 } %}
 
+{% set academicOutcomeRow = {
+  key: {
+    text: "Qualification with " + record | getQualificationText
+  },
+  value: {
+    text: record.outcome.academicQualification | getAcademicQualificationText
+  }
+} %}
+
 {% set deferredContentHtml %}
   {{govukTag({
     text: "Deferred",
@@ -277,14 +286,13 @@
   pendingTrnRow if record | isPendingTrn,
   recommendedForAwardRow if record | isRecommended,
   awardRow if record | isAwarded,
+  academicOutcomeRow if record.status | isRecommendedOrAwarded,
   deferredRow if record | isDeferred,
   withdrawnRow if record | isWithdrawn,
   updatedDate,
   recordCreatedRow,
   traineeStartDateRow
 ] | removeEmpty %}
-
-{{traineeProgressRows | log}}
 
 {% set traineeProgressHtml %}
   {{ govukSummaryList({

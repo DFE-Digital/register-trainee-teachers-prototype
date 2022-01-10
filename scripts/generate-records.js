@@ -18,6 +18,7 @@ const statuses          = require('../app/data/status')
 const courses           = require('../app/data/courses.json')
 const accreditingProviderData      = require('../app/data/accrediting-providers.js')
 const providers         = accreditingProviderData.selected
+const statusFilters          = require('./../app/filters/statuses.js').filters
 
 // Settings
 let simpleGcseGrades    = true //output pass/fail rather than full detail
@@ -66,6 +67,7 @@ const generateGce = require('../app/data/generators/gce')
 const generateGcse = require('../app/data/generators/gcse')
 const generateEvents = require('../app/data/generators/events')
 const generateFunding = require('../app/data/generators/funding')
+const generateOutcomes = require('../app/data/generators/outcomes')
 const generatePlacement = require('../app/data/generators/placement')
 const generateUndergraduateQualification = require('../app/data/generators/undergraduate-qualifications')
 const generateSchools = require('../app/data/generators/schools')
@@ -160,6 +162,15 @@ const generateFakeApplication = (params = {}) => {
   if (routeQualifications.includes('EYTS')) {  
     application.status = application.status.replace('QTS', 'EYTS')
   }
+
+  // Outcomes
+  // let academicQualificationsApply = trainingRouteData.trainingRoutes[application.route]?.academicQualificationsApply || false
+
+  // if (academicQualificationsApply && statusFilters.isRecommendedOrAwarded(application.status)) {
+  //   _.set(application, "outcome.academicQualification", "PGCE")
+  // }
+
+  application.outcome = (params.outcome === null) ? undefined : { ...generateOutcomes(application), ...params.outcome }
 
   return application
 

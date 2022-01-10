@@ -48,6 +48,36 @@ filters.getFullName = ({
   return names.filter(Boolean).join(' ')
 }
 
+// Return an expanded form of the qualification or 'Not applicable' or 'Not available'
+filters.getAcademicQualificationText = function(input, record=false){
+
+  record = record || this?.ctx?.record || false
+
+  if (!record){
+    console.log("Error with expandQualificationText - ctx data not provided")
+  }
+
+  // QTS or EYTS
+  let qualificationText = utils.getQualificationText(record) || "QTS"
+  // Whether a route has academic qualifications (all except Assessment only)
+  let qualificationsApply = utils.academicQualificationsApply(record)
+
+  let foundQualification = utils.lookUpAcademicQualification(input)
+
+  console.log(record, qualificationText, qualificationsApply, foundQualification)
+
+  if (qualificationsApply && foundQualification){
+    return `${foundQualification.short} (${foundQualification.long})`
+  }
+  else if (qualificationsApply && foundQualification == "None"){
+    return `None – ${qualificationText} only`
+  }
+  else if (!qualificationsApply){
+    return "Not applicable"
+  }
+  else return "Not available"
+}
+
 // Prepend with 'Other grade:' if grade isn’t a pre-set type
 filters.prettifyDegreeGrade = grade => {
   if (!grade) return ""

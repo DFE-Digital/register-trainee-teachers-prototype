@@ -12,7 +12,7 @@ const arrayFilters = require('./../filters/arrays.js').filters
 const dates = require('./../filters/dates.js').filters
 const ittSubjects = require('./../data/itt-subjects')
 const generateReference = require('./../data/generators/reference-number')
-
+const academicQualifications = require('./../data/academic-qualifications.js')
 
 // -------------------------------------------------------------------
 // General
@@ -460,6 +460,16 @@ exports.getQualificationText = record => {
   if (exports.qualificationIsEYTS(record)) return "EYTS"
   else if (exports.qualificationIsQTS(record)) return "QTS"
   else return "unknown"
+}
+
+// Look up an academic qualification using string - so we can get the abbreviation or long name
+exports.lookUpAcademicQualification = searchText => {
+  let allQualifications = academicQualifications.all
+
+  // todo: this might fail where two qualifications have the same abbreviation
+  return allQualifications.find(item => {
+    return  (searchText == item.long) || (searchText == item.short)
+  }) || false
 }
 
 // Sort by subject, including course code
@@ -967,6 +977,10 @@ exports.isFullTimeOrPartTime = data => {
 
 exports.sectionIsComplete = section => {
   return section?.status == "Completed" || (section?.status && section.status.includes("Completed"))
+}
+
+exports.academicQualificationsApply = record => {
+  return trainingRoutes?.[record?.route]?.academicQualificationsApply && exports.isPostgraduate(record)
 }
 
 // Check if all sections are complete

@@ -38,6 +38,8 @@ let degreeInstitutions      = require('./degree-instituions')
 // Undergraduate qualification
 let ugEntryQualifications   = require('./undergraduate-qualifications')
 
+let academicQualifications   = require('./academic-qualifications')
+
 // Assessment only
 let assessmentOnlyAgeRanges = require('./assessmentOnlyAgeRanges')
 let ittSubjectData          = require('./itt-subjects')
@@ -176,6 +178,7 @@ records = records.map(record => {
 })
 
 module.exports = {
+  academicQualifications,
   allTrainingRoutes,
   assessmentOnlyAgeRanges,
   awards,

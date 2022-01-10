@@ -1,3 +1,4 @@
+
 {% set qualificationDetailsRows = [
   {
     key: {
@@ -16,6 +17,23 @@
       ]
     } if canAmend
   },
+  {
+    key: {
+      text: "Qualification with " + record | getQualificationText
+    },
+    value: {
+      text: record.outcome.academicQualification | getAcademicQualificationText
+    },
+    actions: {
+      items: [
+        {
+          href: recordPath + "/outcome/academic-qualifications" | addReferrer(referrer),
+          text: "Change",
+          visuallyHiddenText: "academic qualifications"
+        }
+      ]
+    } if canAmend
+  } if record | academicQualificationsApply,
   {
     key: {
       text: "Date of assessment"

@@ -43,7 +43,7 @@ module.exports = function (env) {
     if (type == "nameOfMonth") {
       return moment().format('MMMM')
     } else {
-      return moment().format('MM')
+      return parseInt(moment().format('MM'), 10)
     }
   }
 

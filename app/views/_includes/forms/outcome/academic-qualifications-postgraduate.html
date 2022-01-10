@@ -1,0 +1,56 @@
+{% set items = [] %}
+{% for qualification in academicQualifications %}
+  {% set labelText -%}
+    Yes – {{ qualification.short }}
+  {%- endset %}
+  {% set items = items | push({
+    text: labelText,
+    value: qualification.long,
+    hint: {
+      text: qualification.long
+    }
+  }) %}
+
+  {% if loop.first %}
+    {% set items = items | push({
+      text: "No, just " + record | getQualificationText,
+      value: "None"
+    }) %}
+  {% endif %}
+  
+{% endfor %}
+
+{# {% set items = items | push({
+  text: "Yes – another qualification",
+  value: "Other",
+  conditional: {
+    html: academicQualificationAutocomplete
+  }
+}) %} #}
+
+{# {% set items = items | push({divider: 'or'}) %} #}
+
+{# {% set items = items | push({
+  text: "No, just QTS",
+  value: "None"
+}) %} #}
+
+
+{{ govukRadios({
+  fieldset: {
+    legend: {
+      text: pageHeading,
+      isPageHeading: true,
+      classes: "govuk-fieldset__legend--l"
+    }
+  },
+  hint: {
+    text: ""
+  },
+  items: items
+} | decorateAttributes(record, "record.outcome.academicQualification")) }}
+
+
+{{ govukButton({
+  text: "Continue"
+}) }}

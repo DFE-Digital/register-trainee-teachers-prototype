@@ -1,0 +1,41 @@
+{% set items = [] %}
+{% for qualification in academicQualifications %}
+  {% set items = items | push({
+    text: qualification.short
+  }) %}
+  
+{% endfor %}
+
+{% set items = items | push({divider: 'or'}) %}
+
+{% set items = items | push({
+  text: "No academic qualification"
+}) %}
+
+{% set items = items | push({
+  text: "Other academic award",
+  value: "Other",
+  conditional: {
+    html: academicQualificationAutocomplete
+  }
+}) %}
+
+{% include "_includes/trainee-name-caption.njk" %}
+{{ govukRadios({
+  fieldset: {
+    legend: {
+      text: pageHeading,
+      isPageHeading: true,
+      classes: "govuk-fieldset__legend--l"
+    }
+  },
+  hint: {
+    text: ""
+  },
+  items: items
+} | decorateAttributes(record, "record.outcome.academicQualification")) }}
+
+
+{{ govukButton({
+  text: "Continue"
+}) }}

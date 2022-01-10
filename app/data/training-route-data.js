@@ -62,6 +62,11 @@ allRoutesArray.forEach(route => {
 // Sensible defaults for route data
 let defaultRouteData = {
   defaultEnabled: false,
+  qualifications: [
+    "QTS"
+  ],
+  qualificationsSummary: "QTS",
+  academicQualificationsApply: true,
   duration: 1,
   sections: [
     // 'trainingDetails',
@@ -85,6 +90,7 @@ let baseRouteData = {
   "Assessment only": {
     defaultEnabled: true,
     courseLevel: "Postgraduate",
+    academicQualificationsApply: false,
     qualifications: [
       "QTS"
     ],
@@ -488,6 +494,7 @@ let baseRouteData = {
   "Early years (assessment only)": {
     defaultEnabled: true,
     courseLevel: "Postgraduate",
+    academicQualificationsApply: false,
     sections: [
       // 'trainingDetails',
       'courseDetails',

@@ -56,21 +56,19 @@ module.exports = router => {
   // Collect the EYTS/QTS outcome date and set up the forking
   router.post('/record/:uuid/qualification/outcome-date-answer', (req, res) => {
     const data = req.session.data
-    const newRecord = data.record
-
-    console.log('hello Ed')
+    const record = data.record
 
     // Convert radio choices to real dates
-    if (!newRecord){
+    if (!record){
       res.redirect(`/record/${req.params.uuid}`)
     }
     else {
-      let radioChoice = newRecord.qualificationDetails.outcomeDateRadio
+      let radioChoice = record.qualificationDetails.outcomeDateRadio
       if (radioChoice == "Today") {
-        newRecord.qualificationDetails.outcomeDate = filters.toDateArray(filters.today())
+        record.qualificationDetails.outcomeDate = filters.toDateArray(filters.today())
       }
       if (radioChoice == "Yesterday") {
-        newRecord.qualificationDetails.outcomeDate = filters.toDateArray(moment().subtract(1, "days"))
+        record.qualificationDetails.outcomeDate = filters.toDateArray(moment().subtract(1, "days"))
       } 
     }
     
@@ -80,7 +78,15 @@ module.exports = router => {
       res.redirect(`/record/${req.params.uuid}/qualification/not-passed/reason`)
     }
     else {
-      res.redirect(`/record/${req.params.uuid}/qualification/passed/confirm`)
+
+      // Check if we should ask about academic qualifications - some routes don’t have them.
+      if (utils.academicQualificationsApply(record) && !record?.outcome?.academicQualification){
+        res.redirect(`/record/${req.params.uuid}/outcome/academic-qualifications`)
+      }
+      else {
+        res.redirect(`/record/${req.params.uuid}/qualification/passed/confirm`)
+      }
+
     }
   })
 

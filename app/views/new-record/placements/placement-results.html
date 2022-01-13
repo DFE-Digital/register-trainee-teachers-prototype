@@ -1,0 +1,11 @@
+{% extends "_templates/_new-record.html" %}
+
+{% set pageHeading = "Placement school search results" %}
+{% set schoolType = 'placement' %}
+
+{% set formAction = "./details-answer" | addReferrer(referrer) %}
+
+{% block formContent %}
+  {% set showManualOption = true %}
+  {% include "_includes/forms/schools/school-search-results.html" %}
+{% endblock %}

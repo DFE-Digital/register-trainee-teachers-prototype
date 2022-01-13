@@ -10,9 +10,18 @@
 
 {% set isManualEntry = isManualEntry or (placementTemp.school.manualEntry | falsify) %}
 
+{% set schoolOrOrganisation -%}
+  {%- if record | isEarlyYears -%}
+    organisation
+  {%- else -%}
+    school
+  {%- endif -%}
+{%- endset %}
+
+
 {{ govukInput({
   label: {
-    text: "School name",
+    text: (schoolOrOrganisation | sentenceCase) + " name",
     classes: "govuk-label--s"
   },
   classes: "govuk-!-width-two-thirds",

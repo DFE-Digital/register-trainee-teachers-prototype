@@ -13,9 +13,17 @@
   {% endset %}
 {% endif %}
 
+{% set schoolOrSetting -%}
+  {%- if record | isEarlyYears -%}
+    setting
+  {%- else -%}
+    school
+  {%- endif -%}
+{%- endset %}
+
 {% set placementLocationRow = {
   key: {
-    text: "Placement school"
+    text: "Placement " + schoolOrSetting
   },
   value: {
     text: placementSchoolHtml | safe or 'Not provided'
@@ -25,7 +33,7 @@
       {
         href: recordPath + "/placements/" + placement.id + "/details" | addReferrer(referrer),
         text: "Change",
-        visuallyHiddenText: "placement location URN"
+        visuallyHiddenText: "placement " + schoolOrSetting
       }
     ]
   } if canAmend

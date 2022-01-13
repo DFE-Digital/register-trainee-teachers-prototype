@@ -26,7 +26,7 @@
         {
           href: recordPath + "/placements/" + placement.id + "/details" | addReferrer(referrer),
           text: "Change",
-          visuallyHiddenText: "placement location URN"
+          visuallyHiddenText: (loop.index | getOrdinalName | sentenceCase) + "placement"
         }
       ]
     } if canAmend and false
@@ -45,7 +45,7 @@
         {
           href: recordPath + "/placements/" + placement.id + "/details" | addReferrer(referrer),
           text: "Change",
-          visuallyHiddenText: "placement location URN"
+          visuallyHiddenText: "second placement"
         }
       ]
     } if canAmend and false

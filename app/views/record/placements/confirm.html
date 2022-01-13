@@ -20,23 +20,27 @@
   <h1 class="govuk-heading-l">
     {{pageHeading}}
   </h1>
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
 
-      {% set insetTextHtml %}
-        <p class="govuk-body">
-          You need to add the details of at least {{ minPlacementsRequired }} schools before you can recommend this trainee for {{ record | getQualificationText }}. These can be added at any time.
-        </p>
-        <p class="govuk-body">
-          <a href="https://www.gov.uk/government/publications/initial-teacher-training-criteria/initial-teacher-training-itt-criteria-and-supporting-advice#c23-training-in-schools" class="govuk-link">Initial teacher training (ITT): criteria and supporting advice: C2.2 Training in schools</a>
-        </p>
-      {% endset %}
+  {# Details about how many placements are needed #}
+  {% if placementCount < minPlacementsRequired %}
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
 
-      {{ govukInsetText({
-        html: insetTextHtml
-      }) }}
+        {% set insetTextHtml %}
+          <p class="govuk-body">
+            You need to add the details of at least {{ minPlacementsRequired }} schools before you can recommend this trainee for {{ record | getQualificationText }}. These can be added at any time.
+          </p>
+          <p class="govuk-body">
+            <a href="https://www.gov.uk/government/publications/initial-teacher-training-criteria/initial-teacher-training-itt-criteria-and-supporting-advice#c23-training-in-schools" class="govuk-link">Initial teacher training (ITT): criteria and supporting advice: C2.3 Training in schools</a>
+          </p>
+        {% endset %}
+
+        {{ govukInsetText({
+          html: insetTextHtml
+        }) }}
+      </div>
     </div>
-  </div>
+  {% endif %}
 
   {% include "_includes/summary-cards/placements/placement-details.html" %}
 

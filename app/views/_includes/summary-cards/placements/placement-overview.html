@@ -97,7 +97,7 @@
 {% else %}
   {{ appSummaryCard({
     classes: "govuk-!-margin-bottom-6",
-    titleText: 'Placement details' if record | isDraft,
+    titleText: 'Placement details',
     actions: {
       items: [{
         href: recordPath + "/placements/confirm" | addReferrer(referrer),

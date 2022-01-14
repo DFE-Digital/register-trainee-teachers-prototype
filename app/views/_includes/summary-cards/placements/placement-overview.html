@@ -61,7 +61,29 @@
   }) }}
 {% endset %}
 
-{% if placementCount == 0 %}
+{% set complete = record.placement | sectionIsComplete %}
+{% set status  = record.placement | getStatusText %}
+{% set sectionIsRequired = record | requiresSection("placement") %}
+
+{% if not sectionIsRequired %}
+  {# Section not required #}
+{% elseif showIncomplete and not complete %}
+
+  {% set incompleteType = "warning" if errorList %}
+  {% set incompleteId = "placements" %}
+  {% if status == "In progress" %}
+    {% set incompleteText = "Placement details not marked as complete" %}
+    {% set incompleteLink = recordPath + "/placements/confirm" %}
+    {% set incompleteLinkText = "Continue section" %}
+  {% else %}
+    {% set incompleteText = "Placement details not started" %}
+    {% set incompleteLink = recordPath + "/placements/can-add-placement" %}
+    {% set incompleteLinkText = "Start section" %}
+  {% endif %}
+
+  {% include "_includes/incomplete.njk" %}
+
+{% elseif placementCount == 0 %}
   {% include "_includes/summary-cards/placements/no-placement-details.html" %}
 {# {% elseif placementCount == 0 %}
   <p class="govuk-body">You have not added any placements yet.</p>

@@ -38,7 +38,7 @@
       text: "Second placement"
     },
     value: {
-      text: ''
+      text: 'Second placement not yet known'
     },
     actions: {
       items: [
@@ -55,15 +55,14 @@
   
 {% endfor %}
 
-
 {% set placementDetailsHtml %}
   {{ govukSummaryList({
       rows: placementRows | highlightInvalidRows({ treatEmptyAsMissing: true})
   }) }}
 {% endset %}
 
-{% if placementCount == 6 %}
-      {% include "_includes/summary-cards/placements/no-placement-details.html" %}
+{% if placementCount == 0 %}
+  {% include "_includes/summary-cards/placements/no-placement-details.html" %}
 {# {% elseif placementCount == 0 %}
   <p class="govuk-body">You have not added any placements yet.</p>
   <div class="govuk-form-group">
@@ -80,7 +79,7 @@
     actions: {
       items: [{
         href: recordPath + "/placements/confirm" | addReferrer(referrer),
-        text: "Manage placements" if canAmend else "View placements"
+        text: "Change" if canAmend else "View"
       }]
     },
     html: placementDetailsHtml

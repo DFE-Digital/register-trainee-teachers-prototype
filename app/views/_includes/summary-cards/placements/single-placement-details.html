@@ -33,7 +33,7 @@
       {
         href: recordPath + "/placements/" + placement.id + "/details" | addReferrer(referrer),
         text: "Change",
-        visuallyHiddenText: "placement " + schoolOrSetting
+        visuallyHiddenText: (ordinalCount | lower) + " placement "
       }
     ]
   } if canAmend

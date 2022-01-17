@@ -15,15 +15,7 @@
 {# First / Second / Third #}
 {% set ordinalName = ordinalCount | getOrdinalName | sentenceCase %}
 
-{% set schoolOrSetting -%}
-  {%- if data.record | isEarlyYears -%}
-    setting
-  {%- else -%}
-    school
-  {%- endif -%}
-{%- endset %}
-
-{% set pageHeading = ordinalName + " placement " + schoolOrSetting %}
+{% set pageHeading = ordinalName + " placement " + ( record | schoolOrSettingText ) %}
 
 {% set formAction = "./details-answer" | addReferrer(referrer) %}
 

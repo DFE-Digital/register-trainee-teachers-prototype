@@ -28,7 +28,7 @@
       {% if placementCount < minPlacementsRequired %}
         {% set insetTextHtml %}
           <p class="govuk-body">
-            You need to add the details of at least {{ minPlacementsRequired }} {{ "school" | pluralise(data.settings.minPlacementsRequired) }} before you can recommend this trainee for {{ record | getQualificationText }}. These can be added at any time.
+            You need to add the details of at least {{ minPlacementsRequired }} {{ ( record | schoolOrSettingText ) | pluralise(data.settings.minPlacementsRequired) }} before you can recommend this trainee for {{ record | getQualificationText }}. These can be added at any time.
           </p>
         {% endset %}
 

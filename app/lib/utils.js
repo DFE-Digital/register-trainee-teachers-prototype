@@ -947,6 +947,14 @@ exports.routeIsEarlyYears = route => {
   return route && route.includes("Early years")
 }
 
+// Used by placements - for Early years the locations you go to are settings and not 
+// necessarily schools
+exports.schoolOrSettingText = record => {
+  if (exports.isEarlyYears(record)) {
+    return "setting"
+  }
+  else return "school"
+}
 
 exports.isPrimary = record => {
   return exports.getCoursePhase(record) == "Primary"

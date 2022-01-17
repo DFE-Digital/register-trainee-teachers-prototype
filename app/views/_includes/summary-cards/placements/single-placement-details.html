@@ -13,17 +13,9 @@
   {% endset %}
 {% endif %}
 
-{% set schoolOrSetting -%}
-  {%- if record | isEarlyYears -%}
-    setting
-  {%- else -%}
-    school
-  {%- endif -%}
-{%- endset %}
-
 {% set placementLocationRow = {
   key: {
-    text: "Placement " + schoolOrSetting
+    text: "Placement " + record | schoolOrSettingText
   },
   value: {
     text: placementSchoolHtml | safe or 'Not provided'

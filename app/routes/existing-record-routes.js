@@ -475,7 +475,7 @@ module.exports = router => {
     if (traineeStarted == "true") {
       res.redirect(`/record/${req.params.uuid}/withdraw/when-did-trainee-start${referrer}`)
     } else if (traineeStarted == "false") {
-      res.redirect(`/record/${req.params.uuid}/withdraw/cannot-withdraw${referrer}`)
+      res.redirect(`/record/${req.params.uuid}/withdraw/confirm${referrer}`)
     } else {
       res.redirect(`/record/${req.params.uuid}/withdraw/did-trainee-start${referrer}`)
     }

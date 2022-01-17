@@ -1,11 +1,20 @@
 {% set withdrawalDate %}
   {% if record | isDeferred %}
     {{ record.withdrawalDate | govukDate }} (date of deferral)
+  {% elseif record | ittInTheFuture or record | ittStartedButNoCommencementDate %}
+    Trainee withdrew before starting their ITT
   {% else %}
     {{ record.withdrawalDate | govukDate or "Not provided" }}
   {% endif %}
 {% endset %}
 
+{% set withdrawalRoute %}
+  {%- if record | traineeStarted -%}
+    /withdraw
+  {%- else -%}
+    /withdraw/did-trainee-start
+  {%- endif -%}
+{% endset %}
 
 {% set withdrawalReason %}
   {% if record.withdrawalReason == "For another reason" %}
@@ -28,13 +37,13 @@
     actions: {
       items: [
         {
-          href: recordPath + "/withdraw/did-trainee-start" | addReferrer(referrer),
+          href: recordPath + withdrawalRoute | addReferrer(referrer),
           text: "Change",
           visuallyHiddenText: "trainee start date"
         }
       ]
     }
-  },
+  } if record | traineeStarted,
   {
     key: {
       text: "Date of withdrawal"
@@ -68,7 +77,7 @@
         }
       ]
     } if canAmend
-  }
+  } if record | traineeStarted
 ] %}
 
 {% set withdrawDetailsHtml %}

@@ -30,9 +30,12 @@
 
 {{ govukInput({
   label: {
-    text: "School unique reference number (URN) (if available)",
+    text: "School unique reference number (URN)",
     classes: "govuk-label--s"
   },
+  hint: {
+    text: "Only if this early years setting has a URN"
+  } if record | isEarlyYears,
   classes: "govuk-!-width-one-third",
   value: placementTemp.school.urn if isManualEntry
 } | decorateAttributes(placementTemp, "placementTemp.school.urn"))}}

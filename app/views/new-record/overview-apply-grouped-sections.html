@@ -106,7 +106,7 @@
       }
     } if record | requiresSection("schools"),
     {
-      text: "Placement details",
+      text: "Placements",
       _href: "placements/confirm" if (record.placement) else "placements/can-add-placement",
       href: "placements/can-add-placement" | reviewIfInProgress(record.placement, "placements") | addReferrer(referrer),
       id: "placement-details",

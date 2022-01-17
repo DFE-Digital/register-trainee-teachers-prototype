@@ -1,11 +1,18 @@
 {% include "_includes/trainee-name-caption.njk" %}
+<h1 class="govuk-heading-l">{{pageHeading}}</h1>
+
+<p class="govuk-body">You can add placements at any time whenever you have the details. To recommend the trainee for {{ record | getQualificationText }}, you must have provided the details of {{data.settings.minPlacementsRequired}} {{"placement" | pluralise(data.settings.minPlacementsRequired)}}.</p>
+
+<p class="govuk-body">
+  <a href="https://www.gov.uk/government/publications/initial-teacher-training-criteria/initial-teacher-training-itt-criteria-and-supporting-advice#c23-training-in-schools" class="govuk-link">Read DfE guidance about training placements in schools and early years settings</a>.
+</p>
 
 {{ govukRadios({
   fieldset: {
     legend: {
-      text: pageHeading,
-      isPageHeading: true,
-      classes: "govuk-fieldset__legend--l"
+      text: "Do you have any of the trainee’s placement details?",
+      isPageHeading: false,
+      classes: "govuk-fieldset__legend--m"
     }
   },
   items: [

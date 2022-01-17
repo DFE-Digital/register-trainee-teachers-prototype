@@ -22,25 +22,26 @@
   </h1>
 
   {# Details about how many placements are needed #}
-  {% if placementCount < minPlacementsRequired %}
-    <div class="govuk-grid-row">
-      <div class="govuk-grid-column-two-thirds">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
 
+      {% if placementCount < minPlacementsRequired %}
         {% set insetTextHtml %}
           <p class="govuk-body">
-            You need to add the details of at least {{ minPlacementsRequired }} schools before you can recommend this trainee for {{ record | getQualificationText }}. These can be added at any time.
-          </p>
-          <p class="govuk-body">
-            <a href="https://www.gov.uk/government/publications/initial-teacher-training-criteria/initial-teacher-training-itt-criteria-and-supporting-advice#c23-training-in-schools" class="govuk-link">Initial teacher training (ITT): criteria and supporting advice: C2.3 Training in schools</a>
+            You need to add the details of at least {{ minPlacementsRequired }} {{ "school" | pluralise(data.settings.minPlacementsRequired) }} before you can recommend this trainee for {{ record | getQualificationText }}. These can be added at any time.
           </p>
         {% endset %}
 
         {{ govukInsetText({
           html: insetTextHtml
         }) }}
-      </div>
+      {% endif %}
+
+      <p class="govuk-body">
+        <a href="https://www.gov.uk/government/publications/initial-teacher-training-criteria/initial-teacher-training-itt-criteria-and-supporting-advice#c23-training-in-schools" class="govuk-link">Read DfE guidance about training placements in schools and early years settings</a>.
+      </p>
     </div>
-  {% endif %}
+  </div>
 
   {% include "_includes/summary-cards/placements/placement-details.html" %}
 

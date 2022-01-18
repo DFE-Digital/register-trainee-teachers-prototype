@@ -25,22 +25,29 @@
 {% endset %}
 
 {% set deleteUrl %}
-  {% if (record | ittInTheFuture) %}
+  {% if (record | isDeferred ) %}
     {{ referrer + "/delete/confirm" | addReferrer(referrer) }}
   {% else %}
-    {{ referrer + "/delete/did-trainee-start" | addReferrer(referrer) }}
+    {{ referrer + "/delete/remove-or-defer" | addReferrer(referrer) }}
   {% endif %}
 {% endset %}
 
 
 {% set buttonMenuItems = [] %}
 
-{% if (record | isDeferred) %}
+{% if (record | isDeferred ) and record.trainingDetails.commencementDate %}
   {%- set buttonMenuItems = buttonMenuItems | push(
     { text: "Reinstate", href: reinstateUrl, classes: "govuk-button--secondary" }
   ) -%}
   {%- set buttonMenuItems = buttonMenuItems | push(
     { text: "Withdraw", href: withdrawUrl, classes: "govuk-button--secondary" }
+  ) -%}
+{% elseif (record | isDeferred ) and not record.trainingDetails.commencementDate %}
+  {%- set buttonMenuItems = buttonMenuItems | push(
+    { text: "Reinstate", href: reinstateUrl, classes: "govuk-button--secondary" }
+  ) -%}
+  {%- set buttonMenuItems = buttonMenuItems | push(
+    { text: "Remove record", href: deleteUrl, classes: "govuk-button--secondary" }
   ) -%}
 {% elseif (record | ittInTheFuture) %}
   {%- set buttonMenuItems = buttonMenuItems | push(
@@ -72,7 +79,6 @@
 <div class="record-actions__links">
   <div style="float: right;">
     {{ mojButtonMenu({
-      classes: classes,
       items: buttonMenuItems
     }) }}
   </div>

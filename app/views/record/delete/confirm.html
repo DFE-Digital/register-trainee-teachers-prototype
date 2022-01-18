@@ -1,6 +1,6 @@
 {% extends "_templates/_new-record.html" %}
 
-{% set pageHeading = "Delete this record" %}
+{% set pageHeading = "Remove this record" %}
 {% set backLink = './..' %}
 {% set backText = "Back to record" %}
 {% set returnLink = { href: './../', text: 'Cancel and return to record'} %}
@@ -14,18 +14,16 @@
 {% endset %}
 
 <span class="govuk-caption-l">{{recordName}}</span>
-<h1 class="govuk-heading-l govuk-!-margin-bottom-8">Do you want to delete this record?</h1>
+<h1 class="govuk-heading-l govuk-!-margin-bottom-8">Do you want to remove this record?</h1>
 
-{{ govukWarningText({
-  text: "This will delete the record permanently and cannot be undone.",
-  iconFallbackText: "Warning"
-}) }}
+<p class="govuk">
+  Because the trainee has not started, you can remove this trainee’s record.
+</p>
 
 {{ govukButton({
-  text: "Delete this record",
+  text: "Remove this record",
   href: "./",
   classes: "govuk-button--warning"
 }) }}
 
 {% endblock %}
-

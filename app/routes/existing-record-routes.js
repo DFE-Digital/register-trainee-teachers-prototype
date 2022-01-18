@@ -407,6 +407,23 @@ module.exports = router => {
   })
 
   // Delete route
+
+  // Check if trainee is deferring before delete
+  router.get(`/record/:uuid/delete/did-not-start-answer`, (req, res) => {
+    const data = req.session.data
+    let record = data.record
+    let deleteOrDefer = record?.deleteOrDeferTemp
+    let referrer = utils.getReferrer(req.query.referrer)
+
+    if (!deleteOrDefer) {
+      res.redirect(`/record/${req.params.uuid}/delete/remove-or-defer${referrer}`)
+    } else if (deleteOrDefer == "remove") {
+      res.redirect(`/record/${req.params.uuid}/delete/confirm${referrer}`)
+    } else if (deleteOrDefer == "defer") {
+       res.redirect(`/record/${req.params.uuid}/defer/confirm${referrer}`)
+    }
+  })
+
   // Deletes record
   router.get('/record/:uuid/delete/', (req, res) => {
     const data = req.session.data
@@ -417,7 +434,7 @@ module.exports = router => {
       _.pullAt(records, [recordIndex]) // delete item at index
     }
     utils.deleteTempData(data)
-    req.flash('success', 'Record deleted')
+    req.flash('success', 'Record removed')
     res.redirect('/records')
   })
 

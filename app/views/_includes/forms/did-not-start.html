@@ -1,0 +1,26 @@
+
+{% include "_includes/trainee-name-caption.njk" %}
+
+{{ govukRadios({
+  fieldset: {
+    legend: {
+      isPageHeading: true,
+      text: pageHeading,
+      classes: "govuk-fieldset__legend--l"
+    }
+  },
+  items: [
+    {
+      value: "remove",
+      text: "Yes, remove record"
+    },
+    {
+      value: "defer",
+      text: "No, defer the trainee"
+    }
+  ]
+} | decorateAttributes(record, "record.deleteOrDeferTemp")) }}
+
+{{ govukButton({
+  text: "Continue"
+}) }}

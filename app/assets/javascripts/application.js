@@ -25,6 +25,15 @@ if ($('.js-bulk-menu').length){
   });
 }
 
+new MOJFrontend.ButtonMenu({
+  container: $(".moj-button-menu"),
+  mq: "(min-width: 200em)",
+  buttonText: "Actions",
+  buttonClasses:
+    "govuk-button--secondary moj-button-menu__toggle-button--secondary",
+  menuClasses: "moj-button-menu__wrapper--right",
+});
+
 $(document).ready(function () {
   initAutocompletes()
 })

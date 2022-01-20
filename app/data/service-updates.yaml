@@ -5,10 +5,10 @@ items:
   - date: '2022-01-20'
     title: When you need to provide trainee start dates has changed
     content: >-
-    When registering a trainee, we were always asking when the trainee started, even if their course had not started. Now, we will only ask when the trainee started, after their course has started.
+      When registering a trainee, we were always asking when the trainee started, even if their course had not started. Now, we will only ask when the trainee started, after their course has started.
 
 
-    You’ll need to provide a start date before you can recommend a trainee for QTS or EYTS.
+      You’ll need to provide a start date before you can recommend a trainee for QTS or EYTS.
 
   - date: '2021-12-20'
     title: Support during the Christmas period

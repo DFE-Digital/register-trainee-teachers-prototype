@@ -348,32 +348,15 @@ module.exports = router => {
   /*
     =========================================================================
 
-    Deleting, deferring and withdrawing trainees
+    Removing, deferring and withdrawing trainees
 
     =========================================================================
   */
 
-  // Delete route
-  // If ITT start date is in the past, ask user if the trainee started
-  router.post('/record/:uuid/delete/did-trainee-start-answer', (req, res) => {
-    const data = req.session.data
-    let record = data.record
-    let traineeStarted = record?.trainingDetails?.traineeStarted
-    let referrer = utils.getReferrer(req.query.referrer)
-
-    if (traineeStarted == "true") {
-      res.redirect(`/record/${req.params.uuid}/delete/when-did-trainee-start${referrer}`)
-    } else if (traineeStarted == "false") {
-      res.redirect(`/record/${req.params.uuid}/delete/confirm${referrer}`)
-    } else {
-      res.redirect(`/record/${req.params.uuid}/delete/did-trainee-start${referrer}`)
-    }
-  })
-
   // Remove route
 
   // Removes record
-  router.get('/record/:uuid/delete/', (req, res) => {
+  router.get('/record/:uuid/remove/', (req, res) => {
     const data = req.session.data
     const records = data.records
     let theRecord = data.record

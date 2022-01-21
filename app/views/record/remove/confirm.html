@@ -1,0 +1,29 @@
+{% extends "_templates/_new-record.html" %}
+
+{% set pageHeading = "Remove this record" %}
+{% set backLink = './..' %}
+{% set backText = "Back to record" %}
+{% set returnLink = { href: './../', text: 'Cancel and return to record'} %}
+
+{% block formContent %}
+
+{% set recordName %}
+  {% if record.personalDetails.shortName %}
+   {{record.personalDetails.shortName}}
+  {% endif %}
+{% endset %}
+
+<span class="govuk-caption-l">{{recordName}}</span>
+<h1 class="govuk-heading-l govuk-!-margin-bottom-8">Do you want to remove this record?</h1>
+
+<p class="govuk">
+  Because the trainee has not started, you can remove this trainee’s record.
+</p>
+
+{{ govukButton({
+  text: "Remove this record",
+  href: "./",
+  classes: "govuk-button--warning"
+}) }}
+
+{% endblock %}

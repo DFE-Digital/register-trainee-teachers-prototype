@@ -24,8 +24,8 @@
   {% endif %}
 {% endset %}
 
-{% set deleteUrl %}
-  {{ referrer + "/delete/confirm" | addReferrer(referrer) }}
+{% set removeUrl %}
+  {{ referrer + "/remove/confirm" | addReferrer(referrer) }}
 {% endset %}
 
 
@@ -43,18 +43,18 @@
     { text: "Reinstate", href: reinstateUrl, classes: "govuk-button--secondary" }
   ) -%}
   {%- set buttonMenuItems = buttonMenuItems | push(
-    { text: "Remove record", href: deleteUrl, classes: "govuk-button--secondary" }
+    { text: "Remove record", href: removeUrl, classes: "govuk-button--secondary" }
   ) -%}
 {% elseif (record | ittInTheFuture) %}
   {%- set buttonMenuItems = buttonMenuItems | push(
-    { text: "Did not start", href: deleteUrl, classes: "govuk-button--secondary" }
+    { text: "Did not start", href: removeUrl, classes: "govuk-button--secondary" }
   ) -%}
   {%- set buttonMenuItems = buttonMenuItems | push(
     { text: "Defer", href: deferUrl, classes: "govuk-button--secondary" }
   ) -%}
 {% elseif (record | ittStartedButNoCommencementDate) %}
   {%- set buttonMenuItems = buttonMenuItems | push(
-    { text: "Did not start", href: deleteUrl, classes: "govuk-button--secondary" }
+    { text: "Did not start", href: removeUrl, classes: "govuk-button--secondary" }
   ) -%}
   {%- set buttonMenuItems = buttonMenuItems | push(
     { text: "Defer", href: deferUrl, classes: "govuk-button--secondary" }

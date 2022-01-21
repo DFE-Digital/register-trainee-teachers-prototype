@@ -25,11 +25,7 @@
 {% endset %}
 
 {% set deleteUrl %}
-  {% if (record | isDeferred ) %}
-    {{ referrer + "/delete/confirm" | addReferrer(referrer) }}
-  {% else %}
-    {{ referrer + "/delete/remove-or-defer" | addReferrer(referrer) }}
-  {% endif %}
+  {{ referrer + "/delete/confirm" | addReferrer(referrer) }}
 {% endset %}
 
 

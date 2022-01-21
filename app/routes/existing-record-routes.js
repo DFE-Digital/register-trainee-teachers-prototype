@@ -370,61 +370,9 @@ module.exports = router => {
     }
   })
 
-  // Delete route
-  // If trainee started 'on time', set trainee start date to same as ITT start date
-  router.post('/record/:uuid/delete/when-did-the-trainee-start-answer', (req, res) => {
-    let data = req.session.data
-    let record = data.record
-    let courseStartDate = record?.courseDetails?.startDate
-    let traineeStarted = record?.trainingDetails?.traineeStarted
-    let referrer = utils.getReferrer(req.query.referrer)
+  // Remove route
 
-    if (traineeStarted == "started-itt-on-time"){
-      record.trainingDetails.commencementDate = courseStartDate
-    }
-    utils.updateRecord(data, record, false)
-    res.redirect(`/record/${req.params.uuid}/delete/cannot-delete${referrer}`)
-  })
-
-  // Delete route
-  // If trainee has started, options for how to continue
-  router.post('/record/:uuid/delete/cannot-delete-answer/', (req, res) => {
-    const data = req.session.data
-    let record = data.record
-    let referrer = utils.getReferrer(req.query.referrer)
-    let deferOrWithdraw = record?.deferOrWithdrawTemp
-    
-    delete record.deferOrWithdrawTemp
-    if (!deferOrWithdraw) {
-      res.redirect(`/record/${req.params.uuid}/delete/cannot-delete${referrer}`)
-    } else if (deferOrWithdraw == "defer") {
-      res.redirect(`/record/${req.params.uuid}/defer${referrer}`)
-    } else if (deferOrWithdraw == "withdraw") {
-      res.redirect(`/record/${req.params.uuid}/withdraw${referrer}`)
-    } else if (deferOrWithdraw === "cancel") {
-      res.redirect(utils.getReferrerDestination(req.query.referrer) || `/record/${req.params.uuid}/` )
-    }
-  })
-
-  // Delete route
-
-  // Check if trainee is deferring before delete
-  router.get(`/record/:uuid/delete/did-not-start-answer`, (req, res) => {
-    const data = req.session.data
-    let record = data.record
-    let deleteOrDefer = record?.deleteOrDeferTemp
-    let referrer = utils.getReferrer(req.query.referrer)
-
-    if (!deleteOrDefer) {
-      res.redirect(`/record/${req.params.uuid}/delete/remove-or-defer${referrer}`)
-    } else if (deleteOrDefer == "remove") {
-      res.redirect(`/record/${req.params.uuid}/delete/confirm${referrer}`)
-    } else if (deleteOrDefer == "defer") {
-       res.redirect(`/record/${req.params.uuid}/defer/confirm${referrer}`)
-    }
-  })
-
-  // Deletes record
+  // Removes record
   router.get('/record/:uuid/delete/', (req, res) => {
     const data = req.session.data
     const records = data.records

@@ -244,3 +244,15 @@ $sizes: 40, 35, 20, 15, 10;
     letter-spacing: -0.05px
   }
 }
+
+.app-button-menu, .js-enabled {
+  .moj-button-menu__item { 
+    border-collapse: collapse;
+    border-left:   1px solid $govuk-border-colour;
+    border-right:  1px solid $govuk-border-colour;
+    border-bottom: 1px solid $govuk-border-colour;
+    &:focus {
+      border: none;
+    }
+  }
+}

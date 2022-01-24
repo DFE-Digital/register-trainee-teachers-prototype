@@ -108,7 +108,7 @@ const generateFakeApplication = (params = {}) => {
   application.trn              = (params.trn === null) ? undefined : (params.trn || generateTrn(application))
 
   application.source          = (params.source) ? params.source : generateSource(application)
-  if (application.source == "Apply" ){
+  if (application.source == "Apply"){
     application.applyData = { ...generateApplyData(application), ...params.applyData}
     // if (params.applyData) application.applyData = params.applyData
   }

@@ -28,7 +28,7 @@ if ($('.js-bulk-menu').length){
 new MOJFrontend.ButtonMenu({
   container: $(".moj-button-menu"),
   mq: "(min-width: 200em)",
-  buttonText: "Change attendence",
+  buttonText: "Change attendance",
   buttonClasses:
     "govuk-button--secondary moj-button-menu__toggle-button--secondary",
   menuClasses: "moj-button-menu__wrapper--right",

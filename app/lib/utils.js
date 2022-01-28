@@ -973,7 +973,7 @@ exports.getCohortFilter = record => {
   } else if (exports.isFutureYear(record)) {
     return "Next year’s"
   } else if (exports.isHistoric(record)) {
-    return "Historic"
+    return "Past"
   } else {
     console.log("error in getCohortFilter")
     return "Unknown"

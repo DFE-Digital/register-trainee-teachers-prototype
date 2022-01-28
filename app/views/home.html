@@ -58,7 +58,7 @@
       <ul class="govuk-list govuk-list--spaced">
         <li><a class="govuk-link" href="/records?filterCycle=_unchecked">View all registered trainees ({{ registeredTrainees | length }})</a></li>
         {% if registeredTrainees | filterByFuture | length > 0 %}
-          <li><a class="govuk-link" href="/records">View next year’s trainees ({{ registeredTrainees | filterByFuture | length }})</a></li>
+          <li><a class="govuk-link" href="/records?filterCohortFilter=Next+year’s">View next year’s trainees ({{ registeredTrainees | filterByFuture | length }})</a></li>
         {% endif %}
       </ul>
       <h3 class="govuk-heading-m">Current trainees</h3>

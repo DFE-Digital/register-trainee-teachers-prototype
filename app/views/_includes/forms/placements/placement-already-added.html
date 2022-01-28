@@ -1,0 +1,30 @@
+{# Placement data is stored in a temp location before being merged back to array #}
+
+{# Get placement (if it exists) from existing data #}
+{% set placement = {} %}
+
+{% if record.placement.items %}
+  {% set placement = record.placement.items | getRecordById(placementUuid) %}
+{% endif %}
+
+{# Merge with temp store #}
+{% set placementTemp = placement | mergeObjects(data.placementTemp) %}
+
+{% set headingText %}
+  You’ve already added {{placementTemp.school.schoolName | safe}} as a placement
+{% endset %}
+
+<h1 class="govuk-heading-l">{{headingText}}</h1>
+
+<p class="govuk-body">You only need to add each placement {{ record | schoolOrSettingText }} once.</p>
+
+<p class="govuk-body">Next steps</p>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>
+    <a class="govuk-link" href="./details">go back and edit this placement</a>
+  </li>
+  <li>
+    <a class="govuk-link" href="./../confirm">cancel adding this placement</a>
+  </li>
+</ul>

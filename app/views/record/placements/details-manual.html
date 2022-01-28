@@ -15,7 +15,7 @@
 {# First / Second / Third #}
 {% set ordinalName = ordinalCount | getOrdinalName | sentenceCase %}
 
-{% set pageHeading = ordinalName + " placement " + ( record | schoolOrSettingText ) %}
+{% set pageHeading = ordinalName + " placement " + ( data.record | schoolOrSettingText ) %}
 
 {% set formAction = "./details-answer" | addReferrer(referrer) %}
 

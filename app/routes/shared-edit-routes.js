@@ -1201,12 +1201,23 @@ module.exports = router => {
       return item
     }
 
+    // Check if the most recent placement already exists in the placement array
+    const placementIsDuplicate = (placement) => {
+      let placements = record?.placement?.items || []
+      if (placements.length){
+        return placements.some(singlePlacement => {
+          return placement?.school?.schoolName == singlePlacement?.school?.schoolName
+        })
+      }
+      else return false
+    }
+
     // Used for no-js results page
     let searchResultRadios = req.body?._searchResultRadios
 
     let searchQuery = req.body?._schoolSearch
 
-    console.log(searchQuery, searchResultRadios)
+    // console.log(searchQuery, searchResultRadios)
 
     // Autocomplete page has two inputs that get submitted - we need to filter out
     // the one we don't need.
@@ -1238,6 +1249,9 @@ module.exports = router => {
       let queryParams = utils.addQueryParam(referrer, `_schoolSearch=${searchQuery}`)
       res.redirect(`${recordPath}/placements/${placementUuid}/details${queryParams}`)
     }
+    // else if (placementsContainDuplicates()){
+    //   res.redirect(`${recordPath}/placements/${placementUuid}/placement-already-added${queryParams}`)
+    // }
     else if (isManualEntry){
       if (placement?.school?.postcode){
         placement.school.postcode = placement.school.postcode.toUpperCase()
@@ -1250,15 +1264,26 @@ module.exports = router => {
       }
       placement.school.isManualEntry = true
 
-      savePlacement(placement)
-      res.redirect(`${recordPath}/placements/confirm${referrer}`)
+      if (placementIsDuplicate(placement)){
+        res.redirect(`${recordPath}/placements/${placementUuid}/placement-already-added${referrer}`)
+      }
+      else {
+        savePlacement(placement)
+        res.redirect(`${recordPath}/placements/confirm${referrer}`)
+      }
     }
     else if (queryIsAUuid || utils.isUuid(searchResultRadios)){
       let schoolUuid = queryIsAUuid ? searchQuery : searchResultRadios
 
       placement = lookUpSchool(placement, schoolUuid)
-      savePlacement(placement)
-      res.redirect(`${recordPath}/placements/confirm${referrer}`)
+
+      if (placementIsDuplicate(placement)){
+        res.redirect(`${recordPath}/placements/${placementUuid}/placement-already-added${referrer}`)
+      }
+      else {
+        savePlacement(placement)
+        res.redirect(`${recordPath}/placements/confirm${referrer}`)
+      }
     }
 
   })

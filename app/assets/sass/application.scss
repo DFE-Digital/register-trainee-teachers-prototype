@@ -56,6 +56,7 @@ $govuk-assets-path: '/govuk/assets/';
 @import "overrides/govuk-error-summary";
 @import "overrides/govuk-skip-link";
 @import "overrides/govuk-tag";
+@import "overrides/moj-button-menu";
 @import "overrides/moj-filter";
 @import "overrides/moj-pagination";
 @import "overrides/summary-card";
@@ -242,17 +243,5 @@ $sizes: 40, 35, 20, 15, 10;
 .govuk-select {
   @include govuk-media-query($from: desktop) {
     letter-spacing: -0.05px
-  }
-}
-
-.js-enabled {
-  .moj-button-menu__item { 
-    border-collapse: collapse;
-    border-left:   1px solid $govuk-border-colour;
-    border-right:  1px solid $govuk-border-colour;
-    border-bottom: 1px solid $govuk-border-colour;
-    &:focus {
-      border: none;
-    }
   }
 }

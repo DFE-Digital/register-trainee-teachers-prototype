@@ -1,0 +1,34 @@
+// Overides for MoJ button menu
+
+.moj-button-menu {
+  @include govuk-media-query($from: desktop) {
+    float: right;
+  }
+}
+
+.moj-button-menu {
+  @include govuk-media-query($until: desktop) {
+    margin-top: govuk-spacing(3);
+  }
+}
+
+// buttons appear to right of parent button
+.moj-button-menu__wrapper {
+  @include govuk-media-query($from: desktop) {
+    right: 0;
+  }
+}
+
+// add border so it doesn't clash with top of summary card
+.js-enabled {
+  .moj-button-menu__item {
+    border-collapse: collapse;
+    border-left: 1px solid $govuk-border-colour;
+    border-right: 1px solid $govuk-border-colour;
+    border-bottom: 1px solid $govuk-border-colour;
+
+    &:focus {
+      border: none;
+    }
+  }
+}

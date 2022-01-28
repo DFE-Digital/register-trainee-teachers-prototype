@@ -13,47 +13,56 @@
 
 {% set recordPath = "/record/" + record.id %}
 
-<div class="govuk-grid-row">
-
-  <div class="govuk-grid-column-full">
+  <div class="govuk-grid-row">
 
     {% if canAmend %}
+
       <div class="record-actions">
-        {% if record.status | canRecommendForQts %}
-          {% if record | ittInTheFuture %}
-            {{ govukInsetText({
-            text: "The trainee’s ITT starts on " + (record.courseDetails.startDate | govukDate),
-            classes: "govuk-!-margin-0"
-          }) }}
-          {% elseif record | hasOutstandingActions %}
-            {{ govukInsetText({
-              text: "This trainee record requires additional details",
+        <div class="govuk-grid-column-one-half-from-desktop govuk-!-margin-bottom-1">
+
+          {% if record.status | canRecommendForQts %}
+            {% if record | ittInTheFuture %}
+              {{ govukInsetText({
+              text: "The trainee’s ITT starts on " + (record.courseDetails.startDate | govukDate),
               classes: "govuk-!-margin-0"
             }) }}
-          {% else %}
-            {{ govukButton({
-              text: "Recommend trainee for " + (record | getQualificationText),
-              href: referrer + '/qualification/outcome-date',
-              classes: "govuk-!-margin-bottom-0"
+            {% elseif record | hasOutstandingActions %}
+              {{ govukInsetText({
+                text: "This trainee record requires additional details",
+                classes: "govuk-!-margin-0"
+              }) }}
+            {% else %}
+              {{ govukButton({
+                text: "Recommend trainee for " + (record | getQualificationText),
+                href: referrer + '/qualification/outcome-date',
+                classes: "govuk-!-margin-bottom-0"
+              }) }}
+            {% endif %}
+          {% elseif record.status == "Pending TRN" %}
+            {{ govukInsetText({
+              text: "This trainee is pending a TRN",
+              classes: "govuk-!-margin-0"
+            }) }}
+          {% elseif record.status == "Deferred" %}
+            {{ govukInsetText({
+              text: "This trainee is deferred",
+              classes: "govuk-!-margin-0"
             }) }}
           {% endif %}
-        {% elseif record.status == "Pending TRN" %}
-          {{ govukInsetText({
-            text: "This trainee is pending a TRN",
-            classes: "govuk-!-margin-0"
-          }) }}
-        {% elseif record.status == "Deferred" %}
-          {{ govukInsetText({
-            text: "This trainee is deferred",
-            classes: "govuk-!-margin-0"
-          }) }}
-        {% endif %}
+        </div>
         {% include "_includes/record-actions.njk" %}
       </div>
 
-      <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+    <div class="govuk-grid-column-full">
+      <hr class="govuk-section-break govuk-section-break--l govuk-!-margin-top-3 govuk-section-break--visible">
+    </div>
+
     {% endif %}
 
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
 
     <h2 class="govuk-heading-s">Trainee progress</h2>
     {% include "_includes/summary-cards/trainee-progress.html" %}

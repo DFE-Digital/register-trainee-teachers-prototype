@@ -2,15 +2,8 @@
 
 .record-actions {
   @include govuk-media-query($from: tablet) {
-    display: flex; 
-    justify-content: space-between; 
-    align-items: center
-  }
-}
-
-.record-actions__links {
-  margin-left: auto;
-  @include govuk-media-query($until: tablet) {
-    margin-top: govuk-spacing(3);
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
   }
 }

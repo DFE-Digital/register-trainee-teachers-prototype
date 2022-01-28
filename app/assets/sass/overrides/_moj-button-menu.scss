@@ -4,17 +4,26 @@
   @include govuk-media-query($from: desktop) {
     float: right;
   }
+  @include govuk-media-query($until: tablet) {
+    margin-top: govuk-spacing(3);
+  }
 }
 
-.moj-button-menu {
-  @include govuk-media-query($until: desktop) {
-    margin-top: govuk-spacing(3);
+:not(.js-enabled) {
+  @include govuk-media-query($from: tablet, $until: desktop) {
+    .moj-button-menu__wrapper {
+      display: flex;
+      flex-direction: column;
+      .moj-button-menu__item {
+        margin-right: 0 !important;
+      }
+    }
   }
 }
 
 // buttons appear to right of parent button
 .moj-button-menu__wrapper {
-  @include govuk-media-query($from: desktop) {
+  @include govuk-media-query($from: tablet) {
     right: 0;
   }
 }

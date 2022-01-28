@@ -30,8 +30,7 @@ new MOJFrontend.ButtonMenu({
   mq: "(min-width: 200em)",
   buttonText: "Change attendance",
   buttonClasses:
-    "govuk-button--secondary moj-button-menu__toggle-button--secondary",
-  menuClasses: "moj-button-menu__wrapper--right",
+    "govuk-button--secondary moj-button-menu__toggle-button--secondary"
 });
 
 $(document).ready(function () {

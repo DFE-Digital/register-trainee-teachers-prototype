@@ -29,7 +29,7 @@
           visuallyHiddenText: (loop.index | getOrdinalName | sentenceCase) + "placement"
         }
       ]
-    } if canAmend and false
+    } if canAmend
   }) %}
 
   {% if placements | length == 1 %}
@@ -38,18 +38,18 @@
       text: "Second placement"
     },
     value: {
-      text: 'Second placement not yet known'
+      text: ''
     },
     actions: {
       items: [
         {
-          href: recordPath + "/placements/" + placement.id + "/details" | addReferrer(referrer),
-          text: "Change",
+          href: recordPath + "/placements/add" | addReferrer(referrer),
+          text: "Add",
           visuallyHiddenText: "second placement"
         }
       ]
-    } if canAmend and false
-  }) %}
+    } if canAmend
+  } if not record | isDraft ) %}
     
   {% endif %}
   
@@ -101,7 +101,7 @@
     actions: {
       items: [{
         href: recordPath + "/placements/confirm" | addReferrer(referrer),
-        text: "Change" if canAmend else "View"
+        text: "Manage placements" if canAmend else "View"
       }]
     },
     html: placementDetailsHtml

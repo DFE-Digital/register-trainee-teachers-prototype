@@ -46,7 +46,7 @@ module.exports = (params) => {
 
   // Mark section as complete once we have two placements
   if (count == 2){
-    status = 'Complete'
+    status = 'Completed'
   }
 
   if (params?.placement?.hasPlacements == 'Not yet') {

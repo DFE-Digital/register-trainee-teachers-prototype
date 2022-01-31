@@ -8,7 +8,7 @@
       titleText: "You need to provide additional details before recording an outcome",
       itemList: [
         {
-          text: "Confirm training placement details are complete" if placementCount >= minPlacementsRequired else "Add placement details",
+          text: "Complete placement details",
           href: recordPath + "/placements/confirm" | addReferrer(referrer)
         } if record | needsPlacementDetails,
         {

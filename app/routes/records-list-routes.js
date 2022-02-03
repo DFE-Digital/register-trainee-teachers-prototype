@@ -383,7 +383,7 @@ module.exports = router => {
     // All records except drafts
     let draftRecords = utils.filterRecordsBy(filteredRecords, 'status', "Draft")
     let registeredRecords = objectFilters.removeWhere(filteredRecords, 'status', "Draft")
-    let draftRecordsCount = draftRecords.length
+    let draftRecordsCount = hasFilters ? draftRecords.length : null
 
 
 
@@ -427,7 +427,7 @@ module.exports = router => {
 
     let draftRecords = utils.filterRecordsBy(filteredRecords, 'status', "Draft")
     let registeredRecords = objectFilters.removeWhere(filteredRecords, 'status', "Draft")
-    let registeredRecordsCount = registeredRecords.length
+    let registeredRecordsCount = hasFilters ? registeredRecords.length : null
 
     res.render('drafts', {
       filteredRecords: draftRecords,

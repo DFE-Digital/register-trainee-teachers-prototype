@@ -1111,7 +1111,7 @@ exports.needsPlacementDetails = function(record, data = false) {
   let minPlacementsRequired = data?.settings?.minPlacementsRequired || 2
 
   if (exports.requiresSection(record, 'placement')) {
-    if ((record?.placement?.status != 'Complete') || (placementCount < minPlacementsRequired)) {
+    if ((record?.placement?.status != 'Completed') || (placementCount < minPlacementsRequired)) {
       needsPlacementDetails = true
     }
   }

@@ -95,8 +95,8 @@ filters.prettifyDegreeGrade = grade => {
 // Does a bit of fiddling as we don't always have the same data available to show
 // URN 1234567, Address, Postcode
 filters.getSchoolHint = (school) => {
-  let urn = school.urn ? `URN ${school.urn}` : false
-  let address = school.town ? school.town : [school.addressLine1, school.addressLine2].filter(Boolean).join(', ')
+  let urn = school?.urn ? `URN ${school.urn}` : false
+  let address = school?.town ? school.town : [school?.addressLine1, school?.addressLine2].filter(Boolean).join(', ')
   let items = [urn, address, school?.postcode].filter(Boolean)
   return items.join(', ')
 }

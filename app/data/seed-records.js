@@ -406,22 +406,6 @@ seedRecords.push({
     givenName: "Delia",
     familyName: "Klein",
     sex: "Female"
-  },
-  "placement": {
-    "items": [
-      {
-        "location": "Sacred Heart Newcastle SCITT",
-        "startMonth": "1",
-        "duration": "2",
-        "id": "cd8d959f-a246-4402-b2c8-e1bbb9e1fc48"
-      },
-      {
-        "location": "University of Wales Trinity Saint David (UWTSD Swansea)",
-        "startMonth": "5",
-        "duration": "12",
-        "id": "29477b76-3f2e-4571-bb5f-7e62a2fb994a"
-      }
-    ],
   }
 })
 

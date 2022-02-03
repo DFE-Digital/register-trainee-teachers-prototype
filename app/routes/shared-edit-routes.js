@@ -1204,7 +1204,8 @@ module.exports = router => {
     // Check if the most recent placement already exists in the placement array
     const placementIsDuplicate = (placement) => {
       let placements = record?.placement?.items || []
-      if (placements.length){
+      let isExistingPlacement = placements.find(item => placement.id == item.id)
+      if (placements.length && !isExistingPlacement){
         return placements.some(singlePlacement => {
           return placement?.school?.schoolName == singlePlacement?.school?.schoolName
         })

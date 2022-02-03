@@ -6,20 +6,18 @@
 {% set backText = "Back to record" %}
 
 {% set gridColumn = 'govuk-grid-column-full' %}
-
 {% set formAction = "./update" | addReferrer(referrer) %}
-
 {% set minPlacementsRequired = data.settings.minPlacementsRequired %}
 {% set canAmend = record.status | canBeAmended %}
 
 {% block formContent %}
-
-  {% set placementCount = record.placement.items | length %}
-  
   {% include "_includes/trainee-name-caption.njk" %}
   <h1 class="govuk-heading-l">
     {{pageHeading}}
   </h1>
+
+  {% set placementCount = record.placement.items | length %}
+
 
   {# Details about how many placements are needed #}
   <div class="govuk-grid-row">

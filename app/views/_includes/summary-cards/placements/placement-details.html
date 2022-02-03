@@ -26,10 +26,8 @@
 
 {% else %}
 
-  {% if record.placement.hasPlacements == "Not yet"%}
+  {% if placementCount == 0 %}
     {% include "_includes/summary-cards/placements/no-placement-details.html" %}
-  {% elseif placementCount == 0 %}
-    <p class="govuk-body">You have not added any placements yet.<p>
   {% else %}
     {% for placement in placements %}
       {% include "_includes/summary-cards/placements/single-placement-details.html" %}

@@ -293,12 +293,14 @@ const all = [
   "Wildern School",
   "York St John University",
   "Yorkshire and Humber Teacher Training",
-  "Yorkshire Wolds Teacher Training"
+  "Yorkshire Wolds Teacher Training",
+  "Webury Hill SCITT" // Fake SCITT
 ]
 
 const permanentAccreditingProviders = [
-  "Coventry University",
-  "The University of Buckingham",
+  "Webury Hill SCITT", // Fake SCITT
+  "Coventry University"
+  // "The University of Buckingham",
   // "Leeds SCITT",
   // "Leeds Trinity University",
   // "Bournemouth Poole",

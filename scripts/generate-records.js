@@ -184,7 +184,7 @@ const generateFakeApplications = () => {
     // Hardcode provider and year
     // Todo - apply these back to seed records?
     let seed = {...seedRecord, ...{
-      provider: "Coventry University",
+      provider: "Webury Hill SCITT",
       academicYearSimple: currentYear
     }}
     applications.push(generateFakeApplication(seed))

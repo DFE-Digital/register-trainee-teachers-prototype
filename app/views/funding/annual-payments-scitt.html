@@ -1,11 +1,15 @@
-{% extends "layout.html" %}
+{% extends "_templates/_page.html" %}
 {% set navActive = "funding" %}
+
+{% set backText = "Home" %}
+{% set backLink = '/home' %}
+
+{% set pageHeading = "Funding 2021 to 2022" %}
 
 {% block content %}
 
-  {% set pageHeading = "Funding 2021 to 2022" %}
-
   {% set yearPaymentsTabName = "" | typesOfFunding | joinify  | sentenceCase %}
+
   {% set activeTabYearlyScitt = true %}
   {% include "_includes/funding-header-and-tab-nav.html" %}
 

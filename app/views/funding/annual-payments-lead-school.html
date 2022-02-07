@@ -1,9 +1,13 @@
-{% extends "layout.html" %}
+{% extends "_templates/_page.html" %}
 {% set navActive = "funding" %}
+
+{% set backText = "Home" %}
+{% set backLink = '/home' %}
+
+{% set pageHeading = "Funding 2021 to 2022" %}
 
 {% block content %}
 
-  {% set pageHeading = "Funding 2021 to 2022" %}
   {% set tabName = "Salaries and grants" %}
 
   {% set activeTabYearlyLeadSchool = true %}

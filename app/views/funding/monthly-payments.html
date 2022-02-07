@@ -166,6 +166,8 @@
 
       <h2 class="govuk-heading-l">Payments by funding stream</h2>
 
+      {% set accordionItems = [] %}
+
       {# Payment per month, by payment type tables #}
       {% for item in dataSource %}
 
@@ -210,12 +212,7 @@
         ]) %}
 
 
-        <h3 class="govuk-heading-m">{{ item.description | fixNamesFromFunding | sentenceCase | formatYearRange | safe }}</h3>
-      </div>
-    </div>
-
-    <div class="govuk-grid-row">
-      <div class="govuk-grid-column-one-half">
+      {% set accordionHTML %}
 
         {{ govukTable({
           caption: "Paymants made",
@@ -226,11 +223,12 @@
 
         {% if pastTotal == futureTotal and this != 12 %}
 
-          <p class="govuk-body">No more {{ item.description | fixNamesFromFunding | startLowerCase | formatYearRange | safe }} predicted.</p>
+          <p class="govuk-body govuk-!-margin-bottom-7">No more {{ item.description | fixNamesFromFunding | startLowerCase | formatYearRange | safe }} predicted.</p>
 
         {% elseif thisMonth != 12 %}
 
           {{ govukTable({
+            classes: "govuk-!-margin-bottom-7",
             caption: "Remaining payments (predicted)",
             captionClasses: "govuk-table__caption--s",
             head: headRow,
@@ -239,10 +237,20 @@
 
         {% endif %}
 
-        <hr class="govuk-section-break govuk-section-break--l">
+      {% endset %}
+      {% set accordionItems = accordionItems | push(
+        { 
+          heading: { text: item.description | fixNamesFromFunding | sentenceCase | formatYearRange | safe },
+          content: { html: accordionHTML }
+        }
+      ) %}
 
-        {% endfor %}
+    {% endfor %}
 
+    {{ govukAccordion({
+      id: "accordion-default",
+      items: accordionItems
+    }) }}
 
     </div>
   </div>

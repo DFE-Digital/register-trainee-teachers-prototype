@@ -18,17 +18,18 @@ monthlyFundingScittsArray.shift() // remove header row
 
 let monthlyFundingScitts = []
 monthlyFundingScittsArray.forEach(row => {
-  let description = row[3]
+  let descriptions = row[3]
   let monthlyPayments = row.slice(5, 17).map(value => parseInt(value))
   let cumulativeMonthlyPayments = monthlyPayments.map((payment, index, array) => {
     return array.slice(0, index + 1).reduce((a, b) => a + b, 0)
   })
   monthlyFundingScitts.push({
-    description,
+    descriptions,
     monthlyPayments,
     cumulativeMonthlyPayments
   })
 })
+
 
 // csv training bursaries and scholarships for SCITTS
 let annualFundingScittsCsv =
@@ -178,13 +179,13 @@ monthlyFundingLeadSchoolsArray.shift()
 
 let monthlyFundingLeadSchools = []
 monthlyFundingLeadSchoolsArray.forEach(row => {
-  let description = row[5]
+  let descriptions = row[5]
   let monthlyPayments = row.slice(7, 19).map(value => parseInt(value))
   let cumulativeMonthlyPayments = monthlyPayments.map((payment, index, array) => {
     return array.slice(0, index + 1).reduce((a, b) => a + b, 0)
   })
   monthlyFundingLeadSchools.push({
-    description,
+    descriptions,
     monthlyPayments,
     cumulativeMonthlyPayments
   })

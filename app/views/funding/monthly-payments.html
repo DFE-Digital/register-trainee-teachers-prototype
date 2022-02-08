@@ -37,8 +37,6 @@
   {% endif %}
   {% set dataSource = dataSource | sort(attribute = "descriptions") %}
 
-
-  {# Makes the type size smaller if the table is has more than 4 columns #}
   {% if not tablePerMonth %}
     {% set tableClasses = "govuk-!-font-size-16" %}
   {% endif %}
@@ -84,7 +82,7 @@
   {% endif %}
 
   {% for month in months %}
-    
+
     {% set monthTotal = 0 %}
     {% set row = [{ text: month }] %}
 
@@ -141,7 +139,6 @@
   {% set pastRows = pastRows | push(totalPerStreamRowPast) %}
   {% set futureRows = futureRows | push(totalPerStreamRow) %}
 
-
   <div class="govuk-grid-row">
   {% if not tablePerMonth %}
     <div class="govuk-grid-column-full">
@@ -167,8 +164,10 @@
           head: headRow,
           rows: futureRows
         }) if thisMonth != 12 }}
+
     </div>
   </div>
+
   {% if tablePerMonth %}
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds-from-desktop">
@@ -223,9 +222,7 @@
           items: accordionItems
         })}}
 
+      </div>
     </div>
   {% endif %}
-</div>
-
-
 {% endblock %}

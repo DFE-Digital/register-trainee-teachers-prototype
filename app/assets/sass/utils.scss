@@ -10,3 +10,7 @@ p + ul.govuk-list--bullet {
 html {
   scroll-behavior: smooth;
 }
+
+.app-table__in-accordion tr:last-child td {
+  border-bottom: none;
+}

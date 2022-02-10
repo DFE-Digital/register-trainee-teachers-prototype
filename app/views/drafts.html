@@ -52,7 +52,18 @@
 {% set filterOptionsHtml %}
 
   {# Shown for admins only #}
-  {% include "_includes/filter-panel/all-providers.njk" %}
+  {% if data.isAdmin %}
+
+    {% set adminOnlyFilters %}
+      {% include "_includes/filter-panel/all-providers.njk" %}
+    {% endset %}
+
+    {{ appAdminFeature({
+      classes: "app-status-box--filter-outdent",
+      html: adminOnlyFilters
+    }) }}
+
+  {% endif %}
 
   {# Shown when signed in as multiple providers simultaniously #}
   {% include "_includes/filter-panel/signed-in-providers.njk" %}

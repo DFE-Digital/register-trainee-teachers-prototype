@@ -250,7 +250,7 @@ const generateFakeApplicationsForProvider = (provider, year, count) => {
       qualificationRecommended: 0.05,
       qualificationAwarded: 0.05,
       deferred: 0.02,
-      withdrawn: 0.02,
+      withdrawn: 0.03,
     }
   }
   // Previous years will be mostly awarded with some withdrawn and a handful of deferred

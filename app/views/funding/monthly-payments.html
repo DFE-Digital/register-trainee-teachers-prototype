@@ -4,7 +4,7 @@
 {% set backText = "Home" %}
 {% set backLink = '/home' %}
 
-{% set pageHeading = "Funding 2021 to 2022" %}
+{% set pageHeading = "Funding " + data.years.currentAcademicYear %}
 
 {% set tablePerMonth = true %}
 
@@ -114,7 +114,9 @@
   {% endfor %}
 
   {% if thisMonth != 12 %}
-    {% set tableCaption = 'Payments to ' + thisMonth | prettyMonthFromAugust %}
+    {% set tableCaption %}
+      Payments to {{ thisMonth | prettyMonthFromAugust }} {% if thisMonth < 6 %}{{ data.years.defaultCourseYear }}{% else %}{{ data.years.defaultCourseYear + 1 }}{% endif %}
+    {% endset %}
     {% set totalPerStreamRowPast = [{ text: "Total to " + thisMonth | prettyMonthFromAugust, classes: "govuk-!-font-weight-bold" }] if not tablePerMonth %}
   {% else %}
     {% set tableCaption = 'Monthl payments' %}
@@ -192,14 +194,24 @@
 
           {% set bodyRows = bodyRows | push([{ text: "Total", classes: "govuk-!-font-weight-bold" }, { text: monthTotal | currency, format: "numeric", classes: "govuk-!-font-weight-bold" }]) %}
 
+          {% set accordionTitle -%}
+            {{ month }} {% if loop.index < 6 %}{{ data.years.defaultCourseYear }}{% else %}{{ data.years.defaultCourseYear + 1 }}{% endif %}
+          {%- endset %}
+
           {% set accordionHtml %}
-            {{ govukTable({
-              classes: "app-table__in-accordion",
-              caption: month + " payments",
-              captionClasses: "govuk-visually-hidden",
-              head: [{ text: "Payment type" }, { text: "Amount", format: "numeric" }],
-              rows: bodyRows
-            }) }}
+            {% if monthTotal != 0 %}
+              {{ govukTable({
+                classes: "app-table__in-accordion",
+                caption: month + " payments",
+                captionClasses: "govuk-visually-hidden",
+                head: [{ text: "Payment type" }, { text: "Amount", format: "numeric" }],
+                rows: bodyRows
+              }) }}
+            {% else %}
+              <p class="govuk-body">
+                No payments for {{ accordionTitle }}.
+              </p>
+            {% endif %}
           {% endset %}
 
           {% if loop.index0 == thisMonth -1 %}
@@ -208,11 +220,11 @@
 
           {% set accordionItems = accordionItems | push(
             { 
-              heading: { text: month },
+              heading: { text: accordionTitle },
               content: { html: accordionHtml },
               expanded: expandedState
             }
-          ) if monthTotal != 0 %}
+          )%}
         {% endfor %}
 
         <h2 class="govuk-heading-m">Payment breakdown</h2>

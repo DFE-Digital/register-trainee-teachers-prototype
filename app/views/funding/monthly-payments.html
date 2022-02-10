@@ -45,6 +45,8 @@
 
   {% if dataSource.length == 3 %}
     {% set cellClasses = "app-table__column-20" %}
+  {% elseif dataSource.length == 4 %}
+    {% set cellClasses = "app-table__column-16" %}
   {% endif %}
 
   {% set months  = [

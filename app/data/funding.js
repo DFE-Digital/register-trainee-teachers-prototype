@@ -4,14 +4,9 @@ const _ = require('lodash')
 // csv of monthly funding for SCITTS
 let monthlyFundingScittsCsv = 
 `Academic year,Provider ID,Provider name,Description,Total funding,August,September,October,November,December,January,February,March,April,May,June,July
-2021/22,12345,example provider,FE ITT Bursary for AY 2021/22,401000,0,18900,32880,42911,50932,36511,36511,36511,36461,36461,36461,36461
-2021/22,12345,example provider,Training bursary trainees,1285000,0,22032,22032,22032,396504,115650,115650,167050,115650,115650,115650,77100
-2021/22,12345,example provider,Early Years ITT Bursaries & Training Grants,241000,0,16020,16020,16020,38700,21690,21690,31330,21690,21690,21690,14460
-2021/22,12345,example provider,FE ITT in-year adjs for AY 2021/22,-112000,0,0,-5000,-15000,-13600,-11200,-11200,-11200,-11200,-11200,-11200,-11200
-2021/22,12345,example provider,FE ITT Annex G adj for AY 2018/19,-1500,0,0,0,-750,-750,0,0,0,0,0,0,0
-2021/22,12345,example provider,Course extension trainee payments for AY 20/21,45500,0,0,0,22750,22750,0,0,0,0,0,0,0
-2021/22,12345,example provider,Course extension provider payments for AY 20/21,14000,0,0,0,7000,7000,0,0,0,0,0,0,0
-2021/22,12345,example provider,EY 21/22 in-year adjustment for withdrawals,-11667,0,0,0,0,-5833,-5833,0,0,0,0,0,0`
+2021/22,0,Webury Hill SCITT,Course extension trainee payments for AY 20/21,13000,3250,3250,3250,1625,1625,0,0,0,0,0,0,0
+2021/22,0,Webury Hill SCITT,Training bursary trainees,300000,0,22032,22032,22032,41904,27000,27000,39000,27000,27000,27000,18000
+2021/22,0,Webury Hill SCITT,Course extension provider payments for AY 20/21,4000,0,1000,1000,1000,1000,0,0,0,0,0,0,0`
 
 let monthlyFundingScittsArray = CSV.parse(monthlyFundingScittsCsv)
 monthlyFundingScittsArray.shift() // remove header row

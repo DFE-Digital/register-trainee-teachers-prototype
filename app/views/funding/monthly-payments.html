@@ -119,7 +119,7 @@
     {% endset %}
     {% set totalPerStreamRowPast = [{ text: "Total to " + thisMonth | prettyMonthFromAugust, classes: "govuk-!-font-weight-bold" }] if not tablePerMonth %}
   {% else %}
-    {% set tableCaption = 'Monthl payments' %}
+    {% set tableCaption = 'Monthly payments' %}
     {% set totalPerStreamRowPast = [{ text: "Total", classes: "govuk-!-font-weight-bold" }] %}
   {% endif %}
   {% set totalPerStreamRow = [{ text: "Predicted total", classes: "govuk-!-font-weight-bold" }] if not tablePerMonth %}

@@ -37,8 +37,16 @@
   {% endif %}
   {% set dataSource = dataSource | sort(attribute = "descriptions") %}
 
-  {% if not tablePerMonth %}
+  {% if not tablePerMonth and dataSource.length > 4 %}
     {% set tableClasses = "govuk-!-font-size-16" %}
+  {% endif %}
+
+  {% if tablePerMonth %}
+    {% set cellClasses = "app-table__column-33" %}
+  {% elseif dataSource.length == 3 %}
+    {% set cellClasses = "app-table__column-20" %}
+  {% elseif dataSource.length == 4 %}
+    {% set cellClasses = "app-table__column-16" %}
   {% endif %}
 
   {% set months  = [
@@ -70,15 +78,15 @@
   {% set futureRows   = [] %}
 
 
-  {% set headRow = [{ text: "Month" }] %}
+  {% set headRow = [{ text: "Month", classes: cellClasses }] %}
   {% if not tablePerMonth %}
     {% for item in dataSource %}
-      {% set headRow = headRow | push({ text: item.descriptions | fixNamesFromFunding | sentenceCase | formatYearRange | safe }) %}
+      {% set headRow = headRow | push({ text: item.descriptions | fixNamesFromFunding | sentenceCase | formatYearRange | safe, classes: cellClasses }) %}
     {% endfor %}
   {% endif %}
-  {% set headRow = headRow | push({ text: "Total", format: "numeric" }) %}
+  {% set headRow = headRow | push({ text: "Total", format: "numeric", classes: cellClasses }) %}
   {% if tablePerMonth %}
-    {% set headRow = headRow | push({ text: "Running total", format: "numeric" }) %}
+    {% set headRow = headRow | push({ text: "Running total", format: "numeric", classes: cellClasses }) %}
   {% endif %}
 
   {% for month in months %}

@@ -226,7 +226,7 @@ span.summary-validation-symbol {
 
 // column widths for tables
 // app-table__column-xx
-$sizes: 70, 53, 35, 25, 20, 15, 10;
+$sizes: 70, 53, 33, 25, 20, 16, 15, 10;
 
 @each $size in $sizes {
   .app-table__column-#{$size} {

@@ -6,7 +6,8 @@ let monthlyFundingScittsCsv =
 `Academic year,Provider ID,Provider name,Description,Total funding,August,September,October,November,December,January,February,March,April,May,June,July
 2021/22,0,Webury Hill SCITT,Course extension trainee payments for AY 20/21,13000,3250,3250,3250,1625,1625,0,0,0,0,0,0,0
 2021/22,0,Webury Hill SCITT,Training bursary trainees,300000,0,22032,22032,22032,41904,27000,27000,39000,27000,27000,27000,18000
-2021/22,0,Webury Hill SCITT,Course extension provider payments for AY 20/21,4000,0,1000,1000,1000,1000,0,0,0,0,0,0,0`
+2021/22,0,Webury Hill SCITT,Course extension provider payments for AY 20/21,4000,0,1000,1000,1000,1000,0,0,0,0,0,0,0
+2021/23,0,Webury Hill SCITT,TB 21/22 in-year adjustment for withdrawals,-6300,0,0,0,0,-3150,-3150,0,0,0,0,0,0`
 
 let monthlyFundingScittsArray = CSV.parse(monthlyFundingScittsCsv)
 monthlyFundingScittsArray.shift() // remove header row

@@ -225,7 +225,7 @@ filters.typesOfFunding = () => {
 
 // Attempt to fix the names from funding
 filters.fixNamesFromFunding = (string) => {
-  return string.toLowerCase().replace(/ ay /g," ").replace(/ & /g," and ").replace(/in-year/g,"").replace(/adjs |adj /g,"adjustment ").replace(/annex g/g,"").replace(/fe/g, "further education").replace(/itt/g, "ITT").replace(/ey /g, "early years ")
+  return string.toLowerCase().replace(/ ay /g," ").replace(/ & /g," and ").replace(/in-year/g,"").replace(/adjs |adj /g,"adjustment ").replace(/annex g/g,"").replace(/fe/g, "further education").replace(/itt/g, "ITT").replace(/ey /g, "early years ").replace(/tb /g," Training bursary ")
 }
 
 /*

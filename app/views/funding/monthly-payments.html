@@ -6,7 +6,7 @@
 
 {% set pageHeading = "Funding " + data.years.currentAcademicYear %}
 
-{% set tablePerMonth = true %}
+{% set tablePerMonth = false %}
 
 {% block content %}
 
@@ -37,8 +37,14 @@
   {% endif %}
   {% set dataSource = dataSource | sort(attribute = "descriptions") %}
 
-  {% if not tablePerMonth %}
+  {{ dataSource | log }}
+
+  {% if not tablePerMonth and dataSource.length > 4 %}
     {% set tableClasses = "govuk-!-font-size-16" %}
+  {% endif %}
+
+  {% if dataSource.length == 3 %}
+    {% set cellClasses = "app-table__column-20" %}
   {% endif %}
 
   {% set months  = [
@@ -70,15 +76,15 @@
   {% set futureRows   = [] %}
 
 
-  {% set headRow = [{ text: "Month" }] %}
+  {% set headRow = [{ text: "Month", classes: cellClasses }] %}
   {% if not tablePerMonth %}
     {% for item in dataSource %}
-      {% set headRow = headRow | push({ text: item.descriptions | fixNamesFromFunding | sentenceCase | formatYearRange | safe }) %}
+      {% set headRow = headRow | push({ text: item.descriptions | fixNamesFromFunding | sentenceCase | formatYearRange | safe, classes: cellClasses }) %}
     {% endfor %}
   {% endif %}
-  {% set headRow = headRow | push({ text: "Total", format: "numeric" }) %}
+  {% set headRow = headRow | push({ text: "Total", format: "numeric", classes: cellClasses }) %}
   {% if tablePerMonth %}
-    {% set headRow = headRow | push({ text: "Running total", format: "numeric" }) %}
+    {% set headRow = headRow | push({ text: "Running total", format: "numeric", classes: cellClasses }) %}
   {% endif %}
 
   {% for month in months %}

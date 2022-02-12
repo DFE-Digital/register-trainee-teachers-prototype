@@ -10,6 +10,13 @@
 
 {% block content %}
 
+  {% if currentMonth() >= 6 %}
+    {% set thisMonth = -1 + currentMonth() - 6 %}
+  {% else %}
+    {% set thisMonth = -1 + currentMonth() + 6 %}
+  {% endif %}
+  {# {% set thisMonth = 12 %} #}
+
   {% set yearPaymentsTabName = "" | typesOfFunding | joinify  | sentenceCase %}
 
   {% set activeTabMonthly = true %}
@@ -23,8 +30,11 @@
       <p class="govuk-body govuk-!-margin-bottom-2">
         Last updated: {{ "" | yesterdayGovuk }}
       </p>
+      <p class="govuk-body govuk-!-margin-bottom-2">
+        <a href="#" class="govuk-link--no-visited-state">Export lastest monthly payment data (csv)</a><br>
+      </p>
       <p class="govuk-body">
-        <a href="#" class="govuk-link--no-visited-state">Export monthly payments</a>
+        <a href="#">Export all monthly payment data ({{ thisMonth }} csv files)</a>
       </p>
     </div>
   </div>
@@ -63,13 +73,6 @@
     "June",
     "July"
   ]%}
-
-  {% if currentMonth() >= 6 %}
-    {% set thisMonth = -1 + currentMonth() - 6 %}
-  {% else %}
-    {% set thisMonth = -1 + currentMonth() + 6 %}
-  {% endif %}
-  {# {% set thisMonth = 12 %} #}
 
   {% set pastTotal     = 0 %}
   {% set total         = 0 %}
@@ -207,6 +210,14 @@
           {%- endset %}
 
           {% set accordionHtml %}
+
+            {% if loop.index <= thisMonth %}
+              <p class="govuk-body">
+                <a href="#" class="govuk-link--no-visited-state">Export monthly payment data as it was on {{ [1,2, 3, 4, 5] | random }} {{ month }} {% if loop.index < 6 %}{{ data.years.defaultCourseYear }}{% else %}{{ data.years.defaultCourseYear + 1 }}{% endif %}</a>
+              </p>
+            {% endif %}
+
+
             {% if monthTotal != 0 %}
               {{ govukTable({
                 classes: "app-table__in-accordion",

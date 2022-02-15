@@ -1,10 +1,7 @@
 {% extends "_templates/_page.html" %}
 {% set navActive = "funding" %}
 
-{% set backText = "Home" %}
-{% set backLink = '/home' %}
-
-{% set pageHeading = "Funding " + data.years.currentAcademicYear %}
+{% set pageHeading = "Funding" %}
 
 {% block content %}
 
@@ -16,13 +13,14 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds-from-desktop">
       <h2 class="govuk-heading-l">
-        {{ yearPaymentsTabName | sentenceCase }}
+        {{ yearPaymentsTabName | sentenceCase }} 
+        <span class="app-nowrap">{{ data.years.currentAcademicYear }}</span>
       </h2>
       <p class="govuk-body govuk-!-margin-bottom-1">
         Last updated: {{ "" | yesterdayGovuk }}
       </p>
       <p>
-        <a href="#" class="govuk-link--no-visited-state">Export {{ yearPaymentsTabName | lower }}</a>
+        <a href="#" class="govuk-link--no-visited-state">Export {{ yearPaymentsTabName | lower }} (csv)</a>
       </p>
     </div>
   </div>

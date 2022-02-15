@@ -1,3 +1,6 @@
+{% set backText = "Home" %}
+{% set backLink = '/home' %}
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
     <span class="govuk-caption-xl">{{ data.signedInProviders | andSeparate }}</span>
@@ -9,18 +12,23 @@
   label: 'Sub navigation',
   classes: 'govuk-!-margin-bottom-4',
   items: [{
-    text: 'Monthly payments',
+    text: 'Monthly payments ' + data.years.currentAcademicYear,
     href: "/funding/monthly-payments",
     active: activeTabMonthly
   },
   {
-    text: yearPaymentsTabName,
+    text: yearPaymentsTabName + ' ' + data.years.currentAcademicYear,
     href: '/funding/annual-payments-scitt',
     active: activeTabYearlyScitt
   } if accessLevel == 'accreditingProvider',
   {
-    text: "Salaries and grants",
+    text: 'Salaries and grants ' + data.years.currentAcademicYear,
     href: '/funding/annual-payments-lead-school',
     active: activeTabYearlyLeadSchool
-  } if accessLevel == 'leadSchool'
+  } if accessLevel == 'leadSchool',
+  {
+    text: "Past year’s funding",
+    href: '/funding/data',
+    active: activeTabFundingData
+  }
 ]}) }}

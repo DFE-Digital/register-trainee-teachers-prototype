@@ -1,0 +1,42 @@
+{% extends "_templates/_page.html" %}
+
+{% set backText = "Home" %}
+{% set backLink = '/home' %}
+{% set pageHeading = "Funding" %}
+
+{% block content %}
+
+  {% set historicFundingAcademicYears = [
+    2020,
+    2019,
+    2018
+  ] %}
+
+{% set pageHeading = "Funding " + data.years.currentAcademicYear %}
+
+{% block content %}
+
+  {% set fundingData = true %}
+  {% include "_includes/funding-header-and-tab-nav.html" %}
+
+  <h1 class="govuk-heading-xl">
+    <span class="govuk-caption-l">{{ data.signedInProviders | andSeparate }}</span>
+    {{ pageHeading }}
+  </h1>
+
+  <p class="govuk-body"><a href="annual-payments-scitt">View funding information for 2020 to 2021</a></p>
+
+  <hr class="govuk-section-break govuk-section-break--m">
+
+  <p class="govuk-body">Export funding data (csv) for past years:</p>
+  <ol class="govuk-list govuk-list--bullet govuk-list--spaced">
+  {% for academicYear in historicFundingAcademicYears %}
+    <li>
+      <a href="#" class="govuk-link--no-visited-state">
+        <span class="tabular">{{ academicYear }} to {{ academicYear + 1 }}</span>
+      </a>
+    </li>
+  {% endfor %}
+  </ol>
+
+{% endblock %}

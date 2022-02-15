@@ -1,0 +1,126 @@
+{% extends "_templates/_page.html" %}
+{% set navActive = "funding" %}
+
+{% set pageHeading = "Funding" %}
+
+
+{% block content %}
+
+  {% set activeTabFundingData = true %}
+  {% set tabName = "Past year’s funding" %}
+  {% set yearPaymentsTabName = "" | typesOfFunding | joinify  | sentenceCase %}
+
+  {% set months  = [
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July"
+  ]%}
+
+  {% set historicFundingAcademicYears = [
+    2020,
+    2019,
+    2018
+  ] %}
+
+  {% if currentMonth() >= 6 %}
+    {% set thisMonth = -1 + currentMonth() - 6 %}
+  {% else %}
+    {% set thisMonth = -1 + currentMonth() + 6 %}
+  {% endif %}
+  {# {% set thisMonth = 12 %} #}
+
+  {% set accordionItems = [] %}
+
+  {% include "_includes/funding-header-and-tab-nav.html" %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+      <h2 class="govuk-heading-l">
+        {{ tabName | sentenceCase }}
+      </h2>
+
+      {% for academicYear in historicFundingAcademicYears %}
+
+        <h3 class="govuk-heading-m">
+          {{ academicYear  }} to {{ academicYear + 1 }}
+          {# {% if loop.first %}
+            <span class="govuk-body">(current year)</span>
+          {% endif %} #}
+        </h3>
+
+        {# {% if loop.first %}
+
+          <p class="govuk-body">
+            <a href="#" class="govuk-body govuk-link--no-visited-state">
+              Export all monthly payment data ({% if not loop.first %}12{% else %}{{ thisMonth }}{% endif %} csvs)
+            </a>
+          </p>
+          <p class="govuk-body govuk-!-margin-bottom-5">
+            Export monthly funding data as of:
+          </p>
+          <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
+            {% for month in months %}
+              {% if loop.index <= thisMonth %}
+                <li>
+                  <a href="#" class="govuk-body govuk-link--no-visited-state">
+                    {% set day = [1, 2, 3, 4, 5] | random %}
+                    {% set year = academicYear %}
+                    {% if loop.index > 5 %}
+                      {% set year = year + 1 %}
+                    {% endif %}
+                    {{ day }} {{ month | prettyMonthFromAugust }} {{ year }}
+                  </a>
+                </li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+          <p class="govuk-body">
+            <a href="#" class="govuk-link--no-visited-state">
+              Export {{ yearPaymentsTabName | startLowerCase }} data (csv)
+            </a>
+          </p>
+
+        {% else %} #}
+
+          <p class="govuk-body">
+            Export:
+          </p>
+          <ul class="govuk-list govuk-list--bullet govuk-list--spaced govuk-!-margin-top-1">
+            <li>
+              <a href="#" class="govuk-body govuk-link--no-visited-state">
+                  {# final #} monthly payment data (csv)
+              </a>
+            </li>
+            {# <li>
+              <a href="#" class="govuk-body govuk-link--no-visited-state">
+                  all monthly payment data (12 csvs)
+              </a>
+            </li> #}
+            <li>
+              <a href="#" class="govuk-link--no-visited-state">
+                {{ yearPaymentsTabName | startLowerCase }} data (csv)
+              </a>
+            </li>
+          </ul>
+
+        {# {% endif %} #}
+
+        {% if not loop.last %}
+          <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+        {% endif %}
+
+      {% endfor %}
+
+    </div>
+  </div>
+
+{% endblock %}

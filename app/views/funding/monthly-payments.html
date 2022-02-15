@@ -1,14 +1,17 @@
 {% extends "_templates/_page.html" %}
 {% set navActive = "funding" %}
 
-{% set backText = "Home" %}
-{% set backLink = '/home' %}
-
-{% set pageHeading = "Funding " + data.years.currentAcademicYear %}
+{% set pageHeading = "Funding" %}
 
 {% set tablePerMonth = true %}
 
 {% block content %}
+
+
+  {% set yearPaymentsTabName = "" | typesOfFunding | joinify  | sentenceCase %}
+
+  {% set activeTabMonthly = true %}
+  {% include "_includes/funding-header-and-tab-nav.html" %}
 
   {% if currentMonth() >= 6 %}
     {% set thisMonth = -1 + currentMonth() - 6 %}
@@ -17,24 +20,16 @@
   {% endif %}
   {# {% set thisMonth = 12 %} #}
 
-  {% set yearPaymentsTabName = "" | typesOfFunding | joinify  | sentenceCase %}
-
-  {% set activeTabMonthly = true %}
-  {% include "_includes/funding-header-and-tab-nav.html" %}
-
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds-from-desktop">
       <h2 class="govuk-heading-l">
-        Monthly payments
+        Monthly payments <span class="app-nowrap">{{ data.years.currentAcademicYear }}</span>
       </h2>
       <p class="govuk-body govuk-!-margin-bottom-2">
         Last updated: {{ "" | yesterdayGovuk }}
       </p>
       <p class="govuk-body govuk-!-margin-bottom-2">
         <a href="#" class="govuk-link--no-visited-state">Export lastest monthly payment data (csv)</a><br>
-      </p>
-      <p class="govuk-body">
-        <a href="#">Export all monthly payment data ({{ thisMonth }} csv files)</a>
       </p>
     </div>
   </div>
@@ -49,14 +44,9 @@
 
   {% if not tablePerMonth and dataSource.length > 4 %}
     {% set tableClasses = "govuk-!-font-size-16" %}
-  {% endif %}
-
-  {% if tablePerMonth %}
-    {% set cellClasses = "app-table__column-33" %}
-  {% elseif dataSource.length == 3 %}
-    {% set cellClasses = "app-table__column-20" %}
-  {% elseif dataSource.length == 4 %}
-    {% set cellClasses = "app-table__column-16" %}
+  {% else %}
+    {% set rowHeadingCellClasses = "app-table__column-50" %}
+    {% set dataCellClasses = "app-table__column-25" %}
   {% endif %}
 
   {% set months  = [
@@ -81,15 +71,15 @@
   {% set futureRows   = [] %}
 
 
-  {% set headRow = [{ text: "Month", classes: cellClasses }] %}
+  {% set headRow = [{ text: "Month", classes: rowHeadingCellClasses }] %}
   {% if not tablePerMonth %}
     {% for item in dataSource %}
       {% set headRow = headRow | push({ text: item.descriptions | fixNamesFromFunding | sentenceCase | formatYearRange | safe, classes: cellClasses }) %}
     {% endfor %}
   {% endif %}
-  {% set headRow = headRow | push({ text: "Total", format: "numeric", classes: cellClasses }) %}
+  {% set headRow = headRow | push({ text: "Total", format: "numeric", classes: dataCellClasses }) %}
   {% if tablePerMonth %}
-    {% set headRow = headRow | push({ text: "Running total", format: "numeric", classes: cellClasses }) %}
+    {% set headRow = headRow | push({ text: "Running total", format: "numeric", classes: dataCellClasses }) %}
   {% endif %}
 
   {% for month in months %}
@@ -186,6 +176,7 @@
       <div class="govuk-grid-column-two-thirds-from-desktop">
 
         {% set accordionItems = [] %}
+        {% set runningMonthTotal = 0 %}
 
         {% for month in months %}
         
@@ -195,15 +186,22 @@
           {% set monthTotal = 0 %}
 
           {% for item in dataSource %}
-              {% set row = [
-                { text: item.descriptions | fixNamesFromFunding | sentenceCase | formatYearRange | safe },
-                { text: item.monthlyPayments[monthIndex] | currency, format: "numeric" }
-              ] if item.monthlyPayments[monthIndex] %}
+            {% set row = [
+              { text: item.descriptions | fixNamesFromFunding | sentenceCase | formatYearRange | safe },
+              { text: item.monthlyPayments[monthIndex] | currency, format: "numeric" },
+              { text: item.cumulativeMonthlyPayments[monthIndex] | currency, format: "numeric" }
+            ] if item.monthlyPayments[monthIndex] %}
             {% set monthTotal = monthTotal + item.monthlyPayments[monthIndex] %}
             {% set bodyRows = bodyRows | push(row) %}
           {% endfor %}
+          
+          {% set runningMonthTotal = runningMonthTotal + monthTotal %}
 
-          {% set bodyRows = bodyRows | push([{ text: "Total", classes: "govuk-!-font-weight-bold" }, { text: monthTotal | currency, format: "numeric", classes: "govuk-!-font-weight-bold" }]) %}
+          {% set bodyRows = bodyRows | push([
+            { text: "Total", classes: "govuk-!-font-weight-bold" }, 
+            { text: monthTotal | currency, format: "numeric", classes: "govuk-!-font-weight-bold" },
+            { text: runningMonthTotal | currency, format: "numeric", classes: "govuk-!-font-weight-bold" }
+          ]) %}
 
           {% set accordionTitle -%}
             {{ month }} {% if loop.index < 6 %}{{ data.years.defaultCourseYear }}{% else %}{{ data.years.defaultCourseYear + 1 }}{% endif %}
@@ -211,19 +209,22 @@
 
           {% set accordionHtml %}
 
-            {% if loop.index <= thisMonth %}
+{#             {% if loop.index <= thisMonth %}
               <p class="govuk-body">
                 <a href="#" class="govuk-link--no-visited-state">Export monthly payment data as it was on {{ [1,2, 3, 4, 5] | random }} {{ month }} {% if loop.index < 6 %}{{ data.years.defaultCourseYear }}{% else %}{{ data.years.defaultCourseYear + 1 }}{% endif %}</a>
               </p>
-            {% endif %}
+            {% endif %} #}
 
 
             {% if monthTotal != 0 %}
               {{ govukTable({
-                classes: "app-table__in-accordion",
+                classes: "app-table__in-accordion govuk-!-margin-bottom-6",
                 caption: month + " payments",
                 captionClasses: "govuk-visually-hidden",
-                head: [{ text: "Payment type" }, { text: "Amount", format: "numeric" }],
+                head: [
+                  { text: "Payment type", classes: rowHeadingCellClasses }, 
+                  { text: "Amount", format: "numeric", classes: dataCellClasses }, 
+                  { text: "Running total", format: "numeric", classes: dataCellClasses }],
                 rows: bodyRows
               }) }}
             {% else %}

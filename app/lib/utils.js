@@ -934,6 +934,10 @@ exports.sourceIsManual = record => {
   return record?.source != "Apply"
 }
 
+exports.sourceIsHESA = record => {
+  return record?.source == "HESA"
+}
+
 exports.isApprenticeship = record => {
   return record?.route == "Teaching apprenticeship (postgrad)"
 }

@@ -89,7 +89,8 @@ const generateFakeApplication = (params = {}) => {
   application.diversity       = (params.diversity === null) ? undefined : { ...generateDiversity(), ...params.diversity }
   application.id              = params.id || faker.datatype.uuid()
   application.personalDetails = (params.personalDetails === null) ? undefined : { ...generatePersonalDetails(), ...params.personalDetails }
-  application.provider        = params.provider || faker.helpers.randomize(providers)
+  application.provider        = params.provider || faker.helpers.randomize(providers).name
+  application.providerType    = params.providerType || "SCITT"
   application.route           = (params.route === null) ? undefined : (params.route || getRandomRoute(params))
   application.status          = params.status || faker.helpers.randomize(statuses)
   
@@ -185,6 +186,7 @@ const generateFakeApplications = () => {
     // Todo - apply these back to seed records?
     let seed = {...seedRecord, ...{
       provider: "Webury Hill SCITT",
+      providerType: "SCITT",
       academicYearSimple: currentYear
     }}
     applications.push(generateFakeApplication(seed))
@@ -202,7 +204,7 @@ const generateFakeApplications = () => {
       // Years can be ±10% in size
       let traineeCount = getRandomArbitrary((providerSize * 0.9), (providerSize * 1.1))
       if (provider?.name == "Webury Hill SCITT") traineeCount = 130
-      applications = applications.concat(generateFakeApplicationsForProvider(provider.name, year, traineeCount))
+      applications = applications.concat(generateFakeApplicationsForProvider(provider, year, traineeCount))
     })
 
   })
@@ -361,7 +363,8 @@ const generateFakeApplicationsForProvider = (provider, year, count) => {
     // Set common provider and year for all stubs
     let selectedStub = {
       ...{
-        provider,
+        provider: provider.name,
+        providerType: provider.type,
         academicYearSimple: year
       }, 
       ...stubApplication[statusPick]

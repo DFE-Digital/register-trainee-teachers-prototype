@@ -11,7 +11,7 @@ let utils = require("./../lib/utils.js")
 filters.getHighestLevel = array => {
   if (!array || !Array.isArray(array)) return false
   else if (array.includes("admin")) return "admin"
-  else if (array.includes("accreditingProvider")) return "accreditingProvider"
+  else if (array.includes("SCITT") || array.includes("HEI")) return "accreditingProvider"
   else if (array.includes("leadSchool")) return "leadSchool"
   else return false
 }

@@ -308,30 +308,43 @@ const permanentAccreditingProviders = [
   // "South Coast SCITT"
 ]
 
+const higherEducationInstitutions = [
+  "University of Lincoln",
+  "Durham University",
+  "Imperial College London"
+]
 
-// Returns a smaller set of providers as the real set is too big
-const getSelectedProviders = (providers, permanentProviders) => {
-  // One in 30 providers
-  let reducedProviders = providers.filter((provider, index) => { 
-    return (index % 50 === 0)
-  })
+const scitt = [
+  "Webury Hill SCITT", // Fake SCITT
+  "West Essex SCITT",
+  "The John Taylor SCITT"
+]
+
+// // Returns a smaller set of providers as the real set is too big
+// const getSelectedProviders = (providers, permanentProviders) => {
+//   // One in 50 providers
+//   let reducedProviders = providers.filter((provider, index) => { 
+//     return (index % 50 === 0)
+//   })
   
-  reducedProviders = reducedProviders.concat(permanentAccreditingProviders).sort()
-  return [...new Set(reducedProviders)] // Uniq
-}
+//   reducedProviders = reducedProviders.concat(permanentAccreditingProviders).sort()
+//   return [...new Set(reducedProviders)] // Uniq
+// }
 
-const makeObject = providers => {
+const makeObject = (providers, type) => {
   return providers.map(provider => {
     return {
       name: provider,
-      type: "accreditingProvider"
+      type: type
     }
   } )
 }
 
-const selected = getSelectedProviders(all, permanentAccreditingProviders)
+let allProviders = makeObject(higherEducationInstitutions, "HEI").concat(makeObject(scitt, "SCITT"))
+
+// const selected = getSelectedProviders(all, permanentAccreditingProviders)
 
 module.exports = {
-  all: makeObject(all),
-  selected: makeObject(selected) 
+  all: allProviders,
+  selected: allProviders
 }

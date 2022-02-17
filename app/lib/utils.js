@@ -1402,7 +1402,7 @@ exports.filterByProvider = function(records, array, data=false){
 
     // Check if any of the providers match
     return providerData.some(provider => {
-      if (provider.type == "accreditingProvider"){
+      if (provider.type == "SCTIT" || provider.type == "HEI"){
         return record.provider == provider.name
       }
       else if (provider.type == "leadSchool"){

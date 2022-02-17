@@ -4,13 +4,11 @@ const trainingRouteData = require('../training-route-data')
 
 module.exports = application => {
 
-console.log(application.providerType)
-
   if (application.status == "Draft") return "Manual"
 
   else {
     if (trainingRouteData.applyRoutes.includes(application.route)){
-      if (application.providerType == "HEI") {
+      if (application.accreditingProviderType == "HEI") {
         return weighted.select({
           "Manual": 0.1,
           "HESA":   0.9,

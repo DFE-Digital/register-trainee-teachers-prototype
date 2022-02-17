@@ -90,7 +90,7 @@ const generateFakeApplication = (params = {}) => {
   application.id              = params.id || faker.datatype.uuid()
   application.personalDetails = (params.personalDetails === null) ? undefined : { ...generatePersonalDetails(), ...params.personalDetails }
   application.provider        = params.provider || faker.helpers.randomize(providers).name
-  application.providerType    = params.providerType || "SCITT"
+  application.accreditingProviderType    = params.accreditingProviderType || "SCITT" // TODO: this should look up the accrediting provider type from the provider's name
   application.route           = (params.route === null) ? undefined : (params.route || getRandomRoute(params))
   application.status          = params.status || faker.helpers.randomize(statuses)
   
@@ -186,7 +186,7 @@ const generateFakeApplications = () => {
     // Todo - apply these back to seed records?
     let seed = {...seedRecord, ...{
       provider: "Webury Hill SCITT",
-      providerType: "SCITT",
+      accreditingProviderType: "SCITT",
       academicYearSimple: currentYear
     }}
     applications.push(generateFakeApplication(seed))
@@ -198,7 +198,7 @@ const generateFakeApplications = () => {
     // Approximate size of provider
     // TODO: store provider size somewhere so it can be used here and
     // by the course generator
-    let providerSize = getRandomInt(50)
+    let providerSize = getRandomArbitrary(50, 100)
 
     yearsToGenerate.forEach((year) => {
       // Years can be ±10% in size
@@ -232,9 +232,12 @@ const generateFakeApplicationsForProvider = (provider, year, count) => {
     if (count > 30) {
       count = 30 
     }
+
+    // Only SCITTs should have Apply drafts
+    let isScitt = (provider?.accreditingProviderType != "HEI")
     targetCounts = {
-      draft: 0.20,
-      applyEnrolled: 0.70,
+      draft: (isScitt) ? 0.20 : 0.9,
+      applyEnrolled: (isScitt) ? 0.70 : 0,
       pendingTrn: 0.05,
       trnReceived: 0.05,
       qualificationRecommended: 0.00,
@@ -364,7 +367,7 @@ const generateFakeApplicationsForProvider = (provider, year, count) => {
     let selectedStub = {
       ...{
         provider: provider.name,
-        providerType: provider.type,
+        accreditingProviderType: provider.accreditingProviderType,
         academicYearSimple: year
       }, 
       ...stubApplication[statusPick]

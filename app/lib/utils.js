@@ -1402,7 +1402,7 @@ exports.filterByProvider = function(records, array, data=false){
 
     // Check if any of the providers match
     return providerData.some(provider => {
-      if (provider.type == "SCTIT" || provider.type == "HEI"){
+      if (provider.type == "accreditingProvider"){
         return record.provider == provider.name
       }
       else if (provider.type == "leadSchool"){
@@ -1428,6 +1428,7 @@ exports.filterByLeadSchool = (records, array) => {
 // Can’t be an arrow function because we need access to the Nunjucks context
 exports.filterBySignedIn = function(records, data=false){
   data = Object.assign({}, (data || this.ctx.data || false))
+
   if (!data) {
     console.log('Error with filterBySignedIn: session data not provided')
     return []

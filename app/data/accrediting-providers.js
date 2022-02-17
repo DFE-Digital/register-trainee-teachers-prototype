@@ -311,6 +311,7 @@ const permanentAccreditingProviders = [
 const higherEducationInstitutions = [
   "University of Lincoln",
   "Durham University",
+  "Coventry University",
   "Imperial College London"
 ]
 
@@ -335,7 +336,8 @@ const makeObject = (providers, type) => {
   return providers.map(provider => {
     return {
       name: provider,
-      type: type
+      type: "accreditingProvider",
+      accreditingProviderType: type
     }
   } )
 }

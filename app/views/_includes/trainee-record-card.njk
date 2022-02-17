@@ -24,7 +24,7 @@
       </h3>
 
       <span class="app-application-card_tag-container">
-        {% if not record | recordIsComplete and isAuthorised('showIncomplete') %}
+        {% if not record | recordIsComplete and not record | sourceIsHESA and isAuthorised('showIncomplete') %}
           <span style="display: inline-block;">
             {{govukTag({
               text: "Incomplete",

@@ -952,6 +952,48 @@ exports.isPreviousYears = record => {
   return !exports.isCurrentYear(record) && !exports.isFutureYear(record)
 }
 
+// HESA records will be locked until 14 April of the last year of the course
+// (this is based on last HESA update, but also arbitrary)
+exports.dateHesaRecordUnlocked = record => {
+
+  const endAcademicYear = moment(record?.courseDetails?.endDate).format("YYYY")
+  return moment(`${endAcademicYear}-04-14`).format("YYYY-MM-DD")
+
+}
+
+/* 
+  A HESA record should be read only if:
+  - its not finishing this academic year
+  - or its finishing this year, but todays date is before the cut-off
+*/
+
+exports.isHesaAndLocked = record => {
+
+  const source = record?.source
+
+  const endAcademicYear = moment(record?.courseDetails?.endDate).format("YYYY")
+  const finishedPreviousYear = (endAcademicYear < years.defaultCourseEndYear)
+  const isFinishingThisYear = (endAcademicYear == years.defaultCourseEndYear)
+
+  const dateThisRecordUnlocksOn = exports.dateHesaRecordUnlocked(record)
+
+  let shouldBeLocked = false
+
+  if (source == "HESA") {
+     if (finishedPreviousYear) {
+        shouldBeLocked = false
+     } else if (exports.isFutureYear(record)) {
+        shouldBeLocked = true
+     }
+     else if (isFinishingThisYear && (moment().isBefore(dateThisRecordUnlocksOn))) {
+        shouldBeLocked = true
+     }
+   } 
+  else {
+    shouldBeLocked = false
+  }
+  return shouldBeLocked
+}
 
 // trainees who:
 // - started this year

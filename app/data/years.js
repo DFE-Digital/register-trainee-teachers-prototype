@@ -14,7 +14,7 @@ let currentAcademicYear = "2021 to 2022"
 let defaultCourseYear = 2021
 // defaultCourseYear = null
 
-let defaultCourseEndYear = defaultCourseYear + 1
+let endOfCurrentCycle = defaultCourseYear + 1
 
 // The first year in the range
 let academicYearsShort = academicYears.map(year => year.substring(0, 4))
@@ -28,7 +28,7 @@ module.exports = {
     academicYearsShort,
     currentAcademicYear,
     defaultCourseYear,
-    defaultCourseEndYear,
+    endOfCurrentCycle,
     nextAcademicYear,
     previousAcademicYear
   }

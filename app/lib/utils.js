@@ -972,8 +972,8 @@ exports.isHesaAndLocked = record => {
   const source = record?.source
 
   const endAcademicYear = moment(record?.courseDetails?.endDate).format("YYYY")
-  const finishedPreviousYear = (endAcademicYear < years.defaultCourseEndYear)
-  const isFinishingThisYear = (endAcademicYear == years.defaultCourseEndYear)
+  const finishedPreviousYear = (endAcademicYear < years.endOfCurrentCycle)
+  const isFinishingThisYear = (endAcademicYear == years.endOfCurrentCycle)
 
   const dateThisRecordUnlocksOn = exports.dateHesaRecordUnlocked(record)
 

@@ -100,6 +100,22 @@ filters.startsWith = (string, target) => {
   }
 }
 
+// Make a string possessive
+// {{ "James Joyce" | possessive }} 
+//     James Joyce’s
+// {{ "Joyce James" | possessive }} 
+//     Joyce James’
+
+filters.possessive = (string) => {
+  lastLetterOfString = string.split('').slice(-1)
+  if (lastLetterOfString == "s") {
+    return string + "’"
+  } else {
+    return string + "’s"
+  }
+}
+
+
 // -------------------------------------------------------------------
 // keep the following line to return your filters to the app
 // -------------------------------------------------------------------

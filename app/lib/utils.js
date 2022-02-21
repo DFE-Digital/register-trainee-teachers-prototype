@@ -979,7 +979,7 @@ exports.isHesaAndLocked = record => {
 
   let shouldBeLocked = false
 
-  if (source == "HESA") {
+  if (exports.sourceIsHESA(record)) {
      if (finishedPreviousYear) {
         shouldBeLocked = false
      } else if (exports.isFutureYear(record)) {

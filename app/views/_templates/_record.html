@@ -75,27 +75,7 @@
     {% endif %}
   </div>
 
-  {% if record | isHesaAndLocked %}
-    {% set hesaRecordSummary %}
-      <h3 class="govuk-heading-s">
-        This record was imported from HESA and cannot be edited
-      </h3>
-      <p class="govuk-body">
-        Updates from HESA are imported regularly.
-      </p>
-      <p class="govuk-body">
-        You will be able to recommend the trainee for QTS at the end of the academic year.
-      </p>
-    {% endset %}
-    <div class="govuk-grid-row">
-      <div class="govuk-grid-column-two-thirds-from-desktop">
-        {{ govukInsetText({
-          text: hesaRecordSummary | safe,
-          classes: "govuk-!-padding-top-0 govuk-!-padding-bottom-0"
-        }) }}
-      </div>
-    </div>
-  {% endif %}
+  {% include "_includes/locked-hesa-record-message.html" %}
 
   {% include "_includes/actions-banner.njk" %}
 

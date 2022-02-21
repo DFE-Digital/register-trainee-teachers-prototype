@@ -107,11 +107,15 @@ filters.startsWith = (string, target) => {
 //     Joyce James’
 
 filters.possessive = (string) => {
-  lastLetterOfString = string.split('').slice(-1)
-  if (lastLetterOfString == "s") {
+  const lastLetterOfString = string.split('').slice(-1).toString()
+  if (lastLetterOfString == "s" || lastLetterOfString == "S") {
     return string + "’"
-  } else {
+  } else if (lastLetterOfString == lastLetterOfString.toUpperCase()) {
+    return string + "’S"
+  } else if (lastLetterOfString == lastLetterOfString.toLowerCase()) {
     return string + "’s"
+  } else {
+    console.log("Error with possive filter")
   }
 }
 

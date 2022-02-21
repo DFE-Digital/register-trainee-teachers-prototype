@@ -101,10 +101,14 @@ filters.startsWith = (string, target) => {
 }
 
 // Make a string possessive
-// {{ "James Joyce" | possessive }} 
+// {{ "James Joyce" | possessive }}
 //     James Joyce’s
-// {{ "Joyce James" | possessive }} 
+// {{ "Joyce James" | possessive }}
 //     Joyce James’
+// {{ "JAMES JOYCE" | possessive }}
+//     JAMES JOYCE’S
+// {{ "Joyce James" | possessive }}
+//     JOYCE JAMES’
 
 filters.possessive = (string) => {
   const lastLetterOfString = string.split('').slice(-1).toString()
@@ -115,7 +119,7 @@ filters.possessive = (string) => {
   } else if (lastLetterOfString == lastLetterOfString.toLowerCase()) {
     return string + "’s"
   } else {
-    console.log("Error with possive filter")
+    console.log("Error with possessive filter")
   }
 }
 

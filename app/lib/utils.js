@@ -952,13 +952,25 @@ exports.isPreviousYears = record => {
   return !exports.isCurrentYear(record) && !exports.isFutureYear(record)
 }
 
+// Get end year
+exports.getEndAcademicYear = record => {
+  return moment(record?.courseDetails?.endDate).format("YYYY")
+}
+
+// Check if record is finishing this year
+exports.isFinishingThisAcademicYear = record => {
+  return exports.getEndAcademicYear(record) == years.endOfCurrentCycle
+}
+
+// Check if record finished earlier than this year
+exports.finishedEarlierThanThisAcademicYear = record => {
+  return exports.getEndAcademicYear(record) < years.endOfCurrentCycle
+}
+
 // HESA records will be locked until 14 April of the last year of the course
 // (this is based on last HESA update, but also arbitrary)
 exports.dateHesaRecordUnlocked = record => {
-
-  const endAcademicYear = moment(record?.courseDetails?.endDate).format("YYYY")
-  return moment(`${endAcademicYear}-04-14`).format("YYYY-MM-DD")
-
+  return moment(`${exports.getEndAcademicYear(record)}-04-14`).format("YYYY-MM-DD")
 }
 
 /* 
@@ -971,21 +983,15 @@ exports.isHesaAndLocked = record => {
 
   const source = record?.source
 
-  const endAcademicYear = moment(record?.courseDetails?.endDate).format("YYYY")
-  const finishedPreviousYear = (endAcademicYear < years.endOfCurrentCycle)
-  const isFinishingThisYear = (endAcademicYear == years.endOfCurrentCycle)
-
-  const dateThisRecordUnlocksOn = exports.dateHesaRecordUnlocked(record)
-
   let shouldBeLocked = false
 
   if (exports.sourceIsHESA(record)) {
-     if (finishedPreviousYear) {
+     if (exports.finishedEarlierThanThisAcademicYear(record)) {
         shouldBeLocked = false
      } else if (exports.isFutureYear(record)) {
         shouldBeLocked = true
      }
-     else if (isFinishingThisYear && (moment().isBefore(dateThisRecordUnlocksOn))) {
+     else if (exports.isFinishingThisAcademicYear(record) && (moment().isBefore(exports.dateHesaRecordUnlocked(record)))) {
         shouldBeLocked = true
      }
    } 
@@ -997,7 +1003,7 @@ exports.isHesaAndLocked = record => {
 
 // trainees who:
 // - started this year
-// - are on a course that finishes, or in the future
+// - are on a course that finishes this year, or in the future
 exports.isCurrentYear = record => {
   let isStartingThisYear = record?.academicYear == years.currentAcademicYear
   let endAcademicYear = exports.dateToAcademicYear(record?.courseDetails?.endDate)

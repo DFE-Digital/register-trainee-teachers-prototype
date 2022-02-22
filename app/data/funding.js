@@ -5,9 +5,10 @@ const _ = require('lodash')
 let monthlyFundingScittsCsv = 
 `Academic year,Provider ID,Provider name,Description,Total funding,August,September,October,November,December,January,February,March,April,May,June,July
 2021/22,0,Webury Hill SCITT,Course extension trainee payments for AY 20/21,13000,3250,3250,3250,1625,1625,0,0,0,0,0,0,0
-2021/22,0,Webury Hill SCITT,Training bursary trainees,300000,0,22032,22032,22032,41904,27000,27000,39000,27000,27000,27000,18000
+2021/22,0,Webury Hill SCITT,Training bursary trainees,158750,,27540,27540,27540,1517.5,7937.5,7937.5,11112.5,11112.5,12700,14287.5,9525
 2021/22,0,Webury Hill SCITT,Course extension provider payments for AY 20/21,4000,0,1000,1000,1000,1000,0,0,0,0,0,0,0
-2021/23,0,Webury Hill SCITT,TB 21/22 in-year adjustment for withdrawals,-6300,0,0,0,0,-3150,-3150,0,0,0,0,0,0`
+2021/23,0,Webury Hill SCITT,TB 21/22 in-year adjustment for withdrawals,-6300,,,,,-3150,-3150,0,0,0,0,0,0
+2021/22,0,Webury Hill SCITT,Early Years ITT Bursaries & Training Grants,1254001,,52853,62708,57780,278100,112860,112860,163020,112860,112860,112860,75240`
 
 let monthlyFundingScittsArray = CSV.parse(monthlyFundingScittsCsv)
 monthlyFundingScittsArray.shift() // remove header row
@@ -30,84 +31,80 @@ monthlyFundingScittsArray.forEach(row => {
 // csv training bursaries and scholarships for SCITTS
 let annualFundingScittsCsv =
 `Provider,Provider name,Academic Year,Subject,Route,Lead School,Lead School ID,Cohort Level,Core Allocated places,Final Bursary Awards PG ITT/Tier 1 EYITT,Final Bursary Awards Tier 2 EYITT,Final Bursary Awards Tier 3 EYITT,Final Bursary Awards UG ITT/Tier 4 EYITT,Final Bursary Awards Scholarship,Final Bursary Awards No Bursary Awarded,Bursary Funding Data PG ITT/Tier 1 EYITT,Bursary Funding Data Tier 2 EYITT,Bursary Funding Data Tier £ EYITT,Bursary Funding Data UG ITT/Tier 4 EYITT,Bursary Funding Data Scholarship,Initial Bursary Funding PG ITT/Tier 1 EYITT,Initial Bursary Funding Tier 2 EYITT,Initial Bursary Funding Tier 3 EYITT,Initial Bursary Funding UG ITT/Tier 4 EYITT,Initial Bursary Funding Scholarship,Total Bursary Funding
-12345,example provider,2021/22,Social sciences,School Direct tuition fee,West Park Primary School,141931,PG,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0
-12345,example provider,2021/22,Health & social care,Provider-led,,,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-12345,example provider,2021/22,Drama,School Direct tuition fee,Brockhill Park Performing Arts College,137458,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-12345,example provider,2021/22,Modern Languages,Provider-led,,,PG,0,0,0,0,0,0,0,10000,0,0,0,0,0,0,0,0,0,0
-12345,example provider,2021/22,Design & technology,Provider-led,,,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-12345,example provider,2021/22,Physics,School Direct tuition fee,St Joseph's Catholic Primary School,137422,PG,0,0,0,0,0,0,0,24000,0,0,0,26000,0,0,0,0,0,0
-12345,example provider,2021/22,Physics,Provider-led,,,PG,0,2,0,0,0,1,0,24000,0,0,0,26000,48000,0,0,0,0,48000
-12345,example provider,2021/22,Physical education,School Direct tuition fee,West Park Primary School,141931,PG,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0
-12345,example provider,2021/22,Chemistry,School Direct tuition fee,West Park Primary School,141931,PG,0,0,0,0,0,0,0,24000,0,0,0,26000,0,0,0,0,0,0
-12345,example provider,2021/22,Citizenship,Provider-led,,,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-12345,example provider,2021/22,Mathematics,School Direct tuition fee,Beam Primary School,137353,PG,0,0,0,0,0,0,0,24000,0,0,0,26000,0,0,0,0,0,0
-12345,example provider,2021/22,Physics,School Direct tuition fee,Beam Primary School,137353,PG,0,0,0,0,0,0,0,24000,0,0,0,26000,0,0,0,0,0,0
-12345,example provider,2021/22,Psychology,School Direct tuition fee,West Park Primary School,141931,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-12345,example provider,2021/22,Economics,School Direct tuition fee,West Park Primary School,141931,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-12345,example provider,2021/22,Music,School Direct tuition fee,West Park Primary School,141931,PG,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0
-12345,example provider,2021/22,Biology,School Direct tuition fee,West Park Primary School,141931,PG,0,1,0,0,0,0,0,7000,0,0,0,0,7000,0,0,0,0,7000
-12345,example provider,2021/22,Computing,School Direct tuition fee,West Park Primary School,141931,PG,0,0,0,0,0,0,0,24000,0,0,0,26000,0,0,0,0,0,0
-12345,example provider,2021/22,Primary,School Direct tuition fee,Mulberry School for Girls,143629,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-12345,example provider,2021/22,Psychology,School Direct tuition fee,Dunraven School,137093,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-12345,example provider,2021/22,Business studies,Provider-led,,,PG,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0
-12345,example provider,2021/22,Geography,Provider-led,,,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-12345,example provider,2021/22,History,School Direct tuition fee,Beam Primary School,137353,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-12345,example provider,2021/22,Computing,Provider-led,,,PG,0,0,0,0,0,0,0,24000,0,0,0,26000,0,0,0,0,0,0
-12345,example provider,2021/22,English,Provider-led,,,PG,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0
-12345,example provider,2021/22,Drama,Provider-led,,,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-12345,example provider,2021/22,Chemistry,School Direct tuition fee,Beam Primary School,137353,PG,0,0,0,0,0,2,0,24000,0,0,0,26000,0,0,0,0,0,0
-12345,example provider,2021/22,History,School Direct tuition fee,West Park Primary School,141931,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-12345,example provider,2021/22,History,Provider-led,,,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-12345,example provider,2021/22,Biology,Provider-led,,,PG,0,0,0,0,0,0,0,7000,0,0,0,0,0,0,0,0,0,0
-12345,example provider,2021/22,English,School Direct tuition fee,West Park Primary School,141931,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-12345,example provider,2021/22,Business studies,School Direct tuition fee,Riddlesdown Collegiate,138178,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-12345,example provider,2021/22,Primary,Provider-led,,,PG,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0
-12345,example provider,2021/22,Drama,School Direct tuition fee,Beam Primary School,137353,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-12345,example provider,2021/22,Religious education,Provider-led,,,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-12345,example provider,2021/22,Geography,School Direct tuition fee,Beam Primary School,137353,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-12345,example provider,2021/22,Economics,Provider-led,,,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-12345,example provider,2021/22,Primary,School Direct tuition fee,West Park Primary School,141931,PG,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0
-12345,example provider,2021/22,Classics,Provider-led,,,PG,0,0,0,0,0,0,0,10000,0,0,0,0,0,0,0,0,0,0
-12345,example provider,2021/22,Biology,School Direct tuition fee,Beam Primary School,137353,PG,0,0,0,0,0,0,0,7000,0,0,0,0,0,0,0,0,0,0
-12345,example provider,2021/22,Geography,School Direct tuition fee,West Park Primary School,141931,PG,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0
-12345,example provider,2021/22,Religious education,School Direct tuition fee,St Joseph's Catholic Primary School,137422,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-12345,example provider,2021/22,Music,Provider-led,,,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-12345,example provider,2021/22,Mathematics,School Direct tuition fee,St Joseph's Catholic Primary School,137422,PG,0,0,0,0,0,0,0,24000,0,0,0,26000,0,0,0,0,0,0
-12345,example provider,2021/22,Business studies,School Direct tuition fee,Ifield School,119040,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-12345,example provider,2021/22,Psychology,Provider-led,,,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-12345,example provider,2021/22,Mathematics,School Direct tuition fee,West Park Primary School,141931,PG,0,2,0,0,0,0,0,24000,0,0,0,26000,48000,0,0,0,0,48000
-12345,example provider,2021/22,Dance,Provider-led,,,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-12345,example provider,2021/22,Drama,School Direct tuition fee,West Park Primary School,141931,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-12345,example provider,2021/22,Mathematics,Provider-led,,,PG,0,0,0,0,0,0,0,24000,0,0,0,26000,0,0,0,0,0,0
-12345,example provider,2021/22,Dance,School Direct tuition fee,Dunraven School,137093,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-12345,example provider,2021/22,Media Studies,Provider-led,,,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-12345,example provider,2021/22,Business studies,School Direct tuition fee,Dunraven School,137093,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-12345,example provider,2021/22,Modern Languages,School Direct tuition fee,Beam Primary School,137353,PG,0,0,0,0,0,0,0,10000,0,0,0,0,0,0,0,0,0,0
-12345,example provider,2021/22,Religious education,School Direct tuition fee,Beam Primary School,137353,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-12345,example provider,2021/22,Music,School Direct tuition fee,Beam Primary School,137353,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-12345,example provider,2021/22,Dance,School Direct tuition fee,Brockhill Park Performing Arts College,137458,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-12345,example provider,2021/22,Design & technology,School Direct tuition fee,West Park Primary School,141931,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-12345,example provider,2021/22,Religious education,School Direct tuition fee,West Park Primary School,141931,PG,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0
-12345,example provider,2021/22,Art & design,School Direct tuition fee,West Park Primary School,141931,PG,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0
-12345,example provider,2021/22,Physical education,Provider-led,,,PG,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0
-12345,example provider,2021/22,Art & design,Provider-led,,,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-12345,example provider,2021/22,Classics,School Direct tuition fee,West Park Primary School,141931,PG,0,0,0,0,0,0,0,10000,0,0,0,0,0,0,0,0,0,0
-12345,example provider,2021/22,Social sciences,Provider-led,,,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-12345,example provider,2021/22,Physics,School Direct tuition fee,West Park Primary School,141931,PG,0,1,0,0,0,0,0,24000,0,0,0,26000,24000,0,0,0,0,24000
-12345,example provider,2021/22,Design & technology,School Direct tuition fee,Ifield School,119040,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-12345,example provider,2021/22,Primary with mathematics,Provider-led,,,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-12345,example provider,2021/22,Business studies,School Direct tuition fee,West Park Primary School,141931,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-12345,example provider,2021/22,Modern Languages,School Direct tuition fee,West Park Primary School,141931,PG,0,0,0,0,0,0,0,10000,0,0,0,0,0,0,0,0,0,0
-12345,example provider,2021/22,Computing,School Direct tuition fee,Beam Primary School,137353,PG,0,0,0,0,0,0,0,24000,0,0,0,26000,0,0,0,0,0,0
-12345,example provider,2021/22,Primary,School Direct tuition fee,St Elphege's RC Infants' School,102997,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-12345,example provider,2021/22,Primary,School Direct tuition fee,Beam Primary School,137353,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-12345,example provider,2021/22,Chemistry,Provider-led,,,PG,0,0,0,0,0,0,0,24000,0,0,0,26000,0,0,0,0,0,0
-12345,example provider,2021/22,Early Years ITT,EYITT Graduate employment-based,,,PG,113,0,0,0,0,0,113,0,0,0,0,0,0,0,0,0,0,0
-12345,example provider,2021/22,Early Years ITT,EYITT Graduate Entry,,,PG,9,2,6,0,0,0,0,5000,4000,2000,0,0,10000,24000,0,0,0,34000
-12345,example provider,2021/22,Physical Education,School Direct tuition fee,Brockhill Park Performing Arts College,137458,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-12345,example provider,2021/22,Physical Education,School Direct tuition fee,Dunraven School,137093,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-12345,example provider,2021/22,Mathematics,School Direct tuition fee,Dunraven School,137093,PG,0,0,0,0,0,0,0,24000,0,0,0,26000,0,0,0,0,0,0
-12345,example provider,2021/22,Primary,School Direct tuition fee,Swiss Cottage School - Development and Research Centre,100096,PG,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0`
+0,example-provider,2021/22,Social sciences,School Direct tuition fee,Twettle Row School,141931,PG,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0
+0,example-provider,2021/22,Health & social care,Provider-led,,,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,example-provider,2021/22,Drama,School Direct tuition fee,Wader Bridge College,137458,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,example-provider,2021/22,Modern Languages,Provider-led,,,PG,0,0,0,0,0,0,0,10000,0,0,0,0,0,0,0,0,0,0
+0,example-provider,2021/22,Design & technology,Provider-led,,,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,example-provider,2021/22,Physics,School Direct tuition fee,Weston Parpenham Village School,137422,PG,0,0,0,0,0,0,0,24000,0,0,0,26000,0,0,0,0,0,0
+0,example-provider,2021/22,Physics,Provider-led,,,PG,2,2,0,0,0,0,0,24000,0,0,0,26000,48000,0,0,0,0,48000
+0,example-provider,2021/22,Physical education,School Direct tuition fee,Twettle Row School,141931,PG,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0
+0,example-provider,2021/22,Chemistry,School Direct tuition fee,Twettle Row School,141931,PG,0,0,0,0,0,0,0,24000,0,0,0,26000,0,0,0,0,0,0
+0,example-provider,2021/22,Citizenship,Provider-led,,,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,example-provider,2021/22,Mathematics,School Direct tuition fee,Weston Parpenham Village School,137353,PG,0,0,0,0,0,0,0,24000,0,0,0,26000,0,0,0,0,0,0
+0,example-provider,2021/22,Physics,School Direct tuition fee,Weston Parpenham Village School,137353,PG,0,0,0,0,0,0,0,24000,0,0,0,26000,0,0,0,0,0,0
+0,example-provider,2021/22,Psychology,School Direct tuition fee,Twettle Row School,141931,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,example-provider,2021/22,Economics,School Direct tuition fee,Twettle Row School,141931,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,example-provider,2021/22,Music,School Direct tuition fee,Twettle Row School,141931,PG,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0
+0,example-provider,2021/22,Biology,School Direct tuition fee,Twettle Row School,141931,PG,1,1,0,0,0,0,0,7000,0,0,0,0,7000,0,0,0,0,7000
+0,example-provider,2021/22,Computing,School Direct tuition fee,Twettle Row School,141931,PG,0,0,0,0,0,0,0,24000,0,0,0,26000,0,0,0,0,0,0
+0,example-provider,2021/22,Primary,School Direct tuition fee,Stoke Hill School for Boys,143629,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,example-provider,2021/22,Psychology,School Direct tuition fee,Saxford School,137093,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,example-provider,2021/22,Business studies,Provider-led,,,PG,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0
+0,example-provider,2021/22,Geography,Provider-led,,,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,example-provider,2021/22,History,School Direct tuition fee,Weston Parpenham Village School,137353,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,example-provider,2021/22,Computing,Provider-led,,,PG,0,0,0,0,0,0,0,24000,0,0,0,26000,0,0,0,0,0,0
+0,example-provider,2021/22,English,Provider-led,,,PG,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0
+0,example-provider,2021/22,Drama,Provider-led,,,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,example-provider,2021/22,Chemistry,School Direct tuition fee,Weston Parpenham Village School,137353,PG,0,0,0,0,0,0,0,24000,0,0,0,26000,0,0,0,0,0,0
+0,example-provider,2021/22,History,School Direct tuition fee,Twettle Row School,141931,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,example-provider,2021/22,History,Provider-led,,,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,example-provider,2021/22,Biology,Provider-led,,,PG,0,0,0,0,0,0,0,7000,0,0,0,0,0,0,0,0,0,0
+0,example-provider,2021/22,English,School Direct tuition fee,Twettle Row School,141931,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,example-provider,2021/22,Business studies,School Direct tuition fee,Riddlesdown Collegiate,138178,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,example-provider,2021/22,Primary,Provider-led,,,PG,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0
+0,example-provider,2021/22,Drama,School Direct tuition fee,Weston Parpenham Village School,137353,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,example-provider,2021/22,Religious education,Provider-led,,,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,example-provider,2021/22,Geography,School Direct tuition fee,Weston Parpenham Village School,137353,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,example-provider,2021/22,Economics,Provider-led,,,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,example-provider,2021/22,Primary,School Direct tuition fee,Twettle Row School,141931,PG,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0
+0,example-provider,2021/22,Classics,Provider-led,,,PG,0,0,0,0,0,0,0,10000,0,0,0,0,0,0,0,0,0,0
+0,example-provider,2021/22,Biology,School Direct tuition fee,Weston Parpenham Village School,137353,PG,0,0,0,0,0,0,0,7000,0,0,0,0,0,0,0,0,0,0
+0,example-provider,2021/22,Geography,School Direct tuition fee,Twettle Row School,141931,PG,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0
+0,example-provider,2021/22,Religious education,School Direct tuition fee,Weston Parpenham Village School,137422,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,example-provider,2021/22,Music,Provider-led,,,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,example-provider,2021/22,Mathematics,School Direct tuition fee,Weston Parpenham Village School,137422,PG,0,0,0,0,0,0,0,24000,0,0,0,26000,0,0,0,0,0,0
+0,example-provider,2021/22,Business studies,School Direct tuition fee,Wallow Manworth School,119040,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,example-provider,2021/22,Psychology,Provider-led,,,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,example-provider,2021/22,Mathematics,School Direct tuition fee,Twettle Row School,141931,PG,2,2,0,0,0,0,0,24000,0,0,0,26000,48000,0,0,0,0,48000
+0,example-provider,2021/22,Dance,Provider-led,,,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,example-provider,2021/22,Drama,School Direct tuition fee,Twettle Row School,141931,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,example-provider,2021/22,Mathematics,Provider-led,,,PG,0,0,0,0,0,0,0,24000,0,0,0,26000,0,0,0,0,0,0
+0,example-provider,2021/22,Dance,School Direct tuition fee,Saxford School,137093,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,example-provider,2021/22,Media Studies,Provider-led,,,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,example-provider,2021/22,Business studies,School Direct tuition fee,Saxford School,137093,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,example-provider,2021/22,Modern Languages,School Direct tuition fee,Weston Parpenham Village School,137353,PG,0,0,0,0,0,0,0,10000,0,0,0,0,0,0,0,0,0,0
+0,example-provider,2021/22,Religious education,School Direct tuition fee,Weston Parpenham Village School,137353,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,example-provider,2021/22,Music,School Direct tuition fee,Weston Parpenham Village School,137353,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,example-provider,2021/22,Dance,School Direct tuition fee,Wader Bridge College,137458,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,example-provider,2021/22,Design & technology,School Direct tuition fee,Twettle Row School,141931,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,example-provider,2021/22,Religious education,School Direct tuition fee,Twettle Row School,141931,PG,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0
+0,example-provider,2021/22,Art & design,School Direct tuition fee,Twettle Row School,141931,PG,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0
+0,example-provider,2021/22,Physical education,Provider-led,,,PG,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0
+0,example-provider,2021/22,Art & design,Provider-led,,,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,example-provider,2021/22,Classics,School Direct tuition fee,Twettle Row School,141931,PG,0,0,0,0,0,0,0,10000,0,0,0,0,0,0,0,0,0,0
+0,example-provider,2021/22,Social sciences,Provider-led,,,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,example-provider,2021/22,Physics,School Direct tuition fee,Twettle Row School,141931,PG,1,2,0,0,0,0,0,24000,0,0,0,26000,24000,0,0,0,0,24000
+0,example-provider,2021/22,Design & technology,School Direct tuition fee,Wallow Manworth School,119040,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,example-provider,2021/22,Primary with mathematics,Provider-led,,,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,example-provider,2021/22,Business studies,School Direct tuition fee,Twettle Row School,141931,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,example-provider,2021/22,Modern Languages,School Direct tuition fee,Twettle Row School,141931,PG,0,0,0,0,0,0,0,10000,0,0,0,0,0,0,0,0,0,0
+0,example-provider,2021/22,Computing,School Direct tuition fee,Weston Parpenham Village School,137353,PG,0,1,0,0,0,0,0,24000,0,0,0,26000,0,0,0,0,0,0
+0,example-provider,2021/22,Primary,School Direct tuition fee,Bankinghead Infant’s School,102997,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,example-provider,2021/22,Primary,School Direct tuition fee,Weston Parpenham Village School,137353,PG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,example-provider,2021/22,Chemistry,Provider-led,,,PG,0,0,0,0,0,0,0,24000,0,0,0,26000,0,0,0,0,0,0
+0,example-provider,2021/22,Early Years ITT,EYITT Graduate employment-based,,,PG,0,0,0,0,0,113,0,0,0,0,0,0,0,0,0,0,0,0
+0,example-provider,2021/22,Early Years ITT,EYITT Graduate Entry,,,PG,2,6,1,0,0,0,0,5000,4000,2000,0,0,10000,24000,0,0,0,34000`
 
 let annualFundingScittsArray = CSV.parse(annualFundingScittsCsv)
 annualFundingScittsArray.shift() // remove header row

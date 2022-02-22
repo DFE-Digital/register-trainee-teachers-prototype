@@ -110,9 +110,9 @@
 
   {% for item in eyIttData %}
     {% if item.numberOfTtraineesPgIttOrTier1EyItt > 0 %}
-        {% set total = item.numberOfTtraineesPgIttOrTier1EyItt * item.amountPgIttOrTier1EyItt %}
+      {% set total = item.numberOfTtraineesPgIttOrTier1EyItt * item.amountPgIttOrTier1EyItt %}
       {% set row = [
-        { text: "Tier " + loop.index }, 
+        { text: "Tier 1" }, 
         { text: item.numberOfTtraineesPgIttOrTier1EyItt,
           format: "numeric" },
         { text: item.amountPgIttOrTier1EyItt | currency,
@@ -121,8 +121,36 @@
           format: "numeric" }
       ]%}
       {% set eyIttTotal = eyIttTotal + total %}
+      {% set eyIttBursaryRows = eyIttBursaryRows | push(row) %}
     {% endif %}
-    {% set eyIttBursaryRows = eyIttBursaryRows | push(row) %}
+    {% if item.numberOfTtraineesTier2EyItt > 0 %}
+      {% set total = item.numberOfTtraineesTier2EyItt * item.amountTier2EyItt %}
+      {% set row = [
+        { text: "Tier 2" }, 
+        { text: item.numberOfTtraineesTier2EyItt,
+          format: "numeric" },
+        { text: item.amountTier2EyItt | currency,
+          format: "numeric" },
+        { text: total | currency,
+          format: "numeric" }
+      ]%}
+      {% set eyIttTotal = eyIttTotal + total %}
+      {% set eyIttBursaryRows = eyIttBursaryRows | push(row) %}
+    {% endif %}
+    {% if item.numberOfTtraineesTier3EyItt > 0 %}
+      {% set total = item.numberOfTtraineesTier3EyItt * item.amountTier3EyItt %}
+      {% set row = [
+        { text: "Tier 3" }, 
+        { text: item.amountTier3EyItt,
+          format: "numeric" },
+        { text: item.amountTier3EyItt | currency,
+          format: "numeric" },
+        { text: total | currency,
+          format: "numeric" }
+      ]%}
+      {% set eyIttTotal = eyIttTotal + total %}
+      {% set eyIttBursaryRows = eyIttBursaryRows | push(row) %}
+    {% endif %}
   {% endfor %}
 
   {# EY ITT Grants #}
@@ -176,10 +204,11 @@
   {% endif %}
   {% set annualTotal = ittBursaryTotal + ittScholarshipTotal + eyIttTotal %}
   {% set annualSummaryRows = annualSummaryRows | push([
-    { text: "Total" },
+    { text: "Total",
+      classes: "govuk-!-font-weight-bold" },
     { text: annualTotal | currency,
       format: "numeric",
-      classes: "app-table__column-20"
+      classes: "app-table__column-20 govuk-!-font-weight-bold"
     }]) %}
 
 

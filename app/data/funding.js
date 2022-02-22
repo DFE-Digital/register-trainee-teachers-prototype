@@ -5,10 +5,10 @@ const _ = require('lodash')
 let monthlyFundingScittsCsv = 
 `Academic year,Provider ID,Provider name,Description,Total funding,August,September,October,November,December,January,February,March,April,May,June,July
 2021/22,0,Webury Hill SCITT,Course extension trainee payments for AY 20/21,13000,3250,3250,3250,1625,1625,0,0,0,0,0,0,0
-2021/22,0,Webury Hill SCITT,Training bursary trainees,158750,,27540,27540,27540,1517.5,7937.5,7937.5,11112.5,11112.5,12700,14287.5,9525
+2021/22,0,Webury Hill SCITT,Training bursary trainees,158750,0,27540,27540,27540,1517.5,7937.5,7937.5,11112.5,11112.5,12700,14287.5,9525
 2021/22,0,Webury Hill SCITT,Course extension provider payments for AY 20/21,4000,0,1000,1000,1000,1000,0,0,0,0,0,0,0
-2021/23,0,Webury Hill SCITT,TB 21/22 in-year adjustment for withdrawals,-6300,,,,,-3150,-3150,0,0,0,0,0,0
-2021/22,0,Webury Hill SCITT,Early Years ITT Bursaries & Training Grants,1254001,,52853,62708,57780,278100,112860,112860,163020,112860,112860,112860,75240`
+2021/23,0,Webury Hill SCITT,TB 21/22 in-year adjustment for withdrawals,-6300,0,0,0,0,-3150,-3150,0,0,0,0,0,0
+2021/22,0,Webury Hill SCITT,Early Years ITT Bursaries & Training Grants,1254001,0,52853,62708,57780,278100,112860,112860,163020,112860,112860,112860,75240`
 
 let monthlyFundingScittsArray = CSV.parse(monthlyFundingScittsCsv)
 monthlyFundingScittsArray.shift() // remove header row

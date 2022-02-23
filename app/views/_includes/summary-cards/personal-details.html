@@ -32,7 +32,7 @@
   },
   {
     key: {
-      text: "Gender"
+      text: "Sex"
     },
     value: {
       text: record.personalDetails.sex or 'Not entered'
@@ -42,7 +42,7 @@
         {
           href: recordPath + "/personal-details/edit" | addReferrer(referrer),
           text: "Change",
-          visuallyHiddenText: "gender"
+          visuallyHiddenText: "sex"
         }
       ]
     } if canAmend

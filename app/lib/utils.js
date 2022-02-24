@@ -976,7 +976,7 @@ exports.dateHesaRecordUnlocked = record => {
 /* 
   A HESA record should be read only if:
   - its not finishing this academic year
-  - or its finishing this year, but todays date is before the cut-off
+  - or its finishing this year, but today’s date is before the cut-off
 */
 
 exports.isHesaAndLocked = record => {
@@ -994,10 +994,7 @@ exports.isHesaAndLocked = record => {
      else if (exports.isFinishingThisAcademicYear(record) && (moment().isBefore(exports.dateHesaRecordUnlocked(record)))) {
         shouldBeLocked = true
      }
-   } 
-  else {
-    shouldBeLocked = false
-  }
+   }
   return shouldBeLocked
 }
 

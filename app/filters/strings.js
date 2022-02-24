@@ -110,14 +110,20 @@ filters.startsWith = (string, target) => {
 // {{ "Joyce James" | possessive }}
 //     JOYCE JAMES’
 
-filters.possessive = (string) => {
-  const lastLetterOfString = string.split('').slice(-1).toString()
-  if (lastLetterOfString == "s" || lastLetterOfString == "S") {
-    return string + "’"
-  } else if (lastLetterOfString == lastLetterOfString.toUpperCase()) {
-    return string + "’S"
-  } else if (lastLetterOfString == lastLetterOfString.toLowerCase()) {
-    return string + "’s"
+filters.possessive = (noun) => {
+  if (typeof noun !== 'string' || noun.length == 0) return ""
+
+  const isAllUpperCase = (input) => {
+    return input == input.toUpperCase()
+  }
+
+  const lastLetterOfNoun = noun.split('').slice(-1)
+  if (lastLetterOfNoun == "s" || lastLetterOfNoun == "S") {
+    return noun + "’"
+  } else if (isAllUpperCase(noun)) {
+    return noun + "’S"
+  } else if (! isAllUpperCase(noun)) {
+    return noun + "’s"
   } else {
     console.log("Error with possessive filter")
   }

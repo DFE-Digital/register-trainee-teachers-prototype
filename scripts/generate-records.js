@@ -43,17 +43,9 @@ const getRandomArbitrary = (min, max) => {
 
 // Training routes
 const trainingRoutes = Object.keys(trainingRouteData.trainingRoutes)
-const enabledTrainingRoutes = trainingRouteData.enabledTrainingRoutes
-const enabledApplyRoutes = enabledTrainingRoutes.filter(route => trainingRouteData.applyRoutes.includes(route))
-const getRandomEnabledRoute = () => faker.helpers.randomize(enabledTrainingRoutes)
-const getRandomEnabledApplyRoute = () => faker.helpers.randomize(enabledApplyRoutes)
-
-const getRandomRoute = (params) => {
-  if (params?.source == 'Apply') return getRandomEnabledApplyRoute()
-  else return getRandomEnabledRoute()
-}
 
 // Generators
+const generateRoute = require('../app/data/generators/route.js')
 const generateTrainingDetails = require('../app/data/generators/training-details')
 const generateDates = require('../app/data/generators/dates')
 const generateReference = require('../app/data/generators/reference-number')
@@ -91,7 +83,7 @@ const generateFakeApplication = (params = {}) => {
   application.personalDetails = (params.personalDetails === null) ? undefined : { ...generatePersonalDetails(), ...params.personalDetails }
   application.provider        = params.provider || faker.helpers.randomize(providers).name
   application.accreditingProviderType    = params.accreditingProviderType || "SCITT" // TODO: this should look up the accrediting provider type from the provider's name
-  application.route           = (params.route === null) ? undefined : (params.route || getRandomRoute(params))
+  application.route           = (params.route === null) ? undefined : (params.route || generateRoute(params))
   application.status          = params.status || faker.helpers.randomize(statuses)
   
   if (application.status == "Deferred") {

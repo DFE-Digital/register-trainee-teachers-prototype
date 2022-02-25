@@ -1,5 +1,5 @@
-const faker = require('faker')
-const moment = require('moment')
+const { faker } = require('@faker-js/faker')
+const moment    = require('moment')
 
 // Two letters followed by four numbers
 // This approximates the reference number used by Apply / Manage

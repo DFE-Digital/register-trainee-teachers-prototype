@@ -1,6 +1,6 @@
-const faker   = require('faker')
-const weighted = require('weighted')
-const gcseData = require('../gcse')
+const { faker } = require('@faker-js/faker')
+const weighted  = require('weighted')
+const gcseData  = require('../gcse')
 
 module.exports = (isInternationalTrainee, simpleGcseGrades) => {
   let year = faker.date.between('1970', '2016')

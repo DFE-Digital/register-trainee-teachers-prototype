@@ -3,15 +3,15 @@
 // node scripts/generate-courses.js
 // Re-run generate-records.js after generating new courses
 
-const fs      = require('fs')
-const path    = require('path')
-const faker   = require('faker')
-faker.locale  = 'en_GB'
-const weighted = require('weighted')
-const moment  = require('moment')
-const _       = require('lodash')
-const providerData = require('../app/data/accrediting-providers')
-const providers = providerData.selected
+const fs            = require('fs')
+const path          = require('path')
+const { faker }     = require('@faker-js/faker')
+faker.locale        = 'en_GB'
+const weighted      = require('weighted')
+const moment        = require('moment')
+const _             = require('lodash')
+const providerData  = require('../app/data/accrediting-providers')
+const providers     = providerData.selected
 
 const generateCourseDetails = require('../app/data/generators/course-generator')
 

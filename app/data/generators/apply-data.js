@@ -1,5 +1,5 @@
-const faker = require('faker')
-const moment = require('moment')
+const { faker } = require('@faker-js/faker')
+const moment    = require('moment')
 
 
 module.exports = application => {

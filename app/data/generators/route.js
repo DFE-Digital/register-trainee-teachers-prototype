@@ -1,6 +1,6 @@
-const faker = require('faker')
-const moment = require('moment')
-const weighted = require('weighted')
+const { faker } = require('@faker-js/faker')
+const moment    = require('moment')
+const weighted  = require('weighted')
 
 const trainingRouteData = require('../training-route-data.js')
 

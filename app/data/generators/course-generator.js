@@ -3,18 +3,18 @@
 // data used in our seed records
 
 
-const moment = require('moment')
+const moment            = require('moment')
 const weighted = require('weighted')
-const faker   = require('faker')
-faker.locale  = 'en_GB'
+const { faker }         = require('@faker-js/faker')
+faker.locale            = 'en_GB'
 const trainingRouteData = require('./../training-route-data')
 
-const utils = require('./../../lib/utils.js')
+const utils             = require('./../../lib/utils.js')
 
-const ittSubjects = require('./../itt-subjects')
-const peSubjects = ittSubjects.peSubjects
+const ittSubjects       = require('./../itt-subjects')
+const peSubjects        = ittSubjects.peSubjects
 
-const publishSubjects = ittSubjects.publishSubjects
+const publishSubjects   = ittSubjects.publishSubjects
 
 let primaryPublishSubjects = Object.keys(publishSubjects).filter(subject => subject.includes("Primary"))
 

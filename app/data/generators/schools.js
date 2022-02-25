@@ -1,9 +1,9 @@
 // Generates fake training details
 
-const moment = require('moment')
-const weighted = require('weighted')
-const faker   = require('faker')
-const allSchools = require('../gis-schools.js')
+const moment      = require('moment')
+const weighted    = require('weighted')
+const { faker }   = require('@faker-js/faker')
+const allSchools  = require('../gis-schools.js')
 
 // Using the urn to match against
 const leadSchoolUrns = require('./../lead-schools.js').selected.map(school => school.urn)

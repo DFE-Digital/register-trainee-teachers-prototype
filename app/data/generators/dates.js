@@ -1,5 +1,5 @@
-const faker = require('faker')
-const moment            = require('moment')
+const { faker } = require('@faker-js/faker')
+const moment    = require('moment')
 
 // Dates here a bit complex! In general makes updated date be after
 // submitted date, and historic records likely to be updated near to the

@@ -1,19 +1,19 @@
 
-const moment = require('moment')
-const weighted = require('weighted')
-const faker   = require('faker')
-faker.locale  = 'en_GB'
+const moment            = require('moment')
+const weighted          = require('weighted')
+const { faker }         = require('@faker-js/faker')
+faker.locale            = 'en_GB'
 const trainingRouteData = require('./../training-route-data')
-const ittSubjects = require('./../itt-subjects')
+const ittSubjects       = require('./../itt-subjects')
 const courses           = require('./../courses.json')
-const utils = require('./../../lib/utils.js')
+const utils             = require('./../../lib/utils.js')
 
 
-const publishSubjects = ittSubjects.publishSubjects
+const publishSubjects   = ittSubjects.publishSubjects
 
-const publishRoutes = trainingRouteData.publishRoutes
+const publishRoutes     = trainingRouteData.publishRoutes
 
-const generateCourse = require('./course-generator')
+const generateCourse    = require('./course-generator')
 
 // TODO: this code is nearly identical to mapMappablePublishSubjects() in utils.js - they
 // should probably be combined together

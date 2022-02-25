@@ -1,9 +1,9 @@
-const faker   = require('faker')
-const weighted = require('weighted')
+const { faker }         = require('@faker-js/faker')
+const weighted          = require('weighted')
 
 const trainingRouteData = require('./../training-route-data')
-const trainingRoutes = trainingRouteData.trainingRoutes
-const utils = require('./../../lib/utils.js')
+const trainingRoutes    = trainingRouteData.trainingRoutes
+const utils             = require('./../../lib/utils.js')
 
 module.exports = (params) => {
 

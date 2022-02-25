@@ -1,5 +1,5 @@
-const weighted = require('weighted')
-const faker   = require('faker')
+const weighted  = require('weighted')
+const { faker } = require('@faker-js/faker')
 
 const allSchools = require('../gis-schools.js')
 

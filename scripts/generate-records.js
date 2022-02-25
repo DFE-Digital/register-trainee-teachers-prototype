@@ -5,7 +5,7 @@
 // Re-run this script after generating new courses
 const fs                = require('fs')
 const path              = require('path')
-const faker             = require('faker')
+const { faker }         = require('@faker-js/faker')
 faker.locale            = 'en_GB'
 const moment            = require('moment')
 const _                 = require('lodash')

@@ -1,5 +1,5 @@
-const faker             = require('faker')
-const weighted = require('weighted')
+const { faker }  = require('@faker-js/faker')
+const weighted   = require('weighted')
 
 module.exports = () => {
 

@@ -1,9 +1,9 @@
 // Generates fake training details
 
-const moment = require('moment')
-const weighted = require('weighted')
-const faker   = require('faker')
-const schools = require('../gis-schools.js')
+const moment      = require('moment')
+const weighted    = require('weighted')
+const { faker }   = require('@faker-js/faker')
+const schools     = require('../gis-schools.js')
 
 faker.locale  = 'en_GB'
 

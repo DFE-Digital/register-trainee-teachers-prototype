@@ -1,19 +1,19 @@
 // -------------------------------------------------------------------
 // Imports and setup
 // -------------------------------------------------------------------
-const _ = require('lodash')
-const faker = require('faker')
-const moment = require('moment')
-const path = require('path')
-const url = require('url')
-const trainingRouteData = require('./../data/training-route-data')
-const trainingRoutes = trainingRouteData.trainingRoutes
-const arrayFilters = require('./../filters/arrays.js').filters
-const dates = require('./../filters/dates.js').filters
-const ittSubjects = require('./../data/itt-subjects')
-const generateReference = require('./../data/generators/reference-number')
+const _                      = require('lodash')
+const { faker }              = require('@faker-js/faker')
+const moment                 = require('moment')
+const path                   = require('path')
+const url                    = require('url')
+const trainingRouteData      = require('./../data/training-route-data')
+const trainingRoutes         = trainingRouteData.trainingRoutes
+const arrayFilters           = require('./../filters/arrays.js').filters
+const dates                  = require('./../filters/dates.js').filters
+const ittSubjects            = require('./../data/itt-subjects')
+const generateReference      = require('./../data/generators/reference-number')
 const academicQualifications = require('./../data/academic-qualifications.js')
-const years = require('./../data/years.js')
+const years                  = require('./../data/years.js')
 
 // -------------------------------------------------------------------
 // General

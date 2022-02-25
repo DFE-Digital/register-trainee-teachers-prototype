@@ -1,9 +1,9 @@
-const faker = require('faker')
-const path = require('path')
-const moment = require('moment')
-const utils = require('./../lib/utils')
-const _ = require('lodash')
-const years = require('../data/years')
+const { faker } = require('@faker-js/faker')
+const path      = require('path')
+const moment    = require('moment')
+const utils     = require('./../lib/utils')
+const _         = require('lodash')
+const years     = require('../data/years')
 
 // In function because this is too big to pass around in session
 const getSchools = () => {

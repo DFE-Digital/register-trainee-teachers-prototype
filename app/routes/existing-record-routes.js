@@ -1,10 +1,10 @@
-const faker = require('faker')
-const path = require('path')
-const moment = require('moment')
-const filters = require('./../filters.js')()
-const dates = require('./../filters/dates.js').filters
-const _ = require('lodash')
-const utils = require('./../lib/utils')
+const { faker } = require('@faker-js/faker')
+const path      = require('path')
+const moment    = require('moment')
+const filters   = require('./../filters.js')()
+const dates     = require('./../filters/dates.js').filters
+const _         = require('lodash')
+const utils     = require('./../lib/utils')
 
 
 module.exports = router => {

@@ -1,13 +1,13 @@
-const faker = require('faker')
-const path = require('path')
-const moment = require('moment')
-const filters = require('./../filters.js')()
-const dates = require('./../filters/dates.js').filters
-const _ = require('lodash')
-const utils = require('./../lib/utils')
-const trainingRouteData = require('./../data/training-route-data')
-const trainingRoutes = trainingRouteData.trainingRoutes
-const generateReference = require("./../data/generators/reference-number.js")
+const { faker }           = require('@faker-js/faker')
+const path                = require('path')
+const moment              = require('moment')
+const filters             = require('./../filters.js')()
+const dates               = require('./../filters/dates.js').filters
+const _                   = require('lodash')
+const utils               = require('./../lib/utils')
+const trainingRouteData   = require('./../data/training-route-data')
+const trainingRoutes      = trainingRouteData.trainingRoutes
+const generateReference   = require("./../data/generators/reference-number.js")
 
 module.exports = router => {
 

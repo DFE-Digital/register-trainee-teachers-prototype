@@ -1,8 +1,8 @@
 // -------------------------------------------------------------------
 // Imports and setup
 // -------------------------------------------------------------------
-const _ = require('lodash')
-const ittSubjects = require('./itt-subjects.js')
+const _             = require('lodash')
+const ittSubjects   = require('./itt-subjects.js')
 let modernLanguages = ittSubjects.modernLanguagesSubjects
 
 

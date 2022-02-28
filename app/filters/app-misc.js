@@ -203,21 +203,20 @@ filters.typesOfFunding = () => {
   let bursaryTrainees = 0
   funding.annualFundingScitts.forEach(element => {
     bursaryTrainees += bursaryTrainees 
-    + element.numberOfTtraineesPgIttOrTier1EyItt
-    + element.numberOfTtraineesTier2EyItt
-    + element.numberOfTtraineesTier3EyItt
-    + element.numberOfTtraineesUGIttOrTier4EyItt
+    + element.numberOfTraineesPgIttOrTier1EyItt
+    + element.numberOfTraineesTier2EyItt
+    + element.numberOfTraineesTier3EyItt
   })
 
   if(bursaryTrainees > 0){
     typesOfFunding.push("bursaries")
   }
 
-  let scholarshipTrainnees = 0
+  let scholarshipTrainees = 0
   funding.annualFundingScitts.forEach(element => {
-    scholarshipTrainnees += element.numberOfTtraineesScholarship
+    scholarshipTrainees += element.numberOfTraineesScholarship
   })
-  if(scholarshipTrainnees > 0){
+  if(scholarshipTrainees > 0){
     typesOfFunding.push("scholarships")
   }
   return typesOfFunding

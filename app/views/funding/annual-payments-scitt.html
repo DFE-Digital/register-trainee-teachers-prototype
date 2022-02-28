@@ -44,7 +44,7 @@
   {% set ittBursaryData = dataSource | whereDoesNotInclude("route", "EYITT") %}
 
   {% for item in ittBursaryData %}
-    {% if item.numberOfTtraineesPgIttOrTier1EyItt > 0 %}
+    {% if item.numberOfTraineesPgIttOrTier1EyItt > 0 %}
       {% if item.leadSchool == "" %}
         {% set leadSchool = "–" %}
       {% else %}
@@ -52,12 +52,12 @@
       {% endif %}
       {% set subjectAndRoute = item.subject + '<br><span class="app-nowrap">' + item.route | lower | sentenceCase + '</span>' %}
       {% set amount = item.amountPgIttOrTier1EyItt | currency %}
-      {% set total = item.numberOfTtraineesPgIttOrTier1EyItt * item.amountPgIttOrTier1EyItt %}
+      {% set total = item.numberOfTraineesPgIttOrTier1EyItt * item.amountPgIttOrTier1EyItt %}
       {% set ittBursaryTotal = ittBursaryTotal + total %}
       {% set row = [
         { text: subjectAndRoute | safe },
         { text: leadSchool },
-        { text: item.numberOfTtraineesPgIttOrTier1EyItt,
+        { text: item.numberOfTraineesPgIttOrTier1EyItt,
           format: "numeric" },
         { text: amount,
           format: "numeric" },
@@ -74,7 +74,7 @@
   {% set ittScholarshipRows = dataSource | whereDoesNotInclude("route", "EYITT") %}
 
   {% for item in ittScholarshipRows %}
-    {% if item.numberOfTtraineesScholarship > 0 %}
+    {% if item.numberOfTraineesScholarship > 0 and item.amountScholarship != 0 %}
         {% if item.leadSchool == "" %}
         {% set leadSchool = "–" %}
       {% else %}
@@ -85,11 +85,11 @@
         <span class="app-nowrap">{{ item.route | lower | sentenceCase }}</span>
       {% endset %}
       {% set amount = item.amountScholarship %}
-      {% set total = item.numberOfTtraineesScholarship * item.amountScholarship %}
+      {% set total = item.numberOfTraineesScholarship * item.amountScholarship %}
       {% set row = [
         { text: subjectAndRoute | safe },
         { text: leadSchool },
-        { text: item.numberOfTtraineesScholarship,
+        { text: item.numberOfTraineesScholarship,
           format: "numeric" },
         { text: amount | currency,
           format: "numeric" },
@@ -107,11 +107,11 @@
   {% set eyIttData = dataSource | whereIncludes("route", "EYITT") %}
 
   {% for item in eyIttData %}
-    {% if item.numberOfTtraineesPgIttOrTier1EyItt > 0 %}
-      {% set total = item.numberOfTtraineesPgIttOrTier1EyItt * item.amountPgIttOrTier1EyItt %}
+    {% if item.numberOfTraineesPgIttOrTier1EyItt > 0 %}
+      {% set total = item.numberOfTraineesPgIttOrTier1EyItt * item.amountPgIttOrTier1EyItt %}
       {% set row = [
         { text: "Tier 1" }, 
-        { text: item.numberOfTtraineesPgIttOrTier1EyItt,
+        { text: item.numberOfTraineesPgIttOrTier1EyItt,
           format: "numeric" },
         { text: item.amountPgIttOrTier1EyItt | currency,
           format: "numeric" },
@@ -121,11 +121,11 @@
       {% set eyIttTotal = eyIttTotal + total %}
       {% set eyIttBursaryRows = eyIttBursaryRows | push(row) %}
     {% endif %}
-    {% if item.numberOfTtraineesTier2EyItt > 0 %}
-      {% set total = item.numberOfTtraineesTier2EyItt * item.amountTier2EyItt %}
+    {% if item.numberOfTraineesTier2EyItt > 0 %}
+      {% set total = item.numberOfTraineesTier2EyItt * item.amountTier2EyItt %}
       {% set row = [
         { text: "Tier 2" }, 
-        { text: item.numberOfTtraineesTier2EyItt,
+        { text: item.numberOfTraineesTier2EyItt,
           format: "numeric" },
         { text: item.amountTier2EyItt | currency,
           format: "numeric" },
@@ -135,11 +135,11 @@
       {% set eyIttTotal = eyIttTotal + total %}
       {% set eyIttBursaryRows = eyIttBursaryRows | push(row) %}
     {% endif %}
-    {% if item.numberOfTtraineesTier3EyItt > 0 %}
-      {% set total = item.numberOfTtraineesTier3EyItt * item.amountTier3EyItt %}
+    {% if item.numberOfTraineesTier3EyItt > 0 and item.amountTier3EyItt %}
+      {% set total = item.numberOfTraineesTier3EyItt * item.amountTier3EyItt %}
       {% set row = [
         { text: "Tier 3" }, 
-        { text: item.amountTier3EyItt,
+        { text: item.numberOfTraineesTier3EyItt,
           format: "numeric" },
         { text: item.amountTier3EyItt | currency,
           format: "numeric" },
@@ -159,11 +159,11 @@
 
   {% for item in eyIttData %}
     {% set numberOfEYTrainees = numberOfEYTrainees 
-      + item.numberOfTtraineesPgIttOrTier1EyItt
-      + item.numberOfTtraineesTier2EyItt
-      + item.numberOfTtraineesTier3EyItt
-      + item.numberOfTtraineesUGIttOrTier4EyItt
-      + item.numberOfTtraineesNoBursaryAwarded
+      + item.numberOfTraineesPgIttOrTier1EyItt
+      + item.numberOfTraineesTier2EyItt
+      + item.numberOfTraineesTier3EyItt
+      + item.numberOfTraineesUGIttOrTier4EyItt
+      + item.numberOfTraineesNoBursaryAwarded
      %}
      {% set totalEyIttGrant = numberOfEYTrainees * eyIttGrantValue %}
   {% endfor %}

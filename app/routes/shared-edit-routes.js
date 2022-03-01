@@ -43,6 +43,87 @@ module.exports = router => {
   })
 
   // =============================================================================
+  // Routes
+  // =============================================================================
+
+    // Show error if route is not assessment only
+  router.post(['/:recordtype/:uuid/select-route-answer','/:recordtype/select-route-answer'], function (req, res) {
+    const data = req.session.data
+    let record = data.record
+    let route = record?.route
+    let recordPath = utils.getRecordPath(req)
+    let referrer = utils.getReferrer(req.query.referrer)
+    let existingCourseDetails = record?.courseDetails
+    let recordIsDraft = utils.isDraft(record)
+
+    // No data, return to page
+    if (!route){
+      res.redirect(`${recordPath}/select-route${referrer}`)
+    }
+    // Route not supported
+    else if (route == "Other") {
+      res.redirect(`${recordPath}/route-not-supported${referrer}`)
+    }
+    else if (recordIsDraft) {
+
+      // It’s possible for a user to pick a Publish course, then go back to change the
+      // route to one that doesn’t have publish courses. If they do this, we delete the
+      // course details section
+      if (existingCourseDetails?.isPublishCourse && route != existingCourseDetails?.route){
+        delete record.courseDetails
+        console.log("Changing to a route that doesn’t match the selected Publish course")
+        // In the future, this could send to a confirm page checking if this is the right course
+      }
+
+      // TODO Make course details not complete if route is changed from Early years to a non Early years
+
+      // Coming from the check answers page
+      if (referrer){
+        res.redirect(utils.getReferrerDestination(req.query.referrer))
+      }
+      else {
+        res.redirect(`/new-record/overview`)
+      }
+    }
+
+    else {
+
+      // Look up courses offered by this provider for this route
+      let providerCourses = utils.getProviderCourses({
+        courses: data.courses,
+        provider: record.provider,
+        route
+      })
+
+      let routeHasChanged = (record.route != record?.courseDetails?.route)
+
+      // No Publish courses to pick from, so just go to confirm page
+      if (!providerCourses.length){
+
+        // As we’re going to a non-publish course, delete the Publish stuff
+        record.courseDetails = utils.deletePublishCourseReferences(record.courseDetails)
+
+        // As we're on a new route, lets clear bits of course details that might be incompatible
+        if (routeHasChanged){
+          record = utils.deleteIncompatibleCourseReferences(record)
+        }
+
+        res.redirect(`${recordPath}/course-details${referrer}`)
+
+      }
+      // We have Publish courses for this route, so send the user down the course picker flow
+      // We don't yet clear any data as the user might pick the same course again
+      // Once a new course is picked, it will overwrite the original
+      else {
+        // We’ll retain the existing course info for now, so we can preselect the right things if the route is unchanged.
+        res.redirect(`${recordPath}/course-details${referrer}`)
+      }
+
+    }
+
+  })
+
+  // =============================================================================
   // Schools
   // =============================================================================
 
@@ -395,7 +476,7 @@ module.exports = router => {
     let route = data.record?.route
 
     // If it’s an Apply draft we let users pick from all routes
-    if (utils.sourceIsApply(record)) route = false
+    if (utils.sourceIsApply(record) && utils.isDraft(record)) route = false
 
     let isInvalidCourseYear = !years.academicYearsShort.includes(courseStartYear)
 
@@ -494,10 +575,14 @@ module.exports = router => {
     // They’ve chosen to enter details manually
     else if (selectedCourse == "Other"){
 
-      // User has swapped from a publish to a non-publish course. Delete existing data 
+      // User has swapped from a publish to a non-publish course. Delete existing publish data 
+      // but preserve everything else
       if (record?.courseDetails?.isPublishCourse){
-        delete record.courseDetails
+        record.courseDetails = utils.deletePublishCourseReferences(record.courseDetails)
       }
+
+      // Handle stuff like early years and subjects between routes where they'd be incompatible
+      record = utils.deleteIncompatibleCourseReferences(record)
 
       // Send them down the manual course details journey
       res.redirect(`${recordPath}/course-details/phase${referrer}`)
@@ -538,24 +623,31 @@ module.exports = router => {
         res.redirect(`${recordPath}/course-details/pick-course/${academicYear}${referrer}`)
       }
       else {
-        // Copy over that provider’s course data
-        let courseDetails = providerCourses[courseIndex]
 
-        // Fill in specialisms that are mappable
-        record.courseDetails = utils.mapMappablePublishSubjects(courseDetails)
+        // If we already have a course attached to the record, and it's the *same* course as
+        // the one now selected, then do nothing. Otherwise, we'll overwrite with the newly
+        // selected course
+        if (record?.courseDetails?.id != selectedCourse){
+          // Copy over that provider’s course data
+          let courseDetails = providerCourses[courseIndex]
 
-        // Set course start and end dates for the trainee if the course has them
-        // We don’t get full course dates from Publish, but once a user has added a trainee on a 
-        // particular course we ask if the dates they add for that trainee should be saved back to the 
-        // course - if so we’ll now have them and can apply them to future trainees on that course
-        // and study mode.
-        record.courseDetails = utils.setCourseDatesIfPresent(courseDetails)
+          // Fill in specialisms that are mappable
+          record.courseDetails = utils.mapMappablePublishSubjects(courseDetails)
 
-        if (utils.isDraft(record)){
-          record = utils.setAcademicYear(record)
+          // Set course start and end dates for the trainee if the course has them
+          // We don’t get full course dates from Publish, but once a user has added a trainee on a
+          // particular course we ask if the dates they add for that trainee should be saved back to
+          // the course - if so we’ll now have them and can apply them to future trainees on that
+          // course and study mode.
+          record.courseDetails = utils.setCourseDatesIfPresent(courseDetails)
+
+          if (utils.isDraft(record)){
+            record = utils.setAcademicYear(record)
+          }
+
+          record.academicYear = courseDetails.academicYear
+
         }
-
-        record.academicYear = courseDetails.academicYear
 
         // For apply records we let them pick a Publish course which 
         // might have a different route.
@@ -727,7 +819,7 @@ module.exports = router => {
     }
   })
  
-  router.post(['/:recordtype/:uuid/course-details/details','/:recordtype/course-details/details'], function (req, res) {
+  router.post(['/:recordtype/:uuid/course-details/details-answer','/:recordtype/course-details/details-answer'], function (req, res) {
     const data = req.session.data
     let record = data.record
     let referrer = utils.getReferrer(req.query.referrer)
@@ -770,7 +862,8 @@ module.exports = router => {
     // Set qualification and duration as per selected route
     record = utils.setCourseDefaults(record)
 
-    let isAllocated = utils.hasAllocatedPlaces(record)
+    // let isAllocated = utils.hasAllocatedPlaces(record)
+    let isAllocated = false //disabled feature for now
 
     if (isAllocated) {
       res.redirect(`${recordPath}/course-details/allocated-place${referrer}`)

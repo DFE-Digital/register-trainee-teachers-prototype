@@ -2,7 +2,7 @@
 
 {% set pageHeading = "Course details" %}
 
-{# {% set formAction = "./assessment-details/confirm" %} #}
+{% set formAction = "./details-answer" | addReferrer(referrer) %}
 
 {% block formContent %}
   {% include "_includes/forms/course-details.html" %}

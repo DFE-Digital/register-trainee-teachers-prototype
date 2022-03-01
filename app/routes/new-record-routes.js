@@ -88,46 +88,6 @@ module.exports = router => {
     }
   })
 
-  // Show error if route is not assessment only
-  router.post('/new-record/select-route-answer', function (req, res) {
-    const data = req.session.data
-    let record = data.record
-    let route = record?.route
-    let referrer = utils.getReferrer(req.query.referrer)
-    let existingCourseDetails = record?.courseDetails
-
-    // No data, return to page
-    if (!route){
-      res.redirect(`/new-record/select-route${referrer}`)
-    }
-    // Route not supported
-    else if (route == "Other") {
-      res.redirect(`/new-record/route-not-supported${referrer}`)
-    }
-    else {
-
-      // It’s possible for a user to pick a Publish course, then go back to change the
-      // route to one that doesn’t have publish courses. If they do this, we delete the
-      // course details section
-      if (existingCourseDetails?.isPublishCourse && route != existingCourseDetails?.route){
-        // delete record.courseDetails
-        console.log("Changing to a route that doesn’t match the selected Publish course")
-        // In the future, this could send to a confirm page checking if this is the right course
-      }
-
-      // TODO Make course details not complete if route is changed from Early years to a non Early years
-      
-      // Coming from the check answers page
-      if (referrer){
-        res.redirect(utils.getReferrerDestination(req.query.referrer))
-      }
-      else {
-        res.redirect(`/new-record/overview`)
-      }
-    }
-   
-  })
-
   // Swap between two different templates for this page
   router.get('/new-record/overview', function (req, res) {
     const data = req.session.data

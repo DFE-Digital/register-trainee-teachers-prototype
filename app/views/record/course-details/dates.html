@@ -2,7 +2,7 @@
 
 {% set pageHeading = "ITT dates" %}
 
-{% set formAction = "./dates-answer" %}
+{% set formAction = "./dates-answer" | addReferrer(referrer) %}
 
 {% block formContent %}
 

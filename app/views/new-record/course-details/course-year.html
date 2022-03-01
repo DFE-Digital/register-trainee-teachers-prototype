@@ -4,7 +4,7 @@
 {% set pageHeading = "Which year’s courses do you want to choose from?" %}
 
 
-{% set formAction = "./course-year-answer" %}
+{% set formAction = "./course-year-answer" | addReferrer(referrer) %}
 
 {% block formContent %}
   {% include "_includes/forms/course-details/course-year.html" %}

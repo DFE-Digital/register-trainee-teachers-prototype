@@ -8,22 +8,52 @@
 
 {# {% set canAmend = false %} #}
 
+{% set omniCourseHtml %}
+  <p class="govuk-body">{{record.route}}</p>
+  {% if isPublishCourse %}
+    <p class="govuk-body">{{ courseDetails.courseNameLong }}</p>
+    {# <p class="govuk-body">{{ courseDetails.route }}</p> #}
+  {# {% else %}
+    <p class="govuk-body">{{ courseDetails.subjects | prettifySubjects or 'Not provided' }}</p> #}
+     {# (course details added manually) #}
+  {% endif %}
+
+{% endset %}
+
+{% set omniCourseRow = {
+  key: {
+    text: "Courserino"
+  },
+  value: {
+    html: omniCourseHtml | safe or 'Not provided'
+  },
+  actions: {
+    items: [
+      {
+        href: recordPath + "/select-route" | addReferrer(referrer),
+        text: "Change",
+        visuallyHiddenText: "course"
+      }
+    ]
+  } if canAmend
+} %}
+
 {% set routeRow = {
   key: {
     text: "Route"
   },
   value: {
-    text: courseDetails.route | safe or 'Not provided'
+    text: record.route | safe or 'Not provided'
   },
   actions: {
     items: [
       {
-        href: recordPath + "/course-details" | addReferrer(referrer),
+        href: recordPath + "/select-route" | addReferrer(referrer),
         text: "Change",
         visuallyHiddenText: "route"
       }
     ]
-  } if canAmend and false
+  } if canAmend
 } %}
 
 {% set courseNameRow = {
@@ -31,7 +61,7 @@
     text: "Course"
   },
   value: {
-    text: (courseDetails.courseNameLong | safe or 'Not provided') if isPublishCourse else "Details not on Publish"
+    text: (courseDetails.courseNameLong | safe or 'Not provided') if isPublishCourse else "Course details added manually"
   },
   actions: {
     items: [
@@ -42,7 +72,7 @@
       }
     ]
   } if canAmend
-} if record | routeHasPublishCourses %}
+} if record | routeHasPublishCourses or isPublishCourse %}
 
 
 {% set educationPhaseRow = {
@@ -209,8 +239,9 @@
 
 
 {% set courseDetailsRows = [
-  routeRow if record | isNonDraft,
-  courseNameRow,
+  omniCourseRow,
+  _routeRow if record | isNonDraft,
+  _courseNameRow,
   educationPhaseRow,
   subjectsRow,
   ageRangeRow,
@@ -219,7 +250,7 @@
   startDateRow,
   endDateRow,
   durationRow,
-  allocatedPlaceRow
+  allocatedPlaceRow if false
 ] %}
 
 {# For apply drafts only - show a very minimal card with details of course #}

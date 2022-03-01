@@ -65,8 +65,6 @@ filters.getAcademicQualificationText = function(input, record=false){
 
   let foundQualification = utils.lookUpAcademicQualification(input)
 
-  console.log(record, qualificationText, qualificationsApply, foundQualification)
-
   if (qualificationsApply && foundQualification){
     return `${foundQualification.short} (${foundQualification.long})`
   }

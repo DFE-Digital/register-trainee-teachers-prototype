@@ -329,7 +329,7 @@ module.exports = router => {
       }
       else {
         // More likely we've come from this tab where most things are on
-        res.redirect(`/record/${req.params.uuid}/details-and-education`)
+        res.redirect(`/record/${req.params.uuid}/personal-details`)
       }
     }
   })

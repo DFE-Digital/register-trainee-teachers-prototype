@@ -42,8 +42,6 @@ router.all('*', function(req, res, next){
   data.signedInProviders = (data.isBlendedModel) ? data.settings.userProviders : [data.settings.userActiveProvider]
   data.isAdmin = (data.settings.viewAsAdmin == "true") ? true : false
 
-  // Filter records by provider, enabled routes, apply enabled
-  data.filteredRecords = utils.filterRecords(data.records, data)
 
   res.locals.data.isHatModel = data.isHatModel
   res.locals.data.isBlendedModel = data.isBlendedModel
@@ -56,7 +54,6 @@ router.all('*', function(req, res, next){
     res.locals.data.settings.userActiveProvider = data.settings.userActiveProvider
   }
   // Also save to locals so that the data is available immediately
-  res.locals.data.filteredRecords = data.filteredRecords
   res.locals.accessLevel = permissions.getAccessLevel(data?.signedInProviders, data)
   res.locals.recordAccessLevel = permissions.recordAccessLevel(data?.record, data)
 
@@ -68,6 +65,12 @@ router.all('*', function(req, res, next){
 // and have the query string self-delete once done
 router.get('*', function(req, res, next){
   const data = req.session.data
+
+  // Filter records by provider, enabled routes, apply enabled
+  // Todo: should we really be doing this on all routes?
+  data.filteredRecords = utils.filterRecords(data.records, data)
+  res.locals.data.filteredRecords = data.filteredRecords
+
   let requestedUrl = url.parse(req.url).pathname
   // Delete cashes of invalid answers that should be flushed on each request
   delete data?.temp

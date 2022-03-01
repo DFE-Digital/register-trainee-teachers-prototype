@@ -217,11 +217,10 @@ exports.getCoursePhase = record => {
 
   let matchedPhase
 
-  // Defer to an explicit level if it exists - not all records have this
-  if (record?.courseDetails?.phase) return record?.courseDetails?.phase
-
   // Early years routes don’t have an age range - but they’re all implicitly 'Early years'
-  else if (exports.routeIsEarlyYears(record?.route)) return "Early years"
+  if (exports.routeIsEarlyYears(record?.route)) return "Early years"
+  // Defer to an explicit level if it exists - not all records have this
+  else if (record?.courseDetails?.phase) return record?.courseDetails?.phase
 
   // Age range can be used to derive the phase
   else if (record?.courseDetails?.ageRange) {
@@ -300,13 +299,78 @@ exports.getNextPublishCourseDetailsUrl = (record, recordPath, referrer) => {
   else if (isMissingDates){
     return `${recordPath}/course-details/dates${referrer}`
   }
-  else if (isAllocated) {
-    // After /allocated-place the journey will match other course-details routes
-    return `${recordPath}/course-details/allocated-place${referrer}`
-  }
+  // else if (isAllocated) {
+  //   // After /allocated-place the journey will match other course-details routes
+  //   return `${recordPath}/course-details/allocated-place${referrer}`
+  // }
   else {
     return `${recordPath}/course-details/confirm${referrer}`
   }
+}
+
+// Delete those bits of course details that would have come from Publish. Output should
+// resemble what you get if you manually add course details.
+exports.deletePublishCourseReferences = courseDetails => {
+
+  if (!courseDetails) {
+    console.log("Error with deletePublishCourseReferences: courseDetails empty")
+    return {}
+  }
+
+  delete courseDetails?.code
+  delete courseDetails?.courseNameLong
+  delete courseDetails?.courseNameShort
+  delete courseDetails?.isPublishCourse
+  delete courseDetails?.publishSubjects
+
+  return courseDetails
+
+}
+
+// Have a stab at clearing incompatible data from course details - eg it’s a secondary course but the subject
+// is early years
+// TODO: would it be better to wipe course details but retain specific allowed items?
+exports.deleteIncompatibleCourseReferences = record => {
+
+  if (!record) {
+    console.log("Error with deleteIncompatibleCourseReferences: record empty")
+    return {}
+  }
+
+  delete record?.courseDetails?.route
+  delete record?.courseDetails?.isPublishCourse
+  delete record?.courseDetails?.qualifications
+  delete record?.courseDetails?.qualificationsSummary
+
+  // Using this lower level function to identify Early years because we don't trust
+  // any of the course details at this point.
+  let isEarlyYears = exports.routeIsEarlyYears(record?.route)
+
+  // If moving from Early years to non early years, clear out the subject
+  if (!isEarlyYears){
+    if (record?.courseDetails?.subjects?.first == "Early years teaching"){
+      delete record.courseDetails.subjects
+    }
+
+    if (record?.courseDetails?.phase == "Early years"){
+      delete record.courseDetails.phase
+    }
+  }
+
+  if (isEarlyYears){
+
+    if (record?.courseDetails?.subjects?.first != "Early years teaching"){
+      delete record?.courseDetails?.subjects
+    }
+
+    if (record?.courseDetails?.phase != "Early years"){
+      delete record?.courseDetails?.phase
+    }
+
+  }
+
+  return record
+
 }
 
 // -------------------------------------------------------------------
@@ -793,40 +857,6 @@ exports.mapMappablePublishSubjects = course => {
   if (firstSubject.includes("Primary")){
     subjects = exports.mapPrimarySubjectsToSubjectSpecialisms(firstSubject)
   }
-
-  // // Hacky handling for Primary courses. Publish only treats them as having a single 'subject' but
-  // // we want to map it to two subjects. For most of them, both subjects can be directly mapped.
-  // if (firstSubject.includes("Primary")){
-
-  //   // The first specialism is always 'Primary teaching' (except for Primary with maths)
-  //   subjects.first = "Primary teaching"
-  //   switch(firstSubject){
-  //     case "Primary with English":
-  //       subjects.second = "English studies"
-  //       break
-  //     case "Primary with physical education":
-  //       // PE can’t be mapped so add it as a second publish subject and let the UI collect it from
-  //       // the user
-  //       course.publishSubjects.second = "Physical education"
-  //       subjects.second = null
-  //       break
-  //     case "Primary with science":
-  //       subjects.second = "General sciences"
-  //       break
-  //     case "Primary with geography and history":
-  //       subjects.second = "Geography"
-  //       subjects.third = "History"
-  //       break
-  //     case "Primary with mathematics":
-  //       // Primary with maths is treated specially - override the first subject to set this specific
-  //       subjects.first = "Specialist teaching (primary with mathematics)"
-  //       break
-  //     case "Primary with modern languages":
-  //       course.publishSubjects.second = "Modern languages"
-  //       subjects.second = null
-  //       break
-  //   }
-  // }
 
   // Secondary courses
   else {

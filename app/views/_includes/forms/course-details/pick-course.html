@@ -16,7 +16,7 @@ defer to an id if one exists. #}
   {% for course in providerCourses %}
 
     {% set courseHint %}
-      {% if route %}
+      {% if filteredRoute %}
         {{ course.qualificationsSummary }}
       {% else %}
         {# Not filtered by route, so display the route in addition #}
@@ -45,12 +45,12 @@ defer to an id if one exists. #}
   }) %}
 
   {% set hintText %}
-    {% if filteredRoute %}
+    {# {% if filteredRoute %}
       Your {{filteredRoute | lower | replace("(", "") | replace(")", "")}} courses in the Publish service
       {% else %}
       Your courses in the Publish service
-    {% endif %}
-    
+    {% endif %} #}
+    Courses imported from the Publish service
   {% endset %}
 
 

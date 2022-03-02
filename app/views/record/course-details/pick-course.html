@@ -1,7 +1,11 @@
 {% extends "_templates/_record-form.html" %}
 
 {% set pageHeading %}
-  Your courses starting in {{courseStartYear | yearToAcademicYearString }}
+  {% if filteredRoute %}
+    Your {{filteredRoute | lower | replace("(", "") | replace(")", "")}} courses starting in {{courseStartYear | yearToAcademicYearString }}
+  {% else %}
+    Your courses starting in {{courseStartYear | yearToAcademicYearString }}
+  {% endif %}
 {% endset %}
 
 {% set formAction = "./../pick-course-answer" | addReferrer(referrer) %}

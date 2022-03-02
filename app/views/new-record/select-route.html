@@ -2,10 +2,18 @@
 
 {% set pageHeading = "What type of training are they doing?" %}
 
-{% set formAction = "./select-route-answer" | addReferrer(referrer) %}
+{# Check if the _routeChangeOnly query param is present and if so, pass it along in the action
+This is a bit awkward - perhaps we should always include the existing query param? #}
+{% set routeQuery = referrer | getReferrer %}
+{% if query._routeChangeOnly %}
+  {% set routeQuery = routeQuery | addQueryParam('_routeChangeOnly=true')%}
+{% endif %}
+
+{% set formAction = "./select-route-answer" + routeQuery %}
 
 
 {% block formContent %}
+
   {% include "_includes/forms/select-route.html" %}
 
   {% if not record.recordType %}

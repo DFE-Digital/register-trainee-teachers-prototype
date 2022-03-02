@@ -38,7 +38,7 @@ module.exports = router => {
     else {
       // If single provider, directly assign them to the record
       data.record.provider = data.signedInProviders[0]
-      res.redirect('/new-record/select-route')
+      res.redirect('/new-record/select-route?_routeChangeOnly=true')
     }
   })
 

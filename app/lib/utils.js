@@ -314,7 +314,7 @@ exports.deletePublishCourseReferences = courseDetails => {
 
   if (!courseDetails) {
     console.log("Error with deletePublishCourseReferences: courseDetails empty")
-    return {}
+    return
   }
 
   delete courseDetails?.code
@@ -334,7 +334,7 @@ exports.deleteIncompatibleCourseReferences = record => {
 
   if (!record) {
     console.log("Error with deleteIncompatibleCourseReferences: record empty")
-    return {}
+    return
   }
 
   delete record?.courseDetails?.route
@@ -2234,10 +2234,14 @@ exports.addReferrer = (url, referrer) => {
   }
 }
 
-exports.orReferrer = (url, referrer) => {
-  if (!referrer || referrer == undefined) return url
+exports.orReferrer = function(url, referrer) {
+  let currentPageUrl = this?.ctx?.currentPageUrl || false
+
+  let referrerDestination = exports.getReferrerDestination(referrer, currentPageUrl)
+
+  if (!referrer || !referrerDestination) return url
   else {
-    return exports.getReferrerDestination(referrer)
+    return referrerDestination
   }
 }
 
@@ -2287,18 +2291,30 @@ exports.createSortLink = function(pathname, sortOrder){
 // Referrer could be an array of urls. If so, return the last one
 // and put the remaining as the next referrer.
 // This lets us support multiple return destinations
-exports.getReferrerDestination = referrer => {
-  if (typeof referrer == 'string'){
-    referrer = referrer.split(",")
+exports.getReferrerDestination = function(referrer, currentPageUrl=false) {
+
+  const getReferrer = referrer => {
+    if (typeof referrer == 'string'){
+      referrer = referrer.split(",")
+    }
+    if (!referrer) return ''
+    else if (Array.isArray(referrer)){
+      let referrerCopy = [...referrer]
+      let last = referrerCopy.pop()
+      if (referrerCopy.length) return `${last}?referrer=${referrerCopy}`
+      else return last
+    }
+    else return referrer
   }
-  if (!referrer) return ''
-  else if (Array.isArray(referrer)){
-    let referrerCopy = [...referrer]
-    let last = referrerCopy.pop()
-    if (referrerCopy.length) return `${last}?referrer=${referrerCopy}`
-    else return last
-  }
-  else return referrer
+
+  let referrerUrl = getReferrer(referrer)
+  console.log({referrerUrl})
+  
+  // Check if the referrer url is the same as the url we're already on. This masks a 
+  // bug where the return url is accidentally the url we're already on - and prevents us
+  // returning to the page we’re already on
+  return (currentPageUrl && referrerUrl && referrerUrl.startsWith(currentPageUrl)) ? false : referrerUrl
+
 }
 
 // Return first part of url to use in redirects

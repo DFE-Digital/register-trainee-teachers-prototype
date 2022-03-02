@@ -54,8 +54,6 @@
     {% set bursaryTier = bursaryData.tiers | where('name', fundingSource ) | first %}
     Applied for {{bursaryTier.name}}
     <p class="govuk-hint">{{bursaryTier.value | currency }} estimated bursary</p>
-  {% else %}
-    Not provided
   {% endif %}
 {% endset %}
 
@@ -66,7 +64,7 @@
       text: "Funding method"
     },
     value: {
-      text: courseFundingHtml | safe or "Not provided"
+      text: courseFundingHtml | safe | trim
     },
     actions: {
       items: [
@@ -149,7 +147,9 @@
 
 {% set fundingHtml %}
   {{ govukSummaryList({
-    rows: fundingRows
+    rows: fundingRows | highlightInvalidRows({
+      treatEmptyAsMissing: true
+    })
   }) }}
 {% endset %}
 

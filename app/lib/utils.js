@@ -322,6 +322,7 @@ exports.deletePublishCourseReferences = courseDetails => {
   delete courseDetails?.courseNameShort
   delete courseDetails?.isPublishCourse
   delete courseDetails?.publishSubjects
+  delete courseDetails?.subjects
 
   return courseDetails
 

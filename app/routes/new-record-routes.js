@@ -88,22 +88,21 @@ module.exports = router => {
     }
   })
 
-  // Route for when changing route separate from the cours - used as the first page of manual drafts
+  // Route for when changing route separate from the course - used as the first page of manual drafts
   router.post(['/:recordtype/:uuid/select-route-answer','/:recordtype/select-route-answer'], function (req, res) {
     const data = req.session.data
     let record = data.record
     let route = record?.route
-    let recordPath = utils.getRecordPath(req)
     let referrer = utils.getReferrer(req.query.referrer)
     let existingCourseDetails = record?.courseDetails
 
     // No data, return to page
     if (!route){
-      res.redirect(`${recordPath}/select-route${referrer}`)
+      res.redirect(`/new-record/select-route${referrer}`)
     }
     // Route not supported
     else if (route == "Other") {
-      res.redirect(`${recordPath}/route-not-supported${referrer}`)
+      res.redirect(`/new-record/route-not-supported${referrer}`)
     }
 
     // It’s possible for a user to pick a Publish course, then go back to change the

@@ -43,92 +43,6 @@ module.exports = router => {
   })
 
   // =============================================================================
-  // Routes
-  // =============================================================================
-
-    // Show error if route is not assessment only
-  router.post(['/:recordtype/:uuid/select-route-answer','/:recordtype/select-route-answer'], function (req, res) {
-    const data = req.session.data
-    let record = data.record
-    let route = record?.route
-    let recordPath = utils.getRecordPath(req)
-    let referrer = utils.getReferrer(req.query.referrer)
-    let existingCourseDetails = record?.courseDetails
-    let recordIsDraft = utils.isDraft(record)
-
-    // This param lets us change just the route without chaining on picking a course - is used
-    // when first setting up the draft trainee. If it’s not present, then we chain on picking
-    // a course or adding course details
-    let routeChangeOnly = (req?.query?._routeChangeOnly) ? true : false
-
-    // No data, return to page
-    if (!route){
-      res.redirect(`${recordPath}/select-route${referrer}`)
-    }
-    // Route not supported
-    else if (route == "Other") {
-      res.redirect(`${recordPath}/route-not-supported${referrer}`)
-    }
-    // Where we want to change route separately from updating courses - only used on drafts
-    else if (routeChangeOnly){
-      if (recordIsDraft) {
-
-        // It’s possible for a user to pick a Publish course, then go back to change the
-        // route to one that doesn’t have publish courses. If they do this, we delete the
-        // course details section
-        if (existingCourseDetails?.isPublishCourse && route != existingCourseDetails?.route){
-          delete record.courseDetails
-          console.log("Changing to a route that doesn’t match the selected Publish course")
-          // In the future, this could send to a confirm page checking if this is the right course
-        }
-
-        // TODO Make course details not complete if route is changed from Early years to a non Early years
-
-        // Coming from the check answers page
-        if (referrer){
-          res.redirect(utils.getReferrerDestination(req.query.referrer))
-        }
-        else {
-          res.redirect(`/new-record/overview`)
-        }
-      }
-      // This code shouldn't run - we don't support changing route on its own from a non-draft
-      else {
-        console.log("Error with select-route-answer: route change only requested on non-draft")
-        res.redirect(`${recordPath}`)
-      }
-    }
-    // As we’ve changed the route, we now chain on the course details section
-    else {
-
-      // Look up courses offered by this provider for this route
-      let providerCourses = utils.getProviderCourses({
-        courses: data.courses,
-        provider: record.provider,
-        route
-      })
-
-      // No Publish courses to pick from so delete Publish stuff
-      if (!providerCourses.length){
-        record.courseDetails = utils.deletePublishCourseReferences(record.courseDetails)
-      }
-
-      // Todo: shoudl this be a function? probably we should check the record stored in data not
-      // the route on the course
-      let routeHasChanged = (record.route != record?.courseDetails?.route)
-
-      // As the route has changed, clear bits of course details that might be incompatible
-      // Keeps a few bits (subject, dates) where possible, as we may be able to populate them
-      if (routeHasChanged){
-        record = utils.deleteIncompatibleCourseReferences(record)
-      }
-
-      res.redirect(`${recordPath}/course-details${referrer}`)
-    }
-
-  })
-
-  // =============================================================================
   // Schools
   // =============================================================================
 
@@ -371,6 +285,54 @@ module.exports = router => {
   // Course details - general
   // =============================================================================
 
+  // Show error if route is not assessment only
+  router.post(['/:recordtype/:uuid/course-details/select-route-answer','/:recordtype/course-details/select-route-answer'], function (req, res) {
+    const data = req.session.data
+    let record = data.record
+    let route = record?.route
+    let recordPath = utils.getRecordPath(req)
+    let referrer = utils.getReferrer(req.query.referrer)
+    let existingCourseDetails = record?.courseDetails
+    let recordIsDraft = utils.isDraft(record)
+
+    // No data, return to page
+    if (!route){
+      res.redirect(`${recordPath}/course-details/select-route${referrer}`)
+    }
+    // Route not supported
+    else if (route == "Other") {
+      res.redirect(`${recordPath}/route-not-supported${referrer}`)
+    }
+    // As we’ve changed the route, we now chain on the course details section
+    else {
+
+      // Look up courses offered by this provider for this route
+      let providerCourses = utils.getProviderCourses({
+        courses: data.courses,
+        provider: record.provider,
+        route
+      })
+
+      // No Publish courses to pick from so delete Publish stuff
+      if (!providerCourses.length){
+        record.courseDetails = utils.deletePublishCourseReferences(record.courseDetails)
+      }
+
+      // Todo: shoudl this be a function? probably we should check the record stored in data not
+      // the route on the course
+      let routeHasChanged = (record.route != record?.courseDetails?.route)
+
+      // As the route has changed, clear bits of course details that might be incompatible
+      // Keeps a few bits (subject, dates) where possible, as we may be able to populate them
+      if (routeHasChanged){
+        record = utils.deleteIncompatibleCourseReferences(record)
+      }
+
+      res.redirect(`${recordPath}/course-details${referrer}`)
+    }
+
+  })
+
   // Decide whether to go down Publish pick-course journey or directly to manual course details
   router.get(['/:recordtype/:uuid/course-details','/:recordtype/course-details'], function (req, res) {
     const data = req.session.data
@@ -535,7 +497,7 @@ module.exports = router => {
     }
     else if (confirmed == 'change-course'){
       delete record?.courseDetails?.needsConfirming
-      res.redirect(`${recordPath}/select-route${referrer}`)
+      res.redirect(`${recordPath}/course-details/select-route${referrer}`)
     }
 
   })

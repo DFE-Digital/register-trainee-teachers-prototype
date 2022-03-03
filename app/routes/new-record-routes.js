@@ -38,7 +38,7 @@ module.exports = router => {
     else {
       // If single provider, directly assign them to the record
       data.record.provider = data.signedInProviders[0]
-      res.redirect('/new-record/select-route?_routeChangeOnly=true')
+      res.redirect('/new-record/select-route')
     }
   })
 
@@ -86,6 +86,43 @@ module.exports = router => {
         res.redirect(`/new-record/select-route`)
       }
     }
+  })
+
+  // Route for when changing route separate from the cours - used as the first page of manual drafts
+  router.post(['/:recordtype/:uuid/select-route-answer','/:recordtype/select-route-answer'], function (req, res) {
+    const data = req.session.data
+    let record = data.record
+    let route = record?.route
+    let recordPath = utils.getRecordPath(req)
+    let referrer = utils.getReferrer(req.query.referrer)
+    let existingCourseDetails = record?.courseDetails
+
+    // No data, return to page
+    if (!route){
+      res.redirect(`${recordPath}/select-route${referrer}`)
+    }
+    // Route not supported
+    else if (route == "Other") {
+      res.redirect(`${recordPath}/route-not-supported${referrer}`)
+    }
+
+    // It’s possible for a user to pick a Publish course, then go back to change the
+    // route to one that doesn’t have publish courses. If they do this, we delete the
+    // course details section
+    if (existingCourseDetails?.isPublishCourse && route != existingCourseDetails?.route){
+      delete record.courseDetails
+      console.log("Changing to a route that doesn’t match the selected Publish course")
+      // In the future, this could send to a confirm page checking if this is the right course
+    }
+
+    // Coming from the check answers page
+    if (referrer){
+      res.redirect(utils.getReferrerDestination(req.query.referrer))
+    }
+    else {
+      res.redirect(`/new-record/overview`)
+    }
+
   })
 
   // Swap between two different templates for this page

@@ -367,6 +367,13 @@ exports.deleteIncompatibleCourseReferences = record => {
       delete record?.courseDetails?.phase
     }
 
+    delete record?.courseDetails?.studyMode
+    delete record?.courseDetails?.ageRange
+
+  }
+
+  if (record?.route == "Assessment only"){
+    delete record?.courseDetails.studyMode
   }
 
   return record

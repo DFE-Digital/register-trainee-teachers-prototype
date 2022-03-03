@@ -1,4 +1,4 @@
-{% extends "_templates/_new-record.html" %}
+{% extends "_templates/_record-form.html" %}
 
 {% set pageHeading = "What type of training are they doing?" %}
 
@@ -6,11 +6,5 @@
 
 
 {% block formContent %}
-
   {% include "_includes/forms/select-route.html" %}
-
-  {% if not record.recordType %}
-    {% set hideReturnLink = true %}
-  {% endif %}
-
 {% endblock %}

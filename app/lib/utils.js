@@ -322,7 +322,7 @@ exports.deletePublishCourseReferences = courseDetails => {
   delete courseDetails?.courseNameShort
   delete courseDetails?.isPublishCourse
   delete courseDetails?.publishSubjects
-  delete courseDetails?.subjects
+  delete courseDetails?.startDateVague
 
   return courseDetails
 
@@ -368,13 +368,18 @@ exports.deleteIncompatibleCourseReferences = record => {
       delete record?.courseDetails?.phase
     }
 
-    delete record?.courseDetails?.studyMode
     delete record?.courseDetails?.ageRange
 
   }
 
-  if (record?.route == "Assessment only"){
+  if (record?.route && record.route.toLowerCase().includes("assessment only")){
+
     delete record?.courseDetails.studyMode
+
+    // If a trainee is moving to / from an assessment only course, it’s
+    // likely any existing course details will be wrong.
+    delete record?.courseDetails?.startDate
+    delete record?.courseDetails?.endDate
   }
 
   return record

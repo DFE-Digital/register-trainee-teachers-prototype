@@ -1,0 +1,25 @@
+{% extends "_templates/_record-form.html" %}
+
+{% set pageHeading = "You need to review the trainee’s training details" %}
+{% set hideReturnLink = true %}
+
+
+{% block formContent %}
+  {% include "_includes/trainee-name-caption.njk" %}
+
+  <h1 class="govuk-heading-l">{{pageHeading}}</h1>
+  
+  <p class="govuk-body">
+    Because you updated the trainee’s course details, you should review their {{"school and " if record | requiresSection("schools") }}funding details.
+  </p>
+
+  {{ govukButton({
+    text: "Review training details",
+    href: "./review-course-change" | addReferrer(referrer)
+  }) }}
+
+{% endblock %}
+
+
+
+

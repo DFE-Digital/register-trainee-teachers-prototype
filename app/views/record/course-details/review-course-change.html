@@ -1,0 +1,47 @@
+{% extends "_templates/_record-form.html" %}
+
+{% set pageHeading -%}
+  Check the trainee’s {{"school and " if data.record | requiresSection("schools") }}funding match the new course details
+{% endset %}
+
+{% set backLink = ("/record/" + data.record.id) | orReferrer(referrer) %}
+{% set backText = "Back to record" %}
+
+{% set gridColumn = 'govuk-grid-column-full' %}
+{% set formAction = "./update" | addReferrer(referrer) %}
+
+
+
+{% block formContent %}
+  {% include "_includes/trainee-name-caption.njk" %}
+  <h1 class="govuk-heading-l">
+    {{pageHeading}}
+  </h1>
+
+  {# Add an extra referrer as this is a compound referral path #}
+  {% set referrer = referrer | pushReferrer(recordPath + "/course-details/review-course-change") %}
+
+  {# {% include "_includes/summary-cards/course-details.html" %} #}
+
+  {% include "_includes/summary-cards/schools.html" %}
+
+  {% include "_includes/summary-cards/funding.html" %}
+
+  {{ govukCheckboxes({
+    idPrefix: "apply-trainee-application-checkbox",
+    _name: "record[applyData][status]",
+    items: [
+      {
+        value: "Completed",
+        text: "I have reviewed the trainee data",
+        _checked: checked(record.applyData.status, "Completed")
+      }
+    ]
+  }) }}
+
+  {{ govukButton({
+    text: "Update record"
+  }) }}
+
+{% endblock %}
+

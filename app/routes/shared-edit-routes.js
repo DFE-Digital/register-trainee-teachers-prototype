@@ -177,7 +177,14 @@ module.exports = router => {
         
       }
       else {
-        res.redirect(`${recordPath}/schools/confirm${referrer}`)
+
+        let referrerDestination = utils.getReferrerDestination(req.query.referrer)
+        if (referrerDestination.includes("review-course-change")){
+          res.redirect(referrerDestination)
+        }
+        else {
+          res.redirect(`${recordPath}/schools/confirm${referrer}`)
+        }
       }
     }
 
@@ -276,7 +283,14 @@ module.exports = router => {
         }
       }
 
-      res.redirect(`${recordPath}/schools/confirm${referrer}`)
+      let referrerDestination = utils.getReferrerDestination(req.query.referrer)
+      if (referrerDestination.includes("review-course-change")){
+        res.redirect(referrerDestination)
+      }
+      else {
+        res.redirect(`${recordPath}/schools/confirm${referrer}`)
+      }
+      
     }
 
   })
@@ -834,6 +848,33 @@ module.exports = router => {
 
   })
 
+  // trainee-details
+  router.post('/:recordtype/:uuid/course-details/course-change-check', function (req, res) {
+    let data = req.session.data
+    let record = data.record
+    let referrer = utils.getReferrer(req.query.referrer)
+    let recordPath = utils.getRecordPath(req)
+
+    let previousRecord = utils.getRecordById(data.records, record.id)
+    console.log({previousRecord})
+
+    let routeChanged = (previousRecord?.route != record?.route)
+    let subjectChanged = (previousRecord?.courseDetails?.subjects?.first != record?.courseDetails?.subjects?.first)
+
+    if (routeChanged || subjectChanged){
+
+      // If the route has changed, don’t trust financial incentives - better to
+      // collect again
+      delete record?.funding?.source
+
+      res.redirect(`${recordPath}/course-details/course-change-interstitial${referrer}`)
+    }
+    else {
+      res.redirect(307, `${recordPath}/course-details/update${referrer}`);
+    }
+  })
+
+
   // =============================================================================
   // Diversity section
   // =============================================================================
@@ -1373,7 +1414,14 @@ module.exports = router => {
       res.redirect(`${recordPath}/funding/financial-support${referrer}`)
     }
     else {
-      res.redirect(`${recordPath}/funding/confirm${referrer}`)
+
+      let referrerDestination = utils.getReferrerDestination(req.query.referrer)
+      if (referrerDestination.includes("review-course-change")){
+        res.redirect(referrerDestination)
+      }
+      else {
+        res.redirect(`${recordPath}/funding/confirm${referrer}`)
+      }
     }
   })
 
@@ -1390,7 +1438,14 @@ module.exports = router => {
       res.redirect(`${recordPath}/funding/financial-support${referrer}`)
     }
     else {
-      res.redirect(`${recordPath}/funding/confirm${referrer}`)
+
+      let referrerDestination = utils.getReferrerDestination(req.query.referrer)
+      if (referrerDestination.includes("review-course-change")){
+        res.redirect(referrerDestination)
+      }
+      else {
+        res.redirect(`${recordPath}/funding/confirm${referrer}`)
+      }
     }
   })
 

@@ -1,32 +1,49 @@
 {% extends "_templates/_record-form.html" %}
 
 {% set pageHeading -%}
-  Check the trainee’s {{"school and " if data.record | requiresSection("schools") }}funding match the new course details
+  Review training details match new course details
 {% endset %}
 
 {% set backLink = ("/record/" + data.record.id) | orReferrer(referrer) %}
 {% set backText = "Back to record" %}
 
 {% set gridColumn = 'govuk-grid-column-full' %}
-{% set formAction = "./update" | addReferrer(referrer) %}
 
+{% set formAction = "./update" | addReferrer("/record/" + data.record.id) %}
 
+{% set returnLink = {
+  href: "./cancel-course-change" | addReferrer(referrer),
+  text: "Cancel and return to record"
+} %}
 
 {% block formContent %}
+
+  {# Add an extra referrer as this is a compound referral path #}
+  {% set referrer = referrer | pushReferrer(recordPath + "/course-details/review-course-change") %}
+
   {% include "_includes/trainee-name-caption.njk" %}
   <h1 class="govuk-heading-l">
     {{pageHeading}}
   </h1>
 
-  {# Add an extra referrer as this is a compound referral path #}
-  {% set referrer = referrer | pushReferrer(recordPath + "/course-details/review-course-change") %}
+  {% set previousRecord = data.records | getRecordById(record.id) %}
 
-  {# {% include "_includes/summary-cards/course-details.html" %} #}
+  {# Use minimal summary to provide a way to change, but not promote the full course #}
+  {% set minimalPublishSummary = true %}
+  {% include "_includes/summary-cards/course-details.html" %}
+
+  {# Only show the degree section if they’ve changed from a course that didn't need degrees
+  and now does need one #}
+  {% if not previousRecord | requiresSection("degree") %}
+    {% include "_includes/summary-cards/degree/details.html" %}
+  {% endif %}
 
   {% include "_includes/summary-cards/schools.html" %}
 
+  {% set showBursaryRow = true %}
   {% include "_includes/summary-cards/funding.html" %}
 
+  {# Checkbox not hooked up #}
   {{ govukCheckboxes({
     idPrefix: "apply-trainee-application-checkbox",
     _name: "record[applyData][status]",

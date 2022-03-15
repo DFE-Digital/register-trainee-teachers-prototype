@@ -196,7 +196,7 @@ exports.requiresField = (record, fieldNames) => {
 // Check if the course route requires this section or any of these sections
 exports.requiresSection = (record, sectionNames) => {
   sectionNames = [].concat(sectionNames) // Force to array
-  let route = record.route
+  let route = record?.route
   let requiredSections
   if (route) {
     requiredSections = trainingRoutes[route]?.sections
@@ -305,6 +305,58 @@ exports.getNextPublishCourseDetailsUrl = (record, recordPath, referrer) => {
   // }
   else {
     return `${recordPath}/course-details/confirm${referrer}`
+  }
+}
+
+// When changing course or route, new data might be required - either because the new
+// route needs more data or because some previous data is invalid. This function checks
+// the record to see what's there vs what the route says should be there. Returns an
+// array of items.
+exports.getCourseChangeMissingItems = (record) => {
+
+  let isMissingDegree = exports.needsDegree(record)
+  let isMissingSchools = exports.needsSchools(record)
+  let isMissingLeadSchool = exports.needsLeadSchool(record)
+  let isMissingEmployingSchool = exports.needsEmployingSchool(record)
+  let isMissingFundingSource = exports.needsFundingSource(record)
+
+  let missing = []
+
+  if (isMissingDegree) missing.push("degree")
+  if (isMissingSchools) missing.push("schools")
+  else {
+    if (isMissingLeadSchool) missing.push("lead school")
+    if (isMissingEmployingSchool) missing.push("employing school")
+  }
+
+  if (isMissingFundingSource) missing.push("funding method")
+  return missing
+}
+
+// Decision tree of conditional pages for Publish courses
+exports.getNextCourseChangeUrl = (record, recordPath, referrer) => {
+
+  let missingItems = exports.getCourseChangeMissingItems(record)
+
+  let startWithReviewPage = false
+
+  if (startWithReviewPage){
+    return `${recordPath}/course-details/review-course-change${referrer}`
+  }
+  else if (missingItems.includes("degree")){
+    return `${recordPath}/degree/add${referrer}`
+  }
+  else if (missingItems.includes("schools") || missingItems.includes("lead school")){
+    return `${recordPath}/schools/lead-school${referrer}`
+  }
+  else if (missingItems.includes("employing-school")){
+    return `${recordPath}/schools/employing-school${referrer}`
+  }
+  else if (missingItems.includes("funding method")){
+    return `${recordPath}/funding/financial-support${referrer}`
+  }
+  else {
+    return `${recordPath}/course-details/review-course-change${referrer}`
   }
 }
 
@@ -1246,6 +1298,30 @@ exports.needsStudyMode = record => {
 
 exports.needsCourseDates = record => {
   return !Boolean(record?.courseDetails?.startDate) || !Boolean(record?.courseDetails?.endDate)
+}
+
+exports.needsDegree = record => {
+  let routeRequiresDegree = exports.requiresSection(record, "degree")
+  return routeRequiresDegree && !Boolean(record?.degree) && !Boolean(record?.degree?.items)
+}
+
+exports.needsSchools = record => {
+  return exports.needsLeadSchool(record) || exports.needsEmployingSchool(record)
+}
+
+exports.needsLeadSchool = record => {
+  let routeRequiresLeadSchool = exports.requiresField(record, "leadSchool")
+  return routeRequiresLeadSchool && !Boolean(record?.schools?.leadSchool)
+}
+
+exports.needsEmployingSchool = record => {
+  let routeRequiresEmployingSchool = exports.requiresField(record, "employingSchool")
+  return routeRequiresEmployingSchool && !Boolean(record?.schools?.employingSchool)
+}
+
+exports.needsFundingSource = record => {
+  let financialSupportApplies = exports.financialSupportApplies(record)
+  return financialSupportApplies && !record?.funding?.source
 }
 
 // -------------------------------------------------------------------
@@ -2306,27 +2382,38 @@ exports.createSortLink = function(pathname, sortOrder){
 // This lets us support multiple return destinations
 exports.getReferrerDestination = function(referrer, currentPageUrl=false) {
 
-  const getReferrer = referrer => {
+  // Split referrer string in to array parts
+  const getReferrerArray = referrer => {
+    let referrerArray = []
     if (typeof referrer == 'string'){
-      referrer = referrer.split(",")
+      referrerArray = referrer.split(",")
     }
-    if (!referrer) return ''
-    else if (Array.isArray(referrer)){
-      let referrerCopy = [...referrer]
-      let last = referrerCopy.pop()
-      if (referrerCopy.length) return `${last}?referrer=${referrerCopy}`
-      else return last
+    if (Array.isArray(referrerArray)){
+      return referrerArray
     }
-    else return referrer
+    else return []
   }
 
-  let referrerUrl = getReferrer(referrer)
-  console.log({referrerUrl})
-  
-  // Check if the referrer url is the same as the url we're already on. This masks a 
-  // bug where the return url is accidentally the url we're already on - and prevents us
-  // returning to the page we’re already on
-  return (currentPageUrl && referrerUrl && referrerUrl.startsWith(currentPageUrl)) ? false : referrerUrl
+  // Strip duplicates and falsy values
+  let referrerArray = [...getReferrerArray(referrer).filter(Boolean)]
+
+  // Strip the current page’s url if present (we don’t want to redirect to the page we came from)
+  referrerArray = referrerArray.filter(item => item != currentPageUrl)
+
+  // No url found
+  if (referrerArray.length == 0) {
+    return ''
+  }
+  // A single return url
+  else if (referrerArray.length == 1){
+    return referrerArray[0]
+  }
+  // Multiple return urls
+  else {
+    let referrerCopy = [...referrerArray]
+    let last = referrerCopy.pop()
+    return `${last}?referrer=${referrerCopy}`
+  }
 
 }
 

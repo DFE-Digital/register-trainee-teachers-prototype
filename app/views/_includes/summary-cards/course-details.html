@@ -12,6 +12,8 @@
 
   {% if isPublishCourse %}
     <p class="govuk-body">{{ courseDetails.courseNameLong }}</p>
+  {% elseif minimalPublishSummary %}
+    <p class="govuk-body">{{ courseDetails.subjects | prettifySubjects }}</p>
   {% endif %}
 
 {% endset %}

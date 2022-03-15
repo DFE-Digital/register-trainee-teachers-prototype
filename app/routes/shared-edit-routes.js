@@ -180,7 +180,7 @@ module.exports = router => {
 
         let referrerDestination = utils.getReferrerDestination(req.query.referrer)
         if (referrerDestination.includes("review-course-change")){
-          res.redirect(referrerDestination)
+          res.redirect(utils.getNextCourseChangeUrl(record, recordPath, referrer))
         }
         else {
           res.redirect(`${recordPath}/schools/confirm${referrer}`)
@@ -285,7 +285,7 @@ module.exports = router => {
 
       let referrerDestination = utils.getReferrerDestination(req.query.referrer)
       if (referrerDestination.includes("review-course-change")){
-        res.redirect(referrerDestination)
+        res.redirect(utils.getNextCourseChangeUrl(record, recordPath, referrer))
       }
       else {
         res.redirect(`${recordPath}/schools/confirm${referrer}`)
@@ -848,7 +848,8 @@ module.exports = router => {
 
   })
 
-  // trainee-details
+  // Work out if course details have changed significantly and so we need to have the user
+  // check the school and funding sections
   router.post('/:recordtype/:uuid/course-details/course-change-check', function (req, res) {
     let data = req.session.data
     let record = data.record
@@ -856,15 +857,33 @@ module.exports = router => {
     let recordPath = utils.getRecordPath(req)
 
     let previousRecord = utils.getRecordById(data.records, record.id)
-    console.log({previousRecord})
 
     let routeChanged = (previousRecord?.route != record?.route)
-    let subjectChanged = (previousRecord?.courseDetails?.subjects?.first != record?.courseDetails?.subjects?.first)
 
-    if (routeChanged || subjectChanged){
+    let firstSubject = record?.courseDetails?.subjects?.first
+    let previousFirstSubject = previousRecord?.courseDetails?.subjects?.first
+    let firstSubjectChanged = !Boolean(firstSubject) || (previousFirstSubject !== firstSubject)
 
-      // If the route has changed, don’t trust financial incentives - better to
-      // collect again
+    // Clear out school data if schools no longer needed
+    if (!utils.requiresSection(record, "degree")){
+      delete record?.degree
+    }
+    if (!utils.requiresSection(record, "schools")){
+      delete record?.schools
+    }
+    if (!utils.requiresField(record, "leadSchool")){
+      delete record?.schools?.leadSchool
+    }
+    if (!utils.requiresField(record, "employingSchool")){
+      delete record?.schools?.employingSchool
+    }
+
+    // If the route or first subject has changed, that's a significant change and providers
+    // should review the rest of the training details
+    if (routeChanged || firstSubjectChanged){
+
+      // Don’t trust financial incentives after a significant change - better to
+      // collect again.
       delete record?.funding?.source
 
       res.redirect(`${recordPath}/course-details/course-change-interstitial${referrer}`)
@@ -874,6 +893,19 @@ module.exports = router => {
     }
   })
 
+  router.get(['/:recordtype/:uuid/course-details/get-next-course-change-url','/:recordtype/course-details/get-next-course-change-url'], function (req, res) {
+    const data = req.session.data
+    let record = data.record
+    let recordPath = utils.getRecordPath(req)
+
+    // Unlike most pages, here we want to insert a new referrer in the query string
+    let reviewCourseChangeUrl = `${recordPath}/course-details/review-course-change`
+    let referrerArray = utils.pushReferrer(req.query.referrer, reviewCourseChangeUrl)
+    let referrer = utils.getReferrer(referrerArray)
+
+    res.redirect(utils.getNextCourseChangeUrl(record, recordPath, referrer))
+
+  })
 
   // =============================================================================
   // Diversity section
@@ -886,6 +918,7 @@ module.exports = router => {
     let diversityDisclosed = _.get(data, 'record.diversity.diversityDisclosed')
     let referrer = utils.getReferrer(req.query.referrer)
     let recordPath = utils.getRecordPath(req)
+
     // No data, return to page
     if (!diversityDisclosed){
       res.redirect(`${recordPath}/diversity/information-disclosed${referrer}`)
@@ -961,6 +994,7 @@ module.exports = router => {
   // Delete degree at index
   router.get(['/:recordtype/:uuid/degree/:index/delete','/:recordtype/degree/:index/delete'], function (req, res) {
     const data = req.session.data
+    let record = data.record // copy record
     let recordPath = utils.getRecordPath(req)
     degreeIndex = req.params.index
     let referrer = utils.getReferrer(req.query.referrer)
@@ -975,14 +1009,23 @@ module.exports = router => {
       }
     }
     if (referrer){
-      if (req.params.recordtype == 'record'){
-        // This updates the record immediately without a confirmation.
-        // Probably needs a bespoke confirmation page as the empty degree
-        // confirmation page looks weird - and we probably don't want
-        // records without a dregree anyway.
-        utils.updateRecord(data, data.record)
+      let referrerDestination = utils.getReferrerDestination(req.query.referrer)
+
+      if (utils.isNonDraft(record)){
+
+        if (referrerDestination.includes("review-course-change")){
+          res.redirect(utils.getNextCourseChangeUrl(record, recordPath, referrer))
+        }
+        else {
+          // This updates the record immediately without a confirmation.
+          // Probably needs a bespoke confirmation page as the empty degree
+          // confirmation page looks weird - and we probably don't want
+          // records without a dregree anyway.
+          utils.updateRecord(data, data.record)
+        }
+        
       }
-      res.redirect(utils.getReferrerDestination(req.query.referrer))
+      else res.redirect(utils.getReferrerDestination(req.query.referrer))
     }
     else {
       res.redirect(`${recordPath}/degree/confirm${referrer}`)
@@ -1064,10 +1107,16 @@ module.exports = router => {
     //   res.redirect(`${recordPath}/degree/bursary-selection${referrer}`)
     // }
     // else {
-      if (utils.isDraft(record) && utils.sourceIsApply(record)){
-        res.redirect(utils.orReferrer(`${recordPath}/overview`, req.query.referrer))
-      }
-      else res.redirect(`${recordPath}/degree/confirm${referrer}`)
+
+    let referrerDestination = utils.getReferrerDestination(req.query.referrer)
+
+    if (utils.isDraft(record) && utils.sourceIsApply(record)){
+      res.redirect(utils.orReferrer(`${recordPath}/overview`, req.query.referrer))
+    }
+    else if (referrerDestination.includes("review-course-change")){
+      res.redirect(utils.getNextCourseChangeUrl(record, recordPath, referrer))
+    }
+    else res.redirect(`${recordPath}/degree/confirm${referrer}`)
     // }
 
   })
@@ -1417,7 +1466,7 @@ module.exports = router => {
 
       let referrerDestination = utils.getReferrerDestination(req.query.referrer)
       if (referrerDestination.includes("review-course-change")){
-        res.redirect(referrerDestination)
+        res.redirect(utils.getNextCourseChangeUrl(record, recordPath, referrer))
       }
       else {
         res.redirect(`${recordPath}/funding/confirm${referrer}`)
@@ -1441,7 +1490,7 @@ module.exports = router => {
 
       let referrerDestination = utils.getReferrerDestination(req.query.referrer)
       if (referrerDestination.includes("review-course-change")){
-        res.redirect(referrerDestination)
+        res.redirect(utils.getNextCourseChangeUrl(record, recordPath, referrer))
       }
       else {
         res.redirect(`${recordPath}/funding/confirm${referrer}`)

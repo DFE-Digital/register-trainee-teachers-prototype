@@ -2,13 +2,13 @@
 
 {% set missingItems = data.record | getCourseChangeMissingItems %}
 
-{% set pageHeading = "More data needed" if missingItems else "Review trainee data" %}
+{% set pageHeading = "More data needed" if (missingItems | length) else "Review trainee details" %}
 
 {# Custom return link to send to bespoke cancel page #}
-{% set returnLink = {
+{# {% set returnLink = {
   href: "./cancel-course-change" | addReferrer(referrer),
   text: "Cancel and reteurn to record"
-} %}
+} %} #}
 
 {% block formContent %}
   {% include "_includes/trainee-name-caption.njk" %}
@@ -16,22 +16,24 @@
   <h1 class="govuk-heading-l">{{pageHeading}}</h1>
   
   <p class="govuk-body">
-    Because you updated the trainee’s course details, you need to review other training details to make sure they match the new course details.
+    Because you changed the trainee’s course details, you need to review their other training details to make sure they match the new course details.
   </p>
 
   {% set missingItems = record | getCourseChangeMissingItems %}
 
   {% if missingItems | length %}
-    <p class="govuk-body">Trainee data needed:</p>
+    <p class="govuk-body">More data needed:</p>
     <ul class="govuk-list govuk-list--bullet">
       {% for item in missingItems %}
         <li>{{item}}</li>
       {% endfor %}
     </ul>
+
+    <p class="govuk-body">You’ll need to provide this missing data to save the course changes.</p>
   {% endif %}
 
   {{ govukButton({
-    text: "Provide missing data" if (missingItems | length) else "Review training details",
+    text: "Provide missing data and review training details" if (missingItems | length) else "Review training details",
     href: "./get-next-course-change-url" | addReferrer(referrer)
   }) }}
 

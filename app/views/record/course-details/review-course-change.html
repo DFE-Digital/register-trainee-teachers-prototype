@@ -1,7 +1,7 @@
 {% extends "_templates/_record-form.html" %}
 
 {% set pageHeading -%}
-  Review training details match new course details
+  Check training details
 {% endset %}
 
 {% set backLink = ("/record/" + data.record.id) | orReferrer(referrer) %}
@@ -30,6 +30,7 @@
 
   {# Use minimal summary to provide a way to change, but not promote the full course #}
   {% set minimalPublishSummary = true %}
+  {# {% set showPreviousCourse = true %} #}
   {% include "_includes/summary-cards/course-details.html" %}
 
   {# Only show the degree section if they’ve changed from a course that didn't need degrees

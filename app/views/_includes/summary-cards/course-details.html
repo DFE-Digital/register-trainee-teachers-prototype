@@ -7,23 +7,23 @@
   {% set expectedDuration = courseDetails.duration + " years" %}
 {% endif %}
 
-{% set courseAndRouteHtml %}
+{% macro courseAndRouteHtml(record) %}
+  {% set _isPublishCourse = record.courseDetails.isPublishCourse | falsify %}
   <p class="govuk-body">{{record.route}}</p>
 
-  {% if isPublishCourse %}
-    <p class="govuk-body">{{ courseDetails.courseNameLong }}</p>
+  {% if _isPublishCourse %}
+    <p class="govuk-body">{{ record.courseDetails.courseNameLong }}</p>
   {% elseif minimalPublishSummary %}
-    <p class="govuk-body">{{ courseDetails.subjects | prettifySubjects }}</p>
+    <p class="govuk-body">{{ record.courseDetails.subjects | prettifySubjects }}</p>
   {% endif %}
-
-{% endset %}
+{% endmacro %}
 
 {% set courseRow = {
   key: {
-    text: "Course"
+    text: "Course" if not showPreviousCourse else "New course"
   },
   value: {
-    html: courseAndRouteHtml | safe | trim or 'Not provided'
+    html: courseAndRouteHtml(record) | safe | trim or 'Not provided'
   },
   actions: {
     items: [
@@ -34,6 +34,18 @@
       }
     ]
   } if canAmend
+} %}
+
+{# For use in course change flow #}
+{% set previousRecord = data.records | getRecordById(record.id) %}
+{% set previousCourseRow = {
+  key: {
+    text: "Previous course"
+  },
+  value: {
+    html: courseAndRouteHtml(previousRecord) | safe | trim or 'Not provided',
+    classes: "govuk-hint"
+  }
 } %}
 
 {% set educationPhaseRow = {
@@ -225,8 +237,9 @@
 {# For apply drafts only - show a very minimal card with details of course #}
 {% if minimalPublishSummary %}
   {% set courseDetailsRows = [
-    courseRow
-  ] %}
+    courseRow,
+    previousCourseRow if showPreviousCourse
+  ] | removeEmpty %}
 {% endif %}
 
 {% set courseDetailsHtml %}

@@ -44,19 +44,6 @@
   {% set showBursaryRow = true %}
   {% include "_includes/summary-cards/funding.html" %}
 
-  {# Checkbox not hooked up #}
-  {{ govukCheckboxes({
-    idPrefix: "apply-trainee-application-checkbox",
-    _name: "record[applyData][status]",
-    items: [
-      {
-        value: "Completed",
-        text: "I have reviewed the trainee data",
-        _checked: checked(record.applyData.status, "Completed")
-      }
-    ]
-  }) }}
-
   {{ govukButton({
     text: "Update record"
   }) }}

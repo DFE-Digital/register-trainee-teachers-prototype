@@ -16,14 +16,14 @@ const enabledApplyRoutes = enabledTrainingRoutes.filter(route => trainingRouteDa
 // HEIs are mostly provider led postgrad with some school direct and apprenticeships
 const routeRatios = {
   "SCITT": {
-    'Assessment only': 0.04,
-    'Early years (assessment only)': 0.02,
+    'Assessment only': 0.01,
+    'Early years (assessment only)': 0.01,
     'Early years (postgrad)': 0.02,
     'Early years (salaried)': 0.02,
     'Early years (undergrad)': 0.02,
     'High potential initial teacher training (HPITT)': 0,
     'Opt-in (undergrad)': 0.02,
-    'Provider-led (postgrad)': 0.5,
+    'Provider-led (postgrad)': 0.55,
     'Provider-led (undergrad)': 0,
     'School direct (fee funded)': 0.14,
     'School direct (salaried)': 0.14,

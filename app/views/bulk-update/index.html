@@ -1,0 +1,79 @@
+{% extends "_templates/_page.html" %}
+{% set pageHeading = "Bulk updates" %}
+{% set navActive = 'bulk' %}
+{% set filteredRecords = data.records | filterRecords(data) %}
+{% set traineesThatCanBeUpdated = filteredRecords |
+filterByCanBulkUpdate %}
+{% set traineesWithoutStartDates = traineesThatCanBeUpdated |
+filterByNeedsStartDate | length %}
+{% set traineesWithoutPlacements = traineesThatCanBeUpdated |
+filterByNeedsPlacements | length %}
+{% set traineesThatCanBeRecommended = filteredRecords |
+filterByCanBeRecommended %}
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+      <h1 class="govuk-heading-xl">
+        <span class="govuk-caption-xl">{{ data.signedInProviders | andSeparate }}</span>
+        {{ pageHeading }}
+      </h1>
+      <p class="govuk-body">
+        Update groups of trainee records at the same time.
+      </p>
+      {% if traineesThatCanBeUpdated %}
+        <h2 class="govuk-heading-m">
+          Add missing details
+        </h2>
+        <p class="govuk-body">
+          Bulk add {{ "trainee start dates" if traineesWithoutStartDates }} {{ "and" if traineesWithoutStartDates and traineesWithoutPlacements }} {{ "placement schools" if traineesWithoutPlacements }} to trainee records.
+        </p>
+        <p class="govuk-body">
+          <a href="/bulk-update/add-details" class="govuk-link">
+            Bulk add missing details to trainee records
+          </a>
+        </p>
+      {% else %}
+        <p class="govuk-body">
+          You do not have any trainee records you can add missing
+          details to in bulk.
+        </p>
+        {% include "_includes/bulk-update/update-individual-records.html" %}
+      {% endif %}
+      {% if traineesThatCanBeRecommended %}
+        <h2 class="govuk-heading-m">
+          Recommend trainees for {{ traineesThatCanBeRecommended | getQualifications | orSeparate }}
+        </h2>
+        <p class="govuk-body">
+          Bulk recommended trainees for {{ traineesThatCanBeRecommended | getQualifications | orSeparate }}.
+          After you have recommended trainees, the DfE will award QTS or EYTS where appropriate within <span class="app-nowrap">3 working days</span>.
+        </p>
+        <p class="govuk-body">
+          <a href="/bulk-update/recommend" class="govuk-link">
+            Bulk recommend trainees for {{ traineesThatCanBeRecommended | getQualifications | orSeparate }}
+          </a>
+        </p>
+      {% else %}
+        <h2 class="govuk-heading-m">
+          Recommend trainees for {{ traineesThatCanBeRecommended | getQualifications | orSeparate }}
+        </h2>
+        <p class="govuk-body">
+          You do not have any trainees that can be bulk recommended for
+          {{ traineesThatCanBeRecommended | getQualifications | orSeparate }}.
+        </p>
+      {% endif %}
+      {% if not traineesThatCanBeUpdated and not traineesThatCanBeRecommended %}
+        <p class="govuk-body">
+          You do not have any trainee records that need additional
+          details or can be recommended for {{ traineesThatCanBeRecommended | getQualifications | orSeparate }}.
+        </p>
+        {% if incompleteTrainees %}
+          <p class="govuk-body">
+            <a href="/records?%5BfilterCompleteStatus%5D=Incomplete" class="govuk-link">
+              View incomplete trainees records
+            </a>
+          </p>
+        {% endif %}
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}

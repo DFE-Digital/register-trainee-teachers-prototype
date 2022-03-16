@@ -1,0 +1,109 @@
+{% extends "_templates/_page.html" %}
+
+{% set pageHeading = "Bulk add missing details to trainee records" %}
+{% set navActive = 'bulk' %}
+
+{% set filteredRecords = data.records | filterRecords(data) %}
+
+{% set traineesThatCanBeUpdated = filteredRecords | filterByCanBulkUpdate %}
+{% set traineesWithoutStartDates = traineesThatCanBeUpdated | filterByNeedsStartDate | length %}
+{% set traineesWithoutPlacements = traineesThatCanBeUpdated | filterByNeedsPlacements | length %}
+
+{% set fileName = data.signedInProviders | makeFileName("incomplete trainee records","csv") %}
+
+{% set placementRowHeading = [] %}
+{% for i in range(0, data.settings.minPlacementsRequired) %}
+  {% set placementRowHeading = placementRowHeading | push('<span class="app-nowrap">‘Placement ' + loop.index + ' URN’</span>') %}
+{% endfor %}
+
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+      <h1 class="govuk-heading-l">
+        <span class="govuk-caption-l">{{ data.signedInProviders | andSeparate }}</span>
+        {{ pageHeading }}
+      </h1>
+      <p class="govuk-body">
+        You have trainee records that need additional details:
+      </p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>{{ traineesThatCanBeUpdated | length }} that can be bulk updated</li>
+        <li>{{ filteredRecords | filterByCannotBulkUpdate | length }} that cannot be bulk updated and need to be updated manually</li>
+      </ul>
+      <h2 class="govuk-heading-m">
+        1. Export a template file
+      </h2>
+      <p class="govuk-body">
+        <a href="/public/downloads/add-details.csv" download="{{ fileName }}" class="govuk-link">Trainee records with missing details (csv)</a>
+      </p>
+      <h2 class="govuk-heading-m">
+        2. Add missing details
+      </h2>
+      <p class="govuk-body">
+        Open ‘<span class="govuk-!-font-weight-bold">{{ fileName }}</span>’ in <span class="app-nowrap">spreadsheet software</span> (for example, <span class="app-nowrap">Microsoft Excel</span>) and add the missing information.
+      </p>
+      <p class="govuk-body">
+        You can leave rows or cells empty if you do not want to update those trainee records.
+      </p>
+      {% if traineesWithoutStartDates %}
+        <h3 class="govuk-heading-s">Trainee start date</h3>
+        <p class="govuk-body">
+          In the column ‘Trainee start date’ add the date the trainee began their ITT.
+        </p>
+        <p class="govuk-body">
+          The date must be written in the format <span class="app-nowrap">‘DD/MM/YYYY’</span>. For example, if the trainee started on 20 September {{ data.years.defaultCourseYear }}, write <span class="app-nowrap">‘20/09/{{ data.years.defaultCourseYear }}’</span>.
+        </p>
+        <p class="govuk-body">
+          The trainee start date must be in the past.
+        </p>
+        <p class="govuk-body">
+          If a trainee does not have a start date, leave the cell empty.
+        </p>
+      {% endif %}
+      {% if traineesWithoutPlacements %}
+        <h3 class="govuk-heading-s">Placement schools</h3>
+        <p class="govuk-body">
+          In the columns {{ placementRowHeading | joinify | safe }} add the school’s URN.
+        </p>
+        <p class="govuk-body">
+          You can find the URNs using <a href="https://www.get-information-schools.service.gov.uk/Search" target="_blank" class="govuk-link">Get information about schools (opens in a new tab)</a>.
+        </p>
+        <p class="govuk-body">
+          You cannot add information in bulk if the school or setting does not have a URN. Add those placements to the trainee record manually.
+        </p>
+        <p class="govuk-body">
+          If the trainee did more than {{ data.settings.minPlacementsRequired }} placements, add those extra placements to the trainee record manually.
+        </p>
+        <p class="govuk-body">
+          If you do not have the information for a placement, leave the cell empty.
+        </p>
+      {% endif %}
+      <h2 class="govuk-heading-m">
+        3. Upload your trainee records
+      </h2>
+      <form action="/bulk-update/add-details/errors-found" method="post" novalidate>
+        {{ govukFileUpload({
+          id: "file-upload-1",
+          name: "file-upload-1",
+          hint: {
+            text: "File type must be ‘csv’."
+          },
+          label: {
+            text: "Upload a file"
+          },
+          attributes: {
+            "accept": ".csv"
+          }
+        }) }}
+        {{ govukButton({
+          text: "Upload records"
+        }) }}
+      </form>
+    </div>
+  </div>
+
+{% endblock %}
+
+

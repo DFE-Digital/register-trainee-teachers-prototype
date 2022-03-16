@@ -115,7 +115,19 @@
         items: [
           {
             value: 'true',
-            text: "Show bulk actions in nav"
+            text: "Switch from bulk uploads to bulk actions",
+            hint: {
+              text: "The changes the bulk upload flow to the in-browser bulk action flow"
+            }
+          }
+        ]
+      } | decorateAttributes(data, "data.settings.bulkActionsNotBulkUploads")) }}
+
+      {{ govukCheckboxes({
+        items: [
+          {
+            value: 'true',
+            text: "Show bulk updates or actions in nav"
           }
         ]
       } | decorateAttributes(data, "data.settings.showBulkInPrimaryNav")) }}

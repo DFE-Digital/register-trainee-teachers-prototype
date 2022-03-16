@@ -1,0 +1,47 @@
+{% extends "_templates/_page.html" %}
+
+{% set navActive = 'bulk' %}
+{% set backLink = 'false' %}
+
+{% set filteredRecords = data.records | filterRecords(data) %}
+{% set traineesThatCanBeUpdated = filteredRecords | filterByCanBulkUpdate %}
+
+{% set traineesThatCanBeRecommended = filteredRecords | filterByCanBeRecommended %}
+{% set pageHeading = traineesThatCanBeUpdated | length  + " trainee records updated" %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+      {{ govukPanel({
+        titleText: pageHeading,
+        classes: "govuk-!-margin-bottom-7"
+      }) }}
+
+      <p class="govuk-body">
+        <a href="/records" class="govuk-link">
+          View your trainee records
+        </a>
+      </p>
+      <h2 class="govuk-heading-m">
+        Next steps
+      </h2>
+      <h3 class="govuk-heading-s">
+        Trainees with incomplete records
+      </h3>
+      {% include "_includes/bulk-update/update-individual-records.html" %}
+      <h3 class="govuk-heading-s">
+        Recommend trainees for {{ traineesThatCanBeRecommended | getQualifications | orSeparate }}
+      </h3>
+      <p class="govuk-body">
+        You have {{ traineesThatCanBeRecommended | length }} trainees that can be recommended for {{ traineesThatCanBeRecommended | getQualifications | orSeparate }}.
+      </p> 
+      <p class="govuk-body">
+        <a href="/bulk-update" class="govuk-link">Bulk recommend trainees for {{ traineesThatCanBeRecommended | getQualifications | orSeparate }}</a>
+      </p>
+    </div>
+  </div>
+
+{% endblock %}
+
+

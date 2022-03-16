@@ -154,5 +154,10 @@ require('./routes/existing-record-routes')(router)
 // =============================================================================
 require('./routes/bulk-action-routes')(router)
 
+// =============================================================================
+// Bulk uploads
+// =============================================================================
+require('./routes/bulk-update-routes')(router)
+
 
 module.exports = router

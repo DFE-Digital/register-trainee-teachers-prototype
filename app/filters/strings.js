@@ -129,6 +129,9 @@ filters.possessive = (noun) => {
   }
 }
 
+filters.padDigits = (input, targetLength) => {
+  return input.toString().padStart(targetLength, 0);
+}
 
 // -------------------------------------------------------------------
 // keep the following line to return your filters to the app

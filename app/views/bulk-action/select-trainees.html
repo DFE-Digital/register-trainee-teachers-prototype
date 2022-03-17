@@ -2,6 +2,8 @@
 
 {% set pageHeading = "Select trainees" %}
 
+{% set filteredRecords = data.records | filterRecords(data) %}
+
 {% if filteredRecords | length == 0 %}
   {% set pageHeading = "No records found" %}
 {% endif %}

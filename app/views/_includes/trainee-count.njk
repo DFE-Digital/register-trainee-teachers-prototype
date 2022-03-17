@@ -1,8 +1,8 @@
 
 {% if navActive == "drafts" %}
-  {% set totalTrainees = data.filteredRecords | filterByStatus("Draft") | length %}
+  {% set totalTrainees = filteredRecords | filterByStatus("Draft") | length %}
 {% else %}
-  {% set totalTrainees = data.filteredRecords | filterByStatus("Draft", true) | length %}
+  {% set totalTrainees = filteredRecords | filterByStatus("Draft", true) | length %}
 {% endif %}
 
 <h1 class="govuk-heading-xl">

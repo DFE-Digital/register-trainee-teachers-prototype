@@ -2,10 +2,12 @@
 
 {% set navActive = "home" %}
 
-{% set draftRecords = data.filteredRecords | filterByStatus("Draft") %}
+{% set filteredRecords = data.records | filterRecords(data) %}
+
+{% set draftRecords = filteredRecords | filterByStatus("Draft") %}
 {% set totalDraftCount = draftRecords | length %}
 {% set applyDraftCount = draftRecords | where("source", "Apply") | length %}
-{% set registeredTrainees = data.filteredRecords | filterByStatus("Draft", true) %}
+{% set registeredTrainees = filteredRecords | filterByStatus("Draft", true) %}
 {% set pageHeading = "Your trainee teachers" %}
 {% set currentTrainees = registeredTrainees | filterByActive %}
 

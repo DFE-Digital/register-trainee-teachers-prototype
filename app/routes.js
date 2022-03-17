@@ -34,14 +34,12 @@ router.all('*', function(req, res, next){
   res.locals.flash = req.flash('success') // pass through 'success' messages only
   res.locals.currentPageUrl = url.parse(req.url).pathname
 
-
   // Todo - move this stuff to middleware?
   // Need to also save to locals as saving to data at this point won’t be available to the view unless refreshed
   data.isHatModel = (data.settings.providerModel == 'hat-model') ? true : false
   data.isBlendedModel = (data.settings.providerModel == 'blended-model') ? true : false
   data.signedInProviders = (data.isBlendedModel) ? data.settings.userProviders : [data.settings.userActiveProvider]
   data.isAdmin = (data.settings.viewAsAdmin == "true") ? true : false
-
 
   res.locals.data.isHatModel = data.isHatModel
   res.locals.data.isBlendedModel = data.isBlendedModel
@@ -65,11 +63,6 @@ router.all('*', function(req, res, next){
 // and have the query string self-delete once done
 router.get('*', function(req, res, next){
   const data = req.session.data
-
-  // Filter records by provider, enabled routes, apply enabled
-  // Todo: should we really be doing this on all routes?
-  data.filteredRecords = utils.filterRecords(data.records, data)
-  res.locals.data.filteredRecords = data.filteredRecords
 
   let requestedUrl = url.parse(req.url).pathname
   // Delete cashes of invalid answers that should be flushed on each request

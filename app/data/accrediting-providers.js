@@ -310,14 +310,14 @@ const permanentAccreditingProviders = [
 
 const higherEducationInstitutions = [
   "University of Lincoln",
-  "Durham University",
+  // "Durham University",
   "Coventry University",
-  "Imperial College London"
+  // "Imperial College London"
 ]
 
 const scitt = [
   "Webury Hill SCITT", // Fake SCITT
-  "West Essex SCITT",
+  // "West Essex SCITT",
   "The John Taylor SCITT"
 ]
 

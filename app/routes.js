@@ -132,16 +132,6 @@ router.post('/direct-set-data', function(req, res, next){
   res.redirect("/direct-set-data")
 })
 
-const getIndex = (f) => {
-  fs.readFile('./app/lib/search-index.json', 'utf8', (_, data) => {
-    f(JSON.parse(data))
-  })
-}
-
-router.get('/search-index', function(_, res){
-  getIndex((index) => res.send(index))
-})
-
 // =============================================================================
 // Individual pages
 // =============================================================================

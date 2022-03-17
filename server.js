@@ -12,6 +12,7 @@ const nunjucks = require('nunjucks')
 const sessionInCookie = require('client-sessions')
 const sessionInMemory = require('express-session')
 const cookieParser = require('cookie-parser')
+const compression = require('compression')
 
 // Run before other code to make sure variables from .env are available
 dotenv.config()
@@ -45,6 +46,20 @@ const documentationApp = express()
 if (useV6) {
   console.log('/app/v6/routes.js detected - using v6 compatibility mode')
   v6App = express()
+}
+
+// Compression
+// https://expressjs.com/en/resources/middleware/compression.html
+app.use(compression({ filter: shouldCompress }))
+
+function shouldCompress (req, res) {
+  if (req.headers['x-no-compression']) {
+    // don't compress responses with this request header
+    return false
+  }
+
+  // fallback to standard filter function
+  return compression.filter(req, res)
 }
 
 // Set cookies for use in cookie banner.
@@ -114,7 +129,6 @@ app.set('view engine', 'html')
 app.use('/public', express.static(path.join(__dirname, '/public')))
 
 app.use('/assets', express.static(path.join(__dirname, '/node_modules/@ministryofjustice/frontend/moj/assets')))
-
 
 // Serve govuk-frontend in from node_modules (so not to break pre-extenstions prototype kits)
 app.use('/node_modules/govuk-frontend', express.static(path.join(__dirname, '/node_modules/govuk-frontend')))

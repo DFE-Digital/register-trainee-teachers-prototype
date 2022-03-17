@@ -1,7 +1,7 @@
 // Core dependencies
 const path = require('path')
 const fs = require('fs')
-const lunr = require('./scripts/generate_search_index') // generate search index
+// const lunr = require('./scripts/generate_search_index') // generate search index
 
 checkFiles()
 
@@ -65,7 +65,7 @@ if (!sessionDataDefaultsFileExists) {
 }
 
 // Generate search index
-lunr()
+// lunr()
 
 // Run gulp
 function runGulp () {

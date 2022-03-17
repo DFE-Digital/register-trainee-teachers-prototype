@@ -52,7 +52,7 @@ module.exports = function buildIndex () {
     })
   })
 
-  fs.writeFileSync(__dirname + '/../app/asssets/data/search-index.json', JSON.stringify({ index, store }))
+  fs.writeFileSync(__dirname + '/../app/assets/data/search-index.json', JSON.stringify({ index, store }))
 
   console.log('...done!');
 }

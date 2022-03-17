@@ -1,4 +1,5 @@
-const fs = require('fs');
+const fs = require('fs')
+const path = require('path')
 const lunr = require('lunr')
 
 const removePunctuation = input => input.replace(/['’‘.,\/#!$%\^&\*;:{}=\-_`~()]/g,"")
@@ -52,7 +53,18 @@ module.exports = function buildIndex () {
     })
   })
 
-  fs.writeFileSync(__dirname + '/../app/assets/data/search-index.json', JSON.stringify({ index, store }))
+  let destionationPath = __dirname + '/../app/assets/data/search-index.json'
+
+  function ensureDirectoryExistence(destionationPath) {
+    var dirname = path.dirname(destionationPath);
+    if (fs.existsSync(dirname)) {
+      return true;
+    }
+    fs.mkdirSync(dirname);
+  }
+
+  ensureDirectoryExistence(destionationPath);
+  fs.writeFileSync(destionationPath, JSON.stringify({ index, store }))
 
   console.log('...done!');
 }

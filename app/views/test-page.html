@@ -1,7 +1,6 @@
 {% extends "layout.html" %}
 
 {% set navActive = "home" %}
-{% set applyDraftCount = data.filteredRecords | where('status', 'Apply draft') | length %}
 {% set recordsToBeReviewedCount = 11 %}
 {% set combinedAlertCount = applyDraftCount + recordsToBeReviewedCount %}
 
@@ -12,7 +11,55 @@
         <h1 class="govuk-heading-l">Test page</h1>
 
 
-        {{ "English studies English Greek Studies" | dynamicLowercase}}
+        {% set array = [
+          "One",
+          "Two",
+          "Three",
+          "Four"
+          ] %}
+
+        {% set array = array | lodash("set", "[1]", "One million") %}
+
+        {{ array | log}}
+
+        {{ 0 | getOrdinalNameIndex0 | log('ordinal')}}
+
+        {{ '8ae486be-d7a3-43bdb-b08f-3034b212bb39' | isUuid | log("is uuid")}}
+
+        {{ appAutocompleteFromSelect({
+          label: {
+            text: "Other nationality",
+            classes: "govuk-label--s"
+          },
+          id: 'nationality-other-' + nationalityIndex,
+          name: "record[personalDetails][nationality][" + nationalityIndex + "]",
+          items: data.nationalities | toSelectItems,
+          classes: "govuk-!-max-width-one-half",
+          value: "foobar",
+          autocompleteOptions: {}
+          }
+        ) }}
+
+        {% set events = {
+      "items": [
+        {
+          "title": "Record imported from Apply",
+          "user": "Provider",
+          "date": "2021-11-14T17:58:21.502Z"
+        },
+        {
+          "title": "Trainee submitted for TRN",
+          "user": "Provider",
+          "date": "2021-11-14T17:58:21.502Z"
+        },
+        {
+          "title": "TRN received",
+          "user": "Provider",
+          "date": "2021-11-14T17:58:21.502Z"
+        }
+      ]} %}
+
+        {{ (events.items | last).date | log }}
         
       </div>
     </div>

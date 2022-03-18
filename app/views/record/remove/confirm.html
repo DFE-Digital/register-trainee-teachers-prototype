@@ -9,7 +9,7 @@
 
 {% set recordName %}
   {% if record.personalDetails.shortName %}
-   {{record.personalDetails.shortName}}
+   {{record.personalDetails.shortName | safe }}
   {% endif %}
 {% endset %}
 

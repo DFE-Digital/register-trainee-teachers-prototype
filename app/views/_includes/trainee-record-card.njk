@@ -9,9 +9,9 @@
         <a href="/record/{{ record.id }}" class="govuk-link govuk-link--no-visited-state">
           {% if record | hasName %}
             {% if query.sortOrder == "lastName" %}
-              {{ record.personalDetails | getShortNameReversed }}
+              {{ record.personalDetails | getShortNameReversed | safe }}
             {% else %}
-              {{ record | getShortName }}
+              {{ record | getShortName | safe }}
             {% endif %} 
           {% else %}
             {% if record.status | isDraft %}
@@ -47,7 +47,7 @@
         {% if record.status == 'TRN received' or (record | isDraft and record | recordIsComplete) %}
           <input type="checkbox" name="[bulk][filteredTrainees]" class="govuk-checkboxes__input" id="checkbox-{{record.id}}" value="{{record.id}}">
           <label class="govuk-label govuk-checkboxes__label" for="checkbox-{{record.id}}">
-            <span class="govuk-visually-hidden">Select {{record.personalDetails.shortName}}</span>
+            <span class="govuk-visually-hidden">Select {{record.personalDetails.shortName | safe }}</span>
           </label>
         {% endif %}
       </div>

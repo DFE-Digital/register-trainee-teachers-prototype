@@ -12,7 +12,7 @@
 {% set record = data.records | getRecordById(data.submittedRecordId) or {} %}
 
 {% set panelTitleText %}
- {{ (record.personalDetails.shortName) if record.personalDetails.shortName }} is registered
+ {{ (record.personalDetails.shortName) if record.personalDetails.shortName | safe }} is registered
 {% endset %}
 
 {{ govukPanel({
@@ -39,7 +39,7 @@
 {# The name is only stored short term so make sure we have a fallback #}
 {% set thisRecordName %}
   {% if data.submittedRecordId %}
-    view {{record.personalDetails.shortName}}’s record
+    view {{record.personalDetails.shortName | safe }}’s record
   {% else %}
     view this record
   {% endif %}

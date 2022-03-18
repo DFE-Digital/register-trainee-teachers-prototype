@@ -17,7 +17,7 @@
 
 {% set draftRecordName %}
   {% if record | hasName %}
-   for {{ record | getShortName }}
+   for {{ record | getShortName | safe }}
   {% endif %}
 {% endset %}
 

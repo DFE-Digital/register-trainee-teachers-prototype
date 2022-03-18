@@ -9,7 +9,7 @@
 
 {% set draftRecordName %}
   {% if record.personalDetails.shortName %}
-   for {{record.personalDetails.shortName}}
+   for {{record.personalDetails.shortName | safe }}
   {% endif %}
 {% endset %}
 

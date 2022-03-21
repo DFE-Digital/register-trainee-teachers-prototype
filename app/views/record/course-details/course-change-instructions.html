@@ -4,7 +4,7 @@
 
 {% set hasMissingItems = missingItems | falsify %}
 
-{% set pageHeading = "Check your changes and add missing details" if hasMissingItems else "Check trainee details" %}
+{% set pageHeading = "Check your changes and add missing details" if hasMissingItems else "Check training details" %}
 
 {% macro getCourseString(course) %}
   {% if course.isPublishCourse | falsify %}

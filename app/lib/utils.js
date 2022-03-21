@@ -341,7 +341,7 @@ exports.getNextCourseChangeUrl = (record, recordPath, referrer) => {
   let startWithReviewPage = false
 
   if (startWithReviewPage){
-    return `${recordPath}/course-details/review-course-change${referrer}`
+    return `${recordPath}/course-details/final-check-course-change${referrer}`
   }
   else if (missingItems.includes("degree")){
     return `${recordPath}/degree/add${referrer}`
@@ -356,7 +356,7 @@ exports.getNextCourseChangeUrl = (record, recordPath, referrer) => {
     return `${recordPath}/funding/financial-support${referrer}`
   }
   else {
-    return `${recordPath}/course-details/review-course-change${referrer}`
+    return `${recordPath}/course-details/final-check-course-change${referrer}`
   }
 }
 

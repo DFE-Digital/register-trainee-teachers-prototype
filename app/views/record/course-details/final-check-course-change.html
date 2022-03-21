@@ -19,7 +19,7 @@
 {% block formContent %}
 
   {# Add an extra referrer as this is a compound referral path #}
-  {% set referrer = referrer | pushReferrer(recordPath + "/course-details/review-course-change") %}
+  {% set referrer = referrer | pushReferrer(recordPath + "/course-details/check-training-details") %}
 
   {% include "_includes/trainee-name-caption.njk" %}
   <h1 class="govuk-heading-l">

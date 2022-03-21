@@ -179,7 +179,7 @@ module.exports = router => {
       else {
 
         let referrerDestination = utils.getReferrerDestination(req.query.referrer)
-        if (referrerDestination.includes("review-course-change")){
+        if (referrerDestination.includes("course-details/final-check-course-change")){
           res.redirect(utils.getNextCourseChangeUrl(record, recordPath, referrer))
         }
         else {
@@ -284,7 +284,7 @@ module.exports = router => {
       }
 
       let referrerDestination = utils.getReferrerDestination(req.query.referrer)
-      if (referrerDestination.includes("review-course-change")){
+      if (referrerDestination.includes("course-details/final-check-course-change")){
         res.redirect(utils.getNextCourseChangeUrl(record, recordPath, referrer))
       }
       else {
@@ -886,7 +886,7 @@ module.exports = router => {
       // collect again.
       delete record?.funding?.source
 
-      res.redirect(`${recordPath}/course-details/course-change-interstitial${referrer}`)
+      res.redirect(`${recordPath}/course-details/course-change-instructions${referrer}`)
     }
     else {
       res.redirect(307, `${recordPath}/course-details/update${referrer}`);
@@ -899,7 +899,7 @@ module.exports = router => {
     let recordPath = utils.getRecordPath(req)
 
     // Unlike most pages, here we want to insert a new referrer in the query string
-    let reviewCourseChangeUrl = `${recordPath}/course-details/review-course-change`
+    let reviewCourseChangeUrl = `${recordPath}/course-details/final-check-course-change`
     let referrerArray = utils.pushReferrer(req.query.referrer, reviewCourseChangeUrl)
     let referrer = utils.getReferrer(referrerArray)
 
@@ -1013,7 +1013,7 @@ module.exports = router => {
 
       if (utils.isNonDraft(record)){
 
-        if (referrerDestination.includes("review-course-change")){
+        if (referrerDestination.includes("course-details/final-check-course-change")){
           res.redirect(utils.getNextCourseChangeUrl(record, recordPath, referrer))
         }
         else {
@@ -1113,7 +1113,7 @@ module.exports = router => {
     if (utils.isDraft(record) && utils.sourceIsApply(record)){
       res.redirect(utils.orReferrer(`${recordPath}/overview`, req.query.referrer))
     }
-    else if (referrerDestination.includes("review-course-change")){
+    else if (referrerDestination.includes("course-details/final-check-course-change")){
       res.redirect(utils.getNextCourseChangeUrl(record, recordPath, referrer))
     }
     else res.redirect(`${recordPath}/degree/confirm${referrer}`)
@@ -1465,7 +1465,7 @@ module.exports = router => {
     else {
 
       let referrerDestination = utils.getReferrerDestination(req.query.referrer)
-      if (referrerDestination.includes("review-course-change")){
+      if (referrerDestination.includes("course-details/final-check-course-change")){
         res.redirect(utils.getNextCourseChangeUrl(record, recordPath, referrer))
       }
       else {
@@ -1489,7 +1489,7 @@ module.exports = router => {
     else {
 
       let referrerDestination = utils.getReferrerDestination(req.query.referrer)
-      if (referrerDestination.includes("review-course-change")){
+      if (referrerDestination.includes("course-details/final-check-course-change")){
         res.redirect(utils.getNextCourseChangeUrl(record, recordPath, referrer))
       }
       else {

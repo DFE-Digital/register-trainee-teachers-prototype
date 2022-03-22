@@ -313,10 +313,6 @@ module.exports = router => {
     if (!route){
       res.redirect(`${recordPath}/course-details/select-route${referrer}`)
     }
-    // Route not supported
-    else if (route == "Other") {
-      res.redirect(`${recordPath}/route-not-supported${referrer}`)
-    }
     // As we’ve changed the route, we now chain on the course details section
     else {
 

@@ -100,10 +100,6 @@ module.exports = router => {
     if (!route){
       res.redirect(`/new-record/select-route${referrer}`)
     }
-    // Route not supported
-    else if (route == "Other") {
-      res.redirect(`/new-record/route-not-supported${referrer}`)
-    }
 
     // It’s possible for a user to pick a Publish course, then go back to change the
     // route to one that doesn’t have publish courses. If they do this, we delete the

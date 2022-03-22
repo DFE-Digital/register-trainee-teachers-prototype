@@ -12,10 +12,6 @@
   {% endif %}
 {% endfor %}
 
-{% set enabledTrainingRoutes = enabledTrainingRoutes | push({divider: "or"}) %}
-
-{% set enabledTrainingRoutes = enabledTrainingRoutes | push({text: "Other"}) %}
-
 {% include "_includes/trainee-name-caption.njk" %}
 
 {{ govukRadios({

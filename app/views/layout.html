@@ -140,7 +140,7 @@
       text: 'Funding',
       href: '/funding/monthly-payments',
       active: true if navActive == 'funding'
-    }
+    } if data.settings.showFundingInPrimaryNav
   ] %}
 
   {{  data.settings | log }}

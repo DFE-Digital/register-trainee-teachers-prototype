@@ -124,6 +124,15 @@
         items: [
           {
             value: 'true',
+            text: "Show funding in nav"
+          }
+        ]
+      } | decorateAttributes(data, "data.settings.showFundingInPrimaryNav")) }}
+
+      {{ govukCheckboxes({
+        items: [
+          {
+            value: 'true',
             text: "Include drafts in primary nav"
           }
         ]

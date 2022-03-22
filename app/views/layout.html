@@ -130,7 +130,7 @@
       text: 'Bulk actions',
       href: '/bulk-action/new',
       active: true if navActive == 'bulk'
-    } if isAuthorised('bulkActions'),
+    } if isAuthorised('bulkActions') and data.settings.showBulkInPrimaryNav,
     {
       text: 'Courses',
       href: '/root/case-list',
@@ -142,6 +142,8 @@
       active: true if navActive == 'funding'
     }
   ] %}
+
+  {{  data.settings | log }}
 
     {# MOJ primary nav does’t handle empty items well, so remove them here #}
     {% set navItems = navItems | removeEmpty %}

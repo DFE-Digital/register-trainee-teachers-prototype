@@ -115,6 +115,15 @@
         items: [
           {
             value: 'true',
+            text: "Show bulk actions in nav"
+          }
+        ]
+      } | decorateAttributes(data, "data.settings.showBulkInPrimaryNav")) }}
+
+      {{ govukCheckboxes({
+        items: [
+          {
+            value: 'true',
             text: "Include drafts in primary nav"
           }
         ]

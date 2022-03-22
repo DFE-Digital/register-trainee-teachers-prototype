@@ -54,7 +54,7 @@
   {% endif %}
 
   {# Hide the checkbox until enough placements have been added #}
-  {% if placementCount >= minPlacementsRequired and canAmend %}
+  {# {% if placementCount >= minPlacementsRequired and canAmend %}
     {{ govukCheckboxes({
       fieldset: {
         legend: {
@@ -66,13 +66,13 @@
       name: "record[placement][status]",
       items: [
         {
-          value: "Complete",
+          value: "Completed",
           text: "Yes, all placements have been added",
-          checked: checked(record.placement.status, "Complete")
+          checked: checked(record.placement.status, "Completed")
         }
       ]
     }) }}
-  {% endif %}
+  {% endif %} #}
 
   {{ govukButton({
     text: "Continue"

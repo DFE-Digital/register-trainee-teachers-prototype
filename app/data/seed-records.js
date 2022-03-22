@@ -8,22 +8,23 @@ seedRecords.push({
   },
   "route": "Provider-led (postgrad)",
   "reference": "LK5849",
-  trainingDetails: null,
-  courseDetails: null,
   "personalDetails": {
     "nationality": [
       "Irish",
       "American"
     ],
-    "givenName": "Sarah Lilia",
+    "givenName": "Jane",
     "middleNames": "",
-    "familyName": "Jones",
+    "familyName": "Smith",
     "dateOfBirth": [
       "3",
       "12",
       "1987"
     ],
-    "sex": "Female"
+    "sex": "Female",
+    "status": [
+      "Completed"
+    ]
   },
   "contactDetails": {
     "internationalAddress": "",
@@ -35,7 +36,7 @@ seedRecords.push({
       "postcode": "B12 0QY"
     },
     "phoneNumber": "07700 900941",
-    "email": "s.jones@example.com",
+    "email": "j.smith@example.com",
     "status": [
       "Completed"
     ]
@@ -80,8 +81,14 @@ seedRecords.push({
       "Completed"
     ]
   },
+  trainingDetails: null,
+  courseDetails: {
+    status: 'Completed'
+  },
   placement: null,
-  funding: null
+  funding: {
+    status: 'Completed'
+  }
 })
 
 // Partially complete apply draft with one piece of invalid data, course is eligible for a bursary
@@ -339,8 +346,7 @@ seedRecords.push({
   "reference": "YW1442",
   trainingDetails: {
     traineeId: "2020/21-074",
-    traineeStarted: null,
-    commencementDate: null
+    commencementDate: "2021-09-01T00:00:00.000Z"
   },
   // submittedDate: "2020-06-28T12:37:21.384Z",
   // updatedDate: "2020-07-04T04:26:19.269Z",
@@ -350,13 +356,31 @@ seedRecords.push({
     isPublishCourse: 'false',
     startDate: "2021-09-01T00:00:00.000Z"
   },
-  trainingDetails: {
-    commencementDate: null
-  },
   personalDetails: {
-    givenName: "Janine",
-    familyName: "Newman",
-    sex: "Female"
+    givenName: "Ben",
+    familyName: "Jones",
+    sex: "Male"
+  },
+  placement: {
+    items: [
+      {
+        "school": {
+            "urn": "137182",
+            "localAuthority": "Nottingham",
+            "schoolName": "Djanogly Northgate Academy",
+            "type": "Academy converter",
+            "status": "Open",
+            "phase": "Primary",
+            "ukprn": "10034871",
+            "addressLine1": "Suez Street",
+            "addressLine2": "New Basford",
+            "town": "Nottingham",
+            "postcode": "NG7 7GB",
+            "uuid": "9995f82e-0f73-4ff9-ae36-4e66d6cb7bc9"
+        },
+        "id": "2ecb061d-9605-45bf-ba03-9f342922a1d7"
+      }
+    ]
   },
   id: "e432974c-e719-4ab0-96a2-a144532cec80"
 })
@@ -383,6 +407,45 @@ seedRecords.push({
     familyName: "Cable",
     sex: "Male"
   },
+  placement: {
+    items: [
+      {
+        "school": {
+          "urn": "401031",
+          "localAuthority": "Bridgend",
+          "schoolName": "Cefn Cribwr Primary School",
+          "type": "Welsh establishment",
+          "status": "Open",
+          "phase": "Not applicable",
+          "ukprn": "",
+          "addressLine1": "Cefn Road",
+          "addressLine2": "Cefn Cribbwr",
+          "town": "Bridgend",
+          "postcode": "CF32 0AW",
+          "uuid": "451d029a-ab6e-4981-8f40-b2fd87ace7ee"
+        },
+        "id": "a30b3ac2-c869-4558-a08e-42efcf97e52d"
+      },
+      {
+        "school": {
+          "urn": "117488",
+          "localAuthority": "Hertfordshire",
+          "schoolName": "Sacred Heart Catholic Primary School and Nursery",
+          "type": "Voluntary aided school",
+          "status": "Open",
+          "phase": "Primary",
+          "ukprn": "10076821",
+          "addressLine1": "Merry Hill Road",
+          "addressLine2": "",
+          "town": "Bushey",
+          "postcode": "WD23 1SU",
+          "uuid": "f594857d-9de1-407c-b386-c53acd93fcc0"
+        },
+        "id": "8a4be727-7162-4e54-9362-c80ba256e2e7"
+      }
+    ]
+  },
+  "id": "d4777456-34db-4f38-8e51-7f45910827b1"
 })
 
 seedRecords.push({

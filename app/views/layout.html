@@ -143,8 +143,6 @@
     } if data.settings.showFundingInPrimaryNav
   ] %}
 
-  {{  data.settings | log }}
-
     {# MOJ primary nav does’t handle empty items well, so remove them here #}
     {% set navItems = navItems | removeEmpty %}
 

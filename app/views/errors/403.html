@@ -1,0 +1,24 @@
+
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l">You do not have permission to perform this action</h1>
+
+    <p class="govuk-body">
+      If you think you should have access, contact <a class="govuk-link" href="mailto:becomingateacher@digital.education.gov.uk?subject=Register%20trainee%20teachers%20support">becomingateacher@digital.education.gov.uk</a>.
+    </p>
+
+    {{ govukButton({
+      "text": "Return home",
+      href: '/'
+    }) }}
+
+  </div>
+
+</div>
+
+{% endblock %}

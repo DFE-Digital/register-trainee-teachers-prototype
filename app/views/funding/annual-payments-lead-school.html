@@ -5,7 +5,7 @@
 
 {% block content %}
 
-  {% set tabName = "Salaries and grants" %}
+  {% set yearPaymentsTabName = "Salaries and grants" %}
 
   {% set activeTabYearlyLeadSchool = true %}
   {% include "_includes/funding-header-and-tab-nav.html" %}
@@ -13,15 +13,12 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds-from-desktop">
       <h2 class="govuk-heading-l">
-        {{ tabName | sentenceCase }}
+        {{ yearPaymentsTabName | sentenceCase }}
         <span class="app-nowrap">{{ data.years.currentAcademicYear }}</span>
       </h2>
-      <p class="govuk-body govuk-!-margin-bottom-1">
-        Last updated: {{ "" | yesterdayGovuk }}
-      </p>
-      <p>
-        <a href="#" class="govuk-link--no-visited-state">Export {{ tabName | lower }}</a>
-      </p>
+      {% include "_includes/funding-payment-profile-meta.html" %}
+    </div>
+  </div>
 
   {% set dataSource = data.funding.annualFundingLeadSchools %}
   {% set dataSource = dataSource | sort(attribute = "subject") %}
@@ -58,7 +55,8 @@
   {% endfor %}
   {% set salaryBodyRows = salaryBodyRows | push(row) %}
 
-      <hr class="govuk-section-break govuk-section-break--m">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
 
       <h2 class="govuk-heading-m govuk-!-margin-bottom-2">
         Total salaries and grants

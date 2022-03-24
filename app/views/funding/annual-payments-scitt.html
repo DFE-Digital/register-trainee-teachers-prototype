@@ -16,12 +16,7 @@
         {{ yearPaymentsTabName | sentenceCase }} 
         <span class="app-nowrap">{{ data.years.currentAcademicYear }}</span>
       </h2>
-      <p class="govuk-body govuk-!-margin-bottom-1">
-        Last updated: {{ "" | yesterdayGovuk }}
-      </p>
-      <p>
-        <a href="#" class="govuk-link--no-visited-state">Export {{ yearPaymentsTabName | lower }} (csv)</a>
-      </p>
+      {% include "_includes/funding-payment-profile-meta.html" %}
     </div>
   </div>
 

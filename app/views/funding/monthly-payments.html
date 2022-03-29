@@ -50,18 +50,18 @@
   {% endif %}
 
   {% set months  = [
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July"
+    "August " + data.years.defaultCourseYear,
+    "September " + data.years.defaultCourseYear,
+    "October " + data.years.defaultCourseYear,
+    "November " + data.years.defaultCourseYear,
+    "December " + data.years.defaultCourseYear,
+    "January " + data.years.endOfCurrentCycle,
+    "February " + data.years.endOfCurrentCycle,
+    "March " + data.years.endOfCurrentCycle,
+    "April " + data.years.endOfCurrentCycle,
+    "May " + data.years.endOfCurrentCycle,
+    "June " + data.years.endOfCurrentCycle,
+    "July " + data.years.endOfCurrentCycle
   ]%}
 
   {% set pastTotal     = 0 %}
@@ -114,13 +114,12 @@
 
   {% endfor %}
 
+  {% set tableCaption %}
+    Payments to {{ months[thisMonth - 1] }}
+  {% endset %}
   {% if thisMonth != 12 %}
-    {% set tableCaption %}
-      Payments to {{ thisMonth | prettyMonthFromAugust }} {% if thisMonth < 6 %}{{ data.years.defaultCourseYear }}{% else %}{{ data.years.defaultCourseYear + 1 }}{% endif %}
-    {% endset %}
     {% set totalPerStreamRowPast = [{ text: "Total to " + thisMonth | prettyMonthFromAugust, classes: "govuk-!-font-weight-bold" }] if not tablePerMonth %}
   {% else %}
-    {% set tableCaption = 'Monthly payments' %}
     {% set totalPerStreamRowPast = [{ text: "Total", classes: "govuk-!-font-weight-bold" }] %}
   {% endif %}
   {% set totalPerStreamRow = [{ text: "Predicted total", classes: "govuk-!-font-weight-bold" }] if not tablePerMonth %}
@@ -204,17 +203,10 @@
           ]) %}
 
           {% set accordionTitle -%}
-            {{ month }} {% if loop.index < 6 %}{{ data.years.defaultCourseYear }}{% else %}{{ data.years.defaultCourseYear + 1 }}{% endif %}
+            {{ month }}
           {%- endset %}
 
           {% set accordionHtml %}
-
-{#             {% if loop.index <= thisMonth %}
-              <p class="govuk-body">
-                <a href="#" class="govuk-link--no-visited-state">Export monthly payment data as it was on {{ [1,2, 3, 4, 5] | random }} {{ month }} {% if loop.index < 6 %}{{ data.years.defaultCourseYear }}{% else %}{{ data.years.defaultCourseYear + 1 }}{% endif %}</a>
-              </p>
-            {% endif %} #}
-
 
             {% if monthTotal != 0 %}
               {{ govukTable({
@@ -229,7 +221,7 @@
               }) }}
             {% else %}
               <p class="govuk-body">
-                No payments for {{ accordionTitle }}.
+                No payments for {{ month }}.
               </p>
             {% endif %}
           {% endset %}

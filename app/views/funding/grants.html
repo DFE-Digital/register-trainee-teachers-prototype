@@ -5,7 +5,7 @@
 
 {% block content %}
 
-  {% set yearPaymentsTabName = "Salaries and grants" %}
+  {% set yearPaymentsTabName = "Grants" %}
 
   {% set activeTabYearlyLeadSchool = true %}
   {% include "_includes/funding-header-and-tab-nav.html" %}
@@ -59,7 +59,7 @@
     <div class="govuk-grid-column-two-thirds-from-desktop">
 
       <h2 class="govuk-heading-m govuk-!-margin-bottom-2">
-        Total salaries and grants
+        Total grants
       </h2>
       <p class="govuk-body">
         {{ total | currency }}
@@ -68,7 +68,7 @@
       <hr class="govuk-section-break govuk-section-break--m">
 
       {{ govukTable({
-        caption: "Salaries and grants",
+        caption: "Grants",
         captionClasses: "govuk-table__caption--m",
         head: salaryHeadRow,
         rows: salaryBodyRows

@@ -347,6 +347,8 @@ exports.getNextCourseChangeUrl = (record, recordPath, referrer) => {
 
   let startWithReviewPage = false
 
+  let isMissingCourseMoveQuestion = !Boolean(record?.temp?.courseMoveTemp)
+
   if (startWithReviewPage){
     return `${recordPath}/course-details/final-check-course-change${referrer}`
   }
@@ -361,6 +363,9 @@ exports.getNextCourseChangeUrl = (record, recordPath, referrer) => {
   }
   else if (missingItems.includes("funding method")){
     return `${recordPath}/funding/financial-support${referrer}`
+  }
+  else if (isMissingCourseMoveQuestion){
+    return `${recordPath}/course-details/course-move-question${referrer}`
   }
   else {
     return `${recordPath}/course-details/final-check-course-change${referrer}`

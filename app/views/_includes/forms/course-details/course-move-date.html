@@ -1,4 +1,4 @@
-{% set startStartDateArray = record.temp.courseMoveTemp.courseMoveDate | toDateArray %}
+{% set courseMoveDateArray = record.temp.courseMoveTemp.courseMoveDate | toDateArray %}
 
 {% set startDateHint = "For example, " + "" | today | toDateArray | spaceSeparate %}
 
@@ -21,17 +21,17 @@
       {
         name: "day",
         classes: "govuk-input--width-2",
-        value: startStartDateArray["0"]
+        value: courseMoveDateArray["0"]
       },
       {
         name: "month",
         classes: "govuk-input--width-2",
-        value: startStartDateArray["1"]
+        value: courseMoveDateArray["1"]
       },
       {
         name: "year",
         classes: "govuk-input--width-4",
-        value: startStartDateArray["2"]
+        value: courseMoveDateArray["2"]
       }
     ]
 }) }}

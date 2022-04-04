@@ -501,47 +501,50 @@ module.exports = router => {
 
     let isCourseMove = record?.temp?.courseMoveTemp?.isCourseMove
 
+    // No data
     if (!isCourseMove){
       res.redirect(`/record/${req.params.uuid}/course-details/course-move-question${referrer}`)
     }
-    else if (isCourseMove == 'true'){
-      res.redirect(`/record/${req.params.uuid}/course-details/course-move-date${referrer}`)
-    }
     else {
 
-      // Clear previous data if we've now been told it’s not a course change
-      delete record?.temp?.courseMoveTemp?.courseMoveDate
-
-      // If coming from final check page, send user back there
-      if (req.query.referrer && req.query.referrer.includes("final-check")){
-        res.redirect(`/record/${req.params.uuid}/course-details/final-check-course-change${referrer}`)
+      if (isCourseMove == 'false') {
+        // Clear previous data if we've now been told it’s not a course change
+        delete record?.temp?.courseMoveTemp?.courseMoveDate
       }
 
-      // Otherwise go to confirmation page
       res.redirect(`/record/${req.params.uuid}/course-details/confirm${referrer}`)
 
+      // // If coming from final check page, send user back there
+      // if (req.query.referrer && req.query.referrer.includes("final-check")){
+      //   res.redirect(`/record/${req.params.uuid}/course-details/final-check-course-change${referrer}`)
+      // }
+      // else {
+      //   // Otherwise go to course details confirmation page
+      //   res.redirect(`/record/${req.params.uuid}/course-details/confirm${referrer}`)
+      // }
+
     }
   })
 
-  // Redirect to course question if we don’t yet have data for it
-  router.get('/:recordtype/:uuid/course-details/confirm', function (req, res) {
-    const data = req.session.data
-    let record = data.record
-    let referrer = utils.getReferrer(req.query.referrer)
-    let recordPath = utils.getRecordPath(req)
+  // // Redirect to course question if we don’t yet have data for it
+  // router.get('/:recordtype/:uuid/course-details/confirm', function (req, res) {
+  //   const data = req.session.data
+  //   let record = data.record
+  //   let referrer = utils.getReferrer(req.query.referrer)
+  //   let recordPath = utils.getRecordPath(req)
 
-    console.log('Record temp: ' + record?.temp)
+  //   console.log('Record temp: ' + record?.temp)
 
-    let isMissingCourseMoveQuestion = !Boolean(record?.temp?.courseMoveTemp)
+  //   let isMissingCourseMoveQuestion = !Boolean(record?.temp?.courseMoveTemp)
 
-    if (isMissingCourseMoveQuestion){
-      res.redirect(`${recordPath}/course-details/course-move-question${referrer}`)
-    }
-    else {
-      res.render(`${req.params.recordtype}/course-details/confirm`)
-    }
+  //   if (isMissingCourseMoveQuestion){
+  //     res.redirect(`${recordPath}/course-details/course-move-question${referrer}`)
+  //   }
+  //   else {
+  //     res.render(`${req.params.recordtype}/course-details/confirm`)
+  //   }
 
-  })
+  // })
 
   // Work out if course details have changed significantly and so we need to have the user
   // check the school and funding sections
@@ -560,9 +563,13 @@ module.exports = router => {
     }
 
     let routeChanged = (record?.route != previousRecord?.route)
-
     if (routeChanged){
-      console.log(`Course change: route changed from ${previousRecord?.route} to ${record?.rou}`)
+      console.log(`Course change: route changed from ${previousRecord?.route} to ${record?.route}`)
+    }
+
+    let studyModeChanged = (record?.courseDetails?.studyMode != previousRecord?.courseDetails?.studyMode)
+    if (studyModeChanged){
+      console.log(`Course change: study mode changed from ${previousRecord?.courseDetails?.studyMode} to ${record?.courseDetails?.studyMode}`)
     }
 
     // Check if the allocation subject has changed.
@@ -604,7 +611,7 @@ module.exports = router => {
 
     // If the route or first subject has changed, that's a significant change and providers
     // should review the rest of the training details
-    if (routeChanged || allocationSubjectChanged || isCourseMove){
+    if (routeChanged || allocationSubjectChanged || isCourseMove || studyModeChanged){
       res.redirect(`${recordPath}/course-details/course-change-instructions${referrer}`)
     }
     else {

@@ -42,12 +42,8 @@
   {% endif %}
   {% set dataSource = dataSource | sort(attribute = "descriptions") %}
 
-  {% if not tablePerMonth and dataSource.length > 4 %}
-    {% set tableClasses = "govuk-!-font-size-16" %}
-  {% else %}
-    {% set rowHeadingCellClasses = "app-table__column-50" %}
-    {% set dataCellClasses = "app-table__column-25" %}
-  {% endif %}
+  {% set rowHeadingCellClasses = "app-table__column-50" %}
+  {% set dataCellClasses = "app-table__column-25" %}
 
   {% set months  = [
     "August " + data.years.defaultCourseYear,
@@ -71,16 +67,11 @@
   {% set futureRows   = [] %}
 
 
-  {% set headRow = [{ text: "Month", classes: rowHeadingCellClasses }] %}
-  {% if not tablePerMonth %}
-    {% for item in dataSource %}
-      {% set headRow = headRow | push({ text: item.descriptions | fixNamesFromFunding | sentenceCase | formatYearRange | safe, classes: cellClasses }) %}
-    {% endfor %}
-  {% endif %}
-  {% set headRow = headRow | push({ text: "Total", format: "numeric", classes: dataCellClasses }) %}
-  {% if tablePerMonth %}
-    {% set headRow = headRow | push({ text: "Running total", format: "numeric", classes: dataCellClasses }) %}
-  {% endif %}
+  {% set headRow = [
+    { text: "Month", classes: rowHeadingCellClasses },
+    { text: "Total", format: "numeric", classes: dataCellClasses },
+    { text: "Running total", format: "numeric", classes: dataCellClasses }
+  ] %}
 
   {% for month in months %}
 
@@ -88,10 +79,8 @@
     {% set row = [{ text: month }] %}
 
     {% set monthIndex = loop.index0 %}
+    
     {% for item in dataSource %}
-      {% if not tablePerMonth %}
-        {% set row = row | push({text: item.monthlyPayments[monthIndex] | currency, format: "numeric" }) %}
-      {% endif %}
       {% set monthTotal = monthTotal + item.monthlyPayments[monthIndex] %}
     {% endfor %}
 
@@ -118,21 +107,7 @@
     Payments to {{ months[thisMonth - 1] }}
   {% endset %}
   {% if thisMonth != 12 %}
-    {% set totalPerStreamRowPast = [{ text: "Total to " + thisMonth | prettyMonthFromAugust, classes: "govuk-!-font-weight-bold" }] if not tablePerMonth %}
-  {% else %}
     {% set totalPerStreamRowPast = [{ text: "Total", classes: "govuk-!-font-weight-bold" }] %}
-  {% endif %}
-  {% set totalPerStreamRow = [{ text: "Predicted total", classes: "govuk-!-font-weight-bold" }] if not tablePerMonth %}
-
-  {% if not tablePerMonth %}
-    {% for item in dataSource %}
-      {% set totalPerStreamRowPast = totalPerStreamRowPast | push(
-        {text: item.cumulativeMonthlyPayments[thisMonth - 1] | currency, format: "numeric", classes: "govuk-!-font-weight-bold" }
-      ) %}
-      {% set totalPerStreamRow = totalPerStreamRow | push(
-        {text: item.cumulativeMonthlyPayments[11] | currency, format: "numeric", classes: "govuk-!-font-weight-bold" }
-      ) %}
-    {% endfor %}
   {% endif %}
 
   {% set totalPerStreamRowPast = totalPerStreamRowPast | push({text: pastTotal | currency, format: "numeric", classes: "govuk-!-font-weight-bold" }) if not tablePerMonth %}
@@ -142,116 +117,101 @@
   {% set futureRows = futureRows | push(totalPerStreamRow) %}
 
   <div class="govuk-grid-row">
-  {% if not tablePerMonth %}
-    <div class="govuk-grid-column-full">
-  {% else %}
     <div class="govuk-grid-column-two-thirds-from-desktop">
-  {% endif %}
 
-        <hr class="govuk-section-break govuk-section-break--m">
+      {{ govukTable({
+        classes: tableClasses,
+        caption: tableCaption,
+        captionClasses: "govuk-table__caption--m govuk-!-margin-bottom-3",
+        head: headRow,
+        rows: pastRows
+      }) }}
 
-        <!-- Everything in one table -->
-        {{ govukTable({
-          classes: tableClasses,
-          caption: tableCaption,
-          captionClasses: "govuk-table__caption--m govuk-!-margin-bottom-3",
-          head: headRow,
-          rows: pastRows
-        }) }}
+      {{ govukTable({
+        classes: tableClasses,
+        caption: "Predicted payments",
+        captionClasses: "govuk-table__caption--m govuk-!-margin-bottom-3",
+        head: headRow,
+        rows: futureRows
+      }) if thisMonth != 12 }}
 
-        {{ govukTable({
-          classes: tableClasses,
-          caption: "Predicted payments",
-          captionClasses: "govuk-table__caption--m govuk-!-margin-bottom-3",
-          head: headRow,
-          rows: futureRows
-        }) if thisMonth != 12 }}
+      {% set accordionItems = [] %}
+      {% set runningMonthTotal = 0 %}
+
+      {% for month in months %}
+      
+        {% set bodyRows = [] %}
+        {% set monthIndex = loop.index0 %}
+        {% set expandedState = false %}
+        {% set monthTotal = 0 %}
+
+        {% for item in dataSource %}
+          {% set row = [] %}
+          {% if item.cumulativeMonthlyPayments[monthIndex] > 0 %}
+            {% set row = row | push({ text: item.descriptions | fixNamesFromFunding | sentenceCase | formatYearRange | safe }) %}
+            {% set row = row | push({ text: item.monthlyPayments[monthIndex] | currency, format: "numeric" }) %}
+            {% set row = row | push({ text: item.cumulativeMonthlyPayments[monthIndex] | currency, format: "numeric" }) %}
+          {% elseif item.cumulativeMonthlyPayments[monthIndex] > item.cumulativeMonthlyPayments[monthIndex - 1] %}
+            {% set row = row | push({ text: item.descriptions | fixNamesFromFunding | sentenceCase | formatYearRange | safe }) %}
+            {% set row = row | push({ text: "–", format: "numeric" }) %}
+            {% set row = row | push({ text: item.cumulativeMonthlyPayments[monthIndex] | currency, format: "numeric" }) %}
+          {% endif %}
+          {% set monthTotal = monthTotal + item.monthlyPayments[monthIndex] %}
+          {% set bodyRows = bodyRows | push(row) %}
+        {% endfor %}
+
+        {% set runningMonthTotal = runningMonthTotal + monthTotal %}
+
+        {% set bodyRows = bodyRows | push([
+          { text: "Total", classes: "govuk-!-font-weight-bold" }, 
+          { text: monthTotal | currency, format: "numeric", classes: "govuk-!-font-weight-bold" },
+          { text: runningMonthTotal | currency, format: "numeric", classes: "govuk-!-font-weight-bold" }
+        ]) %}
+
+        {% set accordionTitle -%}
+          {{ month }}
+        {%- endset %}
+
+        {% set accordionHtml %}
+
+          {% if runningMonthTotal != 0 %}
+            {{ govukTable({
+              classes: "app-table__in-accordion govuk-!-margin-bottom-6",
+              caption: month + " payments",
+              captionClasses: "govuk-visually-hidden",
+              head: [
+                { text: "Payment type", classes: rowHeadingCellClasses }, 
+                { text: "Amount", format: "numeric", classes: dataCellClasses }, 
+                { text: "Running total", format: "numeric", classes: dataCellClasses }],
+              rows: bodyRows
+            }) }}
+          {% else %}
+            <p class="govuk-body">
+              No payments for {{ month }}.
+            </p>
+          {% endif %}
+        {% endset %}
+
+        {% if loop.index0 == thisMonth -1 %}
+          {% set expandedState = true %}
+        {% endif %}
+
+        {% set accordionItems = accordionItems | push(
+          { 
+            heading: { text: accordionTitle },
+            content: { html: accordionHtml },
+            expanded: expandedState
+          }
+        )%}
+      {% endfor %}
+
+      <h2 class="govuk-heading-m">Payment breakdown</h2>
+
+      {{ govukAccordion({
+        id: "accordion-default",
+        items: accordionItems
+      })}}
 
     </div>
   </div>
-
-  {% if tablePerMonth %}
-    <div class="govuk-grid-row">
-      <div class="govuk-grid-column-two-thirds-from-desktop">
-
-        {% set accordionItems = [] %}
-        {% set runningMonthTotal = 0 %}
-
-        {% for month in months %}
-        
-          {% set bodyRows = [] %}
-          {% set monthIndex = loop.index0 %}
-          {% set expandedState = false %}
-          {% set monthTotal = 0 %}
-
-          {% for item in dataSource %}
-            {% set row = [] %}
-            {% if item.cumulativeMonthlyPayments[monthIndex] > 0 %}
-              {% set row = row | push({ text: item.descriptions | fixNamesFromFunding | sentenceCase | formatYearRange | safe }) %}
-              {% set row = row | push({ text: item.monthlyPayments[monthIndex] | currency, format: "numeric" }) %}
-              {% set row = row | push({ text: item.cumulativeMonthlyPayments[monthIndex] | currency, format: "numeric" }) %}
-            {% elseif item.cumulativeMonthlyPayments[monthIndex] > item.cumulativeMonthlyPayments[monthIndex - 1] %}
-              {% set row = row | push({ text: item.descriptions | fixNamesFromFunding | sentenceCase | formatYearRange | safe }) %}
-              {% set row = row | push({ text: "–", format: "numeric" }) %}
-              {% set row = row | push({ text: item.cumulativeMonthlyPayments[monthIndex] | currency, format: "numeric" }) %}
-            {% endif %}
-            {% set monthTotal = monthTotal + item.monthlyPayments[monthIndex] %}
-            {% set bodyRows = bodyRows | push(row) %}
-          {% endfor %}
-
-          {% set runningMonthTotal = runningMonthTotal + monthTotal %}
-
-          {% set bodyRows = bodyRows | push([
-            { text: "Total", classes: "govuk-!-font-weight-bold" }, 
-            { text: monthTotal | currency, format: "numeric", classes: "govuk-!-font-weight-bold" },
-            { text: runningMonthTotal | currency, format: "numeric", classes: "govuk-!-font-weight-bold" }
-          ]) %}
-
-          {% set accordionTitle -%}
-            {{ month }}
-          {%- endset %}
-
-          {% set accordionHtml %}
-
-            {% if runningMonthTotal != 0 %}
-              {{ govukTable({
-                classes: "app-table__in-accordion govuk-!-margin-bottom-6",
-                caption: month + " payments",
-                captionClasses: "govuk-visually-hidden",
-                head: [
-                  { text: "Payment type", classes: rowHeadingCellClasses }, 
-                  { text: "Amount", format: "numeric", classes: dataCellClasses }, 
-                  { text: "Running total", format: "numeric", classes: dataCellClasses }],
-                rows: bodyRows
-              }) }}
-            {% else %}
-              <p class="govuk-body">
-                No payments for {{ month }}.
-              </p>
-            {% endif %}
-          {% endset %}
-
-          {% if loop.index0 == thisMonth -1 %}
-            {% set expandedState = true %}
-          {% endif %}
-
-          {% set accordionItems = accordionItems | push(
-            { 
-              heading: { text: accordionTitle },
-              content: { html: accordionHtml },
-              expanded: expandedState
-            }
-          )%}
-        {% endfor %}
-
-        <h2 class="govuk-heading-m">Payment breakdown</h2>
-
-        {{ govukAccordion({
-          id: "accordion-default",
-          items: accordionItems
-        })}}
-
-      </div>
-    </div>
-  {% endif %}
 {% endblock %}

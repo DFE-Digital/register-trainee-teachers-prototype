@@ -185,15 +185,20 @@
           {% set monthTotal = 0 %}
 
           {% for item in dataSource %}
-            {% set row = [
-              { text: item.descriptions | fixNamesFromFunding | sentenceCase | formatYearRange | safe },
-              { text: item.monthlyPayments[monthIndex] | currency, format: "numeric" },
-              { text: item.cumulativeMonthlyPayments[monthIndex] | currency, format: "numeric" }
-            ] if item.monthlyPayments[monthIndex] %}
+            {% set row = [] %}
+            {% if item.cumulativeMonthlyPayments[monthIndex] > 0 %}
+              {% set row = row | push({ text: item.descriptions | fixNamesFromFunding | sentenceCase | formatYearRange | safe }) %}
+              {% set row = row | push({ text: item.monthlyPayments[monthIndex] | currency, format: "numeric" }) %}
+              {% set row = row | push({ text: item.cumulativeMonthlyPayments[monthIndex] | currency, format: "numeric" }) %}
+            {% elseif item.cumulativeMonthlyPayments[monthIndex] > item.cumulativeMonthlyPayments[monthIndex - 1] %}
+              {% set row = row | push({ text: item.descriptions | fixNamesFromFunding | sentenceCase | formatYearRange | safe }) %}
+              {% set row = row | push({ text: "–", format: "numeric" }) %}
+              {% set row = row | push({ text: item.cumulativeMonthlyPayments[monthIndex] | currency, format: "numeric" }) %}
+            {% endif %}
             {% set monthTotal = monthTotal + item.monthlyPayments[monthIndex] %}
             {% set bodyRows = bodyRows | push(row) %}
           {% endfor %}
-          
+
           {% set runningMonthTotal = runningMonthTotal + monthTotal %}
 
           {% set bodyRows = bodyRows | push([
@@ -208,7 +213,7 @@
 
           {% set accordionHtml %}
 
-            {% if monthTotal != 0 %}
+            {% if runningMonthTotal != 0 %}
               {{ govukTable({
                 classes: "app-table__in-accordion govuk-!-margin-bottom-6",
                 caption: month + " payments",

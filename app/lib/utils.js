@@ -307,9 +307,9 @@ exports.getNextPublishCourseDetailsUrl = (record, recordPath, referrer) => {
   //   // After /allocated-place the journey will match other course-details routes
   //   return `${recordPath}/course-details/allocated-place${referrer}`
   // }
-  else if (exports.isNonDraft(record) && isMissingCourseMoveQuestion){
-    return `${recordPath}/course-details/course-move-question${referrer}`
-  }
+  // else if (exports.isNonDraft(record) && isMissingCourseMoveQuestion){
+  //   return `${recordPath}/course-details/course-move-question${referrer}`
+  // }
   else {
     return `${recordPath}/course-details/confirm${referrer}`
   }

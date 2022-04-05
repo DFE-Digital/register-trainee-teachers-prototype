@@ -321,10 +321,6 @@ module.exports = router => {
     let existingCourseDetails = record?.courseDetails
     let recordIsDraft = utils.isDraft(record)
 
-    // In case we’re changing course
-    // Todo: I forget why we delete this here
-    delete record?.temp?.courseMoveTemp?.courseMoveUpFront
-
     // No data, return to page
     if (!route){
       res.redirect(`${recordPath}/course-details/select-route${referrer}`)

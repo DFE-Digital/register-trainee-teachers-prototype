@@ -212,6 +212,14 @@
   {%- endif -%}
 {% endset %}
 
+{% set courseMoveRowHref -%}
+  {%- if courseMove.courseMoveUpFront | falsify -%}
+    /course-details/course-move-date
+  {%- else -%}
+    /course-details/course-move-question
+  {%- endif -%}
+{%- endset %}
+
 {% set courseMoveRow = {
   key: {
     text: "Course move" if not courseMove.isCourseMove | falsify else "Course move date"
@@ -222,7 +230,7 @@
   actions: {
     items: [
       {
-        href: recordPath + "/course-details/course-move-question" | addReferrer(referrer),
+        href: (recordPath + courseMoveRowHref) | addReferrer(referrer),
         text: "Change",
         visuallyHiddenText: "change of course question"
       }

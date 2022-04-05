@@ -498,6 +498,7 @@ module.exports = router => {
     let data = req.session.data
     let record = data.record
     let referrer = utils.getReferrer(req.query.referrer)
+    let recordPath = utils.getRecordPath(req)
 
     let isCourseMove = record?.temp?.courseMoveTemp?.isCourseMove
 
@@ -512,39 +513,10 @@ module.exports = router => {
         delete record?.temp?.courseMoveTemp?.courseMoveDate
       }
 
-      res.redirect(`/record/${req.params.uuid}/course-details/confirm${referrer}`)
-
-      // // If coming from final check page, send user back there
-      // if (req.query.referrer && req.query.referrer.includes("final-check")){
-      //   res.redirect(`/record/${req.params.uuid}/course-details/final-check-course-change${referrer}`)
-      // }
-      // else {
-      //   // Otherwise go to course details confirmation page
-      //   res.redirect(`/record/${req.params.uuid}/course-details/confirm${referrer}`)
-      // }
+      res.redirect(utils.getNextCourseChangeUrl(record, recordPath, referrer))
 
     }
   })
-
-  // // Redirect to course question if we don’t yet have data for it
-  // router.get('/:recordtype/:uuid/course-details/confirm', function (req, res) {
-  //   const data = req.session.data
-  //   let record = data.record
-  //   let referrer = utils.getReferrer(req.query.referrer)
-  //   let recordPath = utils.getRecordPath(req)
-
-  //   console.log('Record temp: ' + record?.temp)
-
-  //   let isMissingCourseMoveQuestion = !Boolean(record?.temp?.courseMoveTemp)
-
-  //   if (isMissingCourseMoveQuestion){
-  //     res.redirect(`${recordPath}/course-details/course-move-question${referrer}`)
-  //   }
-  //   else {
-  //     res.render(`${req.params.recordtype}/course-details/confirm`)
-  //   }
-
-  // })
 
   // Work out if course details have changed significantly and so we need to have the user
   // check the school and funding sections

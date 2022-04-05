@@ -494,30 +494,6 @@ module.exports = router => {
 
   })
 
-  router.post('/record/:uuid/course-details/course-move-question-answer', function (req, res) {
-    let data = req.session.data
-    let record = data.record
-    let referrer = utils.getReferrer(req.query.referrer)
-    let recordPath = utils.getRecordPath(req)
-
-    let isCourseMove = record?.temp?.courseMoveTemp?.isCourseMove
-
-    // No data
-    if (!isCourseMove){
-      res.redirect(`/record/${req.params.uuid}/course-details/course-move-question${referrer}`)
-    }
-    else {
-
-      if (isCourseMove == 'false') {
-        // Clear previous data if we've now been told it’s not a course change
-        delete record?.temp?.courseMoveTemp?.courseMoveDate
-      }
-
-      res.redirect(utils.getNextCourseChangeUrl(record, recordPath, referrer))
-
-    }
-  })
-
   // Work out if course details have changed significantly and so we need to have the user
   // check the school and funding sections
   router.post('/:recordtype/:uuid/course-details/course-change-significant-change-check', function (req, res) {
@@ -533,6 +509,8 @@ module.exports = router => {
     if (isCourseMove){
       console.log(`Course change: changed on ${courseMove.courseMoveDate}`)
     }
+
+    let courseCodeChanged = record?.courseDetails?.code != previousRecord?.courseDetails?.code
 
     let routeChanged = (record?.route != previousRecord?.route)
     if (routeChanged){
@@ -583,7 +561,7 @@ module.exports = router => {
 
     // If the route or first subject has changed, that's a significant change and providers
     // should review the rest of the training details
-    if (routeChanged || allocationSubjectChanged || isCourseMove || studyModeChanged){
+    if (routeChanged || courseCodeChanged || allocationSubjectChanged || isCourseMove || studyModeChanged){
       res.redirect(`${recordPath}/course-details/course-change-instructions${referrer}`)
     }
     else {
@@ -591,6 +569,30 @@ module.exports = router => {
       delete record?.temp?.courseMoveTemp
       // 307 Redirect to POST route
       res.redirect(307, `${recordPath}/course-details/update${referrer}`);
+    }
+  })
+
+  router.post('/:recordtype/:uuid/course-details/course-move-question-answer', function (req, res) {
+    let data = req.session.data
+    let record = data.record
+    let referrer = utils.getReferrer(req.query.referrer)
+    let recordPath = utils.getRecordPath(req)
+
+    let isCourseMove = record?.temp?.courseMoveTemp?.isCourseMove
+
+    // No data
+    if (!isCourseMove){
+      res.redirect(`/record/${req.params.uuid}/course-details/course-move-question${referrer}`)
+    }
+    else {
+
+      if (isCourseMove == 'false') {
+        // Clear previous data if we've now been told it’s not a course change
+        delete record?.temp?.courseMoveTemp?.courseMoveDate
+      }
+
+      res.redirect(utils.getNextCourseChangeUrl(record, recordPath, referrer))
+
     }
   })
 

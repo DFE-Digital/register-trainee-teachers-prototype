@@ -52,7 +52,7 @@
 {# Shown if trainee has been on a previous course - this is the date they started the latest course #}
 {% set dateMovedRow = {
   key: {
-    text: "Date moved to this course"
+    text: "Date changed to this course"
   },
   value: {
     html: (record.historicCourseDetails | last).dateFinished | govukDate or 'Not provided',
@@ -205,7 +205,7 @@
     {%- if courseMove.isCourseMove | falsify -%}
       {{- courseMove.courseMoveDate | govukDate -}}
     {%- else -%}
-      Not a change of course
+      Not applicable, this is not a course change
     {%- endif -%}
   {%- else -%}
     Not provided
@@ -222,7 +222,7 @@
 
 {% set courseMoveRow = {
   key: {
-    text: "Course move" if not courseMove.isCourseMove | falsify else "Course move date"
+    text: "Course change date" if not courseMove.isCourseMove | falsify else "Course change date"
   },
   value: {
     text: courseMoveHtml | safe or 'Not provided'

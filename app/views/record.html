@@ -75,7 +75,7 @@
     {% include "_includes/summary-cards/course-details.html" %}
 
     {% if record.historicCourseDetails %}
-      <p class="govuk-body"><a href="{{recordPath}}/previous-course-details" class="govuk-link">View details of previous courses this trainee has been on</a></p>
+      <p class="govuk-body"><a href="{{recordPath}}/previous-course-details" class="govuk-link">View previous course changes</a></p>
     {% endif %}
 
     {% if record | requiresSection("schools") %}

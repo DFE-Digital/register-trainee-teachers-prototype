@@ -4,7 +4,7 @@
 
 {% set hasMissingItems = missingItems | falsify %}
 
-{% set pageHeading = "Check your changes and add missing details" if hasMissingItems else "Check training details" %}
+{% set pageHeading = "Add more training details" if hasMissingItems else "Check training details" %}
 
 {% macro getCourseString(course) %}
   {% if course.isPublishCourse | falsify %}
@@ -23,36 +23,11 @@
 
   <h1 class="govuk-heading-l">{{pageHeading}}</h1>
   
-  {# {% set previousRecord = data.records | getRecordById(record.id) %}
-
-  {% set previousCourse = previousRecord.courseDetails %}
-
-  {% set previousCourseString %}
-    {{getCourseString(previousCourse)}}
-  {% endset %}
-
-  {% set routeChanged = previousRecord.route != record.route %}
-
-  <p class="govuk-body">
-    You changed the trainee’s course details from {{previousRecord.route | lower}} {{ getCourseString(previousCourse) }} to {{- (" " + record.route | lower ) if routeChanged }} {{getCourseString(record.courseDetails)}}.
-  </p> #}
-
-  <p class="govuk-body">The trainee’s course details changed.</p>
-
   {% if hasMissingItems %}
 
-    <p class="govuk-body">
-      This means you need to:
-    </p>
+    <p class="govuk-body">Based on the changes you made, you need to add more details to the trainee’s record.</p>
 
-    <ul class="govuk-list govuk-list--bullet">
-      <li>review the trainee’s other training details to make sure they match the new course</li>
-      <li>add missing details based on the change</li>
-    </ul>
-
-    <p class="govuk-body">You’ll need to add the missing details to save your changes.</p>
-
-    <p class="govuk-body">Missing details are:</p>
+    <p class="govuk-body">Details to add:</p>
     <ul class="govuk-list govuk-list--bullet">
       {% for item in missingItems %}
         <li>{{item}}</li>
@@ -60,20 +35,17 @@
     </ul>
 
     {{ govukButton({
-      text: "Check and add details",
+      text: "Add details",
       href: "./get-next-course-change-url" | addReferrer(referrer)
     }) }}
-
 
   {# No missing details - either nothing more is needed, or the user has looped through this
   section before #}
   {% else %}
 
     <p class="govuk-body">
-      This means you need to review the trainee’s other training details to make sure they match the new course details.
+      Before you update the trainee’s record, check if their training details are correct.
     </p>
-
-    <p class="govuk-body">You’ll need to review these details to save your changes.</p>
 
     {{ govukButton({
       text: "Check training details",

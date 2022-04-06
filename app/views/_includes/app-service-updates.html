@@ -1,7 +1,7 @@
 <section id="{{ update.title | slugify }}" class="app-markdown">
-  <h2 class="govuk-heading-m govuk-!-margin-bottom-2">
+  <{{ newsHeadingLevel or "h2" }} class="govuk-heading-m govuk-!-margin-bottom-2">
     {{ update.title }}
-  </h2>
+  </{{ newsHeadingLevel or "h2" }}>
   <p class="govuk-body govuk-!-margin-bottom-2">
     {{ update.date | govukDate }}
   </p>

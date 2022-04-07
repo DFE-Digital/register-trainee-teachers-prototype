@@ -45,6 +45,8 @@
 
 {% block content %}
 
+  {{ record | log(record | getShortName + ":") }}
+
   {% include "_includes/app-flash-message.html" %}
 
   <div class="record-header">

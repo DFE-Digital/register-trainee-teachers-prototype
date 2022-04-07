@@ -2,9 +2,9 @@
 
 {% set pageHeading = "Did this course change happen after they started training?" %}
 
-{% set formAction = "./course-move-question-answer" | addReferrer(referrer) %}
+{% set formAction = "./course-change-date-question-answer" | addReferrer(referrer) %}
 
 {% block formContent %}
-  {% include "_includes/forms/course-details/course-move-question.html" %}
+  {% include "_includes/forms/course-details/course-change-date-question.html" %}
 {% endblock %}
 

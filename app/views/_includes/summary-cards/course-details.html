@@ -21,7 +21,7 @@
 
 {% macro getCourseMoveLinkPath(defaultPath, nextPath, referrer, showCourseMoveQuestionUpFront) -%}
   {%- if showCourseMoveQuestionUpFront -%}
-    {{- defaultPath + '/course-move-question'| addReferrer(defaultPath + nextPath) -}}
+    {{- defaultPath + '/course-change-date-question'| addReferrer(defaultPath + nextPath) -}}
   {% else %}
     {{ (defaultPath + nextPath) | addReferrer(referrer) }}
   {%- endif -%}
@@ -214,9 +214,9 @@
 
 {% set courseMoveRowHref -%}
   {%- if courseMove.courseMoveUpFront | falsify -%}
-    /course-details/course-move-date
+    /course-details/course-change-date
   {%- else -%}
-    /course-details/course-move-question
+    /course-details/course-change-date-question
   {%- endif -%}
 {%- endset %}
 
@@ -353,7 +353,7 @@
     titleText: "Course details",
     actions: {
     items: [{
-      href: recordPath + "/course-details/is-course-move" | addReferrer(referrer),
+      href: recordPath + "/course-details/is-course-change" | addReferrer(referrer),
       text: "Move the trainee to a new course"
     }]
   } if canAmend and showCourseChangeOption,

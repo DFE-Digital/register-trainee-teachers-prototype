@@ -482,7 +482,7 @@ module.exports = router => {
   */
 
   // Route to set some date up front before redirecting on
-  router.get('/record/:uuid/course-details/is-course-move', function (req, res) {
+  router.get('/record/:uuid/course-details/is-course-change', function (req, res) {
     let data = req.session.data
     let record = data.record
     let referrer = utils.getReferrer(req.query.referrer)
@@ -490,7 +490,7 @@ module.exports = router => {
     _.set(record, "temp.courseMoveTemp.courseMoveUpFront", "true")
     _.set(record, "temp.courseMoveTemp.isCourseMove", "true")
 
-    res.redirect(`/record/${req.params.uuid}/course-details/course-move-date${referrer}`)
+    res.redirect(`/record/${req.params.uuid}/course-details/course-change-date${referrer}`)
 
   })
 
@@ -572,7 +572,7 @@ module.exports = router => {
     }
   })
 
-  router.post('/:recordtype/:uuid/course-details/course-move-question-answer', function (req, res) {
+  router.post('/:recordtype/:uuid/course-details/course-change-date-question-answer', function (req, res) {
     let data = req.session.data
     let record = data.record
     let referrer = utils.getReferrer(req.query.referrer)
@@ -582,7 +582,7 @@ module.exports = router => {
 
     // No data
     if (!isCourseMove){
-      res.redirect(`/record/${req.params.uuid}/course-details/course-move-question${referrer}`)
+      res.redirect(`/record/${req.params.uuid}/course-details/course-change-date-question${referrer}`)
     }
     else {
 

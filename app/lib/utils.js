@@ -308,7 +308,7 @@ exports.getNextPublishCourseDetailsUrl = (record, recordPath, referrer) => {
   //   return `${recordPath}/course-details/allocated-place${referrer}`
   // }
   // else if (exports.isNonDraft(record) && isMissingCourseMoveQuestion){
-  //   return `${recordPath}/course-details/course-move-question${referrer}`
+  //   return `${recordPath}/course-details/course-change-date-question${referrer}`
   // }
   else {
     return `${recordPath}/course-details/confirm${referrer}`
@@ -365,7 +365,7 @@ exports.getNextCourseChangeUrl = (record, recordPath, referrer) => {
     return `${recordPath}/funding/financial-support${referrer}`
   }
   else if (isMissingCourseMoveQuestion){
-    return `${recordPath}/course-details/course-move-question${referrer}`
+    return `${recordPath}/course-details/course-change-date-question${referrer}`
   }
   else {
     return `${recordPath}/course-details/final-check-course-change${referrer}`

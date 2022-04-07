@@ -8,6 +8,7 @@ const utils = require('./../lib/utils')
 const arrayFilters = require('./arrays.js').filters
 const funding = require('../data/funding')
 const moment = require("moment")
+const strings = require('./../filters/strings.js').filters
 
 // Leave this filters line
 var filters = {}
@@ -236,6 +237,23 @@ filters.formatYearRange = (string) => {
     .replace(/(\d{2})\/(\d{2})/, '20$1&nbsp;to&nbsp;20$2');
 }
 
+filters.recordsHaveQualification = (records, qualification) => {
+  return records.some(record => {
+    return utils.qualificationIs(record, qualification)
+  })
+}
+
+filters.getQualifications = (records) => {
+  let output = []
+  if (filters.recordsHaveQualification(records, "QTS")) {
+    output.push("QTS")
+  }
+  if (filters.recordsHaveQualification(records, "EYTS")) {
+    output.push("EYTS")
+  }
+  return output
+}
+
 /*
   ====================================================================
   prettyMonthFromAugust
@@ -256,6 +274,18 @@ filters.prettyMonthFromAugust = (monthNumber) => {
     return moment().month(monthNumber - 6).format("MMMM");
   } else {
     return moment().month(monthNumber + 6).format("MMMM");
+  }
+}
+
+/*
+  Makes file names
+*/
+
+filters.makeFileName = (provider, input, fileType) => {
+  if (typeof input === "string") {
+   return strings.slugify(provider + "-" + input) + "." + fileType
+  } else {
+    console.log("Error with makeFileName filter. Input is not a string")
   }
 }
 

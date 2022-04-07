@@ -1,0 +1,95 @@
+{% extends "_templates/_page.html" %}
+
+{% set pageHeading = "Check pending updates to trainee records" %}
+{% set navActive = 'bulk' %}
+
+{% set filteredRecords = data.records | filterRecords(data) %}
+{% set traineesThatCanBeUpdated = filteredRecords | filterByCanBulkUpdate %}
+
+{% set tableHeadRow = [
+    {
+      text: "Trainee",
+      classes: "app-table__column-25"
+    },
+    {
+      text: "Trainee start date",
+      classes: "app-table__column-25"
+    },
+    {
+      text: "First placement school",
+      classes: "app-table__column-25"
+    },
+    {
+      text: "Second placement school",
+      classes: "app-table__column-25"
+    }
+  ]
+%}
+
+{% set tableBodyRows = [] %}
+
+{% for trainee in traineesThatCanBeUpdated %}
+
+  {% set completion = 0 %}
+  {% set traineeInfo = trainee.personalDetails.shortName + '<br> <span class="govuk-hint">' + trainee.reference + '</span>' %}
+
+  {% set row = [
+    { text: traineeInfo | safe }
+  ] %}
+  
+  {% set commencementDate %}
+    {% if trainee.trainingDetails.commencementDate %}
+      {{ trainee.trainingDetails.commencementDate | govukDate }}
+      {% set completion = completion + 1 %}
+    {% elseif (range(0, 10) | random) > 2 %}
+      {% set fakeDate = [range(1, 29) | random | padDigits(2), range(9, 11) | random | padDigits(2), data.years.defaultCourseYear] %}
+      {{ fakeDate | govukDate }}
+      {% set completion = completion + 1 %}
+    {% else -%}
+      –
+    {%- endif %}
+  {% endset %}
+
+  {% set row = row | push({ text: commencementDate | safe })%}
+
+  {% for item in trainee.placement.items %}
+    {% set placementContent %}
+      {{ item.school.schoolName }}<br>
+      <span style="color: #505a5f">URN: {{ item.school.urn }}</span>
+    {% endset %}
+    {% set completion = completion + 1 %}
+    {% set row = row | push({ text: placementContent | safe }) %}
+  {% endfor %}
+
+  {% for items in row %}
+    {% if row.length != tableHeadRow.length %}
+      {% set row = row | push({ text: "–" }) %}
+    {% endif %}
+  {% endfor %}
+
+  {% if completion > 0 %}
+    {% set tableBodyRows = tableBodyRows | push(row) %}
+  {% endif %}
+
+{% endfor %}
+
+{# These counts are used by include "_includes/bulk-update/upload-summary.html  #}
+{% set totalTraineeRecords = traineesThatCanBeUpdated.length %}
+{% set errorCount = 0 %}
+{% set unchangedCount = traineesThatCanBeUpdated.length - tableBodyRows.length %}
+{% set updatedCount = tableBodyRows.length %}
+
+{% set tableCaption = "Pending updates to trainee records (" + tableBodyRows.length + ")" %}
+{% set tableCaptionClasses = "govuk-table__caption--m" %}
+
+{% set buttonText = "Confirm updates to records" %}
+
+{% set bulkPath = "add-details" %}
+
+{% block content %}
+
+  {% include "_includes/bulk-update/check-pending-updates.html" %}
+
+{% endblock %}
+
+

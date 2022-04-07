@@ -1,0 +1,45 @@
+{% extends "_templates/_page.html" %}
+
+{% set navActive = 'bulk' %}
+
+{% set filteredRecords = data.records | filterRecords(data) %}
+{% set traineesThatCanBeRecommended = filteredRecords | filterByCanBeRecommended %}
+{% set totalTraineeRecords = traineesThatCanBeRecommended | length %}
+
+{% set errorTrainees     =  0 %}
+{% set unchangedTrainees =  0 %}
+{% set updatedTrainees   =  0 %}
+
+{% for trainee in traineesThatCanBeRecommended %}
+
+  {% set traineeRecord = null %}
+
+  {% set randomNumber = range(0, 100) | random %}
+
+  {% if randomNumber <= 8 %}
+    {% set errorTrainees = errorTrainees + 1 %}
+  {% elseif randomNumber > 8 and randomNumber <= 12 %}
+    {% set unchangedTrainees = unchangedTrainees + 1 %}
+  {% elseif randomNumber > 12 %}
+    {% set updatedTrainees = updatedTrainees + 1 %}
+  {% endif %}
+
+{% endfor %}
+
+{# These counts are used by include "_includes/bulk-update/upload-summary.html  #}
+{% set errorCount = errorTrainees %}
+{% set unchangedCount = unchangedTrainees %}
+{% set updatedCount = updatedTrainees %}
+
+{% set pageHeading = "Errors in your trainee records file" %}
+
+{% set bulkPath = "recommend" %}
+{% set bulkRoute = "recommend" %}
+
+{% block content %}
+
+  {% include "_includes/bulk-update/errors-found.html" %}
+
+{% endblock %}
+
+

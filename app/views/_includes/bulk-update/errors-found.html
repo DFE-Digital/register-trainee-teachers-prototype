@@ -1,0 +1,37 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <h1 class="govuk-heading-l">
+      <span class="govuk-caption-l">{{ data.signedInProviders | andSeparate }}</span>
+      {{ pageHeading }}
+    </h1>
+    {% include "_includes/bulk-update/upload-summary.html" %}
+    {% set errorPluralisation = "error" | pluralise(tableBodyRows.length) %}
+    <form action="/bulk-update/{{ bulkPath }}/errors-found-answer" method="post" novalidate>
+      {{ govukRadios({
+        fieldset: {
+          legend: {
+            text: "Do you want to fix the " + errorPluralisation + " now?",
+            classes: "govuk-fieldset__legend--m"
+          }
+        },
+        items: [
+          { 
+            value: "Fix errors now",
+            text: "Yes, review and fix " + errorPluralisation + " now"
+          },
+          {
+            value: "Skip fixing errors",
+            text: "No, continue without fixing " + errorPluralisation + " and review " + updatedCount + " pending updates"
+          }
+        ]
+      } | decorateAttributes(data, "data.bulk." + bulkRoute + "FixErrors" )) }}
+
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+    </form>
+    <p class="govuk-body">
+      <a href="/bulk-update/cancel-bulk-updates" class="govuk-link">Cancel bulk updates to records</a>
+    </p>
+  </div>
+</div>

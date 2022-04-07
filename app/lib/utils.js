@@ -1016,6 +1016,10 @@ exports.isDeferred = record => {
   return record?.status == "Deferred"
 }
 
+exports.isNotDeferred = record => {
+  return record?.status !== "Deferred"
+}
+
 exports.isWithdrawn = record => {
   return record?.status == "Withdrawn"
 }
@@ -1142,7 +1146,7 @@ exports.isUndergraduate = data => {
   return exports.getCourseLevel(data) == "Undergraduate"
 }
 
-exports.isPostgraduate= data => {
+exports.isPostgraduate = data => {
   return exports.getCourseLevel(data) == "Postgraduate"
 }
 // Phases
@@ -1207,7 +1211,7 @@ exports.recordIsComplete = function(record, data=false ) {
 
   data = Object.assign({}, (data || this?.ctx?.data || false))
 
-  if (!record || !_.get(record, "route")) return false
+  if (!record || !record?.route) return false
 
   // Pretend 20% of submitted records are incomplete
   if (exports.isNonDraft(record)){
@@ -1216,7 +1220,7 @@ exports.recordIsComplete = function(record, data=false ) {
       'EYTS awarded',
       'QTS recommended',
       'QTS awarded',
-      // 'Deferred',
+      'Deferred',
       'Withdrawn'
     ]
     if (statusesThatMustBeComplete.includes(record?.status)) return true
@@ -1260,7 +1264,7 @@ exports.recordIsComplete = function(record, data=false ) {
 // Checks if the placement criteria has been met
 exports.needsPlacementDetails = function(record, data = false) {
 
-  data = Object.assign({}, (data || this.ctx.data || false))
+  data = Object.assign({}, (data || this?.ctx?.data || false))
 
   let needsPlacementDetails = false
   let placementCount = (record?.placement?.items) ? record.placement.items.length : 0
@@ -1275,16 +1279,28 @@ exports.needsPlacementDetails = function(record, data = false) {
   return needsPlacementDetails
 }
 
-// Check if there are outsanding actions (Either adding start date or placements details)
-exports.hasOutstandingActions = function(record, data = false) {
+// Check if record has started and if it is, is missing a start date
+exports.needsStartDate = function(record) {
+  let needsStartDate = false
 
-  data = Object.assign({}, (data || this.ctx.data || false))
-  
-  let hasOutstandingActions = false
   let traineeStarted = record?.trainingDetails?.commencementDate
   let ittStartDate = moment(record?.courseDetails?.startDate)
 
   if (!traineeStarted && dates.isInPast(record?.courseDetails?.startDate) && record.status != "Deferred") {
+    needsStartDate = true
+  }
+
+  return needsStartDate
+}
+
+// Check if there are outsanding actions (Either adding start date or placements details)
+exports.hasOutstandingActions = function(record, data = false) {
+
+  data = Object.assign({}, (data || this?.ctx?.data || false))
+  
+  let hasOutstandingActions = false
+
+  if (exports.needsStartDate(record)) {
     hasOutstandingActions = true
   }
   else if (exports.needsPlacementDetails(record, data)) {
@@ -1392,7 +1408,7 @@ exports.traineeStarted = (record) => {
 
 // Look up a record using it’s UUID
 exports.getRecordById = (records, id) => {
-  return records.find(record => record.id == id)
+  return (records) ? records.find(record => record.id == id) : false
 }
 
 // Look up several records using UUID
@@ -1641,13 +1657,15 @@ exports.filterByStatus = (records, array, invert) => {
   return exports.filterRecordsBy(records, 'status', array, invert)
 }
 
-// For use on drafts only?
+exports.filterOutDeferred = (records) => {
+  return records.filter(record => exports.isNotDeferred(record))
+}
+
 exports.filterByComplete = function(records, data=false) {
   data = Object.assign({}, (data || this?.ctx?.data || false))
   return records.filter(record => exports.recordIsComplete(record, data))
 }
 
-// For use on drafts only?
 exports.filterByIncomplete = function(records, data=false) {
   data = Object.assign({}, (data || this?.ctx?.data || false))
   return records.filter(record => !exports.recordIsComplete(record, data))
@@ -1659,6 +1677,59 @@ exports.filterByQualification = (records, qualification) => {
     let courseQualificationMatches = courseQualifications && courseQualifications.includes(qualification)
     return courseQualificationMatches
  })
+}
+
+exports.filterByNeedsStartDate = (records) => {
+  return records.filter(record => exports.needsStartDate(record))
+}
+
+exports.filterByNeedsPlacements = (records, data=false) => {
+  data = Object.assign({}, (data || this?.ctx?.data || false))
+  return records.filter(record => exports.needsPlacementDetails(record, data))
+}
+
+exports.filterOutEarlyYears = (records) => {
+  return records.filter(record => !exports.isEarlyYears(record))
+}
+
+exports.filterByEarlyYears = (records) => {
+  return records.filter(record => exports.isEarlyYears(record))
+}
+
+exports.filterByAcademicQualificationsApply = (records) => {
+  return records.filter(record => exports.academicQualificationsApply(record))
+}
+
+exports.filterByPostgraduate = (records) => {
+  return records.filter(record => exports.isPostgraduate(record))
+}
+
+exports.filterByUndergraduate = (records) => {
+  return records.filter(record => exports.isUndergraduate(record))
+}
+
+// Trainees that can be bulk updated
+exports.filterByCanBulkUpdate = (records) => {
+  let filteredRecords = exports.filterByActive(records)
+  filteredRecords = exports.filterOutEarlyYears(filteredRecords)
+  filteredRecords = exports.filterByIncomplete(filteredRecords)
+  return filteredRecords
+}
+
+// Trainees that can be bulk updated
+exports.filterByCannotBulkUpdate = (records) => {
+  let filteredRecords = exports.filterByActive(records)
+  filteredRecords = exports.filterByEarlyYears(filteredRecords)
+  filteredRecords = exports.filterByIncomplete(filteredRecords)
+  return filteredRecords
+}
+
+// Trainees that can be bulk recommended
+exports.filterByCanBeRecommended = (records) => {
+  let filteredRecords = exports.filterByComplete(records)
+  filteredRecords = exports.filterByActive(filteredRecords)
+  filteredRecords = exports.filterOutDeferred(filteredRecords)
+  return filteredRecords
 }
 
 // -------------------------------------------------------------------
@@ -2458,4 +2529,3 @@ exports.getRecordPath = req => {
   let recordType = req.params.recordtype
   return (recordType == 'record') ? (`/record/${req.params.uuid}`) : '/new-record'
 }
-

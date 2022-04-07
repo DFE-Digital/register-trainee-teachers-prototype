@@ -1,0 +1,43 @@
+{% set courseMoveDateArray = record.temp.courseMoveTemp.courseMoveDate | toDateArray %}
+
+{% set startDateHint = "For example, " + "" | today | toDateArray | spaceSeparate %}
+
+{% include "_includes/trainee-name-caption.njk" %}
+
+{{ govukDateInput({
+  id: "start-start-date",
+  namePrefix: "record[temp][courseMoveTemp][courseMoveDate]",
+  fieldset: {
+    legend: {
+      text: pageHeading,
+      isPageHeading: true,
+      classes: "govuk-fieldset__legend--l"
+    }
+  },
+  hint: {
+    html: startDateHint
+  },
+  items: [
+      {
+        name: "day",
+        classes: "govuk-input--width-2",
+        value: courseMoveDateArray["0"]
+      },
+      {
+        name: "month",
+        classes: "govuk-input--width-2",
+        value: courseMoveDateArray["1"]
+      },
+      {
+        name: "year",
+        classes: "govuk-input--width-4",
+        value: courseMoveDateArray["2"]
+      }
+    ]
+}) }}
+
+{{ govukButton({
+  text: "Continue"
+}) }}
+
+

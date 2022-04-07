@@ -1,0 +1,28 @@
+{% extends "_templates/_record-form.html" %}
+
+{% set pageHeading = "Confirm you want to cancel your bulk updates" %}
+
+{% set returnLink = {
+  href: 'javascript:history.back();',
+  text: "Return to the previous page"
+} %}
+
+{% block formContent %}
+  {% include "_includes/trainee-name-caption.njk" %}
+
+  <h1 class="govuk-heading-l">
+    {# {{pageHeading}} #}
+    Confirm you want to cancel your <span class="app-nowrap">bulk updates</span>
+  </h1>
+
+  <p class="govuk-body">
+    The updates you made to the trainee’s records will not be saved.
+  </p>
+
+  {{ govukButton({
+    text: "Confirm cancel",
+    href: "/bulk-update",
+    classes: "govuk-button--warning"
+  }) }}
+
+{% endblock %}

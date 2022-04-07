@@ -127,10 +127,15 @@
       active: true if navActive == 'records'
     },
     {
+      text: 'Bulk updates',
+      href: '/bulk-update',
+      active: true if navActive == 'bulk'
+    } if isAuthorised('bulkActions') and data.settings.showBulkInPrimaryNav and not data.settings.bulkActionsNotBulkUploads,
+    {
       text: 'Bulk actions',
       href: '/bulk-action/new',
       active: true if navActive == 'bulk'
-    } if isAuthorised('bulkActions') and data.settings.showBulkInPrimaryNav,
+    } if isAuthorised('bulkActions') and data.settings.showBulkInPrimaryNav and data.settings.bulkActionsNotBulkUploads,
     {
       text: 'Courses',
       href: '/root/case-list',

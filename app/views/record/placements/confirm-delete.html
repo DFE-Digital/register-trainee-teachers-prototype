@@ -1,0 +1,27 @@
+{% extends "_templates/_record-form.html" %}
+
+{% set pageHeading = "Are you sure you want to delete this placement?" %}
+
+{% set returnLink = {
+  href: 'javascript:history.back();',
+  text: "Cancel"
+} %}
+
+{% set placement = data.record.placement.items | getRecordById(placementUuid) %}
+
+{% block formContent %}
+
+{% include "_includes/trainee-name-caption.njk" %}
+<h1 class="govuk-heading-l govuk-!-margin-bottom-8">
+  {{pageHeading}}
+</h1>
+
+<p class="govuk-body govuk-!-margin-bottom-7">{{placement.school.schoolName}}</p>
+
+{{ govukButton({
+  text: "Yes I’m sure — delete this placement",
+  href: "./delete",
+  classes: "govuk-button--warning"
+}) }}
+
+{% endblock %}

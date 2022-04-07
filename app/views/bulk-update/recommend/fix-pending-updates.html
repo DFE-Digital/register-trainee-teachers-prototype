@@ -1,0 +1,20 @@
+{% extends "_templates/_page.html" %}
+
+{% set pageContent = "makeChanges" %}
+{% set pageHeading = "Change your pending updates" %}
+{% set navActive = 'bulk' %}
+
+{% set filteredRecords = data.records | filterRecords(data) %}
+{% set traineesThatCanBeRecommended = filteredRecords | filterByCanBeRecommended %}
+
+{% set fileName = data.signedInProviders | makeFileName("change pending","csv") %}
+
+{% set bulkPath = "recommend" %}
+
+{% block content %}
+
+  {% include "_includes/bulk-update/fix-file.html" %}
+
+{% endblock %}
+
+

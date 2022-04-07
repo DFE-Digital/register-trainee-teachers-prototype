@@ -199,7 +199,7 @@
   titleText: titleText | replace("**invalid**", ""),
   actions: {
     items: [{
-      href: recordPath + "/degree/" + loop.index0 + "/delete" | addReferrer(referrer),
+      href: recordPath + "/degree/" + loop.index0 + "/confirm-delete" | addReferrer(referrer),
       text: "Delete degree"
     }]
   } if canAmend,

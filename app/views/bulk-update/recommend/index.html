@@ -1,0 +1,103 @@
+{% extends "_templates/_page.html" %}
+
+{% set navActive = 'bulk' %}
+
+{% set filteredRecords = data.records | filterRecords(data) %}
+{% set traineesThatCanBeRecommended = filteredRecords | filterByCanBeRecommended %}
+
+{% set needAcademicAward = traineesThatCanBeRecommended | filterByAcademicQualificationsApply %}
+
+{% set fileName = data.signedInProviders | makeFileName("trainees to recommend","csv") %}
+
+{% set pageHeading = "Bulk recommend trainees for " + traineesThatCanBeRecommended | getQualifications | orSeparate %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+      <h1 class="govuk-heading-l">
+        <span class="govuk-caption-l">{{ data.signedInProviders | andSeparate }}</span>
+        {{ pageHeading }}
+      </h1>
+      <p class="govuk-body">
+        You have {{ traineesThatCanBeRecommended | length }} trainees ready to be recommend for {{ traineesThatCanBeRecommended | getQualifications | orSeparate }}.
+      </p>
+      <h2 class="govuk-heading-m">
+        1. Export a template file
+      </h2>
+      <p class="govuk-body">
+        <a href="../public/downloads/recommend.csv" download="{{ fileName }}" class="govuk-link">
+          Trainee records with missing details (csv)
+        </a>
+      </p>
+      <h2 class="govuk-heading-m">
+        2. Add details of the trainee’s outcome
+      </h2>
+      <p class="govuk-body">
+        Open ‘ <span class="govuk-!-font-weight-bold">{{ fileName }}</span>’ in <span class="app-nowrap">spreadsheet software</span> (for example, <span class="app-nowrap">Microsoft Excel</span>) and add when the trainee met {{ traineesThatCanBeRecommended | getQualifications | orSeparate }} {{ "and their postgraduate academic qualification" if needAcademicAward | filterByPostgraduate }}{{ ", where applicable" if traineesThatCanBeRecommended.length > needAcademicAward.length }}.
+      </p>
+      <p class="govuk-body">
+        You can leave rows or cells empty if you do not want to recommend the trainees for {{ traineesThatCanBeRecommended | getQualifications | orSeparate }}.
+      </p>
+      <h3 class="govuk-heading-s">
+        When the trainee met {{ traineesThatCanBeRecommended | getQualifications | orSeparate }}
+      </h3>
+      <p class="govuk-body">
+        In the column ‘Date standards met’ add the date the trainee met {{ traineesThatCanBeRecommended | getQualifications | orSeparate }}.
+      </p>
+      <p class="govuk-body">
+        The date must be written in the format <span class="app-nowrap">‘DD/MM/YYYY’</span>.
+        For example, if the trainee met the standard on <span class="app-nowrap">20 June {{ data.years.defaultCourseYear }}</span>, write <span class="app-nowrap">‘20/07/{{ data.years.defaultCourseYear }}’</span>.
+      </p>
+      <p class="govuk-body">
+        If the trainee has not met {{ traineesThatCanBeRecommended | getQualifications | orSeparate }}, withdraw them manually.
+      </p>
+      {% if needAcademicAward | filterByPostgraduate %}
+      <h3 class="govuk-heading-s">
+        Postgraduate academic qualification
+      </h3>
+        {# Notes - consider tolerating 'None' for routes that are not
+        postgrad #}
+        <p class="govuk-body">
+          For postgraduate trainees, in the column ‘Postgraduate qualification’ add one of these
+          options:
+        </p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li>PGCE</li>
+          <li>PGDE</li>
+          <li>None</li>
+        </ul>
+        {% if traineesThatCanBeRecommended.length > needAcademicAward.length %}
+          <p class="govuk-body">
+            For trainees not on a postgraduate course, leave the cell as <span class="app-nowrap">‘Not applicable’</span>.
+          </p>
+        {% endif %}
+      {% endif %}
+
+      <h2 class="govuk-heading-m">
+        3. Upload your trainee records
+      </h2>
+      <form action="/bulk-update/recommend/errors-found" method="post" novalidate>
+        {{ govukFileUpload({
+          id: "file-upload-1",
+          name: "file-upload-1",
+          hint: {
+            text: "File type must be ‘csv’."
+          },
+          label: {
+            text: "Upload a file"
+          },
+          attributes: {
+            "accept": ".csv"
+          }
+        }) }}
+        {{ govukButton({
+          text: "Upload records"
+        }) }}
+      </form>
+    </div>
+  </div>
+
+{% endblock %}
+
+

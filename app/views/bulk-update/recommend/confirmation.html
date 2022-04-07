@@ -1,0 +1,35 @@
+{% extends "_templates/_page.html" %}
+
+{% set navActive = 'bulk' %}
+{% set backLink = 'false' %}
+
+{% set filteredRecords = data.records | filterRecords(data) %}
+{% set traineesThatCanBeRecommended = filteredRecords | filterByCanBeRecommended %}
+
+{% set pageHeading = traineesThatCanBeRecommended | length  + " trainee records recommended for " + traineesThatCanBeRecommended | getQualifications | orSeparate %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+      {{ govukPanel({
+        titleText: pageHeading,
+        classes: "govuk-!-margin-bottom-7"
+      }) }}
+
+      <p class="govuk-body">
+        The Department for Education will award {{ traineesThatCanBeRecommended | getQualifications | orSeparate }} where appropriate within 3 working days.
+      </p>
+
+      <h2 class="govuk-heading-m">
+        Next steps
+      </h2>
+      <p class="govuk-body">
+        <a href="/records" class="govuk-link">View your current trainees</a>
+      </p>
+    </div>
+  </div>
+
+{% endblock %}
+
+

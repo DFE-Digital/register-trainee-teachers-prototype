@@ -1,0 +1,10 @@
+{% extends "_templates/_record-form.html" %}
+
+{% set pageHeading = "Did this course change happen after they started training?" %}
+
+{% set formAction = "./course-move-question-answer" | addReferrer(referrer) %}
+
+{% block formContent %}
+  {% include "_includes/forms/course-details/course-move-question.html" %}
+{% endblock %}
+

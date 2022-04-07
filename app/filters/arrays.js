@@ -163,6 +163,9 @@ filters.joinArray = joinArray
 // A, B, C and D
 filters.joinify = (items) => filters.joinArray(items, {delimiter:', ', lastDelimiter: ' and '})
 
+// A, B, C or D
+filters.orSeparate = (items)=> filters.joinArray(items, {delimiter:', ', lastDelimiter: ' or '})
+
 // A, B, C, and D
 filters.oxfordComma = (items) => filters.joinArray(items, {delimiter:', ', lastDelimiter: ', and '})
 
@@ -182,6 +185,9 @@ filters.andSeparate = (items)=> filters.joinArray(items, {delimiter: ' and '})
 
 // A B C D
 filters.spaceSeparate = (items) => filters.joinArray(items, {delimiter:' '})
+
+// A-B-C-D
+filters.hyphenSeparate = (items) => filters.joinArray(items, {delimiter:'-'})
 
 // A with B, A with B and C, A with B and C and D
 // Todo: extend joinArray to support first delimiter

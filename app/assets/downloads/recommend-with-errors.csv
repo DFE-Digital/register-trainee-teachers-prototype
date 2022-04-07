@@ -1,0 +1,65 @@
+TRN,Postgraduate qualification,Date standards met,Errors
+Do not change this column,"For postgraduate trainees, in the column ‘Postgraduate qualification’ add one of these options:
+- PGCE
+- PGDE
+- None
+
+If the trainee was not on a postgraduate course, leave the cell as ‘Not applicable’.","When the trainee met the QTS or EYTS standards.
+Must be written DD/MM/YYYY. 
+For example, if the trainee met the teaching standard on 20 July 2022, write '20/07/2022'.
+The date must be in the past.
+If the trainee has not met the teaching standard, leave the cell empty.","Fix these errors and upload this file again.
+
+You do not need to delete this row."
+LY9214,None,11/06/2022,
+CB0736,None,17/06/2022,
+GM2844,PGCE,11/06/2022,
+EH4015,PGCE,18/06/2022,
+CZ5140,None,20/07/2023,"Date standards met: ‘20/07/2023’, date the trainee met QTS must be in the past"
+SF6298,PGCE,05/06/2022,
+CB6515,PGCE,08/06/2022,
+TL1239,None,04/06/2022,
+XP1904,PGDE,02/06/2022,
+LZ4060,PGCE,13/06/2022,
+ES4157,PGCE,26/06/2022,
+EA5531,PGCE,05/06/2022,
+DT4917,PGCE,09/06/2022,
+HY1346,PGDE,05/06/2022,
+CP5267,PGCE,07/20/2023,"Date standards met: ‘07/20/2023’, enter a valid date"
+NN0456,PGCE,06/06/2022,
+TC6049,PGDE,26/06/2022,
+ZG5797,PGDE,27/06/2022,
+QY9024,None,26/06/2022,
+BX1488,,09/06/2022,Postgraduate qualification missing. If the trainee did not get a postgraduate qualification enter ‘None’.
+DM3787,None,07/06/2022,
+LY8349,None,13/06/2022,
+HC4662,PGCE,09/06/2022,
+YL7503,Not applicable,12/06/2022,
+TN0521,PGCE,01/06/2022,
+FH7057,None,18/06/2022,
+FT3026,None,22/06/2022,
+TX2114,None,26/06/2022,
+GX7531,None,27/06/2022,
+CY5405,PGDE,24/06/2022,
+AS7594,PGDE,27/06/2022,
+AM2248,None,28/06/2022,
+TF0044,PGDE,28/06/2022,
+BM6053,None,09/06/2022,
+QW1061,None,26/06/2022,
+CD1243,PGCE,15/06/2022,
+PR7820,Not applicable,13/06/2022,
+AG1726,None,20/06/2022,
+WY9461,PGCE,07/20/2023,"Date standards met: ‘07/20/2023’, enter a valid date"
+AY1140,None,02/06/2022,
+FP7341,PGDE,27/06/2022,
+QD9244,None,19/06/2022,
+GW2621,PGDE,14/06/2022,
+FQ7206,PGCE,16/06/2022,
+FY8755,PGDE,17/06/2022,
+CK0063,PGCE,03/06/2022,
+HY3693,PGCE,22/06/2022,
+QW7739,PGCE,12/06/2022,
+FS2391,PGDE,10/06/2022,
+AW1698,PGCE,28/06/2022,
+TQ4748,PGCE,12/06/2022,
+ZP8118,None,27/06/2022,

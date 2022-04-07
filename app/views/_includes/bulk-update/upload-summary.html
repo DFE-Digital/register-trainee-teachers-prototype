@@ -1,0 +1,14 @@
+<p class="govuk-body">
+  Your file was uploaded, out of {{ totalTraineeRecords }} trainee records:
+</p>
+<ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-7">
+  <li>
+    {{ errorCount if errorCount else "No" }} trainee {{ "record" | pluralise(errorCount) }} with errors
+  </li>
+  <li>
+    {{ unchangedCount if unchangedCount else "No" }} trainee {{ "record" | pluralise(unchangedCount) }} without changes
+  </li>
+  <li>
+    {{ updatedCount if updatedCount else "No" }} pending {{ "update" | pluralise(updatedCount) }} to trainee records
+  </li>
+</ul>

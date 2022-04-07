@@ -61,6 +61,7 @@
     <h2 class="govuk-heading-l">
       Latest news and updates
     </h2>
+    {% set newsHeadingLevel = "h3" %}
     {% for update in data.serviceUpdates.items -%}
       {%- if loop.index == 1 -%}
         {% include "_includes/app-service-updates.html" %}

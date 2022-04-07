@@ -1,0 +1,80 @@
+{% extends "_templates/_page.html" %}
+{% set navActive = "funding" %}
+
+{% set pageHeading = "Funding" %}
+
+{% block content %}
+
+  {% set yearPaymentsTabName = "Grants" %}
+
+  {% set activeTabYearlyLeadSchool = true %}
+  {% include "_includes/funding-header-and-tab-nav.html" %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+      <h2 class="govuk-heading-l">
+        {{ yearPaymentsTabName | sentenceCase }}
+        <span class="app-nowrap">{{ data.years.currentAcademicYear }}</span>
+      </h2>
+      {% include "_includes/funding-payment-profile-meta.html" %}
+    </div>
+  </div>
+
+  {% set dataSource = data.funding.annualFundingLeadSchools %}
+  {% set dataSource = dataSource | sort(attribute = "subject") %}
+
+  {% set salaryHeadRow = [
+    { text: "Subject and route",
+      classes: "app-table__column-53" },
+    { text: "Trainees" },
+    { text: "Amount per trainee" },
+    { text: "Total" }
+  ] %}
+
+  {% set total = 0 %}
+  {% set salaryBodyRows = [] %}
+  {% for item in dataSource %}
+    {% if (item.numberOfTrainees > 0) and (item.amountPerTrainee > 0) %}
+      {% set subjectTotal = (item.numberOfTrainees * item.amountPerTrainee) %}
+      {% set subjectAndRoute %}
+        {{ item.subject }}<br>
+        <span class="app-nowrap">{{ item.route | lower | sentenceCase }}</span>
+      {% endset %}
+      {% set row = [
+        { text: subjectAndRoute | safe },
+        { text: item.numberOfTrainees,
+          format: "numeric" },
+        { text: item.amountPerTrainee | currency,
+          format: "numeric" },
+        { text: subjectTotal | currency,
+          format: "numeric" }
+      ] %}
+    {% set total = total + subjectTotal %}
+    {% set salaryBodyRows = salaryBodyRows | push(row) %}
+    {% endif %}
+  {% endfor %}
+  {% set salaryBodyRows = salaryBodyRows | push(row) %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+
+      <h2 class="govuk-heading-m govuk-!-margin-bottom-2">
+        Total grants
+      </h2>
+      <p class="govuk-body">
+        {{ total | currency }}
+      </p>
+
+      <hr class="govuk-section-break govuk-section-break--m">
+
+      {{ govukTable({
+        caption: "Grants",
+        captionClasses: "govuk-table__caption--m",
+        head: salaryHeadRow,
+        rows: salaryBodyRows
+      }) }}
+
+    </div>
+  </div>
+
+{% endblock %}

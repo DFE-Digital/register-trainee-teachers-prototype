@@ -1,0 +1,68 @@
+{% include "_includes/trainee-name-caption.njk" %}
+
+{% set courseMoveDateArray = record.temp.courseMoveTemp.courseMoveDate | toDateArray %}
+
+{% set courseMoveDateHint = "For example, " + "" | today | toDateArray | spaceSeparate %}
+
+{% set dateHtml %}
+  {{ govukDateInput({
+    id: "course-move-date",
+    namePrefix: "record[temp][courseMoveTemp][courseMoveDate]",
+    fieldset: {
+      legend: {
+        text: "On what date?",
+        classes: "govuk-label govuk-label--s"
+      }
+    },
+    hint: {
+      text: courseMoveDateHint
+    },
+    items: [
+        {
+          name: "day",
+          classes: "govuk-input--width-2",
+          value: courseMoveDateArray["0"]
+        },
+        {
+          name: "month",
+          classes: "govuk-input--width-2",
+          value: courseMoveDateArray["1"]
+        },
+        {
+          name: "year",
+          classes: "govuk-input--width-4",
+          value: courseMoveDateArray["2"]
+        }
+      ]
+  }) }}
+{% endset %}
+
+{{ govukRadios({
+  fieldset: {
+    legend: {
+      text: pageHeading,
+      isPageHeading: true,
+      classes: "govuk-fieldset__legend--l"
+    }
+  },
+  items: [
+    {
+      value: "true",
+      text: "Yes, the change happened after they started",
+      conditional: {
+        html: dateHtml
+      }
+    },
+    {
+      value: "false",
+      text: "No, they’ve always been studying with these details",
+      hint: {
+        text: "For example, you are correcting a mistake"
+      }
+    }
+  ]
+} | decorateAttributes(record, "record.temp.courseMoveTemp.isCourseMove")) }}
+
+{{ govukButton({
+  text: "Continue"
+}) }}

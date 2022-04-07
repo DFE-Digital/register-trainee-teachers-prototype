@@ -571,7 +571,6 @@ module.exports = router => {
       res.redirect(307, `${recordPath}/course-details/update${referrer}`);
     }
   })
-
   router.post('/:recordtype/:uuid/course-details/course-change-date-question-answer', function (req, res) {
     let data = req.session.data
     let record = data.record

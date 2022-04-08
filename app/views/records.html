@@ -139,11 +139,13 @@
     {% include "_includes/trainee-count.njk" %}
 
     {% if isAuthorised('addTrainees') %}
-      {{ govukButton({
-        text: "Create a trainee record",
-        href: "./new-record/new",
-        isStartButton: true
-      }) }}
+      {% if data.settings.bulkLinksInPrimaryNav != "Show bulk updates" %}
+        {{ govukButton({
+          text: "Create a trainee record",
+          href: "./new-record/new",
+          isStartButton: true
+        }) }}
+      {% endif %}
     {% endif %}
 
   </div>

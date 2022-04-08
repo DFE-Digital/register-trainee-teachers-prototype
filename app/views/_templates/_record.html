@@ -45,7 +45,7 @@
 
 {% block content %}
 
-  {{ record | log(record | getShortName + ":") }}
+  {{ record | log(record | getShortName or 'Record') }}
 
   {% include "_includes/app-flash-message.html" %}
 

@@ -139,11 +139,6 @@
     {% include "_includes/trainee-count.njk" %}
 
     {% if isAuthorised('addTrainees') %}
-      {{ govukButton({
-        text: "Create a trainee record",
-        href: "./new-record/new",
-        isStartButton: true
-      }) }}
     {% endif %}
 
   </div>

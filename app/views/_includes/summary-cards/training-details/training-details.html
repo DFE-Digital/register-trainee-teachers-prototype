@@ -35,7 +35,7 @@
   {% if record | isDraft %}
     {% if record.trainingDetails.commencementDate %}
       {{- record.trainingDetails.commencementDate | govukDate -}}
-    {% elseif not data.settings.requireTraineeStartDate and not (record.trainingDetails.traineeStarted | falsify) %}
+    {% elseif not (record.trainingDetails.traineeStarted | falsify) %}
       Trainee yet to start course
     {% else %}
       Not provided

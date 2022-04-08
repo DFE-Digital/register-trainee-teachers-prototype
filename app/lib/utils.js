@@ -1424,7 +1424,6 @@ exports.getRecordsById = (records, array) => {
 exports.filterRecords = (records, data, filters = {}) => {
 
   let filteredRecords = records
-  let applyEnabled = data.settings.enableApplyIntegration
 
   if (data?.settings?.viewAsAdmin != "true"){
     // Only allow records for the signed-in providers
@@ -1437,10 +1436,6 @@ exports.filterRecords = (records, data, filters = {}) => {
 
   // Only show records for currently enabled routes or draft records
   filteredRecords = filteredRecords.filter(record => enabledTrainingRoutes.includes(record.route) || (exports.isDraft(record)))
-
-  if (!applyEnabled){
-    filteredRecords = filteredRecords.filter(record => exports.sourceIsManual(record))
-  }
 
   if (filters.cohortFilter){
     filteredRecords = filteredRecords.filter(record => filters.cohortFilter.includes(exports.getCohortFilter(record)))

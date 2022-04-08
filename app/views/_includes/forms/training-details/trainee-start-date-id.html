@@ -2,8 +2,6 @@
 
 {% set courseStartDate = record.courseDetails.startDate or false %}
 
-{% set startDateNotKnownAllowed = not ( data.settings.requireTraineeStartDate | falsify ) %}
-
 {% set commencementStartDateArray = record.trainingDetails.commencementDate | toDateArray %}
 
 {% set commencementDateLabel = "What is the trainee’s start date?" %}

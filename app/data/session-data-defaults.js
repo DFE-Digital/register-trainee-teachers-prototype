@@ -114,15 +114,6 @@ settings.userActiveProvider = "Webury Hill SCITT"
 
 settings.providerType = "accrediting-provider"
 
-// Enable timeline on records
-settings.includeTimeline = 'true'
-
-// Enable apply integration
-settings.enableApplyIntegration = 'true'
-
-// Enable apply integration
-settings.showRequiresAttentionSection = 'true'
-
 // Enable apply integration
 settings.groupApplySections = 'true'
 
@@ -130,19 +121,9 @@ settings.groupApplySections = 'true'
 settings.highlightInvalidAnswers = 'true'
 
 // Enable timeline on records
-settings.includeGuidance = false
-
-// Enable timeline on records
 settings.includeDeclaration = false
 
-// Enable timeline on records
-settings.showBulkLinks = false
-
-// Where drafts page should live
-settings.draftsInPrimaryNav = 'true'
-
-// Start date is required when registering trainees
-settings.requireTraineeStartDate = 'true'
+settings.bulkLinksInPrimaryNav = "Show bulk updates"
 
 settings.skipCourseDatesPage = 'true'
 

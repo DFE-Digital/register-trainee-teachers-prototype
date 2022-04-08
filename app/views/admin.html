@@ -43,24 +43,6 @@
         items: [
           {
             value: 'true',
-            text: "Include timeline on records"
-          }
-        ]
-      } | decorateAttributes(data, "data.settings.includeTimeline")) }}
-
-      {{ govukCheckboxes({
-        items: [
-          {
-            value: 'true',
-            text: "Enable apply integration"
-          }
-        ]
-      } | decorateAttributes(data, "data.settings.enableApplyIntegration")) }}
-
-      {{ govukCheckboxes({
-        items: [
-          {
-            value: 'true',
             text: "Group apply sections together"
           }
         ]
@@ -74,24 +56,6 @@
           }
         ]
       } | decorateAttributes(data, "data.settings.highlightInvalidAnswers")) }}
-
-      {{ govukCheckboxes({
-        items: [
-          {
-            value: 'true',
-            text: "Show links to guidance"
-          }
-        ]
-      } | decorateAttributes(data, "data.settings.includeGuidance")) }}
-
-      {{ govukCheckboxes({
-        items: [
-          {
-            value: 'true',
-            text: "Use dark header"
-          }
-        ]
-      } | decorateAttributes(data, "data.settings.useDarkHeader")) }}
       
       {{ govukCheckboxes({
         items: [
@@ -115,58 +79,10 @@
         items: [
           {
             value: 'true',
-            text: "Switch from bulk uploads to bulk actions",
-            hint: {
-              text: "The changes the bulk upload flow to the in-browser bulk action flow"
-            }
-          }
-        ]
-      } | decorateAttributes(data, "data.settings.bulkActionsNotBulkUploads")) }}
-
-      {{ govukCheckboxes({
-        items: [
-          {
-            value: 'true',
-            text: "Show bulk updates or actions in nav"
-          }
-        ]
-      } | decorateAttributes(data, "data.settings.showBulkInPrimaryNav")) }}
-
-      {{ govukCheckboxes({
-        items: [
-          {
-            value: 'true',
             text: "Show funding in nav"
           }
         ]
       } | decorateAttributes(data, "data.settings.showFundingInPrimaryNav")) }}
-
-      {{ govukCheckboxes({
-        items: [
-          {
-            value: 'true',
-            text: "Include drafts in primary nav"
-          }
-        ]
-      } | decorateAttributes(data, "data.settings.draftsInPrimaryNav")) }}
-
-      {{ govukCheckboxes({
-        items: [
-          {
-            value: 'true',
-            text: "Trainees need a start date to register for TRN"
-          }
-        ]
-      } | decorateAttributes(data, "data.settings.requireTraineeStartDate")) }}
-      
-      {{ govukCheckboxes({
-        items: [
-          {
-            value: 'true',
-            text: "Show requires attention section"
-          }
-        ]
-      } | decorateAttributes(data, "data.settings.showRequiresAttentionSection")) }}
 
       {{ govukInput({
         label: {
@@ -178,6 +94,29 @@
         },
         classes: "app-!-max-width-one-quarter"
       } | decorateAttributes(data, "data.settings.courseLimit")) }}
+
+      {{ govukRadios({
+        fieldset: {
+          legend: {
+            text: "Bulk links in nav",
+            classes: "govuk-fieldset__legend--s"
+          }
+        },
+        items: [
+          {
+            value: 'Show bulk updates',
+            text: "Show bulk updates"
+          },
+          {
+            value: 'Show bulk actions',
+            text: "Show bulk actions"
+          },
+          {
+            value: 'None',
+            text: "None"
+          }
+        ]
+      } | decorateAttributes(data, "data.settings.bulkLinksInPrimaryNav")) }}
 
 
       {% set allTrainingRoutes = [] %}

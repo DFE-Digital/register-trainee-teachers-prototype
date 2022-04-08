@@ -42,7 +42,6 @@
 {% from "_components/footer/macro.njk"   import appFooter %}
 {% from "_components/school-autocomplete/macro.njk"   import appSchoolAutocomplete with context %}
 {% from "_components/sub-navigation/macro.njk"   import appSubNavigation %}
-{% from "_components/primary-navigation-dark/macro.njk"   import appPrimaryNavigationDark %}
 {% from "_components/notice-banner/macro.njk" import appNoticeBanner %}
 {% from "_components/timeline/macro.njk"   import appTimeline %}
 
@@ -66,7 +65,7 @@
 {% block header %}
   {% include "_includes/cookie-banner.html" %}
   {# Set serviceName in config.js. #}
-  {% set headerClass = 'app-dark-header' if data.settings.useDarkHeader else 'app-light-header' %}
+  {% set headerClass = 'app-light-header' %}
   {{ govukHeader({
     homepageUrl: "/start-page",
     productName: serviceName,
@@ -130,12 +129,12 @@
       text: 'Bulk updates',
       href: '/bulk-update',
       active: true if navActive == 'bulk'
-    } if isAuthorised('bulkActions') and data.settings.showBulkInPrimaryNav and not data.settings.bulkActionsNotBulkUploads,
+    } if isAuthorised('bulkActions') and data.settings.bulkLinksInPrimaryNav == "Show bulk updates",
     {
       text: 'Bulk actions',
       href: '/bulk-action/new',
       active: true if navActive == 'bulk'
-    } if isAuthorised('bulkActions') and data.settings.showBulkInPrimaryNav and data.settings.bulkActionsNotBulkUploads,
+    } if isAuthorised('bulkActions') and data.settings.bulkLinksInPrimaryNav == "Show bulk actions",
     {
       text: 'Courses',
       href: '/root/case-list',
@@ -153,19 +152,11 @@
 
   {% if not hidePrimaryNav %}
 
-    {% if data.settings.useDarkHeader %}
-      {{ appPrimaryNavigationDark({
-        label: 'Primary navigation',
-        items: navItems,
-        searchHtml: rightHandSideNavHtml
-      }) }}
-    {% else %}
-      {{ mojPrimaryNavigation({
-      label: 'Primary navigation',
-      items: navItems,
-      searchHtml: rightHandSideNavHtml
-      }) }}
-    {% endif %}
+    {{ mojPrimaryNavigation({
+    label: 'Primary navigation',
+    items: navItems,
+    searchHtml: rightHandSideNavHtml
+    }) }}
 
   {% endif %}
 
@@ -192,7 +183,7 @@
     <li>Email: <a class="govuk-link govuk-footer__link" href="mailto:becomingateacher@digital.education.gov.uk">becomingateacher<wbr>@digital.education.gov.uk</a></li>
     <li>We aim to respond within 5 working days, or one working day for more urgent&nbsp;queries</li>
   </ul>
-  {% set guidanceLink = '/guidance' if data.settings.includeGuidance else '#' %}
+  {% set guidanceLink = '/guidance' %}
   <p class="govuk-body govuk-!-font-size-16"><a href="{{guidanceLink}}" class="govuk-link govuk-footer__link">Find out about Register trainee teachers</a></p>
   <form method="post" action="/admin/clear-data" class="app-hidden-form">
     <button class="app-link-button">

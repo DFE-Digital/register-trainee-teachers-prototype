@@ -1,6 +1,6 @@
 {% extends "_templates/_page.html" %}
 
-{% set traineesPageHeading = "Registered trainees" if data.settings.draftsInPrimaryNav | falsify else "Registered trainees" %}
+{% set traineesPageHeading = "Registered trainees" %}
 
 {% set pageHeading %}
   {{ traineesPageHeading }} ({{filteredRecords | length}} {{ "record" | pluralise(filteredRecords | length) }})
@@ -198,26 +198,6 @@
   {% endif %}
 {% endset %}
 
-
-
-{% if not data.settings.draftsInPrimaryNav | falsify %}
-  {{ appSubNavigation({
-    label: 'Sub navigation',
-    classes: 'govuk-!-margin-bottom-8',
-    items: [
-    {
-      text: 'Draft records',
-      href: '/drafts',
-      active: (currentPageUrl == "/drafts")
-    },
-    {
-      text: 'Registered trainees',
-      href: '/records',
-      active: (currentPageUrl == "/records")
-    }
-    ]
-  }) }}
-{% endif %}
 
 <div class="govuk-grid-row">
 

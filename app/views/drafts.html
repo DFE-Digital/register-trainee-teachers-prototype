@@ -8,7 +8,7 @@
 
 {% set backText = "Home" %}
 {% set backLink = '/home' %}
-{% set navActive = "drafts" if data.settings.draftsInPrimaryNav | falsify else "records" %}
+{% set navActive = "drafts" %}
 
 {# Dual skip links to support skipping to results rather than #main-content #}
 {% block skipLink %}
@@ -267,25 +267,6 @@
 
   {% endif %}
 {% endset %}
-
-{% if not data.settings.draftsInPrimaryNav | falsify %}
-  {{ appSubNavigation({
-    label: 'Sub navigation',
-    classes: 'govuk-!-margin-bottom-8',
-    items: [
-    {
-      text: 'Draft records',
-      href: '/drafts',
-      active: (currentPageUrl == "/drafts")
-    },
-    {
-      text: 'Registered trainees',
-      href: '/records',
-      active: (currentPageUrl == "/records")
-    }
-    ]
-  }) }}
-{% endif %}
 
 
 <div class="govuk-grid-row">

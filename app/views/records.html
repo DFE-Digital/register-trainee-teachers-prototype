@@ -32,23 +32,6 @@
 {# super pulls in flash message banner #}
 {{super()}}
 
-{% set bulkButton %}
-  {{ mojButtonMenu({
-    items: [
-      {
-        text: "Submit a group of draft records",
-        href: "/bulk-action/new/register-for-trn",
-        classes: "govuk-button--secondary"
-      },
-      {
-        text: "Recommend a group of trainees for " + (data.record | getQualificationText),
-        href: "/bulk-action/new/recommend-for-qts",
-        classes: "govuk-button--secondary"
-      }
-    ]
-    }) }}
-{% endset %}
-
 {% set filterOptionsHtml %}
 
   {% if data.isAdmin %}
@@ -113,64 +96,12 @@
 
     <div class="app-application-cards">
 
-      {% set draftRecords = filteredRecords | where("status", "Draft") %}
-
-      {% if draftRecords | length %}
-
-        {# Bulk actions on drafts #}
-        <form action="/bulk-action/new/direct" method="post" novalidate>
-
-          <div class="govuk-!-margin-bottom-8">
-            <div class="govuk-grid-row">
-              <div class="govuk-grid-column-one-half">
-                <h2 class="govuk-heading-m">Draft records</h2>
-              </div>
-
-              {% if data.settings.showBulkLinks %}
-                <div class="govuk-grid-column-one-half">
-                  <input type="hidden" name="[bulk][action]" value="Submit a group of records and request TRNs">
-                  <button role="link" class="govuk-body app-button-as-link govuk-link align-right">Submit draft records for TRN</button>
-                </div>
-              {% endif %}
-
-            </div>
-
-            {% for record in draftRecords %}
-              {% include "_includes/trainee-record-card.njk" %}
-            {% endfor %}
-
-          </div>
-
-        </form>
-
-      {% endif %}
-
       {% set nonDraftRecords = filteredRecords | removeWhere("status", "Draft") %}
 
       {% if nonDraftRecords | length %}
-
-        {# Bulk actions on non drafts #}
-        <form action="/bulk-action/new/direct" method="post" novalidate>
-
-          <div class="govuk-grid-row">
-            {# <div class="govuk-grid-column-one-half">
-              <h2 class="govuk-heading-m">Records</h2>
-            </div> #}
-
-            {% if data.settings.showBulkLinks %}
-              <div class="govuk-grid-column-one-half">
-                <input type="hidden" name="[bulk][action]" value="Recommend a group of trainees for EYTS or QTS">
-                <button role="link" class="govuk-body app-button-as-link govuk-link align-right">Recommend trainees for EYTS or QTS</button>
-              </div>
-            {% endif %}
-
-          </div>
-
           {% for record in nonDraftRecords %}
             {% include "_includes/trainee-record-card.njk" %}
           {% endfor %}
-
-        </form>
       {% endif %}
     </div>
 
@@ -216,33 +147,6 @@
     {% endif %}
 
   </div>
-
-  {% if data.settings.showBulkLinks %}
-    <div class="govuk-grid-column-one-third">
-      <aside class="app-related-items" role="complementary">
-        <h2 class="govuk-heading-m" id="subsection-title">
-          Actions
-        </h2>
-        <nav role="navigation" aria-labelledby="subsection-title">
-          <ul class="govuk-list govuk-!-font-size-16">
-            <li>
-              <a href="#">
-                Submit a group of draft records
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                Recommend a group of trainees for EYTS or QTS
-              </a>
-            </li>
-          </ul>
-        </nav>
-        <div class="js-bulk-menu govuk-!-margin-bottom-3">
-          {{bulkButton | safe}}
-        </div>
-      </aside>
-    </div>
-  {% endif %}
 
 </div>
 

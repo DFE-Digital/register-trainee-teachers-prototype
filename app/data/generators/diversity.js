@@ -4,7 +4,7 @@ const weighted = require('weighted')
 module.exports = () => {
 
   let ethnicGroup
-  let ethnicGroupSpecific
+  let ethnicBackground
   let disabledAnswer
   let disabilities
 
@@ -14,33 +14,33 @@ module.exports = () => {
       "Chinese",
       "Indian",
       "Pakistani",
-      "Another Asian background",
-      "Prefer not to say"
+      "Any other Asian background",
+      "Not provided"
     ],
     "Black, African, Black British or Caribbean" : [
       "African",
       "Caribbean",
-      "Another Black background",
-      "Prefer not to say"
+      "Any other Black, African or Caribbean background",
+      "Not provided"
     ],
     "Mixed or multiple ethnic groups" : [
-      "Asian and White",
-      "Black African and White",
-      "Black Caribbean and White",
-      "Another Mixed background",
-      "Prefer not to say"
+      "White and Asian",
+      "White and Black African",
+      "White and Black Caribbean",
+      "Any other Mixed or Multiple ethnic background",
+      "Not provided"
     ],
     "White" : [
-      "British, English, Northern Irish, Scottish",
+      "English, Welsh, Scottish, Northern Irish or British",
       "Irish",
-      "Irish Traveller or Gypsy",
-      "Another White background",
-      "Prefer not to say"
+      "Gypsy or Irish Traveller",
+      "Any other White background",
+      "Not provided"
     ],
-    "Another ethnic group" : [
+    "Other ethnic group" : [
       "Arab",
-      "Another ethnic background",
-      "Prefer not to say"
+      "Any other ethnic group",
+      "Not provided"
     ]
   }
 
@@ -49,12 +49,12 @@ module.exports = () => {
       "Black, African, Black British or Caribbean",
       "Mixed or multiple ethnic groups",
       "White",
-      "Another ethnic group",
-      "Prefer not to say"
+      "Other ethnic group",
+      "Not provided"
     ])
 
-    if (ethnicGroup != "Prefer not to say"){
-      ethnicGroupSpecific = faker.helpers.randomize(
+    if (ethnicGroup != "Not provided"){
+      ethnicBackground = faker.helpers.randomize(
         ethnicGroups[ethnicGroup]
         )
     }
@@ -85,7 +85,7 @@ module.exports = () => {
 
   return {
     ethnicGroup,
-    ethnicGroupSpecific,
+    ethnicBackground,
     disabledAnswer,
     disabilities
   }

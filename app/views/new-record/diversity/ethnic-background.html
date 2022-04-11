@@ -1,6 +1,11 @@
 {% extends "_templates/_new-record.html" %}
 
-{% set pageHeading = "Which of the following best describes their " + data.record.diversity.ethnicGroup + " background?" %}
+{% if data.record.diversity.ethnicGroup == "Other ethnic group" %}
+  {% set pageHeading = "Which of the following best describes their background?" %}
+{% else %}
+  {% set pageHeading = "Which of the following best describes their " + data.record.diversity.ethnicGroup + " background?" %}
+{% endif %}
+
 
 {% set formAction = "disabilities" | addReferrer(referrer) %}
 

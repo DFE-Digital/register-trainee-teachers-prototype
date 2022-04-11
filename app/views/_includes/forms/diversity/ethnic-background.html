@@ -1,47 +1,11 @@
 
 {% set ethnicGroup = record.diversity.ethnicGroup %}
 
-{% set asianOtherHtml %}
+{% set otherHtml %}
   {{ govukInput({
     classes: "govuk-!-width-two-thirds",
     label: {
-      text: "Describe their Asian background (optional)"
-    }
-  } | decorateAttributes(record, "record.diversity.ethnicBackgroundOther"))}}
-{% endset -%}
-
-{% set blackOtherHtml %}
-  {{ govukInput({
-    classes: "govuk-!-width-two-thirds",
-    label: {
-      text: "Describe their Black background (optional)"
-    }
-  } | decorateAttributes(record, "record.diversity.ethnicBackgroundOther"))}}
-{% endset -%}
-
-{% set mixedOtherHtml %}
-  {{ govukInput({
-    classes: "govuk-!-width-two-thirds",
-    label: {
-      text: "Describe their Mixed background (optional)"
-    }
-  } | decorateAttributes(record, "record.diversity.ethnicBackgroundOther"))}}
-{% endset -%}
-
-{% set whiteOtherHtml %}
-  {{ govukInput({
-    classes: "govuk-!-width-two-thirds",
-    label: {
-      text: "Describe their White background (optional)"
-    }
-  } | decorateAttributes(record, "record.diversity.ethnicBackgroundOther"))}}
-{% endset -%}
-
-{% set otherOtherHtml %}
-  {{ govukInput({
-    classes: "govuk-!-width-two-thirds",
-    label: {
-      text: "Describe their ethnic background (optional)"
+      text: "Describe their background (optional)"
     }
   } | decorateAttributes(record, "record.diversity.ethnicBackgroundOther"))}}
 {% endset -%}
@@ -60,21 +24,21 @@
     },
     items: [
     {
-      text: "Bangladeshi"
-    },
-    {
-      text: "Chinese"
-    },
-    {
       text: "Indian"
     },
     {
       text: "Pakistani"
     },
     {
-      text: "Another Asian background",
+      text: "Bangladeshi"
+    },
+    {
+      text: "Chinese"
+    },
+    {
+      text: "Any other Asian background",
       conditional: {
-        html: asianOtherHtml
+        html: otherHtml
       }
     },
     {
@@ -102,9 +66,9 @@
       text: "Caribbean"
     },
     {
-      text: "Another Black background",
+      text: "Any other Black, African or Caribbean background",
       conditional: {
-        html: blackOtherHtml
+        html: otherHtml
       }
     },
     {
@@ -126,18 +90,18 @@
     },
     items: [
     {
-      text: "Asian and White"
+      text: "White and Black Caribbean"
     },
     {
-      text: "Black African and White"
+      text: "White and Black African"
     },
     {
-      text: "Black Caribbean and White"
+      text: "White and Asian"
     },
     {
-      text: "Another Mixed background",
+      text: "Any other Mixed or Multiple ethnic background",
       conditional: {
-        html: mixedOtherHtml
+        html: otherHtml
       }
     },
     {
@@ -159,18 +123,18 @@
     },
     items: [
     {
-      text: "British, English, Northern Irish, Scottish, or Welsh"
+      text: "English, Welsh, Scottish, Northern Irish or British"
     },
     {
       text: "Irish"
     },
     {
-      text: "Irish Traveller or Gypsy"
+      text: "Gypsy or Irish Traveller"
     },
     {
-      text: "Another White background",
+      text: "Any other White background",
       conditional: {
-        html: whiteOtherHtml
+        html: otherHtml
       }
     },
     {
@@ -195,9 +159,9 @@
       text: "Arab"
     },
     {
-      text: "Another ethnic background",
+      text: "Any other ethnic group",
       conditional: {
-        html: otherOtherHtml
+        html: otherHtml
       }
     },
     {

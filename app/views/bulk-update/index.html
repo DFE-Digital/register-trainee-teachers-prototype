@@ -25,7 +25,7 @@ filterByCanBeRecommended %}
       </h2>
       {% if traineesThatCanBeUpdated %}
         <p class="govuk-body">
-          Bulk add {{ "trainee start dates" if traineesWithoutStartDates }} {{ "and" if traineesWithoutStartDates and traineesWithoutPlacements }} {{ "placement schools" if traineesWithoutPlacements }} to trainee records.
+          You can bulk add {{ "trainee start dates" if traineesWithoutStartDates }} {{ "and" if traineesWithoutStartDates and traineesWithoutPlacements }} {{ "placement schools" if traineesWithoutPlacements }} to trainee records.
         </p>
         <p class="govuk-body">
           <a href="/bulk-update/add-details" class="govuk-link">
@@ -44,8 +44,8 @@ filterByCanBeRecommended %}
           Recommend trainees for {{ traineesThatCanBeRecommended | getQualifications | orSeparate }}
         </h2>
         <p class="govuk-body">
-          Bulk recommended trainees for {{ traineesThatCanBeRecommended | getQualifications | orSeparate }}.
-          After you have recommended trainees, the DfE will award QTS or EYTS where appropriate within <span class="app-nowrap">3 working days</span>.
+          You can bulk recommended {{ traineesThatCanBeRecommended | length }} {{"trainee" | pluralise(traineesThatCanBeRecommended.length)}} for {{ traineesThatCanBeRecommended | getQualifications | orSeparate }}.
+          The DfE will award {{ traineesThatCanBeRecommended | getQualifications | orSeparate }} where appropriate within <span class="app-nowrap">3 working days</span>.
         </p>
         <p class="govuk-body">
           <a href="/bulk-update/recommend" class="govuk-link">

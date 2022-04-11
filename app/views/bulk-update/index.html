@@ -2,14 +2,10 @@
 {% set pageHeading = "Bulk updates" %}
 {% set navActive = 'bulk' %}
 {% set filteredRecords = data.records | filterRecords(data) %}
-{% set traineesThatCanBeUpdated = filteredRecords |
-filterByCanBulkUpdate %}
-{% set traineesWithoutStartDates = traineesThatCanBeUpdated |
-filterByNeedsStartDate | length %}
-{% set traineesWithoutPlacements = traineesThatCanBeUpdated |
-filterByNeedsPlacements | length %}
-{% set traineesThatCanBeRecommended = filteredRecords |
-filterByCanBeRecommended %}
+{% set traineesThatCanBeUpdated = filteredRecords | filterByCanBulkUpdate %}
+{% set traineesWithoutStartDates = traineesThatCanBeUpdated | filterByNeedsStartDate | length %}
+{% set traineesWithoutPlacements = traineesThatCanBeUpdated | filterByNeedsPlacements | length %}
+{% set traineesThatCanBeRecommended = filteredRecords | filterByCanBeRecommended %}
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds-from-desktop">
@@ -60,19 +56,6 @@ filterByCanBeRecommended %}
           You do not have any trainees that can be bulk recommended for
           {{ traineesThatCanBeRecommended | getQualifications | orSeparate }}.
         </p>
-      {% endif %}
-      {% if not traineesThatCanBeUpdated and not traineesThatCanBeRecommended %}
-        <p class="govuk-body">
-          You do not have any trainee records that need additional
-          details or can be recommended for {{ traineesThatCanBeRecommended | getQualifications | orSeparate }}.
-        </p>
-        {% if incompleteTrainees %}
-          <p class="govuk-body">
-            <a href="/records?%5BfilterCompleteStatus%5D=Incomplete" class="govuk-link">
-              View incomplete trainees records
-            </a>
-          </p>
-        {% endif %}
       {% endif %}
     </div>
   </div>

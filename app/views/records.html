@@ -6,6 +6,10 @@
   {{ traineesPageHeading }} ({{filteredRecords | length}} {{ "record" | pluralise(filteredRecords | length) }})
 {% endset %}
 
+{# Filters used by bulk update links #}
+{% set traineesThatCanBeUpdated     = filteredRecords | filterByCanBulkUpdate   %}
+{% set traineesThatCanBeRecommended = filteredRecords |filterByCanBeRecommended %}
+
 {% set backText = "Home" %}
 {% set backLink = '/home' %}
 {% set navActive = "records" %}
@@ -145,6 +149,20 @@
           href: "./new-record/new",
           isStartButton: true
         }) }}
+      {% else %}
+        <div class="app-bulk-actions-container">
+          <h2 class="app-bulk-actions-title">
+            Bulk actions
+          </h2>
+          <ul class="app-bulk-actions">
+            <li class="app-bulk-actions-item">
+              <a href="/bulk-update/add-details">Bulk add details</a>
+            </li>
+            <li class="app-bulk-actions-item">
+              <a href="/bulk-update/recommend">Bulk recommened</a>
+            </li>
+          </ul>
+        </div>
       {% endif %}
     {% endif %}
 

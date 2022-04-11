@@ -244,3 +244,29 @@ $sizes: 70, 53, 35, 25, 20, 16, 15, 10, 5;
     letter-spacing: -0.05px
   }
 }
+
+.app-bulk-actions-container {
+  margin-bottom: govuk-spacing(4);
+  border: 1px solid $govuk-border-colour;
+  display: flex;
+}
+
+.app-bulk-actions {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  }
+  .app-bulk-actions-title {
+    margin: 0px;
+    font-weight: bold !important;
+  }
+  .app-bulk-actions-title, .app-bulk-actions-item {
+    display: inline-block;
+    padding: govuk-spacing(4);
+    @include govuk-font($size: 19);
+    a {
+      &:visited {
+        color: $govuk-link-colour;
+      }
+    }
+}

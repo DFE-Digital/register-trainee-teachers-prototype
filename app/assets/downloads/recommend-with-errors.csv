@@ -1,4 +1,4 @@
-TRN,Postgraduate qualification,Date standards met,Errors
+TRN,Postgraduate qualification,Assessment date,Errors
 Do not change this column,"For postgraduate trainees, in the column ‘Postgraduate qualification’ add one of these options:
 - PGCE
 - PGDE
@@ -15,7 +15,7 @@ LY9214,None,11/06/2022,
 CB0736,None,17/06/2022,
 GM2844,PGCE,11/06/2022,
 EH4015,PGCE,18/06/2022,
-CZ5140,None,20/07/2023,"Date standards met: ‘20/07/2023’, date the trainee met QTS must be in the past"
+CZ5140,None,20/07/2023,"Assessment date: ‘20/07/2023’, date must be in the past"
 SF6298,PGCE,05/06/2022,
 CB6515,PGCE,08/06/2022,
 TL1239,None,04/06/2022,
@@ -25,7 +25,7 @@ ES4157,PGCE,26/06/2022,
 EA5531,PGCE,05/06/2022,
 DT4917,PGCE,09/06/2022,
 HY1346,PGDE,05/06/2022,
-CP5267,PGCE,07/20/2023,"Date standards met: ‘07/20/2023’, enter a valid date"
+CP5267,PGCE,07/20/2023,"Assessment date: ‘07/20/2023’, enter a valid date"
 NN0456,PGCE,06/06/2022,
 TC6049,PGDE,26/06/2022,
 ZG5797,PGDE,27/06/2022,
@@ -49,7 +49,7 @@ QW1061,None,26/06/2022,
 CD1243,PGCE,15/06/2022,
 PR7820,Not applicable,13/06/2022,
 AG1726,None,20/06/2022,
-WY9461,PGCE,07/20/2023,"Date standards met: ‘07/20/2023’, enter a valid date"
+WY9461,PGCE,07/20/2023,"Assessment date: ‘07/20/2023’, enter a valid date"
 AY1140,None,02/06/2022,
 FP7341,PGDE,27/06/2022,
 QD9244,None,19/06/2022,

@@ -40,10 +40,10 @@
         You can leave rows or cells empty if you do not want to recommend the trainees for {{ traineesThatCanBeRecommended | getQualifications | orSeparate }}.
       </p>
       <h3 class="govuk-heading-s">
-        When the trainee met {{ traineesThatCanBeRecommended | getQualifications | orSeparate }}
+        {{ traineesThatCanBeRecommended | getQualifications | orSeparate }} assessment date
       </h3>
       <p class="govuk-body">
-        In the column ‘Date standards met’ add the date the trainee met {{ traineesThatCanBeRecommended | getQualifications | orSeparate }}.
+        In the column ‘Assessment date’ add the date the trainee met {{ traineesThatCanBeRecommended | getQualifications | orSeparate }}.
       </p>
       <p class="govuk-body">
         The date must be written in the format <span class="app-nowrap">‘DD/MM/YYYY’</span>.

@@ -1,12 +1,10 @@
 TRN,Postgraduate qualification,Date standards met,Errors
 Do not change this column,"For postgraduate trainees, in the column ‘Postgraduate qualification’ add one of these options:
-- PGCE
-- PGDE
-- None
-
+- PGCE- PGDE
+- None
 If the trainee was not on a postgraduate course, leave the cell as ‘Not applicable’.","When the trainee met the QTS or EYTS standards.
 Must be written DD/MM/YYYY. 
-For example, if the trainee met the teaching standard on 20 July 2022, write '20/07/2022'.
+For example, if the trainee met the teaching standard on 20 July 2022, write ‘20/07/2022’.
 The date must be in the past.
 If the trainee has not met the teaching standard, leave the cell empty.","Fix these errors and upload this file again.
 

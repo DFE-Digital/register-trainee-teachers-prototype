@@ -7,12 +7,28 @@ const filters = require('./../filters.js')()
 const { faker } = require('@faker-js/faker')
 const weighted = require('weighted')
 
-module.exports = router => { 
 
-  const getRandomArbitrary = (min, max) => {
-    return Math.floor(Math.random() * (max - min) + min)
+const getRandomArbitrary = (min, max) => {
+  return Math.floor(Math.random() * (max - min) + min)
+}
+
+const rowsHaveErrors = rows => {
+  if (Array.isArray(rows)) {
+    return rows.some(row => row.uploadStatus == "error")
+  } else {
+    return false
   }
+}
 
+const rowsHaveUpdates = rows => {
+  if (Array.isArray(rows)) {
+    return rows.some(row => row.uploadStatus == "updated")
+  } else {
+    return false
+  }
+}
+
+module.exports = router => {
   /* 
   =========================================================
   Add (missing) details routes
@@ -36,7 +52,7 @@ module.exports = router => {
   router.get('/bulk-update/add-details/fix-file', function(req, res) {
     const data = req.session.data
     data.bulk = {
-      addDetailsFixErrors: true,
+      addDetailsFixErrors: true
     }
     res.redirect('/bulk-update/add-details/check-pending-updates');
   });
@@ -65,6 +81,7 @@ module.exports = router => {
       'school is closed'
     ]
 
+    /* For each record, randomly pick whether it's ok, in error, or unchanged. If in error, pick a random error */
     let processedRows = uploadedTrainees.map((trainee, index) => {
       let row = {
         rowNumber: index + 1,
@@ -95,14 +112,11 @@ module.exports = router => {
       processedRows
     }
 
-    const checkIfAnyErrors  = element => element.uploadStatus == "error"
-    const checkIfAnyUpdated = element => element.uploadStatus == "updated"
-
-    if (processedRows.some(checkIfAnyErrors) && processedRows.some(checkIfAnyUpdated)) {
+    if (rowsHaveErrors(processedRows) && rowsHaveUpdates(processedRows)) {
       res.redirect('/bulk-update/add-details/errors-found')
-    } else if (processedRows.some(checkIfAnyErrors) && !processedRows.some(checkIfAnyUpdated)) {
+    } else if (rowsHaveErrors(processedRows) && !rowsHaveUpdates(processedRows)) {
       res.redirect('/bulk-update/add-details/fix-errors')
-    } else if (!processedRows.some(checkIfAnyErrors) && processedRows.some(checkIfAnyUpdated)) {
+    } else if (!rowsHaveErrors(processedRows) && rowsHaveUpdates(processedRows)) {
       res.redirect('/bulk-update/add-details/check-pending-updates')
     }
   })
@@ -131,7 +145,7 @@ module.exports = router => {
   router.get('/bulk-update/recommend/fix-file', function(req, res) {
     const data = req.session.data
     data.bulk = {
-      recommendFixErrors: true,
+      recommendFixErrors: true
     }
     res.redirect('/bulk-update/recommend/check-pending-updates');
   });
@@ -150,23 +164,29 @@ module.exports = router => {
 
     const data = req.session.data
     let filteredRecords  = utils.filterRecords(data.records, data)
-    let uploadedTrainees = utils.filterByCanBulkRecommend(filteredRecords)
+    let uploadedTrainees = utils.filterByReadyToRecommend(filteredRecords)
 
     let templateErrors = [
       'TRN not recognised',
-      'TRN missing',
+      'Assessment date provided without a TRN — add a TRN or remove the assessment date',
       'Date standards met: ‘09/20/2023’ — enter a valid date',
-      'Date standards met: ‘20/09/2023’ — date the trainee met QTS must be in the past',
-      'Postgraduate qualification: ‘BA (Hons)’ — enter ‘PGCE’, ‘PGDE’ or ‘None’ for postgraduate qualification',
-      'Postgraduate qualification: ‘PGCE’ — trainees on undergraduate courses cannot be awarded a postgraduate qualification.',
-      'Postgraduate qualification missing. If the trainee did not get a postgraduate qualification enter ‘None’.'
+      'Date standards met: ‘20/09/2023’ — assessment date must be in the past'
     ]
 
+    if (data.settings.bulkLinksInPrimaryNav != "Show bulk recommend") {
+      templateErrors.push(
+        'Postgraduate qualification: ‘BA (Hons)’ — enter ‘PGCE’, ‘PGDE’ or ‘None’ for postgraduate qualification',
+        'Postgraduate qualification: ‘PGCE’ — trainees on undergraduate courses cannot be awarded a postgraduate qualification',
+        'Postgraduate qualification missing. If the trainee did not get a postgraduate qualification enter ‘None’'
+      )
+    }
+
+    /* For each record, randomly pick whether it's ok, in error, or unchanged. If in error, pick a random error */
     let processedRows = uploadedTrainees.map((trainee, index) => {
       let row = {
         rowNumber: index + 1,
         trainee,
-        uploadStatus: weighted.select(["error", "unchanged", "updated"], [0.1, 0.05, 0.85]),
+        uploadStatus: weighted.select(["error", "unchanged", "updated"], [0.25, 0.05, 0.7]),
         assessmentDate: getRandomArbitrary(6, 8) + "/" + getRandomArbitrary(1, 28) + "/" + data.years.endOfCurrentCycle
       }
 
@@ -181,14 +201,11 @@ module.exports = router => {
       processedRows
     }
 
-    const checkIfAnyErrors  = element => element.uploadStatus == "error"
-    const checkIfAnyUpdated = element => element.uploadStatus == "updated"
-
-    if (processedRows.some(checkIfAnyErrors) && processedRows.some(checkIfAnyUpdated)) {
+    if (rowsHaveErrors(processedRows) && rowsHaveUpdates(processedRows)) {
       res.redirect('/bulk-update/recommend/errors-found')
-    } else if (processedRows.some(checkIfAnyErrors) && !processedRows.some(checkIfAnyUpdated)) {
+    } else if (rowsHaveErrors(processedRows) && !rowsHaveUpdates(processedRows)) {
       res.redirect('/bulk-update/recommend/fix-errors')
-    } else if (!processedRows.some(checkIfAnyErrors) && processedRows.some(checkIfAnyUpdated)) {
+    } else if (!rowsHaveErrors(processedRows) && rowsHaveUpdates(processedRows)) {
       res.redirect('/bulk-update/recommend/check-pending-updates')
     }
 

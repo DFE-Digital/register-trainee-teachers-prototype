@@ -1,31 +1,53 @@
 {% extends "_templates/_page.html" %}
 
 {% set filteredRecords = data.records | filterRecords(data) %}
-{% set traineesThatCanBeRecommended = filteredRecords | filterByCanBulkRecommend %}
+{% set traineesThatCanBeRecommended = filteredRecords | filterByReadyToRecommend %}
 
+{% set fileName = data.signedInProviders | makeFileName("check pending","csv") %}
 {% set pageHeading = "Check pending updates before recommending trainees for " + traineesThatCanBeRecommended | getQualifications | orSeparate %}
 {% set navActive = 'bulk' %}
 
+{% set bulkOnly = true if data.settings.bulkLinksInPrimaryNav == "Show bulk recommend" %}
 
-{% set tableHeadRow = [
-    {
-      text: "Trainee",
-      classes: "app-table__column-25"
-    },
-    {
-      text: "Route and course",
-      classes: "app-table__column-25"
-    },
-    {
-      text: "Postgraduate qualification",
-      classes: "app-table__column-25"
-    },
-    {
-      text: "Date standards met",
-      classes: "app-table__column-25"
-    }
-  ]
-%}
+{% if bulkOnly %}
+  {% set tableHeadRow = [
+      {
+        text: "Trainee",
+        classes: "app-table__column-25"
+      },
+      {
+        text: "Start academic year",
+        classes: "app-table__column-25"
+      } if bulkOnly,
+      {
+        text: "Route and course",
+        classes: "app-table__column-25"
+      },
+      {
+        text: "Assessment date",
+        classes: "app-table__column-25"
+      }
+    ]%}
+{% else %}
+    {% set tableHeadRow = [
+      {
+        text: "Trainee",
+        classes: "app-table__column-25"
+      },
+      {
+        text: "Route and course",
+        classes: "app-table__column-25"
+      },
+      {
+        text: "Postgraduate qualification",
+        classes: "app-table__column-25"
+      },
+      {
+        text: "Assessment date",
+        classes: "app-table__column-25"
+      }
+    ]%}
+{% endif %}
 
 {% set qtsTableBodyRows  = [] %}
 {% set eytsTableBodyRows = [] %}
@@ -56,12 +78,13 @@
 
   {% set routeAndCourseHtml %}
     <p class="govuk-body govuk-!-margin-bottom-1">
-      {{ row.trainee.courseDetails.courseNameShort if row.trainee.courseDetails.courseNameShort
-        else row.trainee.route }}
+      {{ row.trainee.route }}
     </p>
-    <p class="govuk-body govuk-!-margin-bottom-0">
-      {{ row.trainee.courseDetails.studyMode }}
-    </p>
+    {% if row.trainee.courseDetails.courseNameShort %}
+      <p class="govuk-body govuk-!-margin-bottom-0">
+        {{ row.trainee.courseDetails.courseNameShort }}
+      </p>
+    {% endif %}
   {% endset %}
 
   
@@ -73,12 +96,22 @@
       {% set qualification = "—" %}
     {% endif %}
 
-  {% set tableRow = [
-      { text: traineeInfoHtml    | safe },
-      { text: routeAndCourseHtml | safe },
-      { text: qualification },
-      { text: row.assessmentDate | govukDate }
-    ] %}
+    {% if bulkOnly %}
+      {% set tableRow = [
+        { text: traineeInfoHtml    | safe },
+        { text: row.trainee.academicYear },
+        { text: routeAndCourseHtml | safe },
+        { text: row.assessmentDate | govukDate }
+      ]%}
+    {% else %}
+      {% set tableRow = [
+        { text: traineeInfoHtml    | safe },
+        { text: routeAndCourseHtml | safe },
+        { text: qualification },
+        { text: row.assessmentDate | govukDate }
+      ]%}
+    {% endif %}
+  
 
   {% if row.trainee | getQualificationText == "QTS" %}
     {% set qtsTableBodyRows = qtsTableBodyRows   | push(tableRow) %}
@@ -88,8 +121,8 @@
 
 {% endfor %}
 
-{% set qtsTableCaption  = "Trainees to be recommended for QTS (" + qtsTableBodyRows.length + ")" %}
-{% set eytsTableCaption = "Trainees to be recommended for EYTS (" + eytsTableBodyRows.length + ")" %}
+{% set qtsTableCaption  = "Trainees being recommended for QTS (" + qtsTableBodyRows.length + ")" %}
+{% set eytsTableCaption = "Trainees being recommended for EYTS (" + eytsTableBodyRows.length + ")" %}
 {% set tableCaptionClasses = "govuk-table__caption--m" %}
 
 {% set buttonText = "Recommend trainees for " + traineesThatCanBeRecommended | getQualifications | orSeparate %}

@@ -1,11 +1,15 @@
 {% extends "_templates/_page.html" %}
 {% set pageHeading = "Bulk updates" %}
+
+{% set backText = "Home" %}
+{% set backLink = '/home' %}
 {% set navActive = 'bulk' %}
+
 {% set filteredRecords = data.records | filterRecords(data) %}
 {% set traineesThatCanBeUpdated = filteredRecords | filterByCanBulkUpdate %}
 {% set traineesWithoutStartDates = traineesThatCanBeUpdated | filterByNeedsStartDate | length %}
 {% set traineesWithoutPlacements = traineesThatCanBeUpdated | filterByNeedsPlacements | length %}
-{% set traineesThatCanBeRecommended = filteredRecords | filterByCanBulkRecommend %}
+{% set traineesThatCanBeRecommended = filteredRecords | filterByReadyToRecommend %}
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds-from-desktop">

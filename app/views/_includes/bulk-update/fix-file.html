@@ -11,7 +11,7 @@
       1. Export a new template or update your original file
     </h2>
     <p class="govuk-body">
-      <a href="/public/downloads/{{ bulkPath }}{{ "-with-errors" if pageContent == "fixErrors" }}.csv" download="{{ fileName}}">Your trainee records {{ "with a description of the errors" if pageContent == "fixErrors" }} (csv)</a>
+      <a href="/public/downloads/{{ filePath }}.csv" download="{{ fileName }}">{{ "Trainees ready to be recommened for " + traineesThatCanBeRecommended | getQualifications | orSeparate if bulkPath == "recommend" else "Trainee records with missing details " }} {{ "— with a description of errors" if pageContent == "fixErrors" }} (csv)</a>
     </p>
     <h2 class="govuk-heading-m">
       2. {{ "Fix the errors" if pageContent == "fixErrors" else "Update your trainee records" }}
@@ -68,7 +68,7 @@
       </p>
     {% endif %}
     <p class="govuk-body">
-      <a href="/bulk-update/cancel-bulk-updates" class="govuk-link">Cancel bulk updates to records</a>
+      <a href="/bulk-update/cancel-bulk-updates" class="govuk-link">Cancel bulk {{ "recommending trainees" if data.settings.bulkLinksInPrimaryNav == "Show bulk recommend" else "updates to records" }}</a>
     </p>
   </div>
 </div>

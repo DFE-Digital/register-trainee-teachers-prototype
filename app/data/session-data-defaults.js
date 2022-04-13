@@ -125,7 +125,7 @@ settings.highlightInvalidAnswers = 'true'
 // Enable timeline on records
 settings.includeDeclaration = false
 
-settings.bulkLinksInPrimaryNav = "Show bulk updates"
+settings.bulkLinksInPrimaryNav = "Show bulk recommend"
 
 settings.skipCourseDatesPage = 'true'
 

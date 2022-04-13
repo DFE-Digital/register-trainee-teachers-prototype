@@ -43,7 +43,7 @@
           text: buttonText
         }) }}
         <p class="govuk-body">
-          <a href="/bulk-update/cancel-bulk-updates" class="govuk-link">Cancel bulk updates to records</a>
+          <a href="/bulk-update/cancel-bulk-updates" class="govuk-link">Cancel bulk {{ "recommending trainees" if data.settings.bulkLinksInPrimaryNav == "Show bulk recommend" else "updates to records" }}</a>
         </p>
     </form>
   </div>

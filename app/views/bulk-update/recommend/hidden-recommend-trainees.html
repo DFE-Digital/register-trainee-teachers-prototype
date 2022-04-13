@@ -1,0 +1,65 @@
+{% extends "_templates/_page.html" %}
+{% set navActive = 'bulk' %}
+
+{% set pageContent = "fixErrors" %}
+{% set pageHeading = "Fix errors in your pending updates" %}
+
+{% set rows = data.bulkUpload.processedRows %}
+
+{% set tableBodyRows = [] %}
+
+{% for row in rows %}
+  {% set routeAndCourse %}
+    {{ row.trainee.courseDetails.route }}<br>
+    {{ row.trainee.courseDetails.courseNameShort }}
+  {% endset %}
+  {% set tableRow = [
+    { text: row.rowNumber },
+    { text: row.trainee.trn },
+    { text: row.trainee.personalDetails.shortName },
+    { text: row.trainee.academicYear },
+    { text: routeAndCourse | safe },
+    { text: row.assessmentDate },
+    { text: row.errorMessage }
+  ] %}
+  {% set tableBodyRows = tableBodyRows | push(tableRow) %}
+{% endfor %}
+
+{% set tableCaption = "Trainee " + 'record' | pluralise(tableBodyRows.length) + " (" + tableBodyRows.length + ")" %}
+{% set tableCaptionClasses = "govuk-table__caption--m" %}
+{% set tableHeadRow = 
+  [
+    {
+      text: "Row"
+    },
+    {
+      text: "TRN"
+    },
+    {
+      text: "Trainee name"
+    },
+    {
+      text: "Start academic year"
+    },
+    {
+      text: "Route and course"
+    },
+    {
+      text: "Assessment date"
+    },
+    {
+      text: "Error"
+    }
+  ]
+%}
+
+{% block content %}
+
+  {{ govukTable({
+      caption: tableCaption,
+      captionClasses: tableCaptionClasses,
+      head: tableHeadRow,
+      rows: tableBodyRows
+    }) }}
+
+{% endblock %}

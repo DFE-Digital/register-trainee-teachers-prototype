@@ -6,7 +6,7 @@
 {% set filteredRecords = data.records | filterRecords(data) %}
 {% set traineesThatCanBeUpdated = filteredRecords | filterByCanBulkUpdate %}
 
-{% set traineesThatCanBeRecommended = filteredRecords | filterByCanBulkRecommend %}
+{% set traineesThatCanBeRecommended = filteredRecords | filterByReadyToRecommend %}
 {% set pageHeading = traineesThatCanBeUpdated | length  + " trainee records updated" %}
 
 {% block content %}

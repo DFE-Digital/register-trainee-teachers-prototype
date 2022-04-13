@@ -1722,11 +1722,9 @@ exports.filterByCannotBulkUpdate = (records) => {
 }
 
 // Trainees that can be bulk recommended
-exports.filterByCanBulkRecommend = (records) => {
+exports.filterByReadyToRecommend = (records) => {
   let filteredRecords = exports.filterByComplete(records)
-  filteredRecords = exports.filterByStatus(filteredRecords, "Draft", true)
-  filteredRecords = exports.filterByActive(filteredRecords)
-  filteredRecords = exports.filterOutDeferred(filteredRecords)
+  filteredRecords = exports.filterByStatus(filteredRecords, "TRN received")
   return filteredRecords
 }
 

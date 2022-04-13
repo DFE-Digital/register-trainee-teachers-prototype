@@ -126,6 +126,11 @@
       active: true if navActive == 'records'
     },
     {
+      text: 'Bulk recommend',
+      href: '/bulk-update/recommend',
+      active: true if navActive == 'bulk'
+    } if isAuthorised('bulkActions') and data.settings.bulkLinksInPrimaryNav == "Show bulk recommend",
+    {
       text: 'Bulk updates',
       href: '/bulk-update',
       active: true if navActive == 'bulk'

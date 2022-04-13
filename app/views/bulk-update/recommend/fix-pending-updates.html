@@ -4,8 +4,11 @@
 {% set pageHeading = "Change your pending updates" %}
 {% set navActive = 'bulk' %}
 
+{% set bulkOnly = true if data.settings.bulkLinksInPrimaryNav == "Show bulk recommend" %}
+{% set filePath = "recommendOnly-with-data" if bulkOnly else "recommend-with-data" %}
+
 {% set filteredRecords = data.records | filterRecords(data) %}
-{% set traineesThatCanBeRecommended = filteredRecords | filterByCanBulkRecommend %}
+{% set traineesThatCanBeRecommended = filteredRecords | filterByReadyToRecommend %}
 
 {% set fileName = data.signedInProviders | makeFileName("change pending","csv") %}
 

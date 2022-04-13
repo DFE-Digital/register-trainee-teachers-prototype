@@ -7,12 +7,19 @@
   text: "Return to the previous page"
 } %}
 
+{% set bulkOnly = true if data.settings.bulkLinksInPrimaryNav == "Show bulk recommend" %}
+
 {% block formContent %}
   {% include "_includes/trainee-name-caption.njk" %}
 
   <h1 class="govuk-heading-l">
     {# {{pageHeading}} #}
-    Confirm you want to cancel your <span class="app-nowrap">bulk updates</span>
+    Confirm you want to cancel 
+    {% if bulkOnly %}
+      bulk recommending trainees
+    {% else %}
+      your <span class="app-nowrap">bulk updates</span>
+    {% endif %}
   </h1>
 
   <p class="govuk-body">
@@ -21,7 +28,7 @@
 
   {{ govukButton({
     text: "Confirm cancel",
-    href: "/bulk-update",
+    href: "/bulk-update/recommend" if bulkOnly else "/bulk-update",
     classes: "govuk-button--warning"
   }) }}
 

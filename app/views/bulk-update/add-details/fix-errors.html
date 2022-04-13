@@ -4,6 +4,7 @@
 {% set pageContent = "fixErrors" %}
 {% set pageHeading = "Fix errors in your pending updates" %}
 
+{% set filePath = "add-details-with-errors" %}
 {% set rowsWithErrors = data.bulkUpload.processedRows | where("uploadStatus", "error") %}
 
 {% set tableBodyRows = [] %}
@@ -23,7 +24,7 @@
     </p>
   {% endset %}
   {% set errorMessage = row.errorMessage %}
-  {% if row.errorMessage == "TRN missing" %}
+  {% if row.errorMessage == "Assessment date provided without a TRN — add a TRN or remove the assessment date" %}
     {% set traineeInfoHtml = "–" %}
   {% endif %}
   {% if row.errorMessage == "TRN not recognised" %}

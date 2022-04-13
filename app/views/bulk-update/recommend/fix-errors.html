@@ -1,8 +1,13 @@
 {% extends "_templates/_page.html" %}
 {% set navActive = 'bulk' %}
 
+{% set filteredRecords = data.records | filterRecords(data) %}
+{% set traineesThatCanBeRecommended = filteredRecords | filterByReadyToRecommend %}
+
+{% set bulkOnly = true if data.settings.bulkLinksInPrimaryNav == "Show bulk recommend" %}
 {% set pageContent = "fixErrors" %}
 {% set pageHeading = "Fix errors in your pending updates" %}
+{% set filePath = "recommendOnly-with-errors" if bulkOnly else "recommend-with-errors" %}
 
 {% set fileName = data.signedInProviders | makeFileName("fix errors","csv") %}
 {% set bulkPath = "recommend" %}
@@ -29,7 +34,7 @@
   {% if errorMessage == 'TRN not recognised' %}
     {% set traineeInfoHtml = "–" %}
     {% set errorMessage = 'TRN: ‘' + row.trainee.trn + '’, enter a valid TRN' %}
-  {% elseif errorMessage == 'TRN missing' %}
+  {% elseif errorMessage == 'Assessment date provided without a TRN — add a TRN or remove the assessment date' %}
     {% set traineeInfoHtml = '–' %}
   {% endif %}
 

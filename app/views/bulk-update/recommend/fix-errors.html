@@ -9,80 +9,55 @@
 
 {% block content %}
 
-  {% set filteredRecords = data.records | filterRecords(data) %}
-{% set currentTrainees = filteredRecords | filterByStatus("Draft", true) | filterByActive %}
+  {% set rowsWithErrors = data.bulkUpload.processedRows | where("uploadStatus", "error") %}
+  {% set tableBodyRows = [] %}
 
-  {% set traineesThatCanBeRecommended = currentTrainees | filterByComplete | filterByStatus(["Deferred", "Withdrawn", "QTS recommended", "QTS awarded", "EYTS recommended", "EYTS awarded"], true) %}
+  {% for row in rowsWithErrors %}
 
-{% set tableBodyRows     = [] %}
-{% set unchangedTrainees =  0 %}
-{% set updatedTrainees   =  0 %}
+    {% set traineeInfoHtml %}
+      <p class="govuk-body govuk-!-margin-bottom-1">
+        {{ row.trainee.personalDetails.shortName }}
+      </p>
+      <p class="govuk-body govuk-hint govuk-!-margin-bottom-0">
+        {{ row.trainee.trn }}
+      </p>
+    {% endset %}
+    {% set errorMessage = row.errorMessage %}
 
-{% for trainee in traineesThatCanBeRecommended %}
-
-  {% set traineeRecord = null %}
-
-  {% set randomNumber = range(0, 100) | random %}
-
-  {% if randomNumber <= 8 %}
-    {% set traineeRecord = "error" %}
-  {% elseif randomNumber > 8 and randomNumber <= 12 %}
-    {% set unchangedTrainees = unchangedTrainees + 1 %}
-  {% elseif randomNumber > 12 %}
-    {% set updatedTrainees = updatedTrainees + 1 %}
-  {% endif %}
-
-  {% if traineeRecord == "error" %}
-    {% set errorMessage = [
-      'TRN not recognised',
-      'TRN missing',
-      'Date standards met: ‘09/20/2023’ — enter a valid date',
-      'Date standards met: ‘20/09/2023’ — date the trainee met QTS must be in the past',
-      'Postgraduate qualification: ‘BA (Hons)’ — enter ‘PGCE’, ‘PGDE’ or ‘None’ for postgraduate qualification',
-      'Postgraduate qualification: ‘PGCE’ — trainees on undergraduate courses cannot be awarded a postgraduate qualification.',
-      'Postgraduate qualification missing. If the trainee did not get a postgraduate qualification enter ‘None’.'
-      ] | random
-    %}
-
-    {% set traineeInfo = trainee.personalDetails.shortName + '<br> <span class="govuk-hint">' + trainee.reference + '</span>' %}
-
-    {% set row = [{text: loop.index + 2 }] %}
-    {% if errorMessage == 'TRN not recognised.' %}
-      {% set traineeInfo = trainee.reference %}
-      {% set errorMessage = 'TRN: ‘' + trainee.reference + '’, enter a valid TRN' %}
+    {% if errorMessage == 'TRN not recognised' %}
+      {% set traineeInfoHtml = "–" %}
+      {% set errorMessage = 'TRN: ‘' + row.trainee.trn + '’, enter a valid TRN' %}
     {% elseif errorMessage == 'TRN missing' %}
-      {% set traineeInfo = '–' %}
-    {% elseif errorMessage == 'URN not recognised' %}
-      {% set errorMessage = "Placement 1 URN: ‘" + schoolName +  "’, enter a valid URN" %}
-    {% elseif errorMessage == 'School is closed' %}
-      {% set errorMessage = "Placement 1 URN: ‘" + range(10000, 20000) | random +  "’, this school is closed" %}
+      {% set traineeInfoHtml = '–' %}
     {% endif %}
-    
-    {% set row = row | push({ text: traineeInfo | safe }) %}
-    {% set row = row | push({ text: errorMessage | safe }) %}
 
-    {% set tableBodyRows = tableBodyRows | push(row) %}
+    {% set tableRow = [
+      { text: row.rowNumber },
+      { text: traineeInfoHtml | safe },
+      { text: errorMessage | safe }
+    ] %}
 
-  {% endif %}
-{% endfor %}
+    {% set tableBodyRows = tableBodyRows | push(tableRow) %}
 
-{% set tableCaption = "Trainee " + 'record' | pluralise(tableBodyRows.length) + " with errors (" + tableBodyRows.length + ")" %}
-{% set tableCaptionClasses = "govuk-table__caption--m" %}
-{% set tableHeadRow = 
-  [
-    {
-      text: "Row",
-      classes: "app-table__column-5"
-    },
-    {
-      text: "Trainee",
-      classes: "app-table__column-25"
-    },
-    {
-      text: "Error"
-    }
-  ]
-%}
+  {% endfor %}
+
+  {% set tableCaption = "Trainee " + 'record' | pluralise(tableBodyRows.length) + " with errors (" + tableBodyRows.length + ")" %}
+  {% set tableCaptionClasses = "govuk-table__caption--m" %}
+  {% set tableHeadRow = 
+    [
+      {
+        text: "Row",
+        classes: "app-table__column-5"
+      },
+      {
+        text: "Trainee",
+        classes: "app-table__column-25"
+      },
+      {
+        text: "Error"
+      }
+    ]
+  %}
 
   {% include "_includes/bulk-update/fix-file.html" %}
 

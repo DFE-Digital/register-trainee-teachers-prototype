@@ -4,7 +4,7 @@
 {% set backLink = 'false' %}
 
 {% set filteredRecords = data.records | filterRecords(data) %}
-{% set traineesThatCanBeRecommended = filteredRecords | filterByCanBeRecommended %}
+{% set traineesThatCanBeRecommended = filteredRecords | filterByCanBulkRecommend %}
 
 {% set pageHeading = traineesThatCanBeRecommended | length  + " trainee records recommended for " + traineesThatCanBeRecommended | getQualifications | orSeparate %}
 

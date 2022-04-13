@@ -3,7 +3,7 @@
 {% set navActive = 'bulk' %}
 
 {% set filteredRecords = data.records | filterRecords(data) %}
-{% set traineesThatCanBeRecommended = filteredRecords | filterByCanBeRecommended %}
+{% set traineesThatCanBeRecommended = filteredRecords | filterByCanBulkRecommend %}
 
 {% set needAcademicAward = traineesThatCanBeRecommended | filterByAcademicQualificationsApply %}
 
@@ -37,7 +37,7 @@
         Open ‘ <span class="govuk-!-font-weight-bold">{{ fileName }}</span>’ in <span class="app-nowrap">spreadsheet software</span> (for example, <span class="app-nowrap">Microsoft Excel</span>) and add when the trainee met {{ traineesThatCanBeRecommended | getQualifications | orSeparate }} {{ "and their postgraduate academic qualification" if needAcademicAward | filterByPostgraduate }}{{ ", where applicable" if traineesThatCanBeRecommended.length > needAcademicAward.length }}.
       </p>
       <p class="govuk-body">
-        You can leave rows or cells empty if you do not want to recommend the trainees for {{ traineesThatCanBeRecommended | getQualifications | orSeparate }}.
+        Leave rows or cells empty if you do not want to recommend the trainees for {{ traineesThatCanBeRecommended | getQualifications | orSeparate }}.
       </p>
       <h3 class="govuk-heading-s">
         When the trainee met {{ traineesThatCanBeRecommended | getQualifications | orSeparate }}
@@ -77,7 +77,7 @@
       <h2 class="govuk-heading-m">
         3. Upload your trainee records
       </h2>
-      <form action="/bulk-update/recommend/errors-found" method="post" novalidate>
+      <form action="/bulk-update/recommend/bulk-update-answer" method="post" novalidate>
         {{ govukFileUpload({
           id: "file-upload-1",
           name: "file-upload-1",

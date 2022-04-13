@@ -5,7 +5,7 @@
 {% set navActive = 'bulk' %}
 
 {% set filteredRecords = data.records | filterRecords(data) %}
-{% set traineesThatCanBeRecommended = filteredRecords | filterByCanBeRecommended %}
+{% set traineesThatCanBeRecommended = filteredRecords | filterByCanBulkRecommend %}
 
 {% set fileName = data.signedInProviders | makeFileName("change pending","csv") %}
 

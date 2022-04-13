@@ -170,6 +170,7 @@ filters.deleteBlankAttributes = (dictionary) => {
 
 // Filter results for only those containing attribute and value
 filters.where = (arr, key, compare) => {
+  arr = arr || [] 
   compare = [].concat(compare) // force to arr
   let filtered = arr.filter(item => {
     return compare.includes(_.get(item, key))

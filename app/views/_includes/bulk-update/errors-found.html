@@ -21,7 +21,7 @@
           },
           {
             value: "Skip fixing errors",
-            text: "No, continue without fixing " + errorPluralisation + " and review " + updatedCount + " pending updates"
+            text: "No, continue without fixing " + errorPluralisation + " and review " + data.bulkUpload.processedRows | where("uploadStatus", "updated") | length  + " pending updates"
           }
         ]
       } | decorateAttributes(data, "data.bulk." + bulkRoute + "FixErrors" )) }}

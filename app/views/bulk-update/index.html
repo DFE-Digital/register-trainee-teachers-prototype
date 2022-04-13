@@ -5,7 +5,7 @@
 {% set traineesThatCanBeUpdated = filteredRecords | filterByCanBulkUpdate %}
 {% set traineesWithoutStartDates = traineesThatCanBeUpdated | filterByNeedsStartDate | length %}
 {% set traineesWithoutPlacements = traineesThatCanBeUpdated | filterByNeedsPlacements | length %}
-{% set traineesThatCanBeRecommended = filteredRecords | filterByCanBeRecommended %}
+{% set traineesThatCanBeRecommended = filteredRecords | filterByCanBulkRecommend %}
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds-from-desktop">

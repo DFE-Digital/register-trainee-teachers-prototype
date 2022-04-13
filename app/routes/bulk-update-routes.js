@@ -4,8 +4,14 @@ const path = require('path')
 const utils = require('./../lib/utils')
 const url = require('url')
 const filters = require('./../filters.js')()
+const { faker } = require('@faker-js/faker')
+const weighted = require('weighted')
 
 module.exports = router => { 
+
+  const getRandomArbitrary = (min, max) => {
+    return Math.floor(Math.random() * (max - min) + min)
+  }
 
   /* 
   =========================================================
@@ -77,5 +83,45 @@ module.exports = router => {
     delete data?.bulk?.recommendFixErrors
     res.redirect('/bulk-update/recommend/check-pending-updates');
   });
+
+
+  /* Get trainees to bulk recommend */
+  router.post('/bulk-update/recommend/bulk-update-answer', function(req, res) {
+
+    const data = req.session.data
+    let filteredRecords  = utils.filterRecords(data.records, data)
+    let uploadedTrainees = utils.filterByCanBulkRecommend(filteredRecords)
+
+    let templateErrors = [
+      'TRN not recognised',
+      'TRN missing',
+      'Date standards met: ‘09/20/2023’ — enter a valid date',
+      'Date standards met: ‘20/09/2023’ — date the trainee met QTS must be in the past',
+      'Postgraduate qualification: ‘BA (Hons)’ — enter ‘PGCE’, ‘PGDE’ or ‘None’ for postgraduate qualification',
+      'Postgraduate qualification: ‘PGCE’ — trainees on undergraduate courses cannot be awarded a postgraduate qualification.',
+      'Postgraduate qualification missing. If the trainee did not get a postgraduate qualification enter ‘None’.'
+    ]
+
+    let processedRows = uploadedTrainees.map((trainee, index) => {
+      let row = {
+        rowNumber: index + 1,
+        trainee,
+        uploadStatus: weighted.select(["error", "unchanged", "updated"], [0.1, 0.05, 0.85]),
+        assessmentDate: getRandomArbitrary(6, 8) + "/" + getRandomArbitrary(1, 28) + "/" + data.years.endOfCurrentCycle
+      }
+
+      if (row.uploadStatus == "error") {
+        row.errorMessage = faker.helpers.randomize(templateErrors)
+      }
+
+      return row
+    })
+
+    data.bulkUpload = {
+      processedRows
+    }
+
+    res.redirect('/bulk-update/recommend/errors-found');
+  })
 
 }

@@ -21,7 +21,11 @@
       </h2>
       {% if traineesThatCanBeUpdated %}
         <p class="govuk-body">
-          You can bulk add {{ "trainee start dates" if traineesWithoutStartDates }} {{ "and" if traineesWithoutStartDates and traineesWithoutPlacements }} {{ "placement schools" if traineesWithoutPlacements }} to trainee records.
+          {% if traineesWithoutStartDates and traineesWithoutPlacements %}
+            You can bulk add missing details to {{ traineesThatCanBeUpdated.length }} trainee records. Add trainee start dates and placement details.
+          {% elseif traineesWithoutStartDates or traineesWithoutPlacements %}
+            You can bulk {{ "trainee start dates" if traineesWithoutStartDates else "placement details" }} to {{ traineesThatCanBeUpdated.length }} trainee records.
+          {% endif %}
         </p>
         <p class="govuk-body">
           <a href="/bulk-update/add-details" class="govuk-link">

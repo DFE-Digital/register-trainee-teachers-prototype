@@ -1,63 +1,67 @@
 {% extends "_templates/_page.html" %}
+{% set navActive = 'bulk' %}
 
 {% set pageContent = "fixErrors" %}
 {% set pageHeading = "Fix errors in your pending updates" %}
-{% set navActive = 'bulk' %}
 
 {% set fileName = data.signedInProviders | makeFileName("fix errors","csv") %}
 {% set bulkPath = "recommend" %}
 
+{% set rowsWithErrors = data.bulkUpload.processedRows | where("uploadStatus", "error") %}
+{% set tableBodyRows = [] %}
+
+{% set errorCount     = data.bulkUpload.processedRows | where("uploadStatus", "error") | length  %}
+{% set unchangedCount = data.bulkUpload.processedRows | where("uploadStatus", "unchanged") | length  %}
+{% set updatedCount   = data.bulkUpload.processedRows | where("uploadStatus", "updated") | length  %}
+
+{% for row in rowsWithErrors %}
+
+  {% set traineeInfoHtml %}
+    <p class="govuk-body govuk-!-margin-bottom-1">
+      {{ row.trainee.personalDetails.shortName }}
+    </p>
+    <p class="govuk-body govuk-hint govuk-!-margin-bottom-0">
+      {{ row.trainee.trn }}
+    </p>
+  {% endset %}
+  {% set errorMessage = row.errorMessage %}
+
+  {% if errorMessage == 'TRN not recognised' %}
+    {% set traineeInfoHtml = "–" %}
+    {% set errorMessage = 'TRN: ‘' + row.trainee.trn + '’, enter a valid TRN' %}
+  {% elseif errorMessage == 'TRN missing' %}
+    {% set traineeInfoHtml = '–' %}
+  {% endif %}
+
+  {% set tableRow = [
+    { text: row.rowNumber },
+    { text: traineeInfoHtml | safe },
+    { text: errorMessage | safe }
+  ] %}
+
+  {% set tableBodyRows = tableBodyRows | push(tableRow) %}
+
+{% endfor %}
+
+{% set tableCaption = "Trainee " + 'record' | pluralise(tableBodyRows.length) + " with errors (" + tableBodyRows.length + ")" %}
+{% set tableCaptionClasses = "govuk-table__caption--m" %}
+{% set tableHeadRow = 
+  [
+    {
+      text: "Row",
+      classes: "app-table__column-5"
+    },
+    {
+      text: "Trainee",
+      classes: "app-table__column-25"
+    },
+    {
+      text: "Error"
+    }
+  ]
+%}
+
 {% block content %}
-
-  {% set rowsWithErrors = data.bulkUpload.processedRows | where("uploadStatus", "error") %}
-  {% set tableBodyRows = [] %}
-
-  {% for row in rowsWithErrors %}
-
-    {% set traineeInfoHtml %}
-      <p class="govuk-body govuk-!-margin-bottom-1">
-        {{ row.trainee.personalDetails.shortName }}
-      </p>
-      <p class="govuk-body govuk-hint govuk-!-margin-bottom-0">
-        {{ row.trainee.trn }}
-      </p>
-    {% endset %}
-    {% set errorMessage = row.errorMessage %}
-
-    {% if errorMessage == 'TRN not recognised' %}
-      {% set traineeInfoHtml = "–" %}
-      {% set errorMessage = 'TRN: ‘' + row.trainee.trn + '’, enter a valid TRN' %}
-    {% elseif errorMessage == 'TRN missing' %}
-      {% set traineeInfoHtml = '–' %}
-    {% endif %}
-
-    {% set tableRow = [
-      { text: row.rowNumber },
-      { text: traineeInfoHtml | safe },
-      { text: errorMessage | safe }
-    ] %}
-
-    {% set tableBodyRows = tableBodyRows | push(tableRow) %}
-
-  {% endfor %}
-
-  {% set tableCaption = "Trainee " + 'record' | pluralise(tableBodyRows.length) + " with errors (" + tableBodyRows.length + ")" %}
-  {% set tableCaptionClasses = "govuk-table__caption--m" %}
-  {% set tableHeadRow = 
-    [
-      {
-        text: "Row",
-        classes: "app-table__column-5"
-      },
-      {
-        text: "Trainee",
-        classes: "app-table__column-25"
-      },
-      {
-        text: "Error"
-      }
-    ]
-  %}
 
   {% include "_includes/bulk-update/fix-file.html" %}
 

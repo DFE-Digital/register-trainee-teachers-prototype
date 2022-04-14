@@ -4,6 +4,9 @@
       <span class="govuk-caption-l">{{ data.signedInProviders | andSeparate }}</span>
       {{ pageHeading }}
     </h1>
+    {% if pageContent == "fixErrors" and updatedCount == 0 %}
+      {% include "_includes/bulk-update/upload-summary.html" %}
+    {% endif %}
     <h2 class="govuk-heading-m">
       1. Export a new template or update your original file
     </h2>
@@ -14,7 +17,7 @@
       2. {{ "Fix the errors" if pageContent == "fixErrors" else "Update your trainee records" }}
     </h2>
     <p class="govuk-body">
-      Changes you make to this file will overwrite previous files. For example, removing a row will mean no updates are made to that trainee’s record.
+      Changes to this file will overwrite previous files. For example, removing a row will mean no changes are made to that trainee’s record.
     </p>
   </div>
 </div>
@@ -53,15 +56,17 @@
         text: "Upload records"
       }) }}
     </form>
-    <p class="govuk-body">
-      <a href="/bulk-update/{{ bulkPath }}/no-update" class="govuk-link">
-        {% if pageContent == "fixErrors" %}
-          Skip fixing errors and review pending updates to trainee records
-        {% else %}
-          Return to pending updates without making a change
-        {% endif %}
-      </a>
-    </p>
+    {% if updatedCount > 0 %}
+      <p class="govuk-body">
+        <a href="/bulk-update/{{ bulkPath }}/no-update" class="govuk-link">
+          {% if pageContent == "fixErrors" %}
+            Skip fixing errors and review pending updates to trainee records
+          {% else %}
+            Return to pending updates without making a change
+          {% endif %}
+        </a>
+      </p>
+    {% endif %}
     <p class="govuk-body">
       <a href="/bulk-update/cancel-bulk-updates" class="govuk-link">Cancel bulk updates to records</a>
     </p>

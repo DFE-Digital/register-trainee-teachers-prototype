@@ -5,7 +5,7 @@
       {{ pageHeading }}
     </h1>
     {% include "_includes/bulk-update/upload-summary.html" %}
-    {% set errorPluralisation = "error" | pluralise(tableBodyRows.length) %}
+    {% set errorPluralisation = "error" | pluralise(updatedCount) %}
     <form action="/bulk-update/{{ bulkPath }}/errors-found-answer" method="post" novalidate>
       {{ govukRadios({
         fieldset: {
@@ -21,7 +21,7 @@
           },
           {
             value: "Skip fixing errors",
-            text: "No, continue without fixing " + errorPluralisation + " and review " + data.bulkUpload.processedRows | where("uploadStatus", "updated") | length  + " pending updates"
+            text: "No, continue without fixing " + errorPluralisation + " and review " + updatedCount  + " pending updates"
           }
         ]
       } | decorateAttributes(data, "data.bulk." + bulkRoute + "FixErrors" )) }}

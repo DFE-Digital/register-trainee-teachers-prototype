@@ -3,8 +3,19 @@
 {% set pageHeading = "Check pending updates to trainee records" %}
 {% set navActive = 'bulk' %}
 
-{% set filteredRecords = data.records | filterRecords(data) %}
-{% set traineesThatCanBeUpdated = filteredRecords | filterByCanBulkUpdate %}
+{# These counts are used by include "_includes/bulk-update/upload-summary.html  #}
+{# Combines errors and processed if the user has 'fixed the errors' #}
+{% if data.bulk.addDetailsFixErrors %}
+  {% set processedRows = data.bulkUpload.processedRows | where("uploadStatus", "error")  %}
+  {% set processedRows = processedRows | combineArrays(data.bulkUpload.processedRows | where("uploadStatus", "updated")) %}
+{% else %}
+  {% set processedRows = data.bulkUpload.processedRows | where("uploadStatus", "updated") %}
+{% endif %}
+
+{# Sets numbers for errors summary – No errors if you're seeing the summary on this page #}
+{% set errorCount     = 0 %}
+{% set unchangedCount = data.bulkUpload.processedRows | where("uploadStatus", "unchanged") | length %}
+{% set updatedCount   = processedRows | length  %}
 
 {% set tableHeadRow = [
     {
@@ -28,56 +39,43 @@
 
 {% set tableBodyRows = [] %}
 
-{% for trainee in traineesThatCanBeUpdated %}
-
-  {% set completion = 0 %}
-  {% set traineeInfo = trainee.personalDetails.shortName + '<br> <span class="govuk-hint">' + trainee.reference + '</span>' %}
-
-  {% set row = [
-    { text: traineeInfo | safe }
-  ] %}
-  
-  {% set commencementDate %}
-    {% if trainee.trainingDetails.commencementDate %}
-      {{ trainee.trainingDetails.commencementDate | govukDate }}
-      {% set completion = completion + 1 %}
-    {% elseif (range(0, 10) | random) > 2 %}
-      {% set fakeDate = [range(1, 29) | random | padDigits(2), range(9, 11) | random | padDigits(2), data.years.defaultCourseYear] %}
-      {{ fakeDate | govukDate }}
-      {% set completion = completion + 1 %}
-    {% else -%}
-      –
-    {%- endif %}
+{% for row in processedRows %}
+  {% set traineeInfoHtml %}
+    <p class="govuk-body govuk-!-margin-bottom-1">
+      {{ row.trainee.personalDetails.shortName }}
+    </p>
+    <p class="govuk-body govuk-hint govuk-!-margin-bottom-0">
+      {# To do — don't only use TRNs to identify trainees #}
+      {{ row.trainee.trn if row.trainee.trn else 'Pending TRN' }}
+    </p>
   {% endset %}
-
-  {% set row = row | push({ text: commencementDate | safe })%}
-
-  {% for item in trainee.placement.items %}
-    {% set placementContent %}
-      {{ item.school.schoolName }}<br>
-      <span style="color: #505a5f">URN: {{ item.school.urn }}</span>
-    {% endset %}
-    {% set completion = completion + 1 %}
-    {% set row = row | push({ text: placementContent | safe }) %}
-  {% endfor %}
-
-  {% for items in row %}
-    {% if row.length != tableHeadRow.length %}
-      {% set row = row | push({ text: "–" }) %}
-    {% endif %}
-  {% endfor %}
-
-  {% if completion > 0 %}
-    {% set tableBodyRows = tableBodyRows | push(row) %}
-  {% endif %}
-
+  {# To do — set more shools in the data #}
+  {% set placementOneHtml %}
+    <p class="govuk-body govuk-!-margin-bottom-1">
+      {{ row.trainee.placement.items[0].school.schoolName if row.trainee.placement.items[0] else "Lightwater Village School" }}
+    </p>
+    <p class="govuk-body govuk-hint govuk-!-margin-bottom-0">
+      {{ row.trainee.placement.items[0].school.urn  if row.trainee.placement.items[0] else "142433" }}
+    </p>
+  {% endset %}
+  {% set placementTwoHtml %}
+    <p class="govuk-body govuk-!-margin-bottom-1">
+      {{ row.trainee.placement.items[1].school.schoolName if row.trainee.placement.items[1] else "Hammond School" }}
+    </p>
+    <p class="govuk-body govuk-hint govuk-!-margin-bottom-0">
+      {{ row.trainee.placement.items[1].school.urn  if row.trainee.placement.items[1] else "142426" }}
+    </p>
+  {% endset %}
+  
+  {% set tableRow = [
+    { text: traineeInfoHtml | safe },
+    { text: row.trainee.trainingDetails.commencementDate | govukDate },
+    { text: placementOneHtml | safe },
+    { text: placementTwoHtml | safe }
+  ] %}
+  {% set tableBodyRows = tableBodyRows | push(tableRow) %}
 {% endfor %}
 
-{# These counts are used by include "_includes/bulk-update/upload-summary.html  #}
-{% set totalTraineeRecords = traineesThatCanBeUpdated.length %}
-{% set errorCount = 0 %}
-{% set unchangedCount = traineesThatCanBeUpdated.length - tableBodyRows.length %}
-{% set updatedCount = tableBodyRows.length %}
 
 {% set tableCaption = "Pending updates to trainee records (" + tableBodyRows.length + ")" %}
 {% set tableCaptionClasses = "govuk-table__caption--m" %}

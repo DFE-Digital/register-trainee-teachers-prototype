@@ -2,42 +2,18 @@
 
 {% set navActive = 'bulk' %}
 
-{% set filteredRecords = data.records | filterRecords(data) %}
-{% set traineesThatCanBeUpdated = filteredRecords | filterByCanBulkUpdate %}
-{% set totalTraineeRecords = traineesThatCanBeUpdated | length %}
-
-{% set errorTrainees     =  0 %}
-{% set unchangedTrainees =  0 %}
-{% set updatedTrainees   =  0 %}
-
-{% for trainee in traineesThatCanBeUpdated %}
-
-  {% set randomNumber = range(0, 100) | random %}
-
-  {% if randomNumber <= 8 %}
-    {% set errorTrainees = errorTrainees + 1 %}
-  {% elseif randomNumber > 8 and randomNumber <= 12 %}
-    {% set unchangedTrainees = unchangedTrainees + 1 %}
-  {% elseif randomNumber > 12 %}
-    {% set updatedTrainees = updatedTrainees + 1 %}
-  {% endif %}
-
-{% endfor %}
-
-{# These counts are used by include "_includes/bulk-update/upload-summary.html  #}
-{% set errorCount = errorTrainees %}
-{% set unchangedCount = unchangedTrainees %}
-{% set updatedCount = updatedTrainees %}
-
-{% set bulkPath = "add-details" %}
-{% set bulkRoute = "addDetails" %}
-
 {% set pageHeading = "Errors in your trainee records file" %}
+
+{% set bulkPath =  "add-details" %}
+{% set bulkRoute = "addDetails"  %}
+
+{# Sets numbers for errors summary #}
+{% set errorCount     = data.bulkUpload.processedRows | where("uploadStatus", "error") | length  %}
+{% set unchangedCount = data.bulkUpload.processedRows | where("uploadStatus", "unchanged") | length  %}
+{% set updatedCount   = data.bulkUpload.processedRows | where("uploadStatus", "updated") | length  %}
 
 {% block content %}
 
   {% include "_includes/bulk-update/errors-found.html" %}
 
 {% endblock %}
-
-

@@ -23,12 +23,12 @@
 <h2 class="govuk-heading-m">Getting {{ record | getQualificationText }} status</h2>
 <p class="govuk-body">The Department for Education will award {{ record | getQualificationText }} where appropriate within 3 working days.</p>
 
-<h2 class="govuk-heading-m">Giving us feedback</h2>
+{# <h2 class="govuk-heading-m">Giving us feedback</h2>
 <p class="govuk-body">Tell us how recommending a trainee for {{ record | getQualificationText }} with the new service is working for you. We use this to make improvements. It takes 3 minutes to complete.</p>
 {{ govukButton({
   text: "Give feedback (opens in a new tab)",
   href: "/survey-qualification"
-}) }}
+}) }} #}
 
 <h2 class="govuk-heading-m">Next steps</h2>
 {# The name is only stored short term so make sure we have a fallback #}

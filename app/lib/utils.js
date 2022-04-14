@@ -1706,6 +1706,8 @@ exports.filterByUndergraduate = (records) => {
 // Trainees that can be bulk updated
 exports.filterByCanBulkUpdate = (records) => {
   let filteredRecords = exports.filterByActive(records)
+  filteredRecords = exports.filterByStatus(filteredRecords, "Draft", true)
+  filteredRecords = exports.filterByStatus(filteredRecords, "Pending TRN", true)
   filteredRecords = exports.filterOutEarlyYears(filteredRecords)
   filteredRecords = exports.filterByIncomplete(filteredRecords)
   return filteredRecords

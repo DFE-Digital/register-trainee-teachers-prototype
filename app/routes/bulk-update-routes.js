@@ -45,9 +45,67 @@ module.exports = router => {
   router.get('/bulk-update/add-details/no-update', function(req, res) {
     const data = req.session.data
     delete data?.bulk?.addDetailsFixErrors
+    delete data?.bulk?.recommendFixErrors
     res.redirect('/bulk-update/add-details/check-pending-updates');
   });
 
+  /* Get trainees to add missing details */
+  router.post('/bulk-update/add-details/bulk-update-answer', function(req, res) {
+
+    const data = req.session.data
+    let filteredRecords  = utils.filterRecords(data.records, data)
+    let uploadedTrainees = utils.filterByCanBulkUpdate(filteredRecords)
+
+    let templateErrors = [
+      'TRN not recognised',
+      'TRN missing',
+      'Trainee start date: ‘07/20/2023’ — enter a valid start date',
+      'Trainee start date: ‘20/07/2023’ — trainee start date must be in the past',
+      'URN not recognised',
+      'school is closed'
+    ]
+
+    let processedRows = uploadedTrainees.map((trainee, index) => {
+      let row = {
+        rowNumber: index + 1,
+        trainee,
+        uploadStatus: weighted.select(["error", "unchanged", "updated"], [0.25, 0.05, 0.7])
+      }
+
+      if (row.uploadStatus == "error") {
+        row.errorMessage = faker.helpers.randomize(templateErrors)
+      }
+
+      if (!row.trainee.trainingDetails.commencementDate) {
+        row.trainee.trainingDetails.commencementDate = getRandomArbitrary(6, 8) + "/" + getRandomArbitrary(1, 28) + "/" + data.years.defaultCourseYear
+      }
+
+      if (row.errorMessage == "URN not recognised" || row.errorMessage == "school is closed") {
+
+        if (row.trainee?.placement?.items && row.trainee?.placement?.items.length) {
+          row.errorMessage = "URN: ‘" + row.trainee.placement?.items[0]?.school?.urn + "’ — " + row.errorMessage
+        } else {
+          row.errorMessage = "URN: ‘231231’ – URN not recognised"
+        }
+      }
+      return row
+    })
+
+    data.bulkUpload = {
+      processedRows
+    }
+
+    const checkIfAnyErrors  = element => element.uploadStatus == "error"
+    const checkIfAnyUpdated = element => element.uploadStatus == "updated"
+
+    if (processedRows.some(checkIfAnyErrors) && processedRows.some(checkIfAnyUpdated)) {
+      res.redirect('/bulk-update/add-details/errors-found')
+    } else if (processedRows.some(checkIfAnyErrors) && !processedRows.some(checkIfAnyUpdated)) {
+      res.redirect('/bulk-update/add-details/fix-errors')
+    } else if (!processedRows.some(checkIfAnyErrors) && processedRows.some(checkIfAnyUpdated)) {
+      res.redirect('/bulk-update/add-details/check-pending-updates')
+    }
+  })
 
   /* 
   =========================================================
@@ -61,6 +119,7 @@ module.exports = router => {
     if (data?.bulk?.recommendFixErrors == "Fix errors now") {
       res.redirect('/bulk-update/recommend/fix-errors');
     } else if (data?.bulk?.recommendFixErrors == "Skip fixing errors") {
+      delete data?.bulk?.addDetailsFixErrors
       delete data?.bulk?.recommendFixErrors
       res.redirect('/bulk-update/recommend/check-pending-updates');
     } else {
@@ -80,6 +139,7 @@ module.exports = router => {
   /* Clear review errors answer */
   router.get('/bulk-update/recommend/no-update', function(req, res) {
     const data = req.session.data
+    delete data?.bulk?.addDetailsFixErrors
     delete data?.bulk?.recommendFixErrors
     res.redirect('/bulk-update/recommend/check-pending-updates');
   });
@@ -119,6 +179,17 @@ module.exports = router => {
 
     data.bulkUpload = {
       processedRows
+    }
+
+    const checkIfAnyErrors  = element => element.uploadStatus == "error"
+    const checkIfAnyUpdated = element => element.uploadStatus == "updated"
+
+    if (processedRows.some(checkIfAnyErrors) && processedRows.some(checkIfAnyUpdated)) {
+      res.redirect('/bulk-update/recommend/errors-found')
+    } else if (processedRows.some(checkIfAnyErrors) && !processedRows.some(checkIfAnyUpdated)) {
+      res.redirect('/bulk-update/recommend/fix-errors')
+    } else if (!processedRows.some(checkIfAnyErrors) && processedRows.some(checkIfAnyUpdated)) {
+      res.redirect('/bulk-update/recommend/check-pending-updates')
     }
 
     res.redirect('/bulk-update/recommend/errors-found');

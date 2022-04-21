@@ -194,7 +194,7 @@ const generateFakeApplications = () => {
     let providerSize = getRandomArbitrary(50, 100)
     let yearsToGenerate = defaultYearsToGenerate
     if (provider?.name == "Webury Hill SCITT") providerSize = 130
-    if (provider?.name == "Kings Oak University") {
+    if (provider?.name == "King’s Oak University") {
       providerSize = 400
       yearsToGenerate = reducedYearsToGenerate // generate fewer years as there's so many records
     }

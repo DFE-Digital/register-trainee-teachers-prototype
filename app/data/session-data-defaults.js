@@ -99,7 +99,7 @@ settings.providerModel = "hat-model"
 settings.userProviders = [
   "Webury Hill SCITT",
   // "Coventry University",
-  "Kings Oak University",
+  "King’s Oak University",
   // "The University of Buckingham",
   "West Park Primary School",
   "Beam Primary School",
@@ -111,7 +111,7 @@ settings.viewAsAdmin = 'false'
 // The ‘active’ provider for the current user if using hat model
 // Must be one of the ones in settings.userProviders
 // settings.userActiveProvider = "Webury Hill SCITT"
-settings.userActiveProvider = "Kings Oak University"
+settings.userActiveProvider = "King’s Oak University"
 // settings.userActiveProvider = "Beam Primary School"
 
 settings.providerType = "accrediting-provider"

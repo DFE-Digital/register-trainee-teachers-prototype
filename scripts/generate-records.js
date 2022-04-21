@@ -24,7 +24,8 @@ const statusFilters          = require('./../app/filters/statuses.js').filters
 let simpleGcseGrades    = true //output pass/fail rather than full detail
 
 // Todo: get this from the years.js file?
-const yearsToGenerate = [2017, 2018, 2019, 2020, 2021, 2022]
+const defaultYearsToGenerate = [2017, 2018, 2019, 2020, 2021, 2022]
+const reducedYearsToGenerate = [2020, 2021, 2022]
 const currentYear     = 2021
 
 const sortBySubmittedDate = (x, y) => {
@@ -191,11 +192,20 @@ const generateFakeApplications = () => {
     // TODO: store provider size somewhere so it can be used here and
     // by the course generator
     let providerSize = getRandomArbitrary(50, 100)
+    let yearsToGenerate = defaultYearsToGenerate
+    if (provider?.name == "Webury Hill SCITT") providerSize = 130
+    if (provider?.name == "Kings Oak University") {
+      providerSize = 400
+      yearsToGenerate = reducedYearsToGenerate // generate fewer years as there's so many records
+    }
 
     yearsToGenerate.forEach((year) => {
       // Years can be ±10% in size
       let traineeCount = getRandomArbitrary((providerSize * 0.9), (providerSize * 1.1))
-      if (provider?.name == "Webury Hill SCITT") traineeCount = 130
+      if (year > currentYear){
+        traineeCount = traineeCount * 0.3 // generate fewer future trainees
+      }
+
       applications = applications.concat(generateFakeApplicationsForProvider(provider, year, traineeCount))
     })
 
@@ -221,9 +231,7 @@ const generateFakeApplicationsForProvider = (provider, year, count) => {
   // Future years should probably be nearly all drafts, mostly Apply drafts
   if (year > currentYear){
     // Limit no more than 30 future draft trainees
-    if (count > 30) {
-      count = 30 
-    }
+    count = Math.min(count, 30)
 
     // Only SCITTs should have Apply drafts
     let isScitt = (provider?.accreditingProviderType != "HEI")

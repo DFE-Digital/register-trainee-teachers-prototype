@@ -19,7 +19,10 @@
 
 {% set fileName = data.signedInProviders | makeFileName("trainees to recommend","csv") %}
 
-{% set pageHeading = "Bulk recommend trainees for " + traineesThatCanBeRecommended | getQualifications | orSeparate %}
+{% set qualifications = traineesThatCanBeRecommended | getQualifications | orSeparate %}
+
+{% set pageHeading = "Bulk recommend trainees for " + qualifications %}
+
 
 {% block content %}
 
@@ -32,13 +35,16 @@
       {% if bulkRecommendOnly %}
         {% if traineesThatCanBeRecommended %}
           <p class="govuk-body">
-            Bulk recommend multiple trainees for {{ traineesThatCanBeRecommended | getQualifications | orSeparate }} at the same time.
+            Bulk recommend multiple trainees for {{ qualifications }} at the same time.
           </p>
           <p class="govuk-body">
-            You have {{ traineesThatCanBeRecommended.length }} trainees that you can recommend for {{ traineesThatCanBeRecommended | getQualifications | orSeparate }}.
+            You have {{ traineesThatCanBeRecommended.length }} trainees that you can recommend for {{ qualifications }}.
           </p>
           <p class="govuk-body">
-            After you recommend trainees for {{ traineesThatCanBeRecommended | getQualifications | orSeparate }}, the DfE will award them (where appropriate) within <span class="app-nowrap">3 working days</span>.
+            After you recommend trainees for {{ qualifications }}, the DfE will award them (where appropriate) within <span class="app-nowrap">3 working days</span>.
+          </p>
+          <p class="govuk-body">
+            If a trainee has not met {{ qualifications }}, withdraw them manually.
           </p>
         {% else %}
           <p class="govuk-body">
@@ -53,7 +59,7 @@
         {% endif %}
       {% else %}
         <p class="govuk-body">
-          You have {{ traineesThatCanBeRecommended | length }} trainees ready to be recommend for {{ traineesThatCanBeRecommended | getQualifications | orSeparate }}.
+          You have {{ traineesThatCanBeRecommended | length }} trainees ready to be recommend for {{ qualifications }}.
         </p>
       {% endif %}
       {% if data.settings.bulkLinksInPrimaryNav == "Show bulk recommend" %}
@@ -63,54 +69,80 @@
       {% endif %}
 
       <{{ headingLevel }} class="govuk-heading-m">
-        1. Download the template 
+        1. Download a template
       </{{ headingLevel }}>
       <p class="govuk-body">
-        <a href="{{ filePath }}" download="{{ fileName }}" class="govuk-link">
-          Trainees ready to be recommended for {{ traineesThatCanBeRecommended | getQualifications | orSeparate }} (csv)
+        Download and add trainee information to one of these files.
+      </p>
+      <h3 class="govuk-heading-s">
+        Prepopulted file
+      </h3>
+      <p>
+        This file containes all {{ traineesThatCanBeRecommended | length }} trainees that can be recommended for {{ qualifications }}. Delete any trainees you do not want to recommened.
+      </p>
+      {% set fileName = data.signedInProviders | makeFileName("trainees to recommend","csv") %}
+      <p class="govuk-body">
+        <a 
+          href="{{ 
+            '/public/downloads/recommendOnly.csv' if bulkRecommendOnly else '/public/downloads/recommend.csv'
+          }}" 
+          download="{{ fileName }}"
+          class="govuk-link">
+          Trainees that can be recommended for {{ qualifications }} (csv)
         </a>
       </p>
-
+      <h3 class="govuk-heading-s">
+        Empty template
+      </h3>
+      <p class="govuk-body">
+        This template has the column headings ‘TRN’ and ‘Assessment date’. Add the trainees you want to recommend for {{ qualifications }}.
+      </p>
+      <p class="govuk-body">
+        {% set fileName = data.signedInProviders | makeFileName("trainees to recommend template","csv") %}
+        <a 
+          href="{{ 
+            '/public/downloads/recommendOnly-template.csv' if bulkRecommendOnly else '/public/downloads/recommend-template.csv'
+          }}" 
+          download="{{ fileName }}"
+          class="govuk-link">
+          Template for recommending trainees for {{ qualifications }} (csv)
+        </a>
+      </p>
       <{{ headingLevel }} class="govuk-heading-m">
         2. Add {{ "the assessment dates" if bulkRecommendOnly else "details of the trainee’s outcome" }}
       </{{ headingLevel }}>
       <p class="govuk-body">
-        Open ‘<span class="govuk-!-font-weight-bold">{{ fileName }}</span>’ in <span class="app-nowrap">spreadsheet software</span> (for example, <span class="app-nowrap">Microsoft Excel</span>).
+        Open the file in <span class="app-nowrap">spreadsheet software</span> (for example, <span class="app-nowrap">Microsoft Excel</span>).
       </p>
       {% if bulkRecommendOnly %}
         <p class="govuk-body">
-          In the column ‘Assessment date’ add the date the trainee met {{ traineesThatCanBeRecommended | getQualifications | orSeparate }}.
+          In the column ‘Assessment date’ add the date the trainee met {{ qualifications }}.
         </p>
         <p class="govuk-body">
           The date must be written in the format <span class="app-nowrap">‘DD/MM/YYYY’</span>.
           For example, if the trainee met the standard on <span class="app-nowrap">20 June {{ data.years.defaultCourseYear }}</span>, write <span class="app-nowrap">‘20/07/{{ data.years.defaultCourseYear }}’</span>.
         </p>
         <p class="govuk-body">
-          Leave the cell empty if you do not want to recommend the trainee for {{ traineesThatCanBeRecommended | getQualifications | orSeparate }}.
-        </p>
-        <p class="govuk-body">
-          If the trainee has not met {{ traineesThatCanBeRecommended | getQualifications | orSeparate }}, withdraw them manually.
+          Leave the cell empty if you do not want to recommend the trainee for {{ qualifications }}.
         </p>
       {% else %}
         <p class="govuk-body">
-          Add when the trainee met {{ traineesThatCanBeRecommended | getQualifications | orSeparate }} {{ "and their postgraduate academic qualification" if needAcademicAward | filterByPostgraduate }}{{ ", where applicable" if traineesThatCanBeRecommended.length > needAcademicAward.length }}.
+          Add when the trainee met {{ qualifications }} {{ "and their postgraduate academic qualification" if needAcademicAward | filterByPostgraduate }}{{ ", where applicable" if traineesThatCanBeRecommended.length > needAcademicAward.length }}.
         </p>
         <p class="govuk-body">
-          Leave rows or cells empty if you do not want to recommend the trainee for {{ traineesThatCanBeRecommended | getQualifications | orSeparate }}.
+          Leave rows or cells empty if you do not want to recommend the trainee for {{ qualifications }}.
         </p>
         <h3 class="govuk-heading-s">
           Assessment date
         </h3>
         <p class="govuk-body">
-          In the column ‘Assessment date’ add the date the trainee met {{ traineesThatCanBeRecommended | getQualifications | orSeparate }}.
+          In the column ‘Assessment date’ add the date the trainee met {{ qualifications }}.
         </p>
         <p class="govuk-body">
           The date must be written in the format <span class="app-nowrap">‘DD/MM/YYYY’</span>.
           For example, if the trainee met the standard on <span class="app-nowrap">20 June {{ data.years.defaultCourseYear }}</span>, write <span class="app-nowrap">‘20/07/{{ data.years.defaultCourseYear }}’</span>.
         </p>
-        <p class="govuk-body">
-          If the trainee has not met {{ traineesThatCanBeRecommended | getQualifications | orSeparate }}, withdraw them manually.
-        </p>
+
           {% if needAcademicAward | filterByPostgraduate %}
           <h3 class="govuk-heading-s">
             Postgraduate academic qualification

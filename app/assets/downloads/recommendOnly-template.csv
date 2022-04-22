@@ -1,0 +1,8 @@
+TRN,Assessment Date
+"Add the TRN for trainees you want to recommend.
+
+TRNs must be 7 digits.","When the trainee met the QTS or EYTS.
+Must be written DD/MM/YYYY. 
+For example, if the trainee met the teaching standard on 20 July 2022, write ‘20/07/2022’.
+The date must be in the past.
+If the trainee has not met the QTS or EYTS, leave the cell empty."

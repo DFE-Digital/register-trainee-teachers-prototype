@@ -1,5 +1,9 @@
 {% extends "_templates/_page.html" %}
 
+{% block pageScripts %}
+  <script src="/public/javascripts/stick-to-window-when-scrolling.js"></script>
+{% endblock %}
+
 {% set filteredRecords = data.records | filterRecords(data) %}
 {% set traineesThatCanBeRecommended = filteredRecords | filterByReadyToRecommend %}
 
@@ -125,7 +129,13 @@
 {% set eytsTableCaption = "Trainees being recommended for EYTS (" + eytsTableBodyRows.length + ")" %}
 {% set tableCaptionClasses = "govuk-table__caption--m" %}
 
-{% set buttonText = "Recommend trainees for " + traineesThatCanBeRecommended | getQualifications | orSeparate %}
+{% set buttonText %}
+  {% if qtsTableBodyRows.length > 0 and eytsTableBodyRows.length > 0 %}
+    Recommend {{ qtsTableBodyRows.length }} {{ "trainee" | pluralise(qtsTableBodyRows.length) }} for QTS and {{ eytsTableBodyRows.length }} {{ "trainee" | pluralise(eytsTableBodyRows.length) }} for EYTS
+  {% else %}
+    Recommend {{ qtsTableBodyRows.length + " trainees for QTS" if qtsTableBodyRows.length > 0 }}{{ eytsTableBodyRows.length + " trainees for QTS" if eytsTableBodyRows.length > 0 }}
+  {% endif %}
+{% endset %}
 
 {% set bulkPath = "recommend" %}
 

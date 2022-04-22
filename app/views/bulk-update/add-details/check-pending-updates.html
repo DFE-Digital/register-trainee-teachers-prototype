@@ -1,5 +1,9 @@
 {% extends "_templates/_page.html" %}
 
+{% block pageScripts %}
+  <script src="/public/javascripts/stick-to-window-when-scrolling.js"></script>
+{% endblock %}
+
 {% set pageHeading = "Check pending updates to trainee records" %}
 {% set navActive = 'bulk' %}
 

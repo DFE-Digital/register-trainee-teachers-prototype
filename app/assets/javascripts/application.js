@@ -7,6 +7,8 @@ if (window.console && window.console.info) {
 
 $(document).ready(function () {
   window.GOVUKFrontend.initAll()
+  $(() => GOVUK.stickAtTopWhenScrolling.init());
+  $(() => GOVUK.stickAtBottomWhenScrolling.init());
 })
 
 // Submit form when any change detected

@@ -245,3 +245,12 @@ $sizes: 70, 53, 35, 25, 20, 16, 15, 10, 5;
     letter-spacing: -0.05px
   }
 }
+
+.app-numbered-list {
+  display: flex;
+}
+
+.app-numbered-list-number {
+  min-width: govuk-spacing(6);
+}
+

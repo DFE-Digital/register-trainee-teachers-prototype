@@ -34,7 +34,7 @@
   {% if errorMessage == 'TRN not recognised' %}
     {% set traineeInfoHtml = "–" %}
     {% set errorMessage = 'TRN: ‘' + row.trainee.trn + '’, enter a valid TRN' %}
-  {% elseif errorMessage == 'Assessment date provided without a TRN — add a TRN or remove the assessment date' %}
+  {% elseif errorMessage == 'Date standards met provided without a TRN — add a TRN or remove the date standards met' %}
     {% set traineeInfoHtml = '–' %}
   {% endif %}
 

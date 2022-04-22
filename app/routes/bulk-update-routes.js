@@ -174,9 +174,9 @@ module.exports = router => {
 
     let templateErrors = [
       'TRN not recognised',
-      'Assessment date provided without a TRN — add a TRN or remove the assessment date',
+      'Date standards met provided without a TRN — add a TRN or remove the date standards met',
       'Date standards met: ‘09/20/2023’ — enter a valid date',
-      'Date standards met: ‘20/09/2023’ — assessment date must be in the past'
+      'Date standards met: ‘20/09/2023’ — Date standards met must be in the past'
     ]
 
     if (data.settings.bulkLinksInPrimaryNav != "Show bulk recommend") {

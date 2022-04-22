@@ -1,7 +1,7 @@
-TRN,Assessment Date
+TRN,Standards met date
 "Add the TRN for trainees you want to recommend.
 
-TRNs must be 7 digits.","When the trainee met the QTS or EYTS.
+TRNs must be 7 digits.","Add the date when the trainee met QTS or EYTS standards.
 Must be written DD/MM/YYYY. 
 For example, if the trainee met the teaching standard on 20 July 2022, write ‘20/07/2022’.
 The date must be in the past.

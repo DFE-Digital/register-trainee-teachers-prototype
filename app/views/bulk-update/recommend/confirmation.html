@@ -6,7 +6,15 @@
 {% set filteredRecords = data.records | filterRecords(data) %}
 {% set traineesThatCanBeRecommended = filteredRecords | filterByReadyToRecommend %}
 
-{% set pageHeading = traineesThatCanBeRecommended | length  + " trainee records recommended for " + traineesThatCanBeRecommended | getQualifications | orSeparate %}
+
+{% if data.bulk.recommendFixErrors %}
+  {% set processedRows = data.bulkUpload.processedRows | where("uploadStatus", "error")  %}
+  {% set processedRows = processedRows | combineArrays(data.bulkUpload.processedRows | where("uploadStatus", "updated")) %}
+{% else %}
+  {% set processedRows = data.bulkUpload.processedRows | where("uploadStatus", "updated") %}
+{% endif %}
+
+{% set pageHeading = processedRows | length  + " trainee records recommended for " + traineesThatCanBeRecommended | getQualifications | orSeparate %}
 
 {% block content %}
 
@@ -18,7 +26,7 @@
       }) }}
 
       <p class="govuk-body">
-        The Department for Education will award {{ traineesThatCanBeRecommended | getQualifications | orSeparate }} where appropriate within 3 working days.
+        The DfE will award {{ traineesThatCanBeRecommended | getQualifications | orSeparate }} where appropriate within 3 working days.
       </p>
 
       <h2 class="govuk-heading-m">

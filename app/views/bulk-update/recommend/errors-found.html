@@ -2,7 +2,7 @@
 
 {% set navActive = 'bulk' %}
 
-{% set pageHeading = "Errors in your trainee records file" %}
+{% set pageHeading = "File uploaded with some errors" %}
 
 {% set bulkPath =  "recommend" %}
 {% set bulkRoute = "recommend" %}
@@ -13,7 +13,5 @@
 {% set updatedCount   = data.bulkUpload.processedRows | where("uploadStatus", "updated") | length  %}
 
 {% block content %}
-
   {% include "_includes/bulk-update/errors-found.html" %}
-
 {% endblock %}

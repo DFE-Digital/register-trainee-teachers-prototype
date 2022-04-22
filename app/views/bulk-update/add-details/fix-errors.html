@@ -24,7 +24,7 @@
     </p>
   {% endset %}
   {% set errorMessage = row.errorMessage %}
-  {% if row.errorMessage == "Assessment date provided without a TRN — add a TRN or remove the assessment date" %}
+  {% if row.errorMessage == "Date standards met provided without a TRN — add a TRN or remove the date standards met" %}
     {% set traineeInfoHtml = "–" %}
   {% endif %}
   {% if row.errorMessage == "TRN not recognised" %}

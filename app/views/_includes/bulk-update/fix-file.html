@@ -1,20 +1,24 @@
+{% if pageContent == "fixErrors" and updatedCount == 0 %}
+  {% include "_includes/bulk-update/upload-summary.html" %}
+{% endif %}
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
     <h1 class="govuk-heading-l">
       <span class="govuk-caption-l">{{ data.signedInProviders | andSeparate }}</span>
       {{ pageHeading }}
     </h1>
-    {% if pageContent == "fixErrors" and updatedCount == 0 %}
-      {% include "_includes/bulk-update/upload-summary.html" %}
-    {% endif %}
-    <h2 class="govuk-heading-m">
-      1. Export a new template or update your original file
+
+    <h2 class="govuk-heading-m app-numbered-list">
+      <span class="app-numbered-list-number">1.</span><span class="app-numbered-list-title">Download a new trainee record file or update the original file</span>
     </h2>
     <p class="govuk-body">
-      <a href="/public/downloads/{{ filePath }}.csv" download="{{ fileName }}">{{ "Trainees ready to be recommened for " + traineesThatCanBeRecommended | getQualifications | orSeparate if bulkPath == "recommend" else "Trainee records with missing details " }} {{ "— with a description of errors" if pageContent == "fixErrors" }} (csv)</a>
+      {{ "If you download a new file the errors will be included in this file." if pageContent == "fixErrors" }} The new file you download will be called ‘<span class="govuk-!-font-weight-bold app-nowrap">{{ fileName }}</span>’
     </p>
-    <h2 class="govuk-heading-m">
-      2. {{ "Fix the errors" if pageContent == "fixErrors" else "Update your trainee records" }}
+    <p class="govuk-body">
+      <a href="/public/downloads/{{ filePath }}.csv" download="{{ fileName }}">Download {{ "trainees ready to be recommened for " + traineesThatCanBeRecommended | getQualifications | orSeparate if bulkPath == "recommend" else "trainee records with missing details " }} {{ "— with a description of errors" if pageContent == "fixErrors" }} (csv)</a>
+    </p>
+    <h2 class="govuk-heading-m app-numbered-list">
+      <span class="app-numbered-list-number">2.</span><span class="app-numbered-list-title"> {{ "Fix the errors" if pageContent == "fixErrors" else "Update your trainee records" }}</span>
     </h2>
     <p class="govuk-body">
       Changes to this file will overwrite previous files. For example, removing a row will mean no changes are made to that trainee’s record.
@@ -35,8 +39,8 @@
 {% endif %}
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
-    <h2 class="govuk-heading-m">
-      3. Upload your trainee records
+    <h2 class="govuk-heading-m app-numbered-list">
+      <span class="app-numbered-list-number">3.</span><span class="app-numbered-list-title"> Upload the trainee record file</span>
     </h2>
     <form action="/bulk-update/{{ bulkPath }}/fix-file" method="post" novalidate>
       {{ govukFileUpload({
@@ -46,7 +50,7 @@
           text: "File type must be ‘csv’."
         },
         label: {
-          text: "Upload a file"
+          text: "Upload the trainee record file"
         },
         attributes: {
           "accept": ".csv"
@@ -60,7 +64,7 @@
       <p class="govuk-body">
         <a href="/bulk-update/{{ bulkPath }}/no-update" class="govuk-link">
           {% if pageContent == "fixErrors" %}
-            Skip fixing errors and review pending updates to trainee records
+            Skip fixing errors and check pending updates to trainee records
           {% else %}
             Return to pending updates without making a change
           {% endif %}

@@ -1,5 +1,5 @@
-TRN,Start academic year,Route and course,Assessment Date
-Do not change this column,Do not change this column,Do not change this column,"When the trainee met the QTS or EYTS.
+TRN,Start academic year,Route and course,Standards met date
+Do not change this column,Do not change this column,Do not change this column,"Add the date when the trainee met QTS or EYTS standards.
 Must be written DD/MM/YYYY. 
 For example, if the trainee met the teaching standard on 20 July 2022, write ‘20/07/2022’.
 The date must be in the past.

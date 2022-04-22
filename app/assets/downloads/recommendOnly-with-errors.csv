@@ -1,5 +1,5 @@
-TRN,Start academic year,Route and course,Assessment Date,
-Do not change this column,Do not change this column,Do not change this column,"When the trainee met the QTS or EYTS.
+TRN,Start academic year,Route and course,Standards met date,
+Do not change this column,Do not change this column,Do not change this column,"Add the date when the trainee met QTS or EYTS standards.
 Must be written DD/MM/YYYY. 
 For example, if the trainee met the teaching standard on 20 July 2022, write ‘20/07/2022’.
 The date must be in the past.
@@ -15,7 +15,7 @@ Design and technology",7/13/2022,
 7222837,2021 to 2022,"Provider-led (postgrad)
 Modern languages (other)",7/19/2022,
 4397456,2021 to 2022,"Provider-led (postgrad)
-Physical education with biology",20/09/2023,Date standards met: ‘20/09/2023’ — assessment date must be in the past
+Physical education with biology",20/09/2023,Date standards met: ‘20/09/2023’ — date standards met must be in the past
 2473855,2021 to 2022,"Teaching apprenticeship (postgrad)
 Primary",6/13/2022,
 4548896,2021 to 2022,"Provider-led (postgrad)
@@ -60,7 +60,7 @@ Physics with health and social care",7/12/2022,TRN not recognised
 3626742,2021 to 2022,"School direct (fee funded)
 Design and technology",7/22/2022,
 7443258,2021 to 2022,"Provider-led (postgrad)
-Physical education with biology",20/09/2023,Date standards met: ‘20/09/2023’ — assessment date must be in the past
+Physical education with biology",20/09/2023,Date standards met: ‘20/09/2023’ — date standards met must be in the past
 7596050,2021 to 2022,"Provider-led (postgrad)
 Physical education with chemistry",7/23/2022,
 7028834,2021 to 2022,"Provider-led (postgrad)

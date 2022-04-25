@@ -7,15 +7,21 @@
     Upload summary:
   </p>
   <ul class="govuk-list govuk-list--bullet">
-    <li>
-      {{ errorCount if errorCount else "No" }} {{ "trainee" | pluralise(errorCount) }} with errors
-    </li>
-    <li>
-      {{ unchangedCount if unchangedCount else "No" }} {{ "trainee" | pluralise(unchangedCount) }} without changes
-    </li>
-    <li>
-      {{ updatedCount if unchangedCount else "No" }} pending {{ "update" | pluralise(updatedCount) }} to trainee records
-    </li>
+    {% if errorCount %}
+      <li>
+        {{ errorCount }} trainee {{ "records" | pluralise(errorCount) }} with errors
+      </li>
+    {% endif %}
+    {% if unchangedCount %}
+      <li>
+        {{ unchangedCount }} trainee {{ "records" | pluralise(unchangedCount) }} without changes
+      </li>
+    {% endif %}
+    {% if unchangedCount %}
+      <li>
+        {{ updatedCount }} pending {{ "update" | pluralise(updatedCount) }} to trainee records
+      </li>
+    {% endif %}
   </ul>
   {%  if updatedCount == 0 %}
     <p class="govuk-body">

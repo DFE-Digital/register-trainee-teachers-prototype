@@ -192,7 +192,7 @@ module.exports = router => {
       let row = {
         rowNumber: index + 1,
         trainee,
-        uploadStatus: weighted.select(["error", "unchanged", "updated"], [0.25, 0.05, 0.7], randomSeeded),
+        uploadStatus: weighted.select(["error", "unchanged", "updated"], [0.003, 0.02, 0.977], randomSeeded),
         assessmentDate: getRandomArbitrary(6, 8) + "/" + getRandomArbitrary(1, 28) + "/" + data.years.endOfCurrentCycle
       }
 

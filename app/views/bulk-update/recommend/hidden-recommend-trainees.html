@@ -6,37 +6,115 @@
 
 {% set rows = data.bulkUpload.processedRows %}
 
-{% set tableBodyRows = [] %}
+{% set trnTextHtml %}
+  Must contain a trainee’s TRN. Delete or add trainees as necessary. <br>
+  TRNs must be 7 digits.
+{% endset %}
+
+{% set dateStandardsMetHtml  %}
+  Add the date when the trainee met QTS or EYTS standards.<br>
+  Must be written DD/MM/YYYY.<br>
+  For example, if the trainee met the teaching standard on 20 July 2022, write ‘20/07/2022’.<br>
+  The date must be in the past.<br>
+  If the trainee has not met the QTS, leave the cell empty or delete the row.
+{% endset %}
+
+{# 
+  =================================================
+  PREPOPULATED
+  =================================================
+ #}
+
+{% set prepopulatedTableBodyRows = [
+    [
+      { text: trnTextHtml | safe },
+      { text: "For reference only." },
+      { text: "For reference only." },
+      { text: dateStandardsMetHtml | safe }
+    ]
+  ] %}
 
 {% for row in rows %}
   {% set routeAndCourse %}
     {{ row.trainee.courseDetails.route }}<br>
     {{ row.trainee.courseDetails.courseNameShort }}
   {% endset %}
-  {% set tableRow = [
-    { text: row.rowNumber },
+  {% set prepopulatedTableRow = [
     { text: row.trainee.trn },
-    { text: row.trainee.personalDetails.shortName },
     { text: row.trainee.academicYear },
     { text: routeAndCourse | safe },
-    { text: row.assessmentDate },
-    { text: row.errorMessage }
+    { text: "" }
   ] %}
-  {% set tableBodyRows = tableBodyRows | push(tableRow) %}
+  {% set prepopulatedTableBodyRows = prepopulatedTableBodyRows | push(prepopulatedTableRow) %}
 {% endfor %}
 
-{% set tableCaption = "Trainee " + 'record' | pluralise(tableBodyRows.length) + " (" + tableBodyRows.length + ")" %}
-{% set tableCaptionClasses = "govuk-table__caption--m" %}
-{% set tableHeadRow = 
+{% set prepopulatedTableHeadRow = 
   [
-    {
-      text: "Row"
-    },
     {
       text: "TRN"
     },
     {
-      text: "Trainee name"
+      text: "Start academic year"
+    },
+    {
+      text: "Route and course"
+    },
+    {
+      text: "Date standards met"
+    }
+  ]
+%}
+
+{# 
+  =================================================
+  ERROR TABLE
+  =================================================
+ #}
+
+{% set errorTableBodyRows = [
+    [
+      { text: trnTextHtml | safe },
+      { text: "For reference only." },
+      { text: "For reference only." },
+      { text: dateStandardsMetHtml | safe },
+      { text: "For reference only." }
+    ]
+  ] %}
+
+{% for row in rows %}
+  {% set routeAndCourse %}
+    {{ row.trainee.courseDetails.route }}<br>
+    {{ row.trainee.courseDetails.courseNameShort }}
+  {% endset %}
+
+  {% if row.errorMessage == "TRN not recognised" or row.errorMessage == "Date standards met provided without a TRN — add a TRN or remove the date standards met" %}
+    {% set traineeReferenceNumber = "?" %}
+  {% else %}
+    {% set traineeReferenceNumber = row.trainee.trn %}
+  {% endif %}
+
+  {% if row.errorMessage == "Date standards met: ‘09/20/2023’ — enter a valid date" %}
+    {% set assessmentDate = "09/20/2023" %}
+  {% elseif row.errorMessage == "Date standards met: ‘20/09/2023’ — Date standards met must be in the past" %}
+    {% set assessmentDate = "20/09/2023" %}
+  {% else %}
+    {% set assessmentDate = row.assessmentDate %}
+  {% endif %}
+
+  {% set errorTableRow = [
+    { text: traineeReferenceNumber },
+    { text: row.trainee.academicYear },
+    { text: routeAndCourse | safe },
+    { text: assessmentDate },
+    { text: row.errorMessage }
+  ] %}
+  {% set errorTableBodyRows = errorTableBodyRows | push(errorTableRow) %}
+{% endfor %}
+
+{% set errorTableHeadRow = 
+  [
+    {
+      text: "TRN"
     },
     {
       text: "Start academic year"
@@ -53,13 +131,75 @@
   ]
 %}
 
+{# 
+  =================================================
+  MAKE CHANGES
+  =================================================
+ #}
+
+{% set makeChangesTableBodyRows = [
+    [
+      { text: trnTextHtml | safe },
+      { text: "For reference only." },
+      { text: "For reference only." },
+      { text: dateStandardsMetHtml | safe }
+    ]
+  ] %}
+
+{% for row in rows %}
+  {% set routeAndCourse %}
+    {{ row.trainee.courseDetails.route }}<br>
+    {{ row.trainee.courseDetails.courseNameShort }}
+  {% endset %}
+
+  {% set makeChangesTableRow = [
+    { text: row.trainee.trn },
+    { text: row.trainee.academicYear },
+    { text: routeAndCourse | safe },
+    { text: row.assessmentDate }
+  ] %}
+  {% set makeChangesTableBodyRows = makeChangesTableBodyRows | push(makeChangesTableRow) %}
+{% endfor %}
+
+{% set makeChangesTableHeadRow = 
+  [
+    {
+      text: "TRN"
+    },
+    {
+      text: "Start academic year"
+    },
+    {
+      text: "Route and course"
+    },
+    {
+      text: "Date standards met"
+    }
+  ]
+%}
+
 {% block content %}
 
+    {{ govukTable({
+      caption: "prepopulated table",
+      head: prepopulatedTableHeadRow,
+      rows: prepopulatedTableBodyRows
+    }) }}
+
+    <hr class="govuk-section-break govuk-section-break--l">
+
   {{ govukTable({
-      caption: tableCaption,
-      captionClasses: tableCaptionClasses,
-      head: tableHeadRow,
-      rows: tableBodyRows
+      caption: "with errors",
+      head: errorTableHeadRow,
+      rows: errorTableBodyRows
+    }) }}
+
+    <hr class="govuk-section-break govuk-section-break--l">
+
+  {{ govukTable({
+      caption: "make changes",
+      head: makeChangesTableHeadRow,
+      rows: makeChangesTableBodyRows
     }) }}
 
 {% endblock %}

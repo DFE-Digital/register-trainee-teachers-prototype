@@ -17,8 +17,6 @@
 
 {% set needAcademicAward = traineesThatCanBeRecommended | filterByAcademicQualificationsApply %}
 
-{% set fileName = data.signedInProviders | makeFileName("trainees to recommend","csv") %}
-
 {% set qualifications = traineesThatCanBeRecommended | getQualifications | orSeparate %}
 
 {% set pageHeading = "Bulk recommend trainees for " + qualifications %}
@@ -35,16 +33,10 @@
       {% if bulkRecommendOnly %}
         {% if traineesThatCanBeRecommended.length > 0 %}
           <p class="govuk-body">
-            Recommend multiple trainees for {{ qualifications }} at the same time.
-          </p>
-          <p class="govuk-body">
             You have {{ traineesThatCanBeRecommended.length }} trainees that you can recommend for {{ qualifications }}.
           </p>
           <p class="govuk-body">
             After you recommend trainees for {{ qualifications }}, the DfE will award {{ qualifications }} (where appropriate) within <span class="app-nowrap">3 working days</span>.
-          </p>
-          <p class="govuk-body">
-            If a trainee has not met {{ qualifications }}, withdraw them manually.
           </p>
         {% else %}
           <p class="govuk-body">
@@ -81,40 +73,24 @@
         <p>
           This file containes all {{ traineesThatCanBeRecommended | length }} trainees that can be recommended for {{ qualifications }}. Delete any trainees you do not want to recommened.
         </p>
-      <p class="govuk-body">
-        <p class="govuk-body">
-          The file you download will be called ‘<span class="govuk-!-font-weight-bold app-nowrap">{{ fileName }}</span>’
-        </p>
-        {% set fileName = data.signedInProviders | makeFileName("trainees to recommend prepopulated","csv") %}
-          <a 
-            href="{{ 
-              '/public/downloads/recommendOnly.csv' if bulkRecommendOnly else '/public/downloads/recommend.csv'
-            }}" 
-            download="{{ fileName }}"
-            class="govuk-link">
-            Download prepopulated file to recommend trainees for {{ qualifications }} (csv)
-          </a>
-        </p>
+        {{ appDownloadLink({
+          linkText: "prepopulated file to recommend trainees for " + qualifications,
+          fileName: "recommendOnly" if bulkRecommendOnly else "recommend",
+          downloadedFileName: (data.signedInProviders + "-trainees to recommend prepopulated") | slugify,
+          fileType: "csv"
+        })}}
         <h3 class="govuk-heading-s">
-          Empty file
+          Empty template file
         </h3>
         <p class="govuk-body">
           This file has the column headings ‘TRN’ and ‘Standards met date’. Add the trainees you want to recommend for {{ qualifications }}.
         </p>
-        {% set fileName = data.signedInProviders | makeFileName("trainees to recommend empty","csv") %}
-        <p class="govuk-body">
-          The file you download will be called ‘<span class="govuk-!-font-weight-bold app-nowrap">{{ fileName }}</span>’
-        </p>
-        <p class="govuk-body">
-          <a 
-            href="{{ 
-              '/public/downloads/recommendOnly-template.csv' if bulkRecommendOnly else '/public/downloads/recommend-template.csv'
-            }}" 
-            download="{{ fileName }}"
-            class="govuk-link">
-            Download the empty file to recommend trainees for {{ qualifications }} (csv)
-          </a>
-        </p>
+        {{ appDownloadLink({
+          linkText: "empty template file to recommend trainees for " + qualifications,
+          fileName: "recommendOnly-template" if bulkRecommendOnly else "recommend-template",
+          downloadedFileName: (data.signedInProviders + "-trainees to recommend template") | slugify,
+          fileType: "csv"
+        })}}
         <{{ headingLevel }} class="govuk-heading-m app-numbered-list">
           <span class="app-numbered-list-number">2.</span><span class="app-numbered-list-content">Add {{ "the date each trainee met " + qualifications if bulkRecommendOnly else "details of the trainee’s outcome" }}</span>
         </{{ headingLevel }}>
@@ -131,6 +107,9 @@
           </p>
           <p class="govuk-body">
             Leave the cell empty if you do not want to recommend the trainee for {{ qualifications }}.
+          </p>
+          <p class="govuk-body">
+            If a trainee has not met {{ qualifications }}, withdraw them manually.
           </p>
         {% else %}
           <p class="govuk-body">

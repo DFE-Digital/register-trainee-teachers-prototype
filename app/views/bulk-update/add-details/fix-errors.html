@@ -58,8 +58,12 @@
   ]
 %}
 
-{% set fileName = data.signedInProviders | makeFileName("fix errors","csv") %}
 {% set bulkPath = "add-details" %}
+
+{% set linkText = "trainees with missing details — with errors" %}
+{% set fileName = "add-details-with-errors" %}
+{% set downloadedFileName = "-fix-errors" %}
+
 
 {% block content %}
 

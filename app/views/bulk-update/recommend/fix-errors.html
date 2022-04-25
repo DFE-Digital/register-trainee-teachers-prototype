@@ -7,9 +7,8 @@
 {% set bulkOnly = true if data.settings.bulkLinksInPrimaryNav == "Show bulk recommend" %}
 {% set pageContent = "fixErrors" %}
 {% set pageHeading = "Fix errors in your pending updates" %}
-{% set filePath = "recommendOnly-with-errors" if bulkOnly else "recommend-with-errors" %}
 
-{% set fileName = data.signedInProviders | makeFileName("fix errors","csv") %}
+
 {% set bulkPath = "recommend" %}
 
 {% set rowsWithErrors = data.bulkUpload.processedRows | where("uploadStatus", "error") %}
@@ -65,6 +64,11 @@
     }
   ]
 %}
+
+{% set qualifications = traineesThatCanBeRecommended | getQualifications | orSeparate %}
+{% set linkText = "trainees ready to be recommened for " + qualifications + " — with errors" %}
+{% set fileName = "recommendOnly-with-errors" if bulkOnly else "recommend-with-errors" %}
+{% set downloadedFileName = "-fix-errors" %}
 
 {% block content %}
 

@@ -10,9 +10,12 @@
 {% set filteredRecords = data.records | filterRecords(data) %}
 {% set traineesThatCanBeRecommended = filteredRecords | filterByReadyToRecommend %}
 
-{% set fileName = data.signedInProviders | makeFileName("change pending","csv") %}
-
 {% set bulkPath = "recommend" %}
+
+{% set qualifications = traineesThatCanBeRecommended | getQualifications | orSeparate %}
+{% set linkText = "trainees ready to be recommended" %}
+{% set fileName = "recommendOnly-with-data" if bulkOnly else "recommend-with-data" %}
+{% set downloadedFileName = "-change-pending" %}
 
 {% block content %}
 

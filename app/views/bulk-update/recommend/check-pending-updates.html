@@ -7,7 +7,6 @@
 {% set filteredRecords = data.records | filterRecords(data) %}
 {% set traineesThatCanBeRecommended = filteredRecords | filterByReadyToRecommend %}
 
-{% set fileName = data.signedInProviders | makeFileName("check pending","csv") %}
 {% set pageHeading = "Check pending updates before recommending trainees for " + traineesThatCanBeRecommended | getQualifications | orSeparate %}
 {% set navActive = 'bulk' %}
 

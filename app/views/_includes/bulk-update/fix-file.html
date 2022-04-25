@@ -11,12 +11,12 @@
     <h2 class="govuk-heading-m app-numbered-list">
       <span class="app-numbered-list-number">1.</span><span class="app-numbered-list-title">Download a new trainee record file or update the original file</span>
     </h2>
-    <p class="govuk-body">
-      {{ "If you download a new file the errors will be included in this file." if pageContent == "fixErrors" }} The new file you download will be called ‘<span class="govuk-!-font-weight-bold app-nowrap">{{ fileName }}</span>’
-    </p>
-    <p class="govuk-body">
-      <a href="/public/downloads/{{ filePath }}.csv" download="{{ fileName }}">Download {{ "trainees ready to be recommened for " + traineesThatCanBeRecommended | getQualifications | orSeparate if bulkPath == "recommend" else "trainee records with missing details " }} {{ "— with a description of errors" if pageContent == "fixErrors" }} (csv)</a>
-    </p>
+    {{ appDownloadLink({
+      linkText: linkText,
+      fileName: fileName,
+      downloadedFileName: (data.signedInProviders + downloadedFileName) | slugify,
+      fileType: "csv"
+    })}}
     <h2 class="govuk-heading-m app-numbered-list">
       <span class="app-numbered-list-number">2.</span><span class="app-numbered-list-title"> {{ "Fix the errors" if pageContent == "fixErrors" else "Update your trainee records" }}</span>
     </h2>

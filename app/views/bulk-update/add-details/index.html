@@ -9,8 +9,6 @@
 {% set traineesWithoutStartDates = traineesThatCanBeUpdated | filterByNeedsStartDate | length %}
 {% set traineesWithoutPlacements = traineesThatCanBeUpdated | filterByNeedsPlacements | length %}
 
-{% set fileName = data.signedInProviders | makeFileName("incomplete trainee records","csv") %}
-
 {% set placementRowHeading = [] %}
 {% for i in range(0, data.settings.minPlacementsRequired) %}
   {% set placementRowHeading = placementRowHeading | push('<span class="app-nowrap">‘Placement ' + loop.index + ' URN’</span>') %}
@@ -30,14 +28,21 @@
       </p>
       <ul class="govuk-list govuk-list--bullet">
         <li>{{ traineesThatCanBeUpdated | length }} that can be bulk updated</li>
-        <li>{{ filteredRecords | filterByCannotBulkUpdate | length }} that cannot be bulk updated and need to be updated manually</li>
+        {% if filteredRecords | filterByCannotBulkUpdate | length > 0 %}
+          <li>
+            {{ filteredRecords | filterByCannotBulkUpdate | length }} that cannot be bulk updated and need to be updated manually
+          </li>
+        {% endif %}
       </ul>
       <h2 class="govuk-heading-m">
         1. Export a template file
       </h2>
-      <p class="govuk-body">
-        <a href="/public/downloads/add-details.csv" download="{{ fileName }}" class="govuk-link">Trainee records with missing details (csv)</a>
-      </p>
+      {{ appDownloadLink({
+        linkText: "trainees with missing details ",
+        fileName: "add-details",
+        downloadedFileName: (data.signedInProviders + "-trainees to add missing prepopulated") | slugify,
+        fileType: "csv"
+      })}}
       <h2 class="govuk-heading-m">
         2. Add missing details
       </h2>

@@ -277,16 +277,4 @@ filters.prettyMonthFromAugust = (monthNumber) => {
   }
 }
 
-/*
-  Makes file names
-*/
-
-filters.makeFileName = (provider, input, fileType) => {
-  if (typeof input === "string") {
-   return strings.slugify(provider + "-" + input) + "." + fileType
-  } else {
-    console.log("Error with makeFileName filter. Input is not a string")
-  }
-}
-
 exports.filters = filters

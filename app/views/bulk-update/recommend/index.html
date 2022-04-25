@@ -74,7 +74,7 @@
           This file containes all {{ traineesThatCanBeRecommended | length }} trainees that can be recommended for {{ qualifications }}. Delete any trainees you do not want to recommened.
         </p>
         {{ appDownloadLink({
-          linkText: "prepopulated file to recommend trainees for " + qualifications,
+          linkText: "a prepopulated file to recommend trainees for " + qualifications,
           fileName: "recommendOnly" if bulkRecommendOnly else "recommend",
           downloadedFileName: (data.signedInProviders + "-trainees to recommend prepopulated") | slugify,
           fileType: "csv"
@@ -86,7 +86,7 @@
           This file has the column headings ‘TRN’ and ‘Standards met date’. Add the trainees you want to recommend for {{ qualifications }}.
         </p>
         {{ appDownloadLink({
-          linkText: "empty template file to recommend trainees for " + qualifications,
+          linkText: "an empty template file to recommend trainees for " + qualifications,
           fileName: "recommendOnly-template" if bulkRecommendOnly else "recommend-template",
           downloadedFileName: (data.signedInProviders + "-trainees to recommend template") | slugify,
           fileType: "csv"

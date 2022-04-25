@@ -1,13 +1,13 @@
 {% include "_includes/bulk-update/upload-summary.html" %}
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
-    {% set errorPluralisation = "error" | pluralise(updatedCount) %}
+    {% set errorPluralisation = "error" | pluralise(errorCount) %}
     <form action="/bulk-update/{{ bulkPath }}/errors-found-answer" method="post" novalidate>
       <span class="govuk-caption-l">{{ data.signedInProviders | andSeparate }}</span>
       {{ govukRadios({
         fieldset: {
           legend: {
-            text: "Do you want to fix the " + errorPluralisation + " now?",
+            text: "Do you want to fix " + errorPluralisation + " now?",
             isPageHeading: true,
             classes: "govuk-fieldset__legend--l"
           }
@@ -15,7 +15,7 @@
         items: [
           { 
             value: "Fix errors now",
-            text: "Yes, review and fix " + errorPluralisation + " now"
+            text: "Yes, fix " + errorPluralisation + " now"
           },
           {
             value: "Skip fixing errors",

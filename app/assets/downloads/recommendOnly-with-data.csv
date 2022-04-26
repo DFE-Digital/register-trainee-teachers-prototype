@@ -1,8 +1,8 @@
 TRN,Start academic year,Route and course,Date standards met
-"Must contain a trainee’s TRN. Delete or add trainees as necessary.
+"Must contain a trainee's TRN. Delete or add trainees as necessary.
 TRNs must be 7 digits.",For reference only.,For reference only.,"Add the date when the trainee met QTS or EYTS standards.
 Must be written DD/MM/YYYY.
-For example, if the trainee met the teaching standard on 20 July 2022, write ‘20/07/2022’.
+For example, if the trainee met the teaching standard on 20 July 2022, write '20/07/2022'.
 The date must be in the past.
 If the trainee has not met the QTS, leave the cell empty or delete the row."
 9837500,2021 to 2022,"Provider-led (postgrad)

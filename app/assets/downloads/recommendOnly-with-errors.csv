@@ -1,8 +1,8 @@
 TRN,Start academic year,Route and course,Date standards met,Error
-"Must contain a trainee’s TRN. Delete or add trainees as necessary.
+"Must contain a trainee's TRN. Delete or add trainees as necessary.
 TRNs must be 7 digits.",For reference only.,For reference only.,"Add the date when the trainee met QTS or EYTS standards.
 Must be written DD/MM/YYYY.
-For example, if the trainee met the teaching standard on 20 July 2022, write ‘20/07/2022’.
+For example, if the trainee met the teaching standard on 20 July 2022, write '20/07/2022'.
 The date must be in the past.
 If the trainee has not met the QTS, leave the cell empty or delete the row.",For reference only.
 9837500,2021 to 2022,"Provider-led (postgrad)
@@ -25,7 +25,7 @@ Biology with chemistry",06/17/2022
 4073732,2021 to 2022,"Provider-led (postgrad)
 Biology with chemistry",3/3/2022
 8675815,2021 to 2022,"Provider-led (postgrad)
-Primary with mathematics",09/20/2023,Date standards met: ‘09/20/2023’ — enter a valid date
+Primary with mathematics",09/20/2023,Date standards met: '09/20/2023' — enter a valid date
 3960844,2021 to 2022,"Provider-led (postgrad)
 Physical education with physics",06/17/2022
 7646286,2021 to 2022,"Provider-led (postgrad)
@@ -44,7 +44,7 @@ Latin",06/24/2022
 Primary",06/17/2022
 9800306,2021 to 2022,Provider-led (undergrad),06/17/2022
 4930476,2021 to 2022,"Provider-led (postgrad)
-Design and technology",09/20/2023,Date standards met: ‘09/20/2023’ — enter a valid date
+Design and technology",09/20/2023,Date standards met: '09/20/2023' — enter a valid date
 5061918,2021 to 2022,"Provider-led (postgrad)
 Design and technology",06/17/2022
 8748026,2021 to 2022,"School direct (fee funded)
@@ -56,7 +56,7 @@ Primary",06/17/2022
 9888335,2021 to 2022,"Provider-led (postgrad)
 Primary with physical education",06/24/2022
 8260100,2021 to 2022,"Provider-led (postgrad)
-Biology with chemistry",20/09/2023,Date standards met: ‘20/09/2023’ — Date standards met must be in the past
+Biology with chemistry",20/09/2023,Date standards met: '20/09/2023' — Date standards met must be in the past
 3073808,2021 to 2022,"Provider-led (postgrad)
 Physical education with physics",06/24/2022
 7347971,2021 to 2022,"Provider-led (postgrad)
@@ -78,7 +78,7 @@ Design and technology",06/10/2022
 6780890,2021 to 2022,"Provider-led (postgrad)
 Modern languages",06/10/2022
 8262628,2021 to 2022,"Provider-led (postgrad)
-Latin",20/09/2023,Date standards met: ‘20/09/2023’ — Date standards met must be in the past
+Latin",20/09/2023,Date standards met: '20/09/2023' — Date standards met must be in the past
 3860744,2021 to 2022,"Provider-led (postgrad)
 Biology with chemistry",06/10/2022
 7769677,2021 to 2022,"School direct (fee funded)
@@ -243,7 +243,7 @@ Modern languages",06/17/2022
 5999712,2021 to 2022,"Provider-led (postgrad)
 Primary",06/10/2022
 8802182,2021 to 2022,"Provider-led (postgrad)
-Latin",20/09/2023,Date standards met: ‘20/09/2023’ — Date standards met must be in the past
+Latin",20/09/2023,Date standards met: '20/09/2023' — Date standards met must be in the past
 4236028,2021 to 2022,"Provider-led (postgrad)
 Physical education with physics",06/10/2022
 4078189,2021 to 2022,"Provider-led (postgrad)

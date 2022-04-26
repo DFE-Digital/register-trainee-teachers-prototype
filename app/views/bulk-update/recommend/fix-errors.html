@@ -38,7 +38,7 @@
   {% endif %}
 
   {% set tableRow = [
-    { text: row.rowNumber },
+    { text: row.rowNumber + 2 },
     { text: traineeInfoHtml | safe },
     { text: errorMessage | safe }
   ] %}

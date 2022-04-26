@@ -103,7 +103,7 @@
           </p>
           <p class="govuk-body">
             The date must be written in the format <span class="app-nowrap">‘DD/MM/YYYY’</span>.
-            For example, if the trainee met the standard on <span class="app-nowrap">20 June {{ data.years.defaultCourseYear }}</span>, write <span class="app-nowrap">‘20/07/{{ data.years.defaultCourseYear }}’</span>.
+            For example, if the trainee met the standard on <span class="app-nowrap">20 June {{ data.years.endOfCurrentCycle }}</span>, write <span class="app-nowrap">‘20/07/{{ data.years.endOfCurrentCycle }}’</span>.
           </p>
         {% else %}
           <p class="govuk-body">
@@ -120,7 +120,7 @@
           </p>
           <p class="govuk-body">
             The date must be written in the format <span class="app-nowrap">‘DD/MM/YYYY’</span>.
-            For example, if the trainee met the standard on <span class="app-nowrap">20 June {{ data.years.defaultCourseYear }}</span>, write <span class="app-nowrap">‘20/07/{{ data.years.defaultCourseYear }}’</span>.
+            For example, if the trainee met the standard on <span class="app-nowrap">20 June {{ data.years.endOfCurrentCycle }}</span>, write <span class="app-nowrap">‘20/07/{{ data.years.endOfCurrentCycle }}’</span>.
           </p>
 
             {% if needAcademicAward | filterByPostgraduate %}
@@ -128,8 +128,7 @@
               Postgraduate academic qualification
             </h3>
               <p class="govuk-body">
-                For postgraduate trainees, in the column ‘Postgraduate qualification’ add one of these
-                options:
+                For postgraduate trainees, in the column ‘Postgraduate qualification’ add one of these options:
               </p>
               <ul class="govuk-list govuk-list--bullet">
                 <li>PGCE</li>

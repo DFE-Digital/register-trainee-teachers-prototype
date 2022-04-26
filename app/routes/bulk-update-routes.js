@@ -202,7 +202,7 @@ module.exports = router => {
 
       if (row.uploadStatus == "error") {
         // row.errorMessage = utils.pickRandom(templateErrors, randomSeeded)
-        row.errorMessage = weighted.select(["Date standards met provided without a TRN — add a TRN or remove the date standards met", "Date standards met: ‘20/09/2023’ — Date standards met must be in the past"], [0.75, 0.25], randomSeeded)
+        row.errorMessage = weighted.select(["Date standards met provided without a TRN - add a TRN or remove the date standards met", "Date standards met: '20/09/2023' - date standards met must be in the past"], [0.75, 0.25], randomSeeded)
       }
 
       return row

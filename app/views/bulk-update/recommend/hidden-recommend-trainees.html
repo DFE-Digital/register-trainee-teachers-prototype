@@ -87,18 +87,18 @@
     {{ row.trainee.courseDetails.courseNameShort }}
   {% endset %}
 
-  {% if row.errorMessage == "TRN not recognised" or row.errorMessage == "Date standards met provided without a TRN — add a TRN or remove the date standards met" %}
+  {% if row.errorMessage == "TRN not recognised" or row.errorMessage == "Date standards met provided without a TRN - add a TRN or remove the date standards met" %}
     {% set traineeReferenceNumber = "" %}
   {% else %}
     {% set traineeReferenceNumber = row.trainee.trn %}
   {% endif %}
 
-  {% if row.errorMessage == "Date standards met: '09/20/2023' — enter a valid date" %}
+  {% if row.errorMessage == "Date standards met: '09/20/2023' - enter a valid date" %}
     {% set assessmentDate = "09/20/2023" %}
-  {% elseif row.errorMessage == "Date standards met: '20/09/2023' — Date standards met must be in the past" %}
+  {% elseif row.errorMessage == "Date standards met: '20/09/2023' - date standards met must be in the past" %}
     {% set assessmentDate = "20/09/2023" %}
   {% else %}
-    {% set assessmentDate = row.assessmentDate %}
+    {% set assessmentDate = row.assessmentDate | formatDate('slashDateForward') %}
   {% endif %}
 
   {% set errorTableRow = [
@@ -151,12 +151,13 @@
     {{ row.trainee.courseDetails.route }}<br>
     {{ row.trainee.courseDetails.courseNameShort }}
   {% endset %}
+  {% set assessmentDate = row.assessmentDate | formatDate('slashDateForward') %}
 
   {% set makeChangesTableRow = [
     { text: row.trainee.trn },
     { text: row.trainee.academicYear },
     { text: routeAndCourse | safe },
-    { text: row.assessmentDate }
+    { text: assessmentDate }
   ] %}
   {% set makeChangesTableBodyRows = makeChangesTableBodyRows | push(makeChangesTableRow) %}
 {% endfor %}

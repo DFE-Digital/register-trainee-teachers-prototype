@@ -7,14 +7,14 @@
 {% set rows = data.bulkUpload.processedRows %}
 
 {% set trnTextHtml %}
-  Must contain a trainee’s TRN. Delete or add trainees as necessary. <br>
+  Must contain a trainee's TRN. Delete or add trainees as necessary. <br>
   TRNs must be 7 digits.
 {% endset %}
 
 {% set dateStandardsMetHtml  %}
   Add the date when the trainee met QTS or EYTS standards.<br>
   Must be written DD/MM/YYYY.<br>
-  For example, if the trainee met the teaching standard on 20 July 2022, write ‘20/07/2022’.<br>
+  For example, if the trainee met the teaching standard on 20 July 2022, write '20/07/2022'.<br>
   The date must be in the past.<br>
   If the trainee has not met the QTS, leave the cell empty or delete the row.
 {% endset %}
@@ -88,14 +88,14 @@
   {% endset %}
 
   {% if row.errorMessage == "TRN not recognised" or row.errorMessage == "Date standards met provided without a TRN — add a TRN or remove the date standards met" %}
-    {% set traineeReferenceNumber = "?" %}
+    {% set traineeReferenceNumber = "" %}
   {% else %}
     {% set traineeReferenceNumber = row.trainee.trn %}
   {% endif %}
 
-  {% if row.errorMessage == "Date standards met: ‘09/20/2023’ — enter a valid date" %}
+  {% if row.errorMessage == "Date standards met: '09/20/2023' — enter a valid date" %}
     {% set assessmentDate = "09/20/2023" %}
-  {% elseif row.errorMessage == "Date standards met: ‘20/09/2023’ — Date standards met must be in the past" %}
+  {% elseif row.errorMessage == "Date standards met: '20/09/2023' — Date standards met must be in the past" %}
     {% set assessmentDate = "20/09/2023" %}
   {% else %}
     {% set assessmentDate = row.assessmentDate %}

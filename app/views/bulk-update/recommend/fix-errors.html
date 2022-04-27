@@ -24,8 +24,11 @@
     <p class="govuk-body govuk-!-margin-bottom-1">
       {{ row.trainee.personalDetails.shortName }}
     </p>
+    <p class="govuk-body govuk-hint govuk-!-margin-bottom-1">
+      TRN: {{ row.trainee.trn }}
+    </p>
     <p class="govuk-body govuk-hint govuk-!-margin-bottom-0">
-      {{ row.trainee.trn }}
+      Trainee ID: {{ row.trainee.reference }}
     </p>
   {% endset %}
   {% set errorMessage = row.errorMessage %}
@@ -35,6 +38,15 @@
     {% set errorMessage = 'TRN: ‘' + row.trainee.trn + '’, enter a valid TRN' %}
   {% elseif errorMessage == 'Date standards met provided without a TRN - add a TRN or remove the date standards met' %}
     {% set traineeInfoHtml = '–' %}
+  {% elseif errorMessage == 'TRN and Trainee ID are not for the same trainee' %}
+    {% set traineeInfoHtml %}
+      <p class="govuk-body govuk-!-margin-bottom-1">
+        TRN: {{ row.trainee.trn }}
+      </p>
+      <p class="govuk-body govuk-!-margin-bottom-0">
+        Trainee ID: {{ row.trainee.reference }}
+      </p>
+    {% endset %}
   {% endif %}
 
   {% set tableRow = [

@@ -15,39 +15,47 @@
 {% if bulkOnly %}
   {% set tableHeadRow = [
       {
-        text: "Trainee",
-        classes: "app-table__column-25"
+        text: "Name",
+        classes: "app-table__column-20"
+      },
+      {
+        text: "ID",
+        classes: "app-table__column-20"
       },
       {
         text: "Start academic year",
-        classes: "app-table__column-25"
-      } if bulkOnly,
+        classes: "app-table__column-20"
+      },
       {
         text: "Route and course",
-        classes: "app-table__column-25"
+        classes: "app-table__column-20"
       },
       {
         text: "Date standards met",
-        classes: "app-table__column-25"
+        classes: "app-table__column-20"
       }
     ]%}
 {% else %}
     {% set tableHeadRow = [
       {
-        text: "Trainee",
-        classes: "app-table__column-25"
+        text: "Name",
+        classes: "app-table__column-20"
+      },
+      {
+        text: "ID",
+        classes: "app-table__column-20"
       },
       {
         text: "Route and course",
-        classes: "app-table__column-25"
+        classes: "app-table__column-20"
       },
       {
         text: "Postgraduate qualification",
-        classes: "app-table__column-25"
+        classes: "app-table__column-20"
       },
       {
         text: "Date standards met",
-        classes: "app-table__column-25"
+        classes: "app-table__column-20"
       }
     ]%}
 {% endif %}
@@ -70,12 +78,12 @@
 
 {% for row in processedRows %}
 
-  {% set traineeInfoHtml %}
-    <p class="govuk-body govuk-!-margin-bottom-1">
-      {{ row.trainee.personalDetails.shortName }}
+  {% set traineeIdHtml %}
+    <p class="govuk-body govuk-hint govuk-!-margin-bottom-1">
+      TRN: {{ row.trainee.trn }}
     </p>
     <p class="govuk-body govuk-hint govuk-!-margin-bottom-0">
-      {{ row.trainee.trn }}
+      Trainee ID: {{ row.trainee.reference }}
     </p>
   {% endset %}
 
@@ -101,10 +109,11 @@
 
     {% if bulkOnly %}
       {% set tableRow = [
-        { text: traineeInfoHtml    | safe },
-        { text: row.trainee.academicYear },
-        { text: routeAndCourseHtml | safe },
-        { text: row.assessmentDate | govukDate }
+        { text: row.trainee.personalDetails.shortName },
+        { text: traineeIdHtml                  | safe },
+        { text: row.trainee.academicYear              },
+        { text: routeAndCourseHtml             | safe },
+        { text: row.assessmentDate        | govukDate }
       ]%}
     {% else %}
       {% set tableRow = [

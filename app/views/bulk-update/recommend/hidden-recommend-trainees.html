@@ -7,8 +7,13 @@
 {% set rows = data.bulkUpload.processedRows %}
 
 {% set trnTextHtml %}
-  Must contain a trainee's TRN. Delete or add trainees as necessary. <br>
-  TRNs must be 7 digits.
+  Must contain a trainee's TRN, or be empty.<br>
+  Delete or add trainees as necessary.
+{% endset %}
+
+{% set traineeIdText %}
+  Must contain your ID for the trainee, or be empty.<br>
+  Delete or add trainees as necessary.
 {% endset %}
 
 {% set dateStandardsMetHtml  %}
@@ -19,6 +24,7 @@
   If the trainee has not met the QTS, leave the cell empty or delete the row.
 {% endset %}
 
+
 {# 
   =================================================
   PREPOPULATED
@@ -28,6 +34,7 @@
 {% set prepopulatedTableBodyRows = [
     [
       { text: trnTextHtml | safe },
+      { text: traineeIdText | safe },
       { text: "For reference only." },
       { text: "For reference only." },
       { text: dateStandardsMetHtml | safe }
@@ -41,6 +48,7 @@
   {% endset %}
   {% set prepopulatedTableRow = [
     { text: row.trainee.trn },
+    { text: row.trainee.reference },
     { text: row.trainee.academicYear },
     { text: routeAndCourse | safe },
     { text: "" }
@@ -52,6 +60,9 @@
   [
     {
       text: "TRN"
+    },
+    {
+      text: "Trainee ID"
     },
     {
       text: "Start academic year"
@@ -74,6 +85,7 @@
 {% set errorTableBodyRows = [
     [
       { text: trnTextHtml | safe },
+      { text: traineeIdText | safe },
       { text: "For reference only." },
       { text: "For reference only." },
       { text: dateStandardsMetHtml | safe },
@@ -103,6 +115,7 @@
 
   {% set errorTableRow = [
     { text: traineeReferenceNumber },
+    { text: row.trainee.reference },
     { text: row.trainee.academicYear },
     { text: routeAndCourse | safe },
     { text: assessmentDate },
@@ -115,6 +128,9 @@
   [
     {
       text: "TRN"
+    },
+    {
+      text: "Trainee ID"
     },
     {
       text: "Start academic year"
@@ -140,6 +156,7 @@
 {% set makeChangesTableBodyRows = [
     [
       { text: trnTextHtml | safe },
+      { text: traineeIdText | safe },
       { text: "For reference only." },
       { text: "For reference only." },
       { text: dateStandardsMetHtml | safe }
@@ -155,6 +172,7 @@
 
   {% set makeChangesTableRow = [
     { text: row.trainee.trn },
+    { text: row.trainee.reference },
     { text: row.trainee.academicYear },
     { text: routeAndCourse | safe },
     { text: assessmentDate }
@@ -166,6 +184,9 @@
   [
     {
       text: "TRN"
+    },
+    {
+      text: "Trainee ID"
     },
     {
       text: "Start academic year"

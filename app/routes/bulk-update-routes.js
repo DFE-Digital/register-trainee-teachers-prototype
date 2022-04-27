@@ -74,12 +74,12 @@ module.exports = router => {
     let randomSeeded = seedRandom("update")
 
     let templateErrors = [
-      'TRN not recognised',
-      'TRN missing',
-      'Trainee start date: ‘07/20/2023’ — enter a valid start date',
-      'Trainee start date: ‘20/07/2023’ — trainee start date must be in the past',
-      'URN not recognised',
-      'school is closed'
+      "TRN not recognised",
+      "TRN missing",
+      "Trainee start date: '07/20/2023' — enter a valid start date",
+      "Trainee start date: '20/07/2023' — trainee start date must be in the past",
+      "URN not recognised",
+      "school is closed"
     ]
 
     /* For each record, randomly pick whether it's ok, in error, or unchanged. If in error, pick a random error */
@@ -102,9 +102,9 @@ module.exports = router => {
       if (row.errorMessage == "URN not recognised" || row.errorMessage == "school is closed") {
 
         if (row.trainee?.placement?.items && row.trainee?.placement?.items.length) {
-          row.errorMessage = "URN: ‘" + row.trainee.placement?.items[0]?.school?.urn + "’ — " + row.errorMessage
+          row.errorMessage = "URN: '" + row.trainee.placement?.items[0]?.school?.urn + "' — " + row.errorMessage
         } else {
-          row.errorMessage = "URN: ‘231231’ – URN not recognised"
+          row.errorMessage = "URN: '231231' – URN not recognised"
         }
       }
       return row
@@ -174,17 +174,20 @@ module.exports = router => {
 
     // Hiding these for research purposes
     // let templateErrors = [
-    //   'TRN not recognised',
-    //   'Date standards met provided without a TRN — add a TRN or remove the date standards met',
-    //   'Date standards met: ‘09/20/2023’ — enter a valid date',
-    //   'Date standards met: ‘20/09/2023’ — Date standards met must be in the past'
+    //   "TRN not recognised",
+    //   "TRN and Trainee ID are not for the same trainee",
+    //   "Trainee record is missing details and cannot be recommended",
+    //   "Trainee has already been recommended for QTS",
+    //   "Date standards met provided without a TRN or Trainee ID - add a TRN or Trainee ID or remove the date standards met",
+    //   "Date standards met: '09/20/2023' — enter a valid date",
+    //   "Date standards met: '20/09/2023' — Date standards met must be in the past"
     // ]
 
     // if (data.settings.bulkLinksInPrimaryNav != "Show bulk recommend") {
     //   templateErrors.push(
-    //     'Postgraduate qualification: ‘BA (Hons)’ — enter ‘PGCE’, ‘PGDE’ or ‘None’ for postgraduate qualification',
-    //     'Postgraduate qualification: ‘PGCE’ — trainees on undergraduate courses cannot be awarded a postgraduate qualification',
-    //     'Postgraduate qualification missing. If the trainee did not get a postgraduate qualification enter ‘None’'
+    //     "Postgraduate qualification: 'BA (Hons)' — enter 'PGCE', 'PGDE' or 'None' for postgraduate qualification",
+    //     "Postgraduate qualification: 'PGCE' — trainees on undergraduate courses cannot be awarded a postgraduate qualification",
+    //     "Postgraduate qualification missing. If the trainee did not get a postgraduate qualification enter 'None'"
     //   )
     // }
 
@@ -196,13 +199,18 @@ module.exports = router => {
       let row = {
         rowNumber: index + 1,
         trainee,
-        uploadStatus: weighted.select(["error", "unchanged", "updated"], [0.01, 0.02, 0.97], randomSeeded),
-        assessmentDate: weighted.select(["06/10/" + data.years.endOfCurrentCycle, "06/17/" + data.years.endOfCurrentCycle, "06/24/" + data.years.endOfCurrentCycle, wildCardDate], [0.325, 0.3, 0.325, 0.05], randomSeeded),
+        uploadStatus: weighted.select(["error", "unchanged", "updated"], [0.02, 0.02, 0.96], randomSeeded),
+        assessmentDate: weighted.select(["06/10/" + data.years.endOfCurrentCycle, "06/17/" + data.years.endOfCurrentCycle, "06/24/" + data.years.endOfCurrentCycle, wildCardDate], [0.5, 0.2, 0.2, 0.1], randomSeeded),
       }
 
       if (row.uploadStatus == "error") {
         // row.errorMessage = utils.pickRandom(templateErrors, randomSeeded)
-        row.errorMessage = weighted.select(["Date standards met provided without a TRN - add a TRN or remove the date standards met", "Date standards met: '20/09/2023' - date standards met must be in the past"], [0.75, 0.25], randomSeeded)
+        row.errorMessage = weighted.select([
+            "Date standards met provided without a TRN or Trainee ID - add a TRN or Trainee ID or remove the date standards met", 
+            "Date standards met: '20/09/2023' - date standards met must be in the past",
+            "TRN and Trainee ID are not for the same trainee",
+          ], 
+          [0.25, 0.5, 0.25], randomSeeded)
       }
 
       return row

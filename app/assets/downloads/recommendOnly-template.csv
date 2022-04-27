@@ -1,6 +1,7 @@
 TRN,Trainee ID,Date standards met
 "Add the TRN for trainees you want to recommend.
-Can be blank if Trainee ID is provided","Your ID for the trainee.
+
+Can be blank if Trainee ID is provided.","Add your ID for the trainee you want to recommend.
 
 Can be blank if TRN is provided.","Add the date when the trainee met QTS or EYTS standards.
 Must be written DD/MM/YYYY. 

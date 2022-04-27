@@ -208,17 +208,7 @@ module.exports = router => {
       return row
     })
 
-    processedRows.sort(function(a, b) {
-      const traineeA = a.trainee.personalDetails.familyName.toUpperCase()
-      const traineeB = b.trainee.personalDetails.familyName.toUpperCase()
-      if (traineeA < traineeB) {
-        return -1
-      }
-      if (traineeA > traineeB) {
-        return 1
-      }
-      return 0
-    })
+    processedRows.sort((a, b) => utils.sortAlphabetical(a.trainee.personalDetails.familyName, b.trainee.personalDetails.familyName))
 
     data.bulkUpload = {
       processedRows

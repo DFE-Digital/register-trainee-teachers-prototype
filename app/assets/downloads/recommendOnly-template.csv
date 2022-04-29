@@ -1,7 +1,7 @@
 TRN,Provider trainee ID,Date standards met
-"Add the TRN for trainees you want to recommend.  Can be blank if Trainee ID is provided","Add the Trainee ID for trainees you want to recommend.
+"Add the TRN for trainees you want to recommend. Can be empty if Provider trainee ID is provided","Add your trainee ID for trainees you want to recommend.
 
-Can be left blank if TRN is provided","Add the date when the trainee met QTS or EYTS standards.
+Can be empty if TRN is provided","Add the date when the trainee met QTS or EYTS standards.
 Must be written DD/MM/YYYY. 
 For example, if the trainee met the teaching standard on 20 July 2022, write '20/07/2022'.
 The date must be in the past.

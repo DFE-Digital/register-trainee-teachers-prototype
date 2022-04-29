@@ -194,7 +194,7 @@ module.exports = router => {
     /* For each record, randomly pick whether it's ok, in error, or unchanged. If in error, pick a random error */
     let processedRows = uploadedTrainees.map((trainee, index) => {
 
-        let wildCardDate = getRandomArbitrary(1, 6) + "/" + getRandomArbitrary(1, 28) + "/" + data.years.endOfCurrentCycle
+      let wildCardDate = getRandomArbitrary(1, 6) + "/" + getRandomArbitrary(1, 28) + "/" + data.years.endOfCurrentCycle
 
       let row = {
         rowNumber: index + 1,

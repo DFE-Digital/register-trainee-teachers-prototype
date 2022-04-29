@@ -71,7 +71,10 @@
           Prepopulated file
         </h3>
         <p>
-          This file containes all {{ traineesThatCanBeRecommended | length }} trainees that can be recommended for {{ qualifications }}. Delete any trainees you do not want to recommened.
+          This file containes all {{ traineesThatCanBeRecommended | length }} trainees that can be recommended for {{ qualifications }}.
+        </p>
+        <p class="govuk-body">
+          Delete any trainees you do not want to recommened.
         </p>
         {{ appDownloadLink({
           linkText: "a prepopulated file to recommend trainees for " + qualifications,
@@ -83,8 +86,9 @@
           Empty template file
         </h3>
         <p class="govuk-body">
-          This file has the column headings ‘TRN’ and ‘Date standards met’. Add the trainees you want to recommend for {{ qualifications }}.
+          This file has the column headings ‘TRN’, <span class="app-nowrap">‘Trainee ID’</span> and <span class="app-nowrap">‘Date standards met’</span>.
         </p>
+        <p>Add the trainees you want to recommend for {{ qualifications }}.</p>
         {{ appDownloadLink({
           linkText: "an empty template file to recommend trainees for " + qualifications,
           fileName: "recommendOnly-template" if bulkRecommendOnly else "recommend-template",

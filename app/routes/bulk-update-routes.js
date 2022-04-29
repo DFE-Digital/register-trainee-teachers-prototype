@@ -175,10 +175,10 @@ module.exports = router => {
     // Hiding these for research purposes
     // let templateErrors = [
     //   "TRN not recognised",
-    //   "TRN and Trainee ID are not for the same trainee",
+    //   "TRN and Provider trainee ID are not for the same trainee",
     //   "Trainee record is missing details and cannot be recommended",
     //   "Trainee has already been recommended for QTS",
-    //   "Date standards met provided without a TRN or Trainee ID - add a TRN or Trainee ID or remove the date standards met",
+    //   "Date standards met provided without a TRN or Provider trainee ID - add a TRN or Provider trainee ID or remove the date standards met",
     //   "Date standards met: '09/20/2023' — enter a valid date",
     //   "Date standards met: '20/09/2023' — Date standards met must be in the past"
     // ]
@@ -197,7 +197,6 @@ module.exports = router => {
       let wildCardDate = getRandomArbitrary(1, 6) + "/" + getRandomArbitrary(1, 28) + "/" + data.years.endOfCurrentCycle
 
       let row = {
-        rowNumber: index + 1,
         trainee,
         uploadStatus: weighted.select(["error", "unchanged", "updated"], [0.02, 0.02, 0.96], randomSeeded),
         assessmentDate: weighted.select(["06/10/" + data.years.endOfCurrentCycle, "06/17/" + data.years.endOfCurrentCycle, "06/24/" + data.years.endOfCurrentCycle, wildCardDate], [0.5, 0.2, 0.2, 0.1], randomSeeded),
@@ -206,9 +205,9 @@ module.exports = router => {
       if (row.uploadStatus == "error") {
         // row.errorMessage = utils.pickRandom(templateErrors, randomSeeded)
         row.errorMessage = weighted.select([
-            "Date standards met provided without a TRN or Trainee ID - add a TRN or Trainee ID or remove the date standards met", 
+            "Date standards met provided without a TRN or Provider trainee ID - add a TRN or Provider trainee ID or remove the date standards met", 
             "Date standards met: '20/09/2023' - date standards met must be in the past",
-            "TRN and Trainee ID are not for the same trainee",
+            "TRN and Provider trainee ID are not for the same trainee",
           ], 
           [0.25, 0.5, 0.25], randomSeeded)
       }
@@ -217,6 +216,10 @@ module.exports = router => {
     })
 
     processedRows.sort((a, b) => utils.sortAlphabetical(a.trainee.personalDetails.familyName, b.trainee.personalDetails.familyName))
+
+    processedRows.forEach((row, index) => {
+      row.rowNumber = index + 1
+    })
 
     data.bulkUpload = {
       processedRows

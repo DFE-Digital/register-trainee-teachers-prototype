@@ -1,4 +1,4 @@
-TRN,Provider trainee ID,First names,Last names,Start academic year,Route and course,Date standards met
+TRN,Provider trainee ID,Last names,First names,Start academic year,Route and course,Date standards met
 "Must contain a trainee's TRN, or be empty.
 Delete or add trainees as necessary.","Must contain your ID for the trainee, or be empty.
 Delete or add trainees as necessary.",For reference only,For reference only,For reference only,"Add the date when the trainee met QTS or EYTS standards.
@@ -6,248 +6,248 @@ Must be written DD/MM/YYYY.
 For example, if the trainee met the teaching standard on 20 July 2022, write '20/07/2022'.
 The date must be in the past.
 If the trainee has not met the QTS, leave the cell empty or delete the row.",
-6666531,GD6448,Jack,Abshire,2021 to 2022,"School direct (fee funded)
+6666531,GD6448,Abshire,Jack,2021 to 2022,"School direct (fee funded)
 Biology with chemistry",
-4912274,PD4888,Terrence,Altenwerth,2021 to 2022,"Provider-led (postgrad)
+4912274,PD4888,Altenwerth,Terrence,2021 to 2022,"Provider-led (postgrad)
 Primary with physical education",
-1995355,BC3735,Al,Auer,2021 to 2022,"Provider-led (postgrad)
+1995355,BC3735,Auer,Al,2021 to 2022,"Provider-led (postgrad)
 Physical education with physics",
-7004997,XX4142,Angelo,Auer,2021 to 2022,"School direct (fee funded)
+7004997,XX4142,Auer,Angelo,2021 to 2022,"School direct (fee funded)
 Physical education",
-8260100,SK3817,Joanne,Aufderhar,2021 to 2022,"Provider-led (postgrad)
+8260100,SK3817,Aufderhar,Joanne,2021 to 2022,"Provider-led (postgrad)
 Biology with chemistry",
-1069262,YM8630,June,Bailey,2021 to 2022,"Provider-led (postgrad)
+1069262,YM8630,Bailey,June,2021 to 2022,"Provider-led (postgrad)
 Latin",
-3417658,DN8645,Yolanda,Barrows,2021 to 2022,"Provider-led (postgrad)
+3417658,DN8645,Barrows,Yolanda,2021 to 2022,"Provider-led (postgrad)
 Design and technology",
-4078189,AC7745,Isaac,Barton,2021 to 2022,"Provider-led (postgrad)
+4078189,AC7745,Barton,Isaac,2021 to 2022,"Provider-led (postgrad)
 Latin",
-7900253,ST6988,Jose,Batz,2021 to 2022,"Provider-led (postgrad)
+7900253,ST6988,Batz,Jose,2021 to 2022,"Provider-led (postgrad)
 Primary",
-5646510,RC3608,Rafael,Beatty,2021 to 2022,"School direct (salaried)
+5646510,RC3608,Beatty,Rafael,2021 to 2022,"School direct (salaried)
 Italian",
-8744159,HL2974,Lester,Beer,2021 to 2022,Provider-led (undergrad),
-2732947,RS1429,Jaime,Beier,2021 to 2022,"Provider-led (postgrad)
+8744159,HL2974,Beer,Lester,2021 to 2022,Provider-led (undergrad),
+2732947,RS1429,Beier,Jaime,2021 to 2022,"Provider-led (postgrad)
 Design and technology",
-9837500,RN4482,Olive,Benoit,2021 to 2022,"Provider-led (postgrad)
+9837500,RN4482,Benoit,Olive,2021 to 2022,"Provider-led (postgrad)
 Physical education with physics",
-7851957,NH4668,Émeric,Bertrand,2021 to 2022,"Provider-led (postgrad)
+7851957,NH4668,Bertrand,Émeric,2021 to 2022,"Provider-led (postgrad)
 Latin",
-9956721,FC3909,Irving,Boehm,2021 to 2022,"Provider-led (postgrad)
+9956721,FC3909,Boehm,Irving,2021 to 2022,"Provider-led (postgrad)
 Modern languages",
-4641293,QB7031,Mario,Borer,2021 to 2022,"Provider-led (postgrad)
+4641293,QB7031,Borer,Mario,2021 to 2022,"Provider-led (postgrad)
 Physical education with physics",
-5578493,XR1159,Doris,Botsford,2021 to 2022,"Provider-led (postgrad)
+5578493,XR1159,Botsford,Doris,2021 to 2022,"Provider-led (postgrad)
 Latin",
-8691476,DM8266,Vickie,Bradtke,2021 to 2022,"Provider-led (postgrad)
+8691476,DM8266,Bradtke,Vickie,2021 to 2022,"Provider-led (postgrad)
 Physical education with physics",
-4930476,EC6238,Laureline,Caron,2021 to 2022,"Provider-led (postgrad)
+4930476,EC6238,Caron,Laureline,2021 to 2022,"Provider-led (postgrad)
 Design and technology",
-6408379,LM5954,Eudoxe,Caron,2021 to 2022,Provider-led (undergrad),
-8537680,YM1278,Raoul,Carpentier,2021 to 2022,"Provider-led (postgrad)
+6408379,LM5954,Caron,Eudoxe,2021 to 2022,Provider-led (undergrad),
+8537680,YM1278,Carpentier,Raoul,2021 to 2022,"Provider-led (postgrad)
 Design and technology",
-5751332,LP2348,Pearl,Champlin,2021 to 2022,"School direct (fee funded)
+5751332,LP2348,Champlin,Pearl,2021 to 2022,"School direct (fee funded)
 Primary",
-9719346,PB6404,Christine,Chevalier,2021 to 2022,"Provider-led (postgrad)
+9719346,PB6404,Chevalier,Christine,2021 to 2022,"Provider-led (postgrad)
 Physical education with physics",
-8457026,CH1495,Gary,Collier,2021 to 2022,"School direct (salaried)
+8457026,CH1495,Collier,Gary,2021 to 2022,"School direct (salaried)
 Primary with modern languages",
-3904024,SK9525,Patty,Collins,2021 to 2022,"Provider-led (postgrad)
+3904024,SK9525,Collins,Patty,2021 to 2022,"Provider-led (postgrad)
 Latin",
-9457054,RT7878,Francisco,Considine,2021 to 2022,"Provider-led (postgrad)
+9457054,RT7878,Considine,Francisco,2021 to 2022,"Provider-led (postgrad)
 Design and technology",
-6896165,CG5580,Alcyone,Da silva,2021 to 2022,"School direct (fee funded)
+6896165,CG5580,Da silva,Alcyone,2021 to 2022,"School direct (fee funded)
 Design and technology with English",
-8832625,HD9024,Max,Deckow,2021 to 2022,"School direct (fee funded)
+8832625,HD9024,Deckow,Max,2021 to 2022,"School direct (fee funded)
 Physical education",
-7999914,DQ9717,Carla,Deckow,2021 to 2022,"Provider-led (postgrad)
+7999914,DQ9717,Deckow,Carla,2021 to 2022,"Provider-led (postgrad)
 Design and technology",
-3007806,LY3676,Shannon,Dickens,2021 to 2022,"Provider-led (postgrad)
+3007806,LY3676,Dickens,Shannon,2021 to 2022,"Provider-led (postgrad)
 Design and technology",
-9410956,AF9403,Omar,Donnelly,2021 to 2022,"Provider-led (postgrad)
+9410956,AF9403,Donnelly,Omar,2021 to 2022,"Provider-led (postgrad)
 Primary with mathematics",
-1256500,MQ9676,Lucien,Dupuis,2021 to 2022,"Provider-led (postgrad)
+1256500,MQ9676,Dupuis,Lucien,2021 to 2022,"Provider-led (postgrad)
 Biology with chemistry",
-8441731,GM2375,Gene,Durgan,2021 to 2022,"Provider-led (postgrad)
+8441731,GM2375,Durgan,Gene,2021 to 2022,"Provider-led (postgrad)
 Modern languages",
-3738544,NZ7230,Jacqueline,Durgan,2021 to 2022,"Provider-led (postgrad)
+3738544,NZ7230,Durgan,Jacqueline,2021 to 2022,"Provider-led (postgrad)
 Latin",
-2827462,CN4219,Julia,Erdman,2021 to 2022,Provider-led (undergrad),
-3073808,QB3717,Theresa,Fahey,2021 to 2022,"Provider-led (postgrad)
+2827462,CN4219,Erdman,Julia,2021 to 2022,Provider-led (undergrad),
+3073808,QB3717,Fahey,Theresa,2021 to 2022,"Provider-led (postgrad)
 Physical education with physics",
-4700830,HG4569,Marion,Flatley,2021 to 2022,"Provider-led (postgrad)
+4700830,HG4569,Flatley,Marion,2021 to 2022,"Provider-led (postgrad)
 Modern languages",
-3379589,EM2761,Angélina,Fournier,2021 to 2022,"School direct (salaried)
+3379589,EM2761,Fournier,Angélina,2021 to 2022,"School direct (salaried)
 Primary",
-5054746,AW3371,Margie,Frami,2021 to 2022,"Provider-led (postgrad)
+5054746,AW3371,Frami,Margie,2021 to 2022,"Provider-led (postgrad)
 Biology with chemistry",
-4041145,RY2137,Lorena,Franey,2021 to 2022,"Provider-led (postgrad)
+4041145,RY2137,Franey,Lorena,2021 to 2022,"Provider-led (postgrad)
 Physical education with physics",
-8569621,WX3307,Mamie,Funk,2021 to 2022,Provider-led (undergrad),
-9055186,GG9603,Margarita,Funk,2021 to 2022,"Provider-led (postgrad)
+8569621,WX3307,Funk,Mamie,2021 to 2022,Provider-led (undergrad),
+9055186,GG9603,Funk,Margarita,2021 to 2022,"Provider-led (postgrad)
 Latin",
-4371388,ZW8916,Aphélie,Garcia,2021 to 2022,Provider-led (undergrad),
-5843544,DG6419,Elena,Gibson,2021 to 2022,"Teaching apprenticeship (postgrad)
+4371388,ZW8916,Garcia,Aphélie,2021 to 2022,Provider-led (undergrad),
+5843544,DG6419,Gibson,Elena,2021 to 2022,"Teaching apprenticeship (postgrad)
 Primary with mathematics",
-3969536,HK1030,Byron,Gottlieb,2021 to 2022,"Provider-led (postgrad)
+3969536,HK1030,Gottlieb,Byron,2021 to 2022,"Provider-led (postgrad)
 Primary with modern languages",
-9150187,HB3671,Isabelle,Guerin,2021 to 2022,"Provider-led (postgrad)
+9150187,HB3671,Guerin,Isabelle,2021 to 2022,"Provider-led (postgrad)
 Biology with chemistry",
-7279498,RT3004,Blake,Gulgowski,2021 to 2022,"Provider-led (postgrad)
+7279498,RT3004,Gulgowski,Blake,2021 to 2022,"Provider-led (postgrad)
 Design and technology",
-1785167,NL7535,Alison,Hagenes,2021 to 2022,"Provider-led (postgrad)
+1785167,NL7535,Hagenes,Alison,2021 to 2022,"Provider-led (postgrad)
 Design and technology",
-7009193,HH3355,Rodney,Halvorson,2021 to 2022,"Provider-led (postgrad)
+7009193,HH3355,Halvorson,Rodney,2021 to 2022,"Provider-led (postgrad)
 Primary with mathematics",
-4456200,SP9485,Woodrow,Hartmann,2021 to 2022,"Provider-led (postgrad)
+4456200,SP9485,Hartmann,Woodrow,2021 to 2022,"Provider-led (postgrad)
 Primary with mathematics",
-8957378,GM5727,Benny,Harvey,2021 to 2022,Provider-led (undergrad),
-5598145,ZZ0654,Stuart,Hauck,2021 to 2022,"Provider-led (postgrad)
+8957378,GM5727,Harvey,Benny,2021 to 2022,Provider-led (undergrad),
+5598145,ZZ0654,Hauck,Stuart,2021 to 2022,"Provider-led (postgrad)
 Physical education with physics",
-2493764,EQ2692,Kim,Heathcote,2021 to 2022,"Provider-led (postgrad)
+2493764,EQ2692,Heathcote,Kim,2021 to 2022,"Provider-led (postgrad)
 Primary",
-9729520,BT0697,Nick,Heller,2021 to 2022,"Provider-led (postgrad)
+9729520,BT0697,Heller,Nick,2021 to 2022,"Provider-led (postgrad)
 Biology with chemistry",
-1455999,BK4097,Jacquelyn,Herman,2021 to 2022,Provider-led (undergrad),
-8262628,DS2628,Phyllis,Hermann,2021 to 2022,"Provider-led (postgrad)
+1455999,BK4097,Herman,Jacquelyn,2021 to 2022,Provider-led (undergrad),
+8262628,DS2628,Hermann,Phyllis,2021 to 2022,"Provider-led (postgrad)
 Latin",
-2953057,YY3036,Cameron,Hermann,2021 to 2022,"Provider-led (postgrad)
+2953057,YY3036,Hermann,Cameron,2021 to 2022,"Provider-led (postgrad)
 Design and technology",
-5077067,WP3275,Brandy,Hilll,2021 to 2022,Provider-led (undergrad),
-6861505,LY4803,Edna,Hills,2021 to 2022,"Provider-led (postgrad)
+5077067,WP3275,Hilll,Brandy,2021 to 2022,Provider-led (undergrad),
+6861505,LY4803,Hills,Edna,2021 to 2022,"Provider-led (postgrad)
 Latin",
-6784447,SH2853,Katrina,Hodkiewicz,2021 to 2022,"Provider-led (postgrad)
+6784447,SH2853,Hodkiewicz,Katrina,2021 to 2022,"Provider-led (postgrad)
 Physical education with physics",
-7769677,HM3654,Patti,Jacobson,2021 to 2022,"School direct (fee funded)
+7769677,HM3654,Jacobson,Patti,2021 to 2022,"School direct (fee funded)
 Physical education",
-8748026,CG8977,Quiéta,Jacquet,2021 to 2022,"School direct (fee funded)
+8748026,CG8977,Jacquet,Quiéta,2021 to 2022,"School direct (fee funded)
 Primary",
-9350282,MH3891,Terry,Jast,2021 to 2022,"Provider-led (postgrad)
+9350282,MH3891,Jast,Terry,2021 to 2022,"Provider-led (postgrad)
 Latin",
-6780890,PM5795,Randall,Kerluke,2021 to 2022,"Provider-led (postgrad)
+6780890,PM5795,Kerluke,Randall,2021 to 2022,"Provider-led (postgrad)
 Modern languages",
-4337728,SH0505,Grant,Kirlin,2021 to 2022,"Provider-led (postgrad)
+4337728,SH0505,Kirlin,Grant,2021 to 2022,"Provider-led (postgrad)
 Biology with chemistry",
-3865944,GX0521,Merle,Klocko,2021 to 2022,"School direct (fee funded)
+3865944,GX0521,Klocko,Merle,2021 to 2022,"School direct (fee funded)
 Classics with English",
-9919650,PM7014,Winston,Kohler,2021 to 2022,"Provider-led (postgrad)
+9919650,PM7014,Kohler,Winston,2021 to 2022,"Provider-led (postgrad)
 Primary",
-6198842,TD9870,Kerry,Konopelski,2021 to 2022,"Teaching apprenticeship (postgrad)
+6198842,TD9870,Konopelski,Kerry,2021 to 2022,"Teaching apprenticeship (postgrad)
 Modern languages",
-2177277,DQ8137,Oliver,Kovacek,2021 to 2022,"Provider-led (postgrad)
+2177277,DQ8137,Kovacek,Oliver,2021 to 2022,"Provider-led (postgrad)
 Primary with mathematics",
-4073732,QS6710,Vital,Lacroix,2021 to 2022,"Provider-led (postgrad)
+4073732,QS6710,Lacroix,Vital,2021 to 2022,"Provider-led (postgrad)
 Biology with chemistry",
-5999712,LX1542,Christina,Langosh,2021 to 2022,"Provider-led (postgrad)
+5999712,LX1542,Langosh,Christina,2021 to 2022,"Provider-led (postgrad)
 Primary",
-9888335,AB9131,Fidèle,Laurent,2021 to 2022,"Provider-led (postgrad)
+9888335,AB9131,Laurent,Fidèle,2021 to 2022,"Provider-led (postgrad)
 Primary with physical education",
-2086024,QD7026,Sylvie,Laurent,2021 to 2022,"Provider-led (postgrad)
+2086024,QD7026,Laurent,Sylvie,2021 to 2022,"Provider-led (postgrad)
 Primary with mathematics",
-7646286,WA3900,Whitney,Lehner,2021 to 2022,"Provider-led (postgrad)
+7646286,WA3900,Lehner,Whitney,2021 to 2022,"Provider-led (postgrad)
 Latin",
-7882048,FW4161,Victorin,Lemaire,2021 to 2022,"Provider-led (postgrad)
+7882048,FW4161,Lemaire,Victorin,2021 to 2022,"Provider-led (postgrad)
 Design and technology",
-7347971,PY7485,Stanislas,Lemoine,2021 to 2022,"Provider-led (postgrad)
+7347971,PY7485,Lemoine,Stanislas,2021 to 2022,"Provider-led (postgrad)
 Design and technology",
-1484766,RB6215,Jessica,Lubowitz,2021 to 2022,"Provider-led (postgrad)
+1484766,RB6215,Lubowitz,Jessica,2021 to 2022,"Provider-led (postgrad)
 Latin",
-6638309,GW6401,Antoinette,Lueilwitz,2021 to 2022,"Provider-led (postgrad)
+6638309,GW6401,Lueilwitz,Antoinette,2021 to 2022,"Provider-led (postgrad)
 Latin",
-4236028,CR0592,Olive,Mante,2021 to 2022,"Provider-led (postgrad)
+4236028,CR0592,Mante,Olive,2021 to 2022,"Provider-led (postgrad)
 Physical education with physics",
-5597817,CY1368,Marlène,Marie,2021 to 2022,"Provider-led (postgrad)
+5597817,CY1368,Marie,Marlène,2021 to 2022,"Provider-led (postgrad)
 Design and technology",
-5410523,ZW5355,Aliette,Meunier,2021 to 2022,"Provider-led (postgrad)
+5410523,ZW5355,Meunier,Aliette,2021 to 2022,"Provider-led (postgrad)
 Design and technology",
-5536974,BB3367,Moses,Miller,2021 to 2022,"Provider-led (postgrad)
+5536974,BB3367,Miller,Moses,2021 to 2022,"Provider-led (postgrad)
 Latin",
-6851156,EY3088,Victor,Mills,2021 to 2022,"Provider-led (postgrad)
+6851156,EY3088,Mills,Victor,2021 to 2022,"Provider-led (postgrad)
 Latin",
-5617199,GY0902,Arthaud,Moreau,2021 to 2022,"Provider-led (postgrad)
+5617199,GY0902,Moreau,Arthaud,2021 to 2022,"Provider-led (postgrad)
 Design and technology",
-1389975,HB0070,Amber,Mosciski,2021 to 2022,"Provider-led (postgrad)
+1389975,HB0070,Mosciski,Amber,2021 to 2022,"Provider-led (postgrad)
 Design and technology",
-4876485,TA1426,Ora,Mosciski,2021 to 2022,Provider-led (undergrad),
-8215464,ER6952,Cassien,Moulin,2021 to 2022,"Provider-led (postgrad)
+4876485,TA1426,Mosciski,Ora,2021 to 2022,Provider-led (undergrad),
+8215464,ER6952,Moulin,Cassien,2021 to 2022,"Provider-led (postgrad)
 Design and technology",
-7900821,FM9996,David,Nitzsche,2021 to 2022,"Provider-led (postgrad)
+7900821,FM9996,Nitzsche,David,2021 to 2022,"Provider-led (postgrad)
 Design and technology",
-8273630,TM7395,Aubrey,O'Kon,2021 to 2022,"Provider-led (postgrad)
+8273630,TM7395,O'Kon,Aubrey,2021 to 2022,"Provider-led (postgrad)
 Design and technology",
-3860744,HT5730,Orlando,O'Reilly,2021 to 2022,"Provider-led (postgrad)
+3860744,HT5730,O'Reilly,Orlando,2021 to 2022,"Provider-led (postgrad)
 Biology with chemistry",
-8384234,BH1454,Annette,Pacocha,2021 to 2022,"Provider-led (postgrad)
+8384234,BH1454,Pacocha,Annette,2021 to 2022,"Provider-led (postgrad)
 Latin",
-1204048,BH9051,Angélina,Perrot,2021 to 2022,"Provider-led (postgrad)
+1204048,BH9051,Perrot,Angélina,2021 to 2022,"Provider-led (postgrad)
 Physical education with physics",
-6088600,NT0340,Léonne,Petit,2021 to 2022,"Provider-led (postgrad)
+6088600,NT0340,Petit,Léonne,2021 to 2022,"Provider-led (postgrad)
 Design and technology",
-4185941,YG1496,Saul,Pfannerstill,2021 to 2022,"Provider-led (postgrad)
+4185941,YG1496,Pfannerstill,Saul,2021 to 2022,"Provider-led (postgrad)
 Design and technology",
-4828006,YK9994,Harold,Pfeffer,2021 to 2022,"Provider-led (postgrad)
+4828006,YK9994,Pfeffer,Harold,2021 to 2022,"Provider-led (postgrad)
 Biology with chemistry",
-3329403,GC7042,Erik,Pollich,2021 to 2022,"Provider-led (postgrad)
+3329403,GC7042,Pollich,Erik,2021 to 2022,"Provider-led (postgrad)
 Primary with physical education",
-5684508,XE4315,Martha,Pouros,2021 to 2022,"Provider-led (postgrad)
+5684508,XE4315,Pouros,Martha,2021 to 2022,"Provider-led (postgrad)
 Latin",
-3232248,BA0386,Germaine,Prevost,2021 to 2022,"Provider-led (postgrad)
+3232248,BA0386,Prevost,Germaine,2021 to 2022,"Provider-led (postgrad)
 Latin",
-7371200,CS3377,Annabelle,Prevost,2021 to 2022,"Provider-led (postgrad)
+7371200,CS3377,Prevost,Annabelle,2021 to 2022,"Provider-led (postgrad)
 Latin",
-4922124,DS9993,Pat,Rempel,2021 to 2022,"Provider-led (postgrad)
+4922124,DS9993,Rempel,Pat,2021 to 2022,"Provider-led (postgrad)
 Latin",
-7109771,WF0871,Avigaëlle,Remy,2021 to 2022,"Provider-led (postgrad)
+7109771,WF0871,Remy,Avigaëlle,2021 to 2022,"Provider-led (postgrad)
 Latin",
-4817751,NL3209,Céleste,Renaud,2021 to 2022,"Provider-led (postgrad)
+4817751,NL3209,Renaud,Céleste,2021 to 2022,"Provider-led (postgrad)
 Primary with modern languages",
-8668206,QW3812,Russell,Renner,2021 to 2022,"Provider-led (postgrad)
+8668206,QW3812,Renner,Russell,2021 to 2022,"Provider-led (postgrad)
 Design and technology",
-4788104,AD8428,Gautier,Rey,2021 to 2022,"Provider-led (postgrad)
+4788104,AD8428,Rey,Gautier,2021 to 2022,"Provider-led (postgrad)
 Modern languages",
-3960844,SH6489,Gatien,Robert,2021 to 2022,"Provider-led (postgrad)
+3960844,SH6489,Robert,Gatien,2021 to 2022,"Provider-led (postgrad)
 Physical education with physics",
-3889585,WW9157,Daphné,Robert,2021 to 2022,"Provider-led (postgrad)
+3889585,WW9157,Robert,Daphné,2021 to 2022,"Provider-led (postgrad)
 Latin",
-7311560,MN8220,Amalthée,Roger,2021 to 2022,"Provider-led (postgrad)
+7311560,MN8220,Roger,Amalthée,2021 to 2022,"Provider-led (postgrad)
 Biology with chemistry",
-1767139,CS1630,Kelly,Rolfson,2021 to 2022,"Teaching apprenticeship (postgrad)
+1767139,CS1630,Rolfson,Kelly,2021 to 2022,"Teaching apprenticeship (postgrad)
 Biology with chemistry",
-4966948,MD2264,Yolanda,Runolfsdottir,2021 to 2022,"Provider-led (postgrad)
+4966948,MD2264,Runolfsdottir,Yolanda,2021 to 2022,"Provider-led (postgrad)
 Modern languages",
-3081702,AM9800,Lee,Sawayn,2021 to 2022,Provider-led (undergrad),
-7030285,EX9838,Andre,Schaefer,2021 to 2022,"Provider-led (postgrad)
+3081702,AM9800,Sawayn,Lee,2021 to 2022,Provider-led (undergrad),
+7030285,EX9838,Schaefer,Andre,2021 to 2022,"Provider-led (postgrad)
 Primary",
-2260987,NF7094,Jody,Schneider,2021 to 2022,"Provider-led (postgrad)
+2260987,NF7094,Schneider,Jody,2021 to 2022,"Provider-led (postgrad)
 Primary with physical education",
-2693809,DN2616,Mabel,Schroeder,2021 to 2022,"Provider-led (postgrad)
+2693809,DN2616,Schroeder,Mabel,2021 to 2022,"Provider-led (postgrad)
 Modern languages",
-8675815,TX1993,Gwen,Shields,2021 to 2022,"Provider-led (postgrad)
+8675815,TX1993,Shields,Gwen,2021 to 2022,"Provider-led (postgrad)
 Primary with mathematics",
-1723973,DK3273,Alfred,Sipes,2021 to 2022,Provider-led (undergrad),
-7438582,FY0149,Rogelio,Stanton,2021 to 2022,"Provider-led (postgrad)
+1723973,DK3273,Sipes,Alfred,2021 to 2022,Provider-led (undergrad),
+7438582,FY0149,Stanton,Rogelio,2021 to 2022,"Provider-led (postgrad)
 Primary with physical education",
-3456627,EK8893,Carol,Stark,2021 to 2022,"Provider-led (postgrad)
+3456627,EK8893,Stark,Carol,2021 to 2022,"Provider-led (postgrad)
 Primary with modern languages",
-9800306,BE6825,Dwight,Steuber,2021 to 2022,Provider-led (undergrad),
-5061918,BE0921,Victor,Stoltenberg,2021 to 2022,"Provider-led (postgrad)
+9800306,BE6825,Steuber,Dwight,2021 to 2022,Provider-led (undergrad),
+5061918,BE0921,Stoltenberg,Victor,2021 to 2022,"Provider-led (postgrad)
 Design and technology",
-6423079,MC9068,Randal,Stracke,2021 to 2022,"Provider-led (postgrad)
+6423079,MC9068,Stracke,Randal,2021 to 2022,"Provider-led (postgrad)
 Primary with modern languages",
-5609184,QH2562,Sheldon,Swaniawski,2021 to 2022,"School direct (fee funded)
+5609184,QH2562,Swaniawski,Sheldon,2021 to 2022,"School direct (fee funded)
 Primary",
-8802182,TC8129,Nathan,Swift,2021 to 2022,"Provider-led (postgrad)
+8802182,TC8129,Swift,Nathan,2021 to 2022,"Provider-led (postgrad)
 Latin",
-2008753,AT3764,Héloïse,Thomas,2021 to 2022,"Teaching apprenticeship (postgrad)
+2008753,AT3764,Thomas,Héloïse,2021 to 2022,"Teaching apprenticeship (postgrad)
 Design and technology",
-5507441,LA5215,Drew,Tillman,2021 to 2022,"Provider-led (postgrad)
+5507441,LA5215,Tillman,Drew,2021 to 2022,"Provider-led (postgrad)
 Modern languages",
-5536522,MR6798,Ethel,Volkman,2021 to 2022,"Provider-led (postgrad)
+5536522,MR6798,Volkman,Ethel,2021 to 2022,"Provider-led (postgrad)
 Primary with modern languages",
-6146464,DL2085,Max,Von,2021 to 2022,Opt-in (undergrad),
-2763733,FM7612,Winston,Walsh,2021 to 2022,"School direct (salaried)
+6146464,DL2085,Von,Max,2021 to 2022,Opt-in (undergrad),
+2763733,FM7612,Walsh,Winston,2021 to 2022,"School direct (salaried)
 Music with art and design",
-8621661,GE6621,Jimmie,Wuckert,2021 to 2022,"Provider-led (postgrad)
+8621661,GE6621,Wuckert,Jimmie,2021 to 2022,"Provider-led (postgrad)
 Physical education with physics",
-1715621,LT5293,Luke,Wyman,2021 to 2022,"Provider-led (postgrad)
+1715621,LT5293,Wyman,Luke,2021 to 2022,"Provider-led (postgrad)
 Primary",

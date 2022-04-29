@@ -1,4 +1,4 @@
-TRN,Trainee ID,First names,Last names,Start academic year,Route and course,Date standards met
+TRN,Provider trainee ID,First names,Last names,Start academic year,Route and course,Date standards met
 "Must contain a trainee's TRN, or be empty.
 Delete or add trainees as necessary.","Must contain your ID for the trainee, or be empty.
 Delete or add trainees as necessary.",For reference only,For reference only,For reference only,"Add the date when the trainee met QTS or EYTS standards.

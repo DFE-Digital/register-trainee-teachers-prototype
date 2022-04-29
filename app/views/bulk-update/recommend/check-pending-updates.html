@@ -61,8 +61,7 @@
 
 {# Combines errors and processed if the user has 'fixed the errors' #}
 {% if data.bulk.recommendFixErrors %}
-  {% set processedRows = data.bulkUpload.processedRows | where("uploadStatus", "error")  %}
-  {% set processedRows = processedRows | combineArrays(data.bulkUpload.processedRows | where("uploadStatus", "updated")) %}
+  {% set processedRows = data.bulkUpload.processedRows | removeWhere("uploadStatus", "unchanged")  %}
 {% else %}
   {% set processedRows = data.bulkUpload.processedRows | where("uploadStatus", "updated") %}
 {% endif %}

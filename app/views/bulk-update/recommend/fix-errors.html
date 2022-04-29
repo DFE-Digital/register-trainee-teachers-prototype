@@ -20,39 +20,34 @@
 
 {% for row in rowsWithErrors %}
 
-  {% set traineeInfoHtml %}
-    <p class="govuk-body govuk-!-margin-bottom-1">
-      {{ row.trainee.personalDetails.shortName }}
-    </p>
-    <p class="govuk-body govuk-hint govuk-!-margin-bottom-1">
-      TRN: {{ row.trainee.trn }}
-    </p>
-    <p class="govuk-body govuk-hint govuk-!-margin-bottom-0">
-      Trainee ID: {{ row.trainee.reference }}
-    </p>
-  {% endset %}
-  {% set errorMessage = row.errorMessage %}
+  {% set trn = row.trainee.trn %}
+  {% set providerTraineeId = row.trainee.reference %}
+  {% set firstName = row.trainee.personalDetails.givenName %}
+  {% set lastName = row.trainee.personalDetails.familyName %}
+  {% set dateStandardsMet = row.assessmentDate %}
 
-  {% if errorMessage == 'TRN not recognised' %}
-    {% set traineeInfoHtml = "–" %}
-    {% set errorMessage = 'TRN: ‘' + row.trainee.trn + '’, enter a valid TRN' %}
-  {% elseif errorMessage == 'Date standards met provided without a TRN - add a TRN or remove the date standards met' %}
-    {% set traineeInfoHtml = '–' %}
-  {% elseif errorMessage == 'TRN and Trainee ID are not for the same trainee' %}
-    {% set traineeInfoHtml %}
-      <p class="govuk-body govuk-!-margin-bottom-1">
-        TRN: {{ row.trainee.trn }}
-      </p>
-      <p class="govuk-body govuk-!-margin-bottom-0">
-        Trainee ID: {{ row.trainee.reference }}
-      </p>
-    {% endset %}
+  {% if row.errorMessage == "Date standards met provided without a TRN or Trainee ID - add a TRN or Trainee ID or remove the date standards met" %}
+    {% set trn  = "—" %}
+    {% set providerTraineeId  = "—" %}
+  {% endif %}
+
+  {% if row.errorMessage == "TRN and Provider trainee ID are not for the same trainee" %}
+    {% set firstName = "—" %}
+    {% set lastName  = "—" %}
+  {% endif %}
+
+  {% if row.errorMessage == "Date standards met: '20/09/2023' - date standards met must be in the past" %}
+    {% set dateStandardsMet = '20/09/2023' %}
   {% endif %}
 
   {% set tableRow = [
     { text: row.rowNumber + 2 },
-    { text: traineeInfoHtml | safe },
-    { text: errorMessage | safe }
+    { text: trn               },
+    { text: providerTraineeId },
+    { text: firstName         },
+    { text: lastName          },
+    { text: dateStandardsMet  },
+    { text: row.errorMessage  }
   ] %}
 
   {% set tableBodyRows = tableBodyRows | push(tableRow) %}
@@ -68,11 +63,28 @@
       classes: "app-table__column-5"
     },
     {
-      text: "Trainee",
-      classes: "app-table__column-25"
+      text: "TRN",
+      classes: "app-table__column-10"
     },
     {
-      text: "Error"
+      text: "Provider trainee ID",
+      classes: "app-table__column-10"
+    },
+    {
+      text: "Last names",
+      classes: "app-table__column-10"
+    },
+    {
+      text: "First names",
+      classes: "app-table__column-10"
+    },
+    {
+      text: "Date standards met",
+      classes: "app-table__column-10"
+    },
+    {
+      text: "Error",
+      classes: "app-table__column-45"
     }
   ]
 %}

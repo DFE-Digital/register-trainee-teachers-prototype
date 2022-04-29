@@ -50,8 +50,8 @@
   {% set prepopulatedTableRow = [
     { text: row.trainee.trn },
     { text: row.trainee.reference },
-    { text: row.trainee.personalDetails.givenName },
     { text: row.trainee.personalDetails.familyName },
+    { text: row.trainee.personalDetails.givenName },
     { text: row.trainee.academicYear },
     { text: routeAndCourse | safe },
     { text: "" }
@@ -65,13 +65,13 @@
       text: "TRN"
     },
     {
-      text: "Trainee ID"
-    },
-    {
-      text: "First names"
+      text: "Provider trainee ID"
     },
     {
       text: "Last names"
+    },
+    {
+      text: "First names"
     },
     {
       text: "Start academic year"
@@ -126,8 +126,8 @@
   {% set errorTableRow = [
     { text: traineeReferenceNumber },
     { text: row.trainee.reference },
-    { text: row.trainee.personalDetails.givenName },
     { text: row.trainee.personalDetails.familyName },
+    { text: row.trainee.personalDetails.givenName },
     { text: row.trainee.academicYear },
     { text: routeAndCourse | safe },
     { text: assessmentDate },
@@ -142,13 +142,13 @@
       text: "TRN"
     },
     {
-      text: "Trainee ID"
-    },
-    {
-      text: "First names"
+      text: "Provider trainee ID"
     },
     {
       text: "Last names"
+    },
+    {
+      text: "First names"
     },
     {
       text: "Start academic year"
@@ -178,6 +178,7 @@
       { text: "For reference only" },
       { text: "For reference only" },
       { text: "For reference only" },
+      { text: "For reference only" },
       { text: dateStandardsMetHtml | safe }
     ]
   ] %}
@@ -192,8 +193,8 @@
   {% set makeChangesTableRow = [
     { text: row.trainee.trn },
     { text: row.trainee.reference },
-    { text: row.trainee.personalDetails.givenName },
     { text: row.trainee.personalDetails.familyName },
+    { text: row.trainee.personalDetails.givenName },
     { text: row.trainee.academicYear },
     { text: routeAndCourse | safe },
     { text: assessmentDate }
@@ -207,13 +208,13 @@
       text: "TRN"
     },
     {
-      text: "Trainee ID"
-    },
-    {
-      text: "First names"
+      text: "Provider trainee ID"
     },
     {
       text: "Last names"
+    },
+    {
+      text: "First names"
     },
     {
       text: "Start academic year"

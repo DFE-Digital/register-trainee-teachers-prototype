@@ -3,7 +3,7 @@
     text: "Placements"
   },
   value: {
-    text: 'Not provided yet'
+    text: 'Not provided yet' if not record | sourceIsHESA
   },
   actions: {
     items: [
@@ -22,7 +22,10 @@
 
 {% set placementDetailsHtml %}
   {{ govukSummaryList({
-    rows: placementDetailsRows
+    rows: placementDetailsRows | highlightInvalidRows({
+      treatEmptyAsMissing: true,
+      recordSource: record.source
+    })
   }) }}
 {% endset %}
 

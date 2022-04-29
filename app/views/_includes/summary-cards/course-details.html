@@ -185,7 +185,7 @@
     text: "ITT end date"
   },
   value: {
-    text: courseDetails.endDate | govukDate or 'Not provided'
+    text: courseDetails.endDate | govukDate
   },
   actions: {
     items: [
@@ -313,7 +313,10 @@
 
 {% set courseDetailsHtml %}
   {{ govukSummaryList({
-    rows: courseDetailsRows | highlightInvalidRows
+    rows: courseDetailsRows | highlightInvalidRows({
+        treatEmptyAsMissing: true,
+        recordSource: record.source
+      })
   }) }}
 {% endset %}
 

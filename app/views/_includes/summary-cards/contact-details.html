@@ -14,7 +14,7 @@
 {% endif %}
 {% set address = address or 'Not provided' %}
 
-
+{% set isHesa = record | sourceIsHESA %}
 
 {% set contactDetailsRows = [
   {
@@ -33,7 +33,7 @@
         }
       ]
     } if canAmend
-  },
+  } if not isHesa,
   {
     key: {
       text: "Phone number"

@@ -32,8 +32,32 @@
     } if canAmend and false
   }) %}
 
-  {% if placements | length == 1 %}
-    {% set placementRows = placementRows | push({
+{% endfor %}
+
+{# Make sure there’s always two rows #}
+{% if placementCount == 0 %}
+  {% set placementRows = placementRows | push({
+    key: {
+      text: "First placement"
+    },
+    value: {
+      text: ''
+    },
+    actions: {
+      items: [
+        {
+          href: recordPath + "/placements/add" | addReferrer(referrer),
+          text: "Add",
+          visuallyHiddenText: " placement"
+        }
+      ]
+    } if canAmend
+  } if not record | isDraft ) %}
+{% endif %}
+
+{# Suppresses the action link if there are no placements so we don't end up with two links to the same place #}
+{% if placementCount < 2 %}
+  {% set placementRows = placementRows | push({
     key: {
       text: "Second placement"
     },
@@ -45,19 +69,20 @@
         {
           href: recordPath + "/placements/add" | addReferrer(referrer),
           text: "Add",
-          visuallyHiddenText: "second placement"
+          visuallyHiddenText: " placement",
+          suppressActionLink: true if placementCount == 0
         }
       ]
     } if canAmend
   } if not record | isDraft ) %}
-    
-  {% endif %}
-  
-{% endfor %}
+{% endif %}
 
 {% set placementDetailsHtml %}
   {{ govukSummaryList({
-      rows: placementRows | highlightInvalidRows({ treatEmptyAsMissing: true})
+    rows: placementRows | highlightInvalidRows({
+      treatEmptyAsMissing: true,
+      recordSource: record.source,
+    })
   }) }}
 {% endset %}
 
@@ -83,17 +108,6 @@
 
   {% include "_includes/incomplete.njk" %}
 
-{% elseif placementCount == 0 %}
-  {% include "_includes/summary-cards/placements/no-placement-details.html" %}
-{# {% elseif placementCount == 0 %}
-  <p class="govuk-body">You have not added any placements yet.</p>
-  <div class="govuk-form-group">
-    {{ govukButton({
-      "text": "Add a placement",
-      href: recordPath + '/placements/add' | addReferrer(referrer),
-      classes: "govuk-button--secondary govuk-!-margin-bottom-0"
-    }) }}
-  </div> #}
 {% else %}
   {{ appSummaryCard({
     classes: "govuk-!-margin-bottom-6",

@@ -317,7 +317,8 @@
 {% set traineeProgressHtml %}
   {{ govukSummaryList({
     rows: traineeProgressRows | highlightInvalidRows({
-        treatEmptyAsMissing: true
+        treatEmptyAsMissing: true,
+        recordSource: record.source
       })
   }) }}
 {% endset %}

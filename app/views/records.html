@@ -62,6 +62,8 @@
       classes: "app-status-box--filter-outdent",
       html: adminOnlyFilters
     }) }}
+    {% else %}
+      {% include "_includes/filter-panel/source.njk" %}
 
   {% endif %}
 

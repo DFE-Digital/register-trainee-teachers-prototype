@@ -52,7 +52,7 @@
       text: "Nationality"
     },
     value: {
-      text: record.personalDetails.nationality | uniq | removeArrayItem("Other") | joinify or 'Not entered'
+      text: record.personalDetails.nationality | uniq | removeArrayItem("Other") | joinify
     },
     actions: {
       items: [
@@ -68,7 +68,10 @@
 
 {% set personalDetailsHtml %}
   {{ govukSummaryList({
-    rows: personalDetailsRows | highlightInvalidRows
+    rows: personalDetailsRows | highlightInvalidRows({
+        treatEmptyAsMissing: true,
+        recordSource: record.source
+      })
   }) }}
 {% endset %}
 

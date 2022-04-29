@@ -66,6 +66,7 @@ const generateUndergraduateQualification = require('../app/data/generators/under
 const generateSchools = require('../app/data/generators/schools')
 const generateSource = require('../app/data/generators/source')
 const generateApplyData = require('../app/data/generators/apply-data')
+const generateHesaData = require('../app/data/generators/hesa-data')
 
 // Populate application data object with fake data
 const generateFakeApplication = (params = {}) => {
@@ -90,6 +91,12 @@ const generateFakeApplication = (params = {}) => {
   if (application.status == "Deferred") {
     application.previousStatus = "TRN received" // set a state to go back to
   }
+  application.source          = (params.source) ? params.source : generateSource(application)
+  if (application.source == "Apply"){
+    application.applyData = { ...generateApplyData(application), ...params.applyData}
+    // if (params.applyData) application.applyData = params.applyData
+  }
+
 
   // Needed in particular order
 
@@ -101,11 +108,6 @@ const generateFakeApplication = (params = {}) => {
   application.reference              = (params.reference === null) ? undefined : (params.reference || generateReference())
   application.trn              = (params.trn === null) ? undefined : (params.trn || generateTrn(application))
 
-  application.source          = (params.source) ? params.source : generateSource(application)
-  if (application.source == "Apply"){
-    application.applyData = { ...generateApplyData(application), ...params.applyData}
-    // if (params.applyData) application.applyData = params.applyData
-  }
   application.courseDetails = (params.courseDetails === null) ? undefined : { ...generateCourseDetails(params, application), ...params.courseDetails }
   // There's a slight edge case that programme details might return with a different route - if so save it back up
   if (application?.courseDetails?.route && application.courseDetails.route != application.route){
@@ -119,7 +121,8 @@ const generateFakeApplication = (params = {}) => {
 
 
   // Contact details
-  application.isInternationalTrainee = !(application.personalDetails.nationality.includes('British') || application.personalDetails.nationality.includes('Irish'))
+  let nationality = application?.personalDetails?.nationality
+  application.isInternationalTrainee = !(nationality && (nationality.includes('British') || nationality.includes('Irish')))
   application.contactDetails   = (params.contactDetails === null) ? undefined : { ...generateContactDetails(application), ...params.contactDetails } 
   // Education
   application.gcse             = (params.gcse === null) ? undefined : { ...generateGcse(application.isInternationalTrainee, simpleGcseGrades), ...params.gcse }
@@ -163,6 +166,10 @@ const generateFakeApplication = (params = {}) => {
   // if (academicQualificationsApply && statusFilters.isRecommendedOrAwarded(application.status)) {
   //   _.set(application, "outcome.academicQualification", "PGCE")
   // }
+
+  if (application.source == "HESA"){
+    application = generateHesaData(application)
+  }
 
   application.outcome = (params.outcome === null) ? undefined : { ...generateOutcomes(application), ...params.outcome }
 

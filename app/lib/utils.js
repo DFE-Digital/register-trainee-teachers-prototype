@@ -1108,14 +1108,18 @@ exports.isHesaAndLocked = record => {
   let shouldBeLocked = false
 
   if (exports.sourceIsHESA(record)) {
-     if (exports.finishedEarlierThanThisAcademicYear(record)) {
-        shouldBeLocked = false
-     } else if (exports.isFutureYear(record)) {
-        shouldBeLocked = true
-     }
-     else if (exports.isFinishingThisAcademicYear(record) && (moment().isBefore(exports.dateHesaRecordUnlocked(record)))) {
-        shouldBeLocked = true
-     }
+
+     // Hardcoded to locked until we decide on rules for unlocking
+     shouldBeLocked = true
+
+     // if (exports.finishedEarlierThanThisAcademicYear(record)) {
+     //    shouldBeLocked = false
+     // } else if (exports.isFutureYear(record)) {
+     //    shouldBeLocked = true
+     // }
+     // else if (exports.isFinishingThisAcademicYear(record) && (moment().isBefore(exports.dateHesaRecordUnlocked(record)))) {
+     //    shouldBeLocked = true
+     // }
    }
   return shouldBeLocked
 }
@@ -2112,19 +2116,19 @@ exports.highlightInvalidRows = function(rows, params=false) {
 
         if (params?.treatEmptyAsMissing && (!value || value == "")) {
           // Using .apply() to pass on value of 'this'
-          theRow = Object.assign({}, exports.markSummaryRowMissing.apply(this, [theRow]))
+          theRow = Object.assign({}, exports.markSummaryRowMissing.apply(this, [theRow, params]))
         }
 
         else if (value && value.includes('**missing**')) {
           // Using .apply() to pass on value of 'this'
-          theRow = Object.assign({}, exports.markSummaryRowMissing.apply(this, [theRow]))
+          theRow = Object.assign({}, exports.markSummaryRowMissing.apply(this, [theRow, params]))
         }
 
         // We preface invalid answers with **invalid** but technically it should work anywhere
         // Probably might not work for dates / values that get transformed before display
         else if (value && value.includes('**invalid**')) {
           // Using .apply() to pass on value of 'this'
-          theRow = Object.assign({}, exports.markSummaryRowInvalid.apply(this, [theRow]))
+          theRow = Object.assign({}, exports.markSummaryRowInvalid.apply(this, [theRow, params]))
         }
       }
       // If feature not enabled, we still need to strip placeholders
@@ -2146,31 +2150,45 @@ const styleSummaryRowAsInset = (row, params) => {
   // Keys are stored two possible places
   let key = row?.key?.html || row?.key?.text
 
+  let styleAsInvalid = params.insetStyle != 'grey' && params.recordSource != 'HESA'
+  let hasActionLink =  row?.actions?.items && row?.actions?.items.length == 1
+
+  if (row?.actions?.items?.[0]?.suppressActionLink){
+    hasActionLink = false
+  }
+
   // GOVUK summary lists don’t support setting an id on rows
   // so we wrap the key in a div with our own id
   row.key.html = (params.id) ? `<div id="${params.id}">${key}</div>` : key
   delete row.key?.text
 
   // Message that gets shown in bold
-  let messageHtml = (params.message) ? `<p class="govuk-body app-summary-list__message--invalid govuk-!-margin-bottom-2">${params.message}</p>` : ''
+  let messageClasses = [
+    'govuk-body',
+    'app-summary-list__message',
+    (hasActionLink) ? 'govuk-!-margin-bottom-2' : 'govuk-!-margin-bottom-0',
+    (styleAsInvalid) ? 'app-summary-list__message--invalid' : null
+  ].filter(Boolean)
+
+  let messageHtml = (params.message) ? `<p class="${messageClasses.join(' ')}">${params.message}</p>` : ''
 
   // Grab the existing action link and craft a new link
   let linkHtml = '' // default to no link
-  let actionItems = row?.actions?.items
 
   // If there’s more than one link (unlikely), do nothing
-  if (actionItems && actionItems.length == 1){
+  if (hasActionLink){
     let href = row?.actions?.items[0].href
     let hidden = (params.linkTextAppendHidden) ? `<span class="govuk-visually-hidden"> ${params.linkTextAppendHidden}</span>` : ""
     linkHtml = `<div>
     <a class="govuk-link govuk-link--no-visited-state app-summary-list__link--invalid" href="${href}">
     ${params.linkText}${hidden}
     </a></div>`
-    delete row.actions.items
   }
+  delete row.actions.items
 
-  // Add a class to the row so we can target it
-  row.classes = `${row.classes} app-summary-list__row--invalid`
+  if (styleAsInvalid){
+    row.classes = `${row.classes || ''} app-summary-list__row--invalid`
+  }
 
   // Wrap in a div for styling
   // Values are stored two possible places
@@ -2180,7 +2198,12 @@ const styleSummaryRowAsInset = (row, params) => {
   // Entire thing is wrapped in a div so we can style a left border within the padding of the
   // summary list value box
 
-  row.value.html = `<div class="app-summary-list__value-inset">${messageHtml}${userValueHtml}${linkHtml}</div>`
+  let rowClasses = [
+    'app-summary-list__value--inset',
+    (styleAsInvalid) ? 'app-summary-list__value--invalid' : null
+  ].filter(Boolean)
+
+  row.value.html = `<div class="${rowClasses.join(' ')}">${messageHtml}${userValueHtml}${linkHtml}</div>`
   delete row?.value?.text // just in case
 
   return row
@@ -2188,7 +2211,7 @@ const styleSummaryRowAsInset = (row, params) => {
 
 // Generate messages to be used in inset styling
 // Type can be `invalid` or `missing`
-exports.markSummaryRow = function(row, type) {
+exports.markSummaryRow = function(row, params) {
 
   row = Object.assign({}, row)
 
@@ -2205,7 +2228,7 @@ exports.markSummaryRow = function(row, type) {
 
   let message, linkText, linkTextAppendHidden
 
-  if (type == 'invalid'){
+  if (params.type == 'invalid'){
     message = `${key} is not recognised`
     linkText = "Review the trainee’s answer"
     linkTextAppendHidden = `for ${key.toLowerCase()}`
@@ -2213,8 +2236,13 @@ exports.markSummaryRow = function(row, type) {
     // Using .apply() to pass on value of 'this'
     exports.addToErrorArray.apply(this, [{name: message, id}])
   }
-  else if (type == 'missing'){
+  else if (params.type == 'missing'){
     message = `${key} is missing`
+
+    if (params.recordSource == 'HESA'){
+      message = `Not provided from HESA update`
+    }
+
     delete row.value?.html // if it’s missing, there shouldn’t be a value
     linkText = `Enter ${key.toLowerCase()}`
     if (this?.ctx?.query?.errors){
@@ -2224,36 +2252,42 @@ exports.markSummaryRow = function(row, type) {
   }
 
   // If there are no actions, style text grey instead of blue inset
-  if (!row?.actions?.items ||  !row?.actions?.items.length || !row?.actions?.items[0].href){
-    console.log("no link")
-    row = {
-      ...row,
-      value: {
-        html: `<div class="govuk-hint">${message}</div>`
-      }
-    }
-  }
-
-  else {
+  // if (!row?.actions?.items ||  !row?.actions?.items.length || !row?.actions?.items[0].href){
+  //   console.log("no link")
+  //   row = {
+  //     ...row,
+  //     value: {
+  //       html: `<div class="govuk-hint">${message}</div>`
+  //     }
+  //   }
+  // }
+  // else {
     row = styleSummaryRowAsInset(row, {
+      ...params,
       id,
       message,
       linkText,
       linkTextAppendHidden
     })
-  }
+  // }
 
   return row
 }
 
-exports.markSummaryRowInvalid = function(row) {
+exports.markSummaryRowInvalid = function(row, params) {
   // Using .apply() to pass on value of 'this'
-  return exports.markSummaryRow.apply(this, [row, 'invalid'])
+  return exports.markSummaryRow.apply(this, [row, {
+    type: 'invalid',
+    ...params
+  }])
 }
 
-exports.markSummaryRowMissing = function(row) {
+exports.markSummaryRowMissing = function(row, params) {
   // Using .apply() to pass on value of 'this'
-  return exports.markSummaryRow.apply(this, [row, 'missing'])
+  return exports.markSummaryRow.apply(this, [row, {
+    type: 'missing',
+    ...params
+  }])
 }
 
 

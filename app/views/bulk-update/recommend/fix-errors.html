@@ -26,9 +26,11 @@
   {% set lastName = row.trainee.personalDetails.familyName %}
   {% set dateStandardsMet = row.assessmentDate %}
 
-  {% if row.errorMessage == "Date standards met provided without a TRN or Trainee ID - add a TRN or Trainee ID or remove the date standards met" %}
+  {% if row.errorMessage == "Date standards met provided without a TRN or Provider trainee ID - add a TRN or Provider trainee ID or remove the date standards met" %}
     {% set trn  = "—" %}
     {% set providerTraineeId  = "—" %}
+    {% set firstName = "—" %}
+    {% set lastName  = "—" %}
   {% endif %}
 
   {% if row.errorMessage == "TRN and Provider trainee ID are not for the same trainee" %}

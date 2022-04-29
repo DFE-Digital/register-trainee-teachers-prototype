@@ -81,7 +81,7 @@
   {{ govukSummaryList({
     rows: placementRows | highlightInvalidRows({
       treatEmptyAsMissing: true,
-      recordSource: record.source,
+      recordSource: record.source
     })
   }) }}
 {% endset %}

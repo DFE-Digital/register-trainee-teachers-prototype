@@ -15,20 +15,16 @@
 {% if bulkOnly %}
   {% set tableHeadRow = [
       {
-        text: "Name",
-        classes: "app-table__column-20"
-      },
-      {
-        text: "ID",
-        classes: "app-table__column-20"
-      },
-      {
-        text: "Start academic year",
-        classes: "app-table__column-20"
+        text: "Trainee",
+        classes: "app-table__column-30"
       },
       {
         text: "Route and course",
         classes: "app-table__column-20"
+      },
+      {
+        text: "Start academic year",
+        classes: "app-table__column-30"
       },
       {
         text: "Date standards met",
@@ -78,15 +74,6 @@
 
 {% for row in processedRows %}
 
-  {% set traineeIdHtml %}
-    <p class="govuk-body govuk-!-margin-bottom-1">
-      TRN: {{ row.trainee.trn }}
-    </p>
-    <p class="govuk-body govuk-!-margin-bottom-0">
-      Trainee ID: {{ row.trainee.reference }}
-    </p>
-  {% endset %}
-
   {% set routeAndCourseHtml %}
     <p class="govuk-body govuk-!-margin-bottom-1">
       {{ row.trainee.route }}
@@ -107,13 +94,25 @@
       {% set qualification = "—" %}
     {% endif %}
 
+    {% set traineeHtml %}
+      <p class="govuk-body govuk-!-margin-bottom-1">
+        {{ row.trainee.personalDetails.familyName }}, {{ row.trainee.personalDetails.givenName }}
+      </p>
+      <div class="app-trainee-ids"></div>
+      <p class="govuk-body govuk-!-margin-bottom-0 govuk-hint app-trainee-id">
+        TRN: {{ row.trainee.trn }}
+      </p>
+      <p class="govuk-body govuk-!-margin-bottom-0 govuk-hint app-trainee-id">
+        <span class="app-trainee-id">Provider trainee ID: {{ row.trainee.reference }}</span>
+      </p>
+    {% endset %}
+
     {% if bulkOnly %}
       {% set tableRow = [
-        { text: row.trainee.personalDetails.shortName },
-        { text: traineeIdHtml                  | safe },
-        { text: row.trainee.academicYear              },
-        { text: routeAndCourseHtml             | safe },
-        { text: row.assessmentDate        | govukDate }
+        { text: traineeHtml        | safe      },
+        { text: row.trainee.academicYear       },
+        { text: routeAndCourseHtml | safe      },
+        { text: row.assessmentDate | govukDate }
       ]%}
     {% else %}
       {% set tableRow = [

@@ -35,8 +35,9 @@
     [
       { text: trnTextHtml | safe },
       { text: traineeIdText | safe },
-      { text: "For reference only." },
-      { text: "For reference only." },
+      { text: "For reference only" },
+      { text: "For reference only" },
+      { text: "For reference only" },
       { text: dateStandardsMetHtml | safe }
     ]
   ] %}
@@ -49,6 +50,8 @@
   {% set prepopulatedTableRow = [
     { text: row.trainee.trn },
     { text: row.trainee.reference },
+    { text: row.trainee.personalDetails.givenName },
+    { text: row.trainee.personalDetails.familyName },
     { text: row.trainee.academicYear },
     { text: routeAndCourse | safe },
     { text: "" }
@@ -63,6 +66,12 @@
     },
     {
       text: "Trainee ID"
+    },
+    {
+      text: "First names"
+    },
+    {
+      text: "Last names"
     },
     {
       text: "Start academic year"
@@ -86,8 +95,9 @@
     [
       { text: trnTextHtml | safe },
       { text: traineeIdText | safe },
-      { text: "For reference only." },
-      { text: "For reference only." },
+      { text: "For reference only" },
+      { text: "For reference only" },
+      { text: "For reference only" },
       { text: dateStandardsMetHtml | safe },
       { text: "For reference only." }
     ]
@@ -116,6 +126,8 @@
   {% set errorTableRow = [
     { text: traineeReferenceNumber },
     { text: row.trainee.reference },
+    { text: row.trainee.personalDetails.givenName },
+    { text: row.trainee.personalDetails.familyName },
     { text: row.trainee.academicYear },
     { text: routeAndCourse | safe },
     { text: assessmentDate },
@@ -131,6 +143,9 @@
     },
     {
       text: "Trainee ID"
+    },
+    {
+      text: "Trainee name"
     },
     {
       text: "Start academic year"
@@ -157,8 +172,9 @@
     [
       { text: trnTextHtml | safe },
       { text: traineeIdText | safe },
-      { text: "For reference only." },
-      { text: "For reference only." },
+      { text: "For reference only" },
+      { text: "For reference only" },
+      { text: "For reference only" },
       { text: dateStandardsMetHtml | safe }
     ]
   ] %}
@@ -173,6 +189,8 @@
   {% set makeChangesTableRow = [
     { text: row.trainee.trn },
     { text: row.trainee.reference },
+    { text: row.trainee.personalDetails.givenName },
+    { text: row.trainee.personalDetails.familyName },
     { text: row.trainee.academicYear },
     { text: routeAndCourse | safe },
     { text: assessmentDate }
@@ -187,6 +205,9 @@
     },
     {
       text: "Trainee ID"
+    },
+    {
+      text: "Trainee name"
     },
     {
       text: "Start academic year"

@@ -63,7 +63,6 @@
       html: adminOnlyFilters
     }) }}
     {% else %}
-      {% include "_includes/filter-panel/source.njk" %}
 
   {% endif %}
 
@@ -88,6 +87,10 @@
   {% include "_includes/filter-panel/subjects.njk" %}
 
   {% include "_includes/filter-panel/studyMode.njk" %}
+
+  {% if not data.isAdmin %}
+    {% include "_includes/filter-panel/source.njk" %}
+  {% endif %}
 
 {% endset %}
 

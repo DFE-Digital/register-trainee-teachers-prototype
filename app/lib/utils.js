@@ -153,7 +153,7 @@ exports.academicYearStringToYear = string => {
 exports.dateToAcademicYear = date => {
   let theDate = moment(date)
   if (!theDate.isValid()){
-    console.log("Error in dateToAcademicYear: provided date is invalid")
+    console.log(`Error in dateToAcademicYear: provided date (${theDate, date}) is invalid`)
     return false
   }
   let theYear = theDate.year()
@@ -1067,7 +1067,7 @@ exports.isApprenticeship = record => {
 // Active, Future, Historic
 
 exports.isActive = record => {
-  return exports.isCurrentYear(record) || (exports.isPreviousYears(record) && exports.isActiveStatus(record))
+  return exports.isActiveStatus(record) || exports.isCurrentYear(record)
 }
 
 exports.isPreviousYears = record => {
@@ -1129,9 +1129,21 @@ exports.isHesaAndLocked = record => {
 // - are on a course that finishes this year, or in the future
 exports.isCurrentYear = record => {
   let isStartingThisYear = record?.academicYear == years.currentAcademicYear
-  let endAcademicYear = exports.dateToAcademicYear(record?.courseDetails?.endDate)
+
+  // HESA records are sometimes missing course end dates. If 
+  let endAcademicYear
+  if (record?.courseDetails?.endDate){
+    endAcademicYear = exports.dateToAcademicYear(record?.courseDetails?.endDate)
+  }
+  else {
+    if (record?.courseDetails?.duration > 1){
+      endAcademicYear = record?.academicYear + 1
+    }
+    else endAcademicYear = record?.academicYear
+  }
+
   let isFinishingThisYearOrGreater = (endAcademicYear == years.currentAcademicYear) || (endAcademicYear == years.nextAcademicYear)
-  return isStartingThisYear || (isFinishingThisYearOrGreater && !exports.isFutureYear) || !record?.academicYear
+  return isStartingThisYear || (isFinishingThisYearOrGreater && !exports.isFutureYear(record)) || !record?.academicYear
 }
 
 exports.isFutureYear = record => {
@@ -1655,6 +1667,7 @@ exports.filterByYear = (records, array) => {
 // Filter records by status
 exports.filterByActive = (records) => {
   return records.filter(record => exports.isActive(record) )
+  // return records.filter(record => true )
 }
 
 exports.filterByFuture = (records) => {

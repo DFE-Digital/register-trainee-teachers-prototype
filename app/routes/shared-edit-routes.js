@@ -340,7 +340,7 @@ module.exports = router => {
         record.courseDetails = utils.deletePublishCourseReferences(record.courseDetails)
       }
 
-      // Todo: shoudl this be a function? probably we should check the record stored in data not
+      // Todo: should this be a function? probably we should check the record stored in data not
       // the route on the course
       let routeHasChanged = (record.route != record?.courseDetails?.route)
 

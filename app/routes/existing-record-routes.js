@@ -568,7 +568,7 @@ module.exports = router => {
       // Implicitly not a course change, so we can delete any temp data
       delete record?.temp?.courseMoveTemp
       // 307 Redirect to POST route
-      res.redirect(307, `${recordPath}/course-details/update${referrer}`);
+      res.redirect(307, `${recordPath}/course-details/update${referrer}`)
     }
   })
   router.post('/:recordtype/:uuid/course-details/course-change-date-question-answer', function (req, res) {

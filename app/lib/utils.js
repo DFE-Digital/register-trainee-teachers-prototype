@@ -1136,10 +1136,19 @@ exports.isCurrentYear = record => {
     endAcademicYear = exports.dateToAcademicYear(record?.courseDetails?.endDate)
   }
   else {
-    if (record?.courseDetails?.duration > 1){
-      endAcademicYear = record?.academicYear + 1
+    if (exports.isUndergraduate(record)){
+      endAcademicYear = record?.academicYear + 2
     }
-    else endAcademicYear = record?.academicYear
+    else if (exports.isPartTime(record)){
+      endAcademicYear = record?.academicYear + 1
+    } 
+    else if (exports.isFullTime(record)){
+      endAcademicYear = record?.academicYear
+    }
+    else {
+      console.log("No course ITT end date. Assuming it finishes in same year.")
+      endAcademicYear = record?.academicYear
+    }
   }
 
   let isFinishingThisYearOrGreater = (endAcademicYear == years.currentAcademicYear) || (endAcademicYear == years.nextAcademicYear)

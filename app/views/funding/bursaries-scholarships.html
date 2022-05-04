@@ -16,9 +16,6 @@
         {{ yearPaymentsTabName | sentenceCase }} 
         <span class="app-nowrap">{{ data.years.currentAcademicYear }}</span>
       </h2>
-      {% include "_includes/funding-payment-profile-meta.html" %}
-    </div>
-  </div>
 
   {% set dataSource = data.funding.annualFundingScitts %}
   {% set dataSource = dataSource | sort(attribute = "subject") %}
@@ -26,13 +23,16 @@
   {# ITT Bursaries #}
 
   {% set ittHeadItems = [
-    { text: "Subject and route",
-      classes: "app-table__column-35" },
+    { text: "Course",
+      classes: "app-table__column-32" },
     { text: "Lead school",
-      classes: "app-table__column-35" },
-    { text: "Trainees" },
-    { text: "Amount per trainee" },
-    { text: "Total" }
+      classes: "app-table__column-32" },
+    { text: "Trainees",
+      classes: "app-table__column-12" },
+    { text: "Amount per trainee",
+      classes: "app-table__column-12" },
+    { text: "Total",
+      classes: "app-table__column-12" }
   ] %}
   {% set ittBursaryTotal = 0 %}
   {% set ittBursaryRows = [] %}
@@ -45,12 +45,12 @@
       {% else %}
         {% set leadSchool = item.leadSchool %}
       {% endif %}
-      {% set subjectAndRoute = item.subject + '<br><span class="app-nowrap">' + item.route | lower | sentenceCase + '</span>' %}
+      {% set course = item.route + '<br><span class="app-nowrap">' + item.subject | lower | sentenceCase + '</span>' %}
       {% set amount = item.amountPgIttOrTier1EyItt | currency %}
       {% set total = item.numberOfTraineesPgIttOrTier1EyItt * item.amountPgIttOrTier1EyItt %}
       {% set ittBursaryTotal = ittBursaryTotal + total %}
       {% set row = [
-        { text: subjectAndRoute | safe },
+        { text: course | safe },
         { text: leadSchool },
         { text: item.numberOfTraineesPgIttOrTier1EyItt,
           format: "numeric" },
@@ -75,14 +75,14 @@
       {% else %}
         {% set leadSchool = item.leadSchool %}
       {% endif %}
-      {% set subjectAndRoute %}
-        {{ item.subject }}<br>
-        <span class="app-nowrap">{{ item.route | lower | sentenceCase }}</span>
+      {% set course %}
+        <span class="app-nowrap">{{ item.route | lower | sentenceCase }}</span><br>
+        {{ item.subject }}
       {% endset %}
       {% set amount = item.amountScholarship %}
       {% set total = item.numberOfTraineesScholarship * item.amountScholarship %}
       {% set row = [
-        { text: subjectAndRoute | safe },
+        { text: course | safe },
         { text: leadSchool },
         { text: item.numberOfTraineesScholarship,
           format: "numeric" },
@@ -146,30 +146,6 @@
     {% endif %}
   {% endfor %}
 
-  {# EY ITT Grants #}
-  {# Not using this for now as it’s inferred #}
-  {# {% set numberOfEYTrainees = 0 %}
-  {% set eyIttGrantValue  = 7000 %}
-  {% set totalEyIttGrant = 0 %}
-
-  {% for item in eyIttData %}
-    {% set numberOfEYTrainees = numberOfEYTrainees 
-      + item.numberOfTraineesPgIttOrTier1EyItt
-      + item.numberOfTraineesTier2EyItt
-      + item.numberOfTraineesTier3EyItt
-      + item.numberOfTraineesUGIttOrTier4EyItt
-      + item.numberOfTraineesNoBursaryAwarded
-     %}
-     {% set totalEyIttGrant = numberOfEYTrainees * eyIttGrantValue %}
-  {% endfor %}
-  {% set eyIttGrantRow = [[
-    { text: numberOfEYTrainees }, 
-    { text: eyIttGrantValue | currency,
-      format: "numeric" },
-    { text: totalEyIttGrant | currency,
-      format: "numeric" }
-  ]] %} #}
-
   {# Summary data #}
 
   {% set annualSummaryRows = [] %}
@@ -205,116 +181,102 @@
     }]) %}
 
 
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-one-half-from-desktop">
+  {% if annualTotal == 0 %}
 
-      <hr class="govuk-section-break govuk-section-break--m">
+      <p class="govuk-body">
+        No trainees eligible for bursaries or scholarships.
+      </p>
 
-      {{ govukTable({
-          caption: "Summary",
-          captionClasses: "govuk-table__caption--m",
-          head: [
-            { text: "Payment type",
-              classes: "app-table__column-70"
-             },
-            { text: "Total" }
-          ],
-          rows: annualSummaryRows
-        }) }}
+      <p class="govuk-body">
+       Contact <a class="govuk-link" href="mailto:becomingateacher@digital.education.gov.uk?subject=Funding">becomingateacher@digital.education.gov.uk</a> if you have any questions about funding.
+      </p>
 
     </div>
   </div>
 
-  {% if ittBursaryTotal > 0 %}
-    <div class="govuk-grid-row">
-      <div class="govuk-grid-column-full">
+  {% else %}
 
-        <hr class="govuk-section-break govuk-section-break--m">
-
-        {{ govukTable({
-          caption: "ITT bursaries",
-          captionClasses: "govuk-table__caption--m",
-          head: ittHeadItems,
-          rows: ittBursaryRows
-        }) }}
-
-      </div>
+    {% include "_includes/funding-payment-profile-meta.html" %}
     </div>
-  {% endif %}
-
-  {% if ittScholarshipTotal > 0 %}
+  </div>
 
     <div class="govuk-grid-row">
-      <div class="govuk-grid-column-full">
-
-        <hr class="govuk-section-break govuk-section-break--m">
-
-        {# ITT Scholarships #}
-        {{ govukTable({
-          caption: "ITT scholarships",
-          captionClasses: "govuk-table__caption--m",
-          head: ittHeadItems,
-          rows: ittScholarshipRows
-        }) }}
-
-      </div>
-    </div>
-  {% endif %}
-  
-  {% if eyIttTotal > 0 %}
-    <div class="govuk-grid-row">
-      <div class="govuk-grid-column-two-thirds-from-desktop">
-
-        <hr class="govuk-section-break govuk-section-break--m">
+      
+      <div class="govuk-grid-column-one-half-from-desktop">
 
         {{ govukTable({
-          caption: "Early years ITT bursaries",
-          captionClasses: "govuk-table__caption--m",
-          head: [
-            { text: "Tier",
-            classes: "app-table__column-53"
-            },
-            { text: "Trainees"
-            },
-            { text: "Amount per trainee"
-            },
-            { text: "Total"
-            }
-          ],
-          rows: eyIttBursaryRows
-        }) }}
+            caption: "Summary",
+            captionClasses: "govuk-table__caption--m",
+            head: [
+              { text: "Payment type",
+                classes: "app-table__column-64"
+               },
+              { text: "Total" }
+            ],
+            rows: annualSummaryRows
+          }) }}
 
       </div>
     </div>
 
-    {# Not showing this for now as it’s inferred #}
-{#     <div class="govuk-grid-row">
-      <div class="govuk-grid-column-one-half">
+    {% if ittBursaryTotal > 0 %}
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
 
-        <hr class="govuk-section-break govuk-section-break--m">
+          {{ govukTable({
+            caption: "ITT bursaries",
+            captionClasses: "govuk-table__caption--m",
+            head: ittHeadItems,
+            rows: ittBursaryRows
+          }) }}
 
-        {{ govukTable({
-          caption: "Early years ITT grants",
-          captionClasses: "govuk-table__caption--m",
-          head: [
-            { text: "Trainees",
-              classes: "app-table__column-20"
-            },
-            { text: "Amount per trainee",
-              classes: "app-table__column-20"
-            },
-            { text: "Total",
-              classes: "app-table__column-20"
-            }
-          ],
-          rows: eyIttGrantRow
-        }) }}
-
+        </div>
       </div>
-    </div> #}
+    {% endif %}
+
+    {% if ittScholarshipTotal > 0 %}
+
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+
+          {# ITT Scholarships #}
+          {{ govukTable({
+            caption: "ITT scholarships",
+            captionClasses: "govuk-table__caption--m",
+            head: ittHeadItems,
+            rows: ittScholarshipRows
+          }) }}
+
+        </div>
+      </div>
+    {% endif %}
+    
+    {% if eyIttTotal > 0 %}
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds-from-desktop">
+
+          {{ govukTable({
+            caption: "Early years ITT bursaries",
+            captionClasses: "govuk-table__caption--m",
+            head: [
+              { text: "Tier",
+              classes: "app-table__column-48"
+              },
+              { text: "Trainees"
+              },
+              { text: "Amount per trainee"
+              },
+              { text: "Total"
+              }
+            ],
+            rows: eyIttBursaryRows
+          }) }}
+
+        </div>
+      </div>
+
+    {% endif %}
 
   {% endif %}
-
-
 
 {% endblock %}

@@ -2,13 +2,22 @@
 
 items:
 
-  - date: '2022-04-27'
-    title: Register’s website address (URL) has changed
+  - date: '2022-05-09'
+    title: HESA records now visible in Register for April Census update
     content: >-
-      The website address (URL) for Register has now changed to: <span class="app-nowrap">www&period;register-trainee-teachers.service.gov.uk</span>
+      The import from HESA to Register is working normally. This means if you’re a Higher Education Institute (HEI), you can use Register to see data that you have updated and uploaded to HESA. This will allow you to complete your April Census update by 13 May.
 
 
-      You will be automatically redirected to the new URL if you use the old one, so you will not see any disruption to your work or the service.
+      If you identify any further issues with your data, contact [becomingateacher@digital.education.gov.uk](mailto:becomingateacher@digital.education.gov.uk?subject=HESA%20import%20issues%20in%20Register).
+
+
+  - date: '2022-04-29'
+    title: April HESA census update extended to Friday 13 May 2022
+    content: >-
+      The import from HESA to Register is ongoing. This means if you’re a Higher Education Institute (HEI) of Initial Teacher Training (ITT), you can update and upload data to HESA, but you cannot see this update on Register yet. We’ve extended the deadline for the April census update from 29 April to Friday 13 May.
+
+
+      We will update you when your data is visible to check on Register.
 
 
   - date: '2022-03-16'

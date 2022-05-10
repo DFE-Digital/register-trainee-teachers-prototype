@@ -76,6 +76,16 @@ filters.currency = input => {
   else return '–'
 }
 
+// Format a number as £xxxx
+filters.currencyForCsv = input => {
+  let inputAsInt = parseInt(input, 10)
+  if ( inputAsInt > 0 ) { return `£${inputAsInt}` }
+
+  // makes negative number positive and puts minus sign in front of £
+  else if ( inputAsInt < 0 ) { return `-£${inputAsInt * -1 }` }
+  else return 0
+}
+
 // Emulate support for string literals in Nunjucks
 // Usage:
 // {{ 'The count is ${count}' | stringLiteral }}

@@ -1,0 +1,227 @@
+{% extends "_templates/_page.html" %}
+{% set pageHeading = "Funding CSV" %}
+
+{% set months = [
+  {
+    name: "August",
+    year: data.years.defaultCourseYear
+  },
+  {
+    name: "September",
+    year: data.years.defaultCourseYear
+  },
+  {
+    name: "October",
+    year: data.years.defaultCourseYear
+  },
+  {
+    name: "November",
+    year: data.years.defaultCourseYear
+  },
+  {
+    name: "December",
+    year: data.years.defaultCourseYear
+  },
+  {
+    name: "January",
+    year: data.years.endOfCurrentCycle
+  },
+  {
+    name: "February",
+    year: data.years.endOfCurrentCycle
+  },
+  {
+    name: "March",
+    year: data.years.endOfCurrentCycle
+  },
+  {
+    name: "April",
+    year: data.years.endOfCurrentCycle
+  },
+  {
+    name: "May",
+    year: data.years.endOfCurrentCycle
+  },
+  {
+    name: "June",
+    year: data.years.endOfCurrentCycle
+  },
+  {
+    name: "July",
+    year: data.years.endOfCurrentCycle
+  }
+] %}
+
+{# 
+  --------------  Monthly payment schedule | Accredited provider --------------
+#}
+
+{% set scittPaymentScheduleHeadRow = [
+  { text: "Month" }
+] %}
+
+{% set scittPaymentSchedule = data.funding.monthlyFundingScitts | sort(attribute = "descriptions") %}
+
+{% for item in scittPaymentSchedule %}
+  {% set scittPaymentScheduleHeadRow = scittPaymentScheduleHeadRow | push ({ text: item.descriptions | fixNamesFromFunding | sentenceCase | formatYearRange | safe }) %}
+{% endfor %}
+{% set scittPaymentScheduleHeadRow = scittPaymentScheduleHeadRow | push ({ text: "Month total" }) %}
+{% set scittPaymentScheduleTotal = 0 %}
+
+{% set scittPaymentScheduleBodyRows = [] %}
+{% for month in months %}
+  {% set row = [{ text: month.name + " " + month.year }] %}
+  {% set monthTotal = 0 %}
+  {% set monthIndex = loop.index0 %}
+  {% for item in scittPaymentSchedule %}
+    {% set row = row | push({ text: item.monthlyPayments[monthIndex] | currencyForCsv, format: "numeric" }) %}
+    {% set monthTotal = monthTotal +  item.monthlyPayments[monthIndex] %}
+    {% set scittPaymentScheduleTotal = scittPaymentScheduleTotal + monthTotal %}
+  {% endfor %}
+  {% set row = row | push({ text: monthTotal | currencyForCsv, format: "numeric" }) %}
+  {% set scittPaymentScheduleBodyRows = scittPaymentScheduleBodyRows | push(row) %}
+{% endfor %}
+
+{% set paymentScheduleBodyFinalRow = [{ text: "Total", classes: "govuk-!-font-weight-bold" }] %}
+
+{% for item in scittPaymentSchedule %}
+  {% set paymentScheduleBodyFinalRow = paymentScheduleBodyFinalRow | push({ text: item.cumulativeMonthlyPayments | last | currencyForCsv, format: "numeric" }) %}
+{% endfor %}
+
+{% set paymentScheduleBodyFinalRow = paymentScheduleBodyFinalRow | push ({ text: scittPaymentScheduleTotal | currencyForCsv, format: "numeric" }) %}
+{% set scittPaymentScheduleBodyRows = scittPaymentScheduleBodyRows | push(paymentScheduleBodyFinalRow)%}
+
+{# 
+  --------------  Bursaries and scholarships | Accredited provider --------------
+#}
+
+{% set scittscittTraineeSummary = data.funding.annualFundingScitts | sort(attribute = "route") %}
+
+{% set scittTraineeSummaryHeadRow = [
+  { text: "Route" },
+  { text: "Course" },
+  { text: "Lead school" },
+  { text: "Funding type" },
+  { text: "Tier" },
+  { text: "Number of trainees" },
+  { text: "Amount" },
+  { text: "Total" }
+  ] %}
+{% set scittTraineeSummaryBodyRows = [] %}
+
+{% for item in scittscittTraineeSummary %}
+  
+  {% if item.numberOfTraineesScholarship > 0 %}
+    {% set fundingType = "ITT scholarship" %}
+    {% set numberOfTrainees = item.numberOfTraineesScholarship %}
+    {% set amount = item.amountPgIttOrTier1EyItt %}
+  {% elseif item.subject != "Early Years ITT" and item.numberOfTraineesPgIttOrTier1EyItt > 0 %}
+    {% set fundingType = "ITT bursary" %}
+    {% set numberOfTrainees = item.numberOfTraineesPgIttOrTier1EyItt %}
+    {% set amount = item.amountScholarship %}
+  {% endif %}
+  {% if numberOfTrainees > 0 and amount > 0 %}
+    {% set row = [
+      { text: item.route },
+      { text: item.subject },
+      { text: item.leadSchool },
+      { text: fundingType },
+      { text: "Not applicable" },
+      { text: numberOfTrainees,
+        format: "numeric" },
+      { text: amount | currencyForCsv,
+        format: "numeric" },
+      { text: (numberOfTrainees * amount) | currencyForCsv,
+        format: "numeric" }
+    ] %}
+    {% set scittTraineeSummaryBodyRows = scittTraineeSummaryBodyRows | push(row) %}
+  {% endif %}
+
+  {% if item.numberOfTraineesPgIttOrTier1EyItt and item.subject == "Early Years ITT" %}
+    {% set row = [
+      { text: item.route },
+      { text: item.subject },
+      { text: item.leadSchool },
+      { text: "EYITT bursary" },
+      { text: "Tier 1" },
+      { text: item.numberOfTraineesPgIttOrTier1EyItt,
+        format: "numeric" },
+      { text: item.amountPgIttOrTier1EyItt | currencyForCsv,
+        format: "numeric" },
+      { text: (item.numberOfTraineesPgIttOrTier1EyItt * item.amountPgIttOrTier1EyItt) | currencyForCsv,
+        format: "numeric" }
+    ] %}
+    {% set scittTraineeSummaryBodyRows = scittTraineeSummaryBodyRows | push(row) %}
+  {% endif %}
+  {% if item.numberOfTraineesTier2EyItt and item.amountTier2EyItt > 0 %}
+    {% set numberOfTrainees = item.numberOfTraineesTier2EyItt %}
+    {% set row = [
+      { text: item.route },
+      { text: item.subject },
+      { text: item.leadSchool },
+      { text: "EYITT bursary" },
+      { text: "Tier 2" },
+      { text: item.numberOfTraineesTier2EyItt,
+        format: "numeric" },
+      { text: item.amountTier2EyItt | currencyForCsv,
+        format: "numeric" },
+      { text: (item.numberOfTraineesTier2EyItt * item.amountTier2EyItt) | currencyForCsv,
+        format: "numeric" }
+    ] %}
+    {% set scittTraineeSummaryBodyRows = scittTraineeSummaryBodyRows | push(row) %}
+  {% endif %}
+  {% if item.numberOfTraineesTier3EyItt and item.amountTier3EyItt > 0 %}
+    {% set row = [
+      { text: item.route },
+      { text: item.subject },
+      { text: item.leadSchool },
+      { text: "EYITT bursary" },
+      { text: "Tier 3" },
+      { text: item.numberOfTraineesTier3EyItt,
+        format: "numeric" },
+      { text: item.amountTier3EyItt | currencyForCsv,
+        format: "numeric" },
+      { text: (item.numberOfTraineesTier3EyItt * item.amountTier3EyItt) | currencyForCsv,
+        format: "numeric" }
+    ] %}
+    {% set scittTraineeSummaryBodyRows = scittTraineeSummaryBodyRows | push(row) %}
+  {% endif %}
+
+{% endfor %}
+
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+      <h1 class="govuk-heading-xl">{{ pageHeading }}</h1>
+      
+    </div>
+  </div>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+      <h2 class="govuk-heading-m">
+        Accredited provider
+      </h2>
+    </div>
+  </div>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      {{ govukTable({
+        caption: "Payment schedule",
+        captionClasses: "govuk-table__caption--s",
+        head: scittPaymentScheduleHeadRow,
+        rows: scittPaymentScheduleBodyRows
+      }) }}
+    </div>
+  </div>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      {{ govukTable({
+        caption: "Bursaries and scholarships",
+        captionClasses: "govuk-table__caption--s",
+        head: scittTraineeSummaryHeadRow,
+        rows: scittTraineeSummaryBodyRows
+      }) }}
+    </div>
+  </div>
+{% endblock %}

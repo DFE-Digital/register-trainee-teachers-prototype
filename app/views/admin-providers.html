@@ -97,23 +97,6 @@
         html: providersHtml
       }) }}
 
-      {{ govukSelect({
-        label: {
-          text: "Provider type"
-        },
-        items: [
-          {
-            value: "accrediting-provider",
-            text: "Accrediting provider"
-          },
-          {
-            value: "lead-school",
-            text: "Lead school"
-          }
-        ]
-      } | decorateAttributes(data, "data.settings.providerType"))  }}
-
-
       {{ govukButton({
         "text": "Update"
       }) }}

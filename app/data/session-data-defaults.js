@@ -106,15 +106,19 @@ settings.userProviders = [
   "Hope Academy"
 ]
 
-settings.viewAsAdmin = 'false'
+let isAdmin = true
+settings.defaultAdminName = "System admin"
+let defaultProvider = "King’s Oak University"
 
-// The ‘active’ provider for the current user if using hat model
-// Must be one of the ones in settings.userProviders
-// settings.userActiveProvider = "Webury Hill SCITT"
-settings.userActiveProvider = "King’s Oak University"
-// settings.userActiveProvider = "Beam Primary School"
+settings.viewAsAdmin = (isAdmin) ? 'true' : 'false'
 
-settings.providerType = "accrediting-provider"
+if (isAdmin){
+  settings.userActiveProvider = settings.defaultAdminName
+  settings.previousUserActiveProvider = defaultProvider
+}
+else {
+  settings.userActiveProvider = defaultProvider
+}
 
 // Enable apply integration
 settings.groupApplySections = 'true'

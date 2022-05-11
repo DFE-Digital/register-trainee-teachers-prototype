@@ -140,6 +140,28 @@ router.post('/direct-set-data', function(req, res, next){
   res.redirect("/direct-set-data")
 })
 
+// Extra processing to happen on settings
+router.post('/settings', function(req, res, next){
+  const data = req.session.data
+
+  // If admin has been turned on, change our 'signed in' org to reflect that
+  if (data.settings.viewAsAdmin == "true" && data.settings.userActiveProvider != data.settings.defaultAdminName){
+    console.log("Signing in as admin")
+    // Save the previous signed in org
+    data.settings.previousUserActiveProvider = data.settings.userActiveProvider
+    data.settings.userActiveProvider = adminOrgName
+  }
+
+  // If admin is not on, check the signed in org isn't an admin
+  if (data.settings.viewAsAdmin != "true" && data.settings.userActiveProvider == adminOrgName){
+    console.log("Signing out as admin")
+    // Restore previously signed in org
+    data.settings.userActiveProvider = data?.settings?.previousUserActiveProvider || data.settings.userProviders[1]
+  }
+
+  next()
+})
+
 // =============================================================================
 // Individual pages
 // =============================================================================

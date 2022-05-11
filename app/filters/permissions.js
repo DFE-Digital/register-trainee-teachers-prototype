@@ -82,7 +82,10 @@ filters.providerIsAuthorised = function(providers, action){
     'viewRecords'
   ]
 
-  if (accessLevel == "admin") return true
+  if (accessLevel == "admin") {
+    if (action == 'addTrainees') return false
+    else return true
+  }
 
   else if (accessLevel == "accreditingProvider"){
     return accreditingProviderActions.includes(action)

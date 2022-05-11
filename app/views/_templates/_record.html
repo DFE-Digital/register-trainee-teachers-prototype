@@ -3,18 +3,18 @@
 {% set navActive = "records" %}
 
 {% if not backLink %}
-    {% set backLink      = 'javascript:history.back();' %}
+  {% set backLink      = 'javascript:history.back();' %}
 {% endif %}
 {% if not backText %}
-    {% set backText      = 'Back'  %}
+  {% set backText      = 'Back'  %}
 {% endif %}
 
 {% if backLink == 'false' %}
-    {% set backLink = false %}
+  {% set backLink = false %}
 {% endif %}
 
 {% if backText == 'false' %}
-    {% set backText = '' %}
+  {% set backText = '' %}
 {% endif %}
 
 
@@ -37,7 +37,7 @@
   {% set record = {} %}
 {% endif %}
 
-{% set canAmend = isAuthorised("editRecords") and (record.status | canBeAmended) and (not record | isHesaAndLocked) %}
+{% set canAmend = data.isAdmin or isAuthorised("editRecords") and (record.status | canBeAmended) and (not record | isHesaAndLocked) %}
 
 {# Used by summary cards #}
 {% set recordPath = "/record/" + record.id %}
@@ -48,6 +48,12 @@
   {{ record | log(record | getShortName or 'Record') }}
 
   {% include "_includes/app-flash-message.html" %}
+
+  {% if data.isAdmin %}
+    {% include "_includes/impersonate-provider-cta.njk" %}
+  {% endif %}
+
+
 
   <div class="record-header">
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-0">

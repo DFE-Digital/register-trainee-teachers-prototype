@@ -39,11 +39,11 @@ router.all('*', function(req, res, next){
   data.isHatModel = (data.settings.providerModel == 'hat-model') ? true : false
   data.isBlendedModel = (data.settings.providerModel == 'blended-model') ? true : false
   data.signedInProviders = (data.isBlendedModel) ? data.settings.userProviders : [data.settings.userActiveProvider]
-  data.isAdmin = (data.settings.viewAsAdmin == "true") ? true : false
 
   res.locals.data.isHatModel = data.isHatModel
   res.locals.data.isBlendedModel = data.isBlendedModel
   res.locals.data.signedInProviders = data.signedInProviders
+
   // Double check that active provider is listed in signedInProviders
   if (!data.signedInProviders.includes(data.settings.userActiveProvider)){
     console.log(`Error: active provider (${data.settings.userActiveProvider}) not in signedInProviders (${data.signedInProviders})`)
@@ -51,6 +51,26 @@ router.all('*', function(req, res, next){
     data.settings.userActiveProvider = data.signedInProviders[0]
     res.locals.data.settings.userActiveProvider = data.settings.userActiveProvider
   }
+
+  // If there’s no signed in provider, fall back to the first available one
+  if (!data?.settings?.userActiveProvider) {
+    data.settings.userActiveProvider = data.userProviders[0]
+    res.locals.data.settings.userActiveProvider = data.settings.userActiveProvider
+  }
+
+  // Mark as admin if the provider has an admin name
+  if (data?.settings?.userActiveProvider == data.settings.defaultAdminName){
+    data.isAdmin = true
+    res.locals.data.isAdmin = true
+
+  }
+  else {
+    data.isAdmin = false
+    res.locals.data.isAdmin = false
+  }
+
+  // data.isAdmin = (data.settings.viewAsAdmin == "true") ? true : false
+
   // Also save to locals so that the data is available immediately
   res.locals.accessLevel = permissions.getAccessLevel(data?.signedInProviders, data)
   res.locals.recordAccessLevel = permissions.recordAccessLevel(data?.record, data)
@@ -138,28 +158,6 @@ router.post('/direct-set-data', function(req, res, next){
   }
 
   res.redirect("/direct-set-data")
-})
-
-// Extra processing to happen on settings
-router.post('/settings', function(req, res, next){
-  const data = req.session.data
-
-  // If admin has been turned on, change our 'signed in' org to reflect that
-  if (data.settings.viewAsAdmin == "true" && data.settings.userActiveProvider != data.settings.defaultAdminName){
-    console.log("Signing in as admin")
-    // Save the previous signed in org
-    data.settings.previousUserActiveProvider = data.settings.userActiveProvider
-    data.settings.userActiveProvider = adminOrgName
-  }
-
-  // If admin is not on, check the signed in org isn't an admin
-  if (data.settings.viewAsAdmin != "true" && data.settings.userActiveProvider == adminOrgName){
-    console.log("Signing out as admin")
-    // Restore previously signed in org
-    data.settings.userActiveProvider = data?.settings?.previousUserActiveProvider || data.settings.userProviders[1]
-  }
-
-  next()
 })
 
 // =============================================================================

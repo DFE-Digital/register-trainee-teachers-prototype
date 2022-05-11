@@ -29,7 +29,7 @@ filters.getAccessLevels = function(providers, data){
 
   // Loop through each signed-in provider and get their type
   let accessLevels = providers.map(provider => utils.getProviderType.apply(this, [provider, data]))
-  if (data?.settings?.viewAsAdmin == 'true') accessLevels.push("admin")
+  if (data?.isAdmin) accessLevels.push("admin")
   return accessLevels
 }
 
@@ -120,7 +120,7 @@ filters.getRecordAccessLevels = function(record, data=false){
     else if (record?.schools?.leadSchool?.schoolName == provider) return 'leadSchool'
     else return false
   }).filter(Boolean)
-  if (data?.settings?.viewAsAdmin == 'true') accessLevels.push("admin")
+  if (data?.isAdmin) accessLevels.push("admin")
 
   return accessLevels
 }

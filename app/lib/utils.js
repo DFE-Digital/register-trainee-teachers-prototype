@@ -1064,6 +1064,18 @@ exports.isApprenticeship = record => {
   return record?.route == "Teaching apprenticeship (postgrad)"
 }
 
+exports.isSchoolDirect = record => {
+  return record.route && record?.route.includes("School")
+}
+
+exports.hasLeadSchool = record => {
+  return Boolean(record?.schools?.leadSchool?.schoolName)
+}
+
+exports.getLeadSchoolName = record => {
+  return record?.schools?.leadSchool?.schoolName
+}
+
 // Active, Future, Historic
 
 exports.isActive = record => {
@@ -1461,7 +1473,7 @@ exports.filterRecords = (records, data, filters = {}) => {
 
   let filteredRecords = records
 
-  if (data?.settings?.viewAsAdmin != "true"){
+  if (!data?.isAdmin){
     // Only allow records for the signed-in providers
     filteredRecords = exports.filterBySignedIn(filteredRecords, data)
   }
@@ -1539,7 +1551,7 @@ exports.filterRecords = (records, data, filters = {}) => {
 
     // Expand out sciences to three allocation subjects
     if (filters.subject == "Sciences - biology, chemistry, physics"){
-      searchSubjects = ['Biology', 'Chemistry', 'Physics']
+      searchSubjects = ['Biology', 'Chemistry', 'Physics', 'General sciences']
     }
 
     filteredRecords = filteredRecords.filter(record => {

@@ -87,7 +87,7 @@
 
   {% set rightHandSideNavHtml %}
 
-  {% if not data.isAdmin %}
+  {% if not data.isAdmin and not data.isImpersonating | falsify %}
     {% set providerName = data.settings.userActiveProvider %}
     {% if providerName | providerIsLeadSchool %}
       {% set providerName -%}
@@ -166,9 +166,16 @@
 
   {% endif %}
 
+
+
 {% endblock %}
 
 {% block beforeContent %}
+
+{% if data.isImpersonating | falsify %}
+  {% include "_includes/impersonate-provider-cta.njk" %}
+{% endif %}
+
 {{ govukPhaseBanner({
   tag: {
     text: "prototype"
@@ -176,6 +183,7 @@
   classes: 'govuk-!-margin-top-1',
   html: 'This is a prototype of a new service – your <a href="#" class="govuk-link">feedback</a> will help us improve it'
 }) }}
+
 {% block pageNavigation %}
 {% endblock %}
 {% block pageBanner %}

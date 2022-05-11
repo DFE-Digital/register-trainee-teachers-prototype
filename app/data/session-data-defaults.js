@@ -110,8 +110,6 @@ let isAdmin = true
 settings.defaultAdminName = "System admin"
 let defaultProvider = "King’s Oak University"
 
-settings.viewAsAdmin = (isAdmin) ? 'true' : 'false'
-
 if (isAdmin){
   settings.userActiveProvider = settings.defaultAdminName
   settings.previousUserActiveProvider = defaultProvider

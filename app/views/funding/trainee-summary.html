@@ -1,0 +1,309 @@
+{% extends "_templates/_page.html" %}
+{% set navActive = "Funding" %}
+{% set pageHeading = navActive %}
+{% set tabName = "Trainee summary " + data.years.currentAcademicYear %}
+
+{% set totalForAllTrainees = 1 %}
+
+{# Pick data based on user’s organisation #}
+{% if accessLevel == 'accreditingProvider' %}
+  {% set fundingTypes = ["bursaries", "scholarships"] %}
+{% else %}
+  {% set fundingTypes = ["grants"] %}
+{% endif %}
+
+
+{# 
+  ---  Trainee summary | bursary and scholarships | Accredited provider ---
+#}
+
+{% set scittTraineeSummary = data.funding.annualFundingScitts | sort(attribute = "route") %}
+
+{% set ittBursaryAndScholarshipHeadRow = [
+  { text: "Route and course" },
+  { text: "Lead school" },
+  { text: "Number of trainees",
+    format: "numeric" },
+  { text: "Amount per trainee",
+    format: "numeric" },
+  { text: "Total",
+    format: "numeric" }
+] %}
+
+{% set ittBursaryBodyRows = [] %}
+{% set ittBursaryTotal = 0 %}
+
+{% set ittScholarshipBodyRows = [] %}
+{% set ittScholarshipTotal = 0 %}
+
+{% set eyittBursaryHeadRow = [
+  { text: "Tier" },
+  { text: "Number of trainees",
+    format: "numeric" },
+  { text: "Amount per trainee",
+    format: "numeric" },
+  { text: "Total",
+    format: "numeric" }
+] %}
+
+{% set eyittBursaryBodyRows = [] %}
+{% set eyittBursaryTotal = 0 %}
+
+{% for item in scittTraineeSummary %}
+  {% set row = [] %}
+  {% if item.subject != "Early Years ITT" %}
+    {% set routeAndCourseHtml %}
+      {{ item.route }}<br>
+      {{ item.subject }}
+    {% endset %}
+    {% if item.numberOfTraineesScholarship > 0 %}
+      {% set numberOfTrainees = item.numberOfTraineesScholarship %}
+      {% set amountPerTrainee = item.amountPgIttOrTier1EyItt %}
+    {% elseif item.subject != "Early Years ITT" and item.numberOfTraineesPgIttOrTier1EyItt > 0 %}
+      {% set numberOfTrainees = item.numberOfTraineesPgIttOrTier1EyItt %}
+      {% set amountPerTrainee = item.amountScholarship %}
+    {% endif %}
+    {% if numberOfTrainees > 0 and amountPerTrainee > 0 %}
+      {% set row = [
+        { text: routeAndCourseHtml | safe },
+        { text: item.leadSchool if item.leadSchool else "—" },
+        { text: numberOfTrainees,
+          format: "numeric" },
+        { text: amountPerTrainee | currency,
+          format: "numeric" },
+        { text: (numberOfTrainees * amountPerTrainee) | currency,
+          format: "numeric" }
+      ] %}
+    {% endif %}
+    {% if item.numberOfTraineesScholarship > 0 %}
+      {% set ittScholarshipBodyRows = ittScholarshipBodyRows | push(row) %}
+      {% set ittScholarshipTotal = ittScholarshipTotal + (numberOfTrainees * amountPerTrainee) %}
+    {% else %}
+      {% set ittBursaryBodyRows = ittBursaryBodyRows | push(row) %}
+      {% set ittBursaryTotal = ittBursaryTotal + (numberOfTrainees * amountPerTrainee) %}
+    {% endif %}
+  {% else %}
+    {% if item.numberOfTraineesPgIttOrTier1EyItt and item.subject == "Early Years ITT" %}
+      {% set row = [
+        { text: "Tier 1" },
+        { text: item.numberOfTraineesPgIttOrTier1EyItt,
+          format: "numeric" },
+        { text: item.amountPgIttOrTier1EyItt | currency,
+          format: "numeric" },
+        { text: (item.numberOfTraineesPgIttOrTier1EyItt * item.amountPgIttOrTier1EyItt) | currency,
+          format: "numeric" }
+      ] %}
+      {% set eyittBursaryBodyRows = eyittBursaryBodyRows | push(row) %}
+      {% set eyittBursaryTotal = eyittBursaryTotal + (item.numberOfTraineesPgIttOrTier1EyItt * item.amountPgIttOrTier1EyItt) %}
+    {% endif %}
+    {% if item.numberOfTraineesTier2EyItt and item.amountTier2EyItt > 0 %}
+      {% set numberOfTrainees = item.numberOfTraineesTier2EyItt %}
+      {% set row = [
+        { text: "Tier 2" },
+        { text: item.numberOfTraineesTier2EyItt,
+          format: "numeric" },
+        { text: item.amountTier2EyItt | currency,
+          format: "numeric" },
+        { text: (item.numberOfTraineesTier2EyItt * item.amountTier2EyItt) | currency,
+          format: "numeric" }
+      ] %}
+      {% set eyittBursaryBodyRows = eyittBursaryBodyRows | push(row) %}
+      {% set eyittBursaryTotal = eyittBursaryTotal + (item.numberOfTraineesTier2EyItt * item.amountTier2EyItt) %}
+    {% endif %}
+    {% if item.numberOfTraineesTier3EyItt and item.amountTier3EyItt > 0 %}
+      {% set row = [
+        { text: "Tier 3" },
+        { text: item.numberOfTraineesTier3EyItt,
+          format: "numeric" },
+        { text: item.amountTier3EyItt | currency,
+          format: "numeric" },
+        { text: (item.numberOfTraineesTier3EyItt * item.amountTier3EyItt) | currency,
+          format: "numeric" }
+      ] %}
+      {% set eyittBursaryBodyRows = eyittBursaryBodyRows | push(row) %}
+      {% set eyittBursaryTotal = eyittBursaryTotal + (item.numberOfTraineesTier3EyItt * item.amountTier3EyItt) %}
+    {% endif %}
+  {% endif %}
+{% endfor %}
+
+{# 
+  ------------------  Trainee summary | Grants | Lead shool -------------------
+#}
+
+{% set leadSchoolTraineeSummary = data.funding.annualFundingLeadSchools | sort(attribute = "route") %}
+{% set totalForAllLeadSchoolTrainees = 0 %}
+
+{% set leadSchoolTraineeSummaryHeadRow = [
+  { text: "Route and course" },
+  { text: "Trainees" },
+  { text: "Amount per trainee",
+    format: "numeric" },
+  { text: "Total",
+    format: "numeric" }
+  ] %}
+
+{% set leadSchoolTraineeSummaryBodyRows = [] %}
+{% for item in leadSchoolTraineeSummary %}
+  {% if item.numberOfTrainees > 0 and item.amountPerTrainee > 0 %}
+    {% set routeAndCourseHtml %}
+      {{ item.route }}<br>
+      {{ item.subject }}
+    {% endset %}
+    {% set totalForRouteAndCourse = item.numberOfTrainees * item.amountPerTrainee %}
+    {% set row = [
+      { text: routeAndCourseHtml | safe },
+      { text: item.numberOfTrainees,
+        format: "numeric" },
+      { text: item.amountPerTrainee | currency,
+        format: "numeric" },
+      { text: totalForRouteAndCourse | currency,
+        format: "numeric" }
+    ] %}
+    {% set totalForAllLeadSchoolTrainees = totalForAllLeadSchoolTrainees + totalForRouteAndCourse %}
+    {% set leadSchoolTraineeSummaryBodyRows = leadSchoolTraineeSummaryBodyRows | push(row) %}
+  {% endif %}
+{% endfor %}
+
+{% block content %}
+  {% set traineeSummaryTab = true %}
+  {% include "_includes/funding-header-and-tab-nav.html" %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+      <h2 class="govuk-heading-l">
+        {{ tabName }}
+      </h2>
+      {% if totalForAllLeadSchoolTrainees == 0 %}
+        <p class="govuk-body">
+          There are no trainees eligible for {{ fundingTypes | orSeparate }} right now.
+        </p>
+        <p class="govuk-body">
+          Contact <a class="govuk-link" href="mailto:becomingateacher@digital.education.gov.uk?subject=Funding">becomingateacher@digital.education.gov.uk</a> if you think there should be trainees who are eligible.
+        </p>
+      {% else %}
+        <p class="govuk-body">
+          This trainee summary covers {{ fundingTypes | andSeparate }} as recorded in the <span class="app-nowrap">October {{ data.years.defaultCourseYear }} ITT census.</span>
+        </p>
+        <p class="govuk-body">
+          Last updated: 1 December {{ data.years.defaultCourseYear }}
+        </p>
+        {{ appDownloadLink({
+            linkText: "Export " + tabName | startLowerCase,
+            fileName: 
+              "funding/accredited-provider/trainee-summary" if accessLevel == 'accreditingProvider'
+               else "funding/lead-school/trainee-summary",
+            classes: "govuk-!-margin-bottom-7",
+            downloadedFileName: (data.signedInProviders + " " + tabName) | slugify,
+            fileType: "csv"
+          })}}
+      {% endif %}
+    </div>
+  </div>
+  {% if accessLevel == 'accreditingProvider' %}
+    {% set annualTotal = ittBursaryTotal + ittScholarshipTotal + eyittBursaryTotal %}
+    {% if annualTotal > 0 %}
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-one-half">
+          {{ govukTable({
+            caption: "Summary",
+            captionClasses: "govuk-table__caption--m",
+            head: [
+              { text: "Payment type" },
+              { text: "Total" }
+            ],
+            rows: [
+              [
+                { text: "ITT bursaries" },
+                {
+                  text: ittBursaryTotal | currency,
+                  format: "numeric"
+                }
+              ] if ittBursaryTotal > 0,
+              [
+                { text: "ITT scholarships" },
+                {
+                  text: ittScholarshipTotal | currency,
+                  format: "numeric"
+                }
+              ] if ittScholarshipTotal > 0,
+              [
+                { text: "Early years ITT bursaries" },
+                {
+                  text: eyittBursaryTotal | currency,
+                  format: "numeric"
+                }
+              ] if eyittBursaryTotal > 0,
+               [
+                {
+                  text: "Total",
+                  classes: "govuk-!-font-weight-bold"
+                },
+                {
+                  text: annualTotal | currency,
+                  format: "numeric",
+                  classes: "govuk-!-font-weight-bold"
+                }
+              ]
+            ]
+          }) }}
+        </div>
+      </div>
+    {% endif %}
+    {% if ittBursaryBodyRows.length > 0 %}
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+          {{ govukTable({
+            caption: "ITT bursaries breakdown",
+            captionClasses: "govuk-table__caption--m",
+            head: ittBursaryAndScholarshipHeadRow,
+            rows: ittBursaryBodyRows
+          }) }}
+        </div>
+      </div>
+    {% endif %}
+    {% if ittScholarshipBodyRows.length > 0 %}
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+          {{ govukTable({
+            caption: "ITT scholarships breakdown",
+            captionClasses: "govuk-table__caption--m",
+            head: ittBursaryAndScholarshipHeadRow,
+            rows: ittScholarshipBodyRows
+          }) }}
+        </div>
+      </div>
+    {% endif %}
+    {% if eyittBursaryBodyRows.length > 0 %}
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds-from-desktop">
+          {{ govukTable({
+            caption: "Early years ITT bursaries breakdown",
+            captionClasses: "govuk-table__caption--m",
+            head: eyittBursaryHeadRow,
+            rows: eyittBursaryBodyRows
+          }) }}
+        </div>
+      </div>
+    {% endif %}
+  {% else %}
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-one-half">
+        <h3 class="govuk-heading-m govuk-!-margin-bottom-2">
+          Total grants
+        </h3>
+        <p class="govuk-body">
+          {{ totalForAllLeadSchoolTrainees | currency }}
+        </p>
+      </div>
+    </div>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds-from-desktop">
+        {{ govukTable({
+          caption: "Grants breakdown",
+          captionClasses: "govuk-table__caption--m",
+          head: leadSchoolTraineeSummaryHeadRow,
+          rows: leadSchoolTraineeSummaryBodyRows
+        }) }}
+      </div>
+    </div>
+  {% endif %}
+{% endblock %}

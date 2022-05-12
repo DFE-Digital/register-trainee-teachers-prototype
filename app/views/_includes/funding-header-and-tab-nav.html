@@ -14,21 +14,11 @@
   items: [{
     text: 'Payment schedule ' + data.years.currentAcademicYear,
     href: "/funding/payment-schedule",
-    active: activeTabMonthly
+    active: paymentScheduleTab
   },
   {
-    text: yearPaymentsTabName + ' ' + data.years.currentAcademicYear,
-    href: '/funding/bursaries-scholarships',
-    active: activeTabYearlyScitt
-  } if accessLevel == 'accreditingProvider',
-  {
-    text: 'Grants ' + data.years.currentAcademicYear,
-    href: '/funding/grants',
-    active: activeTabYearlyLeadSchool
-  } if accessLevel == 'leadSchool',
-  {
-    text: "Past year’s funding",
-    href: '/funding/data',
-    active: activeTabFundingData
-  } if false
+    text: 'Trainee summary ' + data.years.currentAcademicYear,
+    href: '/funding/trainee-summary',
+    active: traineeSummaryTab
+  }
 ]}) }}

@@ -38,8 +38,9 @@
         1. Export a template file
       </h2>
       {{ appDownloadLink({
-        linkText: "trainees with missing details",
+        linkText: "Download trainees with missing details",
         fileName: "bulk-update/add-details",
+        showDownloadedFileName: true,
         downloadedFileName: (data.signedInProviders + "-trainees to add missing prepopulated") | slugify,
         fileType: "csv"
       })}}

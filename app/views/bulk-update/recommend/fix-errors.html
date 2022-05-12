@@ -92,7 +92,7 @@
 %}
 
 {% set qualifications = traineesThatCanBeRecommended | getQualifications | orSeparate %}
-{% set linkText = "trainees ready to be recommened for " + qualifications + " — with errors" %}
+{% set linkText = "Download trainees ready to be recommened for " + qualifications + " — with errors" %}
 {% set fileName = "recommendOnly-with-errors" if bulkOnly else "recommend-with-errors" %}
 {% set downloadedFileName = "-fix-errors" %}
 

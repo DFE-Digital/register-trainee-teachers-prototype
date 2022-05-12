@@ -13,7 +13,7 @@
 {% set bulkPath = "recommend" %}
 
 {% set qualifications = traineesThatCanBeRecommended | getQualifications | orSeparate %}
-{% set linkText = "trainees ready to be recommended" %}
+{% set linkText = "Download trainees ready to be recommended" %}
 {% set fileName = "recommendOnly-with-data" if bulkOnly else "recommend-with-data" %}
 {% set downloadedFileName = "-change-pending" %}
 

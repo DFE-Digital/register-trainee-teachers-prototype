@@ -77,8 +77,9 @@
           Delete any trainees you do not want to recommened.
         </p>
         {{ appDownloadLink({
-          linkText: "a prepopulated file to recommend trainees for " + qualifications,
+          linkText: "Download a prepopulated file to recommend trainees for " + qualifications,
           fileName: "bulk-update/recommendOnly" if bulkRecommendOnly else "recommend",
+          showDownloadedFileName: true,
           downloadedFileName: (data.signedInProviders + "-trainees to recommend prepopulated") | slugify,
           fileType: "csv"
         })}}
@@ -90,8 +91,9 @@
         </p>
         <p>Add the trainees you want to recommend for {{ qualifications }}.</p>
         {{ appDownloadLink({
-          linkText: "an empty template file to recommend trainees for " + qualifications,
+          linkText: "Download an empty template file to recommend trainees for " + qualifications,
           fileName: "bulk-update/recommendOnly-template" if bulkRecommendOnly else "recommend-template",
+          showDownloadedFileName: true,
           downloadedFileName: (data.signedInProviders + "-trainees to recommend template") | slugify,
           fileType: "csv"
         })}}

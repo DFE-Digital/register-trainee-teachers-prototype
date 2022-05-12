@@ -1,0 +1,6 @@
+Route,Course,Lead school,Funding type,Tier,Number of trainees,Amount per trainee,Total
+EYITT Graduate Entry,Early Years ITT,,EYITT bursary,Tier 1,3,"£5,000","£15,000"
+EYITT Graduate Entry,Early Years ITT,,EYITT bursary,Tier 2,1,"£4,000","£4,000"
+Provider-led,Physics,,ITT bursary,Not applicable,2,"£26,000","£52,000"
+Provider-led,Mathematics,,ITT bursary,Not applicable,6,"£26,000","£156,000"
+Provider-led,Chemistry,,ITT scholarship,Not applicable,1,"£24,000","£24,000"

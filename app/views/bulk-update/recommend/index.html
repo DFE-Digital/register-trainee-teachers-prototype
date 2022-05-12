@@ -78,7 +78,7 @@
         </p>
         {{ appDownloadLink({
           linkText: "a prepopulated file to recommend trainees for " + qualifications,
-          fileName: "recommendOnly" if bulkRecommendOnly else "recommend",
+          fileName: "bulk-update/recommendOnly" if bulkRecommendOnly else "recommend",
           downloadedFileName: (data.signedInProviders + "-trainees to recommend prepopulated") | slugify,
           fileType: "csv"
         })}}
@@ -91,7 +91,7 @@
         <p>Add the trainees you want to recommend for {{ qualifications }}.</p>
         {{ appDownloadLink({
           linkText: "an empty template file to recommend trainees for " + qualifications,
-          fileName: "recommendOnly-template" if bulkRecommendOnly else "recommend-template",
+          fileName: "bulk-update/recommendOnly-template" if bulkRecommendOnly else "recommend-template",
           downloadedFileName: (data.signedInProviders + "-trainees to recommend template") | slugify,
           fileType: "csv"
         })}}

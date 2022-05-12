@@ -115,7 +115,7 @@ const setupAutocomplete = (component) => {
   // Get config for autocomplete
   const autoselect          = element.getAttribute('data-autoselect') || false
   const classes             = element.getAttribute('data-classes') || false
-  const describedById       = element.getAttribute('aria-describedby') || false
+  const describedByIds      = element.getAttribute('aria-describedby') || false
   const minLength           = element.getAttribute('data-min-length') || 2
   const placeholder         = element.getAttribute('data-placeholder') || false
   const showAllValues       = element.getAttribute('data-show-all-values') || false
@@ -130,10 +130,17 @@ const setupAutocomplete = (component) => {
   // If the enhanced element has aria-describedBy, grab the description to pass
   // to the autocomplete
   let describedBy = null
-  if (describedById){
-    describedBy = document.getElementById(describedById).innerText
-    // Add a full stop if the hint didn't have one.
-    describedBy = (describedBy.endsWith(".")) ? describedBy : `${describedBy}.`
+  if (describedByIds){
+
+    // Can be an array where the field is in error
+    let describedByIdsArray = describedByIds.trim().split(' ')
+    describedBy = describedByIdsArray.map(describedById => {
+      let innerText = document.getElementById(describedById).innerText
+      // Make sure each item ends in a full stop.
+      if (!innerText.endsWith(".")){
+        innerText = `${innerText}.`
+      }
+    }).join(' ')
   }
 
   // If enhancing a select and values not provided, fall back to options from select

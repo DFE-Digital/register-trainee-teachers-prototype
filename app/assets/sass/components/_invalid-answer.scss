@@ -51,6 +51,10 @@ $invalid-colour: $govuk-brand-colour;
   // @include govuk-typography-weight-bold;
 }
 
+.app-summary-list__value--invalid .app-summary-list__user-value {
+  color: $govuk-text-colour;
+}
+
 .app-summary-list__message--invalid {
   color: $invalid-colour;
   @include govuk-typography-weight-bold;
@@ -64,7 +68,15 @@ $invalid-colour: $govuk-brand-colour;
   color: $invalid-colour;
 }
 
+.app-invalid-answer .autocomplete__input {
+  border-color: $invalid-colour;
+}
+
 .app-invalid-answer .govuk-form-group--error {
+  border-color: $invalid-colour;
+}
+
+.app-invalid-answer .govuk-select--error {
   border-color: $invalid-colour;
 }
 

@@ -25,16 +25,20 @@
 If so, generate an autocomplete specific class that can be applied
 to the parent #}
 {% set widthClass = false %}
+{% set classesExceptWidth = '' %}
 {% if params.classes %}
   {% set classes = params.classes | split(" ") %}
   {% for class in classes %}
     {% if class | includes("govuk-!-width")  %}
       {% set widthClass = class | replace("govuk-!", "app-!-autocomplete--max")  %}
+    {% else %}
+      {% set classesExceptWidth = classesExceptWidth | push(class) %}
     {% endif %}
   {% endfor %}
+  {% set classesExceptWidth = classesExceptWidth | spaceSeparate %}
 {% endif %}
 
-<div data-module="app-autocomplete" class="govuk-form-group {{ 'app-autocomplete--with-suggestions' if showSuggestions}} {{params.autocompleteOptions.classes}} {{widthClass if widthClass}}">
+<div data-module="app-autocomplete" class="govuk-form-group {{ 'app-autocomplete--with-suggestions' if showSuggestions}} {{classesExceptWidth}} {{params.autocompleteOptions.classes}} {{widthClass if widthClass}}">
 
   {% if autocompleteType == "input" %}
 

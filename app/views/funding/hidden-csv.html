@@ -82,20 +82,20 @@
   {% set scittPaymentScheduleBodyRows = scittPaymentScheduleBodyRows | push(row) %}
 {% endfor %}
 
-{% set paymentScheduleBodyFinalRow = [{ text: "Total", classes: "govuk-!-font-weight-bold" }] %}
+{% set scittPaymentScheduleBodyFinalRow = [{ text: "Total", classes: "govuk-!-font-weight-bold" }] %}
 
 {% for item in scittPaymentSchedule %}
-  {% set paymentScheduleBodyFinalRow = paymentScheduleBodyFinalRow | push({ text: item.cumulativeMonthlyPayments | last | currencyForCsv, format: "numeric" }) %}
+  {% set scittPaymentScheduleBodyFinalRow = scittPaymentScheduleBodyFinalRow | push({ text: item.cumulativeMonthlyPayments | last | currencyForCsv, format: "numeric" }) %}
 {% endfor %}
 
-{% set paymentScheduleBodyFinalRow = paymentScheduleBodyFinalRow | push ({ text: scittPaymentScheduleTotal | currencyForCsv, format: "numeric" }) %}
-{% set scittPaymentScheduleBodyRows = scittPaymentScheduleBodyRows | push(paymentScheduleBodyFinalRow)%}
+{% set scittPaymentScheduleBodyFinalRow = scittPaymentScheduleBodyFinalRow | push ({ text: scittPaymentScheduleTotal | currencyForCsv, format: "numeric" }) %}
+{% set scittPaymentScheduleBodyRows = scittPaymentScheduleBodyRows | push(scittPaymentScheduleBodyFinalRow)%}
 
 {# 
   --------------  Bursaries and scholarships | Accredited provider --------------
 #}
 
-{% set scittscittTraineeSummary = data.funding.annualFundingScitts | sort(attribute = "route") %}
+{% set scittTraineeSummary = data.funding.annualFundingScitts | sort(attribute = "route") %}
 
 {% set scittTraineeSummaryHeadRow = [
   { text: "Route" },
@@ -104,12 +104,12 @@
   { text: "Funding type" },
   { text: "Tier" },
   { text: "Number of trainees" },
-  { text: "Amount" },
+  { text: "Amount per trainee" },
   { text: "Total" }
   ] %}
 {% set scittTraineeSummaryBodyRows = [] %}
 
-{% for item in scittscittTraineeSummary %}
+{% for item in scittTraineeSummary %}
   
   {% if item.numberOfTraineesScholarship > 0 %}
     {% set fundingType = "ITT scholarship" %}
@@ -186,20 +186,87 @@
     ] %}
     {% set scittTraineeSummaryBodyRows = scittTraineeSummaryBodyRows | push(row) %}
   {% endif %}
-
 {% endfor %}
 
+{# 
+  --------------  Monthly payment schedule | Lead shool --------------
+#}
+
+{% set leadSchoolPaymentScheduleHeadRow = [
+  { text: "Month" }
+] %}
+
+{% set leadSchoolPaymentSchedule = data.funding.monthlyFundingLeadSchools | sort(attribute = "descriptions") %}
+
+{% for item in leadSchoolPaymentSchedule %}
+  {% set leadSchoolPaymentScheduleHeadRow = leadSchoolPaymentScheduleHeadRow | push ({ text: item.descriptions | fixNamesFromFunding | sentenceCase | formatYearRange | safe }) %}
+{% endfor %}
+{% set leadSchoolPaymentScheduleHeadRow = leadSchoolPaymentScheduleHeadRow | push ({ text: "Month total" }) %}
+{% set leadSchoolPaymentScheduleTotal = 0 %}
+
+{% set leadSchoolPaymentScheduleBodyRows = [] %}
+{% for month in months %}
+  {% set row = [{ text: month.name + " " + month.year }] %}
+  {% set monthTotal = 0 %}
+  {% set monthIndex = loop.index0 %}
+  {% for item in leadSchoolPaymentSchedule %}
+    {% set row = row | push({ text: item.monthlyPayments[monthIndex] | currencyForCsv, format: "numeric" }) %}
+    {% set monthTotal = monthTotal +  item.monthlyPayments[monthIndex] %}
+    {% set leadSchoolPaymentScheduleTotal = leadSchoolPaymentScheduleTotal + monthTotal %}
+  {% endfor %}
+  {% set row = row | push({ text: monthTotal | currencyForCsv, format: "numeric" }) %}
+  {% set leadSchoolPaymentScheduleBodyRows = leadSchoolPaymentScheduleBodyRows | push(row) %}
+{% endfor %}
+
+{% set leadSchoolPaymentScheduleBodyFinalRow = [{ text: "Total", classes: "govuk-!-font-weight-bold" }] %}
+
+{% for item in leadSchoolPaymentSchedule %}
+  {% set leadSchoolPaymentScheduleBodyFinalRow = leadSchoolPaymentScheduleBodyFinalRow | push({ text: item.cumulativeMonthlyPayments | last | currencyForCsv, format: "numeric" }) %}
+{% endfor %}
+
+{% set leadSchoolPaymentScheduleBodyFinalRow = leadSchoolPaymentScheduleBodyFinalRow | push ({ text: leadSchoolPaymentScheduleTotal | currencyForCsv, format: "numeric" }) %}
+{% set leadSchoolPaymentScheduleBodyRows = leadSchoolPaymentScheduleBodyRows | push(leadSchoolPaymentScheduleBodyFinalRow)%}
+
+{# 
+  --------------  Trainee summary | Lead shool --------------
+#}
+
+{% set leadSchoolTraineeSummary = data.funding.annualFundingLeadSchools | sort(attribute = "route") %}
+
+{% set leadSchoolTraineeSummaryHeadRow = [
+  { text: "Route" },
+  { text: "Course" },
+  { text: "Trainees" },
+  { text: "Amount per trainee" },
+  { text: "Total" }
+  ] %}
+
+{% set leadSchoolTraineeSummaryBodyRows = [] %}
+{% for item in leadSchoolTraineeSummary %}
+  {% if item.numberOfTrainees > 0 and item.amountPerTrainee > 0 %}
+    {% set row = [
+      { text: item.route },
+      { text: item.subject },
+      { text: item.numberOfTrainees,
+        format: "numeric" },
+      { text: item.amountPerTrainee | currencyForCsv,
+        format: "numeric" },
+      { text: (item.numberOfTrainees * item.amountPerTrainee) | currencyForCsv,
+        format: "numeric" }
+    ] %}
+    {% set leadSchoolTraineeSummaryBodyRows = leadSchoolTraineeSummaryBodyRows | push(row) %}
+  {% endif %}
+{% endfor %}
 
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds-from-desktop">
       <h1 class="govuk-heading-xl">{{ pageHeading }}</h1>
-      
     </div>
   </div>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds-from-desktop">
-      <h2 class="govuk-heading-m">
+      <h2 class="govuk-heading-l">
         Accredited provider
       </h2>
     </div>
@@ -221,6 +288,33 @@
         captionClasses: "govuk-table__caption--s",
         head: scittTraineeSummaryHeadRow,
         rows: scittTraineeSummaryBodyRows
+      }) }}
+    </div>
+  </div>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+      <h2 class="govuk-heading-l">
+        Lead schools
+      </h2>
+    </div>
+  </div>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      {{ govukTable({
+        caption: "Payment schedule",
+        captionClasses: "govuk-table__caption--s",
+        head: leadSchoolPaymentScheduleHeadRow,
+        rows: leadSchoolPaymentScheduleBodyRows
+      }) }}
+    </div>
+  </div>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      {{ govukTable({
+        caption: "Trainee summary",
+        captionClasses: "govuk-table__caption--s",
+        head: leadSchoolTraineeSummaryHeadRow,
+        rows: leadSchoolTraineeSummaryBodyRows
       }) }}
     </div>
   </div>

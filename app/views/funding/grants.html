@@ -21,7 +21,7 @@
       {% set dataSource = dataSource | sort(attribute = "subject") %}
 
       {% set salaryHeadRow = [
-        { text: "Subject and route",
+        { text: "Route and course",
           classes: "app-table__column-53" },
         { text: "Trainees" },
         { text: "Amount per trainee" },
@@ -34,8 +34,8 @@
         {% if (item.numberOfTrainees > 0) and (item.amountPerTrainee > 0) %}
           {% set subjectTotal = (item.numberOfTrainees * item.amountPerTrainee) %}
           {% set subjectAndRoute %}
-            {{ item.subject }}<br>
-            <span class="app-nowrap">{{ item.route | lower | sentenceCase }}</span>
+            {{ item.route | lower | sentenceCase }}<br>
+            <span class="app-nowrap">{{ item.subject }}</span>
           {% endset %}
           {% set row = [
             { text: subjectAndRoute | safe },
@@ -53,7 +53,7 @@
       {% set salaryBodyRows = salaryBodyRows | push(row) %}
 
 
-      {% if annualTotal != 0 %}
+      {% if annualTotal == 0 %}
 
           <p class="govuk-body">
             No grant funding available.

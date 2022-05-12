@@ -13,8 +13,8 @@
 {% endif %}
 
 
-{# 
-  ---  Trainee summary | bursary and scholarships | Accredited provider ---
+{#
+  --- Trainee summary | bursary and scholarships | Accredited provider ---
 #}
 
 {% set scittTraineeSummary = data.funding.annualFundingScitts | sort(attribute = "route") %}
@@ -52,6 +52,7 @@
 {% for item in scittTraineeSummary %}
   {% set row = [] %}
   {% if item.subject != "Early Years ITT" %}
+    {# Bursaries and scholarships table #}
     {% set routeAndCourseHtml %}
       {{ item.route }}<br>
       {{ item.subject }}
@@ -83,6 +84,7 @@
       {% set ittBursaryTotal = ittBursaryTotal + (numberOfTrainees * amountPerTrainee) %}
     {% endif %}
   {% else %}
+    {# Early years rows per tier #}
     {% if item.numberOfTraineesPgIttOrTier1EyItt and item.subject == "Early Years ITT" %}
       {% set row = [
         { text: "Tier 1" },
@@ -126,8 +128,10 @@
   {% endif %}
 {% endfor %}
 
-{# 
-  ------------------  Trainee summary | Grants | Lead shool -------------------
+{% set annualTotal = ittBursaryTotal + ittScholarshipTotal + eyittBursaryTotal %}
+
+{#
+  ------------------ Trainee summary | Grants | Lead shool ------------------
 #}
 
 {% set leadSchoolTraineeSummary = data.funding.annualFundingLeadSchools | sort(attribute = "route") %}
@@ -172,7 +176,11 @@
       <h2 class="govuk-heading-l">
         {{ tabName }}
       </h2>
-      {% if totalForAllLeadSchoolTrainees == 0 %}
+      {% if false %}
+      {# {% if 
+        (accessLevel == 'accreditingProvider' and annualTotal == 0) or 
+        (accessLevel != 'accreditingProvider' and totalForAllLeadSchoolTrainees == 0)
+      %} #}
         <p class="govuk-body">
           There are no trainees eligible for {{ fundingTypes | orSeparate }} right now.
         </p>
@@ -199,7 +207,6 @@
     </div>
   </div>
   {% if accessLevel == 'accreditingProvider' %}
-    {% set annualTotal = ittBursaryTotal + ittScholarshipTotal + eyittBursaryTotal %}
     {% if annualTotal > 0 %}
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-one-half">

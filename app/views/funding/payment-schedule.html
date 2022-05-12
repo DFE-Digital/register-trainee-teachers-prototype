@@ -1,16 +1,19 @@
 {% extends "_templates/_page.html" %}
-{% set navActive = "funding" %}
+{% set navActive = "Funding" %}
+{% set pageHeading = navActive %}
+{% set tabName = "Payment schedule " + data.years.currentAcademicYear %}
 
-{% set pageHeading = "Funding" %}
-
-{% set tablePerMonth = true %}
+{# Pick data based on user’s organisation #}
+{% if accessLevel == 'accreditingProvider' %}
+  {% set dataSource = data.funding.monthlyFundingScitts %}
+{% else %}
+  {% set dataSource = data.funding.monthlyFundingLeadSchools %}
+{% endif %}
+{% set dataSource = dataSource | sort(attribute = "descriptions") %}
 
 {% block content %}
 
-
-  {% set yearPaymentsTabName = "" | typesOfFunding | joinify  | sentenceCase %}
-
-  {% set activeTabMonthly = true %}
+  {% set paymentScheduleTab = true %}
   {% include "_includes/funding-header-and-tab-nav.html" %}
 
   {% if currentMonth() >= 6 %}
@@ -23,24 +26,22 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds-from-desktop">
       <h2 class="govuk-heading-l">
-        Payment schedule <span class="app-nowrap">{{ data.years.currentAcademicYear }}</span>
+        {{ tabName }}
       </h2>
       <p class="govuk-body">
         Last updated: {{ "" | yesterdayGovuk }}
       </p>
-      <p class="govuk-body govuk-!-margin-bottom-7">
-        <a href="#" class="govuk-link--no-visited-state">Export lastest monthly payment data (csv)</a><br>
-      </p>
+      {{ appDownloadLink({
+          linkText: "Export " + tabName | startLowerCase,
+          fileName: 
+            "funding/accredited-provider/payment-schedule" if accessLevel == 'accreditingProvider'
+             else "funding/lead-school/payment-schedule",
+          classes: "govuk-!-margin-bottom-7",
+          downloadedFileName: (data.signedInProviders + " " + tabName) | slugify,
+          fileType: "csv"
+        })}}
     </div>
   </div>
-
-  {# Set which data the user sees #}
-  {% if accessLevel == 'accreditingProvider' %}
-    {% set dataSource = data.funding.monthlyFundingScitts %}
-  {% else %}
-    {% set dataSource = data.funding.monthlyFundingLeadSchools %}
-  {% endif %}
-  {% set dataSource = dataSource | sort(attribute = "descriptions") %}
 
   {% set rowHeadingCellClasses = "app-table__column-50" %}
   {% set dataCellClasses = "app-table__column-25" %}
@@ -86,33 +87,20 @@
 
     {% set row = row | push({ text: monthTotal | currency, format: "numeric" }) %}
 
+    {% set pastTotal = pastTotal + monthTotal %}
+    {% set total = total + monthTotal %}
+    {% set row = row | push({ text: total | currency, format: "numeric" }) %}
     {% if monthIndex < thisMonth %}
-      {% set pastTotal = pastTotal + monthTotal %}
-      {% set total = total + monthTotal %}
-      {% if tablePerMonth %}
-        {% set row = row | push({ text: total | currency, format: "numeric" }) %}
-      {% endif %}
       {% set pastRows = pastRows | push(row) %}
     {% else %}
-      {% set total = total + monthTotal %}
-      {% if tablePerMonth %}
-        {% set row = row | push({ text: total | currency, format: "numeric" }) if tablePerMonth %}
-      {% endif %}
       {% set futureRows = futureRows | push(row) %}
     {% endif %}
-
   {% endfor %}
 
   {% set tableCaption %}
     Payments to {{ months[thisMonth - 1] }}
   {% endset %}
-  {% if thisMonth != 12 %}
-    {% set totalPerStreamRowPast = [{ text: "Total", classes: "govuk-!-font-weight-bold" }] %}
-  {% endif %}
-
-  {% set totalPerStreamRowPast = totalPerStreamRowPast | push({text: pastTotal | currency, format: "numeric", classes: "govuk-!-font-weight-bold" }) if not tablePerMonth %}
-  {% set totalPerStreamRow = totalPerStreamRow | push({text: total | currency, format: "numeric", classes: "govuk-!-font-weight-bold" }) if not tablePerMonth %}
-
+  
   {% set pastRows = pastRows | push(totalPerStreamRowPast) %}
   {% set futureRows = futureRows | push(totalPerStreamRow) %}
 

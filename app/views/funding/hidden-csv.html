@@ -98,15 +98,15 @@
 {% set scittTraineeSummary = data.funding.annualFundingScitts | sort(attribute = "route") %}
 
 {% set scittTraineeSummaryHeadRow = [
+  { text: "Funding type" },
   { text: "Route" },
   { text: "Course" },
   { text: "Lead school" },
-  { text: "Funding type" },
   { text: "Tier" },
   { text: "Number of trainees" },
   { text: "Amount per trainee" },
   { text: "Total" }
-  ] %}
+] %}
 {% set scittTraineeSummaryBodyRows = [] %}
 
 {% for item in scittTraineeSummary %}
@@ -122,10 +122,10 @@
   {% endif %}
   {% if numberOfTrainees > 0 and amount > 0 %}
     {% set row = [
+      { text: fundingType },
       { text: item.route },
       { text: item.subject },
       { text: item.leadSchool },
-      { text: fundingType },
       { text: "Not applicable" },
       { text: numberOfTrainees,
         format: "numeric" },
@@ -139,10 +139,10 @@
 
   {% if item.numberOfTraineesPgIttOrTier1EyItt and item.subject == "Early Years ITT" %}
     {% set row = [
+      { text: "EYITT bursary" },
       { text: item.route },
       { text: item.subject },
       { text: item.leadSchool },
-      { text: "EYITT bursary" },
       { text: "Tier 1" },
       { text: item.numberOfTraineesPgIttOrTier1EyItt,
         format: "numeric" },
@@ -156,10 +156,10 @@
   {% if item.numberOfTraineesTier2EyItt and item.amountTier2EyItt > 0 %}
     {% set numberOfTrainees = item.numberOfTraineesTier2EyItt %}
     {% set row = [
+      { text: "EYITT bursary" },
       { text: item.route },
       { text: item.subject },
       { text: item.leadSchool },
-      { text: "EYITT bursary" },
       { text: "Tier 2" },
       { text: item.numberOfTraineesTier2EyItt,
         format: "numeric" },
@@ -172,10 +172,10 @@
   {% endif %}
   {% if item.numberOfTraineesTier3EyItt and item.amountTier3EyItt > 0 %}
     {% set row = [
+      { text: "EYITT bursary" },
       { text: item.route },
       { text: item.subject },
       { text: item.leadSchool },
-      { text: "EYITT bursary" },
       { text: "Tier 3" },
       { text: item.numberOfTraineesTier3EyItt,
         format: "numeric" },
@@ -284,7 +284,7 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
       {{ govukTable({
-        caption: "Bursaries and scholarships",
+        caption: "Trainee summary",
         captionClasses: "govuk-table__caption--s",
         head: scittTraineeSummaryHeadRow,
         rows: scittTraineeSummaryBodyRows

@@ -3,52 +3,60 @@
 
 {% set impersonateUserCtaHtml %}
 
-  {% if isImpersonating %}
-    {% set buttonUrl = currentPageUrl + "?settings[userActiveProvider]=" + data.settings.defaultAdminName + "&isImpersonating=false&clearQuery=true" %}
-    
-{#     <p class="govuk-body">You are now viewing this information as {{data.settings.userActiveProvider}}. Any changes you make will be linked to you.</p> #}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+    {% if isImpersonating %}
+      {% set buttonUrl = currentPageUrl + "?settings[userActiveProvider]=" + data.settings.defaultAdminName + "&isImpersonating=false&clearQuery=true" %}
 
-    {% set title %}
-      Viewing as {{data.settings.userActiveProvider}}. Any changes you make will be linked to you, not {{data.settings.userActiveProvider}}.
-    {% endset %}
-
-    {{ govukButton({
-      classes: "govuk-!-margin-bottom-0",
-      "text": "Return to admin view",
-      href: buttonUrl
-    }) }}
-
-  {% else %}
-
-    {% set buttonUrl = currentPageUrl + "?settings[userActiveProvider]=" + record.provider + "&isImpersonating=true&clearQuery=true" %}
-    <p class="govuk-body">View this information as {{record.provider}} would see it.</p>
-
-    {{ govukButton({
-      classes: "govuk-!-margin-bottom-0" if not record | hasLeadSchool,
-      "text": "View as " + record.provider,
-      href: buttonUrl
-    }) }}
-
-    {% if record | hasLeadSchool %}
-       {% set leadSchoolName = record | getLeadSchoolName %}
-       <p class="govuk-body">View this information as {{leadSchoolName}} would see it.</p>
-      {% set leadSchoolUrl = currentPageUrl + "?settings[userActiveProvider]=" + leadSchoolName + "&isImpersonating=true&clearQuery=true" %}
+      <p class="govuk-body">
+        Viewing as {{data.settings.userActiveProvider}}. Any changes you make will be linked to you, not {{data.settings.userActiveProvider}}.
+      </p>
 
       {{ govukButton({
         classes: "govuk-!-margin-bottom-0",
-        "text": "View as " + leadSchoolName,
-        href: leadSchoolUrl
+        "text": "Return to admin view",
+        href: buttonUrl
       }) }}
+
+    {% else %}
+
+      {% set hasLeadSchool = record | hasLeadSchool %}
+      {% set leadSchoolName = record | getLeadSchoolName %}
+
+      <p class="govuk-body">View this information as {{record.provider}} {{"or " + leadSchoolName if hasLeadSchool }} would see it.</p>
+
+      {% set buttonUrl = currentPageUrl + "?settings[userActiveProvider]=" + record.provider + "&isImpersonating=true&clearQuery=true" %}
+
+      {% if hasLeadSchool %}
+        <div class="govuk-button-group govuk-!-margin-bottom-0">
+      {% endif %}
+      {{ govukButton({
+        classes: "govuk-!-margin-bottom-1",
+        "text": "View as " + record.provider,
+        href: buttonUrl
+      }) }}
+
+      {% if hasLeadSchool %}
+
+        {% set leadSchoolUrl = currentPageUrl + "?settings[userActiveProvider]=" + leadSchoolName + "&isImpersonating=true&clearQuery=true" %}
+
+        {{ govukButton({
+          classes: "govuk-!-margin-bottom-1",
+          "text": "View as " + leadSchoolName,
+          href: leadSchoolUrl
+        }) }}
+
+        </div>
+      {% endif %}
+
     {% endif %}
-
-  {% endif %}
-
+    </div>
+  </div>
 {% endset %}
 
 
 {{ appAdminFeature({
-  classes: "",
-  title: title,
+  classes: "govuk-!-margin-top-2" if isImpersonating,
   html: impersonateUserCtaHtml
 }) }}
 

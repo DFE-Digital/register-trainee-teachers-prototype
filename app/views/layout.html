@@ -33,6 +33,7 @@
 {# custom components #}
 {# Most of these copied from the Apply for teacher training prototype #}
 {% from "_components/admin-feature/macro.njk"   import appAdminFeature %}
+{% from "_components/admin-banner/macro.njk"   import appAdminBanner %}
 {% from "_components/autocomplete/macro.njk"   import appAutocomplete %}
 {% from "_components/autocomplete-new/macro.njk"   import appAutocompleteFromSelect %}
 {% from "_components/autocomplete-new/macro.njk"   import appAutocompleteFromInput %}
@@ -64,6 +65,12 @@
 {% endblock %}
 
 {% block header %}
+
+    {# Show banner to get out of impersonation mode #}
+    {% if data.isImpersonating | falsify %}
+      {% include "_includes/impersonate-provider-banner.njk" %}
+    {% endif %}
+
   {% include "_includes/cookie-banner.html" %}
   {# Set serviceName in config.js. #}
   {% set headerClass = 'app-light-header' %}
@@ -171,10 +178,6 @@
 {% endblock %}
 
 {% block beforeContent %}
-
-{% if data.isImpersonating | falsify %}
-  {% include "_includes/impersonate-provider-cta.njk" %}
-{% endif %}
 
 {{ govukPhaseBanner({
   tag: {

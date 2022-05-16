@@ -9,7 +9,6 @@
   &:after {
     content: '';
     display: inline-block;
-    width: 100%;
   }
 
   padding: govuk-spacing(4);
@@ -23,8 +22,4 @@
 
 .app-admin-banner__tag-line {
   display: flex;
-}
-
-.app-admin-banner .govuk-tag--purple {
-  // border: 1px solid govuk-colour("purple");
 }

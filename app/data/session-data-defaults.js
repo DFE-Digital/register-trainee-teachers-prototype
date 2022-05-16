@@ -125,9 +125,11 @@ settings.highlightInvalidAnswers = 'true'
 // Enable timeline on records
 settings.includeDeclaration = false
 
-settings.bulkLinksInPrimaryNav = "Show bulk recommend"
+settings.bulkLinksInPrimaryNav = "None"
 
 settings.skipCourseDatesPage = 'true'
+
+settings.showFundingInPrimaryNav = 'true'
 
 // Default number of Publish courses that the provider offers
 settings.courseLimit = 12

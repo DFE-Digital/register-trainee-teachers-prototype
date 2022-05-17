@@ -1,5 +1,5 @@
 {% extends "_templates/_page.html" %}
-{% set pageHeading = "Funding CSV" %}
+{% set pageHeading = "Funding CSVs" %}
 
 {% set months = [
   {
@@ -262,6 +262,18 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds-from-desktop">
       <h1 class="govuk-heading-xl">{{ pageHeading }}</h1>
+      {% set howToCreateACSVHtml %}
+      <ol class="govuk-list govuk-list--number">
+        <li>Copy and paste this into spreadsheet software (for example, <span class="app-nowrap">Microsoft Excel</span>)</li>
+        <li>Export the file as a ‘CSV’.</li>
+        <li>Save the file in ‘/app/assets/downloads/funding/’. Theres a folder for accredited providers, and a folder for lead schools.</li>
+        <li>Restart the prototype for the CSV to appear in folder you need to point the download link to ‘/public/downloads/funding/’.</li>
+      </ol>
+      {% endset %}
+      {{ govukDetails({
+        summaryText: "How to create a CSV for funding export",
+        text: howToCreateACSVHtml | safe
+      }) }}
     </div>
   </div>
   <div class="govuk-grid-row">

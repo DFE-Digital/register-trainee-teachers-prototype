@@ -149,6 +149,13 @@ exports.academicYearStringToYear = string => {
   else return false
 }
 
+// Add or remove from an academic year string
+// "2022 to 2023", 2 -> "2024 to 2025"
+exports.incrimentOrDecrimentAcademicYearString = (string, count) => {
+  let yearStart = parseInt(exports.academicYearStringToYear(string)) + count
+  return exports.yearToAcademicYearString(yearStart)
+}
+
 // Return the academic year that a date falls in
 exports.dateToAcademicYear = date => {
   let theDate = moment(date)
@@ -1088,23 +1095,53 @@ exports.isPreviousYears = record => {
 
 // Get end year
 exports.getEndAcademicYear = record => {
-  return moment(record?.courseDetails?.endDate).format("YYYY")
+  // Prefer course ITT end date if we have it
+  if (record?.courseDetails?.endDate){
+    return exports.dateToAcademicYear(record?.courseDetails?.endDate)
+    // return moment(record?.courseDetails?.endDate).format("YYYY")
+  }
+  else if (record?.courseDetails?.endAcademicYear){
+    return record.courseDetails.endAcademicYear
+  }
+  // Fall back on duration
+  else if (record?.courseDetails?.duration){
+
+    // A duration of 1 would mean you finish same year - so decriment by one
+    let duration = record.courseDetails.duration - 1
+    if (duration == 0) return record?.academicYear
+    else {
+      return exports.incrimentOrDecrimentAcademicYearString(record?.academicYear, record.courseDetails.duration)
+    }
+  }
+  else return false
+
 }
 
 // Check if record is finishing this year
 exports.isFinishingThisAcademicYear = record => {
-  return exports.getEndAcademicYear(record) == years.endOfCurrentCycle
+  return exports.getEndAcademicYear(record) == years.currentAcademicYear
 }
 
 // Check if record finished earlier than this year
 exports.finishedEarlierThanThisAcademicYear = record => {
-  return exports.getEndAcademicYear(record) < years.endOfCurrentCycle
+  // 2022 to 2023
+  let endAcademicYear = exports.getEndAcademicYear(record)
+  // 2022
+  let endAcademicYearSimple = parseInt(exports.academicYearStringToYear(endAcademicYear))
+  return endAcademicYearSimple < parseInt(exports.academicYearStringToYear(years.currentAcademicYear))
 }
 
 // HESA records will be locked until 14 April of the last year of the course
 // (this is based on last HESA update, but also arbitrary)
 exports.dateHesaRecordUnlocked = record => {
-  return moment(`${exports.getEndAcademicYear(record)}-04-14`).format("YYYY-MM-DD")
+  let endCalendarYear
+  if (record?.courseDetails?.endDate){
+    let endCalendarYear = moment(record?.courseDetails?.endDate).format("YYYY")
+  }
+  else {
+    endCalendarYear = parseInt(exports.academicYearStringToYear(exports.getEndAcademicYear(record))) + 1
+  }
+  return moment(`${endCalendarYear}-04-14`).format("YYYY-MM-DD")
 }
 
 /* 

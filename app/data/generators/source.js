@@ -1,29 +1,43 @@
 const { faker }         = require('@faker-js/faker')
 const weighted          = require('weighted')
 const trainingRouteData = require('../training-route-data')
+const utils = require('../../lib/utils.js')
+const years = require('../years.js')
 
 module.exports = application => {
 
+  // All drafts are implicitly manual
+  // TODO: how does this work with apply drafts?
   if (application.status == "Draft") return "Manual"
 
   else {
-    if (trainingRouteData.applyRoutes.includes(application.route)){
-      if (application.accreditingProviderType == "HEI") {
-        return weighted.select({
-          "Manual": 0.1,
-          "HESA":   0.9,
-          "DTTP":   0.0,
-          "Apply":  0.0
-        })
-      } else {
-        return weighted.select({
-          "Manual": 0.1,
-          "HESA":   0.0,
-          "DTTP":   0.3,
-          "Apply":  0.3
-        })
+
+    // HEI records are nearly all HESA
+    if (application.accreditingProviderType == "HEI") {
+      if (application.route.includes("Opt-in")){
+        return "Manual"
       }
+      else return "HESA"
     }
-    else return "Manual"
+    else {
+      // Source for SCITTs will depend on date. Older records are DTTP, newer are Apply or manual
+      let startYear = application.academicYear || years.currentAcademicYear
+      let startYearSimple = parseInt(utils.academicYearStringToYear(startYear))
+
+      if (startYearSimple < 2021) return "DTTP"
+
+      else if (trainingRouteData.applyRoutes.includes(application.route)){
+        return weighted.select({
+          "Manual": 0.05,
+          "Apply":  0.95
+        })
+
+      }
+      else {
+        return "Manual"
+      }
+
+    }
+
   }
 }

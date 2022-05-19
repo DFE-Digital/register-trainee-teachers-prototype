@@ -268,7 +268,15 @@ module.exports = (params) => {
   subjects = [].concat(subjects) // coerce to array just in case
 
   // Duaration in years. Note AO always has a duration of 1 even though it’s only 12 weeks
-  let duration = (route == 'Assessment only') ? 1 : parseInt(weighted.select({
+  let duration
+
+  if (route == 'Assessment only'){
+    duration = 1
+  }
+  else if (route.includes("undergrad")){
+    duration = 3
+  }
+  else duration = parseInt(weighted.select({
     '1': 0.8, // 1 year full time or mix - majority of courses are full time
     '2': 0.15, // 2 yeras part time
     '3': 0.05 // 3 years par time
@@ -317,7 +325,12 @@ module.exports = (params) => {
   }
   // Part time
   else {
-    studyMode = "Part time"
+    if (route.includes("undergrad")){
+      studyMode = "Full time"
+    }
+    else {
+      studyMode = "Part time"
+    }
     if (isEarlyYears){
       qualifications = enabledRoutes[route].qualifications
       qualificationsSummary = enabledRoutes[route].qualificationsSummary
@@ -348,6 +361,7 @@ module.exports = (params) => {
   // Assume courses are 9 months long
   const endDate = moment(startDate).add(duration, 'years').subtract(3, 'months').toDate()
 
+  let endAcademicYear = utils.dateToAcademicYear(endDate)
 
   if (isPublishCourse) {
 
@@ -373,6 +387,7 @@ module.exports = (params) => {
       route,
       startDateVague: startDate,
       academicYear,
+      endAcademicYear,
       studyMode,
       publishSubjects: utils.arrayToOrdinalObject(publishCourseSubjects),
       courseNameShort,
@@ -393,6 +408,7 @@ module.exports = (params) => {
       route,
       startDate,
       academicYear,
+      endAcademicYear,
       studyMode,
       subjects: utils.arrayToOrdinalObject(subjects),
     }

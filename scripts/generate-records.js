@@ -245,8 +245,8 @@ const generateFakeApplicationsForProvider = (provider, year, count) => {
     targetCounts = {
       draft: (isScitt) ? 0.20 : 0.9,
       applyEnrolled: (isScitt) ? 0.70 : 0,
-      pendingTrn: 0.05,
-      trnReceived: 0.05,
+      pendingTrn: 0.01,
+      trnReceived: 0.01,
       qualificationRecommended: 0.00,
       qualificationAwarded: 0.00,
       deferred: 0.00,

@@ -1057,14 +1057,24 @@ exports.isWithdrawn = record => {
   return record?.status == "Withdrawn"
 }
 
+// Todo: this should probably combine with the active stuff
+exports.isInTraining = record => {
+  return [
+    "Pending TRN",
+    "TRN received",
+    "QTS recommended",
+    "EYTS recommended"
+  ].includes(record.status)
+}
+
 // Active statuses – trainee hasn’t finished their training
 // (not ‘qualified’ or ‘withdrawn’)
 exports.isActiveStatus = record => {
   return [
-    "Pending TRN", 
-    "TRN received", 
-    "QTS recommended", 
-    "EYTS recommended", 
+    "Pending TRN",
+    "TRN received",
+    "QTS recommended",
+    "EYTS recommended",
     "Deferred"
   ].includes(record.status)
 }
@@ -1536,6 +1546,21 @@ exports.filterRecords = (records, data, filters = {}) => {
 
   // Only show records for currently enabled routes or draft records
   filteredRecords = filteredRecords.filter(record => enabledTrainingRoutes.includes(record.route) || (exports.isDraft(record)))
+
+  if (filters.trainingStatus){
+    filteredRecords = filteredRecords.filter(record => {
+      if (filters.trainingStatus.includes(record.status)) {
+        return true
+      }
+      else if (filters.trainingStatus.includes("Awarded") && record.status && record.status.includes("awarded")){
+        return true
+      }
+      else if (filters.trainingStatus.includes("In training") && exports.isInTraining(record)){
+        return true
+      }
+      else return false
+    })
+  }
 
   if (filters.cohortFilter){
     filteredRecords = filteredRecords.filter(record => filters.cohortFilter.includes(exports.getCohortFilter(record)))

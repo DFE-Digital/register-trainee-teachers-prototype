@@ -78,8 +78,8 @@ module.exports = ({updatedDate, submittedDate, deferredDate, withdrawalDate, qua
       else {
         // Historic entries are most likely updated near to the year end date
         updatedDate = faker.date.between(
-          moment(yearEndDate).add(50, 'days'),
-          moment(yearEndDate).subtract(50, 'days')
+          moment(yearEndDate).add(0, 'days'),
+          moment(yearEndDate).subtract(150, 'days')
         )
       }
 

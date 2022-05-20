@@ -22,7 +22,7 @@ module.exports = application => {
     else {
       // Source for SCITTs will depend on date. Older records are DTTP, newer are Apply or manual
       let startYear = application.academicYear || years.currentAcademicYear
-      let startYearSimple = parseInt(utils.academicYearStringToYear(startYear))
+      let startYearSimple = utils.academicYearToYear(startYear)
 
       if (startYearSimple < 2021) return "DTTP"
 

@@ -305,6 +305,8 @@ module.exports = router => {
         }
       }
 
+      newRecord = utils.setEndAcademicYear(newRecord)
+
       res.redirect(`/record/${req.params.uuid}/withdraw/confirm${referrer}`)
     }
   })

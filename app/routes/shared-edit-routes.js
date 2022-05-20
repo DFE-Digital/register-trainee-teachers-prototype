@@ -390,7 +390,7 @@ module.exports = router => {
       }
       else {
         let coursesByYear = utils.groupCoursesByYear(providerCourses)
-        let defaultYear = (utils.academicYearStringToYear(record.academicYear)) || years.defaultCourseYear
+        let defaultYear = (utils.academicYearToYear(record.academicYear)) || years.defaultCourseYear
 
         // If we have a default year and there's courses
         if (defaultYear && coursesByYear[defaultYear] && coursesByYear[defaultYear].length > 0){
@@ -413,10 +413,10 @@ module.exports = router => {
     let referrer = utils.getReferrer(req.query.referrer)
     let route = record?.route
     let academicYearString = record?.courseDetails?.academicYear
-    let academicYear = utils.academicYearStringToYear(academicYearString)
+    let academicYearSimple = utils.academicYearToYear(academicYearString)
 
     // No data, return to page
-    if (!academicYear){
+    if (!academicYearSimple){
       res.redirect(`${recordPath}/course-details/course-year${referrer}`)
     }
     else {
@@ -442,8 +442,8 @@ module.exports = router => {
       }
 
       // If there are courses for that academic year, show course picker page
-      if (coursesByYear[academicYear] && coursesByYear[academicYear].length > 0){
-        res.redirect(`${recordPath}/course-details/pick-course/${academicYear}${referrer}`)
+      if (coursesByYear[String(academicYearSimple)] && coursesByYear[String(academicYearSimple)].length > 0){
+        res.redirect(`${recordPath}/course-details/pick-course/${academicYearSimple}${referrer}`)
       }
       // If there are no courses, assume manual entry for course details
       else {
@@ -536,7 +536,7 @@ module.exports = router => {
 
     let enabledRoutes = data.settings.enabledTrainingRoutes
     let route = record?.route
-    let academicYear = utils.academicYearStringToYear(record.academicYear)
+    let academicYear = utils.academicYearToYear(record.academicYear)
 
     let providerCourses = utils.getProviderCourses({
       courses: data.courses,

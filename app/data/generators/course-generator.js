@@ -361,7 +361,7 @@ module.exports = (params) => {
   // Assume courses are 9 months long
   const endDate = moment(startDate).add(duration, 'years').subtract(3, 'months').toDate()
 
-  let endAcademicYear = utils.dateToAcademicYear(endDate)
+  // let endAcademicYear = utils.dateToAcademicYear(endDate)
 
   if (isPublishCourse) {
 
@@ -387,7 +387,7 @@ module.exports = (params) => {
       route,
       startDateVague: startDate,
       academicYear,
-      endAcademicYear,
+      // endAcademicYear,
       studyMode,
       publishSubjects: utils.arrayToOrdinalObject(publishCourseSubjects),
       courseNameShort,
@@ -408,7 +408,7 @@ module.exports = (params) => {
       route,
       startDate,
       academicYear,
-      endAcademicYear,
+      // endAcademicYear,
       studyMode,
       subjects: utils.arrayToOrdinalObject(subjects),
     }

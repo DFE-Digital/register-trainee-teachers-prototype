@@ -10,6 +10,7 @@ let academicYears = [
 ]
 
 let currentAcademicYear = "2021 to 2022"
+let currentAcademicYearSimple = 2021
 
 let defaultCourseYear = 2021
 // defaultCourseYear = null
@@ -27,6 +28,7 @@ module.exports = {
     academicYears,
     academicYearsShort,
     currentAcademicYear,
+    currentAcademicYearSimple,
     defaultCourseYear,
     endOfCurrentCycle,
     nextAcademicYear,

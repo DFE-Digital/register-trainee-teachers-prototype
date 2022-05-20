@@ -207,6 +207,11 @@ filters.withSeparate = (items) => {
 // A. B. C. D.
 filters.joinAsSentences = (items) => filters.joinArray(items, {delimiter:'. ', append: '.'})
 
+filters.removeFirstItem = (array) => {
+  let newArray = [...array]
+  newArray.shift()
+  return newArray
+}
 
 filters.removeArrayItem = (array, itemToRemove) =>{
   if (_.isArray(array)){

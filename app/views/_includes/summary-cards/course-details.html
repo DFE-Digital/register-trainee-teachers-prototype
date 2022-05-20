@@ -185,7 +185,8 @@
     text: "ITT end date"
   },
   value: {
-    text: courseDetails.endDate | govukDate
+    text: courseDetails.endDate | govukDate,
+    text: (courseDetails.endDate | govukDate) or ("Expected in academic year " + record | getEndAcademicYear)
   },
   actions: {
     items: [

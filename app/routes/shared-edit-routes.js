@@ -623,7 +623,8 @@ module.exports = router => {
           record.courseDetails = utils.setCourseDatesIfPresent(record.courseDetails)
 
           if (utils.isDraft(record)){
-            record = utils.setAcademicYear(record)
+            record = utils.setStartAcademicYear(record)
+            record = utils.setEndAcademicYear(record)
           }
 
           record.academicYear = courseDetails.academicYear
@@ -756,7 +757,8 @@ module.exports = router => {
 
     // Use the course start date to set the academic year for the trainee
     if (utils.isDraft(record)){
-      record = utils.setAcademicYear(record)
+      record = utils.setStartAcademicYear(record)
+      record = utils.setEndAcademicYear(record)
     }
 
     // Send to next conditional page or confirm page
@@ -838,7 +840,8 @@ module.exports = router => {
     record.courseDetails = courseDetails
 
     if (utils.isDraft(record)){
-      record = utils.setAcademicYear(record)
+      record = utils.setStartAcademicYear(record)
+      record = utils.setEndAcademicYear(record)
     }
 
     // Set qualification and duration as per selected route

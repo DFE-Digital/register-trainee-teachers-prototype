@@ -69,9 +69,16 @@
         {% endif %}
 
         {%  if record.courseDetails.academicYear %}
-          <p class="govuk-caption-m govuk-!-font-size-16">
+          <p class="govuk-caption-m govuk-!-font-size-16 govuk-!-margin-bottom-1">
             Start year:
             <span class="app-nowrap">{{ record.courseDetails.academicYear }}</span>
+          </p>
+        {% endif %}
+        {% set endAcademicYear = record | getEndAcademicYear %}
+        {%  if endAcademicYear %}
+          <p class="govuk-caption-m govuk-!-font-size-16 govuk-!-margin-bottom-1">
+            End year:
+            <span class="app-nowrap">{{ endAcademicYear }}</span>
           </p>
         {% endif %}
 

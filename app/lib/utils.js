@@ -15,7 +15,7 @@ const generateReference      = require('./../data/generators/reference-number')
 const academicQualifications = require('./../data/academic-qualifications.js')
 const years                  = require('./../data/years.js')
 
-let skipCourseDatesPage = true
+let skipCourseDatesPage = false
 
 // -------------------------------------------------------------------
 // General
@@ -158,6 +158,9 @@ exports.incrimentOrDecrimentAcademicYearString = (string, count) => {
 
 // Return the academic year that a date falls in
 exports.dateToAcademicYear = date => {
+  if (Array.isArray(date)){
+    date = dates.arrayToDateObject(date)
+  }
   let theDate = moment(date)
   if (!theDate.isValid()){
     console.log(`Error in dateToAcademicYear: provided date (${theDate, date}) is invalid`)
@@ -172,7 +175,7 @@ exports.dateToAcademicYear = date => {
   else return exports.yearToAcademicYearString(theYear)
 }
 
-exports.setAcademicYear = record => {
+exports.setStartAcademicYear = record => {
   let courseStartDate = record?.courseDetails?.courseStartDate
   let traineeStartDate = record?.trainingDetails?.commencementDate
   if (!courseStartDate){
@@ -185,10 +188,22 @@ exports.setAcademicYear = record => {
     let academicYear = exports.dateToAcademicYear(compareDate)
     if (academicYear) {
       record.academicYear = academicYear
+      record.courseDetails.academicYear = academicYear
     }
     return record
   }
 }
+
+exports.setEndAcademicYear = record => {
+
+  let endAcademicYear = exports.getEndAcademicYear(record)
+
+  if (record.courseDetails && endAcademicYear){
+    record.courseDetails.endAcademicYear = endAcademicYear
+  }
+  return record
+}
+
 
 // Check if the course has allocated places
 exports.hasAllocatedPlaces = (record) => {

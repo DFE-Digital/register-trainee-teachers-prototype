@@ -37,7 +37,7 @@ const getFilters = req => {
   'filterAllProviders',
   'filterCompleteStatus',
   'filterCourseLevel',
-  'filterCycle',
+  'filterYears',
   'filterPhase',
   'filterSource',
   'filterStatus',
@@ -55,7 +55,7 @@ const getFilters = req => {
     source: query.filterSource,
     completeStatus: query.filterCompleteStatus,
     courseLevel: query.filterCourseLevel,
-    cycle: query.filterCycle,
+    years: query.filterYears,
     phase: query.filterPhase,
     studyMode: query.filterStudyMode,
     providers: query.filterUserProviders,
@@ -89,7 +89,7 @@ const getHasFilters = (filters, searchQuery) => {
   || !!(searchQuery)
   || !!(filters.subject && filters.subject != 'All subjects')
 
-  || !!(filters.cycle && filters.cycle != 'All years')
+  || !!(filters.years && filters.years != 'All years')
   || !!(filters.trainingRoutes)
   || !!(filters.trainingStatus)
   || !!(filters.providers)
@@ -145,13 +145,42 @@ const getSelectedFilters = req => {
     })
   }
 
-  if (filters.cycle && filters.cycle != 'All years') {
-    let newQuery = Object.assign({}, query)
-    delete newQuery.filterCycle
+  if (filters.trainingStatus) {
     selectedFilters.categories.push({
-      heading: { text: "Start year" },
+      heading: { text: 'Training status' },
+      items: filters.trainingStatus.map((status) => {
+
+        let newQuery = Object.assign({}, query)
+        newQuery.filterTrainingStatus = filters.trainingStatus.filter(a => a != status)
+
+        return {
+          text: status,
+          href: url.format({
+            pathname,
+            query: newQuery,
+          })
+        }
+      })
+    })
+  }
+
+  if (filters.years && filters.years != 'All years') {
+    let newQuery = Object.assign({}, query)
+    delete newQuery.filterYears
+    let headingText = "Year"
+    // Show conditional heading depending on if it’s a start or end year
+    if (filters.years[0].startsWith("End year")){
+      headingText = "End year"
+    }
+    else if (filters.years[0].startsWith("Start year")){
+      headingText = "Start year"
+    }
+
+    let tagLabelText = filters.years[0].replace("End year: ", "").replace("Start year: ", "")
+    selectedFilters.categories.push({
+      heading: { text: headingText },
       items: [{
-        text: filters.cycle,
+        text: tagLabelText,
         href: url.format({
           pathname,
           query: newQuery,
@@ -326,24 +355,7 @@ const getSelectedFilters = req => {
     })
   }
 
-  if (filters.trainingStatus) {
-    selectedFilters.categories.push({
-      heading: { text: 'Training status' },
-      items: filters.trainingStatus.map((status) => {
 
-        let newQuery = Object.assign({}, query)
-        newQuery.filterTrainingStatus = filters.trainingStatus.filter(a => a != status)
-
-        return {
-          text: status,
-          href: url.format({
-            pathname,
-            query: newQuery,
-          })
-        }
-      })
-    })
-  }
 
   if (filters.subject && filters.subject != 'All subjects') {
     let newQuery = Object.assign({}, query)

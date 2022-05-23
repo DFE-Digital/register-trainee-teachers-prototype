@@ -1,0 +1,80 @@
+{% set years = [] %}
+
+{% set allYears = data.years.academicYears %}
+
+{# Default state - first value is 'all' #}
+{% set years = years | push({
+  value: "All years",
+  text: "All years",
+  selected: true if (not query.filterCycle or query.filterCycle == "All years")
+}) %}
+
+{% for yearType in ['', ''] %}
+  {# {% set years = years | push({
+    text: '–',
+    disabled: true
+  }) %} #}
+  {% for year in allYears %}
+
+    {% if year == data.years.currentAcademicYear %}
+      {% set years = years | push({
+        value: year,
+        text: yearType + year + " (current year)",
+        selected: true if (year == query.filterCycle)
+      }) %}
+    {% else %}
+      {% set years = years | push({
+        value: year,
+        text: yearType+ year,
+        selected: true if (year == query.filterCycle)
+      }) %}
+    {% endif %}
+  {% endfor %}
+  {% if loop.first %}
+    {# {% set years = years | push({
+        text: '–',
+        disabled: true
+      }) %} #}
+  {% endif %}
+{% endfor %}
+
+{# Commented out in favour of raw html below #}
+{# {{ govukSelect({
+  id: "cycle-select",
+  name: "filterCycle",
+  classes: "js-auto-submit govuk-!-width-full",
+  label: {
+    text: "Years",
+    classes: "govuk-label--s"
+  },
+  items: years
+}) }} #}
+
+{# Using HTML because the design system macro for selects does not support optgroup #}
+<div class="govuk-form-group">
+  <label class="govuk-label govuk-label--s" for="years-select">
+    Years
+  </label>
+
+  <select class="govuk-select js-auto-submit govuk-!-width-full" id="years-select" name="filterYears">
+      {% set ?defaultSelected = "selected" if (not query.filterYears or query.filterYears == "All years")%}
+      <option value="All years" {{?defaultSelected}}>All years</option>
+      <optgroup label="Start years:">
+        {% for year in allYears %}
+          {% set value = "Start year: " + year %}
+          {% set ?selected = "selected" if (value == query.filterYears) %}
+          {% set ?currentYearText = " (current year)" if year == data.years.currentAcademicYear %}
+          <option value="{{value}}" {{?selected}}>Start: {{year}}{{?currentYearText}}</option>
+        {% endfor %}
+      </optgroup>
+      <optgroup label="End years:">
+        {% for year in data.years.endAcademicYears %}
+          {% set value = "End year: " + year %}
+          {% set ?selected = "selected" if (value == query.filterYears) %}
+          {% set ?currentYearText = " (current year)" if year == data.years.currentAcademicYear %}
+          <option value="End year: {{year}}" {{?selected}}>End: {{year}}{{?currentYearText}}</option>
+        {% endfor %}
+      </optgroup>
+  
+  </select>
+</div>

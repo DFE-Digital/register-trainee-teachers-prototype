@@ -9,6 +9,18 @@ let academicYears = [
   "2017 to 2018"
 ]
 
+let endAcademicYears = [
+  // "2025 to 2026",
+  "2024 to 2025",
+  "2023 to 2024",
+  "2022 to 2023",
+  "2021 to 2022",
+  "2020 to 2021",
+  "2019 to 2020",
+  "2018 to 2019",
+  "2017 to 2018"
+]
+
 let currentAcademicYear = "2021 to 2022"
 let currentAcademicYearSimple = 2021
 
@@ -30,6 +42,7 @@ module.exports = {
     currentAcademicYear,
     currentAcademicYearSimple,
     defaultCourseYear,
+    endAcademicYears,
     endOfCurrentCycle,
     nextAcademicYear,
     previousAcademicYear

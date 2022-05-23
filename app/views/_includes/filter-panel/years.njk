@@ -51,7 +51,7 @@
 }) }} #}
 
 {# Using HTML because the design system macro for selects does not support optgroup #}
-<div class="govuk-form-group">
+{# <div class="govuk-form-group">
   <label class="govuk-label govuk-label--s" for="years-select">
     Years
   </label>
@@ -77,4 +77,67 @@
       </optgroup>
   
   </select>
-</div>
+</div> #}
+
+{% macro yearSelect(params) %}
+
+  {% set yearType = params.yearType %}
+  {% set kebabCaseYearType = yearType %}
+  {% set yearsToInclude = params.yearsToInclude %}
+  {% set name = params.name %}
+
+  {% set years = [] %}
+
+  {# {% set name = "filter" + yearType + "s" %} #}
+
+  {# Default state - first value is 'All years' #}
+  {% set years = years | push({
+    value: "All years",
+    text: "All years",
+    selected: true if (not query[name] or query.query[name] == "All years")
+  }) %}
+
+  {% for year in yearsToInclude %}
+
+    {% if year == data.years.currentAcademicYear %}
+
+      {% set years = years | push({
+        value: year,
+        text: year + " (current year)",
+        selected: true if (year == query[name])
+      }) %}
+
+    {% else %}
+      {% set years = years | push({
+        value: year,
+        text: year,
+        selected: true if (year == query[name])
+      }) %}
+    {% endif %}
+
+  {% endfor %}
+
+  {{ govukSelect({
+    id: "year-select-" + (yearType | kebabCase),
+    name: name,
+    classes: "js-auto-submit govuk-!-width-full",
+    label: {
+      text: yearType,
+      classes: "govuk-label--s"
+    },
+    items: years
+  }) }}
+
+{% endmacro %}
+
+{{ yearSelect({
+  yearType: "Start year",
+  yearsToInclude: data.years.academicYears,
+  name: "filterStartYears"
+}) }}
+
+{{ yearSelect({
+  yearType: "End year",
+  yearsToInclude: data.years.endAcademicYears,
+  name: "filterEndYears"
+}) }}

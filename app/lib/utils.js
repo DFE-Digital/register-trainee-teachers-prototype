@@ -1581,12 +1581,22 @@ exports.filterRecords = (records, data, filters = {}) => {
     })
   }
 
-  if (filters.cohortFilter){
-    filteredRecords = filteredRecords.filter(record => filters.cohortFilter.includes(exports.getCohortFilter(record)))
+  // Combined start and end years - not currently used
+  // if (filters.years && filters.years != "All years"){
+  //   filteredRecords = filteredRecords.filter(record => filters.years.includes(record.academicYear))
+  // }
+
+  if (filters.startYears && filters.startYears != "All years"){
+    filteredRecords = filteredRecords.filter(record => filters.startYears.includes(record.academicYear))
   }
 
-  if (filters.cycle && filters.cycle != "All years"){
-    filteredRecords = filteredRecords.filter(record => filters.cycle.includes(record.academicYear))
+  if (filters.endYears && filters.endYears != "All years"){
+    console.log(filters.endYears)
+    filteredRecords = filteredRecords.filter(record => filters.endYears.includes(record.endAcademicYear))
+  }
+
+  if (filters.cohortFilter){
+    filteredRecords = filteredRecords.filter(record => filters.cohortFilter.includes(exports.getCohortFilter(record)))
   }
 
   if (filters.completeStatus){

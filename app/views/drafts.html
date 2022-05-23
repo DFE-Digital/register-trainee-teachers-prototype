@@ -70,7 +70,7 @@
 
   {% include "_includes/filter-panel/completeStatus.njk" %}
 
-  {% include "_includes/filter-panel/cohort-filter.njk" %}
+  {# {% include "_includes/filter-panel/cohort-filter.njk" %} #}
 
   {# {% include "_includes/filter-panel/cycles.njk" %} #}
 
@@ -130,14 +130,11 @@
               <div class="govuk-grid-column-two-thirds">
                 <h2 class="govuk-heading-m">Complete drafts - ready to register</h2>
               </div>
-              <div class="govuk-grid-column-one-third">
-                <p class="govuk-body"><a href="/bulk-action/new/register-for-trn?_select=all" class="govuk-link align-right">Register trainees</a></p>
-              </div>
               {% if data.settings.showBulkLinks %}
                 <div class="govuk-grid-column-one-third">
                   {# <input type="hidden" name="[bulk][action]" value="Submit a group of records and request TRNs"> #}
                   {# <input type="hidden" name="[bulk][select]" value="all"> #}
-                  <p class="govuk-body"><a href="/bulk-action/new/register-for-trn?_select=all" class="govuk-link align-right">Submit for TRN</a></p>
+                  <p class="govuk-body"><a href="/bulk-action/new/register-for-trn?_select=all" class="govuk-link align-right">Register trainees</a></p>
                   {# <button role="link" class="govuk-body app-button-as-link govuk-link align-right">Submit draft records for TRN</button> #}
                 </div>
               {% endif %}

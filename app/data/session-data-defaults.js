@@ -108,7 +108,9 @@ settings.userProviders = [
 
 let isAdmin = false
 settings.defaultAdminName = "System admin"
-let defaultProvider = "King’s Oak University"
+
+// Must be one of the user providers above
+let defaultProvider = settings.userProviders[0]
 
 if (isAdmin){
   settings.userActiveProvider = settings.defaultAdminName

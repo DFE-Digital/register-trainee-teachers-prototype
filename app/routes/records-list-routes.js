@@ -38,6 +38,8 @@ const getFilters = req => {
   'filterCompleteStatus',
   'filterCourseLevel',
   'filterYears',
+  'filterStartYears',
+  'filterEndYears',
   'filterPhase',
   'filterSource',
   'filterStatus',
@@ -56,6 +58,8 @@ const getFilters = req => {
     completeStatus: query.filterCompleteStatus,
     courseLevel: query.filterCourseLevel,
     years: query.filterYears,
+    startYears: query.filterStartYears,
+    endYears: query.filterEndYears,
     phase: query.filterPhase,
     studyMode: query.filterStudyMode,
     providers: query.filterUserProviders,
@@ -90,6 +94,8 @@ const getHasFilters = (filters, searchQuery) => {
   || !!(filters.subject && filters.subject != 'All subjects')
 
   || !!(filters.years && filters.years != 'All years')
+  || !!(filters.startYears && filters.startYears != 'All years')
+  || !!(filters.endYears && filters.endYears != 'All years')
   || !!(filters.trainingRoutes)
   || !!(filters.trainingStatus)
   || !!(filters.providers)
@@ -164,6 +170,7 @@ const getSelectedFilters = req => {
     })
   }
 
+  // Combined start and end years select - not currently used
   if (filters.years && filters.years != 'All years') {
     let newQuery = Object.assign({}, query)
     delete newQuery.filterYears
@@ -181,6 +188,38 @@ const getSelectedFilters = req => {
       heading: { text: headingText },
       items: [{
         text: tagLabelText,
+        href: url.format({
+          pathname,
+          query: newQuery,
+        })
+      }]
+    })
+  }
+
+  // Start years
+  if (filters.startYears && filters.startYears != 'All years') {
+    let newQuery = Object.assign({}, query)
+    delete newQuery.filterStartYears
+    selectedFilters.categories.push({
+      heading: { text: "Start year" },
+      items: [{
+        text: filters.startYears,
+        href: url.format({
+          pathname,
+          query: newQuery,
+        })
+      }]
+    })
+  }
+
+  // End years
+  if (filters.endYears && filters.endYears != 'All years') {
+    let newQuery = Object.assign({}, query)
+    delete newQuery.filterEndYears
+    selectedFilters.categories.push({
+      heading: { text: "End year" },
+      items: [{
+        text: filters.endYears,
         href: url.format({
           pathname,
           query: newQuery,

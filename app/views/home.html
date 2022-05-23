@@ -80,32 +80,40 @@
 
       <div class="app-home-statuses app-home-statuses--3-up govuk-!-margin-bottom-4">
 
-        <a href="/records?filterCohortFilter=Current&filterStatus={{ searchStatus }}" class="status-card status-card--in-training">
+        {# Upcoming #}
+        <a href="#" class="status-card status-card--in-training">
           <span class="status-card__count">12</span>
-          <span class="status-card__status">Upcoming or due to start training</span><span class="govuk-visually-hidden">. View these records.</span>
+          <span class="status-card__status">Not yet started</span><span class="govuk-visually-hidden">. View these records.</span>
         </a>
 
+        {# In training #}
         {% set traineesInTraining = registeredTrainees | filterByFunction('isInTraining') %}
         <a href="/records?&filterTrainingStatus=In training" class="status-card status-card--in-training">
           <span class="status-card__count">{{traineesInTraining | length}}</span>
           <span class="status-card__status">In training</span><span class="govuk-visually-hidden">. View these records.</span>
         </a>
 
+        {# Awarded this year #}
         {% set traineesAwarded = registeredTrainees | filterByFunction('isAwarded') %}
         {% set traineesAwardedThisYear = traineesAwarded | filterByFunction('isFinishingThisAcademicYear') %}
-
-        <a href="/records?filterTrainingStatus=Awarded&filterYears=End year: {{ data.years.currentAcademicYear }}" class="status-card status-card--in-training">
+        <a href="/records?filterTrainingStatus=Awarded&filterEndYears={{ data.years.currentAcademicYear }}" class="status-card status-card--awarded">
           <span class="status-card__count">{{traineesAwardedThisYear | length}}</span>
           <span class="status-card__status">Awarded this year</span><span class="govuk-visually-hidden">. View these records.</span>
         </a>
 
-        <a href="/records?filterCohortFilter=Current&filterTrainingStatus={{ searchStatus }}" class="status-card status-card--deferred">
-          <span class="status-card__count">50</span>
+        {# Currently deferred #}
+        {% set deferredTrainees = registeredTrainees | filterByFunction('isDeferred') %}
+
+        <a href="/records?filterTrainingStatus=Deferred" class="status-card status-card--deferred">
+          <span class="status-card__count">{{ deferredTrainees | length }}</span>
           <span class="status-card__status">Currently deferred</span><span class="govuk-visually-hidden"> records. View these records.</span>
         </a>
 
-        <a href="/records?filterCohortFilter=Current&filterStatus={{ searchStatus }}" class="status-card">
-          <span class="status-card__count">50</span>
+        {# Incomplete #}
+        {% set incompleteTrainees = registeredTrainees | filterByIncomplete %}
+
+        <a href="/records?filterCompleteStatus=Incomplete" class="status-card status-card status-card--incomplete">
+          <span class="status-card__count">{{ incompleteTrainees | length }}</span>
           <span class="status-card__status">Incomplete records</span><span class="govuk-visually-hidden"> records. View these records.</span>
         </a>
       </div>

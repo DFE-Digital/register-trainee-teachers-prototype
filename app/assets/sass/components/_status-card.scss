@@ -10,6 +10,10 @@
     padding: govuk-spacing(4);
   }
 
+  &:link {
+    color: $govuk-text-colour;
+  }
+
   &:focus, &:link:focus, &:visited:focus {
     color:  $govuk-text-colour;
     background:  $govuk-focus-colour;
@@ -78,6 +82,16 @@ $statuses: (
     "colour":            govuk-shade(govuk-colour("red"), 30),
     "background-colour": govuk-tint(govuk-colour("red"), 80),
     "hover":             govuk-tint(govuk-colour("red"), 70)
+  ),
+  "in-training": (
+    "colour":            #fff,
+    "background-colour": $govuk-brand-colour,
+    "hover":             govuk-shade($govuk-brand-colour, 15%)
+  ),
+  "incomplete": (
+    "colour":            govuk-shade(govuk-colour("dark-grey", $legacy: "grey-1"), 30),
+    "background-colour": govuk-tint(govuk-colour("dark-grey", $legacy: "grey-1"), 90),
+    "hover":             govuk-tint(govuk-colour("dark-grey", $legacy: "grey-1"), 80)
   )
 );
 

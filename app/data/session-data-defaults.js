@@ -106,7 +106,7 @@ settings.userProviders = [
   "Hope Academy"
 ]
 
-let isAdmin = true
+let isAdmin = false
 settings.defaultAdminName = "System admin"
 let defaultProvider = "King’s Oak University"
 

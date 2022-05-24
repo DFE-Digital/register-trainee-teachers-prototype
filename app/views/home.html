@@ -84,7 +84,7 @@
         {% set coursenNotYetStarted = registeredTrainees | filterByFunction('ittInTheFuture') %}
         <a href="#" class="status-card status-card--in-training">
           <span class="status-card__count">{{coursenNotYetStarted | length}}</span>
-          <span class="status-card__status">Course not yet started</span><span class="govuk-visually-hidden">. View these records.</span>
+          <span class="status-card__status">Course not started yet</span><span class="govuk-visually-hidden">. View these records.</span>
         </a>
 
         {# In training #}

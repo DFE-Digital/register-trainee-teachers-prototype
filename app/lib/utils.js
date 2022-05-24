@@ -1575,7 +1575,7 @@ exports.filterRecords = (records, data, filters = {}) => {
       if (filters.trainingStatus.includes(record.status)) {
         return true
       }
-      else if (filters.trainingStatus.includes("Course not yet started") && exports.ittInTheFuture(record)){
+      else if (filters.trainingStatus.includes("Course not started yet") && exports.ittInTheFuture(record)){
         return true
       }
       else if (filters.trainingStatus.includes("Awarded") && record.status && record.status.includes("awarded")){

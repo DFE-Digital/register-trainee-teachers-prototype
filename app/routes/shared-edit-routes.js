@@ -828,6 +828,19 @@ module.exports = router => {
     // Map back to cardinal object
     courseDetails.subjects = utils.arrayToOrdinalObject(subjectsArray)
 
+    // It’s possible for a user to change the specialism to something completely
+    // different than the selected Publish course. If this happens, delete the 
+    // Publish course references and pretend it’s a manual course.
+    if (courseDetails.isPublishCourse){
+      let allocationSubject = utils.getAllocationSubject(courseDetails)
+      let courseAllocationSubject = utils.getCourseAllocationSubject(courseDetails)
+
+      if (allocationSubject != courseAllocationSubject){
+        console.log(`The allocation subject (${allocationSubject}) of subject 1 (${courseDetails?.subjects?.first}) does not match the Publish course allocatoin subject (${courseAllocationSubject}). Deleting references to old Publish course.`)
+        courseDetails = utils.deletePublishCourseReferences(courseDetails)
+      }
+    }
+
     // Merge autocomplete and radio answers
     if (courseDetails.ageRange == 'Other age range'){
       courseDetails.ageRange = courseDetails.ageRangeOther
@@ -837,6 +850,7 @@ module.exports = router => {
     // Save back to record
     record.courseDetails = courseDetails
 
+    // Todo: unsure why this is only on drafts
     if (utils.isDraft(record)){
       record = utils.setAcademicYear(record)
     }

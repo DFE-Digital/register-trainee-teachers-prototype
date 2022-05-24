@@ -13,7 +13,7 @@
   <span class="govuk-hint">
     {% if isPublishCourse %}
       {{ record.courseDetails.courseNameLong }}
-    {% elseif minimalPublishSummary %}
+    {% else %}
       {{ record.courseDetails.subjects | prettifySubjects }}
     {% endif %}
   </span>

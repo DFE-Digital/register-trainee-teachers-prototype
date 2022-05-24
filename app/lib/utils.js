@@ -499,6 +499,19 @@ exports.getAllocationSubject = (input) => {
   }
 }
 
+exports.getCourseAllocationSubject = (input) => {
+  // Support passing in a course or a record
+  let courseSubject = input?.publishSubjects?.first || input?.courseDetails?.publishSubjects?.first || false
+  if (!courseSubject){
+    console.log('No course subject available')
+    return false
+  }
+  else {
+    let allocationSubject = exports.subjectToAllocationSubject(courseSubject)
+    return allocationSubject
+  }
+}
+
 
 // Internal helper to look up bursary available
 exports.getFinancialSupportByRouteAndSubject = (route, subject) => {

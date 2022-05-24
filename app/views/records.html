@@ -187,7 +187,7 @@
     <p class="govuk-body">Try <a href="/records">clearing your search and filters</a>.</p>
   {% endif %}
 
-  {% if draftRecordsCount and isAuthorised('viewDrafts') %}
+  {% if draftRecordsCount and isAuthorised('viewDrafts') and query.searchQuery %}
     {% set insetHtml %}
       <p class="govuk-body">
         <a href="/drafts{{queryString}}">

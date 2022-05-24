@@ -29,11 +29,11 @@
       <div class="govuk-grid-column-two-thirds-from-desktop">
         <h2 class="govuk-heading-l">Draft trainees</h2>
         <ul class="govuk-list govuk-list--spaced govuk-!-margin-bottom-0">
-          {% if totalDraftCount != applyDraftCount %}
+          {% if (totalDraftCount > 0) and totalDraftCount != applyDraftCount %}
             <li><a class="govuk-link" href="/drafts">View all draft trainees ({{ totalDraftCount }})</a></li>
           {%  endif %}
           {% if applyDraftCount > 0 %}
-            <li><a class="govuk-link" href="/drafts?filterSource=Apply">View draft trainees imported from Apply ({{applyDraftCount}})</a></li>
+            <li><a class="govuk-link" href="/drafts?filterSource=Apply">View draft trainees imported from Apply ({{applyDraftCount}}{% if totalDraftCount != applyDraftCount %} out of {{totalDraftCount}} draft trainees{% endif %})</a></li>
           {% endif %}
 
           {% if isAuthorised('addTrainees') %}
@@ -81,9 +81,10 @@
       <div class="app-home-statuses app-home-statuses--3-up govuk-!-margin-bottom-4">
 
         {# Upcoming #}
+        {% set coursenNotYetStarted = registeredTrainees | filterByFunction('ittInTheFuture') %}
         <a href="#" class="status-card status-card--in-training">
-          <span class="status-card__count">12</span>
-          <span class="status-card__status">Not yet started</span><span class="govuk-visually-hidden">. View these records.</span>
+          <span class="status-card__count">{{coursenNotYetStarted | length}}</span>
+          <span class="status-card__status">Course not yet started</span><span class="govuk-visually-hidden">. View these records.</span>
         </a>
 
         {# In training #}
@@ -111,10 +112,17 @@
 
         {# Incomplete #}
         {% set incompleteTrainees = registeredTrainees | filterByIncomplete %}
+        {% set activeTrainees = registeredTrainees | filterByFunction('isActiveStatus') %}
+        {% set incompleteExplanation %}
+          <br>(out of {{activeTrainees | length}})
+        {% endset %}
+
+        {# Disabled for now #}
+        {% set incompleteExplanation = "" %}
 
         <a href="/records?filterCompleteStatus=Incomplete" class="status-card status-card status-card--incomplete">
           <span class="status-card__count">{{ incompleteTrainees | length }}</span>
-          <span class="status-card__status">Incomplete records</span><span class="govuk-visually-hidden"> records. View these records.</span>
+          <span class="status-card__status">Incomplete records{{incompleteExplanation | safe}}</span><span class="govuk-visually-hidden"> records. View these records.</span>
         </a>
       </div>
       <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">

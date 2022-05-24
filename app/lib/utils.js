@@ -1059,12 +1059,16 @@ exports.isWithdrawn = record => {
 
 // Todo: this should probably combine with the active stuff
 exports.isInTraining = record => {
-  return [
+
+  let isActiveStatus = [
     "Pending TRN",
     "TRN received",
     "QTS recommended",
     "EYTS recommended"
   ].includes(record.status)
+
+  let ittInTheFuture = exports.ittInTheFuture(record)
+  return isActiveStatus && !ittInTheFuture
 }
 
 // Active statuses – trainee hasn’t finished their training
@@ -1349,7 +1353,7 @@ exports.recordIsComplete = function(record, data=false ) {
       'EYTS awarded',
       'QTS recommended',
       'QTS awarded',
-      'Deferred',
+      // 'Deferred',
       'Withdrawn'
     ]
     if (statusesThatMustBeComplete.includes(record?.status)) return true
@@ -1569,6 +1573,9 @@ exports.filterRecords = (records, data, filters = {}) => {
   if (filters.trainingStatus){
     filteredRecords = filteredRecords.filter(record => {
       if (filters.trainingStatus.includes(record.status)) {
+        return true
+      }
+      else if (filters.trainingStatus.includes("Course not yet started") && exports.ittInTheFuture(record)){
         return true
       }
       else if (filters.trainingStatus.includes("Awarded") && record.status && record.status.includes("awarded")){

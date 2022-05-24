@@ -249,7 +249,7 @@
     <p class="govuk-body">Try <a href="/records">clearing your search and filters</a>.</p>
   {% endif %}
 
-  {% if registeredRecordsCount %}
+  {% if registeredRecordsCount and query.searchQuery %}
     {% set insetHtml %}
       <p class="govuk-body">
         <a href="/records{{queryString}}">

@@ -6,7 +6,11 @@
   {%- endif -%}
 {%- endset %}
 
+{% set registeredTrainees = data.records | filterRecords(data) | filterByStatus("Draft", true) %}
 
+{% set coursenNotYetStarted = registeredTrainees | filterByFunction('ittInTheFuture') %}
+
+{{coursenNotYetStarted | log}}
 
 {{ govukCheckboxes({
   classes: "govuk-checkboxes--small js-auto-submit",
@@ -22,6 +26,10 @@
     }
   },
   items: [
+    {
+      text: "Course not yet started",
+      checked: checked(query.filterTrainingStatus, "Course not yet started")
+    } if coursenNotYetStarted | length,
     {
       text: "In training",
       checked: checkedStatus

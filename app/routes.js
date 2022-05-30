@@ -28,8 +28,8 @@ router.all('*', function(req, res, next){
   if (hasQuery) {
     res.locals.query = req.query
     res.locals.queryString = url.format({
-              query: req.query,
-            })
+      query: req.query,
+    })
   }
   res.locals.flash = req.flash('success') // pass through 'success' messages only
   res.locals.currentPageUrl = url.parse(req.url).pathname
@@ -62,11 +62,15 @@ router.all('*', function(req, res, next){
   if (data?.settings?.userActiveProvider == data.settings.defaultAdminName){
     data.isAdmin = true
     res.locals.data.isAdmin = true
-
   }
   else {
     data.isAdmin = false
     res.locals.data.isAdmin = false
+  }
+
+  if (data?.settings?.userActiveProvider){
+    let provider = utils.getProviderData(data.settings.userActiveProvider, data)
+    res.locals.activeProvider = provider
   }
 
   // data.isAdmin = (data.settings.viewAsAdmin == "true") ? true : false
@@ -193,6 +197,11 @@ require('./routes/bulk-action-routes')(router)
 // Bulk uploads
 // =============================================================================
 require('./routes/bulk-update-routes')(router)
+
+// =============================================================================
+// Organisations and users
+// =============================================================================
+require('./routes/organisations-and-users-routes')(router)
 
 
 module.exports = router

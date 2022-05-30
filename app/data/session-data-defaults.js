@@ -1,12 +1,14 @@
 const yaml                  = require('js-yaml')
 const fs                    = require('fs')
 const path                  = require('path')
+const utils                 = require('../lib/utils.js')
 
 let countries               = require('./countries')
 let ethnicities             = require('./ethnicities')
 let nationalities           = require('./nationalities')
 let statuses                = require('./status')
 let strings                 = require('./strings')
+let permissions             = require('./permissions')
 const dataPath              = path.resolve(__dirname);
 let serviceUpdates          = yaml.load(fs.readFileSync(dataPath + '/service-updates.yaml'))
 
@@ -17,6 +19,8 @@ let degreeTypes             = degreeData.types.all
 let degreeTypesSimple       = degreeData.types.all.map(type => type.text).sort()
 let subjects                = degreeData.subjects
 let ukComparableDegrees     = degreeData.ukComparableDegrees
+let allUsers                = require('./users.json')
+const userFilters           = require('../filters/users.js').filters
 
 // Sort two things alphabetically, not case-sensitive
 const sortAlphabetical = (x, y) => {
@@ -76,7 +80,8 @@ providers.all = providers.accreditingProviders.all.concat(providers.leadSchools.
 
 providers.selected = providers.accreditingProviders.selected.concat(providers.leadSchools.selected)
 
-// console.log(providers.all)
+
+
 
 
 let years                   = require('./years')
@@ -105,6 +110,9 @@ settings.userProviders = [
   "Beam Primary School",
   "Hope Academy"
 ]
+
+
+
 
 let isAdmin = false
 settings.defaultAdminName = "System admin"
@@ -139,6 +147,72 @@ settings.courseLimit = 12
 // the minimum number of placements before EYTS/QTS can be awarded
 settings.minPlacementsRequired = 2
 
+
+// Users
+let defaultUser = {
+  fullName: 'Jane Burns',
+  id: '43e32448-30ba-4ce1-94ea-00da84b45f08'
+}
+
+
+// This will generate a default user that belongs to each enabled organisation
+// Done as a (complex) function so that if we change the enabled orgs through
+// the ui this function can be called to recalculate the defaults
+const calculateUsers = (firstProvider, userProviders) => {
+
+  const lookUpProvider = provider => {
+    let item
+    if (providers?.all){
+      item = providers.all.find(item => item.name == provider) || false
+    }
+    if (!item) console.log(`Error with getProvider data: ${provider} not found.`)
+    return item
+  }
+
+  const getProviderData = providers => {
+    if (Array.isArray(providers)){
+      return providers.map(provider => lookUpProvider(provider) ).filter(Boolean)
+    }
+    else return lookUpProvider(providers)
+  }
+
+  let users = {} // reset users
+  users.all = allUsers
+
+  defaultUser.email = userFilters.getUserEmail({
+    user: defaultUser,
+    provider: firstProvider
+  })
+  defaultUser.providers = getProviderData(userProviders)
+
+  defaultUser.providers.map(provider => {
+
+    provider.access = {
+      role: "team admin",
+      permissions: permissions.allAdminPermissions[provider.type]
+    }
+
+    return provider
+  })
+
+  users.all.push(defaultUser)
+
+  users.byProvider = {}
+
+  allUsers.forEach(user => {
+    user.providers.forEach(provider => {
+      if (!users.byProvider[provider.name]) users.byProvider[provider.name] = []
+      users.byProvider[provider.name].push(user)
+    })
+  })
+
+  return users
+
+}
+
+let users = calculateUsers(defaultProvider, settings.userProviders)
+
+
 // Supliment records with getter for name
 let records = require('./records.json')
 records = records.map(record => {
@@ -172,8 +246,10 @@ module.exports = {
   allTrainingRoutes,
   assessmentOnlyAgeRanges,
   awards,
+  calculateUsers,
   countries,
   courses,
+  defaultUser,
   degreeInstitutions,
   degreeTypes,
   degreeTypesSimple,
@@ -183,6 +259,7 @@ module.exports = {
   allSubjects,
   nationalities,
   notPassedReasons,
+  permissions,
   providers,
   records,
   // schools,
@@ -199,6 +276,7 @@ module.exports = {
   serviceUpdates,
   withdrawalReasons,
   ugEntryQualifications,
+  users,
   years,
   primarySubjectOptions: ittSubjectData.primarySubjectOptions
 }

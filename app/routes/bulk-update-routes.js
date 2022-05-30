@@ -8,10 +8,6 @@ const utils = require('./../lib/utils')
 const weighted = require('weighted')
 const { faker } = require('@faker-js/faker')
 
-const getRandomArbitrary = (min, max) => {
-  return Math.floor(Math.random() * (max - min) + min)
-}
-
 const rowsHaveErrors = rows => {
   if (Array.isArray(rows)) {
     return rows.some(row => row.uploadStatus == "error")
@@ -96,7 +92,7 @@ module.exports = router => {
       }
 
       if (!row.trainee.trainingDetails.commencementDate) {
-        row.trainee.trainingDetails.commencementDate = getRandomArbitrary(6, 8) + "/" + getRandomArbitrary(1, 28) + "/" + data.years.defaultCourseYear
+        row.trainee.trainingDetails.commencementDate = utils.getRandomArbitrary(6, 8) + "/" + utils.getRandomArbitrary(1, 28) + "/" + data.years.defaultCourseYear
       }
 
       if (row.errorMessage == "URN not recognised" || row.errorMessage == "school is closed") {
@@ -194,7 +190,7 @@ module.exports = router => {
     /* For each record, randomly pick whether it's ok, in error, or unchanged. If in error, pick a random error */
     let processedRows = uploadedTrainees.map((trainee, index) => {
 
-      let wildCardDate = getRandomArbitrary(1, 6) + "/" + getRandomArbitrary(1, 28) + "/" + data.years.endOfCurrentCycle
+      let wildCardDate = utils.getRandomArbitrary(1, 6) + "/" + utils.getRandomArbitrary(1, 28) + "/" + data.years.endOfCurrentCycle
 
       let row = {
         trainee,

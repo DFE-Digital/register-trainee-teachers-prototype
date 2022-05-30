@@ -49,6 +49,11 @@ exports.pickRandom = (array, randomFunction = Math.random) => {
   return array[Math.floor(randomFunction() * array.length)]
 }
 
+// Random number between x and y
+exports.getRandomArbitrary = (min, max) => {
+  return Math.floor(Math.random() * (max - min) + min)
+}
+
 // Sort two things alphabetically, not case-sensitive
 exports.sortAlphabetical = (x, y) => {
   if(x.toLowerCase() !== y.toLowerCase()) {
@@ -1882,8 +1887,49 @@ exports.getProviderData = function(input, data=false){
 exports.getProviderType = function(provider, data=false){
   data = data || this?.ctx?.data || false
 
-  let found = data?.providers?.all && data.providers.all.find(item => item.name == provider)
-  return found?.type || false
+  let allProviders = data?.providers?.all
+
+  let output = false
+
+  if (!allProviders) {
+    console.log("Error with getProviderType: data not provided")
+    return false
+  }
+
+  if (_.isObject(provider)){
+    output = allProviders.find(item => provider.id == item.id)
+  }
+  // string
+  else output = allProviders.find(item => provider == item.name)
+
+  return output.type
+
+}
+
+// Get a human readable provider type eg `lead school`,
+exports.getProviderTypeString = (input) => {
+
+  let type
+  if (_.isObject(input)){
+    type = input.type
+  }
+  else type = input
+
+  switch (type) {
+    case 'accreditingProvider':
+      // if (input.accreditingProviderType){
+      //   return input.accreditingProviderType
+      // }
+      // else
+        return 'accrediting provider'
+      break;
+    case 'leadSchool':
+      return 'lead school'
+      break;
+    default:
+      return ""
+  }
+
 }
 
 exports.providerIsAccrediting = function(provider, data=false){

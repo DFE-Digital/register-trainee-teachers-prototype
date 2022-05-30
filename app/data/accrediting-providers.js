@@ -1,3 +1,9 @@
+const { faker } = require('@faker-js/faker')
+
+// Seed allows the UUIDs to be consistent each time we run this. The seed should be different than that used by lead-schools.js so we get different UUIDs for each.
+faker.seed(124);
+
+
 const all = [
   "2Schools Consortium",
   "AA Teamworks West Yorkshire SCITT",
@@ -337,7 +343,8 @@ const makeObject = (providers, type) => {
     return {
       name: provider,
       type: "accreditingProvider",
-      accreditingProviderType: type
+      accreditingProviderType: type,
+      id: faker.datatype.uuid()
     }
   } )
 }

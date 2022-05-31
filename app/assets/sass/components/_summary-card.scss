@@ -86,7 +86,7 @@
 
   // Summary list component overrides
   .govuk-summary-list {
-    margin: #{govuk-spacing(2) * -1} 0;
+    margin-bottom: govuk-spacing(-2);
   }
 
   @include govuk-media-query($until: desktop) {

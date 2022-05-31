@@ -1870,6 +1870,13 @@ exports.getProviderData = function(input, data=false){
 
   const lookUpProvider = provider => {
     let item
+    if (provider == "System admin"){
+      return {
+        name: 'System admin',
+        type: 'admin'
+      }
+    }
+
     if (data?.providers?.all){
       item = data.providers.all.find(item => item.name == provider) || false
     }
@@ -1889,6 +1896,9 @@ exports.getProviderType = function(provider, data=false){
 
   let allProviders = data?.providers?.all
 
+  // Handle the admin provider
+  if (provider == "System admin" || provider.type == "System admin") return 'admin'
+
   let output = false
 
   if (!allProviders) {
@@ -1896,13 +1906,16 @@ exports.getProviderType = function(provider, data=false){
     return false
   }
 
+  // Provider object
   if (_.isObject(provider)){
     output = allProviders.find(item => provider.id == item.id)
   }
-  // string
-  else output = allProviders.find(item => provider == item.name)
+  // String name of provider
+  else {
+    output = allProviders.find(item => provider == item.name)
+  }
 
-  return output.type
+  return output?.type
 
 }
 
@@ -1927,7 +1940,7 @@ exports.getProviderTypeString = (input) => {
       return 'lead school'
       break;
     default:
-      return ""
+      return type
   }
 
 }

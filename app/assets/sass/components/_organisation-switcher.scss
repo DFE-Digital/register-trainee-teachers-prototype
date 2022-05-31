@@ -1,0 +1,24 @@
+// Stolen from Publish - https://github.com/DFE-Digital/publish-teacher-training-prototype/blob/1238c02cc0149fc06ab0548dac8c5f7d3d773986/app/views/_components/organisation-switcher/_organisation-switcher.scss
+
+.app-organisation-switcher {
+  @include govuk-clearfix;
+  margin-top: govuk-spacing(2);
+  margin-bottom: govuk-spacing(2);
+  // padding-bottom: govuk-spacing(1);
+  // border-bottom: 1px solid $govuk-border-colour;
+}
+
+.app-organisation-switcher__title {
+  @include govuk-font($size: 19, $weight: "bold");
+  @include govuk-media-query($from: tablet) {
+    float: left;
+    width: 75%;
+  }
+}
+
+.app-organisation-switcher__link {
+  @include govuk-link-common;
+  @include govuk-media-query($from: tablet) {
+    float: right;
+  }
+}

@@ -81,10 +81,14 @@
             {% endif %}
             {% set isCurrentUser = user.fullName == data.defaultUser.fullName %}
             <div class="app-user-card">
+
+
               <h3 class="govuk-heading-s">
                 {{user.fullName}}{% if isCurrentUser %} (you){% endif %}
+                <span class="govuk-!-font-weight-regular">
+                   – {{user.email}}
+                </span>
               </h3>
-              <p class="govuk-body govuk-hint">{{user.email}}</p>
 
               {# Permissions #}
               {# {% set userPermissions = (user.providers | getRecordById(provider.id)).access %}

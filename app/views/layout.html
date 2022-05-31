@@ -72,6 +72,9 @@
     {% endif %}
 
   {% include "_includes/cookie-banner.html" %}
+
+  {% set shouldShowOrganisationSwitchLink = (data.settings.userProviders | length > 1) and not data.isAdmin and not data.isImpersonating | falsify and not hidePrimaryNav  %}
+
   {# Set serviceName in config.js. #}
   {% set headerClass = 'app-light-header' %}
   {{ govukHeader({
@@ -86,39 +89,50 @@
         text: "Your account"
       } if false,
       {
+        href: "/select-organisation",
+        text: "Change organisation"
+      } if shouldShowOrganisationSwitchLink and false,
+      {
         href: "/start-page",
         text: "Sign out"
       }
     ] if not hideNav
   }) }}
 
+  {% if shouldShowOrganisationSwitchLink %}
+    {% include "_includes/organisation-switcher.html" %}
+  {% endif %}
+
   {% set rightHandSideNavHtml %}
 
-  {% if not data.isAdmin and not data.isImpersonating | falsify %}
-    {% set providerName = data.settings.userActiveProvider %}
-    {% if providerName | providerIsLeadSchool %}
-      {% set providerName -%}
-        {{providerName}}{#  (view only) #}
-      {%- endset %}
-    {% endif %}
+    {% if not data.isAdmin and not data.isImpersonating | falsify %}
+      {% set providerName = data.settings.userActiveProvider %}
 
-    <nav class="moj-primary-navigation">
-      <ul class="moj-primary-navigation__list">
-
+      <nav class="moj-primary-navigation">
+        <ul class="moj-primary-navigation__list">
+          {% set ariaCurrent = "aria-current=page" if navActive == "provider" %}
           <li class="moj-primary-navigation__item">
-            <a class="moj-primary-navigation__link {{ 'aria-current="page"' | safe if navActive == 'provider' }}" href="/select-organisation">
-              {{ providerName }}
+            <a class="moj-primary-navigation__link" {{ ariaCurrent }} href="/organisations/{{activeProvider.id}}">
+              {{provider | log('providerisms')}}
+              {# Most users can only view a single organisation - so the section is specific to them #}
+              {% if not data.isAdmin %}
+                Your organisation
+              {# Admins can view all organsations, so use a more generic section name #}
+              {% else %}
+                Organisations
+              {% endif %}
             </a>
           </li>
 
-      </ul>
+        </ul>
 
-    </nav>
-  {% endif %}
+      </nav>
+    {% endif %}
 
   {% endset %}
 
-  {% set navItems = [{
+  {% set navItems = [
+    {
       text: 'Home',
       href: '/home',
       active: true if navActive == 'home'
@@ -158,10 +172,7 @@
       href: '/funding/payment-schedule',
       active: true if navActive == 'Funding'
     } if data.settings.showFundingInPrimaryNav
-  ] %}
-
-    {# MOJ primary nav does’t handle empty items well, so remove them here #}
-    {% set navItems = navItems | removeEmpty %}
+  ] | removeEmpty %}
 
   {% if not hidePrimaryNav %}
 

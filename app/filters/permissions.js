@@ -29,7 +29,7 @@ filters.getAccessLevels = function(providers, data){
 
   // Loop through each signed-in provider and get their type
   let accessLevels = providers.map(provider => utils.getProviderType.apply(this, [provider, data]))
-  if (data?.isAdmin) accessLevels.push("admin")
+  // if (data?.isAdmin) accessLevels.push("admin")
   return accessLevels
 }
 
@@ -96,7 +96,7 @@ filters.providerIsAuthorised = function(providers, action){
   }
 
   else {
-    console.log(`Error: provider type ${providerType} not recognised.`)
+    console.log(`Error: provider type ${providerType}, access level ${accessLevel} not recognised.`)
   }
 
 }

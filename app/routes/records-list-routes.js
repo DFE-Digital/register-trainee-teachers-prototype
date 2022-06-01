@@ -385,13 +385,11 @@ module.exports = router => {
     let registeredRecords = objectFilters.removeWhere(filteredRecords, 'status', "Draft")
     let draftRecordsCount = hasFilters ? draftRecords.length : null
 
-
-
     // Truncate records in case there's lots - and as we don't have working pagination
-    filteredRecords = filteredRecords.slice(0, 204)
+    filteredRecords = registeredRecords.slice(0, 204)
 
     res.render('records', {
-      filteredRecords: registeredRecords,
+      filteredRecords,
       hasFilters,
       selectedFilters,
       draftRecordsCount

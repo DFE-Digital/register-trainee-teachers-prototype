@@ -1,8 +1,8 @@
 let allUserPermissions = {
   "accreditingProvider":[
     "view trainees",
-    "add trainees",
-    "edit trainees",
+    // "add trainees",
+    "add and edit trainees",
     "export trainees",
     "view funding"
   ],

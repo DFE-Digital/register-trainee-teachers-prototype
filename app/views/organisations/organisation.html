@@ -82,7 +82,6 @@
             {% set isCurrentUser = user.fullName == data.defaultUser.fullName %}
             <div class="app-user-card">
 
-
               <h3 class="govuk-heading-s">
                 {{user.fullName}}{% if isCurrentUser %} (you){% endif %}
                 <span class="govuk-!-font-weight-regular">
@@ -115,6 +114,9 @@
           </ol>
         {% endif %}
 
+        <p class="govuk-body">
+          If you need to add or remove team members, contact us at <a href="mailto:becomingateacher@digital.education.gov.uk?subject=Add or remove team members from Register trainee teachers" class="govuk-link">becomingateacher@digital.education.gov.uk</a>.
+        </p>
 
       </div>
     </div>

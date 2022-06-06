@@ -116,7 +116,7 @@ hair and beauty sciences,No,Other subjects
 citizenship,No,Other subjects
 Japanese language,Yes,Modern languages
 design and technology,no,Design and technology
-English as a second language,Yes,Modern languages
+English as a second language,Yes,English
 physical education,no,Physical education
 Ancient Hebrew,no,Ancient languages
 classical Greek studies,no,Ancient languages
@@ -281,7 +281,7 @@ design and technology,Design and technology,
 drama,Drama,
 economics,Economics,economics
 English,English,English studies
-English as a second or other langauge,Modern languages,english as a second or other language
+English as a second or other langauge,English,English as a second language
 French,Modern languages,French language
 geography,Geography,geography
 German,Modern languages,German language

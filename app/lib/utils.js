@@ -866,10 +866,12 @@ exports.prettifySubjects = (subjects, lowercaseFirst=false) => {
       .replace('Specialist teaching (primary with mathematics)', 'Primary with mathematics')
       .replace('General sciences', 'Science')
       .replace('Modern languages', '_modern_lang') // Temporarily rename this
+      .replace('English as a second language', '_english_second_lang') // Temporarily rename this
       .replace(' languages', '') // Strip out languages from 'Chinese languages' etc
       .replace(' language', '') // Strip out language from 'English language' etc
       .replace('English studies', 'English') // Shorten this
       .replace('_modern_lang', 'Modern languages') // Restore 'Modern languages'
+      .replace('_english_second_lang', 'English as a second language') // Restore 'Modern languages'
   })
 
   // Lowercase everything

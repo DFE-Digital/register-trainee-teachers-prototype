@@ -113,14 +113,7 @@
           {% set ariaCurrent = "aria-current=page" if navActive == "provider" %}
           <li class="moj-primary-navigation__item">
             <a class="moj-primary-navigation__link" {{ ariaCurrent }} href="/organisations/{{activeProvider.id}}">
-              {{provider | log('providerisms')}}
-              {# Most users can only view a single organisation - so the section is specific to them #}
-              {% if not data.isAdmin %}
-                Your organisation
-              {# Admins can view all organsations, so use a more generic section name #}
-              {% else %}
-                Organisations
-              {% endif %}
+              Organisation details
             </a>
           </li>
 

@@ -28,7 +28,7 @@ router.get('/install/:page', function (req, res) {
   if (req.params.page.slice(-3).toLowerCase() === '.md') {
     req.params.page = req.params.page.slice(0, -3)
   }
-  redirectMarkdown(req.params.page, res)
+  redirectmarkdown(req.params.page, res)
   var doc = fs.readFileSync(path.join(__dirname, '/documentation/install/', req.params.page + '.md'), 'utf8')
   var html = marked(doc)
   res.render('install_template', { document: html })
@@ -70,7 +70,7 @@ router.post('/examples/branching/over-18-answer', function (req, res) {
 module.exports = router
 
 // Strip off markdown extensions if present and redirect
-var redirectMarkdown = function (requestedPage, res) {
+var redirectmarkdown = function (requestedPage, res) {
   if (requestedPage.slice(-3).toLowerCase() === '.md') {
     res.redirect(requestedPage.slice(0, -3))
   }

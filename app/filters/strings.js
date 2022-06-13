@@ -3,7 +3,10 @@
 // -------------------------------------------------------------------
 const string = require('string')
 const _ = require('lodash');
-const marked = require('marked');
+const { marked } = require('marked')
+// import GovukHTMLRenderer from 'govuk-markdown'
+// const { GovukHTMLRenderer } = require('govuk-markdown')
+const GovukHTMLRenderer = require('govuk-markdown')
 // Leave this filters line
 var filters = {}
 
@@ -95,10 +98,17 @@ filters.stringLiteral = function(str) {
 
 // Format text using markdown
 // Documentation at https://marked.js.org/
-filters.markDown = input => {
+filters.markdown = input => {
   marked.setOptions({
-  })
-  return marked(input)
+  renderer: new GovukHTMLRenderer(),
+  headerIds: false,
+  headingsStartWith: 'xl',
+  smartypants: true
+})
+  if (input) return marked(input)
+  else {
+    console.log("Error with markdown: no input given")
+  }
 }
 
 // Checks if a string starts with something

@@ -38,19 +38,19 @@ This data provides the DfE with past, current, and future foresight of new teach
 
 The following types of personal data will be shared between the parties for the purposes of this agreement:
 
-- Full name
-- Date of birth
-- Gender (female, male, other or not provided)
-- Nationalities
-- Disabilities
-- Ethnicity
+- full name
+- date of birth
+- gender (female, male, other or not provided)
+- nationalities
+- disabilities
+- ethnicity
 
 The following types of Special Category personal data shall be shared between the parties for the purposes of this agreement:
 
-- Nationalities
-- Gender
-- Ethnicity
-- Disabilities
+- nationalities
+- gender
+- ethnicity
+- disabilities
 
 ### Nationality
 
@@ -134,9 +134,9 @@ The systems-based connection in which Register may share data:
 
 - Register connects to Apply to retrieve applicant information to populate its own records
 - Register retrieves course information from the Publish teacher training (Publish) service
-- Organisations connect to Register to add, view or update their trainee data. Users can only access data connected to their organisation
+- organisations connect to Register to add, view or update their trainee data. Users can only access data connected to their organisation
 - Register reads and writes trainee record data to systems within the DfE for the purpose of allocating or retrieving a TRN for trainees and for registering their QTS or EYTS
-- Lead schools connect to Register to view their funding information and trainees’ information
+- lead schools connect to Register to view their funding information and trainees’ information
 
 The DfE uses [Zendesk](https://www.zendesk.co.uk/company/privacy-and-data-protection/#faq-general-1), a customer relationship management system, to handle queries from provider staff.
 
@@ -184,10 +184,10 @@ The DfE will manage SARs regarding any information for which the DfE is a Data C
 
 The DfE and the provider will contact each other immediately if they get a request for:
 
-- Rectification of information (Article 16 of GDPR)
-- Erasure of information (Article 17 of GDPR)
-- Restriction to process information (Article 18 of GDPR)
-For other types of SAR, the provider must notify the DFE within 5 working days.
+- rectification of information (Article 16 of GDPR)
+- erasure of information (Article 17 of GDPR)
+- restriction to process information (Article 18 of GDPR)
+For other types of SARs, the provider must notify the DFE within 5 working days.
 
 Data subjects wanting to make an SAR can email the DfE at [becomingateacher@digital.education.gov.uk](mailto:becomingateacher@digital.education.gov.uk?subject=Register%20subject%20access%20request%20%28SAR%29)
 

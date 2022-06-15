@@ -4,7 +4,7 @@ This agreement was last updated on 14 June 2022.
 
 ## Data sharing details
 
-This data sharing agreement (DSA) applies to personal data shared between the Department for Education (DfE) and (‘the provider’) as part of the Register trainee teachers (Register) service .
+This data sharing agreement (DSA) applies to personal data shared between the Department for Education (DfE) and (‘the provider’) as part of the Register trainee teachers (Register) service.
 
 ### The parties to the data sharing agreement
 

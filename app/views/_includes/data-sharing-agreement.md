@@ -58,7 +58,7 @@ We collect this to inform funding, policy and statistics, and is included in agg
 
 ### Gender, ethnicity and disability
 
-We collect these as part of a section in the service called ‘Personal details.  This information can also be collected from the [Apply for teacher training](https://www.gov.uk/apply-for-teacher-training) (Apply) service, and comes into Register through an integration between the 2 services. Gender, ethnicity and disability information is included in aggregate tables that are included in annual ITT publications reported by TAD. The user can choose to provide this information.
+We collect these as part of a section in the service called ‘Personal details’. This information can also be collected from the [Apply for teacher training](https://www.gov.uk/apply-for-teacher-training) (Apply) service, and comes into Register through an integration between the 2 services. Gender, ethnicity and disability information is included in aggregate tables that are included in annual ITT publications reported by TAD. The user can choose to provide this information.
 
 ### Identifiable data of providers
 

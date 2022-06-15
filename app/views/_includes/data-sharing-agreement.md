@@ -262,7 +262,7 @@ Both participants to this DSA reserve the right to terminate this DSA with 3 mon
 
 ## Your consent
 
- A relevant person at your organisation who deals with initial teacher training (ITT) should consent to this DSA.
+A relevant person at your organisation who deals with initial teacher training (ITT) should consent to this DSA.
 
 ### If you’re an accredited provider
 

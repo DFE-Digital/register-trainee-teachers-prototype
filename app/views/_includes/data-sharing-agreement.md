@@ -189,7 +189,7 @@ The DfE and the provider will contact each other immediately if they get a reque
 - Restriction to process information (Article 18 of GDPR)
 For other types of SAR, the provider must notify the DFE within 5 working days.
 
-Data subjects wanting to make an SAR can email the DfE at <a href="mailto:becomingateacher@digital.education.gov.uk?subject=Register subject access request (SAR)">becomingateacher@digital.education.gov.uk</a>.
+Data subjects wanting to make an SAR can email the DfE at [becomingateacher@digital.education.gov.uk](mailto:becomingateacher@digital.education.gov.uk?subject=Register%20subject%20access%20request%20%28SAR%29)
 
 ## Handling freedom of information requests
 
@@ -230,7 +230,7 @@ The provider must follow the National Cyber Security Centre’s advice on secure
 
 The DfE and the providers are responsible for notifying each other in writing in the event of loss or unauthorised disclosure of information within 24 hours of the event being discovered.
 
-All communication should be sent by email to <a href="mailto:becomingateacher@digital.education.gov.uk?subject=Register security incident">becomingateacher@digital.education.gov.uk</a>.
+All communication should be sent by email to [becomingateacher@digital.education.gov.uk](mailto:becomingateacher@digital.education.gov.uk?subject=Register%20security%20incident).
 
 The designated points of contact will discuss and agree the next steps relating to the incident, taking specialist advice where appropriate. Such arrangements will include (but will not be limited to):
 
@@ -266,7 +266,7 @@ Both participants to this DSA reserve the right to terminate this DSA with 3 mon
 
 ### If you’re an accredited provider
 
-To notify the DfE with your consent to the terms of this data sharing agreement, email <a href="mailto:becomingateacher@digital.education.gov.uk?subject=Register DSA consent">becomingateacher@digital.education.gov.uk</a> with confirmation.
+To notify the DfE with your consent to the terms of this data sharing agreement, email [becomingateacher@digital.education.gov.uk](mailto:becomingateacher@digital.education.gov.uk?subject=Register%20DSA%20consent) with confirmation.
 
 ### If you’re a lead school
 

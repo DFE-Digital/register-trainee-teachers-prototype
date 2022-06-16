@@ -74,7 +74,7 @@ At the point of data collection, the DfE and the providers are Independent Data 
 
 ### Register trainee teachers privacy notice
 
-In situations where a trainee did not use [Apply for teacher training](https://www.gov.uk/apply-for-teacher-training) (Apply), the accredited provider should inform their trainees of Register’s privacy notice which describes to trainees how their data will be used. This privacy notice will include the email address they can use to contact the Register support team, and can be found at www.register-trainee-teachers.education.gov.uk/privacy-policy
+In situations where a trainee did not use [Apply for teacher training](https://www.gov.uk/apply-for-teacher-training) (Apply), the accredited provider should inform their trainees of Register’s privacy notice which describes to trainees how their data will be used. This privacy notice will include the email address they can use to contact the Register support team, and can be found at https://www.register-trainee-teachers.service.gov.uk/privacy-notice
 
 ### What the provider can use personal data for that’s shared with them by the DfE
 
@@ -115,7 +115,7 @@ The collection and processing of this data is vital to the DfE for a variety of 
 
 ## Privacy notices
 
-[Refer to the Register privacy notice](https://www.register-trainee-teachers.service.gov.uk/privacy-policy) to see how Register handles data entered directly into the service.
+[Refer to the Register privacy notice](https://www.register-trainee-teachers.service.gov.uk/privacy-notice) to see how Register handles data entered directly into the service.
 
 In a situation where trainee records are entered directly into Register for non Apply trainees, the provider should inform their trainees of Register’s own privacy notice which describes to trainees how their data will be used. This privacy notice will include the email address they can use to contact the Register support team.
 

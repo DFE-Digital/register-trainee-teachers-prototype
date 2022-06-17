@@ -231,10 +231,13 @@ filters.fixNamesFromFunding = (string) => {
   - eg "19/20" ----> "2019 to 20"
   - eg "2019/20" --> "2019 to 20"
 */
-filters.formatYearRange = (string) => {
+filters.formatYearRange = (string, fundingYear = "2021 to 2022") => {
+
+  fundingYearNbsp = fundingYear.replaceAll(' ', '&nbsp;')
+
   return string
     .replace(/(\d{4})\/(\d{2})/, '$1&nbsp;to&nbsp;20$2')
-    .replace(/(\d{2})\/(\d{2})/, '20$1&nbsp;to&nbsp;20$2');
+    .replace(/(\d{2})\/(\d{2})/, fundingYearNbsp)
 }
 
 filters.recordsHaveQualification = (records, qualification) => {

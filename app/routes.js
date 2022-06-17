@@ -203,5 +203,10 @@ require('./routes/bulk-update-routes')(router)
 // =============================================================================
 require('./routes/organisations-and-users-routes')(router)
 
+// =============================================================================
+// Funding
+// =============================================================================
+require('./routes/funding-routes')(router)
+
 
 module.exports = router

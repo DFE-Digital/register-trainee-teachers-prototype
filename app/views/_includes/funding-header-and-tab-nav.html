@@ -12,13 +12,13 @@
   label: 'Sub navigation',
   classes: 'govuk-!-margin-bottom-4',
   items: [{
-    text: 'Payment schedule ' + data.years.currentAcademicYear,
-    href: "/funding/payment-schedule",
+    text: 'Payment schedule ' + fundingYear,
+    href: "/funding/" + fundingYearShort + "/payment-schedule",
     active: paymentScheduleTab
   },
   {
-    text: 'Trainee summary ' + data.years.currentAcademicYear,
-    href: '/funding/trainee-summary',
+    text: 'Trainee summary ' + fundingYear,
+    href: "/funding/" + fundingYearShort + "/trainee-summary",
     active: traineeSummaryTab
   }
 ]}) }}

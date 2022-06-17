@@ -1,7 +1,10 @@
 {% extends "_templates/_page.html" %}
 {% set navActive = "Funding" %}
 {% set pageHeading = navActive %}
-{% set tabName = "Payment schedule " + data.years.currentAcademicYear %}
+{% set tabName = "Payment schedule " + fundingYear %}
+
+{% set backLink = "/funding" %}
+{% set backText = "All funding years" %}
 
 {# Pick data based on user’s organisation #}
 {% if accessLevel == 'accreditingProvider' %}
@@ -16,12 +19,28 @@
   {% set paymentScheduleTab = true %}
   {% include "_includes/funding-header-and-tab-nav.html" %}
 
-  {% if currentMonth() >= 6 %}
-    {% set thisMonth = -1 + currentMonth() - 6 %}
+
+  {#  Offset months as August is the first month, September the second #}
+  {% set monthOffsets = {
+    "January": 6,
+    "February" : 7,
+    "March" : 8,
+    "April" : 9,
+    "May" : 10,
+    "June" : 11,
+    "July" : 12,
+    "August" : 1,
+    "September" : 2,
+    "October" : 3,
+    "November" : 4,
+    "December" : 5
+  } %} 
+
+  {% if fundingYear == data.years.currentAcademicYear %}
+    {% set thisMonth = monthOffsets[currentMonth('nameOfMonth')] %}
   {% else %}
-    {% set thisMonth = -1 + currentMonth() + 6 %}
+    {% set thisMonth = 12 %}
   {% endif %}
-  {# {% set thisMonth = 12 %} #}
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds-from-desktop">
@@ -46,19 +65,21 @@
   {% set rowHeadingCellClasses = "app-table__column-50" %}
   {% set dataCellClasses = "app-table__column-25" %}
 
+  {% set fundingEndYear = fundingYearShort | int + 1 %}
+
   {% set months  = [
-    "August " + data.years.defaultCourseYear,
-    "September " + data.years.defaultCourseYear,
-    "October " + data.years.defaultCourseYear,
-    "November " + data.years.defaultCourseYear,
-    "December " + data.years.defaultCourseYear,
-    "January " + data.years.endOfCurrentCycle,
-    "February " + data.years.endOfCurrentCycle,
-    "March " + data.years.endOfCurrentCycle,
-    "April " + data.years.endOfCurrentCycle,
-    "May " + data.years.endOfCurrentCycle,
-    "June " + data.years.endOfCurrentCycle,
-    "July " + data.years.endOfCurrentCycle
+    "August " + fundingYearShort,
+    "September " + fundingYearShort,
+    "October " + fundingYearShort,
+    "November " + fundingYearShort,
+    "December " + fundingYearShort,
+    "January " + fundingEndYear,
+    "February " + fundingEndYear,
+    "March " + fundingEndYear,
+    "April " + fundingEndYear,
+    "May " + fundingEndYear,
+    "June " + fundingEndYear,
+    "July " + fundingEndYear
   ]%}
 
   {% set pastTotal     = 0 %}
@@ -136,11 +157,11 @@
         {% for item in dataSource %}
           {% set row = [] %}
           {% if item.cumulativeMonthlyPayments[monthIndex] > 0 %}
-            {% set row = row | push({ text: item.descriptions | fixNamesFromFunding | sentenceCase | formatYearRange | safe }) %}
+            {% set row = row | push({ text: item.descriptions | fixNamesFromFunding | sentenceCase | formatYearRange(fundingYear) | safe }) %}
             {% set row = row | push({ text: item.monthlyPayments[monthIndex] | currency, format: "numeric" }) %}
             {% set row = row | push({ text: item.cumulativeMonthlyPayments[monthIndex] | currency, format: "numeric" }) %}
           {% elseif item.cumulativeMonthlyPayments[monthIndex] > item.cumulativeMonthlyPayments[monthIndex - 1] %}
-            {% set row = row | push({ text: item.descriptions | fixNamesFromFunding | sentenceCase | formatYearRange | safe }) %}
+            {% set row = row | push({ text: item.descriptions | fixNamesFromFunding | sentenceCase | formatYearRange | replace("2020 to 2021", fundingYear) | safe }) %}
             {% set row = row | push({ text: "–", format: "numeric" }) %}
             {% set row = row | push({ text: item.cumulativeMonthlyPayments[monthIndex] | currency, format: "numeric" }) %}
           {% endif %}

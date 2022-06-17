@@ -1,7 +1,10 @@
 {% extends "_templates/_page.html" %}
 {% set navActive = "Funding" %}
 {% set pageHeading = navActive %}
-{% set tabName = "Trainee summary " + data.years.currentAcademicYear %}
+{% set tabName = "Trainee summary " + fundingYear %}
+
+{% set backLink = "/funding" %}
+{% set backText = "All funding years" %}
 
 {% set totalForAllTrainees = 1 %}
 

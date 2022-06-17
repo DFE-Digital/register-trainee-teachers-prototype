@@ -162,7 +162,7 @@
     } if false,
     {
       text: 'Funding',
-      href: '/funding/payment-schedule',
+      href: '/funding/' + data.years.currentAcademicYearSimple + '/payment-schedule',
       active: true if navActive == 'Funding'
     } if data.settings.showFundingInPrimaryNav
   ] | removeEmpty %}

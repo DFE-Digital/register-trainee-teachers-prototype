@@ -1,0 +1,29 @@
+
+{% extends "_templates/_page.html" %}
+{% set backLink = '/home' %}
+
+{% set pageHeading = 'Export records' %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <h1 class="govuk-heading-l">{{pageHeading}}</h1>
+
+    <ul class="govuk-list govuk-list--spaced">
+      <li>
+        <a class="govuk-link" href="/reports/census">
+          Export Census view
+        </a>
+      </li>
+      <li>
+        <a class="govuk-link" href="/reports/hesa">
+          Export HESA records
+        </a>
+      </li>
+
+    </ul>
+    
+  </div>
+</div>
+{% endblock %}

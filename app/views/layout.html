@@ -164,7 +164,12 @@
       text: 'Funding',
       href: '/funding/' + data.years.currentAcademicYearSimple + '/payment-schedule',
       active: true if navActive == 'Funding'
-    } if data.settings.showFundingInPrimaryNav
+    } if data.settings.showFundingInPrimaryNav,
+    {
+      text: 'Reports',
+      href: '/reports',
+      active: true if navActive == 'Reports'
+    }
   ] | removeEmpty %}
 
   {% if not hidePrimaryNav %}

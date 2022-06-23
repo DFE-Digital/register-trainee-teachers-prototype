@@ -1,0 +1,76 @@
+{% extends "_templates/_page.html" %}
+
+{% set pageHeading = 'Export HESA records' %}
+
+{# {% set formAction = "./reinstate/confirm" %} #}
+  
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <h1 class="govuk-heading-l">{{pageHeading}}</h1>
+
+    <h2 class="govuk-heading-m">
+      About the export
+    </h2>
+
+    <p class="govuk-body">
+      Use this export if you’d like to compare data provided to HESA with what Register stores. <a href="#" class="govuk-link">How HESA data maps to a trainee record</a> details the fields we use and how we convert trainee data.
+    </p>
+
+    <p class="govuk-body">
+      This exports your trainee records, filtering trainees using the fields ‘hesa_updated_at’{#  or ‘hesa_last_uploaded_at’ #}.
+
+      It removes columns where hesa does not provide data - such as contact address.
+    </p>
+
+    {{ govukRadios({
+      idPrefix: "hesaExport",
+      name: "",
+      fieldset: {
+        legend: {
+          text: 'Which records would you like to export?',
+          isPageHeading: false,
+          classes: "govuk-fieldset__legend--m"
+        }
+      },
+      hint: {
+        text: ""
+      },
+      items: [
+        {
+          value: "2021 to 2022 cycle",
+          text: "Records updated in the 2021 to 2022 academic year (500 records)"
+        },
+        {
+          value: "2 months updated",
+          text: "Records updated in last 2 months (46 records)",
+          hint: {
+            text: "Updated records only"
+          } if false
+        },
+        {
+          value: "2 months uploaded",
+          text: "All records uploaded in last 2 months (456 records)",
+          hint: {
+            text: "Includes records that were uploaded but not changed"
+          }
+        } if false,
+        {
+          divider: "or"
+        },
+        {
+          value: "All records",
+          text: "All records from HESA (1562 records)"
+        }
+      ]
+    } | decorateAttributes(data, ""))}}
+
+    {{ govukButton({
+      "text": "Export trainee records (CSV)"
+    }) }}
+    
+  </div>
+</div>
+  
+{% endblock %}

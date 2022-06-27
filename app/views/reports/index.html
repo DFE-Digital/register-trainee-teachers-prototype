@@ -16,12 +16,15 @@
           Export Census view
         </a>
       </li>
-      <li>
-        <a class="govuk-link" href="/reports/hesa">
-          Export HESA records
-        </a>
-      </li>
 
+      {# HESA export only relevant to HEIs #}
+      {% if activeProvider.accreditingProviderType == "HEI" %}
+        <li>
+          <a class="govuk-link" href="/reports/hesa">
+            Export HESA records
+          </a>
+        </li>
+      {% endif %}
     </ul>
     
   </div>

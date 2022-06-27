@@ -161,15 +161,15 @@
       active: true if navActive == 'courses'
     } if false,
     {
-      text: 'Funding',
-      href: '/funding/' + data.years.currentAcademicYearSimple + '/payment-schedule',
-      active: true if navActive == 'Funding'
-    } if data.settings.showFundingInPrimaryNav,
-    {
       text: 'Reports',
       href: '/reports',
       active: true if navActive == 'Reports'
-    }
+    } if isAuthorised('exportRecords'),
+    {
+      text: 'Funding',
+      href: '/funding/' + data.years.currentAcademicYearSimple + '/payment-schedule',
+      active: true if navActive == 'Funding'
+    } if data.settings.showFundingInPrimaryNav
   ] | removeEmpty %}
 
   {% if not hidePrimaryNav %}

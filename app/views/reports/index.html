@@ -2,7 +2,7 @@
 {% extends "_templates/_page.html" %}
 {% set backLink = '/home' %}
 
-{% set pageHeading = 'Export records' %}
+{% set pageHeading = 'Reports' %}
 
 {% block content %}
 
@@ -13,7 +13,7 @@
     <ul class="govuk-list govuk-list--spaced">
       <li>
         <a class="govuk-link" href="/reports/census">
-          Export Census view
+          Export census records for the {{data.years.currentAcademicYear}} academic year
         </a>
       </li>
 
@@ -21,7 +21,7 @@
       {% if activeProvider.accreditingProviderType == "HEI" %}
         <li>
           <a class="govuk-link" href="/reports/hesa">
-            Export HESA records
+            Export HESA (Higher Education Statistics Agency) records
           </a>
         </li>
       {% endif %}

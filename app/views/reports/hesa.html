@@ -11,11 +11,19 @@
     <h1 class="govuk-heading-l">{{pageHeading}}</h1>
 
     <h2 class="govuk-heading-m">
-      About the export
+      About this export
     </h2>
 
     <p class="govuk-body">
-      Use this export if you’d like to compare data provided to HESA with what Register stores. <a href="#" class="govuk-link">How HESA data maps to a trainee record</a> details the fields we use and how we convert trainee data.
+      Use these exports to compare data provided to HESA and how that data is stored in Register.
+    </p>
+
+    <p class="govuk-body">
+      The export will filter your trainee records with the field ‘hesa_updated_at’, which shows you the last time any trainee record was updated in HESA. The export removes columns where HESA does not provide data, for example home address.
+    </p>
+
+    <p class="govuk-body">
+      <a href="#" class="govuk-link">Our guidance on how HESA data compares to Register data</a> will give you a breakdown of how we convert HESA data into Register.
     </p>
 
     <p class="govuk-body">
@@ -29,7 +37,7 @@
       name: "",
       fieldset: {
         legend: {
-          text: 'Which records would you like to export?',
+          text: 'Which trainee records would you like to export?',
           isPageHeading: false,
           classes: "govuk-fieldset__legend--m"
         }
@@ -40,11 +48,11 @@
       items: [
         {
           value: "2021 to 2022 cycle",
-          text: "Records updated in the 2021 to 2022 academic year (500 records)"
+          text: "Trainee records updated in HESA in the " + academicYear + " academic year (500 records)"
         },
         {
           value: "2 months updated",
-          text: "Records updated in last 2 months (46 records)",
+          text: "Trainee records updated in HESA in the last 2 months (46 records)",
           hint: {
             text: "Updated records only"
           } if false
@@ -61,7 +69,7 @@
         },
         {
           value: "All records",
-          text: "All records from HESA (1562 records)"
+          text: "All trainee records from HESA (1562 records)"
         }
       ]
     } | decorateAttributes(data, ""))}}

@@ -1,6 +1,6 @@
 {% extends "_templates/_page.html" %}
 
-{% set pageHeading = 'Export Census records' %}
+{% set pageHeading = 'Export census records' %}
 
 {# {% set formAction = "./reinstate/confirm" %} #}
 
@@ -13,96 +13,59 @@
   <div class="govuk-grid-column-two-thirds-from-desktop">
     <h1 class="govuk-heading-l">{{pageHeading}}</h1>
 
+    <p class="govuk-body">
+      Use this export to see your trainee data for the initial teacher training (ITT) census.
+    </p>
+
+    <p class="govuk-body">
+      The ITT census is put together using the <a href="https://explore-education-statistics.service.gov.uk/methodology/initial-teacher-training-census-methodology" class="govuk-link">Initial Teacher Training Census methodology</a>.
+    </p>
+
     <h2 class="govuk-heading-m">
-      About the export
+      About this export
     </h2>
 
     <p class="govuk-body">
-      This export approximates the trainees that included in the {{academicYear}} census. The census is compiled using the <a href="https://explore-education-statistics.service.gov.uk/methodology/initial-teacher-training-census-methodology" class="govuk-link">Initial Teacher Training Census methodology</a>.
+      This export includes trainees that are likely to be included in the {{ academicYear }} ITT census. The ITT census counts trainees registered on a course on the second Wednesday of October, this is sometimes called the ‘census date’.
     </p>
 
-    <p class="govuk-body">This export includes trainees:</p>
+    <p class="govuk-body">The census date for the {{ academicYear }} academic year is Wednesday 12 October {{academicYearShort}}.</p>
+
+    <p class="govuk-body">This export will include trainees:</p>
 
     <ul class="govuk-list govuk-list--bullet">
       <li>
-        that are registered (no drafts)
+        that are registered (so their records are not drafts in Register) 
       </li>
       <li>
-        on their first year
+        on their first year of training 
       </li>
       <li>
-        on ITT courses starting from 1 August {{ academicYearShort }}
+        on ITT courses starting from 1 August {{ academicYearShort }} and the census date
       </li>
       <li>
-        on ITT courses starting no later than the second Wednesday of October {{academicYearShort}}
+        that started their training on or before the census date
       </li>
       <li>
-        on courses leading to QTS
-      </li>
-      <li>
-        not on the Assessment Only route
-      </li>
-      <li>
-        that started training on or before the second Wednesday of October {{academicYearShort}}
-      </li>
-      <li>
-        have not withdrawn, or withdrew after the second Wednesday of October {{academicYearShort}}
+        on courses leading to qualified teacher status (QTS)
       </li>
     </ul>
 
-    {% set insetText %}
-      The export will include trainees where you have not yet given us a trainee start date — as we do not yet know if they started training on or before the second Wednesday of October {{academicYearShort}}
-    {% endset %}
+    <p class="govuk-body">This export will not include trainees on the Assessment only route.</p>
 
-    {{ govukInsetText({
-      text: insetText
-    }) }}
+    <h2 class="govuk-heading-m">How this export will be different from the ITT census</h2>
 
-    <h3 class="govuk-heading-s">How the export will differ from Census</h3>
-
-    <p class="govuk-body">The ITT census also excludes a small number of trainees where you have indicated they are not eligible for UK financial support and do not have a DfE allocated place. This export will not exclude them so may incllude extra trainees. Read the <a href="https://explore-education-statistics.service.gov.uk/methodology/initial-teacher-training-census-methodology" class="govuk-link">Initial Teacher Training Census methodology</a> for more details.</p>
-
-    {# {{ govukRadios({
-      idPrefix: "hesaExport",
-      name: "",
-      fieldset: {
-        legend: {
-          text: 'Which records would you like to export?',
-          isPageHeading: false,
-          classes: "govuk-fieldset__legend--m"
-        }
-      },
-      hint: {
-        text: ""
-      },
-      items: [
-        {
-          value: "2021 to 2022 cycle",
-          text: "Records updated in the " + data.years.currentAcademicYear + " academic year (500 records)"
-        },
-        {
-          value: "2 months updated",
-          text: "Records updated in last 2 months (46 records)",
-          hint: {
-            text: "Updated records only"
-          } if false
-        },
-        {
-          value: "2 months uploaded",
-          text: "All records uploaded in last 2 months (456 records)",
-          hint: {
-            text: "Includes records that were uploaded but not changed"
-          }
-        } if false,
-        {
-          divider: "or"
-        },
-        {
-          value: "All records",
-          text: "All records from HESA (1562 records)"
-        }
-      ]
-    } | decorateAttributes(data, ""))}} #}
+    <p class="govuk-body">
+      All trainees that should be included in the ITT census will be in this export, but there might be a small number of extra trainees that would not normally be included. This is because Register currently does not have a way to exclude them. Trainees who could be in this export are:
+    </p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>
+        trainees without a start date because we cannot know if a trainee started their course on or before the census date without a start date
+      </li>
+      <li>
+        trainees that are self funded (not eligible for UK financial support and do not have a DfE allocated place), the ITT census excludes these trainees. 
+      </li>
+    </ul>
 
     {{ govukButton({
       "text": "Export trainee records (CSV)"

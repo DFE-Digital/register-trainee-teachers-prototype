@@ -3,7 +3,10 @@
 {% set pageHeading = 'Export HESA records' %}
 
 {# {% set formAction = "./reinstate/confirm" %} #}
-  
+
+{% set academicYear = data.years.currentAcademicYear %}
+{% set academicYearShort = data.years.currentAcademicYear | academicYearToYear %}
+
 {% block content %}
 
 <div class="govuk-grid-row">
@@ -24,12 +27,6 @@
 
     <p class="govuk-body">
       <a href="#" class="govuk-link">Our guidance on how HESA data compares to Register data</a> will give you a breakdown of how we import HESA data into Register.
-    </p>
-
-    <p class="govuk-body">
-      This exports your trainee records, filtering trainees using the fields ‘hesa_updated_at’{#  or ‘hesa_last_uploaded_at’ #}.
-
-      It removes columns where hesa does not provide data - such as contact address.
     </p>
 
     {{ govukRadios({

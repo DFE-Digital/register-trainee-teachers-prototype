@@ -2,78 +2,83 @@
 
 {% set pageHeading = 'Export HESA records' %}
 
-{# {% set formAction = "./reinstate/confirm" %} #}
 
 {% set academicYear = data.years.currentAcademicYear %}
 {% set academicYearShort = data.years.currentAcademicYear | academicYearToYear %}
 
 {% block content %}
-
+{{super()}}
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
-    <h1 class="govuk-heading-l">{{pageHeading}}</h1>
 
-    <p class="govuk-body">
-      Use these exports to compare data provided to HESA and how that data is stored in Register.
-    </p>
+    <form action="" method="post">
+      <h1 class="govuk-heading-l">{{pageHeading}}</h1>
 
-    <h2 class="govuk-heading-m">
-      About this export
-    </h2>
+      <p class="govuk-body">
+        Use these exports to compare data provided to HESA and how that data is stored in Register.
+      </p>
 
-    <p class="govuk-body">
-      The export will filter your trainee records with the field ‘hesa_updated_at’, which shows you the last time any trainee record was updated in HESA. The export removes columns where HESA does not provide data, for example home address.
-    </p>
+      <h2 class="govuk-heading-m">
+        About this export
+      </h2>
 
-    <p class="govuk-body">
-      <a href="#" class="govuk-link">Our guidance on how HESA data compares to Register data</a> will give you a breakdown of how we import HESA data into Register.
-    </p>
+      <p class="govuk-body">
+        The export will filter your trainee records with the field ‘hesa_updated_at’, which shows you the last time any trainee record was updated in HESA. The export removes columns where HESA does not provide data, for example home address.
+      </p>
 
-    {{ govukRadios({
-      idPrefix: "hesaExport",
-      name: "",
-      fieldset: {
-        legend: {
-          text: 'Which trainee records would you like to export?',
-          isPageHeading: false,
-          classes: "govuk-fieldset__legend--m"
-        }
-      },
-      hint: {
-        text: ""
-      },
-      items: [
-        {
-          value: "2021 to 2022 cycle",
-          text: "Trainee records updated in HESA in the " + academicYear + " academic year (500 records)"
-        },
-        {
-          value: "2 months updated",
-          text: "Trainee records updated in HESA in the last 2 months (46 records)",
-          hint: {
-            text: "Updated records only"
-          } if false
-        },
-        {
-          value: "2 months uploaded",
-          text: "All records uploaded in last 2 months (456 records)",
-          hint: {
-            text: "Includes records that were uploaded but not changed"
+      <p class="govuk-body">
+        <a href="#" class="govuk-link">Our guidance on how HESA data compares to Register data</a> will give you a breakdown of how we import HESA data into Register.
+      </p>
+
+      {{ govukRadios({
+        idPrefix: "hesaExport",
+        name: "",
+        fieldset: {
+          legend: {
+            text: 'Which trainee records would you like to export?',
+            isPageHeading: false,
+            classes: "govuk-fieldset__legend--m"
           }
-        } if false,
-        {
-          divider: "or"
         },
-        {
-          value: "All records",
-          text: "All trainee records from HESA (1562 records)"
-        }
-      ]
-    } | decorateAttributes(data, ""))}}
+        hint: {
+          text: ""
+        },
+        items: [
+          {
+            value: "2021 to 2022 cycle",
+            text: "Trainee records updated in HESA in the " + academicYear + " academic year (500 records)"
+          },
+          {
+            value: "2 months updated",
+            text: "Trainee records updated in HESA in the last 2 months (46 records)",
+            hint: {
+              text: "Updated records only"
+            } if false
+          },
+          {
+            value: "2 months uploaded",
+            text: "All records uploaded in last 2 months (456 records)",
+            hint: {
+              text: "Includes records that were uploaded but not changed"
+            }
+          } if false,
+          {
+            divider: "or"
+          },
+          {
+            value: "All records",
+            text: "All trainee records from HESA (1562 records)"
+          }
+        ]
+      })}}
 
-    {{ govukButton({
-      "text": "Export trainee records (CSV)"
-    }) }}
+      <input name="successFlash" type="hidden" value="Export successfully downloaded">
+
+      {{ govukButton({
+        "text": "Export trainee records (CSV)"
+      }) }}
+
+    </form>
     
   </div>
 </div>

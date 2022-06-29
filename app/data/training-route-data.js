@@ -80,7 +80,8 @@ let defaultRouteData = {
   ],
   initiatives: [
     "Now teach",
-    "Transition to teach"
+    "Transition to teach",
+    "Troops to Teachers bursary"
   ],
   financialSupportAvailable: false
 }
@@ -128,7 +129,8 @@ let baseRouteData = {
     ],
     initiatives: [
       "Now teach",
-      "Transition to teach"
+      "Transition to teach",
+      "Troops to Teachers bursary"
     ],
     financialSupportAvailable: true,
     financialSupport: [

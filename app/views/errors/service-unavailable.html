@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+{% set hideNav = true %}
+{% set hidePrimaryNav = true %}
+
+{% set pageHeading = "This service is temporarily unavailable" %}
+
+{% block pageTitle %}
+  {{ pageHeading }} - {{serviceName}} - GOV.UK
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l">{{pageHeading}}</h1>
+
+    <p class="govuk-body">
+      You cannot access this service right now because there is scheduled maintenance work happening.
+    </p>
+
+    <p class="govuk-body">
+      You can try accessing the service later.
+    </p>
+
+    <p class="govuk-body">
+      If you have any questions, email us at <a class="govuk-link" href="mailto:becomingateacher@digital.education.gov.uk?subject=Register%20trainee%20teachers%20support">becomingateacher@digital.education.gov.uk</a>.
+    </p>
+
+  </div>
+
+</div>
+
+{% endblock %}

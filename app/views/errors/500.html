@@ -2,12 +2,18 @@
 {% set hideNav = true %}
 {% set hidePrimaryNav = true %}
 
+{% set pageHeading = "Sorry, something went wrong" %}
+
+{% block pageTitle %}
+  {{ pageHeading }} - {{serviceName}} - GOV.UK
+{% endblock %}
+
 {% block content %}
 
 <div class="govuk-grid-row">
 
   <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-l">Sorry, something went wrong</h1>
+    <h1 class="govuk-heading-l">{{ pageHeading }}</h1>
 
     <p class="govuk-body">
       Try again later.

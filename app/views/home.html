@@ -84,14 +84,14 @@
         {% set coursenNotYetStarted = registeredTrainees | filterByFunction('ittInTheFuture') %}
         <a href="#" class="status-card status-card--in-training">
           <span class="status-card__count">{{coursenNotYetStarted | length}}</span>
-          <span class="status-card__status">Course not started yet</span><span class="govuk-visually-hidden">. View these records.</span>
+          <span class="status-card__status">Course not started yet</span><span class="govuk-visually-hidden"> records. View these records.</span>
         </a>
 
         {# In training #}
         {% set traineesInTraining = registeredTrainees | filterByFunction('isInTraining') %}
         <a href="/records?&filterTrainingStatus=In training" class="status-card status-card--in-training">
           <span class="status-card__count">{{traineesInTraining | length}}</span>
-          <span class="status-card__status">In training</span><span class="govuk-visually-hidden">. View these records.</span>
+          <span class="status-card__status">In training</span><span class="govuk-visually-hidden"> records. View these records.</span>
         </a>
 
         {# Awarded this year #}
@@ -99,7 +99,7 @@
         {% set traineesAwardedThisYear = traineesAwarded | filterByFunction('isFinishingThisAcademicYear') %}
         <a href="/records?filterTrainingStatus=Awarded&filterEndYears={{ data.years.currentAcademicYear }}" class="status-card status-card--awarded">
           <span class="status-card__count">{{traineesAwardedThisYear | length}}</span>
-          <span class="status-card__status">Awarded this year</span><span class="govuk-visually-hidden">. View these records.</span>
+          <span class="status-card__status">Awarded this year</span><span class="govuk-visually-hidden"> records. View these records.</span>
         </a>
 
         {# Currently deferred #}

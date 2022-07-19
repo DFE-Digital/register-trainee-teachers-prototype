@@ -73,7 +73,7 @@
 
   {% include "_includes/cookie-banner.html" %}
 
-  {% set shouldShowOrganisationSwitchLink = (data.settings.userProviders | length > 1) and not data.isAdmin and not data.isImpersonating | falsify and not hidePrimaryNav  %}
+  {% set shouldShowOrganisationSwitchLink = (data.settings.userProviders | length > 1) and not data.isAdmin and not data.isImpersonating | falsify and not hidePrimaryNav and not isSupportUi %}
 
   {# Set serviceName in config.js. #}
   {% set headerClass = 'app-light-header' %}
@@ -105,7 +105,7 @@
 
   {% set rightHandSideNavHtml %}
 
-    {% if not data.isAdmin and not data.isImpersonating | falsify %}
+    {% if not data.isAdmin and not data.isImpersonating | falsify and not isSupportUi %}
       {% set providerName = data.settings.userActiveProvider %}
 
       <nav class="moj-primary-navigation">
@@ -124,7 +124,7 @@
 
   {% endset %}
 
-  {% set navItems = [
+  {% set navItemsUser = [
     {
       text: 'Home',
       href: '/home',
@@ -171,6 +171,51 @@
       active: true if navActive == 'Funding'
     } if data.settings.showFundingInPrimaryNav
   ] | removeEmpty %}
+
+  {% set navItemsSupport = [
+    {
+      text: 'Home',
+      href: '/support',
+      active: true if navActive == 'home'
+    },
+    {
+      text: 'Trainees',
+      href: '/support/trainees',
+      active: true if navActive == 'trainees'
+    } if isAuthorised('viewDrafts'),
+    {
+      text: 'Users',
+      href: '/support/users',
+      active: true if navActive == 'users'
+    },
+    {
+      text: 'Organisations',
+      href: '/support/organisations',
+      active: true if navActive == 'organisations'
+    },
+    {
+      text: 'Courses',
+      href: '/support/courses',
+      active: true if navActive == 'courses'
+    } if false,
+    {
+      text: 'Data',
+      href: '/support/data',
+      active: true if navActive == 'data'
+    },
+    {
+      text: 'Settings',
+      href: '/support/settings',
+      active: true if navActive == 'settings'
+    }
+  ] | removeEmpty %}
+
+  {% if isSupportUi %}
+    {% set navItems = navItemsSupport %}
+  {% else %}
+    {{ currentPageUrl | log}}
+    {% set navItems = navItemsUser %}
+  {% endif %}
 
   {% if not hidePrimaryNav %}
 

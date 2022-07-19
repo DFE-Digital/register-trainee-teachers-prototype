@@ -1,6 +1,6 @@
 
 .status-card {
-  background-color: govuk-colour("light-grey");
+  background-color: $govuk-brand-colour;
   padding: govuk-spacing(2);
   text-decoration: none;
 
@@ -11,7 +11,7 @@
   }
 
   &:link {
-    color: $govuk-text-colour;
+    color: govuk-colour("white");
   }
 
   &:focus, &:link:focus, &:visited:focus {

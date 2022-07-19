@@ -1,0 +1,207 @@
+{% extends "_templates/_page.html" %}
+
+{% set allProviders = data.providers.all %}
+{% set filteredProviders = allProviders %}
+
+{% set pageHeadingShort = "Organisations" %}
+
+{% set pageHeading %}
+  {{ pageHeadingShort }} ({{filteredProviders | length}} {{ "user" | pluralise(filteredProviders | length) }})
+{% endset %}
+
+
+
+{% set backText = "Support home" %}
+{% set backLink = '/support' %}
+{% set navActive = "organisations" %}
+
+{# Dual skip links to support skipping to results rather than #main-content #}
+{% block skipLink %}
+  <div class="app-skip-link__container">
+    <span class="app-skip-link__item">
+      {{ govukSkipLink({
+        href: '#main-content',
+        text: 'Skip to main content'
+      }) }}
+    </span>
+    <span class="app-skip-link__item">
+      {{ govukSkipLink({
+        href: '#records-list',
+        text: 'Skip to results' if selectedFilters else 'Skip to records'
+      }) }}
+    </span>
+  </div>
+{% endblock %}
+
+{% block content %}
+{# super pulls in flash message banner #}
+{{super()}}
+
+{{data | log}}
+
+{% set filterOptionsHtml %}
+
+  {% include "_includes/filter-panel/all-providers.njk" %}
+
+  {% include "_includes/filter-panel/training-status.njk" %}
+
+  {# {% include "_includes/filter-panel/cohort-filter.njk" %} #}
+
+  {% include "_includes/filter-panel/years.njk" %}
+
+  {% include "_includes/filter-panel/completeStatus.njk" %}
+
+  {% include "_includes/filter-panel/phase.njk" %}
+
+  {% include "_includes/filter-panel/course-level.njk" %}
+
+  {% include "_includes/filter-panel/signed-in-providers.njk" %}
+
+  {% include "_includes/filter-panel/training-routes.njk" %}
+
+  {# {% include "_includes/filter-panel/statuses.njk" %} #}
+
+  {% include "_includes/filter-panel/subjects.njk" %}
+
+  {% include "_includes/filter-panel/studyMode.njk" %}
+
+  {% include "_includes/filter-panel/source.njk" %}
+
+
+{% endset %}
+
+{% set filterContentHtml %}
+  {% if filteredProviders | length %}
+
+    <div class="app-records-actions">
+      <div class="app-records-actions__col">
+
+        <p class="govuk-body govuk-!-margin-bottom-3"><a href="#" class="govuk-link">Export these users</a></p>
+
+        {# Only sort if there’s at least two items #}
+        {% if filteredProviders | length > 1 %}
+          {% include "_includes/record-sort-order.njk" %}
+        {% endif %}
+      </div>
+      <div class="app-records-actions__col">
+        <div class="moj-action-bar">
+          <div class="moj-action-bar__filter">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="app-application-cards">
+
+      {% if filteredProviders | length %}
+
+        {% for provider in filteredProviders %}
+          {{provider | log}}
+          <p class="govuk-body">{{provider.name}}</p>
+          {# {% include "_includes/user-card.njk" %} #}
+        {% endfor %}
+
+      {% endif %}
+    </div>
+
+    {# Dummy pagination - not hooked up to data yet #}
+    {% include "_includes/pagination.njk" %}
+
+  {% else %}
+    <h2 class="govuk-heading-m">No organisations found</h2>
+    <p class="govuk-body">Try <a href="/records">clearing your search and filters</a>.</p>
+  {% endif %}
+
+{% endset %}
+
+
+<div class="govuk-grid-row">
+
+  <div class="govuk-grid-column-full">
+
+    <span class="govuk-caption-l">{{ data.signedInProviders | andSeparate }}</span>
+    {# This heading set separately than {{pageHeading}} as it uses html #}
+    <h1 class="govuk-heading-xl">
+      {{ pageHeadingShort }} 
+      <span class="govuk-!-font-weight-regular">
+        ({{ filteredProviders | length}}{% if (filteredProviders | length) != (allProviders | length) %} of {{ allProviders | length }}{% endif %}<span class="govuk-visually-hidden">{{ "user" | pluralise(filteredProviders | length )}}</span>)
+      </span>
+    </h1>
+
+
+    {% if isAuthorised('addTrainees') %}
+      {{ govukButton({
+        text: "Create a user",
+        href: "./new-record/new",
+        isStartButton: true
+      }) }}
+    {% endif %}
+
+  </div>
+
+  {% if data.settings.showBulkLinks %}
+    <div class="govuk-grid-column-one-third">
+      <aside class="app-related-items" role="complementary">
+        <h2 class="govuk-heading-m" id="subsection-title">
+          Actions
+        </h2>
+        <nav role="navigation" aria-labelledby="subsection-title">
+          <ul class="govuk-list govuk-!-font-size-16">
+            <li>
+              <a href="#">
+                Submit a group of draft records
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                Recommend a group of trainees for EYTS or QTS
+              </a>
+            </li>
+          </ul>
+        </nav>
+        <div class="js-bulk-menu govuk-!-margin-bottom-3">
+          {{bulkButton | safe}}
+        </div>
+      </aside>
+    </div>
+  {% endif %}
+
+</div>
+
+<div class="govuk-grid-row">
+
+  <div class="govuk-grid-column-full">
+
+    {{ appFilterPage({
+      filterOptions: filterOptionsHtml,
+      selectedFilters: selectedFilters,
+      filterContent: filterContentHtml
+      })
+    }}
+  </div>
+
+</div>
+
+{% endblock %}
+
+{% block pageScripts %}
+  <script>
+    new MOJFrontend.FilterToggleButton({
+    bigModeMediaQuery: '(min-width: 48.063em)',
+    startHidden: false,
+    toggleButton: {
+      container: $('.moj-action-bar__filter'),
+      showText: 'Show filter',
+      hideText: 'Hide filter',
+      classes: 'govuk-button--secondary'
+    },
+    closeButton: {
+      container: $('.moj-filter__header-action'),
+      text: 'Close'
+    },
+    filter: {
+      container: $('.moj-filter')
+    }
+  });
+  </script>
+{% endblock %}

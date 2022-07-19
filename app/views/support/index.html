@@ -1,0 +1,128 @@
+{% extends "layout.html" %}
+
+{% set navActive = "home" %}
+
+{% set filteredRecords = data.records %}
+
+{% set draftRecords = filteredRecords | filterByStatus("Draft") %}
+{% set totalDraftCount = draftRecords | length %}
+{% set applyDraftCount = draftRecords | where("source", "Apply") | length %}
+
+{% set registeredTrainees = filteredRecords | filterByStatus("Draft", true) %}
+{% set pageHeading = "Register support" %}
+{# {% set currentTrainees = registeredTrainees | filterByActive %} #}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+      <h1 class="govuk-heading-xl">{{ pageHeading }}</h1>
+    </div>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+      <h2 class="govuk-heading-l">Trainees</h2>
+    </div>
+  </div>
+
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-full">
+
+      <div class="app-home-statuses app-home-statuses--3-up govuk-!-margin-bottom-4">
+
+        {# Draft #}
+        <a href="#" class="status-card status-card--draft">
+          <span class="status-card__count">{{totalDraftCount}}</span>
+          <span class="status-card__status">Draft trainees</span><span class="govuk-visually-hidden"> records. View these records.</span>
+        </a>
+
+        {# Upcoming #}
+        {% set coursenNotYetStarted = registeredTrainees | filterByFunction('ittInTheFuture') %}
+        <a href="#" class="status-card status-card--in-training">
+          <span class="status-card__count">{{coursenNotYetStarted | length}}</span>
+          <span class="status-card__status">Course not started yet</span><span class="govuk-visually-hidden"> records. View these records.</span>
+        </a>
+
+        {# In training #}
+        {% set traineesInTraining = registeredTrainees | filterByFunction('isInTraining') %}
+        <a href="/records?&filterTrainingStatus=In training" class="status-card status-card--in-training">
+          <span class="status-card__count">{{traineesInTraining | length}}</span>
+          <span class="status-card__status">In training</span><span class="govuk-visually-hidden"> records. View these records.</span>
+        </a>
+
+        {# Awarded this year #}
+        {% set traineesAwarded = registeredTrainees | filterByFunction('isAwarded') %}
+        {% set traineesAwardedThisYear = traineesAwarded | filterByFunction('isFinishingThisAcademicYear') %}
+        <a href="/records?filterTrainingStatus=Awarded&filterEndYears={{ data.years.currentAcademicYear }}" class="status-card status-card--awarded">
+          <span class="status-card__count">{{traineesAwardedThisYear | length}}</span>
+          <span class="status-card__status">Awarded this year</span><span class="govuk-visually-hidden"> records. View these records.</span>
+        </a>
+
+        {# Currently deferred #}
+        {% set deferredTrainees = registeredTrainees | filterByFunction('isDeferred') %}
+
+        <a href="/records?filterTrainingStatus=Deferred" class="status-card status-card--deferred">
+          <span class="status-card__count">{{ deferredTrainees | length }}</span>
+          <span class="status-card__status">Currently deferred</span><span class="govuk-visually-hidden"> records. View these records.</span>
+        </a>
+
+        {# Incomplete #}
+        {% set incompleteTrainees = registeredTrainees | filterByIncomplete %}
+        {% set activeTrainees = registeredTrainees | filterByFunction('isActiveStatus') %}
+        {% set incompleteExplanation %}
+          <br>(out of {{activeTrainees | length}})
+        {% endset %}
+
+        {# Disabled for now #}
+        {% set incompleteExplanation = "" %}
+
+        <a href="/records?filterCompleteStatus=Incomplete" class="status-card status-card status-card--incomplete">
+          <span class="status-card__count">{{ incompleteTrainees | length }}</span>
+          <span class="status-card__status">Incomplete records{{incompleteExplanation | safe}}</span><span class="govuk-visually-hidden"> records. View these records.</span>
+        </a>
+      </div>
+      <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+    </div>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+      <h2 class="govuk-heading-l">User and organisation management</h2>
+    </div>
+  </div>
+
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-full">
+
+      <div class="app-home-statuses app-home-statuses--3-up govuk-!-margin-bottom-4">
+
+        {# Users #}
+        <a href="support/users" class="status-card">
+          <span class="status-card__count">{{data.users.all | length}}</span>
+          <span class="status-card__status">Users</span><span class="govuk-visually-hidden"> users. View these users.</span>
+        </a>
+
+        {# Accrediting providers #}
+        {% set accreditingProviders = data.providers.accreditingProviders.all %}
+        <a href="support/organisations" class="status-card status-card--in-training">
+          <span class="status-card__count">{{accreditingProviders | length}}</span>
+          <span class="status-card__status">Accrediting providers</span><span class="govuk-visually-hidden">. View these providers.</span>
+        </a>
+
+        {# In training #}
+        {% set leadSchools = data.providers.leadSchools.all %}
+        <a href="support/organisations" class="status-card status-card--in-training">
+          <span class="status-card__count">{{leadSchools | length}}</span>
+          <span class="status-card__status">Lead schools</span><span class="govuk-visually-hidden">. View these schools.</span>
+        </a>
+
+      </div>
+      <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+    </div>
+  </div>
+
+
+{% endblock %}

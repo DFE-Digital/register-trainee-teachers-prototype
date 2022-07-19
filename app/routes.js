@@ -79,6 +79,8 @@ router.all('*', function(req, res, next){
   res.locals.accessLevel = permissions.getAccessLevel(data?.signedInProviders, data)
   res.locals.recordAccessLevel = permissions.recordAccessLevel(data?.record, data)
 
+  res.locals.isSupportUi = res.locals.currentPageUrl.startsWith("/support")
+
   next()
 })
 

@@ -1,6 +1,8 @@
+{% set provider = record.provider | getProviderData %}
+
 {% set providerText %}
   {% if record.provider %}
-    {{record.provider | safe}} (C85)
+    {{record.provider | safe}} ({{provider.providerCode or "C23"}})
   {% else %}
     Not provided
   {% endif %}
@@ -17,12 +19,12 @@
   actions: {
     items: [
       {
-        href: recordPath + "/pick-provider" | addReferrer(referrer),
+        href: recordPath + "/accrediting-provider/change" | addReferrer(referrer),
         text: "Change",
-        visuallyHiddenText: "provider"
+        visuallyHiddenText: "accrediting provider"
       }
     ]
-  } if canAmend and false
+  } if canAmend and data.isAdmin
 } %}
 
 {% set sourceText %}

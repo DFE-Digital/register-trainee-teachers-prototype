@@ -1,0 +1,15 @@
+{% extends "_templates/_record-form.html" %}
+
+{% set pageHeading %}
+  Change accrediting provider
+{% endset %}
+
+
+
+{% set formAction = "./confirm" | addReferrer(referrer) %}
+
+{% block formContent %}
+
+  {% include "_includes/forms/support/change-accrediting-provider.html" %}
+
+{% endblock %}

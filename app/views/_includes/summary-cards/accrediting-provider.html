@@ -1,3 +1,13 @@
+{% set provider = record.provider | getProviderData %}
+
+{% set providerText %}
+  {% if record.provider %}
+    {{record.provider | safe}} ({{provider.providerCode or "C23"}})
+  {% else %}
+    Not provided
+  {% endif %}
+{% endset %}
+
 
 {% set recordBaseRows = [
   {
@@ -5,7 +15,7 @@
       text: "Accrediting provider"
     },
     value: {
-      text: record.provider or "Not provided"
+      text: providerText or "Not provided"
     },
     actions: {
       items: [

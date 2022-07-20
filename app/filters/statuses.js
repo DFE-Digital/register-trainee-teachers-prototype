@@ -1,3 +1,4 @@
+
 // -------------------------------------------------------------------
 // Imports and setup
 // -------------------------------------------------------------------
@@ -71,6 +72,20 @@ filters.getStatusClass = (status) => {
       return 'govuk-tag--pink'
     case 'Manual':
       return 'govuk-tag--grey'
+
+
+    // Provider types
+    case 'HEI':
+      return 'govuk-tag--green'
+    case 'SCITT':
+      return 'govuk-tag--yellow'
+    case 'Lead school':
+    case 'leadSchool':
+      return 'govuk-tag--purple'
+    case 'accreditingProvider':
+      return 'govuk-tag--blue'
+
+
     default:
       return 'govuk-tag--blue'
   }

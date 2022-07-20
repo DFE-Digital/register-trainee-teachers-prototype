@@ -2053,7 +2053,7 @@ exports.getProviderType = function(provider, data=false){
 }
 
 // Get a human readable provider type eg `lead school`,
-exports.getProviderTypeString = (input) => {
+exports.getProviderTypeString = (input, includeAccreditingProviderDetail=false) => {
 
   let type
   if (_.isObject(input)){
@@ -2067,10 +2067,13 @@ exports.getProviderTypeString = (input) => {
       //   return input.accreditingProviderType
       // }
       // else
-        return 'accrediting provider'
+        if (includeAccreditingProviderDetail){
+          return input.accreditingProviderType
+        }
+        else return 'Accrediting provider'
       break;
     case 'leadSchool':
-      return 'lead school'
+      return 'Lead school'
       break;
     default:
       return type

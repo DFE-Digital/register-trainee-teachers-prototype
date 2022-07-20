@@ -1,0 +1,65 @@
+{% extends "_templates/_page.html" %}
+
+{% set pageHeading %}
+  Organisation – {{ provider.name }}
+{% endset %}
+
+{# {% set navActive = "provider" %} #}
+
+{% set backText = "Back" %}
+{# {% set backLink = '/home' %} #}
+
+{% block content %}
+
+{{provider | log}}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+      <h1 class="govuk-heading-xl">{{provider.name}}</h1>
+
+      {% set shouldShowOrganisationSwitchLink = (data.settings.userProviders | length > 1) and not data.isAdmin and not data.isImpersonating | falsify  %}
+
+      <h2 class="govuk-heading-m">About your organisation</h2>
+
+      {% include "_includes/summary-cards/support/provider.html" %}
+
+
+      <h2 class="govuk-heading-m">Team members</h2>
+
+      {{ govukButton({
+        "text": "Add a user to this organisaion"
+      }) }}
+
+      {% set providerUsers = data.users.byProvider[provider.name] | sort(attribute = "fullName") %}
+      {% set hasMultipleUsers = providerUsers | length > 1 %}
+
+      {% if hasMultipleUsers %}
+        <ol class="govuk-list">
+      {% endif %}
+
+        {% for user in providerUsers %}
+          {% if hasMultipleUsers %}
+            <li class="">
+          {% endif %}
+
+          {% include "_includes/user-card.njk" %}
+
+          {% if hasMultipleUsers %}
+            </li>
+          {% endif %}
+
+        {% endfor %}
+
+      {% if hasMultipleUsers %}
+        </ol>
+      {% endif %}
+
+      <p class="govuk-body">
+        If you need to add or remove team members, contact us at <a href="mailto:becomingateacher@digital.education.gov.uk?subject=Add or remove team members from Register trainee teachers" class="govuk-link">becomingateacher@digital.education.gov.uk</a>.
+      </p>
+
+    </div>
+  </div>
+
+{% endblock %}
+

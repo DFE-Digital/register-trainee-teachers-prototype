@@ -222,6 +222,7 @@
     {{ mojPrimaryNavigation({
     label: 'Primary navigation',
     items: navItems,
+    containerClasses: "app-primary-navigation--support-ui" if isSupportUi,
     searchHtml: rightHandSideNavHtml
     }) }}
 

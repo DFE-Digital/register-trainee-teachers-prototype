@@ -76,7 +76,7 @@
     <div class="app-records-actions">
       <div class="app-records-actions__col">
 
-        <p class="govuk-body govuk-!-margin-bottom-3"><a href="#" class="govuk-link">Export these users</a></p>
+        {# <p class="govuk-body govuk-!-margin-bottom-3"><a href="#" class="govuk-link">Export these users</a></p> #}
 
         {# Only sort if there’s at least two items #}
         {% if filteredProviders | length > 1 %}
@@ -95,10 +95,11 @@
 
       {% if filteredProviders | length %}
 
+      {{data.users | log}}
+
         {% for provider in filteredProviders %}
           {{provider | log}}
-          <p class="govuk-body">{{provider.name}}</p>
-          {# {% include "_includes/user-card.njk" %} #}
+          {% include "_includes/organisation-card.njk" %}
         {% endfor %}
 
       {% endif %}
@@ -128,14 +129,11 @@
       </span>
     </h1>
 
-
-    {% if isAuthorised('addTrainees') %}
-      {{ govukButton({
-        text: "Create a user",
-        href: "./new-record/new",
-        isStartButton: true
-      }) }}
-    {% endif %}
+    {{ govukButton({
+      text: "Add an organisation",
+      href: "/support/organisations/new",
+      isStartButton: true
+    }) }}
 
   </div>
 

@@ -1,0 +1,123 @@
+{% if provider.updatedDate | isInLast(5, 'minutes') %}
+  {% set justNowClass = "app-just-now" %}
+{% endif %}
+
+{% set providerTypeString = provider | getProviderTypeString(true) %}
+
+<div class="app-application-card {{justNowClass}}">
+
+  <div class="app-application-card_row app-application-card_row--header">
+      <h3 class="app-application-card__trainee-name govuk-heading-m govuk-!-margin-bottom-0">
+        <a href="/support/organisations/{{ provider.id }}" class="govuk-link govuk-link--no-visited-state">
+          {{ provider.name}}
+        </a>
+      </h3>
+
+      <span class="app-application-card_tag-container">
+        
+        <span style="display: inline-block;">
+          {{govukTag({
+            text: providerTypeString,
+            classes: providerTypeString | getStatusClass
+          })}}
+        </span>
+        {# <span style="display: inline-block;">
+          {{govukTag({
+            text: provider | getStatusText,
+            classes: provider.status | getStatusClass
+          })}}
+        </span> #}
+      </span>
+  </div>
+
+  <div class="app-application-card_row app-application-card_row--body">
+    <div class="app-application-card_col">
+
+      <div>
+        {# {{data.users | log}} #}
+        {% set providerUsers = data.users.byProvider[provider.name] %}
+
+        {{providerUsers | log}}
+
+        {# {% if provider.type %}
+          <p class="govuk-caption-m govuk-!-font-size-16 govuk-!-margin-bottom-1">Type: {{provider | getProviderTypeString(true) }}</p>
+        {% endif %} #}
+
+        {# Provider code #}
+        <p class="govuk-caption-m govuk-!-font-size-16 govuk-!-margin-bottom-1">Provider code: {{ provider.providerCode or faker.random.alphaNumeric(3) | upper }}</p>
+
+        {# URN or UKPRN #}
+        {% if provider.urn %}
+          <p class="govuk-caption-m govuk-!-font-size-16 govuk-!-margin-bottom-1">URN: {{provider.urn}}</p>
+        {% else %}
+          <p class="govuk-caption-m govuk-!-font-size-16 govuk-!-margin-bottom-1">UKRPRN: {{ provider.ukprn or faker.datatype.number({
+            'min': 1000000,
+            'max': 9999999
+          })}}</p>
+        {% endif %}
+
+        {# Users #}
+        <p class="govuk-caption-m govuk-!-font-size-16 govuk-!-margin-bottom-1">Users: {{providerUsers | length }}</p>
+
+
+
+        {% if provider.trainingDetails.traineeId %}
+          <p class="govuk-caption-m govuk-!-font-size-16 govuk-!-margin-bottom-1">Trainee ID: {{provider.trainingDetails.traineeId}}</p>
+        {% endif %}
+
+        {%  if provider.courseDetails.academicYear %}
+          <p class="govuk-caption-m govuk-!-font-size-16 govuk-!-margin-bottom-1">
+            Start year:
+            <span class="app-nowrap">{{ provider.courseDetails.academicYear }}</span>
+          </p>
+        {% endif %}
+        {% set endAcademicYear = provider | getEndAcademicYear %}
+        {%  if endAcademicYear %}
+          <p class="govuk-caption-m govuk-!-font-size-16 govuk-!-margin-bottom-1">
+            End year:
+            <span class="app-nowrap">{{ endAcademicYear }}</span>
+          </p>
+        {% endif %}
+
+        {% if data.isAdmin or (data.signedInProviders | length > 1) or (accessLevel == 'leadSchool') %}
+          <p class="govuk-caption-m govuk-!-font-size-16 app-application-card__provider govuk-!-margin-bottom-0 govuk-!-margin-top-2">
+            <span class="govuk-visually-hidden">Provider: </span>{{provider.provider}}</p>
+        {% endif %}
+        {% if data.isAdmin %}
+          <p class="govuk-caption-m govuk-!-font-size-16 app-application-card__provider govuk-!-margin-bottom-0 govuk-!-margin-top-1">
+              provider source: {{ provider.source }}
+          </p>
+        {% endif %}
+      </div>
+
+      <div>
+
+        <p class="govuk-body govuk-!-font-size-16 govuk-!-margin-bottom-1">
+          {# If subject spcialisms are incomplete, prefer course name. Else prefer the specialisms. #}
+          {% set subjects %}
+            {% if provider.courseDetails | subjectsAreIncomplete %}
+              {{ provider.courseDetails.courseNameShort or provider.courseDetails.subjects | prettifySubjects }}
+            {% else %}
+              {{ (provider.courseDetails.subjects | prettifySubjects | falsify ) or provider.courseDetails.courseNameShort }}
+            {% endif %}
+          {% endset %}
+          
+          <span class="govuk-visually-hidden">Course: </span>{{ subjects }}</p>
+        <p class="govuk-body govuk-!-font-size-16 govuk-hint govuk-!-margin-bottom-0">
+          <span class="govuk-visually-hidden">Route: </span>{{ provider.route }}</p>
+      </div>
+
+    </div>
+
+    <div class="app-application-card_col">
+      <p class="govuk-caption-m govuk-!-font-size-16 govuk-!-margin-bottom-1 app-application-card__submitted">
+        {% if query.sortOrder == "dateAdded" %}
+          Added: <span>{{provider.submittedDate | govukDate}}
+        {% else %}
+          Updated: <span>{# {{provider.updatedDate | govukDate}} #}{{ today() | govukDate }}
+        {% endif %}
+        </span></p>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,34 @@
+
+
+{{ govukCheckboxes({
+  classes: "govuk-checkboxes--small js-auto-submit",
+  attributes: {
+    "id": 'filterSupportUserOrganisationCheckboxes'
+  }
+  ,
+  fieldset: {
+    legend: {
+      text: "Belongs to",
+      isPageHeading: false,
+      classes: "govuk-fieldset__legend--s"
+    }
+  },
+  items: [
+    {
+      text: "HIE",
+      checked: checked(query.filterSupportUserOrganisation, "HEI")
+    },
+    {
+      text: "SCITT",
+      checked: checked(query.filterSupportUserOrganisation, "SCITT")
+    },
+    {
+      text: "Lead school",
+      checked: checked(query.filterSupportUserOrganisation, "Lead school")
+    },
+    {
+      text: "Admin",
+      checked: checked(query.filterSupportUserOrganisation, "Admin")
+    }
+  ]
+} | decorateAttributes(data, "data.filterSupportUserOrganisation"))}}

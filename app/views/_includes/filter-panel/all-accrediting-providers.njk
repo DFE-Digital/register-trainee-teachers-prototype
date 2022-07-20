@@ -7,7 +7,7 @@
   selected: true if (not query.filterAllProviders or query.filterAllProviders ==  "All providers")
 }) %}
 
-{% set allProviders = data.providers.all %}
+{% set allProviders = data.providers.accreditingProviders.all %}
 
 {% for provider in allProviders %}
   {% set providerItems = providerItems | push({
@@ -22,7 +22,7 @@
   name: "filterAllProviders",
   classes: "js-auto-submit",
   label: {
-    text: "Organisation",
+    text: "Accrediting provider",
     classes: "govuk-label--s"
   },
   items: providerItems

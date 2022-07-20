@@ -1,0 +1,20 @@
+
+.moj-primary-navigation.app-primary-navigation--support-ui {
+  background: govuk-tint(govuk-colour("purple"), 90);
+
+  & *:link, *:visited {
+    color: govuk-colour("purple");
+  }
+
+  & *:hover {
+    color: govuk-tint(govuk-colour("purple"), 15);
+  }
+
+  .moj-primary-navigation__link[aria-current]:before {
+    background-color: govuk-colour("purple");
+  }
+
+  .moj-primary-navigation {
+    background: govuk-tint(govuk-colour("purple"), 90);
+  }
+}

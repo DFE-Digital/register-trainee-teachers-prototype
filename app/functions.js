@@ -5,6 +5,8 @@ const individualFunctionsFolder = path.join(__dirname, './functions')
 const moment = require("moment");
 const _ = require('lodash')
 const permissions = require('./filters/permissions.js').filters
+const { faker }              = require('@faker-js/faker')
+faker.seed(123)
 
 module.exports = function (env) {
 
@@ -60,6 +62,9 @@ module.exports = function (env) {
 
   // Expose all of lodash
   functions.lodash = _
+
+  // Expose all of faker
+  functions.faker = faker
 
   // Pass through to utility function. Done like this so we don't need to use filter syntax - as nothing really needs to get sent anyway
   functions.isAuthorised = function(action){

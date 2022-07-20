@@ -1,3 +1,4 @@
+
 {{ govukSummaryList({
   rows: [
     {
@@ -50,7 +51,7 @@
           }
         ]
       }
-    },
+    } if isAccreditingProvider,
     {
       key: {
         text: "Provider code"
@@ -67,7 +68,41 @@
           }
         ]
       }
-    },
+    } if isAccreditingProvider,
+    {
+      key: {
+        text: "Accreditation Id"
+      },
+      value: {
+        text: provider.accreditationId
+      },
+      actions: {
+        items: [
+          {
+            href: "./" + uuid + "/edit",
+            text: "Change",
+            visuallyHiddenText: "provider code"
+          }
+        ]
+      }
+    } if isAccreditingProvider,
+    {
+      key: {
+        text: "URN"
+      },
+      value: {
+        text: provider.urn
+      },
+      actions: {
+        items: [
+          {
+            href: "./" + uuid + "/edit",
+            text: "Change",
+            visuallyHiddenText: "urn"
+          }
+        ]
+      }
+    } if isLeadSchool,
     {
       key: {
         text: "Team inbox"
@@ -101,7 +136,7 @@
           }
         ]
       } if false
-    },
+    } if showMetadata,
     {
       key: {
         text: "Last updated"
@@ -118,6 +153,6 @@
           }
         ]
       } if false
-    }
+    } if showMetadata
   ]
 }) }}

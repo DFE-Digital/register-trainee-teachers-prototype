@@ -16,6 +16,8 @@
 
 {% block formContent %}
 
+{% set isAccreditingProvider = provider | providerIsAccrediting %}
+
 {# Get placement (if it exists) from existing data #}
 
 {# Merge with temp store #}
@@ -76,29 +78,41 @@
   ]
 } | decorateAttributes(providerTemp, "providerTemp.type")) }}
 
-{{ govukRadios({
-  label: {
-    text: "UKPRN",
-    classes: "govuk-label--s"
-  },
-  classes: "govuk-!-width-two-thirds"
-}| decorateAttributes(providerTemp, "providerTemp.ukrprn"))}}
+{% if isAccreditingProvider %}
+  {{ govukInput({
+    label: {
+      text: "UKPRN",
+      classes: "govuk-label--s"
+    },
+    classes: "govuk-!-width-two-thirds"
+  }| decorateAttributes(providerTemp, "providerTemp.ukprn"))}}
 
-{{ govukRadios({
-  label: {
-    text: "Provider code",
-    classes: "govuk-label--s"
-  },
-  classes: "govuk-!-width-two-thirds"
-}| decorateAttributes(providerTemp, "providerTemp.providerCode"))}}
+  {{ govukInput({
+    label: {
+      text: "Provider code",
+      classes: "govuk-label--s"
+    },
+    classes: "govuk-!-width-two-thirds"
+  }| decorateAttributes(providerTemp, "providerTemp.providerCode"))}}
 
-{{ govukInput({
-  label: {
-    text: "Accreditation ID",
-    classes: "govuk-label--s"
-  },
-  classes: "govuk-!-width-two-thirds"
-}| decorateAttributes(providerTemp, "providerTemp.accreditationId"))}}
+  {{ govukInput({
+    label: {
+      text: "Accreditation ID",
+      classes: "govuk-label--s"
+    },
+    classes: "govuk-!-width-two-thirds"
+  }| decorateAttributes(providerTemp, "providerTemp.accreditationId"))}}
+{% endif %}
+
+{% if isLeadSchool %}
+  {{ govukInput({
+    label: {
+      text: "URN",
+      classes: "govuk-label--s"
+    },
+    classes: "govuk-!-width-two-thirds"
+  }| decorateAttributes(providerTemp, "providerTemp.urn"))}}
+{% endif %}
 
 {{ govukInput({
   label: {
@@ -107,6 +121,8 @@
   },
   classes: "govuk-!-width-two-thirds"
 }| decorateAttributes(providerTemp, "providerTemp.teamInbox"))}}
+
+<hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
 
 <h2 class="govuk-heading-m">Provider settings</h2>
 

@@ -9,7 +9,7 @@
 {% set applyDraftCount = draftRecords | where("source", "Apply") | length %}
 
 {% set registeredTrainees = filteredRecords | filterByStatus("Draft", true) %}
-{% set pageHeading = "Register support" %}
+{% set pageHeading = "Support for Register" %}
 {# {% set currentTrainees = registeredTrainees | filterByActive %} #}
 
 {% block content %}

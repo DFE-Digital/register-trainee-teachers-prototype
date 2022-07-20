@@ -17,11 +17,13 @@
 <h1 class="govuk-heading-l">{{pageHeading}}</h1>
 
 {% set adminInsetContentHtml %}
+
   <p class="govuk-body">
-    This feature is only available to admins.
+    You should only change the accrediting provider if the current provider <strong>{{record.provider}}</strong> has instructed you to.
   </p>
+
   <p class="govuk-body">
-    The old and new providers will both be sent a notification that the accrediting provider for this trainee has been updated.
+    The old and new providers will be sent a notification confirming the change.
   </p>
 {% endset %}
 
@@ -44,7 +46,7 @@
   _items: providers | toSelectItems,
   items: providerItems,
   classes: "govuk-!-width-two-thirds",
-  value: record.provider,
+  value: null,
   autocompleteOptions: {
     autoselect: false,
     showAllValues: true,

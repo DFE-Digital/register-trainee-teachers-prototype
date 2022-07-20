@@ -1,6 +1,6 @@
 {% extends "_templates/_record-form.html" %}
 
-{% set pageHeading = "Confirm accrediting provider" %}
+{% set pageHeading = "Confirm new accrediting provider" %}
 
 {% set backLink = ("/record/" + data.record.id) | orReferrer(referrer) %}
 {% set backText = "Back to record" %}
@@ -13,9 +13,17 @@
   <h1 class="govuk-heading-l">
     {{pageHeading}}
   </h1>
+
   {% include "_includes/summary-cards/accrediting-provider.html" %}
 
-
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+      {{ govukWarningText({
+        text: "The provider you have selected will be given ownership of this record. Selecting the wrong provider could lead to a data breach.",
+        iconFallbackText: "Warning"
+      }) }}
+    </div>
+  </div>
 
   {{ govukButton({
     text: "Update record"

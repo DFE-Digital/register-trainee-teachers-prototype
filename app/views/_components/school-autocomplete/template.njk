@@ -124,6 +124,10 @@
     else if (!autocompleteStringMatchesSelected){
       element.value = ""
     }
+
+    if ({{params.onConfirmExtra or false}}){
+      onConfirmExtra(result)
+    }
   }
 
   var inputValueSchools = (result) => {

@@ -1,0 +1,35 @@
+{% extends "_templates/_form.html" %}
+
+{% set pageHeading %}
+  Confirm changes to {{ provider.name }}
+{% endset %}
+
+{% set backText = "Back" %}
+{# {% set backLink = '/home' %} #}
+
+{# {% set returnLink = {
+  text: 'Cancel',
+  href: './../' + uuid
+} %} #}
+
+{% block formContent %}
+
+{% set isAccreditingProvider = provider | providerIsAccrediting %}
+{% set isLeadSchool = provider | providerIsLeadSchool %}
+
+{# Merge with temp store #}
+{% set providerTemp = provider | mergeObjects(data.providerTemp) %}
+
+<h1 class="govuk-heading-l">{{pageHeading}}</h1>
+
+{% set provider = providerTemp %}
+
+{% include "_includes/summary-cards/support/provider.html" %}
+
+{{ govukButton({
+  text: "Confirm"
+}) }}
+
+
+{% endblock %}
+

@@ -1,0 +1,147 @@
+{% extends "_templates/_form.html" %}
+
+{% set pageHeading %}
+  Edit – {{ provider.name }}
+{% endset %}
+
+{% set formAction = "./confirm" %}
+
+{% set backText = "Back" %}
+{# {% set backLink = '/home' %} #}
+{# 
+{% set returnLink = {
+  text: 'Cancel',
+  href: './../' + uuid
+} %} #}
+
+{% block formContent %}
+
+{% set isAccreditingProvider = provider | providerIsAccrediting %}
+
+{# Get placement (if it exists) from existing data #}
+
+{# Merge with temp store #}
+{% set providerTemp = provider | mergeObjects(data.providerTemp) %}
+
+
+
+{% set providerTemp = providerTemp | setAttribute('type', provider | getProviderTypeString(true)) %}
+
+{% set teamInbox = provider.teamInbox or ("teacher-training@" + provider.name | makeFakeSchoolDomain) %}
+
+{% set providerTemp = providerTemp | setAttribute('teamInbox', teamInbox) %}
+
+{# {{data | log}} #}
+{{providerTemp | log}}
+
+<h1 class="govuk-heading-l">{{pageHeading}}</h1>
+
+{{ govukInput({
+  label: {
+    text: "Organisation name",
+    classes: "govuk-label--s"
+  },
+  classes: "govuk-!-width-two-thirds"
+}| decorateAttributes(providerTemp, "providerTemp.name"))}}
+
+{# {{ govukRadios({
+  label: {
+    text: "Organisation type",
+    classes: "govuk-label--s"
+  },
+  classes: "govuk-!-width-two-thirds"
+}| decorateAttributes(providerTemp, "providerTemp.type"))}} #}
+
+{{ govukRadios({
+  fieldset: {
+    legend: {
+      text: 'Organisation type',
+      classes: "govuk-fieldset__legend--s"
+    }
+  },
+  hint: {
+    text: ""
+  },
+  items: [
+    {
+      text: "HEI",
+      value: "HEI"
+    },
+    {
+      text: "SCITT",
+      value: "SCITT"
+    },
+    {
+      text: "Lead school",
+      value: "Lead school"
+    }
+  ]
+} | decorateAttributes(providerTemp, "providerTemp.type")) }}
+
+{% if isAccreditingProvider %}
+  {{ govukInput({
+    label: {
+      text: "UKPRN",
+      classes: "govuk-label--s"
+    },
+    classes: "govuk-!-width-two-thirds"
+  }| decorateAttributes(providerTemp, "providerTemp.ukprn"))}}
+
+  {{ govukInput({
+    label: {
+      text: "Provider code",
+      classes: "govuk-label--s"
+    },
+    classes: "govuk-!-width-two-thirds"
+  }| decorateAttributes(providerTemp, "providerTemp.providerCode"))}}
+
+  {{ govukInput({
+    label: {
+      text: "Accreditation ID",
+      classes: "govuk-label--s"
+    },
+    classes: "govuk-!-width-two-thirds"
+  }| decorateAttributes(providerTemp, "providerTemp.accreditationId"))}}
+{% endif %}
+
+{% if isLeadSchool %}
+  {{ govukInput({
+    label: {
+      text: "URN",
+      classes: "govuk-label--s"
+    },
+    classes: "govuk-!-width-two-thirds"
+  }| decorateAttributes(providerTemp, "providerTemp.urn"))}}
+{% endif %}
+
+{{ govukInput({
+  label: {
+    text: "Team inbox",
+    classes: "govuk-label--s"
+  },
+  classes: "govuk-!-width-two-thirds"
+}| decorateAttributes(providerTemp, "providerTemp.teamInbox"))}}
+
+<hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+<h2 class="govuk-heading-m">Provider settings</h2>
+
+{{ govukCheckboxes({
+  idPrefix: "placement-section-complete",
+  name: "placementTemp[shouldImportFromApply]",
+  items: [
+    {
+      value: true,
+      text: 'Import application data from Apply',
+      checked: checked(shouldImportFromApply, true)
+    }
+  ]
+}) }}
+
+{{ govukButton({
+  text: "Continue"
+}) }}
+
+
+{% endblock %}
+

@@ -1,0 +1,124 @@
+
+{{ govukSummaryList({
+  rows: [
+    {
+      key: {
+        text: "Name"
+      },
+      value: {
+        text: school.schoolName
+      },
+      actions: {
+        items: [
+          {
+            href: "./" + uuid + "/edit",
+            text: "Change",
+            visuallyHiddenText: "name"
+          }
+        ]
+      }
+    },
+    {
+      key: {
+        text: "School type"
+      },
+      value: {
+        text: school.schoolName
+      },
+      actions: {
+        items: [
+          {
+            href: "./" + uuid + "/edit",
+            text: "Change",
+            visuallyHiddenText: "organisation type"
+          }
+        ]
+      }
+    },
+    {
+      key: {
+        text: "URN"
+      },
+      value: {
+        text: school.urn
+      },
+      actions: {
+        items: [
+          {
+            href: "./" + uuid + "/edit",
+            text: "Change",
+            visuallyHiddenText: "urn"
+          }
+        ]
+      }
+    },
+    {
+      key: {
+        text: "UKPRN"
+      },
+      value: {
+        text: school.ukprn
+      },
+      actions: {
+        items: [
+          {
+            href: "./" + uuid + "/edit",
+            text: "Change",
+            visuallyHiddenText: "ukprn"
+          }
+        ]
+      }
+    },
+    {
+      key: {
+        text: "Team inbox"
+      },
+      value: {
+        text: "teacher-training@" + school.schoolName | makeFakeSchoolDomain
+      },
+      actions: {
+        items: [
+          {
+            href: "./" + uuid + "/edit",
+            text: "Change",
+            visuallyHiddenText: "team inbox"
+          }
+        ]
+      }
+    } if false,
+    {
+      key: {
+        text: "Created"
+      },
+      value: {
+        text: faker.date.past(3) | govukDate
+      },
+      actions: {
+        items: [
+          {
+            href: "./" + uuid + "/edit",
+            text: "Change",
+            visuallyHiddenText: "team inbox"
+          }
+        ]
+      } if false
+    } if showMetadata,
+    {
+      key: {
+        text: "Last updated"
+      },
+      value: {
+        text: faker.date.recent(100) | govukDate
+      },
+      actions: {
+        items: [
+          {
+            href: "./" + uuid + "/edit",
+            text: "Change",
+            visuallyHiddenText: "team inbox"
+          }
+        ]
+      } if false
+    } if showMetadata
+  ]
+}) }}

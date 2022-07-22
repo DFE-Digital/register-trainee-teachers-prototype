@@ -1,0 +1,68 @@
+{% extends "_templates/_page.html" %}
+
+{% set pageHeading %}
+  School – {{ school.schoolName }}
+{% endset %}
+
+{# {% set navActive = "school" %} #}
+
+{% set backText = "Back" %}
+{# {% set backLink = '/home' %} #}
+
+{% block content %}
+
+{# {% set isLeadSchool = school | schoolIsLeadSchool %} #}
+
+
+{% set showMetadata = true %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+
+      <span class="govuk-caption-xl">{# {{ school | getSchoolTypeString(true) }} #}</span>
+      <h1 class="govuk-heading-xl">{{school.schoolName}}</h1>
+
+
+      <h2 class="govuk-heading-m">General</h2>
+
+      {% include "_includes/summary-cards/support/school.html" %}
+
+
+      {# <h2 class="govuk-heading-m">Team members</h2>
+
+      {{ govukButton({
+        "text": "Add a user to this organisaion",
+        classes: "govuk-button--secondary"
+      }) }}
+
+      {% set schoolUsers = data.users.bySchool[school.schoolName] | sort(attribute = "schoolName") %}
+      {% set hasMultipleUsers = schoolUsers | length > 1 %}
+
+      {% if hasMultipleUsers %}
+        <ol class="govuk-list">
+      {% endif %}
+
+        {% for user in schoolUsers %}
+          {% if hasMultipleUsers %}
+            <li class="">
+          {% endif %}
+
+          {% include "_includes/support/user-card.njk" %}
+
+          {% if hasMultipleUsers %}
+            </li>
+          {% endif %}
+
+        {% endfor %}
+
+      {% if hasMultipleUsers %}
+        </ol>
+      {% endif %} #}
+
+      <p class="govuk-body govuk-!-margin-top-8"><a href="./archive-organisation/confirm" class="govuk-link app-destructive-link">Archive this school</a></p>
+
+    </div>
+  </div>
+
+{% endblock %}
+

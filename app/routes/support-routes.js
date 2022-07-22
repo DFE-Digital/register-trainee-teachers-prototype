@@ -8,6 +8,11 @@ const utils = require('./../lib/utils')
 const weighted = require('weighted')
 const { faker } = require('@faker-js/faker')
 
+// In function because this is too big to pass around in session
+const getSchools = () => {
+  return require('./../data/gis-schools.js')
+}
+
 module.exports = router => {
 
   // Render a page for each organisation UUID
@@ -85,6 +90,71 @@ module.exports = router => {
         targetUrl, res, next, {
           uuid,
           provider,
+          returnLink: {
+            text: 'Cancel',
+            href: `./../${uuid}`
+          }
+        }
+      )
+    }
+  })
+
+  // Render a page for each organisation UUID
+  router.get('/support/schools', function(req, res, next) {
+    const data = req.session.data
+
+    const allSchools = getSchools()
+
+    // const first100Schools = allSchools.slice(0, 100)
+    
+    res.render('support/schools/index', {
+      schools: allSchools,
+      navActive: 'schools'
+    })
+    
+
+  })
+
+  // Render a page for each organisation UUID
+  router.get('/support/schools/:uuid', function(req, res, next) {
+    const data = req.session.data
+    let uuid = req.params.uuid
+
+    const schools = getSchools()
+
+    console.log(schools[1])
+
+    let school = schools.find(school => school.uuid == uuid)
+
+    if (!school) res.redirect('/support/schools')
+    else {
+      res.render('support/schools/view', {
+        school,
+        uuid,
+        navActive: 'schools'
+      })
+    }
+
+  })
+
+  // Render organisation pages, passing along the organisation UUID
+  router.get('/support/schools/:uuid/:page*', function (req, res, next) {
+    const data = req.session.data
+    let uuid = req.params.uuid
+
+    const schools = getSchools()
+    let school = schools.find(school => school.uuid == uuid)
+
+    // Use our own render as some templates live at /index.html
+
+    let targetUrl = path.join('support/schools', req.params.page, req.params[0])
+
+    if (!school) res.redirect('/support/schools')
+    else {
+      utils.render(
+        targetUrl, res, next, {
+          uuid,
+          school,
           returnLink: {
             text: 'Cancel',
             href: `./../${uuid}`

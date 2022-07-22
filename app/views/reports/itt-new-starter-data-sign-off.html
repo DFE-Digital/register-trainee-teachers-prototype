@@ -1,0 +1,81 @@
+{% extends "_templates/_page.html" %}
+
+{% set pageHeading = 'Export data for ITT new starter sign off' %}
+
+{# {% set formAction = "./reinstate/confirm" %} #}
+
+{% set academicYear = data.years.currentAcademicYear %}
+{% set academicYearShort = data.years.currentAcademicYear | academicYearToYear %}
+
+{% set censusDate = "2021-10-12" %}
+  
+{% block content %}
+{{super()}}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <form action="" method="post">
+
+      <h1 class="govuk-heading-l">{{pageHeading}}</h1>
+
+      <p class="govuk-body">
+        Use this export to see new starter trainee data you have provided for the {{academicYear}} academic year.
+      </p>
+
+      <h2 class="govuk-heading-m">What you must do</h2>
+
+      <p class="govuk-body">ITT Providers must sign-off that they have provided accurate and up to date data for new starters.</p>
+
+      <p class="govuk-body">You can use this report to review the data you have provided to DfE to check for errors and omissions.</p>
+
+      <p class="govuk-body">When your organisation is happy to sign-off, a responsible officer should use <a href="#" class="govuk-link">use this form to notify DfE</a>. Your organisation must sign-off your data no later than 31 October {{academicYearShort}}</p>
+
+      <h2 class="govuk-heading-m">How this relates to the ITT census</h2>
+
+      <p class="govuk-body">
+        DfE asks that you sign off all new starter data, not just those included in the ITT census.
+      </p>
+
+      <p class="govuk-body">
+        The ITT census is put together using the <a href="https://explore-education-statistics.service.gov.uk/methodology/initial-teacher-training-census-methodology" class="govuk-link">Initial Teacher Training Census methodology</a>.
+      </p>
+
+      {% set insetTextHtml %}
+        The census date for the {{ academicYear }} academic year is {{ censusDate | govukDate('dddd D MMMM YYYY') }}.
+      {% endset %}
+
+      {{ govukInsetText({
+        html: insetTextHtml
+      }) }}
+
+      <h2 class="govuk-heading-m">About this export</h2>
+
+      <p class="govuk-body">This export includes all trainees:</p>
+
+      <ul class="govuk-list govuk-list--bullet">
+        <li>
+          with a start academic year in {{ academicYear }}
+        </li>
+        <li>
+          with an ITT course start date on or before the census date
+        </li>
+        <li>
+          with a trainee start date on or before the census date
+        </li>
+        <li>
+          where you have yet to provide a trainee start date
+        </li>
+        
+      </ul>
+
+      <input name="successFlash" type="hidden" value="Export successfully downloaded">
+
+      {{ govukButton({
+        "text": "Export trainee records (CSV)"
+      }) }}
+
+    </form>
+  </div>
+</div>
+  
+{% endblock %}

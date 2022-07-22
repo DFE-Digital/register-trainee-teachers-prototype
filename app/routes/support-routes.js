@@ -11,6 +11,48 @@ const { faker } = require('@faker-js/faker')
 module.exports = router => {
 
   // Render a page for each organisation UUID
+  router.get('/support/users/:uuid', function(req, res, next) {
+    const data = req.session.data
+    let uuid = req.params.uuid
+    let user = data.users.all.find(user => user.id == uuid)
+
+    if (!user) res.redirect('/support/users')
+    else {
+      res.render('support/users/view', {
+        user,
+        uuid,
+        navActive: 'users'
+      })
+    }
+
+  })
+
+  // Render organisation pages, passing along the organisation UUID
+  router.get('/support/users/:uuid/:page*', function (req, res, next) {
+    const data = req.session.data
+    let uuid = req.params.uuid
+    let user = data.users.all.find(user => user.id == uuid)
+
+    // Use our own render as some templates live at /index.html
+
+    let targetUrl = path.join('support/users', req.params.page, req.params[0])
+
+    if (!user) res.redirect('/support/users')
+    else {
+      utils.render(
+        targetUrl, res, next, {
+          uuid,
+          user,
+          returnLink: {
+            text: 'Cancel',
+            href: `./../${uuid}`
+          }
+        }
+      )
+    }
+  })
+
+  // Render a page for each organisation UUID
   router.get('/support/organisations/:uuid', function(req, res, next) {
     const data = req.session.data
     let uuid = req.params.uuid
@@ -18,7 +60,7 @@ module.exports = router => {
 
     if (!provider) res.redirect('/support/organisations')
     else {
-      res.render('support/organisations/organisation', {
+      res.render('support/organisations/view', {
         provider,
         uuid,
         navActive: 'organisations'
@@ -37,7 +79,6 @@ module.exports = router => {
 
     let targetUrl = path.join('support/organisations', req.params.page, req.params[0])
 
-    console.log ({targetUrl})
     if (!provider) res.redirect('/support/organisations')
     else {
       utils.render(

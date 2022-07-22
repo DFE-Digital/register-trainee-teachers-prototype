@@ -37,7 +37,7 @@
         {# {{data.users | log}} #}
         {% set providerUsers = data.users.byProvider[provider.name] %}
 
-        {{providerUsers | log}}
+        {# {{providerUsers | log}} #}
 
         {# {% if provider.type %}
           <p class="govuk-caption-m govuk-!-font-size-16 govuk-!-margin-bottom-1">Type: {{provider | getProviderTypeString(true) }}</p>

@@ -27,9 +27,35 @@ var filters = {}
 
 filters.govukDate = (date, format) => {
   if (Array.isArray(date)){
+    date = filters.arrayToDateObject(date)
+  }
+  return filters.dateToGovukDate(date, format)
+}
+
+/*
+  ====================================================================
+  govukDateTime
+  --------------------------------------------------------------------
+  Process a date and return it in GOV.UK format with a time
+  Accepts arrays (as provided by design system date inputs) as 
+  well as javascript dates
+  ====================================================================
+
+  Usage:
+
+    {{ [1,1,1970] | govukDateTime }}
+
+  = 1 January 1970 at 2:03pm
+
+*/
+
+filters.govukDateTime = (date, format) => {
+  if (Array.isArray(date)){
+    // Array doesn't include time information
     return filters.arrayToGovukDate(date, format)
   }
-  else return filters.dateToGovukDate(date, format)
+
+  else return `${filters.dateToGovukDate(date, format)} at ${filters.time(date)}`
 }
 
 /*

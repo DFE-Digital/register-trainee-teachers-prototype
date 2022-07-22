@@ -34,6 +34,41 @@
 {% endblock %}
 
 {% block content %}
+
+{# Data for select / autocomplete #}
+{% set providersForSelect = allProviders | lodash('map', 'name') | toSelectItems %}
+
+{% set providersForAutocomplete = [] %}
+
+{% for provider in allProviders %}
+  {% set synonyms = [] %}
+  {% set hintArray = [] %}
+
+  {% set hintArray = hintArray | push(provider | getProviderTypeString(true)) %}
+
+  {% if provider.postcode %}
+    {% set hintArray = hintArray | push("postcode: " + provider.postcode) %}
+    {% set synonyms = synonyms | push(provider.postcode) %}
+  {% endif %}
+  {% if provider.urn %}
+    {% set hintArray = hintArray | push("URN: " + provider.urn) %}
+    {% set synonyms = synonyms | push(provider.urn | string) %}
+  {% endif %}
+  {% if provider.ukprn %}
+    {% set hintArray = hintArray | push("UKPRN: " + provider.ukprn) %}
+    {% set synonyms = synonyms | push(provider.ukprn | string) %}
+  {% endif %}
+
+  {% set hint = hintArray | commaSeparate %}
+  {% set providersForAutocomplete = providersForAutocomplete | push({
+    name: provider.name,
+    synonyms: synonyms,
+    hint: hint,
+    value: provider.id
+  }) %}
+
+{% endfor %}
+
 {# super pulls in flash message banner #}
 {{super()}}
 
@@ -41,38 +76,58 @@
 
 {% set filterOptionsHtml %}
 
-  {% include "_includes/filter-panel/all-providers.njk" %}
+  {# {% include "_includes/filter-panel/all-providers.njk" %} #}
 
-  {% include "_includes/filter-panel/training-status.njk" %}
+  {# {% include "_includes/filter-panel/training-status.njk" %} #}
 
-  {# {% include "_includes/filter-panel/cohort-filter.njk" %} #}
+  {% include "_includes/filter-panel/support/organisation-type.njk" %}
 
-  {% include "_includes/filter-panel/years.njk" %}
-
-  {% include "_includes/filter-panel/completeStatus.njk" %}
-
-  {% include "_includes/filter-panel/phase.njk" %}
-
-  {% include "_includes/filter-panel/course-level.njk" %}
-
-  {% include "_includes/filter-panel/signed-in-providers.njk" %}
-
-  {% include "_includes/filter-panel/training-routes.njk" %}
+  {# {% include "_includes/filter-panel/training-routes.njk" %} #}
 
   {# {% include "_includes/filter-panel/statuses.njk" %} #}
 
-  {% include "_includes/filter-panel/subjects.njk" %}
-
-  {% include "_includes/filter-panel/studyMode.njk" %}
-
-  {% include "_includes/filter-panel/source.njk" %}
 
 
 {% endset %}
 
 {% set filterContentHtml %}
   {% if filteredProviders | length %}
+    <div>
+      {{ appAutocompleteFromSelect({
+        label: {
+          text: "Search for an organisation",
+          classes: "govuk-label--s"
+        },
+        id: 'organisations',
+        name: "",
+        items: providersForSelect,
+        hint: {
+          text: "Searcy by name, urn, ukprn or postcode"
+        },
+        classes: "govuk-!-width-two-thirds",
+        value: '',
+        autocompleteOptions: {
+          minLength: 2,
+          autoselect: false,
+          showAllValues: false,
+          showSuggestionsBanner: false,
+          values: providersForAutocomplete,
+          onConfirmExtra: true
+        }
+      }) }}
 
+      <script>
+        let onConfirmExtra = selected => {
+          if (selected.value){
+            window.location.href = `./organisations/${selected.value}`
+          }
+        }
+      </script>
+
+      <button class="govuk-button app-no-js-only" data-module="govuk-button">
+        Submit
+      </button>
+    </div>
     <div class="app-records-actions">
       <div class="app-records-actions__col">
 
@@ -95,11 +150,11 @@
 
       {% if filteredProviders | length %}
 
-      {{data.users | log}}
+      {# {{data.users | log}} #}
 
         {% for provider in filteredProviders %}
-          {{provider | log}}
-          {% include "_includes/organisation-card.njk" %}
+          {# {{provider | log}} #}
+          {% include "_includes/support/organisation-card.njk" %}
         {% endfor %}
 
       {% endif %}

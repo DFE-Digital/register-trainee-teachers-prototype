@@ -1,0 +1,59 @@
+{% extends "_templates/_page.html" %}
+
+{% set pageHeading %}
+  User – {{ user.fullName }}
+{% endset %}
+
+{# {% set navActive = "user" %} #}
+
+{% set backText = "Back" %}
+{# {% set backLink = '/home' %} #}
+
+{% block content %}
+
+{{user | log}}
+{% set showMetadata = true %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+      <h1 class="govuk-heading-xl">{{user.fullName}}</h1>
+
+      {% include "_includes/summary-cards/support/user.html" %}
+
+
+      <h2 class="govuk-heading-m">Organisations</h2>
+
+      {{ govukButton({
+        "text": "Add a user to an organisation"
+      }) }}
+
+      {% set userProviders = user.providers | sort(attribute = "name") %}
+      {% set hasMultipleProviders = userProviders | length > 1 %}
+
+      {% if hasMultipleProviders %}
+        <ol class="govuk-list">
+      {% endif %}
+
+        {% for provider in userProviders %}
+          {% if hasMultipleProviders %}
+            <li class="">
+          {% endif %}
+
+          {% include "_includes/support/organisation-card.njk" %}
+
+          {% if hasMultipleProviders %}
+            </li>
+          {% endif %}
+
+        {% endfor %}
+
+      {% if hasMultipleProviders %}
+        </ol>
+      {% endif %}
+
+      <p class="govuk-body govuk-!-margin-top-8"><a href="./archive-user/confirm" class="govuk-link app-destructive-link">Archive user</a></p>
+
+    </div>
+  </div>
+
+{% endblock %}
+

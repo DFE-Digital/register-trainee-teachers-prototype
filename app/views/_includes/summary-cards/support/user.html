@@ -1,0 +1,91 @@
+
+{{ govukSummaryList({
+  rows: [
+    {
+      key: {
+        text: "Name"
+      },
+      value: {
+        text: user.fullName
+      },
+      actions: {
+        items: [
+          {
+            href: "./" + uuid + "/edit",
+            text: "Change",
+            visuallyHiddenText: "name"
+          }
+        ]
+      }
+    },
+    {
+      key: {
+        text: "Email address"
+      },
+      value: {
+        text: user.email
+      },
+      actions: {
+        items: [
+          {
+            href: "./" + uuid + "/edit",
+            text: "Change",
+            visuallyHiddenText: "email"
+          }
+        ]
+      } if false
+    },
+    {
+      key: {
+        text: "DfE Sign-in UID"
+      },
+      value: {
+        text: faker.datatype.uuid()
+      },
+      actions: {
+        items: [
+          {
+            href: "./" + uuid + "/edit",
+            text: "Change",
+            visuallyHiddenText: "email"
+          }
+        ]
+      } if false
+    } if showMetadata,
+    {
+      key: {
+        text: "Created"
+      },
+      value: {
+        text: faker.date.past(3) | govukDateTime
+      },
+      actions: {
+        items: [
+          {
+            href: "./" + uuid + "/edit",
+            text: "Change",
+            visuallyHiddenText: "team inbox"
+          }
+        ]
+      } if false
+    } if showMetadata,
+    {
+      key: {
+        text: "Last updated"
+      },
+      value: {
+        text: faker.date.recent(100) | govukDateTime,
+        text: [1,1,1970] | govukDateTime
+      },
+      actions: {
+        items: [
+          {
+            href: "./" + uuid + "/edit",
+            text: "Change",
+            visuallyHiddenText: "team inbox"
+          }
+        ]
+      } if false
+    } if showMetadata
+  ]
+}) }}

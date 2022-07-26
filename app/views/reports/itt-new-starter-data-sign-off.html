@@ -1,6 +1,6 @@
 {% extends "_templates/_page.html" %}
 
-{% set pageHeading = 'Export data for ITT new starter sign off' %}
+{% set pageHeading = 'Export ITT new starter data for sign off' %}
 
 {# {% set formAction = "./reinstate/confirm" %} #}
 
@@ -19,25 +19,28 @@
       <h1 class="govuk-heading-l">{{pageHeading}}</h1>
 
       <p class="govuk-body">
-        Use this export to see new starter trainee data you have provided for the {{academicYear}} academic year.
+        This export will show the trainee data you've provided to the DfE for trainees starting their initial teacher training (ITT) in the {{academicYear}} academic year. We're calling these trainees ‘new starters’.
       </p>
 
-      <h2 class="govuk-heading-m">What you must do</h2>
+      <h2 class="govuk-heading-m">What you must do to sign off your new starter data</h2>
 
-      <p class="govuk-body">ITT Providers must sign-off that they have provided accurate and up to date data for new starters.</p>
+      <p class="govuk-body">Use this export to check you've provided accurate data for all your new starters. You should check for any errors or missing trainees.</p>
 
-      <p class="govuk-body">You can use this report to review the data you have provided to DfE to check for errors and omissions.</p>
+      <p class="govuk-body">Once you've checked your data, a responsible officer from your organisation should sign off your ITT new starter data <a href="#" class="govuk-link">using this form</a>.</p>
 
-      <p class="govuk-body">When your organisation is happy to sign-off, a responsible officer should use <a href="#" class="govuk-link">use this form to notify DfE</a>. Your organisation must sign-off your data no later than 31 October {{academicYearShort}}</p>
+      <p class="govuk-body">You must sign off your data on or before 31 October {{academicYearShort}}.</p>
 
-      <h2 class="govuk-heading-m">How this relates to the ITT census</h2>
+      <h2 class="govuk-heading-m">How new starter data relates to the ITT census</h2>
 
-      <p class="govuk-body">
-        DfE asks that you sign off all new starter data, not just those included in the ITT census.
-      </p>
+      <p class="govuk-body">At the start of every academic year, we (the DfE) ask you to sign off all your ITT new starter data, not just the trainee data that gets included in census. We then analyse and filter your data for the ITT census.</p>
 
-      <p class="govuk-body">
-        The ITT census is put together using the <a href="https://explore-education-statistics.service.gov.uk/methodology/initial-teacher-training-census-methodology" class="govuk-link">Initial Teacher Training Census methodology</a>.
+      <p class="govuk-body">Not all your trainees in this export will be included in the ITT census.</p>
+        
+      <p class="govuk-body">To understand what data will be used for the ITT census, you can read the <a href="https://explore-education-statistics.service.gov.uk/methodology/initial-teacher-training-census-methodology" class="govuk-link">Intial Teacher Training Census methodology</a>.</p>
+
+      <h2 class="govuk-heading-m">New starters without a start date</h2>
+
+      <p class="govuk-body">Any trainee who does not have a start date will be included in this export. If you know they are due to start on or before the second Wednesday in October (the census date), you should add their start date as soon as you have it.
       </p>
 
       {% set insetTextHtml %}
@@ -54,16 +57,16 @@
 
       <ul class="govuk-list govuk-list--bullet">
         <li>
-          with a start academic year in {{ academicYear }}
+          with their academic start year in {{ academicYear }}
         </li>
         <li>
-          with an ITT course start date on or before the census date
+          with an ITT course start date on or before the ITT census date
         </li>
         <li>
-          with a trainee start date on or before the census date
+          with a trainee start date on or before the ITT census date
         </li>
         <li>
-          where you have yet to provide a trainee start date
+          who do not have a start date yet you have yet
         </li>
         
       </ul>
@@ -71,7 +74,7 @@
       <input name="successFlash" type="hidden" value="Export successfully downloaded">
 
       {{ govukButton({
-        "text": "Export trainee records (CSV)"
+        "text": "Export trainee data (CSV)"
       }) }}
 
     </form>

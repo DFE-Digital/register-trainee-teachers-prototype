@@ -45,7 +45,7 @@
 
   {# {% include "_includes/filter-panel/training-status.njk" %} #}
 
-  {% include "_includes/filter-panel/support/organisation-type.njk" %}
+  {% include "_includes/filter-panel/support/school-type.njk" %}
 
   {# {% include "_includes/filter-panel/training-routes.njk" %} #}
 
@@ -59,13 +59,31 @@
   {% if filteredSchools | length %}
     <div>
       {% set label = "Search for a school by its unique reference number (URN), name or postcode" %}
-      {{ appSchoolAutocomplete({
-        name: "_autocomplete_result_uuid",
-        label: {
-          text: label
-        },
-        onConfirmExtra: true
-      }) }}
+
+      {# Todo - this could probably be the default that the autocomplete progressively enhances #}
+      <label class="govuk-label govuk-label--s" for="schoolSearch">
+        Search for a school
+      </label>
+      <div class="app-no-js-only">
+        {{ govukInput({
+          id: "schoolSearch",
+          name: "_schoolSearch",
+          label: {
+            text: label
+          },
+          value: query._schoolSearch,
+          classes: 'app-!-max-width-two-thirds'
+        }) }}
+      </div>
+      <div class="app-js-only">
+        {{ appSchoolAutocomplete({
+          name: "_autocomplete_result_uuid",
+          label: {
+            text: label
+          },
+          onConfirmExtra: true
+        }) }}
+      </div>
 
       <script>
         let onConfirmExtra = selected => {

@@ -2091,7 +2091,14 @@ exports.providerIsLeadSchool = function(provider, data=false){
   return exports.getProviderType.apply(this, [provider, data]) == 'leadSchool'
 }
 
+// Used to take a school from GIAS and see if it’s in our lead school list
+exports.schoolIsLeadSchool = function(school, data=false){
+  data = data || this?.ctx?.data || false
 
+  let leadSchools = data.providers.leadSchools.all
+
+  return leadSchools.some(leadSchool => leadSchool.urn == school.urn )
+}
 
 
 // -------------------------------------------------------------------

@@ -1,3 +1,9 @@
+{% set giasLinkHtml -%}
+  <a href="https://get-information-schools.service.gov.uk/Establishments/Establishment/Details/{{school.urn}}" class="govuk-link" rel="noreferrer noopener" target="_blank">View this school (opens in a new tab)</a>
+{% endset %}
+
+{{ school | log }}
+{{ data | log}}
 
 {{ govukSummaryList({
   rows: [
@@ -23,7 +29,7 @@
         text: "School type"
       },
       value: {
-        text: school.schoolName
+        text: school.type
       },
       actions: {
         items: [
@@ -31,6 +37,23 @@
             href: "./" + uuid + "/edit",
             text: "Change",
             visuallyHiddenText: "organisation type"
+          }
+        ]
+      }
+    },
+    {
+      key: {
+        text: "Is a lead school"
+      },
+      value: {
+        text: school | schoolIsLeadSchool | sentenceCase
+      },
+      actions: {
+        items: [
+          {
+            href: "./" + uuid + "/edit",
+            text: "Change",
+            visuallyHiddenText: "is lead school"
           }
         ]
       }
@@ -69,6 +92,23 @@
         ]
       }
     },
+    {
+      key: {
+        text: "Get information about schools (GIAS)"
+      },
+      value: {
+        html: giasLinkHtml
+      },
+      actions: {
+        items: [
+          {
+            href: "./" + uuid + "/edit",
+            text: "Change",
+            visuallyHiddenText: "ukprn"
+          }
+        ]
+      } if false
+    } if school.urn,
     {
       key: {
         text: "Team inbox"

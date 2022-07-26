@@ -11,7 +11,7 @@
 
 {% block content %}
 
-{# {% set isLeadSchool = school | schoolIsLeadSchool %} #}
+{% set isLeadSchool = school | schoolIsLeadSchool %}
 
 
 {% set showMetadata = true %}
@@ -19,8 +19,21 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds-from-desktop">
 
-      <span class="govuk-caption-xl">{# {{ school | getSchoolTypeString(true) }} #}</span>
-      <h1 class="govuk-heading-xl">{{school.schoolName}}</h1>
+{#       <span class="govuk-caption-xl">{{ school | getSchoolTypeString(true) }}</span> #}
+      <h1 class="govuk-heading-xl">
+
+        {{school.schoolName}}
+
+        {% if isLeadSchool %}
+          <span style="display: inline-block;">
+            {{govukTag({
+              text: 'Lead school',
+              classes: 'Lead school' | getStatusClass
+            })}}
+          </span>
+        {% endif %}
+
+      </h1>
 
 
       <h2 class="govuk-heading-m">General</h2>

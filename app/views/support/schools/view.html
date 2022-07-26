@@ -11,7 +11,9 @@
 
 {% block content %}
 
-{% set isLeadSchool = school | schoolIsLeadSchool %}
+{% set isRandomLeadSchool = (school.urn % 6) == 0 %} {# 1/6 chance of being lead school #}
+
+{% set isLeadSchool = school | schoolIsLeadSchool or isRandomLeadSchool %}
 
 
 {% set showMetadata = true %}
@@ -20,6 +22,7 @@
     <div class="govuk-grid-column-two-thirds-from-desktop">
 
 {#       <span class="govuk-caption-xl">{{ school | getSchoolTypeString(true) }}</span> #}
+      <span class="govuk-caption-l">{{"Lead school" if isLeadSchool else "School"}}</span>
       <h1 class="govuk-heading-xl">
 
         {{school.schoolName}}

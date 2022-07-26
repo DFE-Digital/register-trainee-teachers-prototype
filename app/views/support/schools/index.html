@@ -1,7 +1,7 @@
 {% extends "_templates/_page.html" %}
 
 {% set allSchools = schools %}
-{% set filteredSchools = allSchools | lodash('slice', 0, 100) %}
+{% set filteredSchools = allSchools | lodash('slice', 0, 100) | sort(attribute="schoolName") %}
 
 {% set pageHeadingShort = "Schools" %}
 

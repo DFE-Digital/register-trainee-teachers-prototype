@@ -1,4 +1,15 @@
 
+<h2 class="govuk-heading-m">General</h2>
+
+{% set accountDatesHtml %}
+  <p class="govuk-body">
+    Updated {{ faker.date.recent(100) | govukDate }}
+  </p>
+  <p class="govuk-body">
+    Created {{ faker.date.past(3) | govukDate }}
+  </p>
+{% endset %}
+
 {{ govukSummaryList({
   rows: [
     {
@@ -16,7 +27,7 @@
             visuallyHiddenText: "name"
           }
         ]
-      }
+      } if false
     },
     {
       key: {
@@ -54,28 +65,10 @@
     } if showMetadata,
     {
       key: {
-        text: "Created"
+        text: "Account"
       },
       value: {
-        text: faker.date.past(3) | govukDateTime
-      },
-      actions: {
-        items: [
-          {
-            href: "./" + uuid + "/edit",
-            text: "Change",
-            visuallyHiddenText: "team inbox"
-          }
-        ]
-      } if false
-    } if showMetadata,
-    {
-      key: {
-        text: "Last updated"
-      },
-      value: {
-        text: faker.date.recent(100) | govukDateTime,
-        text: [1,1,1970] | govukDateTime
+        html: accountDatesHtml
       },
       actions: {
         items: [

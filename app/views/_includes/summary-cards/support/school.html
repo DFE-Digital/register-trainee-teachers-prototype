@@ -5,6 +5,15 @@
 {{ school | log }}
 {{ data | log}}
 
+{% set accountDatesHtml %}
+  <p class="govuk-body">
+    Updated {{ faker.date.recent(100) | govukDate }}
+  </p>
+  <p class="govuk-body">
+    Created {{ faker.date.past(3) | govukDate }}
+  </p>
+{% endset %}
+
 {{ govukSummaryList({
   rows: [
     {
@@ -46,7 +55,7 @@
         text: "Is a lead school"
       },
       value: {
-        text: school | schoolIsLeadSchool | sentenceCase
+        text: "Yes" if isLeadSchool else "No"
       },
       actions: {
         items: [
@@ -128,27 +137,10 @@
     } if false,
     {
       key: {
-        text: "Created"
+        text: "Account"
       },
       value: {
-        text: faker.date.past(3) | govukDate
-      },
-      actions: {
-        items: [
-          {
-            href: "./" + uuid + "/edit",
-            text: "Change",
-            visuallyHiddenText: "team inbox"
-          }
-        ]
-      } if false
-    } if showMetadata,
-    {
-      key: {
-        text: "Last updated"
-      },
-      value: {
-        text: faker.date.recent(100) | govukDate
+        html: accountDatesHtml
       },
       actions: {
         items: [

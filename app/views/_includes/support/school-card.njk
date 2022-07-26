@@ -2,7 +2,9 @@
   {% set justNowClass = "app-just-now" %}
 {% endif %}
 
-{% set schoolTypeString = school | getProviderTypeString(true) %}
+{% set isRandomLeadSchool = (school.urn % 6) == 0 %} {# 1/6 chance of being lead school #}
+
+{% set isLeadSchool = school | schoolIsLeadSchool or isRandomLeadSchool %}
 
 <div class="app-application-card {{justNowClass}}">
 
@@ -14,13 +16,16 @@
       </h3>
 
       <span class="app-application-card_tag-container">
+
+        {% if isLeadSchool %}
+          <span style="display: inline-block;">
+            {{govukTag({
+              text: "Lead school",
+              classes: "Lead school" | getStatusClass
+            })}}
+          </span>
+        {% endif %}
         
-        <span style="display: inline-block;">
-          {# {{govukTag({
-            text: schoolTypeString,
-            classes: schoolTypeString | getStatusClass
-          })}} #}
-        </span>
         {# <span style="display: inline-block;">
           {{govukTag({
             text: school | getStatusText,

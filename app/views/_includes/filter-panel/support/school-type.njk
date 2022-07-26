@@ -3,28 +3,20 @@
 {{ govukCheckboxes({
   classes: "govuk-checkboxes--small js-auto-submit",
   attributes: {
-    "id": 'filterSupportOrganisationTypeCheckboxes'
+    "id": 'filterSupportSchoolTypeCheckboxes'
   }
   ,
   fieldset: {
     legend: {
-      text: "Organisation type",
+      text: "School type",
       isPageHeading: false,
       classes: "govuk-fieldset__legend--s"
     }
   },
   items: [
     {
-      text: "HEI",
-      checked: checked(query.filterSupportOrganisationType, "HEI")
-    },
-    {
-      text: "SCITT",
-      checked: checked(query.filterSupportOrganisationType, "SCITT")
-    },
-    {
-      text: "Lead school",
-      checked: checked(query.filterSupportOrganisationType, "Lead school")
-    } if false
+      text: "Lead schools only",
+      checked: checked(query.filterSupportSchoolType, "Lead school")
+    }
   ]
-} | decorateAttributes(data, "data.filterSupportOrganisationType"))}}
+} | decorateAttributes(data, "data.filterSupportSchoolType"))}}

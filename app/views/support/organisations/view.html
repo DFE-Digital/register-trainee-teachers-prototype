@@ -17,6 +17,8 @@
 
 {% set showMetadata = true %}
 
+  {% include "_includes/support/impersonate-provider-cta.njk" %}
+
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds-from-desktop">
 
@@ -34,6 +36,7 @@
 
       {{ govukButton({
         "text": "Add a user to this organisaion",
+        href: currentPageUrl + '/users/add',
         classes: "govuk-button--secondary"
       }) }}
 

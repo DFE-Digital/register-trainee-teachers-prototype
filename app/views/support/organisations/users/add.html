@@ -1,0 +1,31 @@
+{% extends "_templates/_form.html" %}
+
+{% set pageHeading %}
+  Invite a user to {{ provider.name }}
+{% endset %}
+
+{% set formAction = "./confirm" %}
+
+{% set backText = "Back" %}
+{# {% set backLink = '/home' %} #}
+{# 
+{% set returnLink = {
+  text: 'Cancel',
+  href: './../' + uuid
+} %} #}
+
+{% block formContent %}
+
+{% set isAccreditingProvider = provider | providerIsAccrediting %}
+
+<h1 class="govuk-heading-l">{{pageHeading}}</h1>
+
+{% include "_includes/forms/support/new-user.html" %}
+
+{{ govukButton({
+  text: "Continue"
+}) }}
+
+
+{% endblock %}
+

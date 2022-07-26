@@ -2,7 +2,10 @@
 
 {% set impersonateUserCtaHtml %}
 
-  {% set returnUrl = currentPageUrl + "?settings[userActiveProvider]=" + data.settings.defaultAdminName + "&isImpersonating=false&clearQuery=true" %}
+  {# {% set returnUrl = currentPageUrl + "?settings[userActiveProvider]=" + data.settings.defaultAdminName + "&isImpersonating=false&clearQuery=true" %} #}
+
+  {% set returnUrl = "support?settings[userActiveProvider]=" + data.settings.defaultAdminName + "&isImpersonating=false&clearQuery=true" %}
+
 
   <p class="govuk-body govuk-!-margin-bottom-0">
     Viewing as {{data.settings.userActiveProvider}}. Any changes you make will be linked to you, not {{data.settings.userActiveProvider}}. <a href="{{returnUrl}}" class="govuk-link govuk-link--no-visited-state">Return to admin view</a>.

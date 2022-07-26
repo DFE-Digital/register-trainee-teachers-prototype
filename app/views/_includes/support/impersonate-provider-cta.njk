@@ -1,0 +1,32 @@
+{% set provider = provider.name or school.schoolName %}
+
+{% set impersonateUserCtaHtml %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+
+      {% set hasLeadSchool = record | hasLeadSchool %}
+      {% set leadSchoolName = record | getLeadSchoolName %}
+
+      <p class="govuk-body">View Register as {{provider}} sees it.</p>
+
+      {% set buttonUrl = "/home?settings[userActiveProvider]=" + provider + "&isImpersonating=true&clearQuery=true" %}
+
+      {{ govukButton({
+        classes: "govuk-!-margin-bottom-1",
+        "text": "View as " + provider,
+        href: buttonUrl
+      }) }}
+
+    </div>
+  </div>
+{% endset %}
+
+
+{{ appAdminFeature({
+  html: impersonateUserCtaHtml
+}) }}
+
+
+
+

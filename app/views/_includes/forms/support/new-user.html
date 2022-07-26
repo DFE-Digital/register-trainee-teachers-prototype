@@ -1,0 +1,35 @@
+{% set userTemp = user | mergeObjects(data.userTemp) %}
+
+{{ govukInput({
+  label: {
+    text: "Work email address",
+    classes: "govuk-label--s"
+  },
+  hint: {
+    html: "User will be invited to sign up to DfE Sign-in if they do not have an account"
+  },
+  classes: "govuk-!-width-two-thirds"
+}| decorateAttributes(userTemp, "userTemp.email"))}}
+
+{{ govukRadios({
+  fieldset: {
+    legend: {
+      text: "User type",
+      classes: "govuk-fieldset__legend--s"
+    }
+  },
+  hint: {
+    text: ""
+  },
+  items: [
+    {
+      text: "Standard"
+    },
+    {
+      text: "Team admin",
+      hint: {
+        text: "Can invite more people to " + provider.name
+      }
+    }
+  ]
+}| decorateAttributes(userTemp, "userTemp.access"))}}

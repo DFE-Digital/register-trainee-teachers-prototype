@@ -94,6 +94,10 @@
 
       {{providerCourses[0] | log}}
 
+      {% set publishLinkHtml -%}
+        <a href="#" class="govuk-link" rel="noreferrer noopener" target="_blank">View this organisation in Publish (opens in a new tab)</a>
+      {% endset %}
+
       {% set publishCoursesText %}
         {% if providerCourses %}
           {{providerCourses | length }} courses imported
@@ -104,6 +108,23 @@
 
       {{ govukSummaryList({
         rows: [
+          {
+            key: {
+              text: "Publish teacher training courses"
+            },
+            value: {
+              html: publishLinkHtml
+            },
+            actions: {
+              items: [
+                {
+                  href: providerUrl + "/courses",
+                  text: "View courses",
+                  _visuallyHiddenText: "courses"
+                }
+              ]
+            } if false
+          },
           {
             key: {
               text: "Publish courses"
@@ -117,6 +138,53 @@
                   href: providerUrl + "/courses",
                   text: "View courses",
                   _visuallyHiddenText: "courses"
+                }
+              ]
+            }
+          }
+        ]
+      }) }}
+
+      <h2 class="govuk-heading-m">Trainees</h2>
+
+      {% set providerTrainees = data.records | filterByAccreditingProvider(provider.name) %}
+
+      {% set draftTrainees = providerTrainees | filterByStatus('Draft') %}
+
+      {% set registeredTrainees = providerTrainees | filterByStatus('Draft', true) %}
+
+      {{ govukSummaryList({
+        rows: [
+          {
+            key: {
+              text: "Draft trainees"
+            },
+            value: {
+              html: (draftTrainees | length) + " draft trainees"
+            },
+            actions: {
+              items: [
+                {
+                  href: '#',
+                  text: "View",
+                  visuallyHiddenText: "draft trainees"
+                }
+              ]
+            }
+          },
+          {
+            key: {
+              text: "Registered trainees"
+            },
+            value: {
+              html: (registeredTrainees | length) + " registered trainees"
+            },
+            actions: {
+              items: [
+                {
+                  href: '#',
+                  text: "View",
+                  visuallyHiddenText: "registered trainees"
                 }
               ]
             }

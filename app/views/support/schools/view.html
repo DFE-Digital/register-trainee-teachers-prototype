@@ -48,37 +48,52 @@
 
       {% include "_includes/summary-cards/support/school.html" %}
 
+      {% if isLeadSchool %}
+      <h2 class="govuk-heading-m">Courses</h2>
 
-      {# <h2 class="govuk-heading-m">Team members</h2>
+      {% set publishLinkHtml -%}
+        <a href="#" class="govuk-link" rel="noreferrer noopener" target="_blank">View this organisation in Publish (opens in a new tab)</a>
+      {% endset %}
 
-      {{ govukButton({
-        "text": "Add a user to this organisaion",
-        classes: "govuk-button--secondary"
+      {{ govukSummaryList({
+        rows: [
+          {
+            key: {
+              text: "Publish teacher training courses"
+            },
+            value: {
+              html: publishLinkHtml
+            },
+            actions: {
+              items: [
+                {
+                  href: providerUrl + "/courses",
+                  text: "View courses",
+                  _visuallyHiddenText: "courses"
+                }
+              ]
+            } if false
+          },
+          {
+            key: {
+              text: "Publish courses"
+            },
+            value: {
+              text: "7 courses imported"
+            },
+            actions: {
+              items: [
+                {
+                  href: providerUrl + "/courses",
+                  text: "View courses",
+                  _visuallyHiddenText: "courses"
+                }
+              ]
+            }
+          }
+        ]
       }) }}
-
-      {% set schoolUsers = data.users.bySchool[school.schoolName] | sort(attribute = "schoolName") %}
-      {% set hasMultipleUsers = schoolUsers | length > 1 %}
-
-      {% if hasMultipleUsers %}
-        <ol class="govuk-list">
       {% endif %}
-
-        {% for user in schoolUsers %}
-          {% if hasMultipleUsers %}
-            <li class="">
-          {% endif %}
-
-          {% include "_includes/support/user-card.njk" %}
-
-          {% if hasMultipleUsers %}
-            </li>
-          {% endif %}
-
-        {% endfor %}
-
-      {% if hasMultipleUsers %}
-        </ol>
-      {% endif %} #}
 
       <p class="govuk-body govuk-!-margin-top-8"><a href="./archive-organisation/confirm" class="govuk-link app-destructive-link">Archive this school</a></p>
 

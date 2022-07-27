@@ -13,6 +13,15 @@ const getSchools = () => {
   return require('./../data/gis-schools.js')
 }
 
+let breadcrumbsInitial = {
+  items: [
+    {
+      text: "Support home",
+      href: "/support"
+    }
+  ]
+}
+
 module.exports = router => {
 
   // Render a page for each organisation UUID
@@ -21,11 +30,19 @@ module.exports = router => {
     let uuid = req.params.uuid
     let user = data.users.all.find(user => user.id == uuid)
 
+    let breadcrumbs = {
+      items: breadcrumbsInitial.items.concat([{
+        text: "Users",
+        href: "/support/users"
+      }])
+    }
+
     if (!user) res.redirect('/support/users')
     else {
       res.render('support/users/view', {
         user,
         uuid,
+        breadcrumbs,
         userUrl: `/support/users/${uuid}`,
         navActive: 'users'
       })
@@ -42,6 +59,18 @@ module.exports = router => {
     let provider = data.providers.all.find(provider => provider.id == providerUuid)
 
     let user = data.users.all.find(user => user.id == uuid)
+    let userUrl = `/support/users/${uuid}`
+
+    let breadcrumbs = {
+      items: breadcrumbsInitial.items.concat([{
+        text: "Users",
+        href: "/support/users"
+      },
+      {
+        text: user.fullName,
+        href: userUrl
+      }])
+    }
 
     // Use our own render as some templates live at /index.html
 
@@ -53,8 +82,9 @@ module.exports = router => {
         targetUrl, res, next, {
           uuid,
           user,
-          userUrl: `/support/users/${uuid}`,
+          userUrl,
           provider,
+          breadcrumbs,
           navActive: 'users',
           returnLink: {
             text: 'Cancel',
@@ -73,6 +103,19 @@ module.exports = router => {
 
     // Use our own render as some templates live at /index.html
 
+    let userUrl = `/support/users/${uuid}`
+
+    let breadcrumbs = {
+      items: breadcrumbsInitial.items.concat([{
+        text: "Users",
+        href: "/support/users"
+      },
+      {
+        text: user.fullName,
+        href: userUrl
+      }])
+    }
+
     let targetUrl = path.join('support/users', req.params.page, req.params[0])
 
     if (!user) res.redirect('/support/users')
@@ -81,7 +124,8 @@ module.exports = router => {
         targetUrl, res, next, {
           uuid,
           user,
-          userUrl: `/support/users/${uuid}`,
+          userUrl,
+          breadcrumbs,
           navActive: 'users',
           returnLink: {
             text: 'Cancel',
@@ -98,11 +142,19 @@ module.exports = router => {
     let uuid = req.params.uuid
     let provider = data.providers.all.find(provider => provider.id == uuid)
 
+    let breadcrumbs = {
+      items: breadcrumbsInitial.items.concat([{
+        text: "Organisations",
+        href: "/support/organisations"
+      }])
+    }
+
     if (!provider) res.redirect('/support/organisations')
     else {
       res.render('support/organisations/view', {
         provider,
         uuid,
+        breadcrumbs,
         navActive: 'organisations',
         providerUrl: `/support/organisations/${uuid}`,
         navActive: 'organisations'
@@ -120,8 +172,18 @@ module.exports = router => {
     let provider = data.providers.all.find(provider => provider.id == uuid)
 
     let user = data.users.all.find(user => user.id == userUuid)
+    let providerUrl = `/support/organisations/${uuid}`
 
-    // Use our own render as some templates live at /index.html
+    let breadcrumbs = {
+      items: breadcrumbsInitial.items.concat([{
+        text: "Organisations",
+        href: "/support/organisations"
+      },
+      {
+        text: provider.name,
+        href: providerUrl
+      }])
+    }
 
     let targetUrl = path.join('support/organisations/users', page, req.params[0])
 
@@ -131,8 +193,9 @@ module.exports = router => {
         targetUrl, res, next, {
           uuid,
           user,
-          userUrl: `/support/organisations/${uuid}`,
           provider,
+          providerUrl,
+          breadcrumbs,
           navActive: 'organisations',
           returnLink: {
             text: 'Cancel',
@@ -150,6 +213,18 @@ module.exports = router => {
     let provider = data.providers.all.find(provider => provider.id == uuid)
     
     // Use our own render as some templates live at /index.html
+    let providerUrl = `/support/organisations/${uuid}`
+
+    let breadcrumbs = {
+      items: breadcrumbsInitial.items.concat([{
+        text: "Organisations",
+        href: "/support/organisations"
+      },
+      {
+        text: provider.name,
+        href: providerUrl
+      }])
+    }
 
     let targetUrl = path.join('support/organisations', req.params.page, req.params[0])
 
@@ -160,7 +235,8 @@ module.exports = router => {
           uuid,
           provider,
           navActive: 'organisations',
-          providerUrl: `/support/organisations/${uuid}`,
+          providerUrl,
+          breadcrumbs,
           returnLink: {
             text: 'Cancel',
             href: `./../${uuid}`
@@ -193,15 +269,23 @@ module.exports = router => {
 
     const schools = getSchools()
 
-    console.log(schools[1])
-
     let school = schools.find(school => school.uuid == uuid)
+
+    let schoolUrl = `/support/schools/${uuid}`
+
+    let breadcrumbs = {
+      items: breadcrumbsInitial.items.concat([{
+        text: "Schools",
+        href: "/support/schools"
+      }])
+    }
 
     if (!school) res.redirect('/support/schools')
     else {
       res.render('support/schools/view', {
         school,
-        schoolUrl: `/support/schools/${uuid}`,
+        schoolUrl,
+        breadcrumbs,
         uuid,
         navActive: 'schools'
       })
@@ -217,7 +301,18 @@ module.exports = router => {
     const schools = getSchools()
     let school = schools.find(school => school.uuid == uuid)
 
-    // Use our own render as some templates live at /index.html
+    let schoolUrl = `/support/schools/${uuid}`
+
+    let breadcrumbs = {
+      items: breadcrumbsInitial.items.concat([{
+        text: "Schools",
+        href: "/support/schools"
+      },
+      {
+        text: school.name,
+        href: schoolUrl
+      }])
+    }
 
     let targetUrl = path.join('support/schools', req.params.page, req.params[0])
 
@@ -227,7 +322,7 @@ module.exports = router => {
         targetUrl, res, next, {
           uuid,
           school,
-          schoolUrl: `/support/schools/${uuid}`,
+          schoolUrl,
           navActive: 'schools',
           returnLink: {
             text: 'Cancel',

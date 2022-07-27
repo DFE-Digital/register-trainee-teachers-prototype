@@ -21,7 +21,11 @@
 {% endblock %}
 
 {% block pageNavigation %}
-  {% if backLink %}
+  {% if breadcrumbs %}
+    {{ govukBreadcrumbs({
+      items: breadcrumbs.items
+    }) }}
+  {% elseif backLink %}
     {{ govukBackLink({
       text: backText,
       href: backLink

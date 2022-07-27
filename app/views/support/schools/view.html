@@ -10,6 +10,7 @@
 {# {% set backLink = '/home' %} #}
 
 {% block content %}
+{{super()}}
 
 {% set isRandomLeadSchool = (school.urn % 6) == 0 %} {# 1/6 chance of being lead school #}
 

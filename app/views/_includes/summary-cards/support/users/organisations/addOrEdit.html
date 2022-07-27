@@ -1,0 +1,65 @@
+{% set userOrganisationTemp = userOrganisationTemp | mergeObjects(data.userOrganisationTemp) %}
+{{userOrganisationTemp | log}}
+
+{% if provider %}
+  {% set isNewProvider = false %}
+{% else %}
+  {% set provider = data.providers.all | lookUpProviderById(userOrganisationTemp.providerUuid) %}
+{% endif %}
+
+
+{{ govukSummaryList({
+  rows: [
+    {
+      key: {
+        text: "User"
+      },
+      value: {
+        text: user.fullName
+      },
+      actions: {
+        items: [
+          {
+            href: "./add" if isNewProvider else "./edit",
+            text: "Change",
+            visuallyHiddenText: "name"
+          }
+        ]
+      } if false
+    },
+    {
+      key: {
+        text: "Organisation"
+      },
+      value: {
+        text: provider.name
+      },
+      actions: {
+        items: [
+          {
+            href: "./add" if isNewProvider else "./edit",
+            text: "Change",
+            visuallyHiddenText: "email"
+          }
+        ]
+      } if isNewProvider
+    },
+    {
+      key: {
+        text: "Role at organisation"
+      },
+      value: {
+        text: userOrganisationTemp.access
+      },
+      actions: {
+        items: [
+          {
+            href: "./add" if isNewProvider else "./edit",
+            text: "Change",
+            visuallyHiddenText: "email"
+          }
+        ]
+      }
+    }
+  ]
+}) }}

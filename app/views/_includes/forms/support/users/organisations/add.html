@@ -1,0 +1,82 @@
+{% set userOrganisationTemp = userOrganisationTemp | mergeObjects(data.userOrganisationTemp) %}
+
+{# Data for select / autocomplete #}
+{% set allProviders = data.providers.accreditingProviders.all %}
+
+{% set providersForSelect = allProviders | lodash('map', 'name') | toSelectItems %}
+
+{% set providersForAutocomplete = [] %}
+
+{% for provider in allProviders %}
+  {% set synonyms = [] %}
+  {% set hintArray = [] %}
+
+  {% set hintArray = hintArray | push(provider | getProviderTypeString(true)) %}
+
+  {% if provider.postcode %}
+    {% set hintArray = hintArray | push("postcode: " + provider.postcode) %}
+    {% set synonyms = synonyms | push(provider.postcode) %}
+  {% endif %}
+  {% if provider.urn %}
+    {% set hintArray = hintArray | push("URN: " + provider.urn) %}
+    {% set synonyms = synonyms | push(provider.urn | string) %}
+  {% endif %}
+  {% if provider.ukprn %}
+    {% set hintArray = hintArray | push("UKPRN: " + provider.ukprn) %}
+    {% set synonyms = synonyms | push(provider.ukprn | string) %}
+  {% endif %}
+
+  {% set hint = hintArray | commaSeparate %}
+  {% set providersForAutocomplete = providersForAutocomplete | push({
+    name: provider.name,
+    synonyms: synonyms,
+    hint: hint,
+    value: provider.id
+  }) %}
+
+{% endfor %}
+
+{{ appAutocompleteFromSelect({
+  label: {
+    text: "Search for an organisation",
+    classes: "govuk-label--s"
+  },
+  id: 'organisations',
+  name: "userOrganisationTemp[providerUuid]",
+  items: providersForSelect,
+  hint: {
+    text: "Searcy by name, urn, ukprn or postcode"
+  },
+  classes: "govuk-!-width-two-thirds",
+  value: '',
+  autocompleteOptions: {
+    minLength: 2,
+    autoselect: false,
+    showAllValues: false,
+    showSuggestionsBanner: false,
+    values: providersForAutocomplete
+  }
+}) }}
+
+{{ govukRadios({
+  fieldset: {
+    legend: {
+      text: "User’s role at new organisation",
+      classes: "govuk-fieldset__legend--s"
+    }
+  },
+  hint: {
+    text: ""
+  },
+  items: [
+    {
+      text: "Standard"
+    },
+    {
+      text: "Team admin",
+      hint: {
+        text: "Will be able to manage the organisation"
+      }
+    }
+  ]
+}| decorateAttributes(userOrganisationTemp, "userOrganisationTemp.access"))}}

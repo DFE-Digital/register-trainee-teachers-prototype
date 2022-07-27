@@ -2081,6 +2081,10 @@ exports.getProviderTypeString = (input, includeAccreditingProviderDetail=false) 
 
 }
 
+exports.lookUpProviderById= (providers, uuid) => {
+  return providers.find(provider => provider.id == uuid)
+}
+
 exports.providerIsAccrediting = function(provider, data=false){
   data = data || this?.ctx?.data || false
   return exports.getProviderType.apply(this, [provider, data]) == 'accreditingProvider'

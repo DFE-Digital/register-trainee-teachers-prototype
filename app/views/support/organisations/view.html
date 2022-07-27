@@ -10,15 +10,72 @@
 {# {% set backLink = '/home' %} #}
 
 {% block content %}
+{{super()}}
 
 {% set isAccreditingProvider = provider | providerIsAccrediting %}
 {% set isLeadSchool = provider | providerIsLeadSchool %}
+
+{% macro userTable(params) %}
+
+  {% set tableHead = [
+    {
+      text: "Name"
+    },
+    {
+      text: "Email"
+    },
+    {
+      text: "Access"
+    },
+    {
+      text: "Change"
+    }
+  ] %}
+
+  {% set tableRows = [] %}
+
+  {% for user in params.users %}
+
+    {% set userLinkHtml %}
+      <a href="/support/users/{{ user.id }}" class="govuk-link">{{user.fullName}}</a>
+    {% endset %}
+
+    {% set changeLinkHtml %}
+      <a href="{{providerUrl}}/users/{{user.id}}/edit" class="govuk-link">Change<span class="govuk-visually-hidden"> {{user.fullName}}’s access</span></a>
+    {% endset %}
+
+    {% set tableRows = tableRows | push([
+      {
+        html: userLinkHtml
+      },
+      {
+        text: user.email
+      }, {
+        text: "Standard"
+      },
+      {
+        html: changeLinkHtml
+      }
+    ])
+    %}
+
+  {% endfor %}
+
+  {{ govukTable({
+    _caption: params.caption,
+    captionClasses: "govuk-table__caption--m",
+    firstCellIsHeader: false,
+    head: tableHead,
+    rows: tableRows
+  }) }}
+
+{% endmacro %}
 
 
 {% set showMetadata = true %}
 
   {% include "_includes/support/impersonate-provider-cta.njk" %}
-
+{{data | log}}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds-from-desktop">
 
@@ -31,38 +88,53 @@
 
       {% include "_includes/summary-cards/support/provider.html" %}
 
+      <h2 class="govuk-heading-m">Courses</h2>
 
-      <h2 class="govuk-heading-m">Users</h2>
+      {% set providerCourses = data.courses[provider.name].courses %}
+
+      {{providerCourses[0] | log}}
+
+      {% set publishCoursesText %}
+        {% if providerCourses %}
+          {{providerCourses | length }} courses imported
+        {% else %}
+          No publish courses imported
+        {% endif %}
+      {% endset %}
+
+      {{ govukSummaryList({
+        rows: [
+          {
+            key: {
+              text: "Publish courses"
+            },
+            value: {
+              text: publishCoursesText
+            },
+            actions: {
+              items: [
+                {
+                  href: providerUrl + "/courses",
+                  text: "View courses",
+                  _visuallyHiddenText: "courses"
+                }
+              ]
+            }
+          }
+        ]
+      }) }}
+
+      {% set providerUsers = data.users.byProvider[provider.name] | sort(attribute = "fullName") %}
+      <h2 class="govuk-heading-m">Users ({{providerUsers | length}})</h2>
+      
+
+      {{userTable({users: providerUsers})}}
 
       {{ govukButton({
         "text": "Add a user to this organisaion",
         href: currentPageUrl + '/users/add',
         classes: "govuk-button--secondary"
       }) }}
-
-      {% set providerUsers = data.users.byProvider[provider.name] | sort(attribute = "fullName") %}
-      {% set hasMultipleUsers = providerUsers | length > 1 %}
-
-      {% if hasMultipleUsers %}
-        <ol class="govuk-list">
-      {% endif %}
-
-        {% for user in providerUsers %}
-          {% if hasMultipleUsers %}
-            <li class="">
-          {% endif %}
-
-          {% include "_includes/support/user-card.njk" %}
-
-          {% if hasMultipleUsers %}
-            </li>
-          {% endif %}
-
-        {% endfor %}
-
-      {% if hasMultipleUsers %}
-        </ol>
-      {% endif %}
 
       <p class="govuk-body govuk-!-margin-top-8"><a href="./archive-organisation/confirm" class="govuk-link app-destructive-link">Archive this organisation</a></p>
 

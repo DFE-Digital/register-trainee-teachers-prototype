@@ -1,0 +1,35 @@
+{% extends "_templates/_form.html" %}
+
+{% set pageHeading %}
+  Confirm changes to {{ user.fullName }}
+{% endset %}
+
+{% set backText = "Back" %}
+{# {% set backLink = '/home' %} #}
+
+{% set formAction = userUrl %}
+
+{% set returnLink = {
+  text: 'Cancel',
+  href: userUrl
+} %}
+
+{% block formContent %}
+
+{{data.users | log}}
+{# Merge with temp store #}
+{# {% set providerTemp = provider | mergeObjects(data.providerTemp) %} #}
+<span class="govuk-caption-l">User</span>
+<h1 class="govuk-heading-l">{{pageHeading}}</h1>
+
+{% include "_includes/summary-cards/support/users/organisations/addOrEdit.html" %}
+
+<input name="successFlash" type="hidden" value="User’s organisations updated">
+
+{{ govukButton({
+  text: "Confirm"
+}) }}
+
+
+{% endblock %}
+

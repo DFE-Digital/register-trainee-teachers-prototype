@@ -1,0 +1,65 @@
+{% extends "_templates/_page.html" %}
+
+{% set allUsers = data.users.all %}
+{% set filteredUsers = allUsers %}
+
+{% set pageHeadingShort = "Data" %}
+
+{% set pageHeading %}
+  {{ pageHeadingShort }} ({{filteredUsers | length}} {{ "user" | pluralise(filteredUsers | length) }})
+{% endset %}
+
+
+
+{% set backText = "Support home" %}
+{% set backLink = '/support' %}
+{% set navActive = "data" %}
+{% set activeTab = 'degrees' %}
+
+{% block content %}
+{# super pulls in flash message banner #}
+{{super()}}
+
+<div class="govuk-grid-row">
+
+  <div class="govuk-grid-column-full">
+
+    <span class="govuk-caption-l">Support for Register</span>
+    {# This heading set separately than {{pageHeading}} as it uses html #}
+    <h1 class="govuk-heading-xl">
+      {{ pageHeadingShort }} 
+    </h1>
+
+    {% set dataBaseUrl = '/support/data' %}
+
+    {{ appSubNavigation({
+      label: 'Sub navigation',
+      classes: 'govuk-!-margin-bottom-4',
+      items: [{
+        text: 'Degrees',
+        href: dataBaseUrl,
+        active: (activeTab == "degrees")
+      },
+      {
+        text: 'Validation errors',
+        href: dataBaseUrl + '/validation-errors',
+        active: (activeTab == "personal-details")
+      }
+      ]
+    }) }}
+
+  </div>
+
+
+</div>
+
+<div class="govuk-grid-row">
+
+  <div class="govuk-grid-column-two-thirds">
+   <p class="govuk-body">Content here</p>
+  </div>
+
+</div>
+
+{% endblock %}
+

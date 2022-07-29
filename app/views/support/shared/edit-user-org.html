@@ -1,0 +1,29 @@
+{% extends "_templates/_form.html" %}
+
+{% set pageHeading %}
+  Edit {{user.fullName}}’s access to {{provider.name}}
+{% endset %}
+
+{% set formAction = "./edit-answer" %}
+
+{% set backText = "Back" %}
+{# {% set backLink = '/home' %} #}
+
+{% set returnLink = {
+  text: 'Cancel',
+  href: userUrl
+} %}
+
+{% block formContent %}
+
+<span class="govuk-caption-l">{{user.fullName}}</span>
+<h1 class="govuk-heading-l">{{pageHeading}}</h1>
+
+{% include "_includes/forms/support/users/organisations/edit.html" %}
+
+{{ govukButton({
+  text: "Continue"
+}) }}
+
+{% endblock %}
+

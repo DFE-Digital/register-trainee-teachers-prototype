@@ -1,0 +1,54 @@
+{% set checkedStatus -%}
+  {%- if not query -%}
+    checked
+  {%- else -%}
+    {{- checked(query.filterTrainingStatus, "In training") -}}
+  {%- endif -%}
+{%- endset %}
+
+{% set registeredTrainees = data.records | filterRecords(data) | filterByStatus("Draft", true) %}
+
+{% set coursenNotYetStarted = registeredTrainees | filterByFunction('ittInTheFuture') %}
+
+{{coursenNotYetStarted | log}}
+
+{{ govukCheckboxes({
+  classes: "govuk-checkboxes--small js-auto-submit",
+  attributes: {
+    "id": 'filterTrainingStatusCheckboxes'
+  }
+  ,
+  fieldset: {
+    legend: {
+      text: "Training status",
+      isPageHeading: false,
+      classes: "govuk-fieldset__legend--s"
+    }
+  },
+  items: [
+    {
+      text: "Draft",
+      checked: checked(query.filterTrainingStatus, "Draft")
+    } if coursenNotYetStarted | length,
+    {
+      text: "Course not started yet",
+      checked: checked(query.filterTrainingStatus, "Course not started yet")
+    } if coursenNotYetStarted | length,
+    {
+      text: "In training",
+      checked: checked(query.filterTrainingStatus, "Draft")
+    },
+    {
+      text: "Deferred",
+      checked: checked(query.filterTrainingStatus, "Deferred")
+    },
+    {
+      text: "Awarded",
+      checked: checked(query.filterTrainingStatus, "Awarded")
+    },
+    {
+      text: "Withdrawn",
+      checked: checked(query.filterTrainingStatus, "Withdrawn")
+    }
+  ]
+} | decorateAttributes(data, "data.filterTrainingStatus"))}}

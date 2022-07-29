@@ -1,0 +1,33 @@
+{% extends "_templates/_form.html" %}
+
+{% set pageHeading %}
+  Archive {{user.fullName}}’s account?
+{% endset %}
+
+{# {% set formAction = "./archive" %} #}
+
+{% set backText = "Back" %}
+{# {% set backLink = '/home' %} #}
+
+
+
+{% block formContent %}
+
+<span class="govuk-caption-l">{{user.fullName}}</span>
+<h1 class="govuk-heading-l">{{pageHeading}}</h1>
+
+{# {% include "_includes/forms/support/users/organisations/remove.html" %} #}
+
+{% set buttonText %}
+  Yes I’m sure – remove {{ user.fullName }}’s account
+{% endset %}
+
+<input name="successFlash" type="hidden" value="User archived">
+
+{{ govukButton({
+  text: buttonText,
+  classes: "govuk-button--warning"
+}) }}
+
+{% endblock %}
+

@@ -508,4 +508,56 @@ module.exports = router => {
     })
   })
 
+    router.get(['/support/trainees'], function (req, res) {
+    const data = req.session.data
+
+    // We’re not in a record, so make sure to flush record data
+    delete req.session?.data?.record
+    delete res.locals.data?.record
+
+    // Grab filters and clean them up
+    let filters = getFilters(req)
+
+    // If there’s no query string at all, we want to apply some defaults
+    let hasQueryString = Boolean(Object.keys(req.query).length)
+
+    // by default set search results to show "Current" trainees
+    // if (!hasQueryString) filters.cohortFilter = ["Current"]
+    if (!hasQueryString) filters.trainingStatus = ["In training"]
+
+    let searchQuery = getSearchQuery(req)
+
+    let hasFilters = getHasFilters(filters, searchQuery)
+
+    // Show selected filters as labels that can be individually removed
+    let selectedFilters = getSelectedFilters(req)
+
+    // Filter records using the filters provided
+    let filteredRecords = utils.filterRecords(data.records, data, filters)
+    // console.log(req.query)
+    // if (!hasFilters) filteredRecords = filteredRecords.filter(record => record.academicYear == "2021 to 2022")
+
+    // Sort records by sortOrder, defaulting to updatedDate
+    filteredRecords = utils.sortRecordsBy(filteredRecords, (req?.query?.sortOrder || 'updatedDate'))
+
+    // Search traineeId and full name
+    filteredRecords = utils.filterRecordsBySearchTerm(filteredRecords, searchQuery)
+
+
+    // All records except drafts
+    // let draftRecords = utils.filterRecordsBy(filteredRecords, 'status', "Draft")
+    // let registeredRecords = objectFilters.removeWhere(filteredRecords, 'status', "Draft")
+    // let draftRecordsCount = hasFilters ? draftRecords.length : null
+
+    // Truncate records in case there's lots - and as we don't have working pagination
+    filteredRecords = filteredRecords.slice(0, 204)
+
+    res.render('support/trainees/index.html', {
+      filteredRecords,
+      hasFilters,
+      navActive: 'trainees'
+      // selectedFilters
+    })
+  })
+
 }

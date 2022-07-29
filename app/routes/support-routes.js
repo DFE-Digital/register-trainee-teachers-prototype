@@ -13,6 +13,24 @@ const getSchools = () => {
   return require('./../data/gis-schools.js')
 }
 
+// Work out which part of the site we came from
+const getPageContext = req => {
+  let requestUrl = url.parse(req.url).pathname
+
+  if (requestUrl.startsWith('/support/users')) {
+    return 'users'
+  }
+  else if (requestUrl.startsWith('/support/organisations')) {
+    return 'organisations'
+  }
+  else if (requestUrl.startsWith('/support/schools')) {
+    return 'schools'
+  }
+  else {
+    console.log(`Error with getContext: context (${requestUrl}) not recognised`)
+  }
+}
+
 let breadcrumbsInitial = {
   items: [
     {
@@ -47,6 +65,39 @@ module.exports = router => {
         navActive: 'users'
       })
     }
+
+  })
+
+  // Render a page for each organisation UUID
+  router.post([
+    '/support/users/:userUuid/organisations/:providerUuid/edit-answer',
+    '/support/organisations/:providerUuid/users/:userUuid/edit-answer',
+    '/support/schools/:schoolUuid/users/:userUuid/edit-answer',
+    ], function(req, res, next) {
+
+    const data = req.session.data
+    let context = getPageContext(req)
+    let access = data.userOrganisationTemp.access
+
+    let targetUrl
+
+    if (context == 'users'){
+      targetUrl = `/support/users/${userUuid}/organisations/${providerUuid}`
+    }
+    else {
+      targetUrl = `/support/organisations/${providerUuid}/users/${userUuid}`
+    }
+
+    if (access == "Remove"){
+      targetUrl = `${targetUrl}/confirm-remove`
+    }
+    else if (access == "Archive"){
+      targetUrl = `${targetUrl}/confirm-archive`
+    }
+    else {
+      targetUrl = `${targetUrl}/confirm`
+    }
+    res.redirect(targetUrl)
 
   })
 
@@ -142,6 +193,8 @@ module.exports = router => {
     let uuid = req.params.uuid
     let provider = data.providers.all.find(provider => provider.id == uuid)
 
+    let providerUrl = `/support/organisations/${uuid}`
+
     let breadcrumbs = {
       items: breadcrumbsInitial.items.concat([{
         text: "Organisations",
@@ -156,7 +209,7 @@ module.exports = router => {
         uuid,
         breadcrumbs,
         navActive: 'organisations',
-        providerUrl: `/support/organisations/${uuid}`,
+        providerUrl,
         navActive: 'organisations'
       })
     }

@@ -25,7 +25,15 @@
       divider: 'or'
     },
     {
-      text: "Remove access to " + provider.name
+      text: "Remove access to " + provider.name,
+      value: "Remove",
+      hint: {
+        text: "The user will keep access to 2 other organisations"
+      }
+    },
+    {
+      text: "Archive this user account",
+      value: "Archive"
     }
   ]
 }| decorateAttributes(userOrganisationTemp, "userOrganisationTemp.access"))}}

@@ -1,0 +1,34 @@
+{% extends "_templates/_form.html" %}
+
+{% set pageHeading %}
+  Remove {{user.fullName}}’s access to {{provider.name}}?
+{% endset %}
+
+{# {% set formAction = "./remove" %} #}
+
+{% set backText = "Back" %}
+{# {% set backLink = '/home' %} #}
+
+
+
+{% block formContent %}
+
+<span class="govuk-caption-l">{{user.fullName}}</span>
+<h1 class="govuk-heading-l">{{pageHeading}}</h1>
+
+{# {% include "_includes/forms/support/users/organisations/remove.html" %} #}
+
+{% set buttonText %}
+  Yes I’m sure – remove {{ user.fullName }}’s access to {{provider.name }}
+{% endset %}
+
+<input name="successFlash" type="hidden" value="User removed from {{provider.name}}">
+
+
+{{ govukButton({
+  text: buttonText,
+  classes: "govuk-button--warning"
+}) }}
+
+{% endblock %}
+

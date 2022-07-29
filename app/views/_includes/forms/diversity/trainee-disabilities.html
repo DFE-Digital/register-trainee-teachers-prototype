@@ -37,6 +37,13 @@
         text: "Or a serious hearing impairment"
       }
     }, {
+      text: "Development condition",
+      value: "Development condition",
+      checked: checked(record.diversity.disabilities, "Development condition"),
+      hint: {
+        text: "A condition had since childhood which affects motor, cognitive, social and emotional skills, and speech and language"
+      }
+    }, {
       text: "Learning difficulty",
       value: "Learning difficulty",
       checked: checked(record.diversity.disabilities, "Learning difficulty"),
@@ -69,7 +76,7 @@
       value: "Social or communication impairment",
       checked: checked(record.diversity.disabilities, "Social or communication impairment"),
       hint: {
-        text: "For example Asperger’s, or another autistic spectrum disorder"
+        text: "For example a speech and language impairment or an autistic spectrum condition"
       }
     }, {
       text: "Other",

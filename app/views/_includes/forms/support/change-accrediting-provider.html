@@ -19,11 +19,11 @@
 {% set adminInsetContentHtml %}
 
   <p class="govuk-body">
-    You should only change the accrediting provider if the current provider <strong>{{record.provider}}</strong> has instructed you to.
+    Only change the accredited provider if the current provider, <strong>{{record.provider}}</strong>, has instructed you to.
   </p>
 
   <p class="govuk-body">
-    The old and new providers will be sent a notification confirming the change.
+    The old and new accredited providers will be sent a notification confirming the change.
   </p>
 {% endset %}
 
@@ -35,7 +35,7 @@
 
 {{ appAutocompleteFromSelect({
   label: {
-    text: "Select new accrediting provider",
+    text: "Select a new accredited provider",
     classes: "govuk-label--s"
   },
   hint: {

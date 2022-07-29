@@ -34,6 +34,7 @@ module.exports = () => {
       "English, Welsh, Scottish, Northern Irish or British",
       "Irish",
       "Gypsy or Irish Traveller",
+      "Roma",
       "Any other White background",
       "Not provided"
     ],

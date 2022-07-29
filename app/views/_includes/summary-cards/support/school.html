@@ -103,6 +103,40 @@
     },
     {
       key: {
+        text: "Open date"
+      },
+      value: {
+        html: faker.date.past(26) | govukDate
+      },
+      actions: {
+        items: [
+          {
+            href: "./" + uuid + "/edit",
+            text: "Change",
+            visuallyHiddenText: "team inbox"
+          }
+        ]
+      } if false
+    } if showMetadata,
+    {
+      key: {
+        text: "Close date"
+      },
+      value: {
+        html: "School is still open"
+      },
+      actions: {
+        items: [
+          {
+            href: "./" + uuid + "/edit",
+            text: "Change",
+            visuallyHiddenText: "team inbox"
+          }
+        ]
+      } if false
+    } if showMetadata,
+    {
+      key: {
         text: "Get information about schools (GIAS)"
       },
       value: {

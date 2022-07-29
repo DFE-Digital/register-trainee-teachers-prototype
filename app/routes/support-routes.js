@@ -76,16 +76,32 @@ module.exports = router => {
     ], function(req, res, next) {
 
     const data = req.session.data
+    let userUuid = req.params.userUuid
+    let providerUuid = req.params.providerUuid
+    let schoolUuid = req.params.schoolUuid
+
+    // let user = data.users.all.find(user => user.id == userUuid)
+    let userUrl = `/support/users/${userUuid}`
+
+    // let provider = data.providers.all.find(provider => provider.id == providerUuid)
+    let providerUrl = `/support/organisations/${providerUuid}`
+
+
     let context = getPageContext(req)
+
     let access = data.userOrganisationTemp.access
+
 
     let targetUrl
 
     if (context == 'users'){
       targetUrl = `/support/users/${userUuid}/organisations/${providerUuid}`
     }
-    else {
+    else if (context =='organisations'){
       targetUrl = `/support/organisations/${providerUuid}/users/${userUuid}`
+    }
+    else {
+      targetUrl = `/support/schools/${schoolUuid}/users/${userUuid}`
     }
 
     if (access == "Remove"){
@@ -97,6 +113,7 @@ module.exports = router => {
     else {
       targetUrl = `${targetUrl}/confirm`
     }
+
     res.redirect(targetUrl)
 
   })

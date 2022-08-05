@@ -50,6 +50,7 @@
     "node-sass": "^6.0.1",
     "notifications-node-client": "^4.7.2",
     "nunjucks": "^3.2.3",
+    "nunjucks-markdown": "^2.0.1",
     "pluralize": "^8.0.0",
     "portscanner": "^2.1.1",
     "require-dir": "^1.0.0",

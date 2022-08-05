@@ -1,14 +1,11 @@
-
-{% extends "_templates/_page.html" %}
-{% set backLink = '/home' %}
+{% extends "_templates/_guidance-page.html" %}
 
 {% set pageHeading = 'About Register trainee teachers' %}
 
-{% block content %}
+{% block guidanceContent %}
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds-from-desktop">
-    <h1 class="govuk-heading-l govuk-!-margin-bottom-9">{{pageHeading}}</h1>
+<h1 class="govuk-heading-l govuk-!-margin-bottom-9">{{pageHeading}}</h1>
+
 <p class="govuk-body">Register trainee teachers is the service that will eventually replace the Database of Trainee Teachers & Providers (DTTP) portal.</p>
 
 <p class="govuk-body">Accredited Initial Teacher Training (ITT) providers use it to provide DfE with their trainee data.</p>
@@ -74,7 +71,6 @@
   </a>
 </p>
 
-
 <h3 class="govuk-heading-m">Getting a teacher reference number (TRN)</h3>
 
 <p class="govuk-body">When you’ve added a trainee into Register the first action you can take is to request a TRN for the trainee. This is when the trainee becomes registered with the Department for Education.</p>
@@ -117,6 +113,5 @@
 <h3 class="govuk-heading-m">Profiles (outcomes)</h3>
 
 <p class="govuk-body">DfE publishes data on how many people have successfully completed their training each year.</p>
-</div>
- </div>
+
 {% endblock %}

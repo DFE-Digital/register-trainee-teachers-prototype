@@ -1,0 +1,22 @@
+{% extends "_templates/_guidance-page.html" %}
+
+{% set pageHeading = 'Page heading' %}
+
+{% block guidanceContent %}
+
+<h1 class="govuk-heading-l govuk-!-margin-bottom-9">{{pageHeading}}</h1>
+
+{% include "_includes/guidance/example-one.md" %}
+
+{% set detailsContent %}
+  {% include "_includes/guidance/example-one.md" %}
+{% endset %}
+
+{{ govukDetails({
+  summaryText: "A details component",
+  html: detailsContent
+}) }}
+
+
+
+{% endblock %}

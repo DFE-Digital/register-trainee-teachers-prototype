@@ -1,0 +1,26 @@
+
+{% extends "_templates/_page.html" %}
+{% set backLink = '/home' %}
+{# {% set navActive = "reports" %} #}
+
+{% set pageHeading = 'Guidance' %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <h1 class="govuk-heading-l">{{pageHeading}}</h1>
+
+    <ul class="govuk-list govuk-list--spaced">
+      <li>
+        <a class="govuk-link" href="/guidance/about-register-trainee-teachers">Find out about Register trainee teachers</a>
+      </li>
+      <li>
+        <a class="govuk-link" href="/guidance/check-data">Check what data you need to provide</a>
+      </li>
+
+    </ul>
+
+  </div>
+</div>
+{% endblock %}

@@ -1,6 +1,6 @@
 {% extends "_templates/_page.html" %}
 
-{% set pageHeading = 'Export new trainee data for sign off for the 2022 to 2023 academic year' %}
+{% set pageHeading = 'Export new trainee data for sign off for the ' + data.years.currentAcademicYear + ' academic year' %}
 
 {# {% set formAction = "./reinstate/confirm" %} #}
 
@@ -19,7 +19,7 @@
       <h1 class="govuk-heading-l">{{pageHeading}}</h1>
 
       <p class="govuk-body">
-        This export will show the new trainee data you’ve provided to the DfE for trainees who’ve started their initial teacher training (ITT) in the 2022 to 2023 academic year, and have a trainee start date on or before the second Wednesday of October (sometimes called the census date).
+        This export will show the new trainee data you’ve provided to the DfE for trainees who’ve started their initial teacher training (ITT) in the {{ academicYear }} academic year, and have a trainee start date on or before the second Wednesday of October {{ academicYearShort }} (sometimes called the census date).
       </p>
 
     {% set insetTextHtml %}
@@ -46,9 +46,9 @@
 
       <h2 class="govuk-heading-m">New trainees without a start date</h2>
 
-      <p class="govuk-body">Any new trainee who has a course start date on or before 12 October 2022, but does not have a trainee start date, will be included in this export.</p>
+      <p class="govuk-body">Any new trainee who has a course start date on or before {{ censusDate | govukDate}}, but does not have a trainee start date, will be included in this export.</p>
 
-      <p class="govuk-body">If a new trainee starts their course on or before 12 October 2022, you should add their trainee start date as soon as possible. Not adding this means we will not know if the trainee has started their course, which could affect funding payments (if the trainee is eligible for funding).</p>
+      <p class="govuk-body">If a new trainee starts their course on or before {{ censusDate | govukDate }}, you should add their trainee start date as soon as possible. Not adding this means we will not know if the trainee has started their course, which could affect funding payments (if the trainee is eligible for funding).</p>
 
       <h2 class="govuk-heading-m">About this export</h2>
 

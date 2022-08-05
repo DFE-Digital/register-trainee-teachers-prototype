@@ -7,7 +7,7 @@
 {% set academicYear = data.years.currentAcademicYear %}
 {% set academicYearShort = data.years.currentAcademicYear | academicYearToYear %}
 
-{% set censusDate = "2021-10-12" %}
+{% set censusDate = "2022-10-12" %}
   
 {% block content %}
 {{super()}}
@@ -23,7 +23,7 @@
       </p>
 
     {% set insetTextHtml %}
-      For the {{ academicYear }} academic year, the ITT census date is {{ censusDate | govukDate('dddd D MMMM YYYY') }}.
+      For the {{ academicYear }} academic year, the ITT census date is <span class="app-nowrap">{{ censusDate | govukDate('dddd D MMMM YYYY') }}</span>.
     {% endset %}
 
     {{ govukInsetText({

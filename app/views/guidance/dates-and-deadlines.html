@@ -4,7 +4,7 @@
 
 {% block guidanceContent %}
 
-<h1 class="govuk-heading-l govuk-!-margin-bottom-9">{{pageHeading}} for the {{ data.years.currentAcademicYear }} academic year</h1>
+<h1 class="govuk-heading-l govuk-!-margin-bottom-9">{{pageHeading}} for the {{ data.years.currentAcademicYear | nowrap | safe }} academic year</h1>
 
 {{ govukTable({
   caption: "Deadlines for all training providers",

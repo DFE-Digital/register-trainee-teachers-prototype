@@ -1,0 +1,70 @@
+{% extends "_templates/_guidance-page.html" %}
+
+{% set pageHeading = 'Registering trainees directly in this service' %}
+
+{% block guidanceContent %}
+
+# Registering trainees through HESA (Higher Education Statistics Agency)
+
+Training providers that use HESA, need to submit data through the HESA data collection system to register their trainees. Your trainee data will then be imported into Register where you can check it.
+
+[Find out when you should submit your data for the 2022 to 2023 academic year](/guidance/dates-and-deadlines).
+
+{% include "_includes/guidance/training-status-homepage.md" %}
+
+{% set detailsContent %}
+
+{% include "_includes/guidance/training-status-homepage.md" %}
+{% endset %}
+
+## Checking data imported into Register from HESA
+
+Once your data has been imported into Register, you can check it. To help you check, you can look at [how data fields in HESA map to data fields in Register](/#).
+
+{% include "_includes/guidance/checking-data.md" %}
+
+{% set detailsContent %}
+
+{% include "_includes/guidance/checking-data.md" %}
+{% endset %}
+
+## Adding specific information to a trainee record
+
+### How Register defines ‘withdrawn’ and ‘deferred’ trainees
+
+A ‘deferred’ trainee in Register is a trainee who is registered on a course but then decides to defer to a later date or academic year. In Register, trainees can be deferred if they have started their ITT course or if they never start their ITT course.
+
+In HESA ‘dormant’ trainee means the same as ‘deferred’ in Register. You can record deferred trainees in HESA by using the [Student.MODE field](https://www.hesa.ac.uk/collection/c22053/e/mode).
+
+A ‘withdrawn’ trainee in Register is a trainee that is registered on an ITT course, started that course, but then decides to withdraw from the course and will not return. Trainees who are registered, but then do not start their ITT course at all, cannot be withdrawn in Register.
+
+In HESA, withdrawn trainees are recorded by using the [Student.ENDDATE field](https://www.hesa.ac.uk/collection/c22053/e/enddate) and the [Student.RSNEND field](https://www.hesa.ac.uk/collection/c22053/e/rsnend).
+
+### New trainee start dates
+
+If a new trainee starts their course on or before the second Wednesday in October, you should add their trainee start date as soon as possible. Not adding this means we will not know if the trainee has started their course, which could affect funding payments (if the trainee is eligible for funding).
+
+In HESA, this means you need to fill in the [COMDATE field](https://www.hesa.ac.uk/collection/c22053/e/comdate). If a trainee starts late, you should also fill in the [ITTCOMDATE field](https://www.hesa.ac.uk/collection/c22053/e/ittcomdate) if it’s different from the COMDATE. 
+
+{% include "_includes/guidance/placements.md" %}
+
+{% set detailsContent %}
+
+{% include "_includes/guidance/placements.md" %}
+{% endset %}
+
+## Recommending a trainee for Qualified Teacher Status (QTS) or Early Years Teacher Status (EYTS)
+
+When a trainee has successfully completed their training (or completed their assessment for an ‘assessment only’ route) and met the required standards, you can recommend them for QTS or EYTS in the Teaching Regulation Agency (TRA) portal.
+
+{% set detailsContent %}
+Once you’ve recommended a trainee for QTS or EYTS, you’ll find their record by going to the homepage and using the ‘In training’ status box under ‘Registered trainees’.
+
+{% endset %}
+
+{{ govukDetails({
+  summaryText: "How to find a trainee once you‘ve recommended them for QTS or EYTS",
+  html: detailsContent
+}) }}
+
+{% endblock %}

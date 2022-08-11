@@ -1,0 +1,112 @@
+{% extends "_templates/_guidance-page.html" %}
+
+{% set pageHeading = 'Registering trainees directly in this service' %}
+
+{% block guidanceContent %}
+
+# Registering trainees manually in this service
+
+Training providers can register their trainees directly in the Register service by creating draft trainee records and adding the required data about your trainees.
+
+Get prepared for adding a trainee record manually by [checking what data you need to provide](https://register-prototype.herokuapp.com/check-data).
+
+{% include "_includes/guidance/training-status-homepage.md" %}
+
+{% set detailsContent %}
+
+{% include "_includes/guidance/training-status-homepage.md" %}
+{% endset %}
+
+## Getting a teacher reference number (TRN)
+
+Once a draft is complete, you can request a TRN for each trainee record. This is when the trainee becomes registered with the Department for Education.
+
+Trainees will receive their TRN by email.
+
+## Trainee records imported from the Apply for teacher training (Apply) service
+
+When an application reaches the ‘recruited’ status in Apply, it will be imported into Register. If an application has any conditions set, it will only reach recruited status in Apply once all conditions have been met.
+
+Applications from Apply will import into Register everyday at 4:00am. This is called the ‘Apply integration’.
+
+An application imported from Apply into Register, will become a draft trainee record. You can find these records on the homepage under ‘Draft trainees’ at the link called ‘View draft trainees imported from Apply’. You should not need to manually duplicate applications from Apply into Register.
+
+Within the trainee record from Apply, you’ll be able to see:
+
+* the course the trainee applied for
+* the trainee’s personal details
+
+### What to do with draft records from Apply
+
+To register trainees that come from Apply, you’ll need to check if their data is correct and add any further data about their training. This can include:
+
+* checking their course is correct (if their course has changed, you can update this in Register)
+* fixing any mistakes that you know of
+* providing any further training data like if the trainee will get funding or who their lead or employing school will be
+
+Once an application is imported into Register, any changes you make to the application in Apply (after it’s in ‘recruited’ status) will not reflect in Register. Changes to trainee information in Register will also not reflect in Apply. At the moment, our integration only works to bring applications into Register.
+
+{% include "_includes/guidance/checking-data.md" %}
+
+{% set detailsContent %}
+
+{% include "_includes/guidance/checking-data.md" %}
+{% endset %}
+
+
+
+## Adding specific information to a trainee record
+
+### PE with EBacc
+
+Follow these steps to register a trainee doing PE with EBacc:
+
+* Add a first subject as PE, or a PE based subject.
+* Add a second subject as their EBacc subject.
+* Email us at becomingateacher@digital.education.gov.uk stating their trainee ID and that they are doing PE with EBacc.
+
+{% include "_includes/guidance/placements.md" %}
+
+{% set detailsContent %}
+
+{% include "_includes/guidance/placements.md" %}
+{% endset %}
+
+## Recommending a trainee for Qualified Teacher Status (QTS) or Early Years Teacher Status (EYTS)
+
+When a trainee has successfully completed their training (or completed their assessment for an ‘assessment only’ route) and met the required standards, you can recommend them for QTS or EYTS in Register.
+
+If the trainee’s record is incomplete (there is missing information), the button will not appear, but there will be a prompt to guide you to add the missing information before you can recommend the trainee.
+
+{% set detailsContent %}
+Once you’ve recommended a trainee for QTS or EYTS, you’ll find their record by going to the homepage and using the ‘In training’ status box under ‘Registered trainees’.
+
+{% endset %}
+
+{{ govukDetails({
+  summaryText: "How to find a trainee once you‘ve recommended them for QTS or EYTS",
+  html: detailsContent
+}) }}
+
+## Withdraw or deferring a trainee
+
+Once you’ve registered a trainee, and they have started their training, you can withdraw or defer them. You can do this using the links on the trainee record.
+
+Trainees who are registered, but then do not start their ITT course at all, cannot be withdrawn in Register. You can either defer them or delete the record.
+
+{% set detailsContent %}
+A ‘deferred’ trainee in Register is a trainee who is registered on a course but then decides to defer to a later date or academic year. In Register, trainees can be deferred if they have started their ITT course or if they never start their ITT course.
+
+A ‘withdrawn’ trainee in Register is a trainee that is registered on an ITT course, started that course, but then decides to withdraw from the course and will not return.
+
+
+{% endset %}
+
+{{ govukDetails({
+  summaryText: "More information on what ‘withdrawn’ and ‘deferred’ means in Register",
+  html: detailsContent
+}) }}
+
+
+
+{% endblock %}

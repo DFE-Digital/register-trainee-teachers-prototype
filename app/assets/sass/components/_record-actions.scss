@@ -1,6 +1,6 @@
 // Trainee record actions panel
 
-.record-actions {
+.record-actions--secondary {
   @include govuk-media-query($from: tablet) {
     display: flex;
     justify-content: flex-end;

@@ -1,3 +1,5 @@
+{# Button menu #}
+
 {% set reinstateUrl %}
   {% if (record | ittInTheFuture) %}
     {{ referrer + "/reinstate/confirm" }}
@@ -27,7 +29,6 @@
 {% set removeUrl %}
   {{ referrer + "/remove/confirm" | addReferrer(referrer) }}
 {% endset %}
-
 
 {% set buttonMenuItems = [] %}
 
@@ -71,10 +72,54 @@
   ) -%}
 {% endif %}
 
-<div class="govuk-grid-column-one-half record-actions">
 
-    {{ mojButtonMenu({
-      items: buttonMenuItems
-    }) }}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-half">
+    {% if record.status | canRecommendForQts %}
+      {% if record | ittInTheFuture %}
+        {{ govukInsetText({
+        text: "The trainee’s ITT starts on " + (record.courseDetails.startDate | govukDate),
+        classes: "govuk-!-margin-0"
+      }) }}
+      {% elseif record | hasOutstandingActions %}
+        {{ govukInsetText({
+          text: "This trainee record requires additional details",
+          classes: "govuk-!-margin-0"
+        }) }}
+      {% else %}
+        {{ govukButton({
+          text: "Recommend trainee for " + (record | getQualificationText),
+          href: referrer + '/qualification/outcome-date',
+          classes: "govuk-!-margin-bottom-0"
+        }) }}
+      {% endif %}
+    {% elseif record.status == "Pending TRN" %}
+      {{ govukInsetText({
+        text: "This trainee is pending a TRN",
+        classes: "govuk-!-margin-0"
+      }) }}
+    {% elseif record.status == "Deferred" %}
+      {{ govukInsetText({
+        text: "This trainee is deferred",
+        classes: "govuk-!-margin-0"
+      }) }}
+    {% endif %}
+  </div>
+
+  <div class="govuk-grid-column-one-half record-actions--secondary">
+
+  {{ mojButtonMenu({
+    items: buttonMenuItems
+  }) }}
+
+  </div>
 
 </div>
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <hr class="govuk-section-break govuk-section-break--l govuk-!-margin-top-3 govuk-section-break--visible">
+  </div>
+</div>
+

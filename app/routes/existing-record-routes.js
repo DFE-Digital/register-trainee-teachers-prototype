@@ -370,6 +370,29 @@ module.exports = router => {
     res.redirect('/records')
   })
 
+  // Remove route
+  // If trainee has not started, skip deferred date
+  router.post('/record/:uuid/remove/did-trainee-start-answer', (req, res) => {
+    const data = req.session.data
+    let record = data.record
+    let traineeStarted = record?.trainingDetails?.traineeStarted
+    let referrer = utils.getReferrer(req.query.referrer)
+
+    if (traineeStarted === "true") {
+      console.log("first")
+      res.redirect(`/record/${req.params.uuid}/remove/cannot-remove${referrer}`)
+    }
+    else if (traineeStarted === "false") {
+      console.log("second")
+      res.redirect(`/record/${req.params.uuid}/remove/confirm${referrer}`)
+    }
+    else {
+      console.log("third")
+      res.redirect(`/record/${req.params.uuid}/remove/did-trainee-start${referrer}`)
+    }
+
+  })
+
 
   // Defer route
   // If trainee has not started, skip deferred date

@@ -292,7 +292,7 @@ module.exports = router => {
     }
     else {
 
-      if (utils.isDeferred(record)){
+      if (utils.isDeferred(record) && record.deferredDate){
         record.withdrawalDate = record.deferredDate
       }
       else {

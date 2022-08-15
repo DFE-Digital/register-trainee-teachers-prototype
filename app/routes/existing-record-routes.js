@@ -283,29 +283,29 @@ module.exports = router => {
   // Get dates for withdraw flow
   router.post('/record/:uuid/withdraw', (req, res) => {
     const data = req.session.data
-    const newRecord = data.record
+    let record = data.record
     let referrer = utils.getReferrer(req.query.referrer)
 
     // Update failed or no data
-    if (!newRecord){
+    if (!record){
       res.redirect('/record/:uuid')
     }
     else {
 
-      if (utils.isDeferred(newRecord)){
-        newRecord.withdrawalDate = newRecord.deferredDate
+      if (utils.isDeferred(record)){
+        record.withdrawalDate = record.deferredDate
       }
       else {
-        let radioChoice = newRecord.withdrawalDateRadio
+        let radioChoice = record.withdrawalDateRadio
         if (radioChoice == "Today") {
-          newRecord.withdrawalDate = filters.toDateArray(filters.today())
+          record.withdrawalDate = filters.toDateArray(filters.today())
         } 
         if (radioChoice == "Yesterday") {
-          newRecord.withdrawalDate = filters.toDateArray(moment().subtract(1, "days"))
+          record.withdrawalDate = filters.toDateArray(moment().subtract(1, "days"))
         }
       }
 
-      newRecord = utils.setEndAcademicYear(newRecord)
+      record = utils.setEndAcademicYear(record)
 
       res.redirect(`/record/${req.params.uuid}/withdraw/confirm${referrer}`)
     }

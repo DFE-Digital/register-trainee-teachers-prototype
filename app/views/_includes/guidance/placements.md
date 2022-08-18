@@ -1,4 +1,3 @@
-
 ### Placements
 
 For each of your trainees, you’ll need to provide the details of at least 2 training placements in a school or early years setting.

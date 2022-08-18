@@ -1,7 +1,8 @@
 {% extends "_templates/_page.html" %}
 
 {% set pageHeading = 'Export HESA records' %}
-
+{% set backLink = '/reports' %}
+{% set backText = "Reports" %}
 
 {% set academicYear = data.years.currentAcademicYear %}
 {% set academicYearShort = data.years.currentAcademicYear | academicYearToYear %}

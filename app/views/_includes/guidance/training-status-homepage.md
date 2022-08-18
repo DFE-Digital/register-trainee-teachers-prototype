@@ -1,4 +1,3 @@
-
 ## How trainees are grouped on the Register homepage
 
 When you log into Register, on the homepage you’ll see a section called ‘Draft trainees’ and a section called ‘Registered trainees’. Under ‘Registered trainees’ there are ‘training statuses’ where trainees are grouped by:

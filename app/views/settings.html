@@ -130,6 +130,31 @@
         ]
       } | decorateAttributes(data, "data.settings.bulkLinksInPrimaryNav")) }}
 
+      {{ govukSelect({
+        id: "hesa-guidance-style",
+        name: "settings[hesaGuidanceStyle]",
+        label: {
+          text: "HESA guidance style"
+        },
+        items: [
+          {
+            value: "tabs",
+            text: "Tabs",
+            selected: true if data.settings.hesaGuidanceStyle == 'tabs'
+          },
+          {
+            value: "accordion",
+            text: "Accordion",
+            selected: true if data.settings.hesaGuidanceStyle == 'accordion'
+          },
+          {
+            value: "flat",
+            text: "Flat",
+            selected: true if data.settings.hesaGuidanceStyle == 'flat'
+          }
+        ]
+      }) }}
+
 
       {% set allTrainingRoutes = [] %}
       {% for route in data.allTrainingRoutes %}

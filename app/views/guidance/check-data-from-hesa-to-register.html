@@ -1,0 +1,136 @@
+{% extends "_templates/_guidance-page.html" %}
+
+{% set pageHeading = 'Check how data from HESA imports into Register trainee teachers' %}
+{% set gridColumn = "govuk-grid-column-full" %}
+
+{% macro hesaTable(params) %}
+
+  {% from "govuk/components/table/macro.njk" import govukTable %}
+
+  {{ govukTable({
+  head: [
+    {
+      text: "CSV column name from Register export"
+    },
+    {
+      text: "Field name in Register service"
+    },
+    {
+      text: "HESA code"
+    },
+    {
+      text: "More information"
+    }
+  ],
+  rows: params.rows
+}) }}
+{% endmacro %}
+
+{% set traineeProgressContent %}
+
+Explainer text?
+
+{{ hesaTable({})}}
+
+{% endset %}
+
+{% set allTableContent = {
+  "trainee-progress": 
+  {
+    name: "Trainee progress",
+    content: traineeProgressContent
+  },
+  "personal-details": {
+    name: "Personal details",
+    content: traineeProgressContent
+  },
+  "course-details": {
+    name: "Course details",
+    content: traineeProgressContent
+  },
+  "schools": {
+    name: "Schools",
+    content: traineeProgressContent
+  },
+  "funding": {
+    name: "Funding",
+    content: traineeProgressContent
+  },
+  "other": {
+    name: "Other",
+    content: traineeProgressContent
+  }
+} %}
+
+
+{% block guidanceContent %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+
+    # {{ pageHeading }}
+
+    Use the tables to understand how trainee data from HESA imports into Register and where it goes. 
+
+    Where possible, these tables follow the same order as the CSV export and a trainee’s record in Register.
+    
+  </div>
+</div>
+
+{% if data.settings.hesaGuidanceStyle == 'tabs' %}
+
+  {% set tabItems = [] %}
+
+  {% for key, tab in allTableContent %}
+
+     {% set tabItems = tabItems | push({
+      text: tab.name,
+      href: "./" + key,
+      active: (activeTab == key),
+      panel: {
+        html: tab.content
+      }
+    }) %}
+  {% endfor %}
+
+  {{ appSubNavigation({
+    label: 'Sub navigation',
+    classes: 'govuk-!-margin-bottom-4',
+    items: tabItems
+  }) }}
+
+
+  {# {% include "_includes/guidance/check-data-from-hesa-to-register/tabs.html" %} #}
+
+  {{ allTableContent[activeTab].content  | safe}}
+
+{% elseif data.settings.hesaGuidanceStyle == 'accordion' %}
+
+  {% set accordionItems = [] %}
+
+  {% for key, item in allTableContent %}
+    {% set accordionItems = accordionItems | push({
+      heading: {
+        text: item.name
+      },
+      content: {
+        html: item.content
+      }
+    }) %}
+    
+  {% endfor %}
+
+  {{ govukAccordion({
+    id: "accordion-default",
+    items: accordionItems
+  }) }}
+{% else %}
+
+  {% for key, tabData in allTableContent %}
+    <h2 class="govuk-heading-m">{{tabData.name}}</h2>
+    {{ tabData.content | safe }}
+  {% endfor %}
+
+{% endif %}
+
+{% endblock %}

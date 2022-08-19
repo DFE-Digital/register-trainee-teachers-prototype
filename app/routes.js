@@ -165,8 +165,32 @@ router.post('/direct-set-data', function(req, res, next){
 })
 
 // =============================================================================
-// Individual pages
+// Guidance
 // =============================================================================
+
+// Redirect to tab if tabs are enabled.
+router.get("/guidance/check-data-from-hesa-to-register", function (req, res, next) {
+  const data = req.session.data
+
+  if (data.settings.hesaGuidanceStyle == 'tabs'){
+    res.redirect("/guidance/check-data-from-hesa-to-register/trainee-progress")
+  }
+  else {
+    next()
+  }
+
+})
+
+router.get("/guidance/check-data-from-hesa-to-register/:tabName", function (req, res) {
+  res.render(`guidance/check-data-from-hesa-to-register`, {
+    activeTab: req.params.tabName
+  })
+})
+
+// =============================================================================
+// Individual route files
+// =============================================================================
+
 // Records list
 require('./routes/records-list-routes')(router)
 

@@ -5,13 +5,23 @@
 
 {% set pageHeading = 'Check how data from HESA imports into Register trainee teachers' %}
 {% set gridColumn = "govuk-grid-column-full" %}
+
+{# Page notes:
+
+This page is set up to render as either tabs / accordion / flat content so we can try different layouts.
+
+A get route deals with rendering the separate pages for the tabs.
+
+#}
+
 {# 
-  To generate tables:
+  To generate table data:
 
   1. Start with finished table in Google sheets
   2. Copy cells for table
   3. Paste in to https://tabletomarkdown.com/convert-spreadsheet-to-markdown/
-  4. Convert to markdown and copy markdown below
+  4. Convert to markdown and copy markdown in to the template below
+
  #}
 
 {% set tableHeadItems =  [
@@ -31,11 +41,6 @@
 
 {% set traineeProgressContent %}
 
-{# {{ govukTable({
-  head: tableHeadItems,
-  rows: []
-}) }} #}
-
 | CSV column name from Register export | Field name in Register service | HESA code                                                                                           | More information                                                                     |
 | ------------------------------------ | ------------------------------ | --------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
 | hesa\_id                             | not displayed                  | [HUSID](https://www.hesa.ac.uk/collection/c22053/e/husid) (HESA unique student identifier)          |                                                                                      |
@@ -47,7 +52,6 @@
 {% endset %}
 
 {% set personalDetailsContent %}
-
 
 | CSV column name from Register export                                                                  | Field name in Register service                                                            | HESA code                                                                                                                                         | More information                                                                                                                                                                                                   |
 | ----------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -110,8 +114,10 @@ You will not see these data items in the Register service or the CSV export.
 | [](https://www.hesa.ac.uk/collection/c22053/e/pgappstdt)[PGAPPSTDT](https://www.hesa.ac.uk/collection/c22053/e/pgappstdt) (postgraduate teaching apprenticeship start date) |                                                                                                                                                                      |
 | [](https://www.hesa.ac.uk/collection/c22053/e/plmntsch)[PLMNTSCH](https://www.hesa.ac.uk/collection/c22053/e/plmntsch) (placement school)                                   | At the moment, Register only imports the first placement submitted through HESA. Any other placements added after the first one, will not be imported into Register. |
 | [](https://www.hesa.ac.uk/collection/c22053/e/qlaim)[QLAIM](https://www.hesa.ac.uk/collection/c22053/e/qlaim) (qualification aim)                                           |
+
 {% endset %}
 
+{# Make an object that contains all the page data #}
 {% set allTableContent = {
   "trainee-progress": 
   {
@@ -140,7 +146,7 @@ You will not see these data items in the Register service or the CSV export.
   }
 } %}
 
-
+{# Page begins #}
 {% block guidanceContent %}
 
 <div class="govuk-grid-row">
@@ -155,22 +161,17 @@ You will not see these data items in the Register service or the CSV export.
   </div>
 </div>
 
-{# Everything from here #}
-
 {% if data.settings.hesaGuidanceStyle == 'tabs' %}
 
+  {# Compile tabs  #}
   {% set tabItems = [] %}
-
   {% for key, tab in allTableContent %}
-
-     {% set tabItems = tabItems | push({
-      text: tab.name,
-      href: "./" + key,
-      active: (activeTab == key),
-      panel: {
-        html: tab.content
-      }
-    }) %}
+    {% set tabItems = tabItems | push({
+        text: tab.name,
+        href: "./" + key,
+        active: (activeTab == key)
+      })
+    %}
   {% endfor %}
 
   {{ appSubNavigation({
@@ -179,12 +180,13 @@ You will not see these data items in the Register service or the CSV export.
     items: tabItems
   }) }}
 
+  {# Route will tell us what tab’s content to render #}
   {{ allTableContent[activeTab].content  | safe}}
 
 {% elseif data.settings.hesaGuidanceStyle == 'accordion' %}
 
+  {# Generate data for accordion #}
   {% set accordionItems = [] %}
-
   {% for key, item in allTableContent %}
     {% set accordionItems = accordionItems | push({
       heading: {
@@ -194,14 +196,15 @@ You will not see these data items in the Register service or the CSV export.
         html: item.content
       }
     }) %}
-    
   {% endfor %}
 
   {{ govukAccordion({
     id: "accordion-default",
     items: accordionItems
   }) }}
-{% else %}
+
+{# Flat content #}
+{% else %} 
 
   {% for key, tabData in allTableContent %}
     <h2 class="govuk-heading-m">{{tabData.name}}</h2>

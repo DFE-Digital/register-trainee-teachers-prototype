@@ -72,7 +72,7 @@
 
 {% set endDateHint = "For example, " + "" | today | moment('add', 1, 'years') | toDateArray | spaceSeparate %}
 
-{% set endDateLabel = "ITT end date" %}
+{% set endDateLabel = "Expected end date" %}
 
 {% set programmeEndDateArray = record.courseDetails.endDate | toDateArray %}
 {{ govukDateInput({

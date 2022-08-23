@@ -183,7 +183,7 @@
 
 {% set endDateRow = {
   key: {
-    text: "ITT end date"
+    text: "Expected end date"
   },
   value: {
     text: courseDetails.endDate | govukDate,
@@ -194,7 +194,7 @@
       {
         href: recordPath + "/course-details/details" | addReferrer(referrer),
         text: "Change",
-        visuallyHiddenText: "ITT end date"
+        visuallyHiddenText: "expected end date"
       }
     ]
   } if canAmend

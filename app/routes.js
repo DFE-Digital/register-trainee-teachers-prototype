@@ -182,9 +182,18 @@ router.get("/guidance/check-data-from-hesa-to-register", function (req, res, nex
 })
 
 router.get("/guidance/check-data-from-hesa-to-register/:tabName", function (req, res) {
-  res.render(`guidance/check-data-from-hesa-to-register`, {
-    activeTab: req.params.tabName
-  })
+  const data = req.session.data
+
+  // User has switched to non tab style so we should redirect away from tab urls.
+  if (data.settings.hesaGuidanceStyle != 'tabs'){
+    res.redirect("/guidance/check-data-from-hesa-to-register")
+  }
+  else {
+    res.render(`guidance/check-data-from-hesa-to-register`, {
+      activeTab: req.params.tabName
+    })
+  }
+
 })
 
 // =============================================================================

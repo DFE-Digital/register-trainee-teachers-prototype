@@ -31,7 +31,7 @@
       text: "Expected end date"
     },
     value: {
-      text: record.reinstate.newEndDate | govukDate
+      text: (record.reinstate.newEndDate or record.courseDetails.endDate) | govukDate
     },
     actions: {
       items: [

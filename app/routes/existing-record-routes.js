@@ -245,7 +245,7 @@ module.exports = router => {
       let radioChoice = record.reinstate.expectedEndDateIsSame
 
       // Radio choice is a design option currently disabled - we just show a date input instead
-      if (radioChoice !== "true"){
+      if (radioChoice != "same-date"){
         if (record?.reinstate?.newEndDate){
           record.courseDetails.endDate = record.reinstate.newEndDate
         }

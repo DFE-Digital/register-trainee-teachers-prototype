@@ -4,8 +4,8 @@
 {% set newExpectedEndDate = record.reinstate.newEndDate %}
 {% set reinstateIsAfterEndDate = reinstateDate | isAfter(expectedEndDate) %}
 {% set expectedEndDateIsInThePast = expectedEndDate | isInPast %}
-{# {% set expectedEndDateIsInThePast = true %} #}
 
+{# Set to false to enable alternate flow where we ask a radio question about change #}
 {% set alwaysShowNewExpectedEndDate = true %}
 
 {% set startWithDateInput = reinstateIsAfterEndDate or expectedEndDateIsInThePast or alwaysShowNewExpectedEndDate %}
@@ -68,11 +68,11 @@
     },
     items: [
       {
-        value: "false",
+        value: "same-date",
         text: "Yes, they’re still expected to finish on " + record.courseDetails.endDate | govukDate
       },
       {
-        value: "true",
+        value: "different-date",
         text: "No, they have a new expected end date",
         conditional: {
           html: customEndDateHtml

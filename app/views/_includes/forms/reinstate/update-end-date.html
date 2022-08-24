@@ -14,7 +14,7 @@
 
 {% set dateHint -%}
   {% if alwaysShowNewExpectedEndDate or expectedEndDateIsInThePast -%}
-    They were expected to end on {{record.courseDetails.endDate | toDateArray | join('/') }} before they deferred. If this is still the same, you can enter that date again.
+    They were expected to end their course on {{record.courseDetails.endDate | toDateArray | join('/') }} before they deferred. If this is still the same, you can enter that date again.
   {% else -%}
     For example, {{ "" | today | moment('add', '1', 'years') | toDateArray | spaceSeparate }}
   {%- endif %}

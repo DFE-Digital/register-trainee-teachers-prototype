@@ -1,0 +1,88 @@
+{% set expectedEndDate = record.courseDetails.endDate | toDateArray %}
+{% set reinstateDate = record.reinstate.date | toDateArray %}
+
+{% set newExpectedEndDate = record.reinstate.newEndDate %}
+{% set reinstateIsAfterEndDate = reinstateDate | isAfter(expectedEndDate) %}
+{% set expectedEndDateIsInThePast = expectedEndDate | isInPast %}
+{# {% set expectedEndDateIsInThePast = true %} #}
+
+{% set alwaysShowNewExpectedEndDate = true %}
+
+{% set startWithDateInput = reinstateIsAfterEndDate or expectedEndDateIsInThePast or alwaysShowNewExpectedEndDate %}
+
+{% include "_includes/trainee-name-caption.njk" %}
+
+{% set dateHint -%}
+  {% if alwaysShowNewExpectedEndDate or expectedEndDateIsInThePast -%}
+    They were expected to end on {{record.courseDetails.endDate | toDateArray | join('/') }} before they deferred. If this is still the same, you can enter that date again.
+  {% else -%}
+    For example, {{ "" | today | moment('add', '1', 'years') | toDateArray | spaceSeparate }}
+  {%- endif %}
+{%- endset %}
+
+{% set customEndDateHtml %}
+  {{ govukDateInput({
+    id: "custom-expected-end-date",
+    namePrefix: "record[reinstate][newEndDate]",
+    fieldset: {
+      legend: {
+        text: "What is their expected end date?" if startWithDateInput else "Enter their new expected end date",
+        classes: ("govuk-fieldset__legend--l" if startWithDateInput else "govuk-fieldset__legend--s"),
+        isPageHeading: true if startWithDateInput
+      }
+    },
+    hint: {
+      text: "For example, " + "" | today | toDateArray | spaceSeparate,
+      text: dateHint
+    },
+    items: [
+        {
+          name: "day",
+          classes: "govuk-input--width-2",
+          value: newExpectedEndDate["0"]
+        },
+        {
+          name: "month",
+          classes: "govuk-input--width-2",
+          value: newExpectedEndDate["1"]
+        },
+        {
+          name: "year",
+          classes: "govuk-input--width-4",
+          value: newExpectedEndDate["2"]
+        }
+      ]
+  }) }}
+{% endset %}
+
+{% if startWithDateInput %}
+  {{ customEndDateHtml | safe }}
+{% else %}
+  {{ govukRadios({
+    fieldset: {
+      legend: {
+        isPageHeading: true,
+        text: pageHeading,
+        classes: "govuk-fieldset__legend--l"
+      }
+    },
+    items: [
+      {
+        value: "false",
+        text: "Yes, they’re still expected to finish on " + record.courseDetails.endDate | govukDate
+      },
+      {
+        value: "true",
+        text: "No, they have a new expected end date",
+        conditional: {
+          html: customEndDateHtml
+        }
+      }
+    ]
+  } | decorateAttributes(record, "record.reinstate.expectedEndDateIsSame")) }}
+
+{% endif %}
+
+{{ govukButton({
+  text: "Continue"
+}) }}

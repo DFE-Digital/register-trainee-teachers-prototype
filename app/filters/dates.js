@@ -376,6 +376,26 @@ filters.isInFuture = (date) => {
   return moment(date).isAfter()
 }
 
+/*
+  ====================================================================
+  isAfter
+  --------------------------------------------------------------------
+  Check if a date is after another date
+  ====================================================================
+*/
+
+// Usage: {{ date | isInFuture }} // true
+filters.isAfter = (date, compareDate) => {
+  // Convert to date Object if date is an array (as provided by design system date component)
+  if (_.isArray(date)){
+    date = filters.arrayToDateObject(date)
+  }
+  if (_.isArray(compareDate)){
+    compareDate = filters.arrayToDateObject(compareDate)
+  }
+  return moment(date).isAfter(compareDate)
+}
+
 // Expose moment as a filter
 /* Usage:
 

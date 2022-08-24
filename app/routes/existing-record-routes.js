@@ -243,13 +243,14 @@ module.exports = router => {
         record.trainingDetails.traineeStarted = "true"
       }
       let radioChoice = record.reinstate.expectedEndDateIsSame
-      console.log(record?.reinstate?.newEndDate)
+
+      // Radio choice is a design option currently disabled - we just show a date input instead
       if (radioChoice !== "true"){
-        console.log("radio choice is not true")
         if (record?.reinstate?.newEndDate){
           record.courseDetails.endDate = record.reinstate.newEndDate
         }
       }
+      // Delete this temporary data
       delete record.reinstate.newEndDate
       delete record.reinstate.dateRadio
 

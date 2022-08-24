@@ -1,7 +1,7 @@
 {% set reinstateDateText %}
   {% if record | ittInTheFuture %}
     Trainee returned before their ITT started
-  {% elseif record | traineeStarted %}
+  {% elseif record.reinstate.date %}
     {{ record.reinstate.date | govukDate }}
   {% else %}
     Not provided

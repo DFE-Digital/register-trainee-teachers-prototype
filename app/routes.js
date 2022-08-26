@@ -169,11 +169,11 @@ router.post('/direct-set-data', function(req, res, next){
 // =============================================================================
 
 // Redirect to tab if tabs are enabled.
-router.get("/guidance/check-data-from-hesa-to-register", function (req, res, next) {
+router.get("/guidance/hesa-register-data-mapping", function (req, res, next) {
   const data = req.session.data
 
   if (data.settings.hesaGuidanceStyle == 'tabs'){
-    res.redirect("/guidance/check-data-from-hesa-to-register/trainee-progress")
+    res.redirect("/guidance/hesa-register-data-mapping/trainee-progress")
   }
   else {
     next()
@@ -181,15 +181,15 @@ router.get("/guidance/check-data-from-hesa-to-register", function (req, res, nex
 
 })
 
-router.get("/guidance/check-data-from-hesa-to-register/:tabName", function (req, res) {
+router.get("/guidance/hesa-register-data-mapping/:tabName", function (req, res) {
   const data = req.session.data
 
   // User has switched to non tab style so we should redirect away from tab urls.
   if (data.settings.hesaGuidanceStyle != 'tabs'){
-    res.redirect("/guidance/check-data-from-hesa-to-register")
+    res.redirect("/guidance/hesa-register-data-mapping")
   }
   else {
-    res.render(`guidance/check-data-from-hesa-to-register`, {
+    res.render(`guidance/hesa-register-data-mapping`, {
       activeTab: req.params.tabName
     })
   }

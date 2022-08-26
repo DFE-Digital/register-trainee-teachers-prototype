@@ -12,8 +12,8 @@ const enabledApplyRoutes = enabledTrainingRoutes.filter(route => trainingRouteDa
 
 // Rough percentages for each type of provider
 
-// SCITTs are a mix of provider led postgrad, school direct, and niche routes
-// HEIs are mostly provider led postgrad with some school direct and apprenticeships
+// SCITTs are a mix of provider led postgrad, School Direct, and niche routes
+// HEIs are mostly provider led postgrad with some School Direct and apprenticeships
 const routeRatios = {
   "SCITT": {
     'Assessment only': 0.01,

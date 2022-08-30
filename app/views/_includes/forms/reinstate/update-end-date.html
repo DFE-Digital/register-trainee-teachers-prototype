@@ -1,15 +1,3 @@
-{% set expectedEndDate = record.courseDetails.endDate | toDateArray %}
-{% set reinstateDate = record.reinstate.date | toDateArray %}
-
-{% set newExpectedEndDate = record.reinstate.newEndDate %}
-{% set reinstateIsAfterEndDate = reinstateDate | isAfter(expectedEndDate) %}
-{% set expectedEndDateIsInThePast = expectedEndDate | isInPast %}
-
-{# Set to false to enable alternate flow where we ask a radio question about change #}
-{% set alwaysShowNewExpectedEndDate = true %}
-
-{% set startWithDateInput = reinstateIsAfterEndDate or expectedEndDateIsInThePast or alwaysShowNewExpectedEndDate %}
-
 {% include "_includes/trainee-name-caption.njk" %}
 
 {% set dateHint -%}

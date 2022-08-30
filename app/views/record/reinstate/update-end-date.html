@@ -1,7 +1,19 @@
 {% extends "_templates/_record-form.html" %}
 
+{% set expectedEndDate = data.record.courseDetails.endDate | toDateArray %}
+{% set reinstateDate = data.record.reinstate.date | toDateArray %}
+
+{% set newExpectedEndDate = data.record.reinstate.newEndDate %}
+{% set reinstateIsAfterEndDate = reinstateDate | isAfter(expectedEndDate) %}
+{% set expectedEndDateIsInThePast = expectedEndDate | isInPast %}
+
+{# Set to false to enable alternate flow where we ask a radio question about change #}
+{% set alwaysShowNewExpectedEndDate = true %}
+
+{% set startWithDateInput = reinstateIsAfterEndDate or expectedEndDateIsInThePast or alwaysShowNewExpectedEndDate %}
+
 {% set pageHeading %}
-  Does the trainee have the same expected end date for their course?
+  {{ "What is the expected end date for their course?" if startWithDateInput else "Does the trainee have the same expected end date for their course?" }}
 {% endset %}
 
 {% set formAction = "./confirm" | addReferrer(referrer) %}

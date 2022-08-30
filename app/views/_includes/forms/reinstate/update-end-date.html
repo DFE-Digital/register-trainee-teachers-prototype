@@ -26,7 +26,7 @@
     namePrefix: "record[reinstate][newEndDate]",
     fieldset: {
       legend: {
-        text: "What is their expected end date?" if startWithDateInput else "Enter their new expected end date",
+        text: "What is the expected end date for their course?" if startWithDateInput else "Enter their new expected end date",
         classes: ("govuk-fieldset__legend--l" if startWithDateInput else "govuk-fieldset__legend--s"),
         isPageHeading: true if startWithDateInput
       }
@@ -69,11 +69,11 @@
     items: [
       {
         value: "same-date",
-        text: "Yes, they’re still expected to finish on " + record.courseDetails.endDate | govukDate
+        text: "Yes, they’re still expected to finish their course on " + record.courseDetails.endDate | govukDate
       },
       {
         value: "different-date",
-        text: "No, they have a new expected end date",
+        text: "No, they’re expected to end their course on a new date",
         conditional: {
           html: customEndDateHtml
         }

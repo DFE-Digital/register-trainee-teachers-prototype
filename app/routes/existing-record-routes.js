@@ -204,48 +204,60 @@ module.exports = router => {
   })
 
   // Convert radio choices to real dates
-  router.post('/record/:uuid/reinstate', (req, res) => {
+  router.post('/record/:uuid/reinstate/reinstate-date-answer', (req, res) => {
     const data = req.session.data
-    const newRecord = data.record
+    const record = data.record
 
     // Update failed or no data
-    if (!newRecord){
+    if (!record){
       res.redirect(`/record/${req.params.uuid}`)
     }
     else {
-      let radioChoice = newRecord.reinstateDateRadio
+      let radioChoice = record.reinstate.dateRadio
       if (radioChoice == "Today") {
-        newRecord.reinstateDate = filters.toDateArray(filters.today())
+        record.reinstate.date = filters.toDateArray(filters.today())
       }
       if (radioChoice == "Yesterday") {
-        newRecord.reinstateDate = filters.toDateArray(moment().subtract(1, "days"))
+        record.reinstate.date = filters.toDateArray(moment().subtract(1, "days"))
       }
-      res.redirect(`/record/${req.params.uuid}/reinstate/confirm`)
+
+      res.redirect(`/record/${req.params.uuid}/reinstate/update-end-date`)
     }
   })
 
   // Copy reinstate data back to real record
   router.post('/record/:uuid/reinstate/update', (req, res) => {
     const data = req.session.data
-    const newRecord = data.record
+    const record = data.record
 
-    let traineeStarted = newRecord?.trainingDetails?.traineeStarted
-
-    // Set trainee deferred date as start date if trainee deferred before starting
-    if (traineeStarted == "false") {
-      newRecord.trainingDetails.commencementDate = newRecord.reinstateDate
-      newRecord.trainingDetails.traineeStarted = "true"
-    }
+    let traineeStarted = record?.trainingDetails?.traineeStarted
 
     // Update failed or no data
-    if (!newRecord){
+    if (!record){
       res.redirect('/record/:uuid')
     }
     else {
-      newRecord.status = newRecord.previousStatus || 'TRN received'
-      delete newRecord.previousStatus
+      // Set trainee deferred date as start date if trainee deferred before starting
+      if (traineeStarted == "false") {
+        record.trainingDetails.commencementDate = record.reinstateDate
+        record.trainingDetails.traineeStarted = "true"
+      }
+      let radioChoice = record.reinstate.expectedEndDateIsSame
+
+      // Radio choice is a design option currently disabled - we just show a date input instead
+      if (radioChoice != "same-date"){
+        if (record?.reinstate?.newEndDate){
+          record.courseDetails.endDate = record.reinstate.newEndDate
+        }
+      }
+      // Delete this temporary data
+      delete record.reinstate.newEndDate
+      delete record.reinstate.dateRadio
+
+      record.status = record.previousStatus || 'TRN received'
+      delete record.previousStatus
       utils.deleteTempData(data)
-      utils.updateRecord(data, newRecord, "Trainee reinstated")
+      utils.updateRecord(data, record, "Trainee reinstated")
       req.flash('success', 'Trainee reinstated')
       res.redirect(`/record/${req.params.uuid}`)
     }
@@ -283,29 +295,29 @@ module.exports = router => {
   // Get dates for withdraw flow
   router.post('/record/:uuid/withdraw', (req, res) => {
     const data = req.session.data
-    const newRecord = data.record
+    let record = data.record
     let referrer = utils.getReferrer(req.query.referrer)
 
     // Update failed or no data
-    if (!newRecord){
+    if (!record){
       res.redirect('/record/:uuid')
     }
     else {
 
-      if (utils.isDeferred(newRecord)){
-        newRecord.withdrawalDate = newRecord.deferredDate
+      if (utils.isDeferred(record) && record.deferredDate){
+        record.withdrawalDate = record.deferredDate
       }
       else {
-        let radioChoice = newRecord.withdrawalDateRadio
+        let radioChoice = record.withdrawalDateRadio
         if (radioChoice == "Today") {
-          newRecord.withdrawalDate = filters.toDateArray(filters.today())
+          record.withdrawalDate = filters.toDateArray(filters.today())
         } 
         if (radioChoice == "Yesterday") {
-          newRecord.withdrawalDate = filters.toDateArray(moment().subtract(1, "days"))
+          record.withdrawalDate = filters.toDateArray(moment().subtract(1, "days"))
         }
       }
 
-      newRecord = utils.setEndAcademicYear(newRecord)
+      record = utils.setEndAcademicYear(record)
 
       res.redirect(`/record/${req.params.uuid}/withdraw/confirm${referrer}`)
     }
@@ -368,6 +380,29 @@ module.exports = router => {
     utils.deleteTempData(data)
     req.flash('success', 'Record removed')
     res.redirect('/records')
+  })
+
+  // Remove route
+  // If trainee has not started, skip deferred date
+  router.post('/record/:uuid/remove/did-trainee-start-answer', (req, res) => {
+    const data = req.session.data
+    let record = data.record
+    let traineeStarted = record?.trainingDetails?.traineeStarted
+    let referrer = utils.getReferrer(req.query.referrer)
+
+    if (traineeStarted === "true") {
+      console.log("first")
+      res.redirect(`/record/${req.params.uuid}/remove/cannot-remove${referrer}`)
+    }
+    else if (traineeStarted === "false") {
+      console.log("second")
+      res.redirect(`/record/${req.params.uuid}/remove/confirm${referrer}`)
+    }
+    else {
+      console.log("third")
+      res.redirect(`/record/${req.params.uuid}/remove/did-trainee-start${referrer}`)
+    }
+
   })
 
 

@@ -1,0 +1,71 @@
+{% set providers = data.signedInProviders %}
+
+{% set providers = data.providers.accreditingProviders.all | sort(attribute = "name") %}
+
+{% set providerItems = [] %}
+
+{% for provider in providers %}
+  {% set providerItems = providerItems | push({
+    text: provider.name + " (" + (provider.providerCode or "C23") + ")",
+    value: provider.name
+  }) %}
+{% endfor %}
+
+{# {% set providerItems = providerItems | push({divider: 'or'}) %}
+ #}
+
+<h1 class="govuk-heading-l">{{pageHeading}}</h1>
+
+{% set adminInsetContentHtml %}
+
+  <p class="govuk-body">
+    Only change the accredited provider if the current provider, <strong>{{record.provider}}</strong>, has instructed you to.
+  </p>
+
+  <p class="govuk-body">
+    The old and new accredited providers will be sent a notification confirming the change.
+  </p>
+{% endset %}
+
+
+{{ appAdminFeature({
+  html: adminInsetContentHtml
+}) }}
+
+
+{{ appAutocompleteFromSelect({
+  label: {
+    text: "Select a new accredited provider",
+    classes: "govuk-label--s"
+  },
+  hint: {
+    html: degreeHint
+  },
+  id: 'provider',
+  name: "record[provider]",
+  _items: providers | toSelectItems,
+  items: providerItems,
+  classes: "govuk-!-width-two-thirds",
+  value: null,
+  autocompleteOptions: {
+    autoselect: false,
+    showAllValues: true,
+    minLength: 2,
+    showSuggestionsBanner: false
+  }
+}) }}
+
+{# {{ govukRadios({
+  fieldset: {
+    legend: {
+      text: pageHeading,
+      isPageHeading: true,
+      classes: "govuk-fieldset__legend--l"
+    }
+  },
+  items: providerItems
+} | decorateAttributes(record, "record.provider")) }} #}
+
+{{ govukButton({
+  text: "Continue"
+}) }}

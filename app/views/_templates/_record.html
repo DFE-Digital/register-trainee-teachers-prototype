@@ -39,6 +39,8 @@
 
 {% set canAmend = data.isAdmin or isAuthorised("editRecords") and (record.status | canBeAmended) and (not record | isHesaAndLocked) %}
 
+{% set canDoRecordActions = data.isAdmin or isAuthorised("editRecords") and (record.status | canBeAmended) %}
+
 {# Used by summary cards #}
 {% set recordPath = "/record/" + record.id %}
 {% set referrer = recordPath %}

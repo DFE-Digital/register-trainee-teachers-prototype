@@ -1,0 +1,231 @@
+{% extends "_templates/_guidance-page.html" %}
+
+{% from "govuk/components/table/macro.njk" import govukTable %}
+
+
+{% set pageHeading = 'Check the data mapping between HESA and Register trainee teachers' %}
+{% set gridColumn = "govuk-grid-column-full" %}
+
+{# Page notes:
+
+This page is set up to render as either tabs / accordion / flat content so we can try different layouts.
+
+A get route deals with rendering the separate pages for the tabs.
+
+#}
+
+{# 
+  To generate table data:
+
+  1. Start with finished table in Google sheets
+  2. Copy cells for table
+  3. Paste in to https://tabletomarkdown.com/convert-spreadsheet-to-markdown/
+  4. Convert to markdown and copy markdown in to the template below
+
+ #}
+
+{% set tableHeadItems =  [
+  {
+    text: "Register CSV column"
+  },
+  {
+    text: "Register field in the service"
+  },
+  {
+    text: "HESA field"
+  },
+  {
+    text: "More information"
+  }
+] %}
+
+{% set traineeProgressContent %}
+
+| Register CSV column   | Register field in the service | HESA field                                                                                          | More information                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| --------------------- | ----------------------------- | --------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| hesa\_id              | not displayed                 | [HUSID](https://www.hesa.ac.uk/collection/c22053/e/husid) (HESA unique student identifier)          | –                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| provider\_trainee\_id | Trainee ID                    | [OWNSTU](https://www.hesa.ac.uk/collection/c22053/e/ownstu) (provider's own identifier for student) | –                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| trn                   | TRN                           | [TRN](https://www.hesa.ac.uk/collection/c22053/e/trn) (teacher reference number)                    | –                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| status                | Trainee status                | [RSNEND](https://www.hesa.ac.uk/collection/c22053/e/rsnend) (reason for ending instance)            | If HESA codes 03, 05 or 11 are used we mark the trainee status as ‘withdrawn’ in Register. We’ll also add a ‘withdraw\_date’ and ‘withdraw\_reason’ in the Register CSV.<br><br>HESA field ‘MODE’ will also impact ‘Trainee status’. If codes 63 or 64 (dormant trainees) are used, the trainee’s status will change to ‘Deferred’ in Register.<br><br>‘Dormant’ in HESA means ‘Deferred’ in Register. |
+| hesa\_updated\_at     | not displayed                 | STATUS\_TIMESTAMP                                                                                   | The date the trainee record was last updated in HESA or the TRA portal.<br><br>This is not the date the record was uploaded to HESA. For example, if you update and then upload a record in September, ‘hesa\_updated\_at’ will show a date for September. If you then upload the same record in January and April without any updates, ‘hesa\_updated\_at’ will still show with a date in September.                                                                                                   |
+
+{% endset %}
+
+{% set personalDetailsContent %}
+
+| Register CSV column                                                                         | Register field in the service                   | HESA field                                                                                  | More information                                                                                                                                                                                                                                                                                                                                   |
+| ------------------------------------------------------------------------------------------- | ----------------------------------------------- | ------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| first\_names                                                                                | Full name                                       | [FNAMES](https://www.hesa.ac.uk/collection/c22053/e/fnames) (forenames)                     | A trainee’s first name and middle name (if they have one) will go into the Register CSV column called ‘first\_names’. The column ‘middle\_names’ will be empty.                                                                                                                                                                                                                              |
+| last\_names                                                                                 | Full name                                       | [SURNAME](https://www.hesa.ac.uk/collection/c22053/e/surname) (family name)                 | –                                                                                                                                                                                                                                                                                                                                                  |
+| date\_of\_birth                                                                             | Date of birth                                   | [BIRTHDTE](https://www.hesa.ac.uk/collection/c22053/e/birthdte) (date of birth)             | –                                                                                                                                                                                                                                                                                                                                                  |
+| gender                                                                                      | Gender                                          | [SEXID](https://www.hesa.ac.uk/collection/c22053/e/sexid) (sex identifier)                  | HESA code 96 ‘Information refused’ imports into Register as ‘Prefer not to say’<br><br>HESA code 99 ‘Not available’ imports into Register as ‘Gender not provided’                                                                                                                                                                                 |
+| nationalities                                                                               | Nationality                                     | [NATION](https://www.hesa.ac.uk/collection/c22053/e/nation) (nationality)                   | –                                                                                                                                                                                                                                                                                                                                                  |
+| email\_address                                                                              | Email address                                   | [NQTEMAIL](https://www.hesa.ac.uk/collection/c22053/e/nqtemail) (email addresses)           | –                                                                                                                                                                                                                                                                                                                                                  |
+| diversity\_disclosure<br>ehnic\_group<br>ethnic\_background<br>ethnic\_background\_additional | Ethnicity                                       | [ETHNIC](https://www.hesa.ac.uk/collection/c22053/e/ethnic) (ethnicity)                     | –                                                                                                                                                                                                                                                                                                                                                  |
+| diversity\_disclosure<br>disability\_disclosure<br>disabilities                             | Disability                                      | [DISABLE](https://www.hesa.ac.uk/collection/c22053/e/disable) (disability)                  | –                                                                                                                                                                                                                                                                                                                                                  |
+| number\_of\_degrees degree\_1\_subject                                                      | Subject (within personal details and education) | [DEGSBJ](https://www.hesa.ac.uk/collection/c22053/e/degsbj) (previous degree subject)       | Register only supports 1 degree subject at the moment. If you add multiple subjects for a trainee’s degree, Register will take the first one.                                                                                                                                                                                                      |
+| degree\_1\_non\_uk\_type degree\_1\_type\_of\_degree (for UK degrees only)                  | Degree type                                     | [DEGTYPE](https://www.hesa.ac.uk/collection/c22053/e/degtype) (previous degree type)        | The CSV export from Register does not display degree types with ‘Honours’. For example, in HESA a BEd is code 001 and a BEd (Hons) is code 002. Both these codes will show as ‘Bachelor of Education’ in the CSV.                                                                                                                                 |
+| degree\_1\_awarding\_institution                                                            | Awarding institution                            | [DEGEST](https://www.hesa.ac.uk/collection/c22053/e/degest) (previous degree establishment) | –                                                                                                                                                                                                                                                                                                                                                  |
+| degree\_1\_uk\_or\_non\_uk<br>degree\_1\_country                                            | Country                                         | [DEGCTRY](https://www.hesa.ac.uk/collection/c22053/e/degctry) (previous degree country)     | The 'degree\_1\_uk\_or\_non\_uk’ column in the Register CSV will show as ‘UK’ when the following HESA codes are used:<br>XF England<br>XG Northern Ireland<br>XH Scotland<br>XI Wales<br>XK United Kingdom, not otherwise specified<br><br>The ‘degree\_1\_country’ column in the Register CSV will only populate with countries outside the UK.<br> |
+| degree\_1\_grade                                                                            | Grade                                           | [DEGCLSS](https://www.hesa.ac.uk/collection/c22053/e/degclss) (previous degree class)       | This information will only show in the Register service and CSV for UK degrees.                                                                                                                                                                                                                                                                    |
+| degree\_1\_graduation\_year                                                                 | Graduation year                                 | [DEGENDDT](https://www.hesa.ac.uk/collection/c22053/e/degenddt) (previous degree end date)  | Register will show the year the trainee graduated from their degree. For example, 2010.                                                                                                                                                                                                                                                            |
+
+{% endset %}
+
+{% set courseDetailsContent %}
+
+| Register CSV column                                                                                          | Register field in the service             | HESA field                                                                                        | More information                                                                                                                                                                                                                                                                          |
+| ------------------------------------------------------------------------------------------------------------ | ----------------------------------------- | ------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| course\_route                                                                                                | Training route                            | [ENTRYRTE](https://www.hesa.ac.uk/collection/c22053/e/entryrte) (entry route)                     | –                                                                                                                                                                                                                                                                                         |
+| course\_allocation\_subject<br>course\_itt\_subject\_1<br>course\_itt\_subject\_2<br>course\_itt\_subject\_3 | Subject (within course details)           | [SBJCA](https://www.hesa.ac.uk/collection/c22053/e/sbjca) (subject of ITT course)                 | The course allocation subject is like an overall category that ITT subjects are grouped by.<br><br>We get the ‘course\_allocation\_subject’ in the CSV from the ‘course\_itt\_subject\_1’. For example, if the trainees’ course subject 1 is French, the allocation subject is Modern languages. |
+| course\_min\_age<br>course\_max\_age<br>course\_education\_phase                                             | Age range<br><br>Education phase          | [ITTPHSC](https://www.hesa.ac.uk/collection/c22053/e/ittphsc) (ITT phase or scope)                | HESA codes 99803 and 99801 are not used in Register.<br><br>We decide the ‘Education phase’ (primary or secondary) from the ‘Age range’. If the maximum age is 11 or under, we set the ‘Education phase’ to ‘primary’. Anything else will be set to ‘secondary’.                          |
+| course\_study\_mode                                                                                          | Full time or part time                    | [MODE](https://www.hesa.ac.uk/collection/c22053/e/mode) (mode)                                    | –                                                                                                                                                                                                                                                                                          |
+| itt\_start\_date<br>start\_academic\_year                                                                    | ITT start date                            | [COMDATE](https://www.hesa.ac.uk/collection/c22053/e/comdate) (start date of instance)            | ‘ITT start date’ (COMDATE) will also be used to set the ‘trainee start date’ (ITTCOMDATE) if ‘ITTCOMDATE’ is not available.                                                                                                                                         |
+| itt\_end\_date<br>end\_academic\_year                                                                        | ITT end date                              | [EXPECTEDENDDATE](https://www.hesa.ac.uk/collection/c22053/e/expectedenddate) (expected end date) | You must submit this data even though it’s optional in HESA. If you do not add it, we’ll use the trainee’s ITT start date (COMDATE), training route (ENTRYRTE) and if they’re full or part time (MODE) to work out the ITT end date.                                                      |
+| commencement\_date<br>itt\_start\_date                                                                       | Trainee start date                        | [ITTCOMDATE](https://www.hesa.ac.uk/collection/c22053/e/ittcomdate) (start date of ITT course)    | If this is available, it will set the ‘ITT start date’ (COMDATE) and ‘trainee start date’ (ITTCOMDATE)                                                                                                                                                                                    |
+| withdraw\_date                                                                                               | Withdrawal date (in Trainee status field) | [ENDDATE](https://www.hesa.ac.uk/collection/c22053/e/enddate) (end date of instance)              | –                                                                                                                                                                                                                                                                                         |
+
+{% endset %}
+
+{% set schoolsContent %}
+
+Register will check the URN (unique reference number) of each school to make sure it’s valid. If it’s not, this data will not import into Register.
+
+| Register CSV column    | Register field in the service | HESA field                                                                                       | More information                                                                                                             |
+| ---------------------- | ----------------------------- | ------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------- |
+| employing\_school\_urn | Employing school              | [SDEMPLOY](https://www.hesa.ac.uk/collection/c22053/e/sdemploy) (School Direct employing school) | – |
+| lead\_school\_urn      | Lead school                   | [SDLEAD](https://www.hesa.ac.uk/collection/c22053/e/sdlead) (School Direct lead school)          | – |
+
+{% endset %}
+
+{% set fundingContent %}
+| Register CSV column  | Register field in the service | HESA field                                                                          | More information                                                                                                                                                                                                                                                                |
+| -------------------- | ----------------------------- | ----------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| funding\_method      | Funding method                | [BURSLEV](https://www.hesa.ac.uk/collection/c22053/e/burslev) (bursary level award) | –                                                                                                                                                                                                                                                                               |
+| training\_initiative | Training initiative           | [INITIATIVES](https://www.hesa.ac.uk/collection/c22053/e/initiatives) (initiatives) | HESA allows you to add 2 initiatives, but Register will only import the first one.<br><br>The following HESA codes are not mapped to Register:<br>001 Abridged ITT course<br>011 Primary with mathematics specialist<br>019 Additional ITT place for PE with a priority subject |
+{% endset %}
+
+{% set otherContent %}
+
+These HESA fields are used for analysis and map to Register’s database, so you will not see them in the Register service or the CSV export.
+
+For school placements (HESA field PLMNTSCH), although we collect and use this data, you cannot view it in the service or the CSV yet.
+
+| HESA field                                                                                                          |
+| ------------------------------------------------------------------------------------------------------------------- |
+| [ALLPLACE](https://www.hesa.ac.uk/collection/c22053/e/allplace) (allocated place)                                   |
+| [COURSEID](https://www.hesa.ac.uk/collection/c22053/e/courseid) (course identifier)                                 |
+| [CTITLE](https://www.hesa.ac.uk/collection/c22053/e/ctitle) (course title)                                          |
+| [FUNDCODE](https://www.hesa.ac.uk/collection/c22053/e/fundcode) (fundability code)                                  |
+| [ITTAIM](https://www.hesa.ac.uk/collection/c22053/e/ittaim) (ITT qualification aim)                                 |
+| [NIN](https://www.hesa.ac.uk/collection/c22053/e/nin) (national insurance number)                                   |
+| [NUMHUS](https://www.hesa.ac.uk/collection/c22053/e/numhus) (student instance identifier)                           |
+| [PGAPPSTDT](https://www.hesa.ac.uk/collection/c22053/e/pgappstdt) (postgraduate teaching apprenticeship start date) |
+| [PLMNTDYS](https://www.hesa.ac.uk/collection/c22053/e/plmntdys) (number of days spent in a placement school)        |
+| [PLMNTSCH](https://www.hesa.ac.uk/collection/c22053/e/plmntsch) (placement school)                                  |
+| [PSURNAME](https://www.hesa.ac.uk/collection/c22053/e/psurname) (immediately prior surname)                         |
+| [QLAIM](https://www.hesa.ac.uk/collection/c22053/e/qlaim) (qualification aim)                                       |
+| [SNAME16](https://www.hesa.ac.uk/collection/c22053/e/sname16) (family name on 16 birthday)                          |
+| [TTCID](https://www.hesa.ac.uk/collection/c22053/e/ttcid) (teacher training course)                                 |
+| [YEARPRG](https://www.hesa.ac.uk/collection/c22053/e/yearprg) (year of course)                                      |
+
+{% endset %}
+
+{# Make an object that contains all the page data #}
+{% set allTableContent = {
+  "trainee-progress": 
+  {
+    name: "Trainee progress",
+    content: traineeProgressContent
+  },
+  "personal-details": {
+    name: "Personal details",
+    content: personalDetailsContent
+  },
+  "course-details": {
+    name: "Course details",
+    content: courseDetailsContent
+  },
+  "schools": {
+    name: "Schools",
+    content: schoolsContent
+  },
+  "funding": {
+    name: "Funding",
+    content: fundingContent
+  },
+  "Database only": {
+    name: "Database only",
+    content: otherContent
+  }
+} %}
+
+{# Page begins #}
+{% block guidanceContent %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+
+    # {{ pageHeading }}
+
+    Use the table to check how data maps between HESA and Register trainee teachers (Register).
+
+    Where possible, these tables follow the same order as the CSV export and a trainee’s record in Register.
+
+    
+  </div>
+</div>
+
+{% if data.settings.hesaGuidanceStyle == 'tabs' %}
+
+  {# Compile tabs  #}
+  {% set tabItems = [] %}
+  {% for key, tab in allTableContent %}
+    {% set tabItems = tabItems | push({
+        text: tab.name,
+        href: "./" + key,
+        active: (activeTab == key)
+      })
+    %}
+  {% endfor %}
+
+  {{ appSubNavigation({
+    label: 'Sub navigation',
+    classes: 'govuk-!-margin-bottom-4',
+    items: tabItems
+  }) }}
+
+  {# Route will tell us what tab’s content to render #}
+  {{ allTableContent[activeTab].content  | safe}}
+
+{% elseif data.settings.hesaGuidanceStyle == 'accordion' %}
+
+  {# Generate data for accordion #}
+  {% set accordionItems = [] %}
+  {% for key, item in allTableContent %}
+    {% set accordionItems = accordionItems | push({
+      heading: {
+        text: item.name
+      },
+      content: {
+        html: item.content
+      }
+    }) %}
+  {% endfor %}
+
+  {{ govukAccordion({
+    id: "accordion-default",
+    items: accordionItems
+  }) }}
+
+{# Flat content #}
+{% else %} 
+
+  {% for key, tabData in allTableContent %}
+    <h2 class="govuk-heading-m">{{tabData.name}}</h2>
+    {{ tabData.content | safe }}
+  {% endfor %}
+
+{% endif %}
+
+{% endblock %}

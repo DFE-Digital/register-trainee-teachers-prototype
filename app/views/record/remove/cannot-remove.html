@@ -1,7 +1,7 @@
 
 {% extends "_templates/_record-form.html" %}
 
-{% set pageHeading = 'You cannot withdraw this trainee' %}
+{% set pageHeading = 'You cannot remove this trainee' %}
 
 {% block formContent %}
 
@@ -11,10 +11,10 @@
   </h1>
 
   <p class="govuk-body">
-    You can only withdraw a trainee after they have started their ITT.
+    You can only remove a trainee if they have not started their ITT.
   </p>
   <p class="govuk-body">
-    You can <a href="{{ "./../remove/confirm" | addReferrer(referrer) }}">remove this trainee record</a>.
+    You can <a href="{{ "./../withdraw/when-did-trainee-start" | addReferrer(referrer) }}">withdraw this trainee instead</a>.
   </p>
   <p class="govuk-body">
     If you need more help, email us at <a class="govuk-link" href="mailto:becomingateacher@digital.education.gov.uk?subject=withdraw%20a%20trainee">becomingateacher@digital.education.gov.uk</a>.

@@ -1,7 +1,8 @@
 {% extends "_templates/_record-form.html" %}
 
 {% set pageHeading = "When did the trainee return?" %}
-{# {% set formAction = "./reinstate/confirm" %} #}
+
+{% set formAction = "./reinstate/reinstate-date-answer" %}
   
 {% block formContent %}
 
@@ -12,6 +13,6 @@
     </h1>
   {% endset %}
 
-  {% include "_includes/forms/reinstate.html" %}
+  {% include "_includes/forms/reinstate/date.html" %}
 
 {% endblock %}

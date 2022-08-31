@@ -14,6 +14,11 @@ const sessionInMemory = require('express-session')
 const cookieParser = require('cookie-parser')
 const compression = require('compression')
 
+// Register added
+const { marked } = require('marked')
+const GovukHTMLRenderer = require('govuk-markdown')
+const nunjucksMarkdown = require('nunjucks-markdown')
+
 // Run before other code to make sure variables from .env are available
 dotenv.config()
 
@@ -121,6 +126,17 @@ utils.addNunjucksFilters(nunjucksAppEnv)
 
 // Add Nunjucks functions (**Register trainee teachers addition**)
 utils.addNunjucksFunctions(nunjucksAppEnv)
+
+  // Register added
+  marked.setOptions({
+    renderer: new GovukHTMLRenderer(),
+    headerIds: true,
+    headingsStartWith: 'l',
+    smartypants: true
+  })
+
+  nunjucksMarkdown.register(nunjucksAppEnv, marked)
+  // End Register added
 
 // Set views engine
 app.set('view engine', 'html')

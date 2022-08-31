@@ -21,10 +21,10 @@ let endAcademicYears = [
   "2017 to 2018"
 ]
 
-let currentAcademicYear = "2021 to 2022"
-let currentAcademicYearSimple = 2021
+let currentAcademicYear = "2022 to 2023"
+let currentAcademicYearSimple = 2022
 
-let defaultCourseYear = 2021
+let defaultCourseYear = 2022
 // defaultCourseYear = null
 
 let endOfCurrentCycle = defaultCourseYear + 1

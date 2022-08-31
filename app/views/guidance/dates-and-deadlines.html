@@ -1,0 +1,98 @@
+{% extends "_templates/_guidance-page.html" %}
+
+{% set pageHeading = 'Dates and deadlines' %}
+
+{% block guidanceContent %}
+
+<h1 class="govuk-heading-l govuk-!-margin-bottom-9">{{pageHeading}} for the {{ data.years.currentAcademicYear | nowrap | safe }} academic year</h1>
+
+{{ govukTable({
+  caption: "Deadlines for all training providers",
+  captionClasses: "govuk-table__caption--m",
+  firstCellIsHeader: false,
+  head: [
+    {
+      text: "Date",
+      classes: 'govuk-!-width-one-third'
+    },
+    {
+      text: "What happens"
+    }
+  ],
+  rows: [
+    [
+      {
+        html: "Wednesday 12 October 2022" | nowrap
+      },
+      {
+        text: "The second Wednesday of October every academic year is called the ‘census date’. If a new trainee starts their course after this date, they will not be included in the ITT census publication. This is why it’s important to add your new trainees as they start their training."
+      }
+    ],
+    [
+      {
+        html: "31 October 2022" | nowrap
+      },
+      {
+        text: "A senior person from your organisation must sign off your new trainee data on or before this date (this should be a different person to who submitted the data). "
+      }
+    ]
+  ]
+} ) }}
+
+{# Done here so they can each be nowraped on their own lines #}
+{% set combinedDatesContent %}
+{{ "16 to 31 January 2023" | nowrap | safe }}
+{{ "17 to 28 April 2023" | nowrap | safe }}
+{{ "17 to 31 July 2023" | nowrap | safe }}
+{% endset %}
+
+{{ govukTable({
+  caption: "Deadlines for higher education institutions (HEIs) that use HESA",
+  captionClasses: "govuk-table__caption--m",
+  firstCellIsHeader: false,
+  head: [
+    {
+      text: "Date",
+      classes: 'govuk-!-width-one-third'
+    },
+    {
+      text: "What happens"
+    }
+  ],
+  rows: [
+    [
+      {
+        html: "1 September 2022" | nowrap
+      },
+      {
+        text: "HESA data collection system opens. Training providers can start submitting their ITT trainee data to the DfE through HESA."
+      }
+    ],
+    [
+      {
+        html: "14 October 2022" | nowrap
+      },
+      {
+        text: "First data submission required to HESA. Training providers should have started submitting data by this date."
+      }
+    ],
+    [
+      {
+        html: "31 October 2022" | nowrap
+      },
+      {
+        text: "HESA data collection system closes. ITT trainee data must be submitted and signed off on or before the data collection system closes. Not doing this, will mean the DfE has inaccurate data which could affect the ITT census publication."
+      }
+    ],
+    [
+      {
+        html: combinedDatesContent
+      },
+      {
+        text: "ITT data collection update periods where you can update your trainee data through HESA if anything has changed. Data will be imported into Register. You do not need to sign off your data during these update periods."
+      }
+    ]
+  ]
+} ) }}
+
+{% endblock %}

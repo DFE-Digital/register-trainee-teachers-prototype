@@ -2,8 +2,17 @@
 
 .record-actions {
   @include govuk-media-query($from: tablet) {
+    // display: flex;
+    // align-items: center;
+
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
   }
 }
+
+// .record-actions--secondary {
+//   @include govuk-media-query($from: tablet) {
+//     justify-content: flex-end;
+//   }
+// }

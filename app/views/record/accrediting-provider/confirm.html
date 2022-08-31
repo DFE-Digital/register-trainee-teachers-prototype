@@ -1,0 +1,33 @@
+{% extends "_templates/_record-form.html" %}
+
+{% set pageHeading = "Confirm new accredited provider" %}
+
+{% set backLink = ("/record/" + data.record.id) | orReferrer(referrer) %}
+{% set backText = "Back to record" %}
+
+{% set gridColumn = 'govuk-grid-column-full' %}
+{% set formAction = "./update" | addReferrer(referrer) %}
+
+{% block formContent %}
+  {% include "_includes/trainee-name-caption.njk" %}
+  <h1 class="govuk-heading-l">
+    {{pageHeading}}
+  </h1>
+
+  {% include "_includes/summary-cards/accrediting-provider.html" %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+      {{ govukWarningText({
+        text: "The accredited provider you’ve selected will be given ownership of this trainee’s record. Selecting the wrong provider could lead to a data breach.",
+        iconFallbackText: "Warning"
+      }) }}
+    </div>
+  </div>
+
+  {{ govukButton({
+    text: "Update record"
+  }) }}
+
+{% endblock %}
+

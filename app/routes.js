@@ -167,7 +167,39 @@ router.post('/direct-set-data', function(req, res, next){
 })
 
 // =============================================================================
-// Individual pages
+// Guidance
+// =============================================================================
+
+// Redirect to tab if tabs are enabled.
+router.get("/guidance/hesa-register-data-mapping", function (req, res, next) {
+  const data = req.session.data
+
+  if (data.settings.hesaGuidanceStyle == 'tabs'){
+    res.redirect("/guidance/hesa-register-data-mapping/trainee-progress")
+  }
+  else {
+    next()
+  }
+
+})
+
+router.get("/guidance/hesa-register-data-mapping/:tabName", function (req, res) {
+  const data = req.session.data
+
+  // User has switched to non tab style so we should redirect away from tab urls.
+  if (data.settings.hesaGuidanceStyle != 'tabs'){
+    res.redirect("/guidance/hesa-register-data-mapping")
+  }
+  else {
+    res.render(`guidance/hesa-register-data-mapping`, {
+      activeTab: req.params.tabName
+    })
+  }
+
+})
+
+// =============================================================================
+// Individual route files
 // =============================================================================
 
 // =============================================================================
@@ -175,8 +207,9 @@ router.post('/direct-set-data', function(req, res, next){
 // =============================================================================
 require('./routes/support-routes')(router)
 
-
+// =============================================================================
 // Records list
+// =============================================================================
 require('./routes/records-list-routes')(router)
 
 // =============================================================================

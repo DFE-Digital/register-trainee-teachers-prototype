@@ -1,8 +1,10 @@
 
 {% extends "_templates/_page.html" %}
 {% set backLink = '/home' %}
+{% set backText = "Home" %}
 
 {% set pageHeading = 'Reports' %}
+{% set navActive = 'reports' %}
 
 {% block content %}
 
@@ -11,9 +13,16 @@
     <h1 class="govuk-heading-l">{{pageHeading}}</h1>
 
     <ul class="govuk-list govuk-list--spaced">
-      <li>
+      {# Census report put on pause for now #}
+      {# <li>
         <a class="govuk-link" href="/reports/census">
-          Export census records for the {{data.years.currentAcademicYear}} academic year
+          Export census data for the {{data.years.currentAcademicYear}} academic year
+        </a>
+      </li> #}
+
+      <li>
+        <a class="govuk-link" href="/reports/itt-new-starter-data-sign-off">
+          Export new trainee data for the {{data.years.currentAcademicYear}} academic year for sign off
         </a>
       </li>
 

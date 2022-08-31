@@ -1,3 +1,14 @@
+
+{% set deferUrl %}
+  {% if (record | ittInTheFuture) %}
+    {{ referrer + "/defer/confirm" | addReferrer(referrer) }}
+  {% elseif (record | ittStartedButNoCommencementDate) %}
+    {{ referrer + "/defer/did-trainee-start" | addReferrer(referrer) }}
+  {% else %}
+    {{ referrer + "/defer" | addReferrer(referrer) }}
+  {% endif %}
+{% endset %}
+
 {% set reinstateUrl %}
   {% if (record | ittInTheFuture) %}
     {{ referrer + "/reinstate/confirm" }}
@@ -14,24 +25,57 @@
   {% endif %}
 {% endset %}
 
-{% set deferUrl %}
-  {% if (record | ittInTheFuture) %}
-    {{ referrer + "/defer/confirm" | addReferrer(referrer) }}
-  {% elseif (record | ittStartedButNoCommencementDate) %}
-    {{ referrer + "/defer/did-trainee-start" | addReferrer(referrer) }}
+{% set removeUrl %}
+  {% if record | ittStartedButNoCommencementDate %}
+    {{ referrer + "/remove/did-trainee-start" | addReferrer(referrer) }}
   {% else %}
-    {{ referrer + "/defer" | addReferrer(referrer) }}
+    {{ referrer + "/remove/confirm" | addReferrer(referrer) }}
   {% endif %}
 {% endset %}
 
-{% set removeUrl %}
-  {{ referrer + "/remove/confirm" | addReferrer(referrer) }}
+{% set actionItems = [] %}
+
+
+{# Remove record #}
+{% if not record.trainingDetails.commencementDate %}
+  {% set actionItems = actionItems | push(['remove', removeUrl]) %}
+{% endif %}
+
+{# Did not start #}
+{# {% if record | isNotDeferred and not record.trainingDetails.commencementDate %}
+  {% set actionItems = actionItems | push(['did not start', removeUrl]) %}
+{% endif %} #}
+
+{# Defer #}
+{% if not record | isDeferred %}
+  {% set actionItems = actionItems | push(['defer', deferUrl]) %}
+{% endif %}
+
+{# Reinstate #}
+{% if record | isDeferred %}
+  {% set actionItems = actionItems | push(['reinstate', reinstateUrl]) %}
+{% endif %}
+
+{# Withdraw #}
+{% if not record | ittInTheFuture %}
+  {% set actionItems = actionItems | push(['withdraw', withdrawUrl]) %}
+{% endif %}
+
+{% set actionLinksHtml = [] %}
+
+{% for item in actionItems -%}
+  {% set linkHtml -%}<a href="{{ item[1] }}">{{ (item[0] | sentenceCase ) if loop.first else item[0] }}</a>
+  {%- endset %}
+  {% set actionLinksHtml = actionLinksHtml | push(linkHtml) %}
+{%- endfor %}
+
+{% set actionSentenceHtml %}
+  <p class="govuk-body">{{actionLinksHtml | orSeparate | safe }} this trainee</p>
 {% endset %}
 
+{# {% set buttonMenuItems = [] %} #}
 
-{% set buttonMenuItems = [] %}
-
-{% if (record | isDeferred ) and record.trainingDetails.commencementDate %}
+{# {% if (record | isDeferred ) and record.trainingDetails.commencementDate %}
   {%- set buttonMenuItems = buttonMenuItems | push(
     { text: "Reinstate", href: reinstateUrl, classes: "govuk-button--secondary" }
   ) -%}
@@ -69,12 +113,59 @@
   {%- set buttonMenuItems = buttonMenuItems | push(
     { text: "Withdraw", href: withdrawUrl, classes: "govuk-button--secondary" }
   ) -%}
-{% endif %}
+{% endif %} #}
 
-<div class="govuk-grid-column-one-half record-actions">
 
-    {{ mojButtonMenu({
-      items: buttonMenuItems
-    }) }}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full record-actions">
 
+    <div class="">
+      {% if record.status | canRecommendForQts %}
+        {% if record | ittInTheFuture %}
+          {{ govukInsetText({
+          text: "The trainee’s ITT starts on " + (record.courseDetails.startDate | govukDate),
+          classes: "govuk-!-margin-0"
+        }) }}
+        {% elseif record | hasOutstandingActions %}
+          {{ govukInsetText({
+            text: "This trainee record requires additional details",
+            classes: "govuk-!-margin-0"
+          }) }}
+        {% else %}
+          {{ govukButton({
+            text: "Recommend trainee for " + (record | getQualificationText),
+            href: referrer + '/qualification/outcome-date',
+            classes: "govuk-!-margin-bottom-0"
+          }) }}
+        {% endif %}
+      {% elseif record.status == "Pending TRN" %}
+        {{ govukInsetText({
+          text: "This trainee is pending a TRN",
+          classes: "govuk-!-margin-0"
+        }) }}
+      {% elseif record.status == "Deferred" %}
+        {{ govukInsetText({
+          text: "This trainee is deferred",
+          classes: "govuk-!-margin-0"
+        }) }}
+      {% endif %}
+    </div>
+
+    <div class="">
+      {{actionSentenceHtml | safe}}
+      {# {{ mojButtonMenu({
+        items: buttonMenuItems
+      }) }} #}
+
+    </div>
+
+  </div>
 </div>
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <hr class="govuk-section-break govuk-section-break--l govuk-!-margin-top-3 govuk-section-break--visible">
+  </div>
+</div>
+

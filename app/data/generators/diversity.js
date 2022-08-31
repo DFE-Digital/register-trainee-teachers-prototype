@@ -34,6 +34,7 @@ module.exports = () => {
       "English, Welsh, Scottish, Northern Irish or British",
       "Irish",
       "Gypsy or Irish Traveller",
+      "Roma",
       "Any other White background",
       "Not provided"
     ],
@@ -69,6 +70,7 @@ module.exports = () => {
     let disabilityChoices = [
       "Blind",
       "Deaf",
+      "Development condition",
       "Learning difficulty",
       "Long-standing illness",
       "Mental health condition",

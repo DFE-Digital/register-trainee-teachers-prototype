@@ -165,6 +165,11 @@ filters.padDigits = (input, targetLength) => {
   return input.toString().padStart(targetLength, 0);
 }
 
+// Return string wrapped in a nowrap class.
+filters.nowrap = (input) => {
+  return `<span class="app-nowrap">${input}</span>`
+}
+
 // -------------------------------------------------------------------
 // keep the following line to return your filters to the app
 // -------------------------------------------------------------------

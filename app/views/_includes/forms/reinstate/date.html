@@ -1,12 +1,12 @@
-{% set customReinstateDateArray = record.reinstateDate | toDateArray %}
-{% if record.reinstateDate | isInLast(2, "days") and record.reinstateDateRadio != "On another day" %}
+{% set customReinstateDateArray = record.reinstate.date | toDateArray %}
+{% if record.reinstate.date | isInLast(2, "days") and record.reinstateDateRadio != "On another day" %}
   {% set customReinstateDateArray = undefined %}
 {% endif %}
 
 {% set customReinstateDate %}
   {{ govukDateInput({
     id: "custom-reinstate-date",
-    namePrefix: "record[reinstateDate]",
+    namePrefix: "record[reinstate][date]",
     fieldset: {
       legend: {
         text: "Enter the return date",
@@ -59,7 +59,7 @@
       }
     }
   ]
-} | decorateAttributes(record, "record.reinstateDateRadio")) }}
+} | decorateAttributes(record, "record.reinstate.dateRadio")) }}
 
 {{ govukButton({
   text: "Continue"

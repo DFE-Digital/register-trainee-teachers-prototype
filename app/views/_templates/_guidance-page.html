@@ -47,7 +47,7 @@
   {% include "_includes/app-flash-message.html" %}
 
   <div class="govuk-grid-row">
-    <div class="{{ gridColumn or govuk-grid-column-two-thirds-from-desktop }}">
+    <div class="{{ gridColumn or 'govuk-grid-column-two-thirds-from-desktop' }}">
       {% markdown %}
         {% block guidanceContent %}
           

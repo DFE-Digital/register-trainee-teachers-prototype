@@ -63,6 +63,9 @@ module.exports = function (env) {
   // Expose all of lodash
   functions.lodash = _
 
+  // Expose all of moment
+  functions.moment = moment
+
   // Expose all of faker
   functions.faker = faker
 

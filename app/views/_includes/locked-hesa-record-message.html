@@ -15,7 +15,8 @@
         This record was imported from HESA and cannot be edited except to {{ deferOrReinstateText }} or withdraw the trainee.
       </h3>
       <p class="govuk-body">
-        Updates from HESA are imported regularly.
+        {# Assume sync has happened within in last 2 hours #}
+        HESA records last imported at: {{ moment().subtract(78, 'minutes') | govukDateTime }}
       </p>
      {#  <p class="govuk-body">
         You will be able to recommend the trainee for QTS at the end of the academic year.

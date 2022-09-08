@@ -34,7 +34,8 @@ let nonPublishRoutes = [
   'Early years (assessment only)',
   'Early years (undergrad)',
   'Opt-in (undergrad)',
-  'High potential initial teacher training (HPITT)'
+  'High potential initial teacher training (HPITT)',
+  'International qualified teacher status (iQTS)'
 ]
 
 // These sections should have a default status of 'review'
@@ -554,6 +555,38 @@ let baseRouteData = {
     financialSupportAvailable: false,
     fields: [
       "region"
+    ]
+  },
+  "International qualified teacher status (iQTS)": {
+    defaultEnabled: true,
+    courseLevel: "Postgraduate",
+    qualifications: [
+      "QTS"
+    ],
+    qualificationsSummary: "QTS",
+    hasAllocatedPlaces: false,
+    sections: [
+      // 'trainingDetails',
+      'courseDetails',
+      'personalDetails',
+      'contactDetails',
+      'diversity',
+      'degree',
+      // 'schools',
+      // 'placement'
+      // 'funding'
+    ],
+    // fields: [
+    //   "leadSchool",
+    //   "studyMode"
+    // ],
+    initiatives: [
+      "Maths and physics chairs programme / Researchers in schools",
+      "Now teach",
+      "Transition to teach"
+    ],
+    financialSupportAvailable: false,
+    financialSupport: [
     ]
   }
 }

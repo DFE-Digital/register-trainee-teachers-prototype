@@ -6,7 +6,7 @@ Example:
 #}
 
 {% set routeSwitchUrl %}
-  <a href="{{ './select-route' | addReferrer(referrer) }}" class="govuk-link">{{ record.route | lower or "route not set" }}</a>
+  <a href="{{ './select-route' | addReferrer(referrer) }}" class="govuk-link">{{ record.route or "route not set" }}</a>
 {%- endset %}
 
 {% set providerText %}

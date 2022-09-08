@@ -20,9 +20,9 @@
     } if params.organisations[0].type == "accreditingProvider",
     {
       text: "Access"
-    },
+    }if false,
     {
-      text: "Change"
+      text: "Remove access"
     }
   ] %}
 
@@ -38,9 +38,9 @@
     {% endset %}
     {% set changeLinkHtml %}
       {% if organisation.type == 'accreditingProvider' %}
-        <a href="{{userUrl}}/organisations/{{organisation.id}}/edit" class="govuk-link">Change<span class="govuk-visually-hidden"> access to {{organisation.name}}</span></a>
+        <a href="{{userUrl}}/organisations/{{organisation.id}}/edit" class="govuk-link">Remove<span class="govuk-visually-hidden"> access to {{organisation.name}}</span></a>
       {% else %}
-        <a href="{{userUrl}}/schools/{{organisation.id}}/edit" class="govuk-link">Change<span class="govuk-visually-hidden"> access to {{organisation.name}}</span></a>
+        <a href="{{userUrl}}/schools/{{organisation.id}}/edit" class="govuk-link">Remove<span class="govuk-visually-hidden"> access to {{organisation.name}}</span></a>
       {% endif %}
       
     {% endset %}
@@ -51,9 +51,10 @@
       },
       {
         text: organisation | getProviderTypeString(true)
-      } if params.organisations[0].type == "accreditingProvider", {
+      } if params.organisations[0].type == "accreditingProvider",
+      {
         text: "Standard"
-      },
+      } if false,
       {
         html: changeLinkHtml
       }
@@ -136,7 +137,7 @@
 
       
 
-      <p class="govuk-body govuk-!-margin-top-8"><a href="./archive-user/confirm" class="govuk-link app-destructive-link">Archive user</a></p>
+      <p class="govuk-body govuk-!-margin-top-8"><a href="{{currentPageUrl}}/confirm-delete" class="govuk-link app-destructive-link">Delete this user</a></p>
 
     </div>
   </div>

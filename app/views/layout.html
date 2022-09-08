@@ -79,7 +79,7 @@
   {% set headerClass = 'app-light-header' %}
   {{ govukHeader({
     homepageUrl: "/start-page",
-    productName: serviceName,
+    productName: serviceName if not isSupportUi else "Support for Register",
     serviceUrl: "/records",
     classes: headerClass,
     containerClasses: "govuk-width-container",
@@ -179,10 +179,15 @@
       active: true if navActive == 'home'
     },
     {
-      text: 'Trainees',
+      text: 'Draft trainees',
+      href: '/support/trainees',
+      active: true if navActive == 'drafts'
+    },
+    {
+      text: 'Registered trainees',
       href: '/support/trainees',
       active: true if navActive == 'trainees'
-    } if isAuthorised('viewDrafts'),
+    },
     {
       text: 'Users',
       href: '/support/users',

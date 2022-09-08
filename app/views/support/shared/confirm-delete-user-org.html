@@ -1,7 +1,7 @@
 {% extends "_templates/_form.html" %}
 
 {% set pageHeading %}
-  Archive {{user.fullName}}’s account?
+  Delete {{user.fullName}}’s account?
 {% endset %}
 
 {# {% set formAction = "./archive" %} #}
@@ -19,10 +19,10 @@
 {# {% include "_includes/forms/support/users/organisations/remove.html" %} #}
 
 {% set buttonText %}
-  Yes I’m sure – remove {{ user.fullName }}’s account
+  Yes I’m sure – delete {{ user.fullName }}’s account
 {% endset %}
 
-<input name="successFlash" type="hidden" value="User archived">
+<input name="successFlash" type="hidden" value="User deleted">
 
 {{ govukButton({
   text: buttonText,

@@ -107,8 +107,8 @@ module.exports = router => {
     if (access == "Remove"){
       targetUrl = `${targetUrl}/confirm-remove`
     }
-    else if (access == "Archive"){
-      targetUrl = `${targetUrl}/confirm-archive`
+    else if (access == "Delete"){
+      targetUrl = `${targetUrl}/confirm-delete`
     }
     else {
       targetUrl = `${targetUrl}/confirm`

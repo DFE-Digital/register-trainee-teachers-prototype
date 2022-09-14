@@ -12,6 +12,10 @@
 {% set academicYearShort = data.years.currentAcademicYear | academicYearToYear %}
 
 {% set censusDate = "2022-10-12" %}
+
+{% set traineeCount = 37 %}
+
+{% set hasZeroTraineesToExport = true if traineeCount == 0 %}
   
 {% block content %}
 {{super()}}
@@ -74,8 +78,19 @@
 
       <input name="successFlash" type="hidden" value="Export successfully downloaded">
 
+      {% if hasZeroTraineesToExport %}
+        {{ govukInsetText({
+          text: "You have no trainees available to export. Check you have added new trainees for the " + data.years.currentAcademicYear + " academic year."
+        }) }}
+      {% endif %}
+
+      {% set buttonText -%}
+        Export new trainee data ({{traineeCount}} {{"trainee" | pluralise(traineeCount)}})
+      {%- endset %}
+
       {{ govukButton({
-        "text": "Export new trainee data (CSV)"
+        "text": "Export new trainee data (CSV)",
+        "text": buttonText
       }) }}
 
     </form>

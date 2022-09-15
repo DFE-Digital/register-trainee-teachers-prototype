@@ -224,6 +224,8 @@ module.exports = (params) => {
 
   let isEarlyYears = route.includes('Early years')
 
+  let isUndergrad = route.includes("undergrad")
+
   let phase, qualifications, qualificationsSummary, studyMode
 
   if (isEarlyYears){
@@ -273,12 +275,19 @@ module.exports = (params) => {
   if (route == 'Assessment only'){
     duration = 1
   }
-  else if (route.includes("undergrad")){
-    duration = 3
+  else if (isUndergrad){
+
+    duration = parseInt(weighted.select({
+      '3': 0.8, // Regular full time
+      '4': 0.15, // 4 year full time
+      '6': 0.05 // Undergrad part time
+    }))
+
+    studyMode = (duration != 6) ? "Full time" : "Part time"
   }
   else duration = parseInt(weighted.select({
     '1': 0.8, // 1 year full time or mix - majority of courses are full time
-    '2': 0.15, // 2 yeras part time
+    '2': 0.15, // 2 years part time
     '3': 0.05 // 3 years par time
   }))
 
@@ -325,10 +334,7 @@ module.exports = (params) => {
   }
   // Part time
   else {
-    if (route.includes("undergrad")){
-      studyMode = "Full time"
-    }
-    else {
+    if (!isUndergrad) {
       studyMode = "Part time"
     }
     if (isEarlyYears){
@@ -359,7 +365,7 @@ module.exports = (params) => {
   let academicYear = `${startYear} to ${startYear + 1}`
 
   // Assume courses are 9 months long
-  const endDate = moment(startDate).add(duration, 'years').subtract(3, 'months').toDate()
+  const endDate = moment(startDate).add(duration, 'years').subtract(2, 'months').toDate()
 
   // let endAcademicYear = utils.dateToAcademicYear(endDate)
 

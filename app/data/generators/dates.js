@@ -110,8 +110,14 @@ module.exports = ({updatedDate, submittedDate, deferredDate, withdrawalDate, qua
   }
 
   if (application.status.includes('awarded')) {    
+    let courseEndDate = application.courseDetails.endDate
+
+    qualificationAwardedDate = faker.date.between(
+        moment(courseEndDate).subtract(100, 'days'),
+        moment(courseEndDate)
+      )
     // Make sure withdrawal date is the same as the last updated date
-    qualificationAwardedDate = qualificationAwardedDate || updatedDate
+    updatedDate = qualificationAwardedDate
   }
 
   // console.log({

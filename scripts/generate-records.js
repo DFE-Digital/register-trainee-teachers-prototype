@@ -21,7 +21,6 @@ const years             = require('../app/data/years.js')
 const accreditingProviderData      = require('../app/data/accrediting-providers.js')
 const providers         = accreditingProviderData.selected
 const statusFilters     = require('./../app/filters/statuses.js').filters
-const utils             = require('./../app/lib/utils.js')
 
 // Settings
 let simpleGcseGrades    = true //output pass/fail rather than full detail
@@ -65,6 +64,7 @@ const generatePlacement = require('../app/data/generators/placement')
 const generateUndergraduateQualification = require('../app/data/generators/undergraduate-qualifications')
 const generateSchools = require('../app/data/generators/schools')
 const generateSource = require('../app/data/generators/source')
+const generateStatus = require('../app/data/generators/status')
 const generateApplyData = require('../app/data/generators/apply-data')
 const generateHesaData = require('../app/data/generators/hesa-data')
 
@@ -86,11 +86,8 @@ const generateFakeApplication = (params = {}) => {
   application.provider        = params.provider || faker.helpers.randomize(providers).name
   application.accreditingProviderType    = params.accreditingProviderType || "SCITT" // TODO: this should look up the accrediting provider type from the provider's name
   application.route           = (params.route === null) ? undefined : (params.route || generateRoute(params))
-  application.status          = params.status || faker.helpers.randomize(statuses)
-  
-  if (application.status == "Deferred") {
-    application.previousStatus = "TRN received" // set a state to go back to
-  }
+  // application.status          = params.status || faker.helpers.randomize(statuses)
+
   application.source          = (params.source) ? params.source : generateSource(application)
   if (application.source == "Apply"){
     application.applyData = { ...generateApplyData(application), ...params.applyData}
@@ -99,6 +96,13 @@ const generateFakeApplication = (params = {}) => {
 
 
   // Needed in particular order
+  application.courseDetails = (params.courseDetails === null) ? undefined : { ...generateCourseDetails(params, application), ...params.courseDetails }
+
+  application.status          = (params.status == "Draft") ? params.status : generateStatus(application)
+  
+  if (application.status == "Deferred") {
+    application.previousStatus = "TRN received" // set a state to go back to
+  }
 
   // Dates
   application                  = { ...application, ...generateDates(params, application) }
@@ -106,9 +110,13 @@ const generateFakeApplication = (params = {}) => {
 
   // Reference numbers like Apply
   application.reference              = (params.reference === null) ? undefined : (params.reference || generateReference())
+
+
+
+
   application.trn              = (params.trn === null) ? undefined : (params.trn || generateTrn(application))
 
-  application.courseDetails = (params.courseDetails === null) ? undefined : { ...generateCourseDetails(params, application), ...params.courseDetails }
+
   // There's a slight edge case that programme details might return with a different route - if so save it back up
   if (application?.courseDetails?.route && application.courseDetails.route != application.route){
     console.log("Overwriting route") // hacky, and hopefully doesn’t happen often
@@ -175,6 +183,8 @@ const generateFakeApplication = (params = {}) => {
   else {
     application = utils.setEndAcademicYear(application)
   }
+
+  application = utils.setTrainingYears(application)
 
   application.outcome = (params.outcome === null) ? undefined : { ...generateOutcomes(application), ...params.outcome }
 

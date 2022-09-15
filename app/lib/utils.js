@@ -209,6 +209,55 @@ exports.setEndAcademicYear = record => {
   return record
 }
 
+// Saves training years on to a trainee
+exports.setTrainingYears = record => {
+
+  let trainingYears = exports.calculateTrainingYears(record)
+
+  if (trainingYears){
+    record.trainingYears = trainingYears
+  }
+
+  return record
+}
+
+// Calculates training years for a trainee
+// Training years are all the years that the trainee was in training for
+// A trainee that started in 2019 to 2020 and is still in training in 2022 to 2023 
+// will have training years of: ['2019 to 2020','2020 to 2021', '2021 to 2022', '2022 to 2023']
+
+// For finished trainees, it'll be all the years between start year and end year. For trainees
+// still in training, it'll be the years from start year to the current yera
+exports.calculateTrainingYears = record => {
+
+  let currentYear = exports.academicYearToYear(years.currentAcademicYear)
+
+  // Lower bound year
+  let lowerBoundYear = exports.academicYearToYear(record.academicYear)
+
+  // Max upper bound year
+  let upperBoundYear = currentYear
+
+
+  // If the trainee has finished, then their upper bound is their end year
+  if (!exports.isActiveStatus(record)){
+    let endYear = exports.academicYearToYear(record.endAcademicYear)
+
+    // It shouldn't be possible to have a finished trainee with an end year in the future. But
+    // just in case, use the lower of curren tyera or end year.
+    upperBoundYear = Math.min(currentYear, endYear)
+  }
+
+  let allYears = []
+
+  // Interpolate all years between upper and lower bound
+  for (let year = lowerBoundYear; year <= upperBoundYear; year++){
+    allYears.push(exports.yearToAcademicYearString(year)) // 2022 to 2023
+  }
+
+  return allYears
+}
+
 
 // Check if the course has allocated places
 exports.hasAllocatedPlaces = (record) => {

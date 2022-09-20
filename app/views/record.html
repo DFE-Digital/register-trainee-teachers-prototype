@@ -20,10 +20,10 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
 
-    <h2 class="govuk-heading-s">Trainee progress</h2>
+    {# <h2 class="govuk-heading-s">Trainee progress</h2> #}
     {% include "_includes/summary-cards/trainee-progress.html" %}
 
-    <h2 class="govuk-heading-s">Course details</h2>
+    {# <h2 class="govuk-heading-s">Course details</h2> #}
     {# {% set showCourseChangeOption = true %} #}
     {% set showDateMovedRow = true %}
     {% include "_includes/summary-cards/course-details.html" %}
@@ -38,12 +38,12 @@
     {% endif %}
 
     {% if record | requiresSection("placement") %}
-      <h2 class="govuk-heading-s">Placements</h2>
+      <h2 class="govuk-heading{# - #}s">Placements</h2>
       {% include "_includes/summary-cards/placements/placement-overview.html" %}
     {% endif %}
 
     {% if record | requiresSection("funding") %}
-      <h2 class="govuk-heading-s">Funding</h2>
+      {# <h2 class="govuk-heading-s">Funding</h2> #}
       {% set showBursaryRow = true %}
       {% include "_includes/summary-cards/funding.html" %}
     {% endif %}

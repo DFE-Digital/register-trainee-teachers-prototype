@@ -23,11 +23,12 @@ const routeRatios = {
     'Early years (undergrad)': 0.01,
     'High potential initial teacher training (HPITT)': 0,
     'Opt-in (undergrad)': 0.02,
-    'Provider-led (postgrad)': 0.35,
+    'Provider-led (postgrad)': 0.30,
     'Provider-led (undergrad)': 0,
     'School direct (fee funded)': 0.34,
     'School direct (salaried)': 0.08,
-    'Teaching apprenticeship (postgrad)': 0.05
+    'Teaching apprenticeship (postgrad)': 0.05,
+    'International qualified teacher status (iQTS)': 0.05
   },
   "HEI": {
     'Assessment only': 0,
@@ -37,11 +38,12 @@ const routeRatios = {
     'Early years (undergrad)': 0,
     'High potential initial teacher training (HPITT)': 0,
     'Opt-in (undergrad)': 0.02,
-    'Provider-led (postgrad)': 0.5,
+    'Provider-led (postgrad)': 0.45,
     'Provider-led (undergrad)': 0.3,
     'School direct (fee funded)': 0.05,
     'School direct (salaried)': 0.05,
-    'Teaching apprenticeship (postgrad)': 0.05
+    'Teaching apprenticeship (postgrad)': 0.05,
+    'International qualified teacher status (iQTS)': 0.05
   }
 }
 

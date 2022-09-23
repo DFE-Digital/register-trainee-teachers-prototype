@@ -267,26 +267,30 @@ module.exports = router => {
   // Copy withdraw data back to real record
   router.post('/record/:uuid/withdraw/update', (req, res) => {
     const data = req.session.data
-    const newRecord = data.record
+    let record = data.record
 
     // Update failed or no data
-    if (!newRecord){
+    if (!record){
       res.redirect('/record/:uuid')
     }
     else {
-      newRecord.previousStatus = newRecord.status
-      newRecord.status = 'Withdrawn'
-      delete newRecord.withdrawDateRadio
-      if (newRecord.withdrawalReason != "For another reason") {
-        delete newRecord.withdrawalReasonOther
+      record.previousStatus = record.status
+      record.status = 'Withdrawn'
+      delete record.withdrawDateRadio
+      if (record.withdrawalReason != "For another reason") {
+        delete record.withdrawalReasonOther
       }
 
-      let withdrawalReasonText = `Date of withdrawal: ${filters.govukDate(newRecord.withdrawalDate)}<br>`
-      withdrawalReasonText += `Reason for withdrawal: ${newRecord?.withdrawalReasonOther || newRecord?.withdrawalReason}`
+      let withdrawalReasonText = `Date of withdrawal: ${filters.govukDate(record.withdrawalDate)}<br>`
+      withdrawalReasonText += `Reason for withdrawal: ${record?.withdrawalReasonOther || record?.withdrawalReason}`
+
+
+      record = utils.setEndAcademicYear(record)
+      record = utils.setTrainingYears(record)
 
       utils.deleteTempData(data)
-      utils.updateRecord(data, newRecord, false)
-      utils.addEvent(newRecord, "Trainee withdrawn", withdrawalReasonText)
+      utils.updateRecord(data, record, false)
+      utils.addEvent(record, "Trainee withdrawn", withdrawalReasonText)
       req.flash('success', 'Trainee withdrawn')
       res.redirect('/record/' + req.params.uuid)
     }
@@ -316,8 +320,6 @@ module.exports = router => {
           record.withdrawalDate = filters.toDateArray(moment().subtract(1, "days"))
         }
       }
-
-      record = utils.setEndAcademicYear(record)
 
       res.redirect(`/record/${req.params.uuid}/withdraw/confirm${referrer}`)
     }

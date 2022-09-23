@@ -1213,7 +1213,7 @@ exports.calculateCourseEndAcademicYear = record => {
 // End academic year depends on the trainee status and what data
 // we have available
 exports.calculateEndAcademicYear = record => {
-  
+  console.log("Calculating end academic year")
   if (exports.isAwarded(record)){
     return exports.dateToAcademicYear(record?.qualificationAwardedDate)
   }
@@ -1230,7 +1230,6 @@ exports.calculateEndAcademicYear = record => {
     return exports.calculateCourseEndAcademicYear(record)
   }
   else return false
-
 }
 
 // Check if record is finishing this year
@@ -1667,9 +1666,19 @@ exports.filterRecords = (records, data, filters = {}) => {
   }
 
   if (filters.endYears && filters.endYears != "All years"){
-    console.log(filters.endYears)
     filteredRecords = filteredRecords.filter(record => filters.endYears.includes(record.endAcademicYear))
   }
+
+  if (filters.trainingYears && filters.trainingYears != "All years"){
+    filteredRecords = filteredRecords.filter(record => {
+
+      // Make sure training years is always an array
+      let trainingYears = [].concat(record.trainingYears || [])
+
+      return trainingYears.some(trainingYear => filters.trainingYears.includes(trainingYear))
+    })
+  }
+
 
   if (filters.cohortFilter){
     filteredRecords = filteredRecords.filter(record => filters.cohortFilter.includes(exports.getCohortFilter(record)))

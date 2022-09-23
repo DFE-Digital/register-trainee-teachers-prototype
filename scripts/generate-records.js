@@ -98,6 +98,7 @@ const generateFakeApplication = (params = {}) => {
   // Needed in particular order
   application.courseDetails = (params.courseDetails === null) ? undefined : { ...generateCourseDetails(params, application), ...params.courseDetails }
 
+  // TODO: fix this hack. We ignore the status except where it's draft.
   application.status          = (params.status == "Draft") ? params.status : generateStatus(application)
   
   if (application.status == "Deferred") {

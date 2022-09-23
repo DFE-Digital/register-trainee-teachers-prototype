@@ -210,7 +210,6 @@ filters.whereIncludes = (arr, key, compare) => {
     return compare.some(string => {
       return _.get(item, key) && _.get(item, key).includes(string)
     })
-    return compare.includes(_.get(item, key))
   })
   return filtered
 }

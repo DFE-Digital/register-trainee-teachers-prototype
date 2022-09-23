@@ -131,6 +131,12 @@
 {% endmacro %}
 
 {{ yearSelect({
+  yearType: "Training year",
+  yearsToInclude: data.years.academicYears,
+  name: "filterTrainingYears"
+}) }}
+
+{{ yearSelect({
   yearType: "Start year",
   yearsToInclude: data.years.academicYears,
   name: "filterStartYears"

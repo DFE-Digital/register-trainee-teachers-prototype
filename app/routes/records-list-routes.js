@@ -46,6 +46,7 @@ const getFilters = req => {
   'filterStudyMode',
   'filterTrainingRoutes',
   'filterTrainingStatus',
+  'filterTrainingYears',
   'filterUserProviders']
   filtersToClean.forEach(filter => query[filter] = cleanInputData(query[filter]))
 
@@ -66,6 +67,7 @@ const getFilters = req => {
     allProviders: query.filterAllProviders,
     trainingRoutes: query.filterTrainingRoutes,
     trainingStatus: query.filterTrainingStatus,
+    trainingYears: query.filterTrainingYears,
     subject: query.filterSubject
   }
 
@@ -98,6 +100,7 @@ const getHasFilters = (filters, searchQuery) => {
   || !!(filters.endYears && filters.endYears != 'All years')
   || !!(filters.trainingRoutes)
   || !!(filters.trainingStatus)
+  || !!(filters.trainingYears && filters.trainingYears != 'All years')
   || !!(filters.providers)
   || !!(filters.allProviders && filters.allProviders != 'All providers')
 }
@@ -220,6 +223,22 @@ const getSelectedFilters = req => {
       heading: { text: "End year" },
       items: [{
         text: filters.endYears,
+        href: url.format({
+          pathname,
+          query: newQuery,
+        })
+      }]
+    })
+  }
+
+  // Training years
+  if (filters.trainingYears && filters.trainingYears != 'All years') {
+    let newQuery = Object.assign({}, query)
+    delete newQuery.filterTrainingYears
+    selectedFilters.categories.push({
+      heading: { text: "Training year" },
+      items: [{
+        text: filters.trainingYears,
         href: url.format({
           pathname,
           query: newQuery,
@@ -432,7 +451,7 @@ module.exports = router => {
 
     // by default set search results to show "Current" trainees
     // if (!hasQueryString) filters.cohortFilter = ["Current"]
-    if (!hasQueryString) filters.trainingStatus = ["In training"]
+    // if (!hasQueryString) filters.trainingStatus = ["In training"]
 
     let searchQuery = getSearchQuery(req)
 

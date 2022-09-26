@@ -244,18 +244,20 @@
 
 {% block beforeContent %}
 
-{{ govukPhaseBanner({
-  tag: {
-    text: "prototype"
-  },
-  classes: 'govuk-!-margin-top-1',
-  html: 'This is a prototype of a new service – your <a href="#" class="govuk-link">feedback</a> will help us improve it'
-}) }}
+  {{ govukPhaseBanner({
+    tag: {
+      text: "prototype"
+    },
+    classes: 'govuk-!-margin-top-1',
+    html: 'This is a prototype of a new service – your <a href="#" class="govuk-link">feedback</a> will help us improve it'
+  }) }}
 
-{% block pageNavigation %}
+  {% block pageNavigation %}
+  {% endblock %}
+
+  {% block pageBanner %}
 {% endblock %}
-{% block pageBanner %}
-{% endblock %}
+
 {% endblock %}
 
 {% set mainClasses = mainClasses | default("govuk-main-wrapper--auto-spacing") %}

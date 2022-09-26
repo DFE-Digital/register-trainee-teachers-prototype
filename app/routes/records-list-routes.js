@@ -179,14 +179,17 @@ const getSelectedFilters = req => {
     delete newQuery.filterYears
     let headingText = "Year"
     // Show conditional heading depending on if it’s a start or end year
-    if (filters.years[0].startsWith("End year")){
+    if (filters.years[0].toLowerCase().includes("end")){
       headingText = "End year"
     }
-    else if (filters.years[0].startsWith("Start year")){
+    else if (filters.years[0].toLowerCase().includes("start")){
       headingText = "Start year"
     }
+    else if (filters.years[0].toLowerCase().includes("training")){
+      headingText = "Training year"
+    }
 
-    let tagLabelText = filters.years[0].replace("End year: ", "").replace("Start year: ", "")
+    let tagLabelText = filters.years[0].replace("End year: ", "").replace("Start year: ", "").replace("Training year: ", "")
     selectedFilters.categories.push({
       heading: { text: headingText },
       items: [{
@@ -478,10 +481,13 @@ module.exports = router => {
     let draftRecordsCount = hasFilters ? draftRecords.length : null
 
     // Truncate records in case there's lots - and as we don't have working pagination
+    let filteredRecordsRealCount = registeredRecords.length
+    console.log({filteredRecordsRealCount})
     filteredRecords = registeredRecords.slice(0, 204)
 
     res.render('records', {
       filteredRecords,
+      filteredRecordsRealCount,
       hasFilters,
       selectedFilters,
       draftRecordsCount
@@ -527,7 +533,7 @@ module.exports = router => {
     })
   })
 
-    router.get(['/support/trainees'], function (req, res) {
+  router.get(['/support/trainees'], function (req, res) {
     const data = req.session.data
 
     // We’re not in a record, so make sure to flush record data
@@ -569,10 +575,12 @@ module.exports = router => {
     // let draftRecordsCount = hasFilters ? draftRecords.length : null
 
     // Truncate records in case there's lots - and as we don't have working pagination
+    let filteredRecordsRealCount = filteredRecords.length()
     filteredRecords = filteredRecords.slice(0, 204)
 
     res.render('support/trainees/index.html', {
       filteredRecords,
+      filteredRecordsRealCount,
       hasFilters,
       navActive: 'trainees'
       // selectedFilters

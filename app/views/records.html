@@ -3,7 +3,7 @@
 {% set traineesPageHeading = "Registered trainees" %}
 
 {% set pageHeading %}
-  {{ traineesPageHeading }} ({{filteredRecords | length}} {{ "record" | pluralise(filteredRecords | length) }})
+  {{ traineesPageHeading }} ({{filteredRecordsRealCount}} {{ "record" | pluralise(filteredRecordsRealCount) }})
 {% endset %}
 
 {% set backText = "Home" %}
@@ -102,7 +102,11 @@
     <div class="app-records-actions">
       <div class="app-records-actions__col">
         {% if isAuthorised('exportRecords') %}
-          <p class="govuk-body govuk-!-margin-bottom-3"><a href="#" class="govuk-link">Export these records</a></p>
+          {% if hasFilters %}
+            <p class="govuk-body govuk-!-margin-bottom-3"><a href="#" class="govuk-link">Export these records</a></p>
+          {% else %}
+            <p class="govuk-body govuk-!-margin-bottom-3"><a href="/reports" class="govuk-link">Choose records to export</a></p>
+          {% endif %}
         {% endif %}
 
         {# Only sort if there’s at least two items #}

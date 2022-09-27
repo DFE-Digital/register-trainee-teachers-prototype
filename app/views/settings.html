@@ -130,6 +130,29 @@
         ]
       } | decorateAttributes(data, "data.settings.bulkLinksInPrimaryNav")) }}
 
+      {{ govukRadios({
+        fieldset: {
+          legend: {
+            text: "Training years in UI",
+            classes: "govuk-fieldset__legend--s"
+          }
+        },
+        items: [
+          {
+            text: "Tabs"
+          },
+          {
+            text: "Separate select filter"
+          },
+          {
+            text: "Combined years filter"
+          },
+          {
+            text: "Checkboxes"
+          }
+        ]
+      } | decorateAttributes(data, "data.settings.trainingYearsUiStyle")) }}
+
       {{ govukSelect({
         id: "hesa-guidance-style",
         name: "settings[hesaGuidanceStyle]",

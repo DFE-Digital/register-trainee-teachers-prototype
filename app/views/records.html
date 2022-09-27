@@ -105,7 +105,7 @@
           {% if hasFilters %}
             <p class="govuk-body govuk-!-margin-bottom-3"><a href="#" class="govuk-link">Export these records</a></p>
           {% else %}
-            <p class="govuk-body govuk-!-margin-bottom-3"><a href="/reports" class="govuk-link">Choose records to export</a></p>
+            <p class="govuk-body govuk-!-margin-bottom-3"><a href="/reports/choose-trainee-records" class="govuk-link">Choose trainee records to export</a></p>
           {% endif %}
         {% endif %}
 
@@ -264,12 +264,38 @@
 
   <div class="govuk-grid-column-full">
 
+    {% if data.settings.trainingYearsUiStyle == "Tabs" %}
+      {# Compile tabs  #}
+      {% set tabItems = [] %}
+      {% set tabItems = [
+        {
+          text: data.years.currentAcademicYear + " training year",
+          href: "/records/" + "current-year",
+          active: (activeTab == "current-year" or not activeTab)
+        },
+        {
+          text: "All years",
+          href: "/records/" + "all-years",
+          active: (activeTab == "all-years")
+        }
+      ] %}
+
+      {{ appSubNavigation({
+        label: 'Sub navigation',
+        classes: 'govuk-!-margin-bottom-7',
+        items: tabItems
+      }) }}
+
+    {% endif %}
+
+    {# Main page content - filters and trainees #}
     {{ appFilterPage({
       filterOptions: filterOptionsHtml,
       selectedFilters: selectedFilters,
       filterContent: filterContentHtml
       })
     }}
+
   </div>
 
 </div>

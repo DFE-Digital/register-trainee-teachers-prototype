@@ -143,47 +143,69 @@
 
 {% endmacro %}
 
-{{ govukCheckboxes({
-  classes: "govuk-checkboxes--small js-auto-submit",
-  fieldset: {
-    legend: {
-      text: "Training year",
-      isPageHeading: false,
-      classes: "govuk-fieldset__legend--s"
-    }
-  },
-  items: [
-    {
-      text: "2022 to 2023 training year only",
-      text: "2022 to 2023",
-      value: "2022 to 2023",
-      checked: checked(query.filterTrainingYears, "2022 to 2023")
+{% set trainingYearCheckboxes %}
+  {{ govukCheckboxes({
+    classes: "govuk-checkboxes--small js-auto-submit",
+    fieldset: {
+      legend: {
+        text: "Training year",
+        isPageHeading: false,
+        classes: "govuk-fieldset__legend--s"
+      }
     },
-    {
-      text: "2021 to 2022 training year only",
-      text: "2021 to 2022",
-      value: "2021 to 2022",
-      checked: checked(query.filterTrainingYears, "2021 to 2022")
-    }
-  ]
-} | decorateAttributes(data, "data.filterTrainingYears"))}}
+    items: [
+      {
+        text: "2022 to 2023 training year only",
+        text: "2022 to 2023",
+        value: "2022 to 2023",
+        checked: checked(query.filterTrainingYears, "2022 to 2023")
+      },
+      {
+        text: "2021 to 2022 training year only",
+        text: "2021 to 2022",
+        value: "2021 to 2022",
+        checked: checked(query.filterTrainingYears, "2021 to 2022")
+      }
+    ]
+  } | decorateAttributes(data, "data.filterTrainingYears"))}}
+{% endset %}
 
-{# {{ yearsSelect | safe }} #}
 
-{# {{ yearSelect({
-  yearType: "Training year",
-  yearsToInclude: data.years.trainingYears,
-  name: "filterTrainingYears"
-}) }} #}
+{% if data.settings.trainingYearsUiStyle == "Combined years filter" %}
 
-{{ yearSelect({
-  yearType: "Start year",
-  yearsToInclude: data.years.startAcademicYears,
-  name: "filterStartYears"
-}) }}
+  {{ yearsSelect | safe }}
 
-{{ yearSelect({
-  yearType: "End year",
-  yearsToInclude: data.years.endAcademicYears,
-  name: "filterEndYears"
-}) }}
+{% else %}
+
+  {% if data.settings.trainingYearsUiStyle == "Separate select filter" %}
+
+    {{ yearSelect({
+      yearType: "Training year",
+      yearsToInclude: data.years.trainingYears,
+      name: "filterTrainingYears"
+    }) }}
+
+  {% elseif data.settings.trainingYearsUiStyle == "Checkboxes" %}
+
+    {{ trainingYearCheckboxes | safe }}
+
+  {% endif %}
+
+  {{ yearSelect({
+    yearType: "Start year",
+    yearsToInclude: data.years.startAcademicYears,
+    name: "filterStartYears"
+  }) }}
+
+  {{ yearSelect({
+    yearType: "End year",
+    yearsToInclude: data.years.endAcademicYears,
+    name: "filterEndYears"
+  }) }}
+
+{% endif %}
+
+
+{{data.settings | log}}
+
+

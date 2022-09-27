@@ -141,6 +141,8 @@ settings.includeDeclaration = false
 
 settings.bulkLinksInPrimaryNav = "None"
 
+settings.trainingYearsUiStyle = "Tabs"
+
 settings.skipCourseDatesPage = 'true'
 
 settings.showFundingInPrimaryNav = 'true'

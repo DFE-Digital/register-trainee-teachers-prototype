@@ -439,7 +439,19 @@ const getSelectedFilters = req => {
 
 module.exports = router => {
 
-  router.get(['/records'], function (req, res) {
+  router.get("/records", function (req, res, next) {
+    const data = req.session.data
+
+    if (data.settings.trainingYearsUiStyle == 'Tabs'){
+      res.redirect("/records/current-year")
+    }
+    else {
+      next()
+    }
+
+  })
+
+  router.get(['/records', '/records/:tabName'], function (req, res) {
     const data = req.session.data
 
     // We’re not in a record, so make sure to flush record data
@@ -465,6 +477,23 @@ module.exports = router => {
 
     // Filter records using the filters provided
     let filteredRecords = utils.filterRecords(data.records, data, filters)
+
+    let tabName = req?.params?.tabName
+    if (tabName){
+      let currentYear = data.years.currentAcademicYear
+      let tabFilters = {}
+      if (tabName == "current-year"){
+        console.log("Showing current year")
+        tabFilters.trainingYears = [currentYear]
+        filteredRecords = utils.filterRecords(filteredRecords, data, tabFilters)
+      }
+      else if (tabName == "all-years"){
+        console.log("Showing all years")
+      }
+      else {
+        console.log(`Error: tab name ${tabName} not recognised`)
+      }
+    }
     // console.log(req.query)
     // if (!hasFilters) filteredRecords = filteredRecords.filter(record => record.academicYear == "2021 to 2022")
 
@@ -485,13 +514,20 @@ module.exports = router => {
     console.log({filteredRecordsRealCount})
     filteredRecords = registeredRecords.slice(0, 204)
 
-    res.render('records', {
-      filteredRecords,
-      filteredRecordsRealCount,
-      hasFilters,
-      selectedFilters,
-      draftRecordsCount
-    })
+    if (req?.params?.tabName && data.settings.trainingYearsUiStyle != 'Tabs'){
+      res.redirect("/records")
+    }
+    else {
+      res.render('records', {
+        filteredRecords,
+        filteredRecordsRealCount,
+        hasFilters,
+        selectedFilters,
+        draftRecordsCount,
+        activeTab: req.params.tabName
+      })
+    }
+
   })
 
   router.get(['/drafts'], function (req, res) {
@@ -529,7 +565,7 @@ module.exports = router => {
       filteredRecords: draftRecords,
       hasFilters,
       selectedFilters,
-      registeredRecordsCount,
+      registeredRecordsCount
     })
   })
 

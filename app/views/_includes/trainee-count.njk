@@ -9,8 +9,11 @@
 
 <h1 class="govuk-heading-xl">
   {{ traineesPageHeading }} 
-  <span class="govuk-!-font-weight-regular">
+{#   <span class="govuk-!-font-weight-regular">
     ({{ filteredRecordsRealCount }}{% if filteredRecordsRealCount != totalTrainees %} of {{ totalTrainees }}{% endif %}<span class="govuk-visually-hidden">{{ "record" | pluralise(filteredRecordsRealCount)}}</span>)
+  </span> #}
+  <span class="govuk-!-font-weight-regular">
+    ({{ filteredRecordsRealCount }}<span class="govuk-visually-hidden">{{ " record" | pluralise(filteredRecordsRealCount)}}</span>)
   </span>
 </h1>
 

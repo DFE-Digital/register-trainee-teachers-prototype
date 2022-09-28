@@ -3,7 +3,7 @@
 {% set navActive = 'reports' %}
 
 {% set isCurrentYear = data.reports.year == data.years.currentAcademicYear %}
-{% set isLastYear = data.reports.year == data.years.currentAcademicYear %}
+{% set isLastYear = data.reports.year == data.years.previousAcademicYear %}
 
 {% set pageCaption -%}
   {%- if isCurrentYear -%}
@@ -74,7 +74,7 @@
       },
       {
         value: "endYear",
-        text: "Trainees that finished in" + data.reports.year
+        text: "Trainees that finished in " + data.reports.year
       }
     ]
   } | decorateAttributes(data, "data.reports.year-type")) }}

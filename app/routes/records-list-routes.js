@@ -487,6 +487,18 @@ module.exports = router => {
         tabFilters.trainingYears = [currentYear]
         filteredRecords = utils.filterRecords(filteredRecords, data, tabFilters)
       }
+      else if (tabName == "previous-year"){
+        console.log("Showing current year")
+        let previousYear = utils.yearToAcademicYearString(utils.academicYearToYear(currentYear) - 1)
+        tabFilters.trainingYears = [previousYear]
+        filteredRecords = utils.filterRecords(filteredRecords, data, tabFilters)
+      }
+      else if (tabName == "next-year"){
+        console.log("Showing next year")
+        let nextYear = utils.yearToAcademicYearString(utils.academicYearToYear(currentYear) + 1)
+        tabFilters.trainingYears = [nextYear]
+        filteredRecords = utils.filterRecords(filteredRecords, data, tabFilters)
+      }
       else if (tabName == "all-years"){
         console.log("Showing all years")
       }

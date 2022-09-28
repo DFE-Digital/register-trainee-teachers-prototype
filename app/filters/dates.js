@@ -364,7 +364,19 @@ filters.isInLast = (date, count, units) => {
     date = filters.arrayToDateObject(date)
   }
   let compareDate = moment().subtract(count, units)
-  return moment(date).isAfter(compareDate)
+  return moment(date).isBetween(compareDate, moment())
+}
+
+// Check if date is in next x units
+
+// Usage: {{ date | isInLast(5, "weeks") }}
+filters.isInNext = (date, count, units) => {
+  // Convert to date Object if date is an array (as provided by design system date component)
+  if (_.isArray(date)){
+    date = filters.arrayToDateObject(date)
+  }
+  let compareDate = moment().add(count, units)
+  return moment(date).isBetween(compareDate, moment())
 }
 
 /*

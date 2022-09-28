@@ -49,6 +49,43 @@
     }) }}
 {% endset %}
 
+{% set trainingYearsTabsHtml %}
+
+  {% set academicYearRecentlyChanged = data.years.academicYearStartDate | isInLast(3, 'months') %}
+
+  {% set academicYearChangeUpcoming = data.years.academicYearStartDate | isInNext(1, 'months') %}
+  {# Compile tabs  #}
+  {% set tabItems = [
+    {
+      text: data.years.currentAcademicYear + " (current)",
+      href: "/records/" + "current-year",
+      active: (activeTab == "current-year" or not activeTab)
+    },
+    {
+      text: data.years.nextAcademicYear + " (upcoming)",
+      href: "/records/" + "next-year",
+      active: (activeTab == "next-year")
+    } if academicYearChangeUpcoming,
+    {
+      text: data.years.previousAcademicYear + " (last year)",
+      href: "/records/" + "previous-year",
+      active: (activeTab == "previous-year")
+    } if academicYearRecentlyChanged,
+    {
+      text: "All years",
+      href: "/records/" + "all-years",
+      active: (activeTab == "all-years")
+    }
+  ] %}
+
+  {{ appSubNavigation({
+    label: 'Sub navigation',
+    classes: 'govuk-!-margin-bottom-7',
+    items: tabItems
+  }) }}
+
+{% endset %}
+
 {% set filterOptionsHtml %}
 
   {% include "_includes/filter-panel/trainee-search.njk" %}
@@ -217,7 +254,11 @@
 
   <div class="govuk-grid-column-full">
 
-    <span class="govuk-caption-l">{{ data.signedInProviders | andSeparate }}</span>
+    {% if data.settings.trainingYearsUiStyle == "Tabs" %}
+      {{ trainingYearsTabsHtml | safe }}
+    {% endif %}
+
+    {# <span class="govuk-caption-l">{{ data.signedInProviders | andSeparate }}</span> #}
     {# This heading set separately than {{pageHeading}} as it uses html #}
     {% include "_includes/trainee-count.njk" %}
 
@@ -263,30 +304,6 @@
 <div class="govuk-grid-row">
 
   <div class="govuk-grid-column-full">
-
-    {% if data.settings.trainingYearsUiStyle == "Tabs" %}
-      {# Compile tabs  #}
-      {% set tabItems = [] %}
-      {% set tabItems = [
-        {
-          text: data.years.currentAcademicYear + " training year",
-          href: "/records/" + "current-year",
-          active: (activeTab == "current-year" or not activeTab)
-        },
-        {
-          text: "All years",
-          href: "/records/" + "all-years",
-          active: (activeTab == "all-years")
-        }
-      ] %}
-
-      {{ appSubNavigation({
-        label: 'Sub navigation',
-        classes: 'govuk-!-margin-bottom-7',
-        items: tabItems
-      }) }}
-
-    {% endif %}
 
     {# Main page content - filters and trainees #}
     {{ appFilterPage({

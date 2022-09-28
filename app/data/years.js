@@ -37,19 +37,47 @@ let trainingYears = [
 let currentAcademicYear = "2022 to 2023"
 let currentAcademicYearSimple = 2022
 
+// First of August of current academic year
+// Todo: use this in publish course generator
+let academicYearStartDate = new Date(`${currentAcademicYearSimple}-8-1`)
+
 let defaultCourseYear = 2022
-// defaultCourseYear = null
+
+
+// Todo: this is a duplicate from utils - should have only one
+const academicYearToYear = string => {
+  if (string) return parseInt(string.substring(0, 4))
+  else return false
+}
+
+// Todo: this is a duplicate from utils - should have only one
+const yearToAcademicYearString = year => {
+  let yearInt = parseInt(year)
+  return `${year} to ${yearInt + 1}`
+}
+
+const incrementOrDecrimentYear = (year, units) => {
+  let yearShort = academicYearToYear(year)
+
+  if (yearShort){
+    return yearToAcademicYearString(yearShort + units)
+  }
+  else {
+    console.log("Error with incrementOrDecrimentYear")
+    return year
+  }
+}
 
 let endOfCurrentCycle = defaultCourseYear + 1
 
 // The first year in the range
-let academicYearsShort = academicYears.map(year => year.substring(0, 4))
+let academicYearsShort = academicYears.map(year => academicYearToYear(year))
 
-let yearIndex = academicYears.findIndex(year => year == currentAcademicYear)
-let nextAcademicYear = academicYears[yearIndex - 1]
-let previousAcademicYear = academicYears[yearIndex + 1]
+let nextAcademicYear = incrementOrDecrimentYear(currentAcademicYear, 1)
+let previousAcademicYear = incrementOrDecrimentYear(currentAcademicYear, -1)
 
 module.exports = {
+    academicYearStartDate,
     academicYears,
     academicYearsShort,
     currentAcademicYear,

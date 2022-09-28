@@ -250,5 +250,10 @@ require('./routes/organisations-and-users-routes')(router)
 // =============================================================================
 require('./routes/funding-routes')(router)
 
+// =============================================================================
+// Reports
+// =============================================================================
+require('./routes/reports-routes')(router)
+
 
 module.exports = router

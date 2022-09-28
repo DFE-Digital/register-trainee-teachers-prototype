@@ -141,7 +141,7 @@ settings.includeDeclaration = false
 
 settings.bulkLinksInPrimaryNav = "None"
 
-settings.trainingYearsUiStyle = "Tabs"
+settings.trainingYearsUiStyle = "Checkboxes"
 
 settings.skipCourseDatesPage = 'true'
 

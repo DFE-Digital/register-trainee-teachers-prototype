@@ -1,0 +1,45 @@
+{% extends "_templates/_form.html" %}
+
+{% set navActive = 'reports' %}
+{% set pageHeading = "Which year are you interested in?" %}
+{% set formAction = "./year-type" %}
+  
+{% block formContent %}
+
+  
+{{ govukRadios({
+  fieldset: {
+    legend: {
+      text: pageHeading,
+      isPageHeading: true,
+      classes: "govuk-fieldset__legend--l"
+    }
+  },
+  hint: {
+    text: ""
+  },
+  items: [
+    {
+      value: data.years.currentAcademicYear,
+      text: "Current academic year (" + data.years.currentAcademicYear + ")"
+    },
+    {
+      value: data.years.previousAcademicYear,
+      text: "Last academic year (" + data.years.previousAcademicYear + ")"
+    },
+    {
+      divider: "or"
+    },
+    {
+      value: "All years",
+      text: "All years"
+    }
+  ]
+} | decorateAttributes(data, "data.reports.year")) }}
+
+
+{{ govukButton({
+  text: "Continue"
+}) }}
+
+{% endblock %}

@@ -13,7 +13,35 @@ module.exports = router => {
 
   // Render a page for each organisation UUID
   router.get('/reports/choose-trainee-records', function(req, res, next) {
+    const data = req.session.data
+
+    // Delete any previous data
+    delete data.reports
+
     res.redirect('/reports/choose-trainee-records/year')
+  })
+
+
+  // Render a page for each organisation UUID
+  router.post('/reports/choose-trainee-records/year-answer', function(req, res, next) {
+
+    const data = req.session.data
+
+    let dateAnswer = data?.reports?.year
+
+    // Skip following question about type of year
+    if (dateAnswer == 'All years'){
+      res.redirect('./statuses')
+    }
+    // Answer expected to be current year or previous year
+    else if (dateAnswer){
+      res.redirect('./year-type')
+    }
+    // No answer given, return to page
+    else {
+      res.redirect('/reports/date')
+    }
+
   })
 
 }

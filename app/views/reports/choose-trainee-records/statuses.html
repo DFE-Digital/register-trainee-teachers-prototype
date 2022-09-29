@@ -1,0 +1,86 @@
+{% extends "_templates/_form.html" %}
+
+{% set navActive = 'reports' %}
+
+{% set pageHeading = "Which trainee statuses?" %}
+
+{% set formAction = "/reports" %}
+  
+{% block formContent %}
+
+{# <span class="govuk-caption-l">{{pageCaption}}</span> #}
+
+<h1 class="govuk-heading-l">Statuses and sources</h1>
+
+{{ govukCheckboxes({
+  fieldset: {
+    legend: {
+      text: pageHeading,
+      isPageHeading: false,
+      classes: "govuk-fieldset__legend--m"
+    }
+  },
+  classes: "govuk-!-margin-bottom-6",
+  hint: {
+    text: "Choose all that apply"
+  },
+  items: [
+    {
+      text: "Course not started yet"
+    },
+    {
+      text: "In training"
+    },
+    {
+      text: "Deferred"
+    },
+    {
+      text: "Awarded"
+    },
+    {
+      text: "Withdrawn"
+    }
+  ]
+} | decorateAttributes(data, "data.reports.statuses")) }}
+
+
+{{ govukCheckboxes({
+  fieldset: {
+    legend: {
+      text: "Which record sources?",
+      isPageHeading: false,
+      classes: "govuk-fieldset__legend--m"
+    }
+  },
+  hint: {
+    text: "Choose all that apply"
+  },
+  items: [
+    {
+      text: "Added manually"
+    },
+    {
+      text: "Imported from Apply"
+    },
+    {
+      text: "HESA"
+    },
+    {
+      divider: "or"
+    },
+    {
+      text: "All sources",
+      behaviour: "exclusive"
+    }
+  ]
+} | decorateAttributes(data, "data.reports.sources")) }}
+
+
+<input name="successFlash" type="hidden" value="Export successfully downloaded">
+
+
+{{ govukButton({
+  text: "Download trainees"
+}) }}
+
+{% endblock %}

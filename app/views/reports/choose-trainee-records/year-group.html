@@ -1,0 +1,54 @@
+{% extends "_templates/_form.html" %}
+
+{% set navActive = 'reports' %}
+{% set pageHeading = "Which trainees do you want to export?" %}
+{% set formAction = "./statuses" %}
+  
+{% block formContent %}
+
+{# <span class="govuk-caption-l">Choose trainee records to export</span> #}
+
+{{ govukRadios({
+  fieldset: {
+    legend: {
+      text: pageHeading,
+      isPageHeading: true,
+      classes: "govuk-fieldset__legend--l"
+    }
+  },
+  hint: {
+    text: ""
+  },
+  items: [
+    {
+      _value: data.years.currentAcademicYear,
+      text: "All trainees in the current academic year (" + data.years.currentAcademicYear + ")"
+    },
+    {
+      _value: data.years.previousAcademicYear,
+      text: "All trainees from the last academic year (" + data.years.previousAcademicYear + ")"
+    },
+    {
+      _value: data.years.previousAcademicYear,
+      text: "Trainees due to finish this academic year (" + data.years.currentAcademicYear + ")"
+    },
+    {
+      _value: data.years.previousAcademicYear,
+      text: "Choose other years"
+    } if false,
+    {
+      divider: "or"
+    },
+    {
+      _value: "All years",
+      text: "All trainees in Register"
+    }
+  ]
+} | decorateAttributes(data, "data.reports.year")) }}
+
+
+{{ govukButton({
+  text: "Continue"
+}) }}
+
+{% endblock %}

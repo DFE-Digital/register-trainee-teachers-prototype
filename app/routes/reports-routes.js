@@ -18,7 +18,15 @@ module.exports = router => {
     // Delete any previous data
     delete data.reports
 
-    res.redirect('/reports/choose-trainee-records/year')
+    let formOption = data?.settings?.traineeExportQuestionStyle
+
+    if (formOption == "Two stage"){
+      res.redirect('/reports/choose-trainee-records/year')
+    }
+    else {
+      res.redirect('/reports/choose-trainee-records/year-group')
+    }
+
   })
 
 

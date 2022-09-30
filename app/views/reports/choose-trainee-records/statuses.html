@@ -39,6 +39,13 @@
     },
     {
       text: "Withdrawn"
+    },
+    {
+      divider: "or"
+    },
+    {
+      text: "All trainee statues",
+      behaviour: "exclusive"
     }
   ]
 } | decorateAttributes(data, "data.reports.statuses")) }}
@@ -52,8 +59,8 @@
       classes: "govuk-fieldset__legend--m"
     }
   },
-  hint: {
-    text: "Choose all that apply"
+  _hint: {
+    text: ""
   },
   items: [
     {

@@ -153,6 +153,23 @@
         ]
       } | decorateAttributes(data, "data.settings.trainingYearsUiStyle")) }}
 
+      {{ govukRadios({
+        fieldset: {
+          legend: {
+            text: "Trainee export question style",
+            classes: "govuk-fieldset__legend--s"
+          }
+        },
+        items: [
+          {
+            text: "Two stage"
+          },
+          {
+            text: "Up front"
+          }
+        ]
+      } | decorateAttributes(data, "data.settings.traineeExportQuestionStyle")) }}
+
       {{ govukSelect({
         id: "hesa-guidance-style",
         name: "settings[hesaGuidanceStyle]",

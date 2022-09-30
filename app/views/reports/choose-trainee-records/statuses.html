@@ -2,7 +2,7 @@
 
 {% set navActive = 'reports' %}
 
-{% set pageHeading = "Which trainee statuses?" %}
+{% set pageHeading = "Trainee statuses and record sources" %}
 
 {% set formAction = "/reports" %}
   
@@ -10,12 +10,12 @@
 
 {# <span class="govuk-caption-l">{{pageCaption}}</span> #}
 
-<h1 class="govuk-heading-l">Statuses and sources</h1>
+<h1 class="govuk-heading-l">{{pageHeading}}</h1>
 
 {{ govukCheckboxes({
   fieldset: {
     legend: {
-      text: pageHeading,
+      text: "Which trainee statuses do you want to include in the export?",
       isPageHeading: false,
       classes: "govuk-fieldset__legend--m"
     }
@@ -54,7 +54,7 @@
 {{ govukCheckboxes({
   fieldset: {
     legend: {
-      text: "Which record sources?",
+      text: "Which record sources do you want to include in the export?",
       isPageHeading: false,
       classes: "govuk-fieldset__legend--m"
     }
@@ -87,7 +87,7 @@
 
 
 {{ govukButton({
-  text: "Download trainees"
+  text: "Export trainee records (CSV)"
 }) }}
 
 {% endblock %}

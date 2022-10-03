@@ -462,7 +462,7 @@ module.exports = router => {
     let courseStartYear = req.params.courseStartYear
     let route = data.record?.route
 
-    let isInvalidCourseYear = !years.academicYearsShort.includes(courseStartYear)
+    let isInvalidCourseYear = !years.academicYearsShort.includes(parseInt(courseStartYear))
 
     // Year is invalid
     if (isInvalidCourseYear){

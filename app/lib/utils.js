@@ -2238,6 +2238,30 @@ exports.providerIsAccrediting = function(provider, data=false){
   return exports.getProviderType.apply(this, [provider, data]) == 'accreditingProvider'
 }
 
+exports.providerIsHei = function(provider, data=false){
+  data = data || this?.ctx?.data || false
+  let type
+
+  if (_.isObject(provider)){
+    type = provider?.accreditingProviderType
+  }
+  else type = exports.getProviderData(provider, data)?.accreditingProviderType
+
+  return type == "HEI"
+}
+
+exports.providerIsScitt = function(provider, data=false){
+  data = data || this?.ctx?.data || false
+  let type
+
+  if (_.isObject(provider)){
+    type = provider?.accreditingProviderType
+  }
+  else type = exports.getProviderData(provider, data)?.accreditingProviderType
+
+  return type == "SCITT"
+}
+
 exports.providerIsLeadSchool = function(provider, data=false){
   data = data || this?.ctx?.data || false
   return exports.getProviderType.apply(this, [provider, data]) == 'leadSchool'

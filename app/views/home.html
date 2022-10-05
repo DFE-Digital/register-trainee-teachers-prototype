@@ -80,9 +80,15 @@
 
       <div class="app-home-statuses app-home-statuses--3-up govuk-!-margin-bottom-4">
 
+        {# Previous training year #}
+       {#  {% set previousTrainingYear = registeredTrainees | whereIncludes('trainingYears', data.years.previousAcademicYear) %}
+        <a href="/records?&filterTrainingYears={{data.years.previousAcademicYear}}" class="status-card status-card--in-training">
+          <span class="status-card__count">{{previousTrainingYear | length}}</span>
+          <span class="status-card__status">Total trainees in {{data.years.previousAcademicYear}}</span><span class="govuk-visually-hidden"> records. View these records.</span>
+        </a>
+ #}
         {# Training year #}
         {% set currentTrainingYear = registeredTrainees | whereIncludes('trainingYears', data.years.currentAcademicYear) %}
-        {{currentTrainingYear | log}}
         <a href="/records?&filterTrainingYears={{data.years.currentAcademicYear}}" class="status-card status-card--in-training">
           <span class="status-card__count">{{currentTrainingYear | length}}</span>
           {# <span class="status-card__status">{{data.years.currentAcademicYear}} training year</span><span class="govuk-visually-hidden"> records. View these records.</span> #}

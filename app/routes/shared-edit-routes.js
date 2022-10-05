@@ -1446,4 +1446,18 @@ module.exports = router => {
   })
 
 
+  // =============================================================================
+  // iQTS
+  // =============================================================================
+
+
+  // Redirect to first page of iQTS
+  router.get(['/:recordtype/:uuid/iqts','/:recordtype/iqts'], function (req, res) {
+    const data = req.session.data
+    let recordPath = utils.getRecordPath(req)
+    let referrer = utils.getReferrer(req.query.referrer)
+    res.redirect(`${recordPath}/iqts/country${referrer}`)
+  })
+
+
 }

@@ -32,13 +32,18 @@
       <p class="govuk-body"><a href="{{recordPath}}/previous-course-details" class="govuk-link">View previous course changes</a></p>
     {% endif %}
 
+    {% if record | requiresSection("iQts") %}
+      {# <h2 class="govuk-heading-s">iQTS</h2> #}
+      {% include "_includes/summary-cards/iqts.html" %}
+    {% endif %}
+
     {% if record | requiresSection("schools") %}
-      <h2 class="govuk-heading-s">Schools</h2>
+      {# <h2 class="govuk-heading-s">Schools</h2> #}
       {% include "_includes/summary-cards/schools.html" %}
     {% endif %}
 
     {% if record | requiresSection("placement") %}
-      <h2 class="govuk-heading-s">Placements</h2>
+      {# <h2 class="govuk-heading-s">Placements</h2> #}
       {% include "_includes/summary-cards/placements/placement-overview.html" %}
     {% endif %}
 

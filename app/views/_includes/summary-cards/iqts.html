@@ -1,0 +1,65 @@
+
+{% set iqtsRows = [
+  {
+    key: {
+      text: "Country of study"
+    },
+    value: {
+      html: record.iqts.country or "Not provided"
+    },
+    actions: {
+      items: [
+        {
+          href: recordPath + "/iqts/country" | addReferrer(referrer),
+          text: "Change",
+          visuallyHiddenText: "country"
+        }
+      ]
+    } if canAmend
+  }
+  ] %}
+
+
+
+{% set contactDetailsHtml %}
+  {{ govukSummaryList({
+    rows: iqtsRows | highlightInvalidRows
+  }) }}
+{% endset %}
+
+{% set complete = record.iQts | sectionIsComplete %}
+{% set status  = record.iQts | getStatusText %}
+{% set sectionIsRequired = record | requiresSection("iQts") %}
+
+{% if not sectionIsRequired %}
+  {# Section not required #}
+{% elseif showIncomplete and not complete %}
+
+  {% set incompleteType = "warning" if errorList %}
+  {% set incompleteId = "iqts-details" %}
+  {% if status == "Review" %}
+    {% set incompleteText = "iQTS details not reviewed" %}
+    {% set incompleteLink = recordPath + "/iqts/confirm" %}
+    {% set incompleteLinkText = "Review section" %}
+  {% elseif status == "In progress" %}
+    {% set incompleteText = "iQTS details not marked as complete" %}
+    {% set incompleteLink = recordPath + "/iqts/confirm" %}
+    {% set incompleteLinkText = "Continue section" %}
+  {% else %}
+    {% set incompleteText = "iQTS details not started" %}
+    {% set incompleteLink = recordPath + "/iqts" %}
+    {% set incompleteLinkText = "Start section" %}
+  {% endif %}
+
+  {% include "_includes/incomplete.njk" %}
+
+{% else %}
+
+  {{ appSummaryCard({
+    classes: "govuk-!-margin-bottom-6",
+    titleText: "iQTS details",
+    html: contactDetailsHtml
+  }) }}
+  
+{% endif %}
+

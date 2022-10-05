@@ -1,0 +1,53 @@
+{% include "_includes/trainee-name-caption.njk" %}
+<h1 class="govuk-heading-l">
+  {{pageHeading}}
+</h1>
+
+{% set label = "Search for a school by its unique reference number (URN), name or postcode" %}
+
+{# Todo - this could probably be the default that the autocomplete progressively enhances #}
+{# <div class="app-no-js-only">
+  {{ govukInput({
+    id: "schoolSearch",
+    name: "_schoolSearch",
+    label: {
+      text: label
+    },
+    value: query._schoolSearch,
+    classes: 'app-!-max-width-two-thirds'
+  }) }}
+</div>
+
+<div class="app-js-only">
+  {{ appSchoolAutocomplete({
+    name: "_autocomplete_result_uuid",
+    value: record.schools.employingSchool.schoolName,
+    uuid: record.schools.employingSchool.uuid,
+    label: {
+      text: label
+    }
+  }) }}
+</div> #}
+
+{# Degree country #}
+{{ appAutocompleteFromSelect({
+  label: {
+    _text: "In which country or territory is the degree institution based?",
+    classes: "govuk-label--s"
+  },
+  id: 'iqts-country',
+  name: "record[iqts][country]",
+  items: data.countries | removeArrayItem("United Kingdom") | toSelectItems,
+  classes: "govuk-!-width-two-thirds",
+  value: record.iqts.country,
+  autocompleteOptions: {
+    minLength: 2,
+    autoselect: true,
+    showAllValues: false
+  }
+} ) }}
+
+
+{{ govukButton({
+  text: "Continue"
+}) }}

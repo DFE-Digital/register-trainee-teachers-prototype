@@ -573,8 +573,11 @@ module.exports = router => {
     let registeredRecords = objectFilters.removeWhere(filteredRecords, 'status', "Draft")
     let registeredRecordsCount = hasFilters ? registeredRecords.length : null
 
+    let filteredRecordsRealCount = draftRecords.length
+
     res.render('drafts', {
       filteredRecords: draftRecords,
+      filteredRecordsRealCount,
       hasFilters,
       selectedFilters,
       registeredRecordsCount

@@ -14,7 +14,7 @@ module.exports = application => {
 
     // HEI records are nearly all HESA
     if (application.accreditingProviderType == "HEI") {
-      if (application.route.includes("Opt-in")){
+      if (application.route.includes("Opt-in") || application.route.includes("iQTS")){
         return "Manual"
       }
       else return "HESA"

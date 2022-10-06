@@ -67,6 +67,7 @@ const generateSource = require('../app/data/generators/source')
 const generateStatus = require('../app/data/generators/status')
 const generateApplyData = require('../app/data/generators/apply-data')
 const generateHesaData = require('../app/data/generators/hesa-data')
+const generateIQtsData = require('../app/data/generators/iqts-data')
 
 // Populate application data object with fake data
 const generateFakeApplication = (params = {}) => {
@@ -161,6 +162,11 @@ const generateFakeApplication = (params = {}) => {
   // Placements
   if (requiredSections.includes('placement')) {
     application.placement        = (params.placement === null) ? undefined : { ...generatePlacement(application), ...params.placement } 
+  }
+
+  // iQTS
+  if (requiredSections.includes('iqts')) {
+    application.iqts        = (params.iqts === null) ? undefined : { ...generateIQtsData(application), ...params.iqts }
   }
 
   // Make sure statuses match qualifications
@@ -312,6 +318,7 @@ const generateFakeApplicationsForProvider = (provider, year, count) => {
       status: 'Completed'
     },
     degree: null,
+    iqts: null,
     updatedDate: faker.date.between(
       moment(),
       moment().subtract(16, 'days'))

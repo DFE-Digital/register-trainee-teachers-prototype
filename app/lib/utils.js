@@ -1213,7 +1213,7 @@ exports.calculateCourseEndAcademicYear = record => {
 // End academic year depends on the trainee status and what data
 // we have available
 exports.calculateEndAcademicYear = record => {
-  console.log("Calculating end academic year")
+  // console.log("Calculating end academic year")
   if (exports.isAwarded(record)){
     return exports.dateToAcademicYear(record?.qualificationAwardedDate)
   }

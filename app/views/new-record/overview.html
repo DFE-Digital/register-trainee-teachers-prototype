@@ -133,10 +133,10 @@
     href: "iqts" | reviewIfInProgress(record.iQts),
     id: "iQts",
     tag: {
-      classes: record.iQts | getStatusText | getStatusClass,
-      text: record.iQts | getStatusText
+      classes: record.iqts | getStatusText | getStatusClass,
+      text: record.iqts | getStatusText
     }
-  } if record | requiresSection("iQts"),
+  } if record | requiresSection("iqts"),
   {
     text: "Trainee ID",
     href: "training-details" | reviewIfInProgress(record.trainingDetails),

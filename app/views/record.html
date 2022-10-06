@@ -32,7 +32,7 @@
       <p class="govuk-body"><a href="{{recordPath}}/previous-course-details" class="govuk-link">View previous course changes</a></p>
     {% endif %}
 
-    {% if record | requiresSection("iQts") %}
+    {% if record | requiresSection("iqts") %}
       {# <h2 class="govuk-heading-s">iQTS</h2> #}
       {% include "_includes/summary-cards/iqts.html" %}
     {% endif %}

@@ -2,12 +2,23 @@
 {% set enabledTrainingRoutes = [] %}
 {% for route in data.settings.enabledTrainingRoutes %}
   {% if not data.trainingRoutes[route].disableForNewDrafts %}
-    {% set enabledTrainingRoutes = enabledTrainingRoutes | push({
-      text: route,
-      hint: {
+    {% set hint = false %}
+
+    {% if route | includes("Provider-led") %}
+      {% set hint = {
         text: "Training run by higher education institutions (HEIs) or school centred
           initial teacher training (SCITT) providers"
-      } if route | includes("Provider-led")
+      } %}
+
+    {% elseif route | includes("iQTS") %}
+      {% set hint = {
+        text: "iQTS is amazing"
+      } %}
+    {% endif %}
+
+    {% set enabledTrainingRoutes = enabledTrainingRoutes | push({
+      text: route,
+      hint: hint
     }) %}
   {% endif %}
 {% endfor %}

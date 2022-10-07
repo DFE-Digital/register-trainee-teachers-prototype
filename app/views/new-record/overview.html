@@ -130,8 +130,8 @@
   } if record | requiresSection("courseDetails"),
   {
     text: "International training details",
-    href: "iqts" | reviewIfInProgress(record.iQts),
-    id: "iQts",
+    href: "iqts" | reviewIfInProgress(record.iqts),
+    id: "iqts",
     tag: {
       classes: record.iqts | getStatusText | getStatusClass,
       text: record.iqts | getStatusText

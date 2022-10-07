@@ -24,12 +24,12 @@
   {% if record | sourceIsManual or not data.settings.groupApplySections %}
     {{ govukCheckboxes({
       idPrefix: "contact-details",
-      name: "record[iQts][status]",
+      name: "record[iqts][status]",
       items: [
         {
           value: "Completed",
           text: checkboxText,
-          checked: checked(record.iQts.status, "Completed")
+          checked: checked(record.iqts.status, "Completed")
         }
       ]
       }) }}

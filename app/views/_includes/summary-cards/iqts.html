@@ -2,7 +2,7 @@
 {% set iqtsRows = [
   {
     key: {
-      text: "Country of study"
+      text: "Country or territory of training"
     },
     value: {
       html: record.iqts.country or "Not provided"
@@ -57,7 +57,7 @@
 
   {{ appSummaryCard({
     classes: "govuk-!-margin-bottom-6",
-    titleText: "iQTS details",
+    titleText: "International training details",
     html: contactDetailsHtml
   }) }}
   

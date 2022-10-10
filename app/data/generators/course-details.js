@@ -94,8 +94,8 @@ const setSubjectSpecialisms = (courseDetails, pickRandom) => {
 
 module.exports = (params, application) => {
 
-  const isDraft = utils.isDraft(application)
-  const isNonDraft = utils.isNonDraft(application)
+  const isDraft = utils.isDraft(params)
+  const isNonDraft = utils.isNonDraft(params)
   const isApplyDraft = utils.sourceIsApply(application) && isDraft
   const isManualDraft = utils.sourceIsManual(application) && isDraft
   
@@ -143,7 +143,7 @@ module.exports = (params, application) => {
     }
 
     // For each Publish subject, set course subjects where they’re mappable.
-    // Not all subjects are mappable. Users will use UI to map them. Where we're pretending the data
+    // Not all subjects are mappable. Users will use UI to map them. Where we’re pretending the data
     // is complete we pick a random subject - as if the user had preivously picked that.
     courseDetails = setSubjectSpecialisms(courseDetails, pretendDataIsComplete)
 

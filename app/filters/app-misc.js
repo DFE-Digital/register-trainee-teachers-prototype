@@ -157,6 +157,19 @@ filters.getDegreeTypesForAutocomplete = (degreeTypes) => {
   })
 }
 
+// Generate an array of data suitable for autocomplete
+filters.getDegreeGradesForAutocomplete = (degreeGrades) => {
+
+  return degreeGrades.map(grade => {
+
+    return {
+      name: grade.name,
+      value: grade.name,
+      synonyms: grade.suggestion_synonyms.concat(grade.match_synonyms).filter(Boolean),
+    }
+  })
+}
+
 // Return a pretty name for the degree
 filters.getDegreeName = (degree) => {
   if (!degree) return ''

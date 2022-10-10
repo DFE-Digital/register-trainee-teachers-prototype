@@ -83,7 +83,7 @@ const onConfirm = function(selected) {
     // need to store the current typed text.
     else if (autocompleteInput.value != autocompleteValueInput.getAttribute('data-text') ){
       autocompleteValueInput.value = autocompleteInput.value
-      autocompleteVAlueInput.setAttribute('data-text', autocompleteInput.value)
+      autocompleteValueInput.setAttribute('data-text', autocompleteInput.value)
     }
   }
 

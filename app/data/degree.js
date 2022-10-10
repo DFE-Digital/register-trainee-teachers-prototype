@@ -1645,10 +1645,103 @@ module.exports = () => {
     "Truro College"
   ]
 
+let grades = [
+  { hesa_code: '1',
+    name: 'First-class honours',
+    suggestion_synonyms: ['First class honours with distinction'],
+    match_synonyms: [
+      'First class honours',
+      'First class hons',
+      'First',
+      'First class'
+    ],
+    group: "main_undergrad" },
+  { hesa_code: '2',
+    name: 'Upper second-class honours (2:1)',
+    suggestion_synonyms: [],
+    match_synonyms: ['Upper second class honours', '2:1', '2.1'],
+    group: "main_undergrad" },
+  { hesa_code: '3',
+    name: 'Lower second-class honours (2:2)',
+    suggestion_synonyms: [],
+    match_synonyms: ['Lower second class honours', '2:2', '2.2'],
+    group: "main_undergrad" },
+  { hesa_code: '4',
+    name: 'Undivided second-class honours',
+    suggestion_synonyms: [],
+    match_synonyms: ['Undivided second class honours'],
+    group: "other" },
+  { hesa_code: '5',
+    name: 'Third-class honours',
+    suggestion_synonyms: [],
+    match_synonyms: ['Third class honours', 'Third'],
+    group: "main_undergrad" },
+  { hesa_code: '6',
+    name: 'Fourth-class honours',
+    suggestion_synonyms: [],
+    match_synonyms: ['Fourth class honours'],
+    group: "other" },
+  { hesa_code: '7',
+    name: 'Unclassified',
+    suggestion_synonyms: [],
+    match_synonyms: [],
+    group: "other" },
+  { hesa_code: '8',
+    name: 'Aegrotat',
+    suggestion_synonyms: [],
+    match_synonyms: [],
+    group: "other" },
+  { hesa_code: '10',
+    name: 'Ordinary degree',
+    suggestion_synonyms: [],
+    match_synonyms: ['Ordinary'],
+    group: "other " },
+  { hesa_code: '11',
+    name: 'General degree',
+    suggestion_synonyms: [],
+    match_synonyms: [],
+    group: "other" },
+  { hesa_code: '12',
+    name: 'Distinction',
+    suggestion_synonyms: [],
+    match_synonyms: [],
+    group: "main_postgrad" },
+  { hesa_code: '13',
+    name: 'Merit',
+    suggestion_synonyms: [],
+    match_synonyms: [
+      'Pass with merit'
+    ],
+    group: "main_postgrad" },
+  { hesa_code: '14',
+    name: 'Pass',
+    suggestion_synonyms: [
+      'Awarded'
+    ],
+    match_synonyms: ['Passed'],
+    group: "main_undergrad" },
+  { hesa_code: '98',
+    name: 'Not applicable',
+    suggestion_synonyms: [],
+    match_synonyms: ['NA', 'N/A', 'Not classified'],
+    group: "main_postgrad" },
+  { hesa_code: '99',
+    name: 'Unknown',
+    suggestion_synonyms: [],
+    match_synonyms: [],
+    group: "main_postgrad" }
+]
+
+
   return {
     types: {
       all: types,
       undergraduate: types.filter(type => type.level === 6 || type.level === 7)
+    },
+    grades: {
+      all: grades,
+      undergrad: grades.filter(grade => grade.group == "main_undergrad"),
+      postgrad: grades.filter(grade => grade.group == "main_postgrad")
     },
     invalidInstitutions,
     invalidSubjects,

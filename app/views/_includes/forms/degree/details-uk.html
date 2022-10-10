@@ -136,13 +136,19 @@
     "Upper second-class honours (2:1)",
     "Lower second-class honours (2:2)",
     "Third-class honours",
-    "Pass"
+    "Pass",
+    "Merit",
+    "Distinction"
   ] %}
     {% set storedGradeOther = true %}
   {% endif %}
 
   {% set degreeGradeOtherHtml %}
-    {{ govukInput({
+
+    {# Degree types #}
+    {% set degreeGradesAutocomplete = data.degreeGrades.all | getDegreeGradesForAutocomplete | sort(attribute='value') %}
+
+{#     {{ govukInput({
       label: {
         text: "Enter the degree grade"
       },
@@ -150,7 +156,28 @@
       classes: "app-!-max-width-one-half",
       name: "degreeTemp[otherGrade]",
       value: degreeTemp.grade if storedGradeOther
-    } | decorateAttributes(degreeTemp, "degreeTemp.grade"))}}
+    } | decorateAttributes(degreeTemp, "degreeTemp.grade"))}} #}
+
+
+    {{ appAutocompleteFromInput({
+      label: {
+        text: "Enter the degree grade",
+        _classes: "govuk-label--s"
+      },
+      _hint: {
+        text: "none"
+      },
+      id: 'degree-grade',
+      name: "degreeTemp[otherGrade]",
+      classes: "govuk-!-width-one-half",
+      value: degreeTemp.grade if storedGradeOther,
+      autocompleteOptions: {
+        minLength: 2,
+        autoselect: false,
+        showSuggestionsBanner: true,
+        values: degreeGradesAutocomplete
+      }
+    })}}
   {% endset %}
 
   {{ govukRadios({
@@ -179,6 +206,15 @@
       },
       {
         text: "Pass"
+      },
+      {
+        text: "Distinction"
+      },
+      {
+        text: "Merit"
+      },
+      {
+        divider: "or"
       },
       {
         text: "Other",

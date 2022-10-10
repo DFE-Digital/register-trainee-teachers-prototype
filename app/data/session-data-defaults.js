@@ -15,6 +15,7 @@ let serviceUpdates          = yaml.load(fs.readFileSync(dataPath + '/service-upd
 // Degree stuff
 let awards                  = require('./awards') // Types of degree
 let degreeData              = require('./degree')()
+let degreeGrades            = degreeData.grades
 let degreeTypes             = degreeData.types.all
 let degreeTypesSimple       = degreeData.types.all.map(type => type.text).sort()
 let subjects                = degreeData.subjects
@@ -263,6 +264,7 @@ module.exports = {
   degreeInstitutions,
   degreeTypes,
   degreeTypesSimple,
+  degreeGrades,
   ethnicities,
   funding,
   ittSubjects,

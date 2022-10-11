@@ -82,13 +82,15 @@
       },
       {
         text: "I do not have any of these disabilities or health conditions",
-        value: "No disabilities or health conditions"
+        value: "No disabilities or health conditions",
+        behaviour: "exclusive"
       },
       {
         divider: "or"
       },
       {
-        text: "Prefer not to say"
+        text: "Prefer not to say",
+        behaviour: "exclusive"
       }
     ]
   } | decorateAttributes(record, "record.diversity.disabilities")) }}

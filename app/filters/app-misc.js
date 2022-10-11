@@ -198,8 +198,8 @@ filters.getDegreeHint = (degree) =>{
   } 
 }
 
-filters.includes = (route, string) =>{
-  if (route && route.includes(string)) {
+filters.includes = (item, string) =>{
+  if (item && item.includes(string)) {
     return true
   } else {
     return false

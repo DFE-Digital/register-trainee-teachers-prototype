@@ -34,25 +34,32 @@
   } if canAmend
 } %}
 
-{% set hasDisabilities = true if record.diversity.disabledAnswer == "They shared that they’re disabled" %}
-
 {% set disabilities = record.diversity.disabilities %}
 
+{# {% set hasDisabilities = true if record.diversity.disabledAnswer == "They shared that they’re disabled" %} #}
+
+
+{% set hasDisabilities = false %}
+
 {% if disabilities | length > 0 %}
+  {% set noDisabilities = disabilities | includes('No disabilities or health conditions')  %}
+  {% set preferNotToSay = disabilities | includes('Prefer not to say') %}
+  {% set hasDisabilities = true if not (noDisabilities or preferNotToSay) %}
+{% endif %}
+
+{% if hasDisabilities %}
   {% set disabilitiesList %}
     <ul class="govuk-list govuk-list--bullet">
       {% for disability in disabilities %}
         {% if disability == 'Other' and record.diversity.disabilitiesOther %}
-          <li>{{ disability | lower }} ({{record.diversity.disabilitiesOther | lower}})</li>
+          <li>{{ disability }} ({{record.diversity.disabilitiesOther | lower}})</li>
         {% else %}
-          <li>{{ disability | lower }}</li>
+          <li>{{ disability }}</li>
         {% endif %}
       {% endfor %}
     </ul>
   {% endset %}
-{% endif %}
 
-{% if hasDisabilities %}
   {% set disabledAnswer %}
     <p class="govuk-body">{{record.diversity.disabledAnswer}}</p>
     {% if disabilitiesList %}
@@ -62,15 +69,16 @@
       <p class="govuk-body">They have not shared details of specific disabilities</p>
     {% endif %}
   {% endset %}
+
 {% else %}
   {% set disabledAnswer %}
-    {{record.diversity.disabledAnswer}}
+    {{record.diversity.disabilities}}
   {% endset %}
 {% endif %}
 
 {% set disabilitiesAnswerRow = {
     key: {
-      text: "Disability"
+      text: "Disabilities and health conditions"
     },
     value: {
       text: disabledAnswer | safe or "Not provided"

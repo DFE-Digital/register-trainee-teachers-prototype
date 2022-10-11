@@ -56,17 +56,30 @@ module.exports = (params, application) => {
       }
 
       const level = type.level
-      const grade = faker.helpers.randomize([
-        'First-class honours',
-        'Upper second-class honours (2:1)',
-        'Lower second-class honours (2:2)',
-        'Third-class honours',
-        'Pass',
-        ...(level !== 6) ? ['Merit'] : [],
-        ...(level !== 6) ? ['Distinction'] : [],
-        ...(level !== 6) ? ['Not applicable'] : [],
-        ...(level !== 6) ? ['Unknown'] : []
-      ])
+      let grade
+
+      if (level <= 6){
+        grade = faker.helpers.randomize([
+          'First-class honours',
+          'Upper second-class honours (2:1)',
+          'Lower second-class honours (2:2)',
+          'Third-class honours',
+          'Pass'
+        ])
+      }
+      else {
+        grade = faker.helpers.randomize([
+          'First-class honours',
+          'Upper second-class honours (2:1)',
+          'Lower second-class honours (2:2)',
+          'Pass',
+          'Merit',
+          'Distinction',
+          'Pass',
+          'Merit',
+          'Distinction'
+        ])
+      }
 
       return {
         type,
@@ -83,6 +96,7 @@ module.exports = (params, application) => {
     }
   }
 
+  // Number of qualifications to add
   const count = weighted.select({
     1: 0.9,
     2: 0.1

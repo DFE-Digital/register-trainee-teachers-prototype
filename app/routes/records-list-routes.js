@@ -524,7 +524,7 @@ module.exports = router => {
     // Truncate records in case there's lots - and as we don't have working pagination
     let filteredRecordsRealCount = registeredRecords.length
     console.log({filteredRecordsRealCount})
-    filteredRecords = registeredRecords.slice(0, 204)
+    filteredRecords = registeredRecords.slice(0, 100)
 
     if (req?.params?.tabName && data.settings.trainingYearsUiStyle != 'Tabs'){
       res.redirect("/records")

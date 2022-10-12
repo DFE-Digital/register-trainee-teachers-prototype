@@ -49,7 +49,7 @@ filters.uniq = arr => {
 
 filters.push = (array, item) => {
   let newArray = [...array]
-  newArray.push(item)
+  newArray.push(_.cloneDeep(item))
   return newArray
 }
 

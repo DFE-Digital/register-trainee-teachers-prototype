@@ -1,12 +1,12 @@
 const { faker }         = require('@faker-js/faker')
 const weighted = require('weighted')
 
+const disabilities = require('../disabilities.js')
+
 module.exports = () => {
 
   let ethnicGroup
   let ethnicBackground
-  let disabledAnswer
-  let disabilities
 
   const ethnicGroups = {
     "Asian or Asian British" : [
@@ -60,35 +60,29 @@ module.exports = () => {
         )
     }
 
-    disabledAnswer = faker.helpers.randomize([
-      "They shared that they’re disabled",
-      "They shared that they’re not disabled",
-      "Not provided"])
+    let hasDisability = weighted.select([true, false], [0.3,0.7])
 
-    disabilityCount = faker.datatype.number(1, 3); // up to 3 disabilities
+    let disabilityCount = faker.helpers.shuffle([1, 2, 3])[0] // up to 3 disabilities
 
-    let disabilityChoices = [
-      "Blind",
-      "Deaf",
-      "Development condition",
-      "Learning difficulty",
-      "Long-standing illness",
-      "Mental health condition",
-      "Physical disability or mobility issue",
-      "Social or communication impairment",
-      "Other"
-    ]
-    let shuffledDisabilities = disabilityChoices.sort(() => 0.5 - Math.random());
+    let disabilityChoices = disabilities.items.map(item => item.value)
 
-    if ((disabledAnswer=="They shared that they’re disabled") && disabilityCount){
-      disabilities = shuffledDisabilities.slice(0, disabilityCount).sort();
+    let shuffledDisabilities = faker.helpers.shuffle(disabilityChoices)
+
+    let selectedDisabilities
+
+    if (hasDisability){
+      selectedDisabilities = shuffledDisabilities.slice(0, disabilityCount).sort();
     }
-
+    else {
+      selectedDisabilities = [weighted.select(
+        [disabilities.noneOption.value, disabilities.notProvidedOption.value],
+        [0.5, 0.5]
+      )]
+    }
 
   return {
     ethnicGroup,
     ethnicBackground,
-    disabledAnswer,
-    disabilities
+    disabilities: selectedDisabilities
   }
 }

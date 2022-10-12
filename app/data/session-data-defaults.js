@@ -4,6 +4,7 @@ const path                  = require('path')
 const utils                 = require('../lib/utils.js')
 
 let countries               = require('./countries')
+let disabilities            = require('./disabilities')
 let ethnicities             = require('./ethnicities')
 let nationalities           = require('./nationalities')
 let statuses                = require('./status')
@@ -265,6 +266,7 @@ module.exports = {
   degreeTypes,
   degreeTypesSimple,
   degreeGrades,
+  disabilities,
   ethnicities,
   funding,
   ittSubjects,

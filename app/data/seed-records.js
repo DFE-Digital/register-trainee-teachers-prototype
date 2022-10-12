@@ -46,12 +46,12 @@ seedRecords.push({
     "ethnicGroup": "White",
     "ethnicBackground": "Irish",
     "ethnicBackgroundOther": "",
-    "disabledAnswer": "They shared that they’re disabled",
-    "disabilities": [
-      "Physical disability or mobility issue",
-      "Social or communication impairment"
-    ],
-    "disabilitiesOther": "",
+    // "disabledAnswer": "They shared that they’re disabled",
+    // "disabilities": [
+    //   "Physical disability or mobility issue",
+    //   "Social or communication impairment"
+    // ],
+    // "disabilitiesOther": "",
     "status": [
       "Completed"
     ]

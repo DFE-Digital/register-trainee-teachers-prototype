@@ -42,39 +42,26 @@
 {% set hasDisabilities = false %}
 
 {% if disabilities | length > 0 %}
-  {% set noDisabilities = disabilities | includes('No disabilities or health conditions')  %}
-  {% set preferNotToSay = disabilities | includes('Prefer not to say') %}
-  {% set hasDisabilities = true if not (noDisabilities or preferNotToSay) %}
+  {% set noDisabilities = disabilities | includes(data.disabilities.noneOption.value)  %}
+  {% set notProvided = disabilities | includes(data.disabilities.notProvidedOption.value) %}
+  {% set hasDisabilities = true if not (noDisabilities or notProvided) %}
 {% endif %}
 
-{% if hasDisabilities %}
-  {% set disabilitiesList %}
-    <ul class="govuk-list govuk-list--bullet">
+{% set disabledAnswer %}
+  {% if hasDisabilities %}
+    <ul class="govuk-list">
       {% for disability in disabilities %}
-        {% if disability == 'Other' and record.diversity.disabilitiesOther %}
-          <li>{{ disability }} ({{record.diversity.disabilitiesOther | lower}})</li>
+        {% if disability == data.disabilities.otherOption.value and record.diversity.disabilitiesOther %}
+          <li>{{ record.diversity.disabilitiesOther }}</li>
         {% else %}
           <li>{{ disability }}</li>
         {% endif %}
       {% endfor %}
     </ul>
-  {% endset %}
-
-  {% set disabledAnswer %}
-    <p class="govuk-body">{{record.diversity.disabledAnswer}}</p>
-    {% if disabilitiesList %}
-      <p class="govuk-body">Disabilities shared:</p>
-      {{disabilitiesList | safe}}
-    {% else %}
-      <p class="govuk-body">They have not shared details of specific disabilities</p>
-    {% endif %}
-  {% endset %}
-
-{% else %}
-  {% set disabledAnswer %}
+  {% else %}
     {{record.diversity.disabilities}}
-  {% endset %}
-{% endif %}
+  {% endif %}
+{% endset %}
 
 {% set disabilitiesAnswerRow = {
     key: {

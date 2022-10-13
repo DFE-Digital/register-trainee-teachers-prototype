@@ -2,12 +2,22 @@
 
 {% set showEthnicGroupHint = false %}
 
+<h1 class="govuk-heading-l">{{ pageHeading }}</h1>
+
+<p class="govuk-body">
+  You should only enter this information if the trainee chose to declare this information as part of the ethnicity questions on their application form.
+</p>
+
+<p class="govuk-body">
+  You should not enter this information for the trainee based on other information they may have told you about.
+</p>
+
 {{ govukRadios({
     fieldset: {
       legend: {
-        text: pageHeading,
+        text: "What is their ethnic group?",
         isPageHeading: true,
-        classes: "govuk-fieldset__legend--l"
+        classes: "govuk-fieldset__legend--m"
       }
     },
     items: [

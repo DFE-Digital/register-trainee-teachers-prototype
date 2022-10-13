@@ -69,7 +69,9 @@ filters.find = (items, key, value) => {
 
 Will populate name and id, and add value and checked for each item
 */
-filters.decorateAttributes = (obj, data, value) => {
+filters.decorateAttributes = (originalObject, data, value) => {
+
+  let obj = _.cloneDeep(originalObject)
 
   // Map dot or bracket notation to path parts
   pathParts = _.toPath(value)

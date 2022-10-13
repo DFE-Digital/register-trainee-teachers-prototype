@@ -1,44 +1,36 @@
 let disabilities = [
   {
-    text: "Blind",
-    value: "Blind",
-    hint: {
-      text: "Or a serious visual impairment which is not corrected by glasses"
-    }
+    text: "Autistic spectrum condition or another condition affecting speech, language, communication or social skills",
+    value: "Autistic spectrum condition or another condition affecting speech, language, communication or social skills"
   },
   {
-    text: "Deaf",
-    value: "Deaf",
-    hint: {
-      text: "Or a serious hearing impairment"
-    }
+    text: "Blindness or a visual impairment not corrected by glasses",
+    value: "Blindness or a visual impairment not corrected by glasses"
   },
   {
-    text: "Development condition",
-    value: "Development condition",
-    hint: {
-      text: "A condition had since childhood which affects motor, cognitive, social and emotional skills, and speech and language"
-    }
+    text: "Condition affecting motor, cognitive, social and emotional skills, speech or language since childhood",
+    value: "Condition affecting motor, cognitive, social and emotional skills, speech or language since childhood"
   },
   {
-    text: "Learning difficulty",
-    value: "Learning difficulty",
-    hint: {
-      text: "For example, dyslexia, dyspraxia or ADHD"
-    }
+    text: "Deafness or a serious hearing impairment",
+    value: "Deafness or a serious hearing impairment"
   },
   {
-    text: "Long-standing illness",
-    value: "Long-standing illness",
+    text: "Dyslexia, dyspraxia or attention deficit hyperactivity disorder (ADHD) or another learning difference",
+    value: "Dyslexia, dyspraxia or attention deficit hyperactivity disorder (ADHD) or another learning difference"
+  },
+  {
+    text: "Long term illness",
+    value: "Long term illness",
     hint: {
       text: "For example, cancer, HIV, diabetes, chronic heart disease or epilepsy"
     }
   },
   {
-    text: "Mental health condition",
-    value: "Mental health condition",
+    text: "Mental health conditions",
+    value: "Mental health conditions",
     hint: {
-      text: "For example, depression, schizophrenia or anxiety disorder"
+      text: "For example, depression, schizophrenia or anxiery disorder"
     }
   },
   {
@@ -47,30 +39,23 @@ let disabilities = [
     hint: {
       text: "For example, impaired use of arms or legs, use of a wheelchair or crutches"
     }
-  },
-  {
-    text: "Social or communication impairment",
-    value: "Social or communication impairment",
-    hint: {
-      text: "For example a speech and language impairment or an autistic spectrum condition"
-    }
   }
 ]
 
 let otherOption = {
-  text: "Other",
-  value: "Other"
+  text: "Another disability, health condition or impairment affecting daily life",
+  value: "Another disability, health condition or impairment affecting daily life"
 }
 
 let noneOption = {
-  text: "I do not have any of these disabilities or health conditions",
-  value: "No disabilities or health conditions",
+  text: "Trainee does not have any of these disabilites or health conditions",
+  value: "Trainee does not have any disabilites or health conditions",
   behaviour: "exclusive"
 }
 
 let notProvidedOption = {
-  text: "Prefer not to say",
-  value: "Prefer not to say",
+  text: "Trainee has not declared any information",
+  value: "Trainee has not declared any information",
   behaviour: "exclusive"
 }
 

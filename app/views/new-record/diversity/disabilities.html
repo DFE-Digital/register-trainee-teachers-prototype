@@ -1,6 +1,6 @@
 {% extends "_templates/_new-record.html" %}
 
-{% set pageHeading = "Which disabilities were shared?" %}
+{% set pageHeading = "Which disabilities or health conditions did the trainee share?" %}
 
 {% if data.record | sourceIsApply %}
   {% set formAction = "./../overview" | orReferrer(referrer) %}

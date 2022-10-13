@@ -27,8 +27,8 @@ let disabilities = [
     }
   },
   {
-    text: "Mental health conditions",
-    value: "Mental health conditions",
+    text: "Mental health condition",
+    value: "Mental health condition",
     hint: {
       text: "For example, depression, schizophrenia or anxiery disorder"
     }

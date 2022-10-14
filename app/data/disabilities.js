@@ -48,14 +48,14 @@ let otherOption = {
 }
 
 let noneOption = {
-  text: "Trainee does not have any of these disabilites or health conditions",
-  value: "Trainee does not have any disabilites or health conditions",
+  text: "Trainee said they do not have any of these disabilites or health conditions",
+  value: "Trainee said they do not have any disabilites or health conditions",
   behaviour: "exclusive"
 }
 
 let notProvidedOption = {
-  text: "Trainee has not provided any information",
-  value: "Trainee has not provided any information",
+  text: "Trainee did not provide any information",
+  value: "Trainee did not provide any information",
   behaviour: "exclusive"
 }
 

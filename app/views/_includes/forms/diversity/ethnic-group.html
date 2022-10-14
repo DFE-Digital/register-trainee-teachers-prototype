@@ -15,7 +15,7 @@
 {{ govukRadios({
     fieldset: {
       legend: {
-        text: "What is their ethnic group?",
+        text: "What is the trainee's ethnic group?",
         isPageHeading: true,
         classes: "govuk-fieldset__legend--m"
       }
@@ -55,7 +55,7 @@
       divider: "or"
     },
     {
-      text: "Not provided"
+      text: "Trainee did not provide any information"
     }]
   } | decorateAttributes(record, "record.diversity.ethnicGroup")) }}
 

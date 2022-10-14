@@ -54,8 +54,8 @@ let noneOption = {
 }
 
 let notProvidedOption = {
-  text: "Trainee has not declared any information",
-  value: "Trainee has not declared any information",
+  text: "Trainee has not provided any information",
+  value: "Trainee has not provided any information",
   behaviour: "exclusive"
 }
 

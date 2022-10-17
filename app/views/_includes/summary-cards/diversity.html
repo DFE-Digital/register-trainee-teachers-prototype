@@ -11,8 +11,8 @@
 {# Combine ethnic group and ethnic background #}
 {% set ethnicity %}
   {{ethnicGroup}}
-  {% if ethnicBackground and ethnicBackground != 'Not provided' %}
-    ({{ethnicBackground | replace('Another', 'another')}})
+  {% if ethnicBackground and ethnicBackground != 'Trainee did not provide any information' %}
+    ({{ethnicBackground | replace('Any other', 'any other')}})
   {% endif %}
 {% endset %}
 
@@ -21,7 +21,7 @@
     text: "Ethnicity"
   },
   value: {
-    text: ethnicity or 'Not provided'
+    text: ethnicity or 'Trainee did not provide any information'
   },
   actions: {
     items: [

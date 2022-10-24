@@ -139,10 +139,15 @@
     <div class="app-records-actions">
       <div class="app-records-actions__col">
         {% if isAuthorised('exportRecords') %}
-          {% if hasFilters or activeTab == 'current-year' %}
-            <p class="govuk-body govuk-!-margin-bottom-3"><a href="#" class="govuk-link">Export these records</a></p>
+          {# Prevent admins exporting more than 100 trainees #}
+          {% if data.isAdmin and (filteredRecordsRealCount > 100) %}
+            <p class="govuk-body align-right govuk-hint govuk-!-margin-bottom-3">Admins cannot export more than 100 trainees</p>
           {% else %}
-            <p class="govuk-body govuk-!-margin-bottom-3"><a href="/reports/choose-trainee-records" class="govuk-link">Choose trainee records to export</a></p>
+            {% if hasFilters or activeTab == 'current-year' %}
+              <p class="govuk-body govuk-!-margin-bottom-3"><a href="#" class="govuk-link">Export these records</a></p>
+            {% else %}
+              <p class="govuk-body govuk-!-margin-bottom-3"><a href="/reports/choose-trainee-records" class="govuk-link">Choose trainee records to export</a></p>
+            {% endif %}
           {% endif %}
         {% endif %}
 

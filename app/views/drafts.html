@@ -100,12 +100,17 @@
 
     <div class="app-records-actions">
       <div class="app-records-actions__col">
-        {% if isAuthorised('exportRecords') %}
-          <p class="govuk-body govuk-!-margin-bottom-3"><a href="#" class="govuk-link">Export these records</a></p>
-        {% endif %}
-        {# Only sort if there’s at least two items #}
-        {% if filteredRecords | length > 1 %}
-          {% include "_includes/record-sort-order.njk" %}
+        {# Prevent admins exporting more than 100 trainees #}
+        {% if data.isAdmin and (filteredRecordsRealCount > 100) %}
+          <p class="govuk-body align-right govuk-hint govuk-!-margin-bottom-3">Admins cannot export more than 100 trainees</p>
+        {% else %}
+          {% if isAuthorised('exportRecords') %}
+            <p class="govuk-body govuk-!-margin-bottom-3"><a href="#" class="govuk-link">Export these records</a></p>
+          {% endif %}
+          {# Only sort if there’s at least two items #}
+          {% if filteredRecords | length > 1 %}
+            {% include "_includes/record-sort-order.njk" %}
+          {% endif %}
         {% endif %}
       </div>
       <div class="app-records-actions__col">

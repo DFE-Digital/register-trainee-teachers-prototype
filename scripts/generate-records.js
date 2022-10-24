@@ -191,7 +191,7 @@ const generateFakeApplication = (params = {}) => {
     application = utils.setEndAcademicYear(application)
   }
 
-  application = utils.setTrainingYears(application)
+  application = utils.setAcademicYears(application)
 
   application.outcome = (params.outcome === null) ? undefined : { ...generateOutcomes(application), ...params.outcome }
 

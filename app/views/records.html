@@ -49,7 +49,7 @@
     }) }}
 {% endset %}
 
-{% set trainingYearsTabsHtml %}
+{% set academicYearsTabsHtml %}
 
   {% set academicYearRecentlyChanged = data.years.academicYearStartDate | isInLast(3, 'months') %}
 
@@ -259,8 +259,8 @@
 
   <div class="govuk-grid-column-full">
 
-    {% if data.settings.trainingYearsUiStyle == "Tabs" %}
-      {{ trainingYearsTabsHtml | safe }}
+    {% if data.settings.academicYearsUiStyle == "Tabs" %}
+      {{ academicYearsTabsHtml | safe }}
     {% endif %}
 
     {# <span class="govuk-caption-l">{{ data.signedInProviders | andSeparate }}</span> #}

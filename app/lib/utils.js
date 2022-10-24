@@ -209,26 +209,26 @@ exports.setEndAcademicYear = record => {
   return record
 }
 
-// Saves training years on to a trainee
-exports.setTrainingYears = record => {
+// Saves academic years on to a trainee
+exports.setAcademicYears = record => {
 
-  let trainingYears = exports.calculateTrainingYears(record)
+  let academicYears = exports.calculateAcademicYears(record)
 
-  if (trainingYears){
-    record.trainingYears = trainingYears
+  if (academicYears){
+    record.academicYears = academicYears
   }
 
   return record
 }
 
-// Calculates training years for a trainee
-// Training years are all the years that the trainee was in training for
+// Calculates academic years for a trainee
+// Academic years are all the years that the trainee was in training for
 // A trainee that started in 2019 to 2020 and is still in training in 2022 to 2023 
-// will have training years of: ['2019 to 2020','2020 to 2021', '2021 to 2022', '2022 to 2023']
+// will have academic years of: ['2019 to 2020','2020 to 2021', '2021 to 2022', '2022 to 2023']
 
 // For finished trainees, it'll be all the years between start year and end year. For trainees
 // still in training, it'll be the years from start year to the current yera
-exports.calculateTrainingYears = record => {
+exports.calculateAcademicYears = record => {
 
   let currentYear = exports.academicYearToYear(years.currentAcademicYear)
 
@@ -1664,7 +1664,7 @@ exports.filterRecords = (records, data, filters = {}) => {
       return filters.years.some(year => {
 
         // Value might be something like `End year: 2022 to 2023` or `Start year: 2019 to 2020 and prior`
-        let yearCleaned = year.replace("End year: ", "").replace("Start year: ", "").replace("Training year: ", "").replace(" and prior", "")
+        let yearCleaned = year.replace("End year: ", "").replace("Start year: ", "").replace("Academic year: ", "").replace(" and prior", "")
         let yearShort = exports.academicYearToYear(yearCleaned)
 
         // Start year
@@ -1685,21 +1685,21 @@ exports.filterRecords = (records, data, filters = {}) => {
           else return year.includes(record.endAcademicYear)
         }
 
-        // Training year
+        // Academic year
         else if (year.toLowerCase().includes("training")) {
-          // Make sure training years is always an array
-          let trainingYears = [].concat(record.trainingYears || [])
+          // Make sure academic years is always an array
+          let academicYears = [].concat(record.academicYears || [])
 
-          // Trainees can have multiple training years. Match on any.
-          return trainingYears.some(trainingYear => {
+          // Trainees can have multiple academic years. Match on any.
+          return academicYears.some(academicYear => {
 
-            // eg 'Training year: 2020 to 2021 and prior'
-            // Should match all training years 2020 to 2021 and prior
+            // eg 'Academic year: 2020 to 2021 and prior'
+            // Should match all academic years 2020 to 2021 and prior
             if (year.includes("prior")){
-              let trainingYearShort = exports.academicYearToYear(trainingYear)
-              return (trainingYearShort <= yearShort)
+              let academicYearShort = exports.academicYearToYear(academicYear)
+              return (academicYearShort <= yearShort)
             }
-            else return year.includes(trainingYear)
+            else return year.includes(academicYear)
           })
         }
 
@@ -1743,26 +1743,26 @@ exports.filterRecords = (records, data, filters = {}) => {
     })
   }
 
-  if (filters.trainingYears && filters.trainingYears != "All years"){
+  if (filters.academicYears && filters.academicYears != "All years"){
     filteredRecords = filteredRecords.filter(record => {
 
-      // Make sure training years is always an array
-      let trainingYears = [].concat(record.trainingYears || [])
+      // Make sure academic years is always an array
+      let academicYears = [].concat(record.academicYears || [])
 
-      return filters.trainingYears.some(year => {
+      return filters.academicYears.some(year => {
 
         let yearCleaned = year.replace(" and prior", "")
         let yearShort = exports.academicYearToYear(yearCleaned)
 
-        return trainingYears.some(trainingYear => {
+        return academicYears.some(academicYear => {
 
-          // eg 'Training year: 2020 to 2021 and prior'
-          // Should match all training years 2020 to 2021 and prior
+          // eg 'Academic year: 2020 to 2021 and prior'
+          // Should match all academic years 2020 to 2021 and prior
           if (year.includes("prior")){
-            let trainingYearShort = exports.academicYearToYear(trainingYear)
-            return (trainingYearShort <= yearShort)
+            let academicYearShort = exports.academicYearToYear(academicYear)
+            return (academicYearShort <= yearShort)
           }
-          else return year.includes(trainingYear)
+          else return year.includes(academicYear)
         })
       })
 

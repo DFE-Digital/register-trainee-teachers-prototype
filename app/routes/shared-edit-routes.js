@@ -625,7 +625,7 @@ module.exports = router => {
           if (utils.isDraft(record)){
             record = utils.setStartAcademicYear(record)
             record = utils.setEndAcademicYear(record)
-            record = utils.setTrainingYears(record)
+            record = utils.setAcademicYears(record)
           }
 
           record.academicYear = courseDetails.academicYear
@@ -760,7 +760,7 @@ module.exports = router => {
     if (utils.isDraft(record)){
       record = utils.setStartAcademicYear(record)
       record = utils.setEndAcademicYear(record)
-      record = utils.setTrainingYears(record)
+      record = utils.setAcademicYears(record)
     }
 
     // Send to next conditional page or confirm page
@@ -858,7 +858,7 @@ module.exports = router => {
     if (utils.isDraft(record)){
       record = utils.setStartAcademicYear(record)
       record = utils.setEndAcademicYear(record)
-      record = utils.setTrainingYears(record)
+      record = utils.setAcademicYears(record)
     }
 
     // Set qualification and duration as per selected route
@@ -892,7 +892,7 @@ module.exports = router => {
     if (!ethnicGroup){
       res.redirect(`${recordPath}/diversity/ethnic-group${referrer}`)
     }
-    else if (ethnicGroup.includes("Trainee did not provide any information")){
+    else if (ethnicGroup.includes("Not provided")){
       res.redirect(`${recordPath}/diversity/disabilities${referrer}`)
     }
     else {

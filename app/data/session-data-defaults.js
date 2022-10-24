@@ -143,7 +143,7 @@ settings.includeDeclaration = false
 
 settings.bulkLinksInPrimaryNav = "None"
 
-settings.trainingYearsUiStyle = "Checkboxes"
+settings.academicYearsUiStyle = "Checkboxes"
 
 settings.traineeExportQuestionStyle = "Two stage"
 

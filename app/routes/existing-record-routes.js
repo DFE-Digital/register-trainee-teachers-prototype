@@ -286,7 +286,7 @@ module.exports = router => {
 
 
       record = utils.setEndAcademicYear(record)
-      record = utils.setTrainingYears(record)
+      record = utils.setAcademicYears(record)
 
       utils.deleteTempData(data)
       utils.updateRecord(data, record, false)

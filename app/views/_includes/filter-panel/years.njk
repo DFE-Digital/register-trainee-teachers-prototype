@@ -60,9 +60,9 @@
   <select class="govuk-select js-auto-submit govuk-!-width-full" id="years-select" name="filterYears">
       {% set ?defaultSelected = "selected" if (not query.filterYears or query.filterYears == "All years")%}
       <option value="All years" {{?defaultSelected}}>All years</option>
-      <optgroup label="Training years:">
-        {% for year in data.years.trainingYears %}
-          {% set value = "Training year: " + year %}
+      <optgroup label="Academic years:">
+        {% for year in data.years.academicYears %}
+          {% set value = "Academic year: " + year %}
           {% set ?selected = "selected" if (value == query.filterYears) %}
           {% set ?currentYearText = " (current year)" if year == data.years.currentAcademicYear %}
           <option value="{{value}}" {{?selected}}>In training: {{year}}{{?currentYearText}}</option>
@@ -143,51 +143,51 @@
 
 {% endmacro %}
 
-{% set trainingYearCheckboxes %}
+{% set academicYearCheckboxes %}
   {{ govukCheckboxes({
     classes: "govuk-checkboxes--small js-auto-submit",
     fieldset: {
       legend: {
-        text: "Training year",
+        text: "Academic year",
         isPageHeading: false,
         classes: "govuk-fieldset__legend--s"
       }
     },
     items: [
       {
-        text: "2022 to 2023 training year only",
+        text: "2022 to 2023 academic year only",
         text: "2022 to 2023",
         value: "2022 to 2023",
-        checked: checked(query.filterTrainingYears, "2022 to 2023")
+        checked: checked(query.filterAcademicYears, "2022 to 2023")
       },
       {
-        text: "2021 to 2022 training year only",
+        text: "2021 to 2022 academic year only",
         text: "2021 to 2022",
         value: "2021 to 2022",
-        checked: checked(query.filterTrainingYears, "2021 to 2022")
+        checked: checked(query.filterAcademicYears, "2021 to 2022")
       }
     ]
-  } | decorateAttributes(data, "data.filterTrainingYears"))}}
+  } | decorateAttributes(data, "data.filterAcademicYears"))}}
 {% endset %}
 
 
-{% if data.settings.trainingYearsUiStyle == "Combined years filter" %}
+{% if data.settings.academicYearsUiStyle == "Combined years filter" %}
 
   {{ yearsSelect | safe }}
 
 {% else %}
 
-  {% if data.settings.trainingYearsUiStyle == "Separate select filter" %}
+  {% if data.settings.academicYearsUiStyle == "Separate select filter" %}
 
     {{ yearSelect({
-      yearType: "Training year",
-      yearsToInclude: data.years.trainingYears,
-      name: "filterTrainingYears"
+      yearType: "Academic year",
+      yearsToInclude: data.years.academicYears,
+      name: "filterAcademicYears"
     }) }}
 
-  {% elseif data.settings.trainingYearsUiStyle == "Checkboxes" %}
+  {% elseif data.settings.academicYearsUiStyle == "Checkboxes" %}
 
-    {{ trainingYearCheckboxes | safe }}
+    {{ academicYearCheckboxes | safe }}
 
   {% endif %}
 

@@ -46,7 +46,7 @@ const getFilters = req => {
   'filterStudyMode',
   'filterTrainingRoutes',
   'filterTrainingStatus',
-  'filterTrainingYears',
+  'filterAcademicYears',
   'filterUserProviders']
   filtersToClean.forEach(filter => query[filter] = cleanInputData(query[filter]))
 
@@ -67,7 +67,7 @@ const getFilters = req => {
     allProviders: query.filterAllProviders,
     trainingRoutes: query.filterTrainingRoutes,
     trainingStatus: query.filterTrainingStatus,
-    trainingYears: query.filterTrainingYears,
+    academicYears: query.filterAcademicYears,
     subject: query.filterSubject
   }
 
@@ -100,7 +100,7 @@ const getHasFilters = (filters, searchQuery) => {
   || !!(filters.endYears && filters.endYears != 'All years')
   || !!(filters.trainingRoutes)
   || !!(filters.trainingStatus)
-  || !!(filters.trainingYears && filters.trainingYears != 'All years')
+  || !!(filters.academicYears && filters.academicYears != 'All years')
   || !!(filters.providers)
   || !!(filters.allProviders && filters.allProviders != 'All providers')
 }
@@ -186,10 +186,10 @@ const getSelectedFilters = req => {
       headingText = "Start year"
     }
     else if (filters.years[0].toLowerCase().includes("training")){
-      headingText = "Training year"
+      headingText = "Academic year"
     }
 
-    let tagLabelText = filters.years[0].replace("End year: ", "").replace("Start year: ", "").replace("Training year: ", "")
+    let tagLabelText = filters.years[0].replace("End year: ", "").replace("Start year: ", "").replace("Academic year: ", "")
     selectedFilters.categories.push({
       heading: { text: headingText },
       items: [{
@@ -234,14 +234,14 @@ const getSelectedFilters = req => {
     })
   }
 
-  // Training years
-  if (filters.trainingYears && filters.trainingYears != 'All years') {
+  // Academic years
+  if (filters.academicYears && filters.academicYears != 'All years') {
     let newQuery = Object.assign({}, query)
-    delete newQuery.filterTrainingYears
+    delete newQuery.filterAcademicYears
     selectedFilters.categories.push({
-      heading: { text: "Training year" },
+      heading: { text: "Academic year" },
       items: [{
-        text: filters.trainingYears,
+        text: filters.academicYears,
         href: url.format({
           pathname,
           query: newQuery,
@@ -442,7 +442,7 @@ module.exports = router => {
   router.get("/records", function (req, res, next) {
     const data = req.session.data
 
-    if (data.settings.trainingYearsUiStyle == 'Tabs'){
+    if (data.settings.academicYearsUiStyle == 'Tabs'){
       res.redirect("/records/current-year")
     }
     else {
@@ -484,19 +484,19 @@ module.exports = router => {
       let tabFilters = {}
       if (tabName == "current-year"){
         console.log("Showing current year")
-        tabFilters.trainingYears = [currentYear]
+        tabFilters.academicYears = [currentYear]
         filteredRecords = utils.filterRecords(filteredRecords, data, tabFilters)
       }
       else if (tabName == "previous-year"){
         console.log("Showing current year")
         let previousYear = utils.yearToAcademicYearString(utils.academicYearToYear(currentYear) - 1)
-        tabFilters.trainingYears = [previousYear]
+        tabFilters.academicYears = [previousYear]
         filteredRecords = utils.filterRecords(filteredRecords, data, tabFilters)
       }
       else if (tabName == "next-year"){
         console.log("Showing next year")
         let nextYear = utils.yearToAcademicYearString(utils.academicYearToYear(currentYear) + 1)
-        tabFilters.trainingYears = [nextYear]
+        tabFilters.academicYears = [nextYear]
         filteredRecords = utils.filterRecords(filteredRecords, data, tabFilters)
       }
       else if (tabName == "all-years"){
@@ -526,7 +526,7 @@ module.exports = router => {
     console.log({filteredRecordsRealCount})
     filteredRecords = registeredRecords.slice(0, 100)
 
-    if (req?.params?.tabName && data.settings.trainingYearsUiStyle != 'Tabs'){
+    if (req?.params?.tabName && data.settings.academicYearsUiStyle != 'Tabs'){
       res.redirect("/records")
     }
     else {

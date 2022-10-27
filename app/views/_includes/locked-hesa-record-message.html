@@ -16,7 +16,7 @@
       </h3>
       <p class="govuk-body">
         {# Assume sync has happened within in last 2 hours #}
-        HESA records last imported at: {{ moment().subtract(78, 'minutes') | govukDateTime }}
+        Last import for all HESA records at {{ moment().subtract(78, 'minutes') | govukDateTime }}
       </p>
      {#  <p class="govuk-body">
         You will be able to recommend the trainee for QTS at the end of the academic year.

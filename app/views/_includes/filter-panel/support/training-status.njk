@@ -2,7 +2,7 @@
   {%- if not query -%}
     checked
   {%- else -%}
-    {{- checked(query.filterTrainingStatus, "In training") -}}
+    {{- checked(query.filterTrainingStatus, "Actively training") -}}
   {%- endif -%}
 {%- endset %}
 
@@ -35,7 +35,7 @@
       checked: checked(query.filterTrainingStatus, "Course not started yet")
     } if coursenNotYetStarted | length,
     {
-      text: "In training",
+      text: "Actively training",
       checked: checked(query.filterTrainingStatus, "Draft")
     },
     {

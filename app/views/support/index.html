@@ -45,11 +45,11 @@
           <span class="status-card__status">Course not started yet</span><span class="govuk-visually-hidden"> records. View these records.</span>
         </a>
 
-        {# In training #}
+        {# Actively training #}
         {% set traineesInTraining = registeredTrainees | filterByFunction('isInTraining') %}
-        <a href="/records?&filterTrainingStatus=In training" class="status-card status-card--in-training">
+        <a href="/records?&filterTrainingStatus=Actively training" class="status-card status-card--in-training">
           <span class="status-card__count">{{traineesInTraining | length}}</span>
-          <span class="status-card__status">In training</span><span class="govuk-visually-hidden"> records. View these records.</span>
+          <span class="status-card__status">Actively training</span><span class="govuk-visually-hidden"> records. View these records.</span>
         </a>
 
         {# Awarded this year #}
@@ -112,7 +112,7 @@
           <span class="status-card__status">Organisations</span><span class="govuk-visually-hidden">. View these providers.</span>
         </a>
 
-        {# In training #}
+        {# Lead schools #}
         {% set leadSchools = data.providers.leadSchools.all %}
         <a href="support/organisations" class="status-card status-card--in-training">
           <span class="status-card__count">{{leadSchools | length}}</span>

@@ -1649,7 +1649,7 @@ exports.filterRecords = (records, data, filters = {}) => {
       else if (filters.trainingStatus.includes("Awarded") && record.status && record.status.includes("awarded")){
         return true
       }
-      else if (filters.trainingStatus.includes("In training") && exports.isInTraining(record)){
+      else if (filters.trainingStatus.includes("Actively training") && exports.isInTraining(record)){
         return true
       }
       else return false

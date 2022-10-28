@@ -466,7 +466,7 @@ module.exports = router => {
 
     // by default set search results to show "Current" trainees
     // if (!hasQueryString) filters.cohortFilter = ["Current"]
-    // if (!hasQueryString) filters.trainingStatus = ["In training"]
+    // if (!hasQueryString) filters.trainingStatus = ["Actively training"]
 
     let searchQuery = getSearchQuery(req)
 
@@ -599,7 +599,7 @@ module.exports = router => {
 
     // by default set search results to show "Current" trainees
     // if (!hasQueryString) filters.cohortFilter = ["Current"]
-    if (!hasQueryString) filters.trainingStatus = ["In training"]
+    if (!hasQueryString) filters.trainingStatus = ["Actively training"]
 
     let searchQuery = getSearchQuery(req)
 

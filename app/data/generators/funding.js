@@ -43,7 +43,7 @@ module.exports = (params) => {
     }
     else source = "self-funded"
 
-    // Special handling for Early years (postgrad)
+    // Special handling for Early years graduate entry
     if (source == 'bursary' && availableFinancialSupport.tiersApply){
       let selectedTier = faker.helpers.randomize(availableFinancialSupport.tiers)
       source = selectedTier.name

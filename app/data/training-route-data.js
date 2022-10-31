@@ -29,10 +29,10 @@ let nonPublishRoutes = [
   'Provider-led (undergrad)',
   'Assessment only',
   // 'Teach First (postgrad)',
-  'Early years (salaried)',
-  'Early years (postgrad)',
-  'Early years (assessment only)',
-  'Early years (undergrad)',
+  'Early years graduate employment based',
+  'Early years graduate entry',
+  'Early years assessment only',
+  'Early years undergraduate',
   'Opt-in (undergrad)',
   'High potential initial teacher training (HPITT)',
   'International qualified teacher status (iQTS)'
@@ -413,7 +413,7 @@ let baseRouteData = {
       }
     ]
   },
-  "Early years (salaried)": {
+  "Early years graduate employment based": {
     defaultEnabled: true,
     courseLevel: "Postgraduate",
     sections: [
@@ -445,7 +445,7 @@ let baseRouteData = {
       }
     ]
   },
-  "Early years (postgrad)": {
+  "Early years graduate entry": {
     defaultEnabled: true,
     courseLevel: "Postgraduate",
     sections: [
@@ -494,7 +494,7 @@ let baseRouteData = {
       }
     ]
   },
-  "Early years (assessment only)": {
+  "Early years assessment only": {
     defaultEnabled: true,
     courseLevel: "Postgraduate",
     academicQualificationsApply: false,
@@ -513,7 +513,7 @@ let baseRouteData = {
     qualificationsSummary: "EYTS full time",
     financialSupportAvailable: false
   },
-  "Early years (undergrad)": {
+  "Early years undergraduate": {
     defaultEnabled: true,
     courseLevel: "Undergraduate",
     sections: [

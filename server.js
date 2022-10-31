@@ -55,8 +55,6 @@ if (useV6) {
 
 // Compression
 // https://expressjs.com/en/resources/middleware/compression.html
-app.use(compression({ filter: shouldCompress }))
-
 function shouldCompress (req, res) {
   if (req.headers['x-no-compression']) {
     // don't compress responses with this request header
@@ -66,6 +64,10 @@ function shouldCompress (req, res) {
   // fallback to standard filter function
   return compression.filter(req, res)
 }
+
+app.use(compression({ filter: shouldCompress }))
+
+
 
 // Set cookies for use in cookie banner.
 app.use(cookieParser())

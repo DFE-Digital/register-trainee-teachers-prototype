@@ -15,7 +15,7 @@ module.exports = router => {
     const newRecord = data.record
     // Update failed or no data
     if (!newRecord){
-      res.redirect('/record/:uuid')
+      res.redirect(`/record/${req.params.uuid}`)
     }
     else {
       if (newRecord.status == 'Pending TRN'){
@@ -37,7 +37,7 @@ module.exports = router => {
     const newRecord = data.record
     // Update failed or no data
     if (!newRecord){
-      res.redirect('/record/:uuid')
+      res.redirect(`/record/${req.params.uuid}`)
     }
     else {
       if (newRecord.status.includes('recommended') || newRecord.status == 'TRN received'){
@@ -95,7 +95,7 @@ module.exports = router => {
     const newRecord = data.record
     // Update failed or no data
     if (!newRecord){
-      res.redirect('/record/:uuid')
+      res.redirect(`/record/${req.params.uuid}`)
     }
     else {
       utils.recommendForAward(newRecord)
@@ -112,7 +112,7 @@ module.exports = router => {
     const newRecord = data.record
     // Update failed or no data
     if (!newRecord){
-      res.redirect('/record/:uuid')
+      res.redirect(`/record/${req.params.uuid}`)
     }
     else {
       
@@ -127,8 +127,8 @@ module.exports = router => {
         utils.addEvent(newRecord, "Trainee withdrawn")
         newRecord.previousStatus = newRecord.status
         newRecord.status = 'Withdrawn'
-        newRecord.withdrawalDate = newRecord.qtsNotPassedOutcomeDate
-        newRecord.withdrawalReason = newRecord.notPassedReason
+        newRecord.withdraw.date = newRecord.qtsNotPassedOutcomeDate
+        newRecord.withdraw.reason = newRecord.notPassedReason
         req.flash( 'success', {
           html: `
           <p class="govuk-notification-banner__heading">
@@ -162,7 +162,7 @@ module.exports = router => {
 
     // Update failed or no data
     if (!newRecord){
-      res.redirect('/record/:uuid')
+      res.redirect(`/record/${req.params.uuid}`)
     }
     else {
       let radioChoice = newRecord.deferredDateRadio
@@ -184,7 +184,7 @@ module.exports = router => {
 
     // Update failed or no data
     if (!newRecord){
-      res.redirect('/record/:uuid')
+      res.redirect(`/record/${req.params.uuid}`)
     }
     else {
       newRecord.previousStatus = newRecord.status
@@ -234,7 +234,7 @@ module.exports = router => {
 
     // Update failed or no data
     if (!record){
-      res.redirect('/record/:uuid')
+      res.redirect(`/record/${req.params.uuid}`)
     }
     else {
       // Set trainee deferred date as start date if trainee deferred before starting
@@ -264,97 +264,13 @@ module.exports = router => {
   })
 
 
-  // Copy withdraw data back to real record
-  router.post('/record/:uuid/withdraw/update', (req, res) => {
-    const data = req.session.data
-    let record = data.record
-
-    // Update failed or no data
-    if (!record){
-      res.redirect('/record/:uuid')
-    }
-    else {
-      record.previousStatus = record.status
-      record.status = 'Withdrawn'
-      delete record.withdrawDateRadio
-      if (record.withdrawalReason != "For another reason") {
-        delete record.withdrawalReasonOther
-      }
-
-      let withdrawalReasonText = `Date of withdrawal: ${filters.govukDate(record.withdrawalDate)}<br>`
-      withdrawalReasonText += `Reason for withdrawal: ${record?.withdrawalReasonOther || record?.withdrawalReason}`
-
-
-      record = utils.setEndAcademicYear(record)
-      record = utils.setAcademicYears(record)
-
-      utils.deleteTempData(data)
-      utils.updateRecord(data, record, false)
-      utils.addEvent(record, "Trainee withdrawn", withdrawalReasonText)
-      req.flash('success', 'Trainee withdrawn')
-      res.redirect('/record/' + req.params.uuid)
-    }
-  })
-
-  // Get dates for withdraw flow
-  router.post('/record/:uuid/withdraw', (req, res) => {
-    const data = req.session.data
-    let record = data.record
-    let referrer = utils.getReferrer(req.query.referrer)
-
-    // Update failed or no data
-    if (!record){
-      res.redirect('/record/:uuid')
-    }
-    else {
-
-      if (utils.isDeferred(record) && record.deferredDate){
-        record.withdrawalDate = record.deferredDate
-      }
-      else {
-        let radioChoice = record.withdrawalDateRadio
-        if (radioChoice == "Today") {
-          record.withdrawalDate = filters.toDateArray(filters.today())
-        } 
-        if (radioChoice == "Yesterday") {
-          record.withdrawalDate = filters.toDateArray(moment().subtract(1, "days"))
-        }
-      }
-
-      res.redirect(`/record/${req.params.uuid}/withdraw/confirm${referrer}`)
-    }
-  })
-
-  // Copy temp record back to real record
-  router.post(['/record/:uuid/:page/update', '/record/:uuid/update'], (req, res) => {
-    const data = req.session.data
-    const record = data.record
-    let referrer = utils.getReferrer(req.query.referrer)
-    // Update failed or no data
-    if (!record){
-      res.redirect('/record/:uuid')
-    }
-    else {
-      utils.deleteTempData(data)
-      utils.updateRecord(data, record)
-      req.flash('success', 'Trainee record updated')
-
-      if (referrer){
-        res.redirect(utils.getReferrerDestination(req.query.referrer))
-      }
-      else {
-        // More likely we've come from this tab where most things are on
-        res.redirect(`/record/${req.params.uuid}/personal-details`)
-      }
-    }
-  })
 
   // Get timeline items and pass to view
   router.get('/record/:uuid/timeline', (req, res) => {
     const data = req.session.data
     const record = data.record
     if (!record){
-      res.redirect('/record/:uuid')
+      res.redirect(`/record/${req.params.uuid}`)
     }
     let timeline = utils.getTimeline(record)
     res.render(`record/timeline`, {timeline})
@@ -449,16 +365,30 @@ module.exports = router => {
     }
   })
 
+  /*
+  =========================================================================
 
-  // Withdraw route
+  Withdraw routes
+
+  =========================================================================
+  */
+
+  // Redirect to first page
+  router.get('/record/:uuid/withdraw', (req, res) => {
+    res.redirect(`/record/${req.params.uuid}/withdraw/date`)
+  })
+
   // If trainee has not started, tell user they cannot withdraw the trainee
   router.post('/record/:uuid/withdraw/did-trainee-start-answer', (req, res) => {
     const data = req.session.data
     let record = data.record
     let traineeStarted = record?.trainingDetails?.traineeStarted
+
+
     let referrer = utils.getReferrer(req.query.referrer)
 
     if (traineeStarted == "true") {
+      _.set(record, "withdraw.showStartDate", true)
       res.redirect(`/record/${req.params.uuid}/withdraw/when-did-trainee-start${referrer}`)
     } else if (traineeStarted == "false") {
       res.redirect(`/record/${req.params.uuid}/withdraw/cannot-withdraw${referrer}`)
@@ -482,13 +412,75 @@ module.exports = router => {
     if (traineeStarted == "started-itt-on-time"){
       record.trainingDetails.commencementDate = courseStartDate
     }
-    if (moment(dates.toDateObject(record?.withdrawalDate)).isAfter(dates.toDateObject(commencementDate))) {
+    if (moment(dates.toDateObject(record?.withdraw?.date)).isAfter(dates.toDateObject(commencementDate))) {
       res.redirect(`/record/${req.params.uuid}/withdraw/confirm${referrer}`)
     } else {
-      delete record?.withdrawalDate
-      res.redirect(`/record/${req.params.uuid}/withdraw${referrer}`)
+      delete record?.withdraw?.date
+      res.redirect(`/record/${req.params.uuid}/withdraw/date${referrer}`)
     }
   })
+
+  // Get dates for withdraw flow
+  router.post('/record/:uuid/withdraw/date-answer', (req, res) => {
+    const data = req.session.data
+    let record = data.record
+    let referrer = utils.getReferrer(req.query.referrer)
+
+    // Update failed or no data
+    if (!record){
+      res.redirect(`/record/${req.params.uuid}`)
+    }
+    else {
+
+      if (utils.isDeferred(record) && record.deferredDate){
+        record.withdraw.date = record.deferredDate
+      }
+      else {
+        let radioChoice = record.withdraw.dateRadio
+        if (radioChoice == "Today") {
+          record.withdraw.date = filters.toDateArray(filters.today())
+        }
+        if (radioChoice == "Yesterday") {
+          record.withdraw.date = filters.toDateArray(moment().subtract(1, "days"))
+        }
+      }
+
+      res.redirect(`/record/${req.params.uuid}/withdraw/details${referrer}`)
+    }
+  })
+
+  // Copy withdraw data back to real record
+  router.post('/record/:uuid/withdraw/update', (req, res) => {
+    const data = req.session.data
+    let record = data.record
+
+    // Update failed or no data
+    if (!record){
+      res.redirect(`/record/${req.params.uuid}`)
+    }
+    else {
+      record.previousStatus = record.status
+      record.status = 'Withdrawn'
+      delete record.withdrawDateRadio
+      if (record.withdraw.reason != "For another reason") {
+        delete record.withdraw.reasonOther
+      }
+
+      let withdrawalReasonText = `Date of withdrawal: ${filters.govukDate(record.withdraw.date)}<br>`
+      withdrawalReasonText += `Reason for withdrawal: ${record?.withdraw.reasonOther || record?.withdraw.reason}`
+
+
+      record = utils.setEndAcademicYear(record)
+      record = utils.setAcademicYears(record)
+
+      utils.deleteTempData(data)
+      utils.updateRecord(data, record, false)
+      utils.addEvent(record, "Trainee withdrawn", withdrawalReasonText)
+      req.flash('success', 'Trainee withdrawn')
+      res.redirect('/record/' + req.params.uuid)
+    }
+  })
+
 
   // end of delete, defer, withdraw routes
   // =========================================================================
@@ -699,6 +691,30 @@ module.exports = router => {
       res.redirect(`/record/${req.params.uuid}`)
     }
 
+  })
+
+  // Copy temp record back to real record
+  router.post(['/record/:uuid/:page/update', '/record/:uuid/update'], (req, res) => {
+    const data = req.session.data
+    const record = data.record
+    let referrer = utils.getReferrer(req.query.referrer)
+    // Update failed or no data
+    if (!record){
+      res.redirect(`/record/${req.params.uuid}`)
+    }
+    else {
+      utils.deleteTempData(data)
+      utils.updateRecord(data, record)
+      req.flash('success', 'Trainee record updated')
+
+      if (referrer){
+        res.redirect(utils.getReferrerDestination(req.query.referrer))
+      }
+      else {
+        // More likely we've come from this tab where most things are on
+        res.redirect(`/record/${req.params.uuid}/personal-details`)
+      }
+    }
   })
 
   // Existing record pages

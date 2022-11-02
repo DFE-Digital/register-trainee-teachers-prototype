@@ -1,0 +1,89 @@
+{% include "_includes/trainee-name-caption.njk" %}
+
+{# Trainees who withdraw whilst deferred must use deferral date as withdrawal date #}
+{# It’s possible to have deferred trainees without deferral dates - so check for that too #}
+{% if record | isDeferred and record.deferredDate %}
+  {% set deferredTextHtml %}
+    <p class="govuk-body">
+      We’ll use the trainee’s deferral date of <span class="govuk-!-font-weight-bold">{{record.deferredDate | govukDate }}</span> as their withdrawal date.
+    </p>
+    <p class="govuk-body">
+      To use a different date, <a href="./reinstate">reinstate this trainee</a>, then withdraw them.
+    </p>
+  {% endset %}
+
+  <h1 class="govuk-heading-l">Withdrawal date</h1>
+
+  {{ govukInsetText({
+    html: deferredTextHtml
+  }) }}
+
+{% else %}
+
+  {% set customWithdrawalDateArray = record.withdraw.date | toDateArray %}
+  {% if record.withdraw.date | isInLast(2, "days") and record.withdraw.dateRadio != "On another day" %}
+    {% set customWithdrawalDateArray = undefined %}
+  {% endif %}
+
+  {% set customWithdrawalDate %}
+    {{ govukDateInput({
+      id: "custom-withdrawal-date",
+      namePrefix: "record[withdraw][date]",
+      fieldset: {
+        legend: {
+          text: "Enter the withdrawal date",
+          classes: "govuk-label govuk-label--s"
+        }
+      },
+      hint: {
+        text: "For example, " + "" | today | toDateArray | spaceSeparate
+      },
+      items: [
+          {
+            name: "day",
+            classes: "govuk-input--width-2",
+            value: customWithdrawalDateArray["0"]
+          },
+          {
+            name: "month",
+            classes: "govuk-input--width-2",
+            value: customWithdrawalDateArray["1"]
+          },
+          {
+            name: "year",
+            classes: "govuk-input--width-4",
+            value: customWithdrawalDateArray["2"]
+          }
+        ]
+    }) }}
+  {% endset %}
+
+  {{ govukRadios({
+    fieldset: {
+      legend: {
+        text: "When did the trainee withdraw?",
+        isPageHeading: true,
+        classes: "govuk-fieldset__legend--l"
+      }
+    },
+    items: [
+      {
+        text: "Today"
+      },
+      {
+        text: "Yesterday"
+      },
+      {
+        text: "On another day",
+        conditional: {
+          html: customWithdrawalDate
+        }
+      }
+    ]
+  } | decorateAttributes(record, "record.withdraw.dateRadio")) }}
+
+{% endif %}
+
+{{ govukButton({
+  text: "Continue"
+}) }}

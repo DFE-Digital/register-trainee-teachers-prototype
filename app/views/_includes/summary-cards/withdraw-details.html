@@ -1,17 +1,17 @@
 {% set withdrawalDate %}
   {% if record | isDeferred %}
-    {{ record.withdrawalDate | govukDate }} (date of deferral)
+    {{ record.withdraw.date | govukDate }} (date of deferral)
   {% else %}
-    {{ record.withdrawalDate | govukDate or "Not provided" }}
+    {{ record.withdraw.date | govukDate or "Not provided" }}
   {% endif %}
 {% endset %}
 
 
 {% set withdrawalReason %}
-  {% if record.withdrawalReason == "For another reason" %}
-    {{record.withdrawalReasonOther}}
+  {% if record.withdraw.reason == "For another reason" %}
+    {{record.withdraw.reasonOther}}
   {% else%}
-    {{record.withdrawalReason}}
+    {{record.withdraw.reason}}
   {% endif %}
 {% endset %}
 
@@ -34,7 +34,7 @@
         }
       ]
     }
-  },
+  } if record.withdraw.showStartDate,
   {
     key: {
       text: "Date of withdrawal"

@@ -1218,7 +1218,7 @@ exports.calculateEndAcademicYear = record => {
     return exports.dateToAcademicYear(record?.qualificationAwardedDate)
   }
   else if (exports.isWithdrawn(record)){
-    return exports.dateToAcademicYear(record?.withdrawalDate)
+    return exports.dateToAcademicYear(record?.withdraw?.date)
   }
   // Prefer course ITT end date if we have it
   else if (record?.courseDetails?.endDate){

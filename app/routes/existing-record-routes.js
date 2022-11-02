@@ -425,11 +425,11 @@ module.exports = router => {
     const data = req.session.data
     let record = data.record
     let referrer = utils.getReferrer(req.query.referrer)
-    let radioChoice = record.withdraw.dateRadio
+    let radioChoice = record?.withdraw?.dateRadio
 
     if (utils.isDeferred(record) && record.deferredDate){
       console.log("Record was previously deferred. Using deferral date for")
-      record.withdraw.date = record.deferredDate
+      _.set(record, "withdraw.date", record.deferredDate)
       res.redirect(`/record/${req.params.uuid}/withdraw/details${referrer}`)
     }
     else {

@@ -425,10 +425,11 @@ module.exports = router => {
     const data = req.session.data
     let record = data.record
     let referrer = utils.getReferrer(req.query.referrer)
+    let radioChoice = record.withdraw.dateRadio
 
-    // Update failed or no data
-    if (!record){
-      res.redirect(`/record/${req.params.uuid}`)
+    // Catch no answer given
+    if (!radioChoice || (radioChoice == "On another day" && !record?.withdraw?.date)){
+      res.redirect(`/record/${req.params.uuid}/withdraw/date`)
     }
     else {
 
@@ -436,7 +437,7 @@ module.exports = router => {
         record.withdraw.date = record.deferredDate
       }
       else {
-        let radioChoice = record.withdraw.dateRadio
+        
         if (radioChoice == "Today") {
           record.withdraw.date = filters.toDateArray(filters.today())
         }

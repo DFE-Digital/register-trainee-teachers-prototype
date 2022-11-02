@@ -427,27 +427,30 @@ module.exports = router => {
     let referrer = utils.getReferrer(req.query.referrer)
     let radioChoice = record.withdraw.dateRadio
 
-    // Catch no answer given
-    if (!radioChoice || (radioChoice == "On another day" && !record?.withdraw?.date)){
-      res.redirect(`/record/${req.params.uuid}/withdraw/date`)
+    if (utils.isDeferred(record) && record.deferredDate){
+      console.log("Record was previously deferred. Using deferral date for")
+      record.withdraw.date = record.deferredDate
+      res.redirect(`/record/${req.params.uuid}/withdraw/details${referrer}`)
     }
     else {
 
-      if (utils.isDeferred(record) && record.deferredDate){
-        record.withdraw.date = record.deferredDate
+      // Catch no answer given
+      if (!radioChoice || (radioChoice == "On another day" && !record?.withdraw?.date)){
+        res.redirect(`/record/${req.params.uuid}/withdraw/date`)
       }
       else {
-        
+
         if (radioChoice == "Today") {
           record.withdraw.date = filters.toDateArray(filters.today())
         }
         if (radioChoice == "Yesterday") {
           record.withdraw.date = filters.toDateArray(moment().subtract(1, "days"))
         }
-      }
 
-      res.redirect(`/record/${req.params.uuid}/withdraw/details${referrer}`)
+        res.redirect(`/record/${req.params.uuid}/withdraw/details${referrer}`)
+      }
     }
+
   })
 
   // Copy withdraw data back to real record

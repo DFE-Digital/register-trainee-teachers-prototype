@@ -11,14 +11,20 @@
 } | decorateAttributes(record, "record.withdraw.reasonOther")) }} #}
 
 {{ govukTextarea({
-  name: "more-detail",
-  id: "more-detail",
   label: {
-    text: "More details about why they’re withdrawing from the course (optional)",
+    text: "Why the trainee withdrew from the course (optional)",
     classes: "govuk-label--m",
     isPageHeading: false
   }
-} | decorateAttributes(record, "record.withdraw.reasonOther"))  }}
+} | decorateAttributes(record, "record.withdraw.additionalDetail"))  }}
+
+{{ govukTextarea({
+  label: {
+    text: "What the Department for Education could have done to prevent the trainee withdrawing (optional)",
+    classes: "govuk-label--m",
+    isPageHeading: false
+  }
+} | decorateAttributes(record, "record.withdraw.additionalDfE"))  }}
 
 {{ govukButton({
   text: "Continue"

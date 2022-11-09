@@ -56,10 +56,27 @@
   },
   {
     key: {
-      text: "Additional details"
+      text: "Why the trainee withdrew"
     },
     value: {
-      text: "TBD"
+      text: record.withdraw.additionalDetail or "Not provided"
+    },
+    actions: {
+      items: [
+        {
+          href: recordPath + "/withdraw/additional-details" | addReferrer(referrer),
+          text: "Change",
+          visuallyHiddenText: "additional details"
+        }
+      ]
+    } if canAmend
+  },
+  {
+    key: {
+      text: "What the Department for Education could have done"
+    },
+    value: {
+      text: record.withdraw.additionalDfE
     },
     actions: {
       items: [

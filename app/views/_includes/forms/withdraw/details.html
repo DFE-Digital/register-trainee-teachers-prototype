@@ -24,9 +24,9 @@
   }) %}
 {% endfor %}
 
-{% set withdrawalReasonsItems = withdrawalReasonsItems | push ({
+{# {% set withdrawalReasonsItems = withdrawalReasonsItems | push ({
   divider: "or"
-}) %}
+}) %} #}
 
 {% set withdrawalReasonsItems = withdrawalReasonsItems | push ({
   text: "Another reason"
@@ -48,6 +48,9 @@
       isPageHeading: true,
       classes: "govuk-fieldset__legend--l"
     }
+  },
+  hint: {
+    text: "Select all that apply."
   },
   items: withdrawalReasonsItems
 } | decorateAttributes(record, "record.withdraw.reasons")) }}

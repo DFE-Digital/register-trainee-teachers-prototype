@@ -428,7 +428,7 @@ module.exports = router => {
     if (utils.isDeferred(record) && record.deferredDate){
       console.log("Record was previously deferred. Using deferral date for")
       _.set(record, "withdraw.date", record.deferredDate)
-      res.redirect(`/record/${req.params.uuid}/withdraw/details${referrer}`)
+      res.redirect(`/record/${req.params.uuid}/withdraw/confirm${referrer}`)
     }
     else {
 
@@ -464,13 +464,8 @@ module.exports = router => {
       record.previousStatus = record.status
       record.status = 'Withdrawn'
       delete record.withdrawDateRadio
-      if (record.withdraw.reason != "For another reason") {
-        delete record.withdraw.reasonOther
-      }
 
-      let withdrawalReasonText = `Date of withdrawal: ${filters.govukDate(record.withdraw.date)}<br>`
-      withdrawalReasonText += `Reason for withdrawal: ${record?.withdraw.reasonOther || record?.withdraw.reason}`
-
+      let withdrawalReasonText = `Date trainee withdrew: ${filters.govukDate(record.withdraw.date)}`
 
       record = utils.setEndAcademicYear(record)
       record = utils.setAcademicYears(record)

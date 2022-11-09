@@ -23,6 +23,10 @@
     {# <h2 class="govuk-heading-s">Trainee progress</h2> #}
     {% include "_includes/summary-cards/trainee-progress.html" %}
 
+    {% if record | isWithdrawn %}
+      {% include "_includes/summary-cards/withdraw-details.html" %}
+    {% endif %}
+
     {# <h2 class="govuk-heading-s">Course details</h2> #}
     {% set showCourseChangeOption = true %}
     {% set showDateMovedRow = true %}

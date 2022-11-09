@@ -1,14 +1,7 @@
 
 {% include "_includes/trainee-name-caption.njk" %}
-<h1 class="govuk-heading-l">
-  {{pageHeading}}
-</h1>
 
-<div class="govuk-inset-text">
-  Do not withdraw duplicate records. If you need to remove a duplicate record, contact us at <a class="govuk-link" href="mailto:becomingateacher@digital.education.gov.uk">becomingateacher@digital.education.gov.uk</a>.
-</div>
-
-{% set customWithdrawalReason %}
+{# {% set customWithdrawalReason %}
   {{ govukInput({
     label: {
         text: "Enter the reason for withdrawal",
@@ -16,11 +9,16 @@
     },
     classes: "govuk-!-width-two-thirds"
   } | decorateAttributes(record, "record.withdraw.reasonOther")) }}
-{% endset %}
+{% endset %} #}
+
+{# Remove these as we're going to add them manually with 'or' text #}
+{% set specialCaseReasons = ['Unknown', 'Another reason'] %}
+
+{% set withdrawalReasonsWithoutSpecial = data.withdrawalReasons | removeArrayItems(specialCaseReasons) %}
 
 {% set withdrawalReasonsItems = []  %}
 
-{% for reason in data.withdrawalReasons %}
+{% for reason in withdrawalReasonsWithoutSpecial %}
   {% set withdrawalReasonsItems = withdrawalReasonsItems | push ({
     text: reason
   }) %}
@@ -31,26 +29,28 @@
 }) %}
 
 {% set withdrawalReasonsItems = withdrawalReasonsItems | push ({
-  text: "For another reason",
-  checked: storeWithdrawalReasonOther,
-  conditional: {
-    html: customWithdrawalReason
-  }
+  text: "Another reason"
 }) %}
 
 {% set withdrawalReasonsItems = withdrawalReasonsItems | push ({
-  text: "Unknown"
+  divider: "or"
 }) %}
 
-{{ govukRadios({
+{% set withdrawalReasonsItems = withdrawalReasonsItems | push ({
+  text: "Unknown",
+  behaviour: "exclusive"
+}) %}
+
+{{ govukCheckboxes({
   fieldset: {
     legend: {
-      text: "Reason for leaving",
-      classes: "govuk-fieldset__legend--s govuk-!-margin-bottom-4"
+      text: pageHeading,
+      isPageHeading: true,
+      classes: "govuk-fieldset__legend--l"
     }
   },
   items: withdrawalReasonsItems
-} | decorateAttributes(record, "record.withdraw.reason")) }}
+} | decorateAttributes(record, "record.withdraw.reasons")) }}
 
 {{ govukButton({
   text: "Continue"

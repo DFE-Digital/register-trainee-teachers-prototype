@@ -1,32 +1,51 @@
 module.exports = [
-    // 'Successful completion of course',
-    // 'Academic failure',
-    'Death',
-    'Did not pass the assessment',
-    'Did not pass the exams',
-    'Exclusion',
-    'Financial reasons',
-    'Gone into employment',
-    'Health reasons',
-    'Other personal reasons and dropped out',
-    'Transferred to another provider',
-    'Written off after lapse of time'
-    // 'Completion of course - result unknown'
-    // 'Unknown'
+    // Old reasons
+    // 'Death',
+    // 'Did not pass the assessment',
+    // 'Did not pass the exams',
+    // 'Exclusion',
+    // 'Financial reasons',
+    // 'Gone into employment',
+    // 'Health reasons',
+    // 'Other personal reasons and dropped out',
+    // 'Transferred to another provider',
+    // 'Written off after lapse of time'
 
-    // Include DTTP assessment outcomes failure options here?
+    // Separate groups, sorted alphabetically
 
-    // Awarded QTS
-    // Awarded degree without QTS
-    // Yet to complete the course
-    // Left course before the end
-    // Failed the course
-    // Withheld: skills test not met
-    // Withheld: standards not met
-    // Withheld: standards & skills test not met
-    // Skills test not taken (standards met)
-    // Skills tests not taken (standards not met)
-    // Course complete - standards and/or skills test not met
-    // Awarded EYTS
-    // EYTS withheld
+    // // Personal reasons:
+    // 'Course was not suitable for them',
+    // 'Does not want to become a teacher',
+    // 'Family problems',
+    // 'Financial problems',
+    // 'Got a job',
+    // 'Their health',
+
+    // // Problems with course:
+    // 'Could not give enough time to course',
+    // 'Did not meet course entry requirements',
+    // 'Failed to make progress in course',
+    // 'Teaching placement problems',
+    // 'Unacceptable behaviour',
+    // 'Unhappy with course, provider or employing school',
+
+    // All together, sorted alphabetically:
+    'Could not give enough time to course',
+    'Course was not suitable for them',
+    'Did not meet course entry requirements',
+    'Does not want to become a teacher',
+    'Failed to make progress in course',
+    'Family problems',
+    'Financial problems',
+    'Got a job',
+    'Teaching placement problems',
+    'Their health',
+    'Unacceptable behaviour',
+    'Unhappy with course, provider or employing school',
+
+    // 'Other'
+    'Another reason',
+    'Trainee has stopped responding',
+    'Unknown'
+
 ]

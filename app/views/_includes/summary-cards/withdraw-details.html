@@ -8,14 +8,16 @@
 
 
 {% set withdrawalReason %}
-  {% if record.withdraw.reason == "For another reason" %}
-    {{record.withdraw.reasonOther}}
-  {% else%}
-    {{record.withdraw.reason}}
+  {% if record.withdraw.reasons | length > 1 %}
+    <ul class="govuk-list">
+      {% for reason in record.withdraw.reasons %}
+        <li>{{reason}}</li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    {{record.withdraw.reasons}}
   {% endif %}
 {% endset %}
-
-
 
 {% set withdrawDetailsRows = [
   {
@@ -37,6 +39,40 @@
   } if record.withdraw.showStartDate,
   {
     key: {
+      text: "Reasons for withdrawal"
+    },
+    value: {
+      text: withdrawalReason | safe or 'Not provided'
+    },
+    actions: {
+      items: [
+        {
+          href: recordPath + "/withdraw/details" | addReferrer(referrer),
+          text: "Change",
+          visuallyHiddenText: "withdrawal reason"
+        }
+      ]
+    } if canAmend
+  },
+  {
+    key: {
+      text: "Additional details"
+    },
+    value: {
+      text: "TBD"
+    },
+    actions: {
+      items: [
+        {
+          href: recordPath + "/withdraw/additional-details" | addReferrer(referrer),
+          text: "Change",
+          visuallyHiddenText: "additional details"
+        }
+      ]
+    } if canAmend
+  },
+  {
+    key: {
       text: "Date of withdrawal"
     },
     value: {
@@ -51,23 +87,6 @@
         }
       ]
     } if canAmend and record.status != "Deferred"
-  },
-  {
-    key: {
-      text: "Reason for withdrawal"
-    },
-    value: {
-      text: withdrawalReason or 'Not provided'
-    },
-    actions: {
-      items: [
-        {
-          href: recordPath + "/withdraw" | addReferrer(referrer),
-          text: "Change",
-          visuallyHiddenText: "withdrawal reason"
-        }
-      ]
-    } if canAmend
   }
 ] %}
 

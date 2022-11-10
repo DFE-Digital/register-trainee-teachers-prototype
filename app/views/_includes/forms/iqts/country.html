@@ -47,6 +47,40 @@
   }
 } ) }}
 
+<div id="iqts-country2__container" style="display: none;">
+  {{ appAutocompleteFromSelect({
+    label: {
+      text: "Second country",
+      classes: "govuk-label--s"
+    },
+    id: 'iqts-country2',
+    name: "record[iqts][country]",
+    items: data.countries | removeArrayItem("United Kingdom") | toSelectItems,
+    classes: "govuk-!-width-two-thirds",
+    value: record.iqts.country,
+    autocompleteOptions: {
+      minLength: 2,
+      autoselect: true,
+      showAllValues: false
+    }
+} ) }} 
+</div>
+
+
+
+<div class="govuk-form-group">
+  {{ govukButton({
+    text: "Add another country",
+    classes: "govuk-button--secondary govuk-!-margin-bottom-1",
+    attributes: {
+      id: "add-another-country"
+    },
+    href: "#"
+  }) }}
+</div>
+
+
+
 
 {{ govukButton({
   text: "Continue"

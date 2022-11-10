@@ -32,20 +32,20 @@ module.exports = [
     // All together, sorted alphabetically:
     'Could not give enough time to course',
     'Course was not suitable for them',
+    'Did not make progress in course',
     'Did not meet course entry requirements',
     'Does not want to become a teacher',
-    'Failed to make progress in course',
     'Family problems',
     'Financial problems',
     'Got a job',
+    'Problems with their health',
+    'Stopped responding to messages',
     'Teaching placement problems',
-    'Their health',
     'Unacceptable behaviour',
     'Unhappy with course, provider or employing school',
 
     // 'Other'
     'Another reason',
-    'Trainee has stopped responding',
     'Unknown'
 
 ]

@@ -47,6 +47,7 @@
   }
 } ) }}
 
+{# Autocomplete here for demo purposes - data not saved #}
 <div id="iqts-country2__container" style="display: none;">
   {{ appAutocompleteFromSelect({
     label: {
@@ -54,7 +55,7 @@
       classes: "govuk-label--s"
     },
     id: 'iqts-country2',
-    name: "record[iqts][country]",
+    _name: "record[iqts][country]",
     items: data.countries | removeArrayItem("United Kingdom") | toSelectItems,
     classes: "govuk-!-width-two-thirds",
     value: record.iqts.country,

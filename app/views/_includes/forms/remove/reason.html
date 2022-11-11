@@ -12,12 +12,24 @@
   items: [
     {
       text: "Did not start the course",
-      value: "did-not-start"
-    } if not record | traineeStarted,
+      value: "did-not-start",
+      hint: {
+        text: "Not available because the trainee has started"
+      } if record | traineeStarted,
+      attributes: {
+        disabled: true
+      } if record | traineeStarted
+    },
     {
       text: "Withdrawing from course",
-      value: "withdraw"
-    } if not record | ittInTheFuture,
+      value: "withdraw",
+      hint: {
+        text: "Not available because the course has not yet started"
+      } if record | ittInTheFuture,
+      attributes: {
+        disabled: true
+      } if record | ittInTheFuture
+    },
     {
       text: "Transferring to a different provider"
     },

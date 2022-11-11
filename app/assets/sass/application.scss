@@ -258,3 +258,8 @@ $sizes: 70, 64, 55, 53, 50, 48, 35, 32, 30, 25, 20, 16, 15, 12, 10, 5;
   min-width: govuk-spacing(6);
 }
 
+// Copied from govuk fronend 4.0
+.govuk-radios__input:disabled + .govuk-radios__label,
+.govuk-radios__input:disabled ~ .govuk-hint {
+  opacity: .5;
+}

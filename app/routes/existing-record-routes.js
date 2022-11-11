@@ -373,7 +373,7 @@ module.exports = router => {
 
   // Redirect to first page
   router.get('/record/:uuid/withdraw', (req, res) => {
-    res.redirect(`/record/${req.params.uuid}/withdraw/details`)
+    res.redirect(`/record/${req.params.uuid}/withdraw/date`)
   })
 
   // If trainee has not started, tell user they cannot withdraw the trainee
@@ -411,10 +411,10 @@ module.exports = router => {
       record.trainingDetails.commencementDate = courseStartDate
     }
     if (moment(dates.toDateObject(record?.withdraw?.date)).isAfter(dates.toDateObject(commencementDate))) {
-      res.redirect(`/record/${req.params.uuid}/withdraw/details${referrer}`)
+      res.redirect(`/record/${req.params.uuid}/withdraw/date${referrer}`)
     } else {
       delete record?.withdraw?.date
-      res.redirect(`/record/${req.params.uuid}/withdraw/details${referrer}`)
+      res.redirect(`/record/${req.params.uuid}/withdraw/date${referrer}`)
     }
   })
 
@@ -428,7 +428,7 @@ module.exports = router => {
     if (utils.isDeferred(record) && record.deferredDate){
       console.log("Record was previously deferred. Using deferral date for")
       _.set(record, "withdraw.date", record.deferredDate)
-      res.redirect(`/record/${req.params.uuid}/withdraw/confirm${referrer}`)
+      res.redirect(`/record/${req.params.uuid}/withdraw/details${referrer}`)
     }
     else {
 
@@ -445,7 +445,7 @@ module.exports = router => {
           record.withdraw.date = filters.toDateArray(moment().subtract(1, "days"))
         }
 
-        res.redirect(`/record/${req.params.uuid}/withdraw/confirm${referrer}`)
+        res.redirect(`/record/${req.params.uuid}/withdraw/details${referrer}`)
       }
     }
 

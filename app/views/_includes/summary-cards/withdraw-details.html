@@ -39,6 +39,23 @@
   } if record.withdraw.showStartDate,
   {
     key: {
+      text: "Date the trainee withdrew"
+    },
+    value: {
+      text: withdrawalDate
+    },
+    actions: {
+      items: [
+        {
+          href: recordPath + "/withdraw" | addReferrer(referrer),
+          text: "Change",
+          visuallyHiddenText: "withdrawal date"
+        }
+      ]
+    } if canAmend and record.status != "Deferred"
+  },
+  {
+    key: {
       text: "Why the trainee withdrew"
     },
     value: {
@@ -87,23 +104,6 @@
         }
       ]
     } if canAmend
-  },
-  {
-    key: {
-      text: "Date the trainee withdrew"
-    },
-    value: {
-      text: withdrawalDate
-    },
-    actions: {
-      items: [
-        {
-          href: recordPath + "/withdraw" | addReferrer(referrer),
-          text: "Change",
-          visuallyHiddenText: "withdrawal date"
-        }
-      ]
-    } if canAmend and record.status != "Deferred"
   }
 ] %}
 

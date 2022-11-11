@@ -298,6 +298,34 @@ module.exports = router => {
     res.redirect('/records')
   })
 
+  // Removes record
+  router.post('/record/:uuid/remove/reason-answer', (req, res) => {
+    const data = req.session.data
+    let record = data.record
+    let referrer = utils.getReferrer(req.query.referrer)
+
+    let removeReason = record?.remove?.reason
+
+    if (!removeReason){
+      res.redirect(`/record/${req.params.uuid}/remove/reason${referrer}`)
+    }
+    else {
+      if (['did-not-start', 'added-in-error', "already-holds-teaching-status"].includes(removeReason)){
+        res.redirect(`/record/${req.params.uuid}/remove/confirm${referrer}`)
+      }
+      else if (removeReason == 'withdraw'){
+        res.redirect(`/record/${req.params.uuid}/withdraw${referrer}`)
+      }
+      else if (removeReason == 'transferred-provider'){
+        res.redirect(`/record/${req.params.uuid}/remove/date-of-transfer${referrer}`)
+      }
+      else {
+        res.redirect(`/record/${req.params.uuid}/remove/reason${referrer}`)
+      }
+    }
+  })
+
+
   // Remove route
   // If trainee has not started, skip deferred date
   router.post('/record/:uuid/remove/did-trainee-start-answer', (req, res) => {
@@ -373,13 +401,25 @@ module.exports = router => {
 
   // Redirect to first page
   router.get('/record/:uuid/withdraw', (req, res) => {
-    res.redirect(`/record/${req.params.uuid}/withdraw/date`)
+    const data = req.session.data
+    let record = data.record
+
+    if (utils.traineeStarted(record)){
+      res.redirect(`/record/${req.params.uuid}/withdraw/date`)
+    }
+    else if (utils.ittStartedButNoCommencementDate(record)){
+      res.redirect(`/record/${req.params.uuid}/withdraw/did-trainee-start`)
+    }
+    else {
+      res.redirect(`/record/${req.params.uuid}/withdraw/cannot-withdraw${referrer}`)
+    }
   })
 
   // If trainee has not started, tell user they cannot withdraw the trainee
   router.post('/record/:uuid/withdraw/did-trainee-start-answer', (req, res) => {
     const data = req.session.data
     let record = data.record
+
     let traineeStarted = record?.trainingDetails?.traineeStarted
 
 

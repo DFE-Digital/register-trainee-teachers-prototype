@@ -33,12 +33,17 @@
   {% endif %}
 {% endset %}
 
+{% set combinedRemoveUrl %}
+  {{ referrer + "/remove/reason" | addReferrer(referrer) }}
+{% endset %}
+
 {% set actionItems = [] %}
 
-
-{# Remove record #}
-{% if not record.trainingDetails.commencementDate %}
-  {% set actionItems = actionItems | push(['remove', removeUrl]) %}
+{% if data.settings.useCombinedRemoveFlow == 'false' %}
+  {# Remove record #}
+  {% if not record.trainingDetails.commencementDate %}
+    {% set actionItems = actionItems | push(['remove', removeUrl]) %}
+  {% endif %}
 {% endif %}
 
 {# Did not start #}
@@ -56,10 +61,17 @@
   {% set actionItems = actionItems | push(['reinstate', reinstateUrl]) %}
 {% endif %}
 
-{# Withdraw #}
-{% if not record | ittInTheFuture %}
-  {% set actionItems = actionItems | push(['withdraw', withdrawUrl]) %}
+{% if data.settings.useCombinedRemoveFlow == 'false' %}
+  {# Withdraw #}
+  {% if not record | ittInTheFuture %}
+    {% set actionItems = actionItems | push(['withdraw', withdrawUrl]) %}
+  {% endif %}
 {% endif %}
+
+{% if data.settings.useCombinedRemoveFlow == 'true' %}
+  {% set actionItems = actionItems | push(['remove', combinedRemoveUrl]) %}
+{% endif %}
+
 
 {% set actionLinksHtml = [] %}
 

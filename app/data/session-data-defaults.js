@@ -143,6 +143,8 @@ settings.includeDeclaration = false
 
 settings.bulkLinksInPrimaryNav = "None"
 
+settings.useCombinedRemoveFlow = "true"
+
 settings.academicYearsUiStyle = "Checkboxes"
 
 settings.traineeExportQuestionStyle = "Two stage"

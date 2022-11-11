@@ -133,6 +133,25 @@
       {{ govukRadios({
         fieldset: {
           legend: {
+            text: "Use combined removal flow",
+            classes: "govuk-fieldset__legend--s"
+          }
+        },
+        items: [
+          {
+            text: 'Yes, new flow',
+            value: "true"
+          },
+          {
+            text: 'No, existing flow',
+            value: "false"
+          }
+        ]
+      } | decorateAttributes(data, "data.settings.useCombinedRemoveFlow")) }}
+
+      {{ govukRadios({
+        fieldset: {
+          legend: {
             text: "Academic years in UI",
             classes: "govuk-fieldset__legend--s"
           }

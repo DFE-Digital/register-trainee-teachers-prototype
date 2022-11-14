@@ -11,6 +11,19 @@
 
 {% set subjectSpecialisms = data.ittSubjects | removeArrayItems(primarySubjectsToRemove) %}
 
+{# Make autocomplete array so we can have subject category as a hint #}
+{% set subjectsForAutocomplete = [] %}
+
+{% for subject in subjectSpecialisms %}
+  {% set allocationSubject = subject | subjectToAllocationSubject %}
+  {% set subjectsForAutocomplete = subjectsForAutocomplete | push({
+    name: subject,
+    value: subject,
+    hint: allocationSubject if subject != allocationSubject,
+    synonyms: [allocationSubject]
+  }) %}
+{% endfor %}
+
 {# Autocompletes for subjects 2 and 3 #}
 {% set multipleSubjectsHtml %}
   
@@ -44,7 +57,8 @@
       autocompleteOptions: {
         autoselect: true,
         showAllValues: false,
-        allowEmpty: true
+        allowEmpty: true,
+        values: subjectsForAutocomplete
       }
     }
     ) }}
@@ -144,7 +158,8 @@
     value: record.courseDetails.subjects.first,
     autocompleteOptions: {
       autoselect: true,
-      showAllValues: false
+      showAllValues: false,
+      values: subjectsForAutocomplete
     }
   }
   ) }}

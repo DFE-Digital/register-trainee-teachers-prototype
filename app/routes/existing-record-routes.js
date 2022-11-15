@@ -310,7 +310,7 @@ module.exports = router => {
       res.redirect(`/record/${req.params.uuid}/remove/reason${referrer}`)
     }
     else {
-      if (['did-not-start', 'added-in-error', "already-holds-teaching-status"].includes(removeReason)){
+    if (['did-not-start', 'added-in-error', "already-has-teaching-status"].includes(removeReason)){
         res.redirect(`/record/${req.params.uuid}/remove/confirm${referrer}`)
       }
       else if (removeReason == 'withdraw'){

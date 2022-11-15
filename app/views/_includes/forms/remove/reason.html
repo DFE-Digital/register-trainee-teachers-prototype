@@ -11,36 +11,36 @@
   },
   items: [
     {
+      text: "Already has " + record | getQualificationText,
+      value: "already-has-teaching-status"
+    },
+    {
       text: "Did not start the course",
       value: "did-not-start",
-      hint: {
+      _hint: {
         text: "Not available because the trainee has started"
       } if record | traineeStarted,
-      attributes: {
+      _attributes: {
         disabled: true
       } if record | traineeStarted
-    },
-    {
-      text: "Withdrawing from course",
-      value: "withdraw",
-      hint: {
-        text: "Not available because the course has not yet started"
-      } if record | ittInTheFuture,
-      attributes: {
-        disabled: true
-      } if record | ittInTheFuture
-    },
-    {
-      text: "Transferring to a different provider"
-    },
+    } if not record | traineeStarted,
     {
       text: "Record added in error",
       value: "added-in-error"
     },
     {
-      text: "Already holds " + record | getQualificationText,
-      value: "already-holds-teaching-status"
-    }
+      text: "Transferring to a different provider"
+    },
+    {
+      text: "Withdrawing from course",
+      value: "withdraw",
+      _hint: {
+        text: "Not available because the course has not yet started"
+      } if record | ittInTheFuture,
+      _attributes: {
+        disabled: true
+      } if record | ittInTheFuture
+    } if not record | ittInTheFuture
   ]
 } | decorateAttributes(record, "record.remove.reason")) }}
 

@@ -38,8 +38,8 @@ let nonPublishRoutes = [
   'International qualified teacher status (iQTS)'
 ]
 
-// These sections should have a default status of 'review'
-// rather than 'not started'
+// These sections are all collected in to one super section for Apply.
+// If any of these are encountered, we defer to a different bit of data
 let applyReviewSections = [
   'personalDetails',
   'contactDetails',

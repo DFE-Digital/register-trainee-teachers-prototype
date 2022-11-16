@@ -358,7 +358,7 @@ module.exports = (params) => {
   }
 
   // Assume most courses start in Autumn
-  let startMonth = faker.helpers.randomize([9,10,11]) // September, October, November
+  let startMonth = weighted.select([9,10,11],[0.9,0.06,0.04]) // September, October, November
   let startYear = params.startYear || moment().toDate().getFullYear() // Current year
   let startDate = moment(`${startYear}-${startMonth}-01`, "YYYY-MM-DD").toDate()
 

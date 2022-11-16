@@ -35,8 +35,8 @@ module.exports = (params) => {
   // Remaining: TRN received, Withdrawn, Deferred
   else count = weighted.select({
     0: 0.05,
-    1: 0.3,
-    2: 0.65
+    1: 0.05,
+    2: 0.9
   })
 
   const items = []

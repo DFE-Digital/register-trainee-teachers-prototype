@@ -41,8 +41,8 @@ module.exports = (params) => {
   }
   else {
     traineeStarted = params?.traineeStarted || weighted.select({
-      "true": 0.8, // Most students should have commencement dates
-      "false": 0.2
+      "true": 0.95, // Most students should have commencement dates
+      "false": 0.5
     })
   }
 

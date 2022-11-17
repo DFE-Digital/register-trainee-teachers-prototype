@@ -2,7 +2,9 @@
 {% include "_includes/trainee-name-caption.njk" %}
 <h1 class="govuk-heading-l">{{pageHeading}}</h1>
 
-{{ govukTextarea({
+{{ govukCharacterCount({
+  maxlength: 500,
+  threshold: 75,
   label: {
     text: "Details about why the trainee withdrew (optional)",
     classes: "govuk-label--m",
@@ -10,7 +12,9 @@
   }
 } | decorateAttributes(record, "record.withdraw.additionalDetail"))  }}
 
-{{ govukTextarea({
+{{ govukCharacterCount({
+  maxlength: 500,
+  threshold: 75,
   label: {
     text: "What the Department for Education could have done to prevent the trainee withdrawing (optional)",
     classes: "govuk-label--m",

@@ -76,7 +76,7 @@
       text: "Details of why the trainee withdrew"
     },
     value: {
-      text: record.withdraw.additionalDetail or "Not provided"
+      text: record.withdraw.additionalDetail | nl2br | safe or "Not provided"
     },
     actions: {
       items: [
@@ -93,7 +93,7 @@
       text: "What the Department for Education could have done"
     },
     value: {
-      text: record.withdraw.additionalDfE  or "Not provided"
+      text: record.withdraw.additionalDfE | nl2br | safe or "Not provided"
     },
     actions: {
       items: [

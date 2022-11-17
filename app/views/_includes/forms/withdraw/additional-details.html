@@ -3,7 +3,7 @@
 <h1 class="govuk-heading-l">{{pageHeading}}</h1>
 
 {{ govukCharacterCount({
-  maxlength: 500,
+  maxlength: 1000,
   threshold: 75,
   label: {
     text: "Details about why the trainee withdrew (optional)",
@@ -13,7 +13,7 @@
 } | decorateAttributes(record, "record.withdraw.additionalDetail"))  }}
 
 {{ govukCharacterCount({
-  maxlength: 500,
+  maxlength: 1000,
   threshold: 75,
   label: {
     text: "What the Department for Education could have done to prevent the trainee withdrawing (optional)",

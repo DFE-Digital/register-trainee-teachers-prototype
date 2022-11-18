@@ -68,6 +68,7 @@ const generateStatus = require('../app/data/generators/status')
 const generateApplyData = require('../app/data/generators/apply-data')
 const generateHesaData = require('../app/data/generators/hesa-data')
 const generateIQtsData = require('../app/data/generators/iqts-data')
+const generateWithdrawalDetails = require('../app/data/generators/withdraw')
 
 // Populate application data object with fake data
 const generateFakeApplication = (params = {}) => {
@@ -124,6 +125,11 @@ const generateFakeApplication = (params = {}) => {
     console.log("Overwriting route") // hacky, and hopefully doesn’t happen often
     application.route = application.courseDetails.route
   }
+
+  if (application.status == "Withdrawn") {
+    application.withdraw = (params.withdraw === null) ? undefined : { ...generateWithdrawalDetails(application), ...params.withdraw }
+  }
+
 
   application.events           = generateEvents(application)
 

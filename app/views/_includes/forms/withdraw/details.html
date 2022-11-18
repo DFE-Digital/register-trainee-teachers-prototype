@@ -19,8 +19,22 @@
 {% set withdrawalReasonsItems = []  %}
 
 {% for reason in withdrawalReasonsWithoutSpecial %}
+  {# {% set conditionalInput %}
+    {{ govukInput({
+      label: {
+          text: "Extra detail about " + (reason | lower),
+          text: "Details (optional)",
+          classes: "govuk-label"
+      },
+      _classes: "govuk-!-width-three-quarters"
+    } | decorateAttributes(record, "record.withdraw.reasonOther")) }}
+  {% endset %} #}
+
   {% set withdrawalReasonsItems = withdrawalReasonsItems | push ({
-    text: reason
+    text: reason,
+    _conditional: {
+      html: conditionalInput
+    }
   }) %}
 {% endfor %}
 

@@ -70,7 +70,7 @@ if (application.status == 'Deferred'){
   addEvent("Trainee deferred")
 }
 
-let withdrawalTextHtml = `Date of withdrawal: 1 September 2021<br>Reason for withdrawal: Did not pass the assessment`
+let withdrawalTextHtml = `Date of withdrawal: 1 September 2021`
 
 if (application.status == 'Withdrawn'){
   addEvent("Trainee submitted for TRN")

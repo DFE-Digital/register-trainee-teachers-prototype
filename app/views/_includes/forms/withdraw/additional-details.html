@@ -12,15 +12,38 @@
   }
 } | decorateAttributes(record, "record.withdraw.additionalDetail"))  }}
 
-{{ govukCharacterCount({
-  maxlength: 1000,
-  threshold: 75,
-  label: {
-    text: "What the Department for Education could have done to prevent the trainee withdrawing (optional)",
-    classes: "govuk-label--m",
-    isPageHeading: false
-  }
-} | decorateAttributes(record, "record.withdraw.additionalDfE"))  }}
+{% set extraSupportTextArea %}
+  {{ govukCharacterCount({
+    maxlength: 1000,
+    threshold: 75,
+    label: {
+      text: "Give details",
+      _classes: "govuk-label--s",
+      isPageHeading: false
+    }
+  } | decorateAttributes(record, "record.withdraw.suggestedSupport"))  }}
+{% endset %}
+
+{{ govukRadios({
+  fieldset: {
+    legend: {
+      isPageHeading: false,
+      text: "Could the Department for Education have done anything to avoid the candidate withdrawing?",
+      classes: "govuk-fieldset__legend--m"
+    }
+  },
+  items: [
+    {
+      text: "Yes",
+      conditional: {
+        html: extraSupportTextArea
+      }
+    },
+    {
+      text: "No"
+    }
+  ]
+} | decorateAttributes(record, "record.withdraw.suggestedSupportBoolean"))  }}
 
 {{ govukButton({
   text: "Continue"

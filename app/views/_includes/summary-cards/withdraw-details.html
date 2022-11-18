@@ -10,12 +10,29 @@
 {% set withdrawalReason %}
   {% if record.withdraw.reasons | length > 1 %}
     <ul class="govuk-list">
-      {% for reason in record.withdraw.reasons %}
+      {% for reason in record.withdraw.reasons | sort %}
         <li>{{reason}}</li>
       {% endfor %}
     </ul>
   {% else %}
-    {{record.withdraw.reasons}}
+    {{ record.withdraw.reasons }}
+  {% endif %}
+{% endset %}
+
+{% set suggestedSupportLabel %}
+  {% if record.withdraw.suggestedSupportBoolean == "Yes" %}
+    What the Department for Education could have done
+  {% else %}
+    Could the Department for Education have done anything to avoid the candidate withdrawing?
+  {% endif %}
+{% endset %}
+
+
+{% set suggestedSupportValue %}
+  {% if record.withdraw.suggestedSupportBoolean == "Yes" %}
+    {{ record.withdraw.suggestedSupport | nl2br | safe or "Not provided" }}
+  {% else %}
+      No
   {% endif %}
 {% endset %}
 
@@ -76,7 +93,7 @@
       text: "Details of why the trainee withdrew"
     },
     value: {
-      text: record.withdraw.additionalDetail | nl2br | safe or "Not provided"
+      text: record.withdraw.additionalDetail | nl2br | safe | falsify or "Not provided"
     },
     actions: {
       items: [
@@ -90,10 +107,10 @@
   },
   {
     key: {
-      text: "What the Department for Education could have done"
+      text: suggestedSupportLabel
     },
     value: {
-      text: record.withdraw.additionalDfE | nl2br | safe or "Not provided"
+      html: suggestedSupportValue
     },
     actions: {
       items: [

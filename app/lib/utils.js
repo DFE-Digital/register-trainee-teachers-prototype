@@ -1450,7 +1450,7 @@ exports.recordIsComplete = function(record, data=false ) {
       // Some sections are collected together with one checkbox for all
       // If so, defer to that checkbox
       if (applyReviewSections.includes(section)){
-        return (record.applyData.status == "Completed") || sectionStatus
+        return (record.applyData.status == "Completed")
       }
       else return sectionStatus
     }

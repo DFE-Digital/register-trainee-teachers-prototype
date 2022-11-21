@@ -10,13 +10,13 @@
 {% macro courseAndRouteHtml(record, minimalPublishSummary) %}
   {% set isPublishCourse = record.courseDetails.isPublishCourse | falsify %}
   <p class="govuk-body">{{record.route}}</p>
-  <span class="govuk-hint">
+  <div class="govuk-hint">
     {% if isPublishCourse %}
       {{ record.courseDetails.courseNameLong }}
     {% else %}
       {{ record | getAllocationSubject }}
     {% endif %}
-  </span>
+  </div>
 {% endmacro %}
 
 {% macro getCourseMoveLinkPath(defaultPath, nextPath, referrer, showCourseMoveQuestionUpFront) -%}

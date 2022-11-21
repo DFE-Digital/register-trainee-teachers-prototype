@@ -113,7 +113,7 @@
 
 {% set submittedDateHtml %}
   <p class="govuk-body">{{record.submittedDate | govukDate}}</p>
-  <span class="govuk-hint">{{record.submittedDate | formatDate('relative')}}</span>
+  <div class="govuk-hint">{{record.submittedDate | formatDate('relative')}}</div>
 {% endset %}
 
 {% set pendingTrnRow = {
@@ -245,7 +245,7 @@
 {% set updatedDateHtml %}
   <p class="govuk-body">{{record.updatedDate | govukDate or 'Not provided'}}</p>
   {% if record.updatedDate | isInLast( 7, 'days') %}
-    <span class="govuk-hint">{{ record.updatedDate | formatDate('relative') }}</span>
+    <div class="govuk-hint">{{ record.updatedDate | formatDate('relative') }}</div>
   {% endif %}
 {% endset %}
 

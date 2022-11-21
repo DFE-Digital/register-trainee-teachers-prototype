@@ -141,7 +141,7 @@ settings.highlightInvalidAnswers = 'true'
 // Enable timeline on records
 settings.includeDeclaration = false
 
-settings.bulkLinksInPrimaryNav = "None"
+settings.bulkLinksInPrimaryNav = "Show bulk recommend"
 
 // Flow that combines withdrawing and removing in one
 settings.useCombinedRemoveFlow = "false"

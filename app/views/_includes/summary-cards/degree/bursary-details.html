@@ -4,7 +4,7 @@
 {% if bursaryDegree %}
   {% set bursaryHtml %}
     <p class="govuk-body">{{ bursaryDegree | getDegreeName }}</p>
-    <span class="govuk-hint">{{ bursaryDegree | getDegreeHint }}</span>
+    <div class="govuk-hint">{{ bursaryDegree | getDegreeHint }}</div>
   {% endset %}
 {% elseif record.degree.degreeToBeUsedForBursaries %}
   {% set bursaryHtml = "Not provided" %}

@@ -4,7 +4,7 @@
 {% for trainee in filteredRecords  %}
 
   {% set traineeHintHtml %}
-    <span class="govuk-hint">{{trainee.courseDetails.subjects | prettifySubjects }}, {{trainee.route | lower}}</span>
+    <div class="govuk-hint">{{trainee.courseDetails.subjects | prettifySubjects }}, {{trainee.route | lower}}</div>
     {{govukTag({
       text: trainee.status,
       classes: trainee.status | getStatusClass

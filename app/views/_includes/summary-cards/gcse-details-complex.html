@@ -24,7 +24,7 @@
       {% if gcse.country != "United Kingdom" %}
         {% set grade %}
           Grade {{item.grade}}<br>
-          <span class="govuk-hint">{{gcse.type}}, {{gcse.country}}</span>
+          <div class="govuk-hint">{{gcse.type}}, {{gcse.country}}</div>
         {% endset %}
         {# {% set grade = gcse.type + ", " + gcse.country + " (" + item.grade + ")"  %} #}
       {% elseif item.exam %}

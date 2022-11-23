@@ -32,14 +32,11 @@
       text: "Transferring to a different provider"
     },
     {
-      text: "Withdrawing from course",
+      text: "Withdrawing",
       value: "withdraw",
-      _hint: {
-        text: "Not available because the course has not yet started"
-      } if record | ittInTheFuture,
-      _attributes: {
-        disabled: true
-      } if record | ittInTheFuture
+      hint: {
+        text: "Left the course or no longer working towards " + record | getQualificationText
+      }
     } if not record | ittInTheFuture
   ]
 } | decorateAttributes(record, "record.remove.reason")) }}

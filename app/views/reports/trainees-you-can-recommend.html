@@ -1,0 +1,75 @@
+{% extends "_templates/_page.html" %}
+
+{% set pageHeading = 'Export trainees you can recommend for teaching status in bulk' %}
+
+{% set backLink = '/reports' %}
+{% set backText = "Reports" %}
+{% set navActive = 'reports' %}
+
+{# {% set formAction = "./reinstate/confirm" %} #}
+
+{% set academicYear = data.years.currentAcademicYear %}
+{% set academicYearShort = data.years.currentAcademicYear | academicYearToYear %}
+
+{% set censusDate = "2022-10-12" %}
+
+{% set viewingUserIsScitt = data.settings.userActiveProvider | providerIsScitt %}
+
+{% if viewingUserIsScitt %}
+  {% set traineeCount = 37 %}
+{% else %}
+  {% set traineeCount = 127 %}
+{% endif %}
+
+
+{% set hasZeroTraineesToExport = true if traineeCount == 0 %}
+  
+{% block content %}
+{{super()}}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <form action="" method="post">
+
+      <h1 class="govuk-heading-l">{{pageHeading}}</h1>
+
+      <h2 class="govuk-heading-m">About this export</h2>
+
+      <p class="govuk-body">This export includes all trainees:</p>
+
+      <ul class="govuk-list govuk-list--bullet">
+        <li>
+          with their academic start year in {{ academicYear }}
+        </li>
+        <li>
+          with an ITT course start date on or before the ITT census date
+        </li>
+        <li>
+          with a trainee start date on or before the ITT census date
+        </li>
+      </ul>
+
+      <p class="govuk-body">If a trainee does not have a trainee start date, they will also be included in this export.</p> 
+
+      <input name="successFlash" type="hidden" value="Export successfully downloaded">
+
+      {% if hasZeroTraineesToExport %}
+        {{ govukInsetText({
+          text: "You have no trainees available to export. Check you have registered new trainees for the " + data.years.currentAcademicYear + " academic year."
+        }) }}
+      {% endif %}
+
+      {% set buttonText -%}
+        Export trainee data ({{traineeCount}} {{"trainee" | pluralise(traineeCount)}})
+      {%- endset %}
+
+      {{ govukButton({
+        "text": "Export trainee data (CSV)",
+        "text": buttonText
+      }) }}
+
+    </form>
+  </div>
+</div>
+  
+{% endblock %}

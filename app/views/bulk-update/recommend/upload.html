@@ -1,0 +1,99 @@
+{% extends "_templates/_page.html" %}
+
+{% if data.settings.bulkLinksInPrimaryNav == "Show bulk recommend" %}
+  {% set backText = "Home" %}
+  {% set backLink = '/home' %}
+  {% set bulkRecommendOnly = true %}
+{% endif %}
+
+{% set headingLevel = "h3" if bulkRecommendOnly else "h2" %}
+
+{% set filePath = "/public/downloads/recommendOnly.csv" %}
+
+{% set navActive = 'bulk' %}
+
+{% set filteredRecords = data.records | filterRecords(data) %}
+{% set traineesThatCanBeRecommended = filteredRecords | filterByReadyToRecommend %}
+
+{% set needAcademicAward = traineesThatCanBeRecommended | filterByAcademicQualificationsApply %}
+
+{% set qualifications = traineesThatCanBeRecommended | getQualifications | orSeparate %}
+
+{% set pageHeading = "Bulk recommend trainees for " + qualifications %}
+
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+      <h1 class="govuk-heading-l">
+        <span class="govuk-caption-l">{{ data.signedInProviders | andSeparate }}</span>
+        {{ pageHeading }}
+      </h1>
+
+      <h2 class="govuk-heading-m app-numbered-list">1. Prepare your file with recommendations</h2>
+
+      <p class="govuk-body">Your file should be a csv and contain trainees you are recommending for QTS</p>
+
+      {#  #}{% set detailsHtml %}
+        <p class="govuk-body">You can download a report of trainees in register that may be suitable to be recommended</p>
+
+        <p class="govuk-body"><a href="" class="govuk-link">Download a report of trainees due to finish this year</a> </p>
+      {% endset %}
+
+      {# {{ govukDetails({
+        summaryText: "Get a preprepared file",
+        html: detailsHtml
+      }) }} #}
+
+      {# {{ govukButton({
+        text: "Generate a pre-populated file of trainees due to finish expected to finish this year",
+        classes: "govuk-button--secondary"
+      }) }} #}
+
+      {% set insetHtml %}
+        <p class="govuk-body"><a href="" class="govuk-link">Generate a CSV of trainees you can recommend</a></p>
+      {% endset %}
+
+      {{ govukInsetText({
+        html: insetHtml
+      }) }}
+
+      {{ govukDetails({
+        summaryText: "Can I prepare my own file?",
+        text: "We need to know your nationality so we can work out which elections you’re entitled to vote in. If you cannot provide your nationality, you’ll have to send copies of identity documents through the post."
+      }) }}
+      
+        <h2 class="govuk-heading-m app-numbered-list">
+          <span class="app-numbered-list-number">2.</span><span class="app-numbered-list-content">Upload your file</span>
+        </h2>
+
+        {# <p class="govuk-body">
+          You will be able to check the trainee’s details after uploading the file.
+        </p> #}
+
+         <form action="/bulk-update/recommend/bulk-update-answer" method="post" novalidate>
+          {{ govukFileUpload({
+            id: "file-upload-1",
+            name: "file-upload-1",
+            hint: {
+              text: "File type must be ‘csv’."
+            },
+            label: {
+              text: "Upload a file"
+            },
+            attributes: {
+              "accept": ".csv"
+            }
+          }) }}
+          {{ govukButton({
+            text: "Upload and check records"
+          }) }}
+        </form>
+
+    </div>
+  </div>
+
+{% endblock %}
+
+

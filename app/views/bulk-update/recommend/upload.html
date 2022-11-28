@@ -33,15 +33,30 @@
 
       <p class="govuk-body">You can upload a CSV file to recommend multiple trainees for QTS or EYTS.</p>
 
-      <ol class="govuk-list govuk-list--number">
+      <form action="/bulk-update/recommend/bulk-update-answer" method="post" novalidate>
 
-        <li><a href="/reports/trainees-you-can-recommend">Export a list of trainees you can bulk recommend</a>.</li>
+        <ol class="govuk-list govuk-list--number">
 
-        <li>Fill in the date when each trainee met QTS or EYTS standards. If you leave the date blank for a trainee, they will not be recommended.</li>
+          <li><a href="/reports/trainees-you-can-recommend">Export a list of trainees you can bulk recommend</a>.</li>
 
-        <li>Upload the CSV file.</li>
+          <li>Fill in the date when each trainee met QTS or EYTS standards. If you leave the date blank for a trainee, they will not be recommended.</li>
 
-      </ol>
+          {# <li>Upload the CSV file.</li> #}
+
+          <li>
+            {{ govukFileUpload({
+              id: "file-upload-1",
+              name: "file-upload-1",
+              label: {
+                text: "Upload the CSV file."
+              },
+              attributes: {
+                "accept": ".csv"
+              }
+            }) }}
+          </li>
+
+        </ol>
 
       <!-- {# Making thier own file #}
       {% set detailsHtml %}
@@ -123,17 +138,8 @@
         html: detailsHtml
       }) }} -->
 
-      <form action="/bulk-update/recommend/bulk-update-answer" method="post" novalidate>
-        {{ govukFileUpload({
-          id: "file-upload-1",
-          name: "file-upload-1",
-          label: {
-            text: "Upload a file"
-          },
-          attributes: {
-            "accept": ".csv"
-          }
-        }) }}
+      
+        
 
         <p class="govuk-inset-text">You cannot use this upload to make other changes to a trainee’s record.</p>
 

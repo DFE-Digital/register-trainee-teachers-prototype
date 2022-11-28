@@ -31,15 +31,19 @@
         {{ pageHeading }}
       </h1>
 
-      <h2 class="govuk-heading-m app-numbered-list">1. Prepare your file with recommendations</h2>
+      <p class="govuk-body">You can upload a CSV file to recommend multiple trainees for QTS or EYTS.</p>
 
-      <p class="govuk-body">Your file should be a csv and contain trainees you are recommending for QTS</p>
+      <ol class="govuk-list govuk-list--number">
 
-      <p class="govuk-body">
-        <a href="" class="govuk-link">Generate a CSV of trainees you can recommend</a>
-      </p>
+        <li><a href="/reports/trainees-you-can-recommend">Export a list of trainees you can bulk recommend</a>.</li>
 
-      {# Making thier own file #}
+        <li>Fill in the date when each trainee met QTS or EYTS standards. If you leave the date blank for a trainee, they will not be recommended.</li>
+
+        <li>Upload the CSV file.</li>
+
+      </ol>
+
+      <!-- {# Making thier own file #}
       {% set detailsHtml %}
 
         <p class="govuk-body">You can prepare your own CSV of trainees you would like to recommend for QTS.</p>
@@ -66,7 +70,7 @@
               <tr>
                 <th scope="col" class="table-field-heading-first" width="">
                 </th>
-                
+
                 <th scope="col" class="table-field-heading" width="">
                   A
                 </th>
@@ -76,7 +80,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr class="table-row"> 
+              <tr class="table-row">
                 <td class="table-field-index">
                   1
                 </td>
@@ -111,29 +115,18 @@
         </div>
 
         <a href="#" class="govuk-link">Download this example (CSV)</a>
-  
+
       {% endset %}
 
       {{ govukDetails({
         summaryText: "Can I use my own file?",
         html: detailsHtml
-      }) }}
-      
-      <h2 class="govuk-heading-m app-numbered-list">
-        <span class="app-numbered-list-number">2.</span><span class="app-numbered-list-content">Upload your file</span>
-      </h2>
-
-      {# <p class="govuk-body">
-        You will be able to check the trainee’s details after uploading the file.
-      </p> #}
+      }) }} -->
 
       <form action="/bulk-update/recommend/bulk-update-answer" method="post" novalidate>
         {{ govukFileUpload({
           id: "file-upload-1",
           name: "file-upload-1",
-          hint: {
-            text: "File type must be ‘csv’."
-          },
           label: {
             text: "Upload a file"
           },
@@ -141,8 +134,11 @@
             "accept": ".csv"
           }
         }) }}
+
+        <p class="govuk-inset-text">You cannot use this upload to make other changes to a trainee’s record.</p>
+
         {{ govukButton({
-          text: "Upload and check records"
+          text: "Upload file and check who you’ll recommend"
         }) }}
       </form>
 
@@ -150,5 +146,3 @@
   </div>
 
 {% endblock %}
-
-

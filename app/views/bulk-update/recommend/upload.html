@@ -35,61 +35,116 @@
 
       <p class="govuk-body">Your file should be a csv and contain trainees you are recommending for QTS</p>
 
-      {#  #}{% set detailsHtml %}
-        <p class="govuk-body">You can download a report of trainees in register that may be suitable to be recommended</p>
+      <p class="govuk-body">
+        <a href="" class="govuk-link">Generate a CSV of trainees you can recommend</a>
+      </p>
 
-        <p class="govuk-body"><a href="" class="govuk-link">Download a report of trainees due to finish this year</a> </p>
+      {# Making thier own file #}
+      {% set detailsHtml %}
+
+        <p class="govuk-body">You can prepare your own CSV of trainees you would like to recommend for QTS.</p>
+
+        <p class="govuk-body">Your spreadsheet must include:</p>
+
+        <ul class="govuk-list govuk-list--bullet">
+          <li>a header row</li>
+          <li>an identifier column with one of TRN, Provider Trainee ID, or HESA ID</li>
+          <li>a date column labeled ‘Date QTS or EYTS standards met’</li>
+        </ul>
+
+        <p class="govuk-body">For each trainee you are awarding, provide their identifer and the date they met the teaching standards</p>
+
+        <p class="govuk-body">An example of what your sheet should look like:</p>
+
+        <div class="spreadsheet" data-notify-module="fullscreen-table">
+          <div class="fullscreen-scrollable-table" role="region" aria-labelledby="example" tabindex="0" style="height: 155.888px;">
+            <table class="table table-font-xsmall">
+            <caption class="heading-medium table-heading govuk-visually-hidden" id="example">
+              Example
+            </caption>
+            <thead class="table-field-headings-visible">
+              <tr>
+                <th scope="col" class="table-field-heading-first" width="">
+                </th>
+                
+                <th scope="col" class="table-field-heading" width="">
+                  A
+                </th>
+                <th scope="col" class="table-field-heading" width="">
+                  B
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="table-row"> 
+                <td class="table-field-index">
+                  1
+                </td>
+                <td class="table-field-left-aligned  ">
+                  <div class="">
+                    TRN
+                  </div>
+                </td>
+                <td class="table-field-left-aligned  ">
+                  <div class="">
+                    Date QTS or EYTS standards met
+                  </div>
+                </td>
+              </tr>
+              <tr class="table-row">
+                <td class="table-field-index">
+                  2
+                </td>
+                <td class="table-field-left-aligned  ">
+                  <div class="">
+                    123456789
+                  </div>
+                </td>
+                <td class="table-field-left-aligned  ">
+                  <div class="">
+                    5/6/2023
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <a href="#" class="govuk-link">Download this example (CSV)</a>
+  
       {% endset %}
-
-      {# {{ govukDetails({
-        summaryText: "Get a preprepared file",
-        html: detailsHtml
-      }) }} #}
-
-      {# {{ govukButton({
-        text: "Generate a pre-populated file of trainees due to finish expected to finish this year",
-        classes: "govuk-button--secondary"
-      }) }} #}
-
-      {% set insetHtml %}
-        <p class="govuk-body"><a href="" class="govuk-link">Generate a CSV of trainees you can recommend</a></p>
-      {% endset %}
-
-      {{ govukInsetText({
-        html: insetHtml
-      }) }}
 
       {{ govukDetails({
-        summaryText: "Can I prepare my own file?",
-        text: "We need to know your nationality so we can work out which elections you’re entitled to vote in. If you cannot provide your nationality, you’ll have to send copies of identity documents through the post."
+        summaryText: "Can I use my own file?",
+        html: detailsHtml
       }) }}
       
-        <h2 class="govuk-heading-m app-numbered-list">
-          <span class="app-numbered-list-number">2.</span><span class="app-numbered-list-content">Upload your file</span>
-        </h2>
+      <h2 class="govuk-heading-m app-numbered-list">
+        <span class="app-numbered-list-number">2.</span><span class="app-numbered-list-content">Upload your file</span>
+      </h2>
 
-        {# <p class="govuk-body">
-          You will be able to check the trainee’s details after uploading the file.
-        </p> #}
+      {# <p class="govuk-body">
+        You will be able to check the trainee’s details after uploading the file.
+      </p> #}
 
-         <form action="/bulk-update/recommend/bulk-update-answer" method="post" novalidate>
-          {{ govukFileUpload({
-            id: "file-upload-1",
-            name: "file-upload-1",
-            hint: {
-              text: "File type must be ‘csv’."
-            },
-            label: {
-              text: "Upload a file"
-            },
-            attributes: {
-              "accept": ".csv"
-            }
-          }) }}
-          {{ govukButton({
-            text: "Upload and check records"
-          }) }}
-        </form>
+      <form action="/bulk-update/recommend/bulk-update-answer" method="post" novalidate>
+        {{ govukFileUpload({
+          id: "file-upload-1",
+          name: "file-upload-1",
+          hint: {
+            text: "File type must be ‘csv’."
+          },
+          label: {
+            text: "Upload a file"
+          },
+          attributes: {
+            "accept": ".csv"
+          }
+        }) }}
+        {{ govukButton({
+          text: "Upload and check records"
+        }) }}
+      </form>
 
     </div>
   </div>

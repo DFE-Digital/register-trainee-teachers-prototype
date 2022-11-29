@@ -7,6 +7,8 @@
 {% set bulkPath =  "recommend" %}
 {% set bulkRoute = "recommend" %}
 
+{% set totalCount = data.bulkUpload.processedRows | length %}
+
 {# Sets numbers for errors summary #}
 {% set errorCount     = data.bulkUpload.processedRows | where("uploadStatus", "error") | length  %}
 {% set unchangedCount = data.bulkUpload.processedRows | where("uploadStatus", "unchanged") | length  %}
@@ -23,31 +25,29 @@
       <h1 class="govuk-heading-l">{{pageHeading}}</h1>
       {% set errorPluralisation = "error" | pluralise(errorCount) %}
       <form action="/bulk-update/{{ bulkPath }}/errors-found-answer" method="post" novalidate>
-        
-        <h3 class="govuk-notification-banner__heading">
-        {{ data.bulkUpload.processedRows | length }} trainee records uploaded
-        </h3>
 
-        <p class="govuk-body">Your file with {{ data.bulkUpload.processedRows | length }} trainee records was processed.</p>
+        <p class="govuk-body">You upploaded a file with details of {{ totalCount }} {{ "trainee" | pluralise(totalCount) }}.</p>
+
         <p class="govuk">
           It included:
         </p>
         <ul class="govuk-list govuk-list--bullet">
+          {% if updatedCount %}
+            <li>
+              {{ updatedCount }} {{ "trainee" | pluralise(updatedCount) }} who will be recommended for QTS or EYTS
+            </li>
+          {% endif %}
+          {% if unchangedCount %}
+            <li>
+              {{ unchangedCount }} {{ "trainee" | pluralise(unchangedCount) }} who will not be recommended, as you did not give a date when they met the training standard
+            </li>
+          {% endif %}
           {% if errorCount %}
             <li>
-              {{ errorCount }} {{ "trainee" | pluralise(errorCount) }} with errors
+              {{ errorCount }} {{ "trainee" | pluralise(errorCount) }} with errors in their details
             </li>
           {% endif %}
-          {% if unchangedCount %}
-            <li>
-              {{ unchangedCount }} {{ "trainee" | pluralise(unchangedCount) }} without changes
-            </li>
-          {% endif %}
-          {% if unchangedCount %}
-            <li>
-              {{ updatedCount }} {{ "trainee" | pluralise(updatedCount) }} to be recommended for QTS or EYTS
-            </li>
-          {% endif %}
+
         </ul>
         {%  if updatedCount == 0 %}
           <p class="govuk-body">

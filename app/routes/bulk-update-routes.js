@@ -221,16 +221,19 @@ module.exports = router => {
       processedRows
     }
 
-    if (rowsHaveErrors(processedRows) && rowsHaveUpdates(processedRows)) {
-      res.redirect('/bulk-update/recommend/errors-found')
-    } else if (rowsHaveErrors(processedRows) && !rowsHaveUpdates(processedRows)) {
-      res.redirect('/bulk-update/recommend/fix-errors')
-    } else if (!rowsHaveErrors(processedRows) && rowsHaveUpdates(processedRows)) {
-      res.redirect('/bulk-update/recommend/check-pending-updates')
-    }
-    else {
-      res.redirect('/bulk-update/recommend/errors-found')
-    }
+    res.redirect('/bulk-update/recommend/upload-summary')
+
+    // Earlier version of prototype let users choose to skip errors:
+    // if (rowsHaveErrors(processedRows) && rowsHaveUpdates(processedRows)) {
+    //   res.redirect('/bulk-update/recommend/errors-found')
+    // } else if (rowsHaveErrors(processedRows) && !rowsHaveUpdates(processedRows)) {
+    //   res.redirect('/bulk-update/recommend/fix-errors')
+    // } else if (!rowsHaveErrors(processedRows) && rowsHaveUpdates(processedRows)) {
+    //   res.redirect('/bulk-update/recommend/check-pending-updates')
+    // }
+    // else {
+    //   res.redirect('/bulk-update/recommend/errors-found')
+    // }
   })
 
 }

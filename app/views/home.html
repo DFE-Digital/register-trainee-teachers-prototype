@@ -114,7 +114,7 @@
         {% set traineesAwardedThisYear = traineesAwarded | filterByFunction('isFinishingThisAcademicYear') %}
         <a href="/records?filterTrainingStatus=Awarded&filterEndYears={{ data.years.currentAcademicYear }}" class="status-card status-card--awarded">
           <span class="status-card__count">{{traineesAwardedThisYear | length}}</span>
-          <span class="status-card__status">Awarded this year</span><span class="govuk-visually-hidden"> records. View these records.</span>
+          <span class="status-card__status">Awarded in {{data.years.currentAcademicYear}}</span><span class="govuk-visually-hidden"> records. View these records.</span>
         </a>
 
         {# Currently deferred #}

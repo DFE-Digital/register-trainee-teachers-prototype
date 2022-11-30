@@ -128,6 +128,15 @@ module.exports = router => {
   =========================================================
   */
 
+  /* Set-up check updates page up as coming from upload */
+  // router.post('/reports/trainees-you-can-recommend', function(req, res) {
+  //   const data = req.session.data
+  //   data.bulk = {
+  //     recommendFixErrors: true
+  //   }
+  //   res.redirect('/bulk-update/recommend/check-pending-updates');
+  // });
+
   /* Review errors or skip */
   router.get('/bulk-update/recommend/errors-found-answer', function(req, res) {
     const data = req.session.data
@@ -146,9 +155,23 @@ module.exports = router => {
   router.get('/bulk-update/recommend/fix-file', function(req, res) {
     const data = req.session.data
     data.bulk = {
-      recommendFixErrors: true
+      addDetailsFixErrors: true
     }
-    res.redirect('/bulk-update/recommend/check-pending-updates');
+    let processedRows = data?.bulkUpload?.processedRows
+
+    if (processedRows){
+      processedRows.forEach(row => {
+        if (row.uploadStatus == "error"){
+          row.uploadStatus = "updated"
+          delete row.errorMessage
+        }
+      })
+    }
+
+    data.bulkUpload = {
+      processedRows
+    }
+    res.redirect('/bulk-update/recommend/upload-summary');
   });
 
   /* Clear review errors answer */
@@ -159,13 +182,14 @@ module.exports = router => {
     res.redirect('/bulk-update/recommend/check-pending-updates');
   });
 
-
-  /* Get trainees to bulk recommend */
-  router.post('/bulk-update/recommend/bulk-update-answer', function(req, res) {
+  // Used to generate a new set of errors
+  router.get('/bulk-update/recommend/start-journey-with-errors', function(req, res){
 
     const data = req.session.data
     let filteredRecords  = utils.filterRecords(data.records, data)
     let uploadedTrainees = utils.filterByReadyToRecommend(filteredRecords)
+
+    // This should make the errors consistent each time
     let randomSeeded = seedRandom("recommend")
 
     // Hiding these for research purposes
@@ -179,14 +203,6 @@ module.exports = router => {
     //   "Date standards met: '20/09/2023' — Date standards met must be in the past"
     // ]
 
-    // if (data.settings.bulkLinksInPrimaryNav != "Show bulk recommend") {
-    //   templateErrors.push(
-    //     "Postgraduate qualification: 'BA (Hons)' — enter 'PGCE', 'PGDE' or 'None' for postgraduate qualification",
-    //     "Postgraduate qualification: 'PGCE' — trainees on undergraduate courses cannot be awarded a postgraduate qualification",
-    //     "Postgraduate qualification missing. If the trainee did not get a postgraduate qualification enter 'None'"
-    //   )
-    // }
-
     /* For each record, randomly pick whether it's ok, in error, or unchanged. If in error, pick a random error */
     let processedRows = uploadedTrainees.map((trainee, index) => {
 
@@ -194,15 +210,15 @@ module.exports = router => {
 
       let row = {
         trainee,
-        uploadStatus: weighted.select(["error", "unchanged", "updated"], [0.02, 0.02, 0.96], randomSeeded),
-        assessmentDate: weighted.select(["06/10/" + data.years.endOfCurrentCycle, "06/17/" + data.years.endOfCurrentCycle, "06/24/" + data.years.endOfCurrentCycle, wildCardDate], [0.5, 0.2, 0.2, 0.1], randomSeeded),
+        uploadStatus: weighted.select(["error", "unchanged", "updated"], [0.02, 0.04, 0.94], randomSeeded),
+        assessmentDate: weighted.select(["28/6/" + data.years.endOfCurrentCycle, "19/6/" + data.years.endOfCurrentCycle, "6/5/" + data.years.endOfCurrentCycle, wildCardDate], [0.5, 0.2, 0.2, 0.1], randomSeeded),
       }
 
       if (row.uploadStatus == "error") {
         // row.errorMessage = utils.pickRandom(templateErrors, randomSeeded)
         row.errorMessage = weighted.select([
             "Date standards met provided without a TRN or Provider trainee ID - add a TRN or Provider trainee ID or remove the date standards met", 
-            "Date standards met: '20/09/2023' - date standards met must be in the past",
+            "Date standards met: '20/9/2023' - date standards met must be in the past",
             "TRN and Provider trainee ID are not for the same trainee",
           ], 
           [0.25, 0.5, 0.25], randomSeeded)
@@ -221,19 +237,7 @@ module.exports = router => {
       processedRows
     }
 
-    res.redirect('/bulk-update/recommend/upload-summary')
-
-    // Earlier version of prototype let users choose to skip errors:
-    // if (rowsHaveErrors(processedRows) && rowsHaveUpdates(processedRows)) {
-    //   res.redirect('/bulk-update/recommend/errors-found')
-    // } else if (rowsHaveErrors(processedRows) && !rowsHaveUpdates(processedRows)) {
-    //   res.redirect('/bulk-update/recommend/fix-errors')
-    // } else if (!rowsHaveErrors(processedRows) && rowsHaveUpdates(processedRows)) {
-    //   res.redirect('/bulk-update/recommend/check-pending-updates')
-    // }
-    // else {
-    //   res.redirect('/bulk-update/recommend/errors-found')
-    // }
+    res.redirect('/bulk-update/recommend/upload')
   })
 
 }

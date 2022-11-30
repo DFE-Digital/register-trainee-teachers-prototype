@@ -16,7 +16,7 @@
 {% set viewingUserIsScitt = data.settings.userActiveProvider | providerIsScitt %}
 
 {% if viewingUserIsScitt %}
-  {% set traineeCount = 37 %}
+  {% set traineeCount = 95 %}
 {% else %}
   {% set traineeCount = 127 %}
 {% endif %}
@@ -66,10 +66,26 @@
         Export trainee data ({{traineeCount}} {{"trainee" | pluralise(traineeCount)}})
       {%- endset %}
 
+      {% set downloadFilename = (data.signedInProviders + "-trainees to recommend prepopulated") | slugify %}
+        
+
       {{ govukButton({
-        "text": "Export trainee data (CSV)",
-        "text": buttonText
+        "text": buttonText,
+        href: "/public/downloads/bulk-update/recommendOnly.csv",
+        attributes: {
+          download: downloadFilename
+        }
       }) }}
+
+{#       {{ appDownloadLink({
+          linkText: "Download a prepopulated file to recommend trainees for " + qualifications,
+          fileName: "bulk-update/recommendOnly" if bulkRecommendOnly else "recommend",
+          showDownloadedFileName: true,
+          downloadedFileName: (data.signedInProviders + "-trainees to recommend prepopulated") | slugify,
+          fileType: "csv"
+        })}}
+ #}
+
 
     </form>
   </div>

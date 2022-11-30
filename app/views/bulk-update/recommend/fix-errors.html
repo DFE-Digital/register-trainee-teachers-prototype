@@ -6,90 +6,17 @@
 
 {% set bulkOnly = true if data.settings.bulkLinksInPrimaryNav == "Show bulk recommend" %}
 {% set pageContent = "fixErrors" %}
-{% set pageHeading = "Fix errors in your pending updates" %}
+
 
 
 {% set bulkPath = "recommend" %}
 
 {% set rowsWithErrors = data.bulkUpload.processedRows | where("uploadStatus", "error") %}
-{% set tableBodyRows = [] %}
-
 {% set errorCount     = data.bulkUpload.processedRows | where("uploadStatus", "error") | length  %}
-{% set unchangedCount = data.bulkUpload.processedRows | where("uploadStatus", "unchanged") | length  %}
-{% set updatedCount   = data.bulkUpload.processedRows | where("uploadStatus", "updated") | length  %}
 
-{% for row in rowsWithErrors %}
-
-  {% set trn = row.trainee.trn %}
-  {% set providerTraineeId = row.trainee.reference %}
-  {% set firstName = row.trainee.personalDetails.givenName %}
-  {% set lastName = row.trainee.personalDetails.familyName %}
-  {% set dateStandardsMet = row.assessmentDate %}
-
-  {% if row.errorMessage == "Date standards met provided without a TRN or Provider trainee ID - add a TRN or Provider trainee ID or remove the date standards met" %}
-    {% set trn  = "—" %}
-    {% set providerTraineeId  = "—" %}
-    {% set firstName = "—" %}
-    {% set lastName  = "—" %}
-  {% endif %}
-
-  {% if row.errorMessage == "TRN and Provider trainee ID are not for the same trainee" %}
-    {% set firstName = "—" %}
-    {% set lastName  = "—" %}
-  {% endif %}
-
-  {% if row.errorMessage == "Date standards met: '20/09/2023' - date standards met must be in the past" %}
-    {% set dateStandardsMet = '20/09/2023' %}
-  {% endif %}
-
-  {% set tableRow = [
-    { text: row.rowNumber + 2 },
-    { text: trn               },
-    { text: providerTraineeId },
-    { text: firstName         },
-    { text: lastName          },
-    { text: dateStandardsMet  },
-    { text: row.errorMessage  }
-  ] %}
-
-  {% set tableBodyRows = tableBodyRows | push(tableRow) %}
-
-{% endfor %}
-
-{% set tableCaption = "Trainee " + 'record' | pluralise(tableBodyRows.length) + " with errors (" + tableBodyRows.length + ")" %}
-{% set tableCaptionClasses = "govuk-table__caption--m" %}
-{% set tableHeadRow = 
-  [
-    {
-      text: "Row",
-      classes: "app-table__column-5"
-    },
-    {
-      text: "TRN",
-      classes: "app-table__column-10"
-    },
-    {
-      text: "Provider trainee ID",
-      classes: "app-table__column-10"
-    },
-    {
-      text: "Last names",
-      classes: "app-table__column-10"
-    },
-    {
-      text: "First names",
-      classes: "app-table__column-10"
-    },
-    {
-      text: "Date standards met",
-      classes: "app-table__column-10"
-    },
-    {
-      text: "Error",
-      classes: "app-table__column-45"
-    }
-  ]
-%}
+{% set pageHeading %}
+  Fix errors on {{errorCount}} {{ "row" | pluralise(traineeCount) }} in the file you uploaded
+{% endset %}
 
 {% set qualifications = traineesThatCanBeRecommended | getQualifications | orSeparate %}
 {% set linkText = "Download trainees ready to be recommened for " + qualifications + " — with errors" %}
@@ -98,6 +25,54 @@
 
 {% block content %}
 
-  {% include "_includes/bulk-update/fix-file.html" %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+
+      <h1 class="govuk-heading-l">
+        <span class="govuk-caption-l">{{ data.signedInProviders | andSeparate }}</span>
+        {{ pageHeading }}
+      </h1>
+
+      <form action="/bulk-update/recommend/fix-file" method="post" novalidate>
+
+        <p class="govuk-body">You need to fix errors in the CSV file you uploaded before you can recommend trainees for QTS or EYTS.</p>
+        <ol class="govuk-list govuk-list--number">
+
+          <li>
+            
+            <a class="govuk-link--no-visited-state" href="/public/downloads/recommendOnly-with-data.csv" download="{{ (data.signedInProviders + '-fix-errors') | slugify }}.csv">Download your CSV file with errors indicated</a>.
+            {# <a href="#">Download your CSV file with errors indicated</a>. #}
+          </li>
+
+          <li>Fix the errors. If you cannot fix an error, you can delete the row and the trainee will not be recommended.</li>
+
+          {# <li>Upload the CSV file.</li> #}
+
+          <li>
+            {{ govukFileUpload({
+              id: "file-upload-1",
+              name: "file-upload-1",
+              label: {
+                text: "Upload the CSV file."
+              },
+              attributes: {
+                "accept": ".csv"
+              }
+            }) }}
+          </li>
+
+        </ol>
+
+        {#   <p class="govuk-inset-text">You cannot use this upload to make other changes to a trainee’s record.</p> #}
+
+        <input name="successFlash" type="hidden" value="File uploaded">
+
+        {{ govukButton({
+          text: "Upload file and check who you’ll recommend"
+        }) }}
+      </form>
+
+  </div>
+</div>
 
 {% endblock %}

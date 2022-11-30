@@ -57,7 +57,7 @@
 
         {{ govukButton({
           text: "Review errors" if errorCount else "Review recommendations",
-          href: '/bulk-update/add-details/fix-errors' if errorCount else '/bulk-update/add-details/check-pending-updates'
+          href: '/bulk-update/recommend/fix-errors' if errorCount else '/bulk-update/recommend/check-pending-updates'
         }) }}
       </form>
       <p class="govuk-body">

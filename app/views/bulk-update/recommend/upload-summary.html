@@ -16,6 +16,8 @@
 
 {% set hasErrors = errorCount > 0 %}
 
+{% set hasUpdated = updatedCount > 0 %}
+
 {% block content %}
 {{super()}}
   <div class="govuk-grid-row">
@@ -55,10 +57,24 @@
           </p>
         {% endif %}
 
-        {{ govukButton({
-          text: "Review errors" if errorCount else "Review recommendations",
-          href: '/bulk-update/recommend/fix-errors' if errorCount else '/bulk-update/recommend/check-pending-updates'
-        }) }}
+        {% if hasErrors %}
+          {{ govukButton({
+            text: "Review errors",
+            href: '/bulk-update/recommend/fix-errors'
+          }) }}
+        {% elseif hasUpdated %}
+          {{ govukButton({
+            text: "Review recommendations",
+            href: '/bulk-update/recommend/check-pending-updates'
+          }) }}
+        {% else %}
+          {{ govukButton({
+            text: "Return to upload",
+            href: '/bulk-update/recommend/upload'
+          }) }}
+        {% endif %}
+
+        
       </form>
       <p class="govuk-body">
         <a href="/bulk-update/cancel-bulk-updates" class="govuk-link">Cancel bulk {{ "recommending trainees" if data.settings.bulkLinksInPrimaryNav == "Show bulk recommend" else "updates to records" }}</a>

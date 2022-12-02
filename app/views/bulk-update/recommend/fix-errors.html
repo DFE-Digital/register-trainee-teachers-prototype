@@ -20,7 +20,7 @@
 
 {% set qualifications = traineesThatCanBeRecommended | getQualifications | orSeparate %}
 {% set linkText = "Download trainees ready to be recommened for " + qualifications + " — with errors" %}
-{% set fileName = "recommendOnly-with-errors" if bulkOnly else "recommend-with-errors" %}
+
 {% set downloadedFileName = "-fix-errors" %}
 
 {% block content %}
@@ -40,7 +40,7 @@
 
           <li>
             
-            <a class="govuk-link--no-visited-state" href="/public/downloads/recommendOnly-with-data.csv" download="{{ (data.signedInProviders + '-fix-errors') | slugify }}.csv">Download your CSV file with errors indicated</a>.
+            <a class="govuk-link--no-visited-state" href="/public/downloads/bulk-update/recommendOnly-with-errors.csv" download="{{ (data.signedInProviders + '-fix-errors') | slugify }}.csv">Download your CSV file with errors indicated</a>.
             {# <a href="#">Download your CSV file with errors indicated</a>. #}
           </li>
 

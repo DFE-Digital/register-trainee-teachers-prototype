@@ -1,6 +1,6 @@
-{% if data.bulk.recommendFixErrors or data.bulk.addDetailsFixErrors %}
+{# {% if data.bulk.recommendFixErrors or data.bulk.addDetailsFixErrors %}
   {% include "_includes/bulk-update/upload-summary-panel.html" %}
-{% endif %}
+{% endif %} #}
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
     <h1 class="govuk-heading-l">
@@ -9,6 +9,10 @@
     </h1>
   </div>
 </div>
+
+
+
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
     {{ govukTable({
@@ -18,7 +22,46 @@
       rows: tableBodyRows
     }) if bulkPath == "add-details" }}
     {% if bulkPath == "recommend" %}
-      {{ govukTable({
+
+    {% set chunkSize = 10 %}
+
+    {% set chunkedRows = qtsTableBodyRows | batch(chunkSize) %}
+
+    {{chunkedRows | log}}
+
+    {% set accordionItems = [] %}
+
+    {% for chunk in chunkedRows %}
+      {% set tableHtml %}
+        {{ govukTable({
+          head: tableHeadRow,
+          rows: chunk
+        }) }}
+      {% endset %}
+
+      {% set accordionHeadingText %}
+        Trainees {{ (loop.index0 * chunkSize) + 1 }} to {{ (loop.index0 * chunkSize) + chunkSize }}
+      {% endset %}
+      {% set accordionItems = accordionItems | push({
+        heading: {
+          text: accordionHeadingText
+        },
+        content: {
+          html: tableHtml
+        },
+        expanded: true if loop.first else false
+      }) %}
+
+    {% endfor %}
+
+    {# NowUTC used to give the id a new unique name, so the same item is *always* open #}
+    {{ govukAccordion({
+      id: "qts-accordion-" + nowUTC(),
+      items: accordionItems
+    }) }}
+
+
+      {# {{ govukTable({
         caption: qtsTableCaption,
         captionClasses: tableCaptionClasses,
         head: tableHeadRow,
@@ -30,7 +73,7 @@
         captionClasses: tableCaptionClasses,
         head: tableHeadRow,
         rows: eytsTableBodyRows
-      }) if eytsTableBodyRows.length > 0 }}
+      }) if eytsTableBodyRows.length > 0 }} #}
     {% endif %}
   </div>
 </div>
@@ -38,7 +81,7 @@
   <div class="govuk-grid-column-full">
     <div class="js-stick-at-bottom-when-scrolling">
       <p class="govuk-body govuk-!-margin-bottom-5">
-        <a href="fix-pending-updates">Make changes to your pending updates</a>
+        <a href="upload-changes">Make changes to your pending updates</a>
       </p>
       <form action="/bulk-update/{{ bulkPath }}/confirmation" method="post" novalidate>
         <div class="govuk-button-group govuk-!-margin-bottom-0">

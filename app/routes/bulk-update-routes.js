@@ -8,6 +8,8 @@ const utils = require('./../lib/utils')
 const weighted = require('weighted')
 const { faker } = require('@faker-js/faker')
 
+let randomSeeded = new seedRandom("recommend")
+
 const rowsHaveErrors = rows => {
   if (Array.isArray(rows)) {
     return rows.some(row => row.uploadStatus == "error")
@@ -54,12 +56,12 @@ module.exports = router => {
   });
 
   /* Clear review errors answer */
-  router.get('/bulk-update/add-details/no-update', function(req, res) {
-    const data = req.session.data
-    delete data?.bulk?.addDetailsFixErrors
-    delete data?.bulk?.recommendFixErrors
-    res.redirect('/bulk-update/add-details/check-pending-updates');
-  });
+  // router.get('/bulk-update/add-details/no-update', function(req, res) {
+  //   const data = req.session.data
+  //   delete data?.bulk?.addDetailsFixErrors
+  //   delete data?.bulk?.recommendFixErrors
+  //   res.redirect('/bulk-update/add-details/check-pending-updates');
+  // });
 
   /* Get trainees to add missing details */
   router.post('/bulk-update/add-details/bulk-update-answer', function(req, res) {
@@ -128,116 +130,163 @@ module.exports = router => {
   =========================================================
   */
 
-  /* Set-up check updates page up as coming from upload */
-  // router.post('/reports/trainees-you-can-recommend', function(req, res) {
-  //   const data = req.session.data
-  //   data.bulk = {
-  //     recommendFixErrors: true
-  //   }
-  //   res.redirect('/bulk-update/recommend/check-pending-updates');
-  // });
+  // Generate somewhat realistic data
+  const populateErrors = (data, errorWeights, seed) => {
 
-  /* Review errors or skip */
-  router.get('/bulk-update/recommend/errors-found-answer', function(req, res) {
-    const data = req.session.data
-    if (data?.bulk?.recommendFixErrors == "Fix errors now") {
-      res.redirect('/bulk-update/recommend/fix-errors');
-    } else if (data?.bulk?.recommendFixErrors == "Skip fixing errors") {
-      delete data?.bulk?.addDetailsFixErrors
-      delete data?.bulk?.recommendFixErrors
-      res.redirect('/bulk-update/recommend/check-pending-updates');
-    } else {
-      res.redirect('/bulk-update/recommend/errors-found');
-    }
-  });
+    console.log("Bulk recommend: populating errors")
 
-  /* Set-up check updates page up as coming from upload */
-  router.get('/bulk-update/recommend/fix-file', function(req, res) {
-    const data = req.session.data
-    data.bulk = {
-      addDetailsFixErrors: true
-    }
+    seed = seed || new seedRandom()
+
+    errorWeights = errorWeights || [0.02, 0.04, 0.94]
+
+    let wildCardDate = utils.getRandomArbitrary(1, 6) + "/" + utils.getRandomArbitrary(1, 28) + "/" + data.years.endOfCurrentCycle
     let processedRows = data?.bulkUpload?.processedRows
 
-    if (processedRows){
+    if (!processedRows) {
+      console.log("Bulk recommend: generating new errors")
+      let filteredRecords  = utils.filterRecords(data.records, data)
+      let uploadedTrainees = utils.filterByReadyToRecommend(filteredRecords)
+
+      /* For each record, randomly pick whether it's ok, in error, or unchanged. If in error, pick a random error */
+      processedRows = uploadedTrainees.map((trainee, index) => {
+
+        let selectedStatus = weighted.select(["error", "unchanged", "updated"], errorWeights, seed)
+
+        let wildCardDate = utils.getRandomArbitrary(1, 28) + "/" + utils.getRandomArbitrary(1, 6) + "/" + data.years.endOfCurrentCycle
+        let assessmentDate = weighted.select(["28/6/" + data.years.endOfCurrentCycle, "19/6/" + data.years.endOfCurrentCycle, "6/5/" + data.years.endOfCurrentCycle, wildCardDate], [0.5, 0.2, 0.2, 0.1], seed)
+
+        let row = {
+          rowNumber: index + 1,
+          trainee,
+          uploadStatus: selectedStatus,
+          assessmentDate: (selectedStatus != 'unchanged') ? assessmentDate : null,
+        }
+
+        if (selectedStatus == "error") {
+          // row.errorMessage = utils.pickRandom(templateErrors, seed)
+          row.errorMessage = weighted.select([
+              "Date standards met provided without a TRN or Provider trainee ID - add a TRN or Provider trainee ID or remove the date standards met", 
+              "Date standards met: '20/9/2023' - date standards met must be in the past",
+              "TRN and Provider trainee ID are not for the same trainee",
+            ], 
+            [0.25, 0.5, 0.25], seed)
+        }
+
+        return row
+      })
+      processedRows.sort((a, b) => utils.sortAlphabetical(a.trainee.personalDetails.familyName, b.trainee.personalDetails.familyName))
+
+    }
+
+    // Reduce errors by 80%
+    else {
+      console.log("Bulk recommend: reducing existing errors")
       processedRows.forEach(row => {
+
         if (row.uploadStatus == "error"){
-          row.uploadStatus = "updated"
-          delete row.errorMessage
+          let errorFixed = weighted.select([true, false], [0.9, 0.1])
+          if (errorFixed){
+            row.uploadStatus = "updated"
+            delete row.errorMessage
+          }
+
+        }
+      })
+    }
+
+    return processedRows
+
+  }
+
+  /* Clear out existing data when startin a new journey */
+  router.get('/bulk-update/recommend/start', function(req, res) {
+    console.log("Bulk recommend: starting new journey")
+    const data = req.session.data
+    delete data.bulkUpload
+    delete data?.bulk
+    res.redirect('/bulk-update/recommend/upload');
+  });
+
+  /* Clear review errors answer */
+  router.post('/bulk-update/recommend/upload-answer', function(req, res) {
+    const data = req.session.data
+
+    data.bulkUpload = {
+      ...data?.bulkUpload,
+      processedRows: populateErrors(data, [0.02, 0.04, 0.94])
+    }
+    res.redirect('/bulk-update/recommend/upload-summary');
+  });
+
+    /* Set-up check updates page up as coming from upload */
+  router.post('/bulk-update/recommend/fix-errors-answer', function(req, res) {
+    const data = req.session.data
+
+    data.bulkUpload = {
+      ...data?.bulkUpload,
+      processedRows: populateErrors(data)
+    }
+
+    res.redirect('/bulk-update/recommend/upload-summary');
+  });
+
+  // Assume a small number of changes. Swaps some trainees from recommended and some to recommended
+  router.post('/bulk-update/recommend/upload-changes-answer', function(req, res) {
+    const data = req.session.data
+
+    let processedRows = data?.bulkUpload?.processedRows
+
+    if (!processedRows){
+      res.redirect('/bulk-update/recommend/upload')
+    }
+    else {
+      processedRows.forEach(row => {
+        if (row.uploadStatus == "unchanged"){
+          let startRecommending = weighted.select([true, false], [0.01, 0.99])
+          if (startRecommending){
+            console.log("Bulk recommend: swapping to recommended")
+            row.uploadStatus = "updated"
+            row.assessmentDate = `28/6/${data.years.endOfCurrentCycle}`
+          }
+        }
+        else if (row.uploadStatus == "updated"){
+          let stopRecommending = weighted.select([true, false], [0.05, 0.95])
+          if (stopRecommending){
+            console.log("Bulk recommend: swapping to not recommended")
+            row.uploadStatus = "unchanged"
+            delete row.assessmentDate
+          }
         }
       })
     }
 
     data.bulkUpload = {
-      processedRows
-    }
-    res.redirect('/bulk-update/recommend/upload-summary');
-  });
-
-  /* Clear review errors answer */
-  router.get('/bulk-update/recommend/no-update', function(req, res) {
-    const data = req.session.data
-    delete data?.bulk?.addDetailsFixErrors
-    delete data?.bulk?.recommendFixErrors
-    res.redirect('/bulk-update/recommend/check-pending-updates');
-  });
-
-  // Used to generate a new set of errors
-  router.get('/bulk-update/recommend/start-journey-with-errors', function(req, res){
-
-    const data = req.session.data
-    let filteredRecords  = utils.filterRecords(data.records, data)
-    let uploadedTrainees = utils.filterByReadyToRecommend(filteredRecords)
-
-    // This should make the errors consistent each time
-    let randomSeeded = seedRandom("recommend")
-
-    // Hiding these for research purposes
-    // let templateErrors = [
-    //   "TRN not recognised",
-    //   "TRN and Provider trainee ID are not for the same trainee",
-    //   "Trainee record is missing details and cannot be recommended",
-    //   "Trainee has already been recommended for QTS",
-    //   "Date standards met provided without a TRN or Provider trainee ID - add a TRN or Provider trainee ID or remove the date standards met",
-    //   "Date standards met: '09/20/2023' — enter a valid date",
-    //   "Date standards met: '20/09/2023' — Date standards met must be in the past"
-    // ]
-
-    /* For each record, randomly pick whether it's ok, in error, or unchanged. If in error, pick a random error */
-    let processedRows = uploadedTrainees.map((trainee, index) => {
-
-      let wildCardDate = utils.getRandomArbitrary(1, 6) + "/" + utils.getRandomArbitrary(1, 28) + "/" + data.years.endOfCurrentCycle
-
-      let row = {
-        trainee,
-        uploadStatus: weighted.select(["error", "unchanged", "updated"], [0.02, 0.04, 0.94], randomSeeded),
-        assessmentDate: weighted.select(["28/6/" + data.years.endOfCurrentCycle, "19/6/" + data.years.endOfCurrentCycle, "6/5/" + data.years.endOfCurrentCycle, wildCardDate], [0.5, 0.2, 0.2, 0.1], randomSeeded),
-      }
-
-      if (row.uploadStatus == "error") {
-        // row.errorMessage = utils.pickRandom(templateErrors, randomSeeded)
-        row.errorMessage = weighted.select([
-            "Date standards met provided without a TRN or Provider trainee ID - add a TRN or Provider trainee ID or remove the date standards met", 
-            "Date standards met: '20/9/2023' - date standards met must be in the past",
-            "TRN and Provider trainee ID are not for the same trainee",
-          ], 
-          [0.25, 0.5, 0.25], randomSeeded)
-      }
-
-      return row
-    })
-
-    processedRows.sort((a, b) => utils.sortAlphabetical(a.trainee.personalDetails.familyName, b.trainee.personalDetails.familyName))
-
-    processedRows.forEach((row, index) => {
-      row.rowNumber = index + 1
-    })
-
-    data.bulkUpload = {
+      ...data?.bulkUpload,
       processedRows
     }
 
-    res.redirect('/bulk-update/recommend/upload')
+    if (!processedRows || !processedRows.filter(row => {row.uploadStatus == "updated"})){
+      res.redirect('/bulk-update/recommend/upload')
+    }
+    else {
+      res.redirect('/bulk-update/recommend/upload-summary')
+    }
+
+  })
+
+  // Redirect back to upload if there are no trainees with updates
+  router.get('/bulk-update/recommend/check-pending-updates', function(req, res) {
+    const data = req.session.data
+
+    let processedRows = data?.bulkUpload?.processedRows
+
+    if (!processedRows || !processedRows.filter(row => {row.uploadStatus == "updated"})){
+      res.redirect('/bulk-update/recommend/upload')
+    }
+    else {
+      res.render('bulk-update/recommend/check-pending-updates');
+    }
+
   })
 
 }

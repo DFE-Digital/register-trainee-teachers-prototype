@@ -1,17 +1,7 @@
 {% extends "_templates/_page.html" %}
+
+{% set pageHeading = "Change which trainees you’ll recommend for QTS or EYTS" %}
 {% set navActive = 'bulk' %}
-
-{% set filteredRecords = data.records | filterRecords(data) %}
-{% set traineesThatCanBeRecommended = filteredRecords | filterByReadyToRecommend %}
-
-{% set bulkOnly = true if data.settings.bulkLinksInPrimaryNav == "Show bulk recommend" %}
-{% set pageContent = "fixErrors" %}
-
-
-
-{% set bulkPath = "recommend" %}
-
-{% set rowsWithErrors = data.bulkUpload.processedRows | where("uploadStatus", "error") %}
 
 {# Sets numbers for errors summary #}
 {% set errorCount     = data.bulkUpload.processedRows | where("uploadStatus", "error") | length  %}
@@ -20,17 +10,7 @@
 {% set hasErrors = errorCount > 0 %}
 {% set hasUpdated = updatedCount > 0 %}
 
-{% set pageHeading %}
-  Fix errors on {{errorCount}} {{ "row" | pluralise(errorCount) }} in the file you uploaded
-{% endset %}
-
-{% set qualifications = traineesThatCanBeRecommended | getQualifications | orSeparate %}
-{% set linkText = "Download trainees ready to be recommened for " + qualifications + " — with errors" %}
-
-{% set downloadedFileName = "-fix-errors" %}
-
 {% block content %}
-
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds-from-desktop">
 
@@ -39,18 +19,19 @@
         {{ pageHeading }}
       </h1>
 
-      <form action="/bulk-update/recommend/fix-errors-answer" method="post" novalidate>
+      <form action="/bulk-update/recommend/upload-changes-answer" method="post" novalidate>
 
-        <p class="govuk-body">You need to fix errors in the CSV file you uploaded before you can recommend trainees for QTS or EYTS.</p>
+        <p class="govuk-body">You can upload an edited CSV file to change which trainees you’ll recommend.</p>
+
         <ol class="govuk-list govuk-list--number">
 
           <li>
-            
-            <a class="govuk-link--no-visited-state" href="/public/downloads/bulk-update/recommendOnly-with-errors.csv" download="{{ (data.signedInProviders + '-fix-errors') | slugify }}.csv">Download your CSV file with errors indicated</a>.
+            User the CSV file which you uploaded with details of trainees you wanted to recommend. You can
+            <a class="govuk-link--no-visited-state" href="/public/downloads/bulk-update/recommendOnly-with-data.csv" download="{{ (data.signedInProviders + '-with-pending') | slugify }}.csv">download your CSV file</a> if you need it.
             {# <a href="#">Download your CSV file with errors indicated</a>. #}
           </li>
 
-          <li>Fix the errors. If you cannot fix an error, you can delete the row and the trainee will not be recommended.</li>
+          <li>To recommend a trainee, add the date when tehy met QTS or EYTS standards. If you remove the date then the trainee will not be recommended.</li>
 
           {# <li>Upload the CSV file.</li> #}
 
@@ -69,18 +50,16 @@
 
         </ol>
 
-        {#   <p class="govuk-inset-text">You cannot use this upload to make other changes to a trainee’s record.</p> #}
-
         <input name="successFlash" type="hidden" value="File uploaded">
 
         {{ govukButton({
           text: "Upload file and check who you’ll recommend"
         }) }}
 
-        {% if hasErrors %}
+        {% if hasUpdated %}
           <p class="govuk-body">
             <a href="/bulk-update/recommend/check-pending-updates" class="govuk-link">
-              Skip fixing errors and check pending updates to trainee records
+              Return to pending updates without making changes
             </a>
           </p>
         {% endif %}
@@ -93,4 +72,8 @@
     </div>
   </div>
 
+  {% include "_includes/bulk-update/fix-file.html" %}
+
 {% endblock %}
+
+

@@ -33,6 +33,10 @@ module.exports = function (env) {
     return moment().format('YYYY-MM-DD')
   }
 
+  functions.nowUTC = function() {
+    return Date.now()
+  }
+
   /* 
    ---------------------------------------
     Get current month

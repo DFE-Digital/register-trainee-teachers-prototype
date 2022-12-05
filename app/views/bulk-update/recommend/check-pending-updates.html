@@ -137,9 +137,10 @@
 
 {% set buttonText %}
   {% if qtsTableBodyRows.length > 0 and eytsTableBodyRows.length > 0 %}
-    Recommend {{ qtsTableBodyRows.length }} {{ "trainee" | pluralise(qtsTableBodyRows.length) }} for QTS and {{ eytsTableBodyRows.length }} {{ "trainee" | pluralise(eytsTableBodyRows.length) }} for EYTS
+    Recommend {{processedRows.length}} trainees for QTS or EYTS 
+{#     Recommend {{ qtsTableBodyRows.length }} {{ "trainee" | pluralise(qtsTableBodyRows.length) }} for QTS and {{ eytsTableBodyRows.length }} {{ "trainee" | pluralise(eytsTableBodyRows.length) }} for EYTS #}
   {% else %}
-    Recommend {{ qtsTableBodyRows.length + " trainees for QTS" if qtsTableBodyRows.length > 0 }}{{ eytsTableBodyRows.length + " trainees for QTS" if eytsTableBodyRows.length > 0 }}
+    Recommend {{processedRows.length}} {{ "trainee" | pluralise(processedRows.length) }} for {{ " QTS" if qtsTableBodyRows.length else "EYTS" }}
   {% endif %}
 {% endset %}
 

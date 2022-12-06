@@ -20,11 +20,11 @@
     }) if bulkPath == "add-details" }}
     {% if bulkPath == "recommend" %}
 
-    {% set chunkSize = 10 %}
+    {% set chunkSize = 50 %}
 
     {% set chunkedRows = qtsTableBodyRows | batch(chunkSize) %}
 
-    {{chunkedRows | log}}
+    {# {{chunkedRows | log}} #}
 
     {% set accordionItems = [] %}
 

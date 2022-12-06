@@ -10,80 +10,106 @@
   </div>
 </div>
 
+{% macro accordionOrTable(params) %}
+
+  {% set chunkSize = 10 %}
+
+  {% set totalCount = params.rows | length %}
+
+  {% if totalCount > chunkSize %}
+    {% set chunkedRows = params.rows | batch(chunkSize) %}
+
+    {% set accordionItems = [] %}
+
+    {% for chunk in chunkedRows %}
+      {% set tableHtml %}
+        {{ govukTable({
+          head: tableHeadRow,
+          rows: chunk
+        }) }}
+      {% endset %}
+
+      {% set chunkStart = (loop.index0 * chunkSize) + 1 %}
+      {% set chunkEnd = (loop.index0 * chunkSize) + chunkSize %}
+      {% if chunkEnd > totalCount %}
+        {% set chunkEnd = totalCount %}
+      {% endif %}
+
+      {% set accordionHeadingText %}
+        Trainees you’ll recommend for {{params.awardType}} ({{ chunkStart }} to {{ chunkEnd }})
+      {%- endset %}
+      {% set accordionItems = accordionItems | push({
+        heading: {
+          text: accordionHeadingText
+        },
+        content: {
+          html: tableHtml
+        },
+        _expanded: true if loop.first else false,
+        expanded: false
+      }) %}
+
+    {% endfor %}
+
+    {# <h2 class="govuk-heading-m">{{qtsTableCaption}}</h2> #}
+
+    {# NowUTC used to give the id a new unique name, so the same item is *always* open #}
+    {{ govukAccordion({
+      id: (params.awardType | lower) + "-accordion-" + nowUTC(),
+      items: accordionItems,
+      headingLevel: 3,
+      showAllSectionsText: "Show all trainees you’ll recommend",
+      hideAllSectionsText: "Hide all trainees you’ll recommend"
+    }) }}
+
+  {% else %}
+
+    {{ govukTable({
+      caption: params.tableCaption,
+      captionClasses: tableCaptionClasses,
+      head: tableHeadRow,
+      rows: params.rows
+    }) if totalCount > 0 }}
+
+  {% endif %}
+{% endmacro %}
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
 
-    {{ govukTable({
-      caption: tableCaption,
-      captionClasses: tableCaptionClasses,
-      head: tableHeadRow,
-      rows: tableBodyRows
-    }) if bulkPath == "add-details" }}
+{% if allAwardsTableBodyRows | length %}
+  {{ accordionOrTable({
+    caption: "Trainees being recommended for " + qualificationText,
+    rows: allAwardsTableBodyRows,
+    awardType: qualificationText
+  }) }}
+  <hr class="govuk-section-break govuk-section-break--xl">
 
-    {% if bulkPath == "recommend" %}
+{% endif %}
 
-    {% set totalCount = qtsTableBodyRows | length %}
+{# {% if qtsTableBodyRows | length %}
+  <h2 class="govuk-heading-m">{{qtsTableCaption}}</h2>
 
-    {% set chunkSize = 50 %}
+  {{ accordionOrTable({
+    caption: qtsTableCaption,
+    rows: qtsTableBodyRows,
+    awardType: "QTS"
+  }) }}
+  <hr class="govuk-section-break govuk-section-break--xl">
 
+{% endif %}
+
+
+{% if eytsTableBodyRows | length %}
+  <h2 class="govuk-heading-m">{{eytsTableCaption}}</h2>
+
+  {{ accordionOrTable({
+    caption: eytsTableCaption,
+    rows: eytsTableBodyRows,
+    awardType: "EYTS"
+  }) }}
+{% endif %} #}
     
-
-    {% if totalCount > chunkSize %}
-      {% set chunkedRows = qtsTableBodyRows | batch(chunkSize) %}
-
-      {% set accordionItems = [] %}
-
-      {% for chunk in chunkedRows %}
-        {% set tableHtml %}
-          {{ govukTable({
-            head: tableHeadRow,
-            rows: chunk
-          }) }}
-        {% endset %}
-
-        {% set chunkStart = (loop.index0 * chunkSize) + 1 %}
-        {% set chunkEnd = (loop.index0 * chunkSize) + chunkSize %}
-        {% if chunkEnd > totalCount %}
-          {% set chunkEnd = totalCount %}
-        {% endif %}
-
-        {% set accordionHeadingText %}
-          Trainees being recommended for QTS ({{ chunkStart }} to {{ chunkEnd }})
-        {% endset %}
-        {% set accordionItems = accordionItems | push({
-          heading: {
-            text: accordionHeadingText
-          },
-          content: {
-            html: tableHtml
-          },
-          expanded: true if loop.first else false
-        }) %}
-
-      {% endfor %}
-
-      {# <h2 class="govuk-heading-m">{{qtsTableCaption}}</h2> #}
-
-      {# NowUTC used to give the id a new unique name, so the same item is *always* open #}
-      {{ govukAccordion({
-        id: "qts-accordion-" + nowUTC(),
-        items: accordionItems,
-        headingLevel: 3
-      }) }}
-
-    {% else %}
-
-      {{ govukTable({
-        caption: qtsTableCaption,
-        captionClasses: tableCaptionClasses,
-        head: tableHeadRow,
-        rows: qtsTableBodyRows
-      }) if totalCount > 0 }}
-
-    {% endif %}
-
-    
-
 
       {# {{ govukTable({
         caption: qtsTableCaption,
@@ -98,7 +124,7 @@
         head: tableHeadRow,
         rows: eytsTableBodyRows
       }) if eytsTableBodyRows.length > 0 }} #}
-    {% endif %}
+
   </div>
 </div>
 <div class="govuk-grid-row">

@@ -149,6 +149,7 @@ module.exports = router => {
     if (!processedRows) {
       console.log("Bulk recommend: generating new errors")
       let filteredRecords  = utils.filterRecords(data.records, data)
+
       let uploadedTrainees = utils.filterByReadyToRecommend(filteredRecords)
 
       uploadedTrainees.sort((a, b) => utils.sortAlphabetical(a.personalDetails.familyName, b.personalDetails.familyName))
@@ -183,13 +184,13 @@ module.exports = router => {
 
     }
 
-    // Reduce errors by 80%
+    // Reduce errors by 100%
     else {
       console.log("Bulk recommend: reducing existing errors")
       processedRows.forEach(row => {
 
         if (row.uploadStatus == "error"){
-          let errorFixed = weighted.select([true, false], [0.9, 0.1])
+          let errorFixed = weighted.select([true, false], [1, 0.0])
           if (errorFixed){
             row.uploadStatus = "updated"
             delete row.errorMessage

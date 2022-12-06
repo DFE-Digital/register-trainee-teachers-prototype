@@ -7,15 +7,19 @@
 {% set filteredRecords = data.records | filterRecords(data) %}
 {% set traineesThatCanBeRecommended = filteredRecords | filterByReadyToRecommend %}
 
-{% set pageHeading = "Check pending updates before recommending trainees for " + traineesThatCanBeRecommended | getQualifications | orSeparate %}
+{% set qualificationText = traineesThatCanBeRecommended | getQualifications | orSeparate %}
+
+{% set pageHeading = "Check who you’ll recommend for " + qualificationText %}
 {% set navActive = 'bulk' %}
+
+
 
 {% set bulkOnly = true if data.settings.bulkLinksInPrimaryNav == "Show bulk recommend" %}
 
 {% if bulkOnly %}
   {% set tableHeadRow = [
       {
-        text: "Row",
+        text: "CSV row",
         classes: "app-table__column-5"
       },
       {
@@ -62,6 +66,7 @@
 
 {% set qtsTableBodyRows  = [] %}
 {% set eytsTableBodyRows = [] %}
+{% set allAwardsTableBodyRows = [] %}
 
 {# Combines errors and processed if the user has 'fixed the errors' #}
 {% if data.bulk.recommendFixErrors %}
@@ -110,18 +115,28 @@
       </p>
     {% endset %}
 
+    {% set dateAndAwardHtml %}
+      <p class="govuk-body govuk-!-margin-bottom-1">
+        {{ row.assessmentDate | govukDate('DD/MM/YYYY')}}
+      </p>
+      <p class="govuk-body govuk-!-margin-bottom-0 govuk-hint">
+        {{ row.trainee | getQualificationText }}
+      </p>
+    {% endset %}
+
     {% if bulkOnly %}
       {% set tableRow = [
         { text: row.rowNumber       | safe      },
         { text: traineeHtml        | safe      },
         { text: routeAndCourseHtml | safe      },
-        { text: row.assessmentDate | govukDate('DD/MM/YYYY') }
+        { html: dateAndAwardHtml }
+        
       ]%}
     {% else %}
       {% set tableRow = [
         { text: row.rowNumber    | safe },
-        { text: traineeInfoHtml    | safe },
-        { text: routeAndCourseHtml | safe },
+        { html: traineeInfoHtml    | safe },
+        { html: routeAndCourseHtml | safe },
         { text: qualification },
         { text: row.assessmentDate | govukDate('DD/MM/YYYY') }
       ]%}
@@ -134,6 +149,9 @@
     {% set eytsTableBodyRows = eytsTableBodyRows | push(tableRow) %}
   {% endif %}
 
+  {% set allAwardsTableBodyRows = allAwardsTableBodyRows | push(tableRow) %}
+  
+
 {% endfor %}
 
 {% set qtsTableCaption  = "Trainees being recommended for QTS (" + qtsTableBodyRows.length + ")" %}
@@ -141,12 +159,7 @@
 {% set tableCaptionClasses = "govuk-table__caption--m" %}
 
 {% set buttonText %}
-  {% if qtsTableBodyRows.length > 0 and eytsTableBodyRows.length > 0 %}
-    Recommend {{processedRows.length}} trainees for QTS or EYTS 
-{#     Recommend {{ qtsTableBodyRows.length }} {{ "trainee" | pluralise(qtsTableBodyRows.length) }} for QTS and {{ eytsTableBodyRows.length }} {{ "trainee" | pluralise(eytsTableBodyRows.length) }} for EYTS #}
-  {% else %}
-    Recommend {{processedRows.length}} {{ "trainee" | pluralise(processedRows.length) }} for {{ " QTS" if qtsTableBodyRows.length else "EYTS" }}
-  {% endif %}
+  Recommend {{processedRows.length}} {{ "trainee" | pluralise(processedRows.length) }} for {{ qualificationText }}
 {% endset %}
 
 {% set bulkPath = "recommend" %}

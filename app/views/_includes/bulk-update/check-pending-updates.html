@@ -12,50 +12,77 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
+
     {{ govukTable({
       caption: tableCaption,
       captionClasses: tableCaptionClasses,
       head: tableHeadRow,
       rows: tableBodyRows
     }) if bulkPath == "add-details" }}
+
     {% if bulkPath == "recommend" %}
+
+    {% set totalCount = qtsTableBodyRows | length %}
 
     {% set chunkSize = 50 %}
 
-    {% set chunkedRows = qtsTableBodyRows | batch(chunkSize) %}
+    
 
-    {# {{chunkedRows | log}} #}
+    {% if totalCount > chunkSize %}
+      {% set chunkedRows = qtsTableBodyRows | batch(chunkSize) %}
 
-    {% set accordionItems = [] %}
+      {% set accordionItems = [] %}
 
-    {% for chunk in chunkedRows %}
-      {% set tableHtml %}
-        {{ govukTable({
-          head: tableHeadRow,
-          rows: chunk
-        }) }}
-      {% endset %}
+      {% for chunk in chunkedRows %}
+        {% set tableHtml %}
+          {{ govukTable({
+            head: tableHeadRow,
+            rows: chunk
+          }) }}
+        {% endset %}
 
-      {% set accordionHeadingText %}
-        Trainees being recommended ({{ (loop.index0 * chunkSize) + 1 }} to {{ (loop.index0 * chunkSize) + chunkSize }})
-      {% endset %}
-      {% set accordionItems = accordionItems | push({
-        heading: {
-          text: accordionHeadingText
-        },
-        content: {
-          html: tableHtml
-        },
-        expanded: true if loop.first else false
-      }) %}
+        {% set chunkStart = (loop.index0 * chunkSize) + 1 %}
+        {% set chunkEnd = (loop.index0 * chunkSize) + chunkSize %}
+        {% if chunkEnd > totalCount %}
+          {% set chunkEnd = totalCount %}
+        {% endif %}
 
-    {% endfor %}
+        {% set accordionHeadingText %}
+          Trainees being recommended for QTS ({{ chunkStart }} to {{ chunkEnd }})
+        {% endset %}
+        {% set accordionItems = accordionItems | push({
+          heading: {
+            text: accordionHeadingText
+          },
+          content: {
+            html: tableHtml
+          },
+          expanded: true if loop.first else false
+        }) %}
 
-    {# NowUTC used to give the id a new unique name, so the same item is *always* open #}
-    {{ govukAccordion({
-      id: "qts-accordion-" + nowUTC(),
-      items: accordionItems
-    }) }}
+      {% endfor %}
+
+      {# <h2 class="govuk-heading-m">{{qtsTableCaption}}</h2> #}
+
+      {# NowUTC used to give the id a new unique name, so the same item is *always* open #}
+      {{ govukAccordion({
+        id: "qts-accordion-" + nowUTC(),
+        items: accordionItems,
+        headingLevel: 3
+      }) }}
+
+    {% else %}
+
+      {{ govukTable({
+        caption: qtsTableCaption,
+        captionClasses: tableCaptionClasses,
+        head: tableHeadRow,
+        rows: qtsTableBodyRows
+      }) if totalCount > 0 }}
+
+    {% endif %}
+
+    
 
 
       {# {{ govukTable({

@@ -162,7 +162,7 @@ module.exports = router => {
         let assessmentDate = weighted.select(["28/6/" + data.years.endOfCurrentCycle, "19/6/" + data.years.endOfCurrentCycle, "6/5/" + data.years.endOfCurrentCycle, wildCardDate], [0.5, 0.2, 0.2, 0.1], seed)
 
         let row = {
-          rowNumber: index + 1,
+          rowNumber: index + 3,
           trainee,
           uploadStatus: selectedStatus,
           assessmentDate: (selectedStatus != 'unchanged') ? assessmentDate : null,

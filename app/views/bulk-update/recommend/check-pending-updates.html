@@ -16,15 +16,11 @@
   {% set tableHeadRow = [
       {
         text: "Row",
-        classes: "app-table__column-10"
+        classes: "app-table__column-5"
       },
       {
         text: "Trainee",
         classes: "app-table__column-30"
-      },
-      {
-        text: "Start academic year",
-        classes: "app-table__column-20"
       },
       {
         text: "Route and course",
@@ -118,7 +114,6 @@
       {% set tableRow = [
         { text: row.rowNumber       | safe      },
         { text: traineeHtml        | safe      },
-        { text: row.trainee.academicYear       },
         { text: routeAndCourseHtml | safe      },
         { text: row.assessmentDate | govukDate('DD/MM/YYYY') }
       ]%}

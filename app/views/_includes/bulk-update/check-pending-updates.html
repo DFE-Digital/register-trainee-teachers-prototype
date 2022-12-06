@@ -10,9 +10,6 @@
   </div>
 </div>
 
-
-
-
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
     {{ govukTable({
@@ -40,7 +37,7 @@
       {% endset %}
 
       {% set accordionHeadingText %}
-        Trainees {{ (loop.index0 * chunkSize) + 1 }} to {{ (loop.index0 * chunkSize) + chunkSize }}
+        Trainees being recommended ({{ (loop.index0 * chunkSize) + 1 }} to {{ (loop.index0 * chunkSize) + chunkSize }})
       {% endset %}
       {% set accordionItems = accordionItems | push({
         heading: {

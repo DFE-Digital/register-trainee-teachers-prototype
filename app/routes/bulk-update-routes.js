@@ -137,7 +137,11 @@ module.exports = router => {
 
     seed = seed || new seedRandom()
 
-    errorWeights = errorWeights || [0.02, 0.04, 0.94]
+    let errorPercentage       = 0.10 // 5%
+    let unchangedPercentage   = 0.05 // 5%
+    let recommendedPercentage = 0.85 // 90%
+
+    errorWeights = errorWeights || [errorPercentage, unchangedPercentage, recommendedPercentage]
 
     let wildCardDate = utils.getRandomArbitrary(1, 6) + "/" + utils.getRandomArbitrary(1, 28) + "/" + data.years.endOfCurrentCycle
     let processedRows = data?.bulkUpload?.processedRows
@@ -146,6 +150,8 @@ module.exports = router => {
       console.log("Bulk recommend: generating new errors")
       let filteredRecords  = utils.filterRecords(data.records, data)
       let uploadedTrainees = utils.filterByReadyToRecommend(filteredRecords)
+
+      uploadedTrainees.sort((a, b) => utils.sortAlphabetical(a.personalDetails.familyName, b.personalDetails.familyName))
 
       /* For each record, randomly pick whether it's ok, in error, or unchanged. If in error, pick a random error */
       processedRows = uploadedTrainees.map((trainee, index) => {
@@ -174,7 +180,6 @@ module.exports = router => {
 
         return row
       })
-      processedRows.sort((a, b) => utils.sortAlphabetical(a.trainee.personalDetails.familyName, b.trainee.personalDetails.familyName))
 
     }
 
@@ -213,7 +218,7 @@ module.exports = router => {
 
     data.bulkUpload = {
       ...data?.bulkUpload,
-      processedRows: populateErrors(data, [0.02, 0.04, 0.94])
+      processedRows: populateErrors(data)
     }
     res.redirect('/bulk-update/recommend/upload-summary');
   });

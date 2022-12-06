@@ -2,6 +2,7 @@
 // Imports and setup
 // -------------------------------------------------------------------
 const moment = require("moment");
+moment.locale('en-GB')
 const _ = require('lodash');
 
 // Leave this filters line
@@ -100,9 +101,9 @@ filters.arrayToGovukDate = (array, format) => {
 
 filters.dateToGovukDate = (date, format=false) => {
   if (date){
-    let theDate = moment(date)
+    let theDate = moment(date, format)
     if (theDate.isValid()){
-      return theDate.format(format || 'D MMMM YYYY')
+      return theDate.format('D MMMM YYYY')
     }
   }
   return ''

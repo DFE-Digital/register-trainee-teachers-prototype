@@ -15,6 +15,10 @@
 {% if bulkOnly %}
   {% set tableHeadRow = [
       {
+        text: "Row",
+        classes: "app-table__column-10"
+      },
+      {
         text: "Trainee",
         classes: "app-table__column-30"
       },
@@ -33,6 +37,10 @@
     ]%}
 {% else %}
     {% set tableHeadRow = [
+      {
+        text: "Row",
+        classes: "app-table__column-10"
+      },
       {
         text: "Name",
         classes: "app-table__column-20"
@@ -108,17 +116,19 @@
 
     {% if bulkOnly %}
       {% set tableRow = [
+        { text: row.rowNumber       | safe      },
         { text: traineeHtml        | safe      },
         { text: row.trainee.academicYear       },
         { text: routeAndCourseHtml | safe      },
-        { text: row.assessmentDate | govukDate }
+        { text: row.assessmentDate | govukDate('DD/MM/YYYY') }
       ]%}
     {% else %}
       {% set tableRow = [
+        { text: row.rowNumber    | safe },
         { text: traineeInfoHtml    | safe },
         { text: routeAndCourseHtml | safe },
         { text: qualification },
-        { text: row.assessmentDate | govukDate }
+        { text: row.assessmentDate | govukDate('DD/MM/YYYY') }
       ]%}
     {% endif %}
   

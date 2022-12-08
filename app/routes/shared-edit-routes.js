@@ -892,7 +892,7 @@ module.exports = router => {
     if (!ethnicGroup){
       res.redirect(`${recordPath}/diversity/ethnic-group${referrer}`)
     }
-    else if (ethnicGroup.includes("Not provided")){
+    else if (ethnicGroup.includes("Trainee did not provide any information")){
       res.redirect(`${recordPath}/diversity/disabilities${referrer}`)
     }
     else {

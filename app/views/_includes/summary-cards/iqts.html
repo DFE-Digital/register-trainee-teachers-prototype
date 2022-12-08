@@ -38,15 +38,15 @@
   {% set incompleteType = "warning" if errorList %}
   {% set incompleteId = "iqts-details" %}
   {% if status == "Review" %}
-    {% set incompleteText = "iQTS details not reviewed" %}
+    {% set incompleteText = "International training details not reviewed" %}
     {% set incompleteLink = recordPath + "/iqts/confirm" %}
     {% set incompleteLinkText = "Review section" %}
   {% elseif status == "In progress" %}
-    {% set incompleteText = "iQTS details not marked as complete" %}
+    {% set incompleteText = "International training details not marked as complete" %}
     {% set incompleteLink = recordPath + "/iqts/confirm" %}
     {% set incompleteLinkText = "Continue section" %}
   {% else %}
-    {% set incompleteText = "iQTS details not started" %}
+    {% set incompleteText = "International training details not started" %}
     {% set incompleteLink = recordPath + "/iqts" %}
     {% set incompleteLinkText = "Start section" %}
   {% endif %}

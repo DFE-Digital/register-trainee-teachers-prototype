@@ -6,6 +6,12 @@
 {% set pageHeading = 'Reports' %}
 {% set navActive = 'reports' %}
 
+{% set filteredRecords = data.records | filterRecords(data) %}
+{% set traineesThatCanBeRecommended = filteredRecords | filterByReadyToRecommend %}
+{% set needAcademicAward = traineesThatCanBeRecommended | filterByAcademicQualificationsApply %}
+{% set qualifications = traineesThatCanBeRecommended | getQualifications | orSeparate %}
+
+
 {% block content %}
 {{super()}}
 <div class="govuk-grid-row">
@@ -34,7 +40,7 @@
 
       <li>
         <a class="govuk-link" href="/reports/trainees-you-can-recommend">
-          Trainees you can bulk recommend for teaching status
+          Trainees you can bulk recommend for {{qualifications}}
         </a>
       </li>
 

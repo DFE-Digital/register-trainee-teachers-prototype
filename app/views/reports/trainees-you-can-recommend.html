@@ -1,6 +1,14 @@
 {% extends "_templates/_page.html" %}
 
-{% set pageHeading = 'Trainees you can bulk recommend for teaching status' %}
+{% set filteredRecords = data.records | filterRecords(data) %}
+
+{% set traineesThatCanBeRecommended = filteredRecords | filterByReadyToRecommend %}
+
+{% set needAcademicAward = traineesThatCanBeRecommended | filterByAcademicQualificationsApply %}
+
+{% set qualifications = traineesThatCanBeRecommended | getQualifications | orSeparate %}
+
+{% set pageHeading = 'Trainees you can bulk recommend for ' + qualifications %}
 
 {% set backLink = '/reports' %}
 {% set backText = "Reports" %}
@@ -33,7 +41,7 @@
 
       <h1 class="govuk-heading-l">{{pageHeading}}</h1>
 
-      <p class="govuk-body">This export includes the details of {{traineeCount}} {{"trainee" | pluralise(traineeCount)}}. You can use the file to <a href="/bulk-update/recommend/upload">bulk recommend</a> any of those trainees.
+      <p class="govuk-body">This export includes the details of {{traineeCount}} {{"trainee" | pluralise(traineeCount)}}. You can use the file to <a href="/bulk-update/recommend/upload">bulk recommend</a> any of those trainees for {{qualifications}}.
       </p>
 
       <p class="govuk-body">The export includes all trainees who:

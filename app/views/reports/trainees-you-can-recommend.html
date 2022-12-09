@@ -1,11 +1,8 @@
 {% extends "_templates/_page.html" %}
 
 {% set filteredRecords = data.records | filterRecords(data) %}
-
 {% set traineesThatCanBeRecommended = filteredRecords | filterByReadyToRecommend %}
-
 {% set needAcademicAward = traineesThatCanBeRecommended | filterByAcademicQualificationsApply %}
-
 {% set qualifications = traineesThatCanBeRecommended | getQualifications | orSeparate %}
 
 {% set pageHeading = 'Trainees you can bulk recommend for ' + qualifications %}

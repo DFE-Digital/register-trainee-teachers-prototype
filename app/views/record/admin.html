@@ -1,0 +1,16 @@
+{% extends "_templates/_record.html" %}
+
+{% set backLink = '/records' %}
+{% set backText = 'All registered trainees' %}
+{% set pageHeading = data.record.personalDetails.shortName %}
+{% set activeTab = 'admin' %}
+
+{% block tabContent %}
+
+  {% set referrer = recordPath + "/admin" %}
+
+  {% set canAmend = false %}
+
+  {% include "_includes/summary-cards/record-admin/hesa.html" %}
+
+{% endblock %}

@@ -28,7 +28,7 @@
       {% set errorPluralisation = "error" | pluralise(errorCount) %}
       <form action="/bulk-update/{{ bulkPath }}/errors-found-answer" method="post" novalidate>
 
-        <p class="govuk-body">You uploaded a file with details of {{ totalCount }} {{ "trainee" | pluralise(totalCount) }}.</p>
+        <p class="govuk-body">You uploaded a CSV file with details of {{ totalCount }} {{ "trainee" | pluralise(totalCount) }}.</p>
 
         <p class="govuk">
           It included:
@@ -64,7 +64,7 @@
           }) }}
         {% elseif hasUpdated %}
           {{ govukButton({
-            text: "Review recommendations",
+            text: "Check who you’ll recommend",
             href: '/bulk-update/recommend/check-pending-updates'
           }) }}
         {% else %}

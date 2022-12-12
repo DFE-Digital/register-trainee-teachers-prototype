@@ -14,7 +14,11 @@
   {% set processedRows = data.bulkUpload.processedRows | where("uploadStatus", "updated") %}
 {% endif %}
 
-{% set pageHeading = processedRows | length  + " trainee records recommended for " + traineesThatCanBeRecommended | getQualifications | orSeparate %}
+{# Get an array of the trainees #}
+{% set processedTrainees = processedRows | lodash("map", "trainee") %}
+
+
+{% set pageHeading = processedRows | length  + " trainee records recommended for " + processedTrainees | getQualifications | orSeparate %}
 
 {% set incompleteRecords = filteredRecords | filterByIncomplete %}
 
@@ -32,15 +36,15 @@
       </p>
 
       <h2 class="govuk-heading-m">
-        Next steps
+        You can now:
       </h2>
 
       <ul class="govuk-list govuk-list--bullet">
         <li><a href="/records" class="govuk-link">view all registered trainees</a></li>
         {% if incompleteRecords | length%}
-          <li><a href="#" class="govuk-link">view your incomplete trainees ({{incompleteRecords | length}})</a></li>
+          <li><a href="/records?filterCompleteStatus=Incomplete" class="govuk-link">view your incomplete trainees ({{incompleteRecords | length}})</a></li>
         {% endif %}
-        <li><a href="#" class="govuk-link">view registered trainees whose course ends in the {{ data.years.currentAcademicYear }} academic year</a></li>
+        <li><a href="/records?filterEndYears={{ data.years.currentAcademicYear }}" class="govuk-link">view registered trainees whose course ends in the {{ data.years.currentAcademicYear }} academic year</a></li>
         <li><a href="/drafts" class="govuk-link">view all draft trainees</a></li>
       </ul>
 

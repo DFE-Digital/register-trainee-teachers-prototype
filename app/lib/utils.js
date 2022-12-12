@@ -2441,6 +2441,7 @@ exports.recommendForAward = (record, params) => {
     return false
   }
   else {
+    console.log(`Recommending trainee ${record.trn}`)
     record.status = `${exports.getQualificationText(record)} recommended`
     _.set(record, 'qualificationDetails.standardsAssessedOutcome', "Passed")
     record.qualificationRecommendedDate = record?.qualificationDetails?.outcomeDate || params?.date || new Date()

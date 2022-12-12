@@ -271,7 +271,7 @@ module.exports = router => {
       processedRows
     }
 
-    if (!processedRows || !processedRows.filter(row => {row.uploadStatus == "updated"})){
+    if (!processedRows || !processedRows.filter(row => row.uploadStatus == "updated")){
       res.redirect('/bulk-update/recommend/upload')
     }
     else {
@@ -286,12 +286,42 @@ module.exports = router => {
 
     let processedRows = data?.bulkUpload?.processedRows
 
-    if (!processedRows || !processedRows.filter(row => {row.uploadStatus == "updated"})){
+    if (!processedRows || !processedRows.filter(row => row.uploadStatus == "updated")){
       res.redirect('/bulk-update/recommend/upload')
     }
     else {
       res.render('bulk-update/recommend/check-pending-updates');
     }
+
+  })
+
+    // Redirect back to upload if there are no trainees with updates
+  router.post('/bulk-update/recommend/update', function(req, res) {
+    const data = req.session.data
+
+    let successCount = 0
+    let failCount = 0
+
+    let processedRows = data?.bulkUpload?.processedRows || []
+    let rowsWithUpdates = processedRows.filter(row => row.uploadStatus == "updated")
+  
+    console.log({processedRows})
+    console.log(`processedRows: ${processedRows.length}`)
+    console.log(`trainees to recommend: ${rowsWithUpdates.length}`)
+
+    rowsWithUpdates.forEach(row => {
+      let record = utils.getRecordById(data.records, row.trainee.id)
+      let success = utils.recommendForAward(record, {date: row.assessmentDate})
+      if (success) successCount++
+      else failCount++
+    })
+
+    console.log(`Bulk recommend: ${successCount} ${filters.pluralise('success', successCount)}, ${failCount} ${filters.pluralise('failure', failCount)}.`)
+
+    // Clear data for next time
+    // delete data.bulkUpdate
+
+    res.redirect('/bulk-update/recommend/confirmation')
 
   })
 

@@ -1,3 +1,5 @@
+// https://github.com/alphagov/notifications-admin/blob/main/app/assets/javascripts/stick-to-window-when-scrolling.js
+
 ;(function (global) {
   'use strict';
 
@@ -993,3 +995,16 @@
   GOVUK.stickAtBottomWhenScrolling = stickAtBottom;
   global.GOVUK = GOVUK;
 })(window);
+
+// The Notify sticky code doesn’t work if the document height changes.
+// This code patches that by triggering a resize event each time the height
+// changes
+const resizeObserver = new ResizeObserver(entries => {
+  let el = document // This can be your element on which to trigger the event
+  let event = document.createEvent('HTMLEvents');
+  event.initEvent('resize', true, false);
+  el.dispatchEvent(event);
+})
+
+// start observing a DOM node
+resizeObserver.observe(document.body)

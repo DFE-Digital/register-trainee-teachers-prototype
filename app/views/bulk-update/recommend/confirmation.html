@@ -18,7 +18,7 @@
 {% set processedTrainees = processedRows | lodash("map", "trainee") %}
 
 
-{% set pageHeading = processedRows | length  + " trainee records recommended for " + processedTrainees | getQualifications | orSeparate %}
+{% set pageHeading = processedTrainees | length  + " trainee records recommended for " + processedTrainees | getQualifications | orSeparate %}
 
 {% set incompleteRecords = filteredRecords | filterByIncomplete %}
 

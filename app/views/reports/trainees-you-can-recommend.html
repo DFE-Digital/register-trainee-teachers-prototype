@@ -38,7 +38,7 @@
 
       <h1 class="govuk-heading-l">{{pageHeading}}</h1>
 
-      <p class="govuk-body">This export includes the details of {{traineeCount}} {{"trainee" | pluralise(traineeCount)}}. You can use the file to <a href="/bulk-update/recommend/upload">bulk recommend</a> any of those trainees for {{qualifications}}.
+      <p class="govuk-body">This export includes the details of {{traineeCount}} {{"trainee" | pluralise(traineeCount)}}. You can use the CSV file to <a href="/bulk-update/recommend/upload">bulk recommend</a> any of those trainees for {{qualifications}}.
       </p>
 
       <p class="govuk-body">The export includes all trainees who:
@@ -46,17 +46,17 @@
 
       <ul class="govuk-list govuk-list--bullet">
         <li>
-          have a TRN
+          have a complete trainee record
         </li>
         <li>
-          have a complete trainee record
+          have been registered with the Department for Education
         </li>
         <li>
           are studying on a course which ends in the {{ academicYear }} academic year
         </li>
       </ul>
 
-      <p class="govuk-body">If you want to include a trainee who deferred and is now studying, you’ll need to reinstate them so that they have the correct course end date.
+      <p class="govuk-body">If you want to include a trainee who deferred and is now studying, you’ll need to reinstate them. They will then have the correct course end date.
       </p>
 
       <input name="successFlash" type="hidden" value="Export successfully downloaded">

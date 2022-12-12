@@ -25,7 +25,8 @@
       {% set tableHtml %}
         {{ govukTable({
           head: tableHeadRow,
-          rows: chunk
+          rows: chunk,
+          classes: "app-table--no-bottom-border"
         }) }}
       {% endset %}
 
@@ -130,16 +131,22 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
     <div class="js-stick-at-bottom-when-scrolling">
-      <p class="govuk-body govuk-!-margin-bottom-5">
-        <a href="upload-changes">Change who you‘ll recommend</a>
-      </p>
+      
       <form action="/bulk-update/{{ bulkPath }}/confirmation" method="post" novalidate>
-        <div class="govuk-button-group govuk-!-margin-bottom-0">
-              {{ govukButton({
-                text: buttonText
-              }) }}
-          <a href="/bulk-update/cancel-bulk-updates" class="govuk-link">Cancel bulk {{ "recommending trainees" if data.settings.bulkLinksInPrimaryNav == "Show bulk recommend" else "updates to records" }}</a>
-        </div>
+        {# <div class="govuk-button-group govuk-!-margin-bottom-0"> #}
+
+          {{ govukButton({
+            text: buttonText
+          }) }}
+
+          <p class="govuk-body">
+            <a href="/bulk-update/cancel-bulk-updates" class="govuk-link">
+              Cancel bulk {{ "recommending trainees" if data.settings.bulkLinksInPrimaryNav == "Show bulk recommend" else "updates to records" }}</a> 
+            or
+            <a href="upload-changes">change who you’ll recommend</a>
+          </p>
+
+        {# </div> #}
       </form>
     </div>
   </div>

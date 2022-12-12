@@ -1,0 +1,7 @@
+
+.app-table--no-bottom-border .govuk-table__body {
+  .govuk-table__row:last-child .govuk-table__cell,
+  .govuk-table__row:last-child .govuk-table__header {
+    border-bottom-width: 0;
+  }
+}

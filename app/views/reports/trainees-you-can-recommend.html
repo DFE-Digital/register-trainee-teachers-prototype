@@ -18,13 +18,10 @@
 
 {% set censusDate = "2022-10-12" %}
 
-{% set viewingUserIsScitt = data.settings.userActiveProvider | providerIsScitt %}
+{% set filteredRecords = data.records | filterRecords(data) %}
+{% set traineesThatCanBeRecommended = filteredRecords | filterByReadyToRecommend %}
 
-{% if viewingUserIsScitt %}
-  {% set traineeCount = 95 %}
-{% else %}
-  {% set traineeCount = 127 %}
-{% endif %}
+{% set traineeCount = traineesThatCanBeRecommended | length %}
 
 
 {% set hasZeroTraineesToExport = true if traineeCount == 0 %}

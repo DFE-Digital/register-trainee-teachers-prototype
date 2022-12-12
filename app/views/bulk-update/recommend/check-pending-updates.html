@@ -83,14 +83,18 @@
 {% for row in processedRows %}
 
   {% set routeAndCourseHtml %}
+
+    {% set isPublishCourse = row.trainee.courseDetails.isPublishCourse | falsify %}
     <p class="govuk-body govuk-!-margin-bottom-1">
       {{ row.trainee.route }}
     </p>
-    {% if row.trainee.courseDetails.courseNameShort %}
-      <p class="govuk-body govuk-!-margin-bottom-0">
-        {{ row.trainee.courseDetails.courseNameShort }}
-      </p>
-    {% endif %}
+    <span class="govuk-hint">
+      {% if isPublishCourse %}
+        {{ row.trainee.courseDetails.courseNameLong }}
+      {% else %}
+        {{ row.trainee | getAllocationSubject }}
+      {% endif %}
+    </span>
   {% endset %}
 
   

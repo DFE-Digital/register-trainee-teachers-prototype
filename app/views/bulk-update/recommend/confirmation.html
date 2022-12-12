@@ -16,6 +16,8 @@
 
 {% set pageHeading = processedRows | length  + " trainee records recommended for " + traineesThatCanBeRecommended | getQualifications | orSeparate %}
 
+{% set incompleteRecords = filteredRecords | filterByIncomplete %}
+
 {% block content %}
 
   <div class="govuk-grid-row">
@@ -32,9 +34,16 @@
       <h2 class="govuk-heading-m">
         Next steps
       </h2>
-      <p class="govuk-body">
-        <a href="/records" class="govuk-link">View your current trainees</a>
-      </p>
+
+      <ul class="govuk-list govuk-list--bullet">
+        <li><a href="/records" class="govuk-link">view all registered trainees</a></li>
+        {% if incompleteRecords | length%}
+          <li><a href="#" class="govuk-link">view your incomplete trainees ({{incompleteRecords | length}})</a></li>
+        {% endif %}
+        <li><a href="#" class="govuk-link">view registered trainees whose course ends in the {{ data.years.currentAcademicYear }} academic year</a></li>
+        <li><a href="/drafts" class="govuk-link">view all draft trainees</a></li>
+      </ul>
+
     </div>
   </div>
 

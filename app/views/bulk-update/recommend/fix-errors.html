@@ -21,7 +21,7 @@
 {% set hasUpdated = updatedCount > 0 %}
 
 {% set pageHeading %}
-  Fix errors on {{errorCount}} {{ "row" | pluralise(errorCount) }} in the file you uploaded
+  Fix errors for {{errorCount}} {{ "trainee" | pluralise(errorCount) }} in the file you uploaded
 {% endset %}
 
 {% set qualifications = traineesThatCanBeRecommended | getQualifications | orSeparate %}
@@ -45,7 +45,7 @@
         <ol class="govuk-list govuk-list--number">
 
           <li>
-            
+
             <a class="govuk-link--no-visited-state" href="/public/downloads/bulk-update/recommendOnly-with-errors.csv" download="{{ (data.signedInProviders + '-fix-errors') | slugify }}.csv">Download your CSV file with errors indicated</a>.
             {# <a href="#">Download your CSV file with errors indicated</a>. #}
           </li>
@@ -80,7 +80,7 @@
         {% if hasErrors and hasUpdated %}
           <p class="govuk-body">
             <a href="/bulk-update/recommend/check-pending-updates" class="govuk-link">
-              Skip fixing errors and check pending updates to trainee records
+              Skip fixing errors and check who you’ll recommend
             </a>
           </p>
         {% endif %}

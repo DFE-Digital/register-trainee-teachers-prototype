@@ -33,7 +33,7 @@
         }
       ]
     }
-  } if record | traineeStarted,
+  } if record.defer.showStartDate and record | traineeStarted,
   {
     key: {
       text: "Date of deferral"

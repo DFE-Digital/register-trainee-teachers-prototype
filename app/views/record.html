@@ -23,6 +23,14 @@
     {# <h2 class="govuk-heading-s">Trainee progress</h2> #}
     {% include "_includes/summary-cards/trainee-progress.html" %}
 
+    {% if record | isAwarded or record | isRecommended %}
+      {% include "_includes/summary-cards/qts-assessment-details.html" %}
+    {% endif %}
+
+    {% if record | isDeferred %}
+      {% include "_includes/summary-cards/defer-details.html" %}
+    {% endif %}
+
     {% if record | isWithdrawn %}
       {% include "_includes/summary-cards/withdraw-details.html" %}
     {% endif %}

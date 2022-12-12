@@ -310,6 +310,7 @@ module.exports = router => {
     console.log(`trainees to recommend: ${rowsWithUpdates.length}`)
 
     rowsWithUpdates.forEach(row => {
+      // We need to look up the record again as the one we have is a copy
       let record = utils.getRecordById(data.records, row.trainee.id)
       let success = utils.recommendForAward(record, {date: row.assessmentDate})
       if (success) successCount++

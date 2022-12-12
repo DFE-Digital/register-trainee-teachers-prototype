@@ -306,10 +306,6 @@
   regionRow if record | requiresField("region"),
   startYearRow,
   pendingTrnRow if record | isPendingTrn,
-  recommendedForAwardRow if record | isRecommended,
-  awardRow if record | isAwarded,
-  academicOutcomeRow if record.status | isRecommendedOrAwarded,
-  deferredRow if record | isDeferred,
   updatedDate,
   recordCreatedRow,
   traineeStartDateRow

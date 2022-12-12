@@ -358,7 +358,8 @@ module.exports = router => {
     let traineeStarted = record?.trainingDetails?.traineeStarted
     let referrer = utils.getReferrer(req.query.referrer)
 
-    if (traineeStarted == "true") {
+    if (traineeStarted == "true"){
+      _.set(record, "defer.showStartDate", true)
       res.redirect(`/record/${req.params.uuid}/defer/when-did-trainee-start${referrer}`)
     } else if (traineeStarted == "false") {
       delete record?.trainingDetails?.commencementDate

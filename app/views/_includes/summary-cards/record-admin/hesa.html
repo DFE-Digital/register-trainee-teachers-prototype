@@ -124,9 +124,16 @@
 {% endmarkdown %}
 {% endset %}
 
-{% set collectionData %}
+{% set collectionData1 %}
   {{ govukDetails({
-  summaryText: "2021-05-17",
+  summaryText: "17 May 2021 at 5.43pm",
+  html: code
+}) }}
+{% endset %}
+
+{% set collectionData2 %}
+  {{ govukDetails({
+  summaryText: "4 December 2022 at 1.07pm",
   html: code
 }) }}
 {% endset %}
@@ -135,10 +142,10 @@
 {% set hesaRows = [
   {
     key: {
-      text: "CC21053"
+      text: "Collection C21053"
     },
     value: {
-      text: collectionData | safe
+      text: collectionData1 | safe
     },
     actions: {
       items: [{
@@ -150,10 +157,10 @@
   },
   {
     key: {
-      text: "CC22053"
+      text: "Collection C22053"
     },
     value: {
-      text: collectionData | safe
+      text: collectionData2 | safe
     },
     actions: {
       items: [{

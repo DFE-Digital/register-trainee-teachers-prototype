@@ -997,13 +997,14 @@
 })(window);
 
 // The Notify sticky code doesn’t work if the document height changes.
-// This code patches that by triggering a resize event each time the height
+// This code patches that by recalculating each time the height
 // changes
 const resizeObserver = new ResizeObserver(entries => {
-  let el = document // This can be your element on which to trigger the event
-  let event = document.createEvent('HTMLEvents');
-  event.initEvent('resize', true, false);
-  el.dispatchEvent(event);
+  // let el = document // This can be your element on which to trigger the event
+  // let event = document.createEvent('HTMLEvents');
+  // event.initEvent('resize', true, false);
+  // el.dispatchEvent(event);
+  GOVUK.stickAtBottomWhenScrolling.recalculate();
 })
 
 // start observing a DOM node

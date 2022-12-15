@@ -10,6 +10,7 @@ const trainingRouteData      = require('./../data/training-route-data')
 const trainingRoutes         = trainingRouteData.trainingRoutes
 const arrayFilters           = require('./../filters/arrays.js').filters
 const dates                  = require('./../filters/dates.js').filters
+const statuses               = require('./../filters/statuses.js').filters
 const ittSubjects            = require('./../data/itt-subjects')
 const generateReference      = require('./../data/generators/reference-number')
 const academicQualifications = require('./../data/academic-qualifications.js')
@@ -2528,6 +2529,14 @@ exports.highlightInvalidRows = function(rows, params=false) {
   let featureEnabled = ctx?.data?.settings?.highlightInvalidAnswers == "true"
 
   if (returnRows) {
+
+    let canBeAmended = statuses.canBeAmended(ctx?.record?.status)
+
+    // Style as grey without action links when the record can't be amended
+    if (!canBeAmended){
+      params.insetStyle = params?.insetStyle ?? 'grey'
+    }
+
     // Loop through each row
     returnRows = returnRows.map(row => {
       if (!row) return row
@@ -2576,7 +2585,7 @@ const styleSummaryRowAsInset = (row, params) => {
   // Keys are stored two possible places
   let key = row?.key?.html || row?.key?.text
 
-  let styleAsInvalid = params.insetStyle != 'grey' && params.recordSource != 'HESA'
+  let styleAsInvalid = params.insetStyle != 'grey'
   let hasActionLink =  row?.actions?.items && row?.actions?.items.length == 1
 
   if (row?.actions?.items?.[0]?.suppressActionLink){
@@ -2665,12 +2674,14 @@ exports.markSummaryRow = function(row, params) {
   else if (params.type == 'missing'){
     message = `${key} is missing`
 
+    delete row.value?.html // if it’s missing, there can't be a value
+    linkText = `Enter ${key.toLowerCase()}`
+
     if (params.recordSource == 'HESA'){
-      message = `Not provided from HESA update`
+      // This message is meant to show, but not as a link. However the prototype suppresses it and it's not worth fixing that functionality.
+      linkText = `You need to provide this data through HESA`
     }
 
-    delete row.value?.html // if it’s missing, there shouldn’t be a value
-    linkText = `Enter ${key.toLowerCase()}`
     if (this?.ctx?.query?.errors){
       // Using .apply() to pass on value of 'this'
       exports.addToErrorArray.apply(this, [{name: message, id}])

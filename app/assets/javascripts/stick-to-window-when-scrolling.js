@@ -1000,10 +1000,6 @@
 // This code patches that by recalculating each time the height
 // changes
 const resizeObserver = new ResizeObserver(entries => {
-  // let el = document // This can be your element on which to trigger the event
-  // let event = document.createEvent('HTMLEvents');
-  // event.initEvent('resize', true, false);
-  // el.dispatchEvent(event);
   GOVUK.stickAtBottomWhenScrolling.recalculate();
 })
 

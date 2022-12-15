@@ -299,7 +299,7 @@
 
 {% set traineeProgressRows = [
   providerRow if data.isAdmin or data.settings.userProviders | length > 1,
-  recordSourceRow if data.isAdmin,
+  recordSourceRow,
   trnRow if record.trn,
   referenceRow,
   traineeIdRow,

@@ -126,35 +126,20 @@
 
 {% set collectionData1 %}
   {{ govukDetails({
-  summaryText: "17 May 2021 at 5.43pm",
+  summaryText: "17 May 2021 at 5:43pm",
   html: code
 }) }}
 {% endset %}
 
 {% set collectionData2 %}
   {{ govukDetails({
-  summaryText: "4 December 2022 at 1.07pm",
+  summaryText: "4 December 2022 at 1:07pm",
   html: code
 }) }}
 {% endset %}
 
 
 {% set hesaRows = [
-  {
-    key: {
-      text: "Collection C21053"
-    },
-    value: {
-      text: collectionData1 | safe
-    },
-    actions: {
-      items: [{
-        href: recordPath + "/personal-details/edit" | addReferrer(referrer),
-        text: "Change",
-        visuallyHiddenText: "name"
-      }]
-    } if canAmend
-  },
   {
     key: {
       text: "Collection C22053"
@@ -167,6 +152,21 @@
         href: recordPath + "/personal-details/edit" | addReferrer(referrer),
         text: "Change",
         visuallyHiddenText: "date of birth"
+      }]
+    } if canAmend
+  },
+  {
+    key: {
+      text: "Collection C21053"
+    },
+    value: {
+      text: collectionData1 | safe
+    },
+    actions: {
+      items: [{
+        href: recordPath + "/personal-details/edit" | addReferrer(referrer),
+        text: "Change",
+        visuallyHiddenText: "name"
       }]
     } if canAmend
   }

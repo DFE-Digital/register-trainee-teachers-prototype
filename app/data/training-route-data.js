@@ -80,8 +80,9 @@ let defaultRouteData = {
     'funding'
   ],
   initiatives: [
-    "Now teach",
-    "Transition to teach",
+    "Future Teaching Scholars",
+    "Get an International Relocation Payment",
+    "Now Teach",
     "Troops to Teachers bursary"
   ],
   financialSupportAvailable: false
@@ -127,11 +128,6 @@ let baseRouteData = {
     ],
     fields: [
       "studyMode",
-    ],
-    initiatives: [
-      "Now teach",
-      "Transition to teach",
-      "Troops to Teachers bursary"
     ],
     financialSupportAvailable: true,
     financialSupport: [
@@ -216,12 +212,6 @@ let baseRouteData = {
       "employingSchool",
       "studyMode"
     ],
-    initiatives: [
-      "Future Teaching Scholars",
-      "Maths and physics chairs programme / Researchers in schools",
-      "Now teach",
-      "Transition to teach"
-    ],
     financialSupportAvailable: true,
     financialSupport: [
       {
@@ -275,11 +265,6 @@ let baseRouteData = {
     fields: [
       "leadSchool",
       "studyMode"
-    ],
-    initiatives: [
-      "Maths and physics chairs programme / Researchers in schools",
-      "Now teach",
-      "Transition to teach"
     ],
     financialSupportAvailable: true,
     financialSupport: [
@@ -337,11 +322,6 @@ let baseRouteData = {
       'employingSchool',
       "studyMode"
       // "apprenticeshipStartDate"
-    ],
-    initiatives: [
-      "Maths and physics chairs programme / Researchers in schools",
-      "Now teach",
-      "Transition to teach"
     ],
     financialSupportAvailable: true,
     financialSupport: [
@@ -581,11 +561,7 @@ let baseRouteData = {
     //   "leadSchool",
     //   "studyMode"
     // ],
-    initiatives: [
-      "Maths and physics chairs programme / Researchers in schools",
-      "Now teach",
-      "Transition to teach"
-    ],
+
     financialSupportAvailable: false,
     financialSupport: [
     ]

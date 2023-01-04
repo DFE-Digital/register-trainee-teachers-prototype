@@ -80,17 +80,17 @@ let cardinalDirections =[
 let generators = {}
 
 generators.generateFaithSchool = () => {
-  return `${faker.helpers.randomize(faithSchoolPlaces)} ${faker.helpers.randomize(faithSuffixes)} ${faker.helpers.randomize(primarySchools)}`.replace("  ", " ")
+  return `${faker.helpers.arrayElement(faithSchoolPlaces)} ${faker.helpers.arrayElement(faithSuffixes)} ${faker.helpers.arrayElement(primarySchools)}`.replace("  ", " ")
 }
 
 generators.generateSchoolWithCommonName = () => {
   let suffix = weighted.select(schoolSuffixes)
-  return `${faker.helpers.randomize(commonPlaces)} ${suffix}`
+  return `${faker.helpers.arrayElement(commonPlaces)} ${suffix}`
 }
 
 generators.generateSchoolWithUncommonName = () => {
   let suffix = weighted.select(schoolSuffixes)
-  return `${faker.helpers.randomize(fakePlaces)} ${suffix}`
+  return `${faker.helpers.arrayElement(fakePlaces)} ${suffix}`
 }
 
 
@@ -126,7 +126,7 @@ const generateSchool = (params = {}) => {
     let fakePostcode = faker.address.zipCode()
     if (town == "London"){
       fakePostcode = fakePostcode.split(" ").pop()
-      fakePostcode = `${faker.helpers.randomize(cardinalDirections)}${faker.datatype.number({'min': 1, 'max': 20})} ${fakePostcode}`
+      fakePostcode = `${faker.helpers.arrayElement(cardinalDirections)}${faker.datatype.number({'min': 1, 'max': 20})} ${fakePostcode}`
     }
     postcode = params.postcode || fakePostcode
   }

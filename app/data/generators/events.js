@@ -3,7 +3,7 @@ const { faker }         = require('@faker-js/faker')
 module.exports = (application) => {
   const events = { items: [] }
 
-  const date = faker.helpers.randomize([
+  const date = faker.helpers.arrayElement([
     '2021-08-12',
     '2021-08-11',
     faker.date.past(),

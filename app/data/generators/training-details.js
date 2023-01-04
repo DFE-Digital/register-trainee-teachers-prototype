@@ -23,8 +23,9 @@ module.exports = (params) => {
 
   // Much better to use submitted date
   let commencementDate = params?.submittedDate || faker.date.between(
-    moment(),
-    moment().subtract(200, 'days'))
+    moment().subtract(200, 'days'),
+    moment()
+  )
 
   let traineeStarted
 

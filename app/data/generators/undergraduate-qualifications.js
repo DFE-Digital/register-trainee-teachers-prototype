@@ -3,8 +3,8 @@ const ugEntryQualifications = require('../undergraduate-qualifications.js')
 
 module.exports = () => {
 
-  const type = faker.helpers.randomize(ugEntryQualifications)
-  const tarrifPoints = faker.helpers.randomize(['16','24','32','72','112','136','136','152','160','170','200','320','400'])
+  const type = faker.helpers.arrayElement(ugEntryQualifications)
+  const tarrifPoints = faker.helpers.arrayElement(['16','24','32','72','112','136','136','152','160','170','200','320','400'])
 
   return {
     type,

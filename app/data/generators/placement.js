@@ -6,9 +6,9 @@ const allSchools = require('../gis-schools.js')
 module.exports = (params) => {
 
   const item = () => {
-    const school = faker.helpers.randomize(allSchools)
-    // const startMonth = faker.helpers.randomize(['1','2','3','4','5','6','7','8','9','10','11','12'])
-    // const duration = faker.helpers.randomize(['1','2','4','8','10','12'])
+    const school = faker.helpers.arrayElement(allSchools)
+    // const startMonth = faker.helpers.arrayElement(['1','2','3','4','5','6','7','8','9','10','11','12'])
+    // const duration = faker.helpers.arrayElement(['1','2','4','8','10','12'])
 
     return {
       school,

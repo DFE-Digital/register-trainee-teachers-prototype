@@ -13,7 +13,7 @@ module.exports = (params) => {
   let availableFinancialSupport = utils.getFinancialSupport(params)
 
   let initiatives = routeData?.initiatives || []
-  let randomInitiative = faker.helpers.randomize(initiatives)
+  let randomInitiative = faker.helpers.arrayElement(initiatives)
   let initiative
 
   let noInitiativeString = 'Not on a training initiative'
@@ -45,7 +45,7 @@ module.exports = (params) => {
 
     // Special handling for Early years graduate entry
     if (source == 'bursary' && availableFinancialSupport.tiersApply){
-      let selectedTier = faker.helpers.randomize(availableFinancialSupport.tiers)
+      let selectedTier = faker.helpers.arrayElement(availableFinancialSupport.tiers)
       source = selectedTier.name
     }
 

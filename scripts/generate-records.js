@@ -85,16 +85,13 @@ const generateFakeApplication = (params = {}) => {
   application.diversity       = (params.diversity === null) ? undefined : { ...generateDiversity(), ...params.diversity }
   application.id              = params.id || faker.datatype.uuid()
   application.personalDetails = (params.personalDetails === null) ? undefined : { ...generatePersonalDetails(), ...params.personalDetails }
-  application.provider        = params.provider || faker.helpers.randomize(providers).name
+  application.provider        = params.provider || faker.helpers.arrayElement(providers).name
   application.accreditingProviderType    = params.accreditingProviderType || "SCITT" // TODO: this should look up the accrediting provider type from the provider's name
   application.route           = (params.route === null) ? undefined : (params.route || generateRoute(params))
-  // application.status          = params.status || faker.helpers.randomize(statuses)
+  // application.status          = params.status || faker.helpers.arrayElement(statuses)
 
   application.source          = (params.source) ? params.source : generateSource(application)
-  if (application.source == "Apply"){
-    application.applyData = { ...generateApplyData(application), ...params.applyData}
-    // if (params.applyData) application.applyData = params.applyData
-  }
+
 
 
   // Needed in particular order
@@ -110,6 +107,10 @@ const generateFakeApplication = (params = {}) => {
   // Dates
   application                  = { ...application, ...generateDates(params, application) }
   // Training
+  if (application.source == "Apply"){
+    application.applyData = { ...generateApplyData(application), ...params.applyData}
+    // if (params.applyData) application.applyData = params.applyData
+  }
 
   // Reference numbers like Apply
   application.reference              = (params.reference === null) ? undefined : (params.reference || generateReference())
@@ -326,13 +327,14 @@ const generateFakeApplicationsForProvider = (provider, year, count) => {
     degree: null,
     iqts: null,
     updatedDate: faker.date.between(
-      moment(),
-      moment().subtract(16, 'days'))
+      moment().subtract(16, 'days'),
+      moment()
+    )
   }
 
   let applyStubUpdatedDate = faker.date.between(
-    moment(),
-    moment().subtract(16, 'days')
+    moment().subtract(16, 'days'),
+    moment()
   )
 
   stubApplication.applyEnrolled = {
@@ -342,8 +344,8 @@ const generateFakeApplicationsForProvider = (provider, year, count) => {
     applyData: {
       recruitedDate: applyStubUpdatedDate,
       applicationDate: faker.date.between(
-        moment().subtract(30, 'days'),
-        moment().subtract(60, 'days')
+        moment().subtract(60, 'days'),
+        moment().subtract(30, 'days')
       ),
       status: 'Review'
     },

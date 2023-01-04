@@ -5,7 +5,7 @@ const countriesExcludingUK = countries.filter(country => country != "United King
 
 module.exports = params => {
 
-  let randomCountry = faker.helpers.randomize(countriesExcludingUK)
+  let randomCountry = faker.helpers.arrayElement(countriesExcludingUK)
 
   return {
     country: randomCountry

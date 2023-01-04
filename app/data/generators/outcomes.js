@@ -38,7 +38,7 @@ module.exports = (record) => {
 
   // Pick a suitable qualification
   let possibleQualifications = qualifications[courseLevel.toLowerCase()]
-  let randomQualification = faker.helpers.randomize(possibleQualifications)
+  let randomQualification = faker.helpers.arrayElement(possibleQualifications)
 
   // Save to record
   if (academicQualificationsApply && statusShouldHaveOutcome){

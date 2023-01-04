@@ -69,13 +69,13 @@ const pickRoute = (isPublishCourse = false) => {
     let publishRoutes = Object.keys(enabledRoutes).filter(route => {
       return enabledRoutes[route].isPublishRoute
     })
-    return faker.helpers.randomize(publishRoutes)
+    return faker.helpers.arrayElement(publishRoutes)
   }
   else {
     let nonPublishRoutes = Object.keys(enabledRoutes).filter(route => {
       return enabledRoutes[route].isNonPublishRoute
     })
-    return faker.helpers.randomize(nonPublishRoutes)
+    return faker.helpers.arrayElement(nonPublishRoutes)
   }
 }
 
@@ -91,9 +91,9 @@ const getPrimarySubjects = subjectCount => {
     .filter(subject => subject != "Primary teaching")
 
   if (subjectCount == 2){
-    let specialism = faker.helpers.randomize([
-      faker.helpers.randomize(['Mathematics', "English studies"]), // Lots of primary teachers have these
-      faker.helpers.randomize(primarySpecialisms)
+    let specialism = faker.helpers.arrayElement([
+      faker.helpers.arrayElement(['Mathematics', "English studies"]), // Lots of primary teachers have these
+      faker.helpers.arrayElement(primarySpecialisms)
     ])
     subjects.push(specialism)
   }
@@ -113,20 +113,20 @@ const getSecondarySubjects = (subjectCount) => {
   let randomisedScienceSubjects = faker.helpers.shuffle(['Physics', 'Chemistry', 'Biology'])
 
   // PE is one of these three
-  let randomPeSubject = faker.helpers.randomize(peSubjects)
+  let randomPeSubject = faker.helpers.arrayElement(peSubjects)
 
   // Bias slightly towards specific subjects but have some random
   // ones too for good measure
   if (subjectCount == 1){
-    subjects = faker.helpers.randomize([
-      faker.helpers.randomize(ittSubjects.coreSubjects),
-      faker.helpers.randomize(ittSubjects.commonSecondarySubjects),
+    subjects = faker.helpers.arrayElement([
+      faker.helpers.arrayElement(ittSubjects.coreSubjects),
+      faker.helpers.arrayElement(ittSubjects.commonSecondarySubjects),
     ])
   }
 
   // Dual subjects typically have one of a few common sets of subjects
   if (subjectCount == 2){
-    subjects = faker.helpers.randomize([
+    subjects = faker.helpers.arrayElement([
       randomisedLanguages.slice(0,2),                           // Two languages
       [randomisedSecondarySubjects[0], randomisedLanguages[0]], // One subject and one language
       randomisedScienceSubjects.slice(0,2),                     // Two sciences
@@ -137,7 +137,7 @@ const getSecondarySubjects = (subjectCount) => {
 
   // Nearly always languages and sciences
   if (subjectCount == 3){
-    subjects = faker.helpers.randomize([
+    subjects = faker.helpers.arrayElement([
       randomisedLanguages.slice(0,3), // Three languages
       randomisedScienceSubjects, // Science subjects
       [randomPeSubject].concat(randomisedScienceSubjects.slice(0,2)) // PE with two EBacc subjects
@@ -177,9 +177,9 @@ const getSecondaryPublishSubjects = (subjectCount) => {
   // Bias slightly towards specific subjects but have some random
   // ones too for good measure
   if (subjectCount == 1){
-    subjects = faker.helpers.randomize([
-      faker.helpers.randomize(ittSubjects.corePublishSubjects),
-      faker.helpers.randomize(nonPrimaryPublishSubjects),
+    subjects = faker.helpers.arrayElement([
+      faker.helpers.arrayElement(ittSubjects.corePublishSubjects),
+      faker.helpers.arrayElement(nonPrimaryPublishSubjects),
       // In Publish users pick specific languages - this isn't modelled here - instead we just set 
       // 'Modern languages' and the ui will ask which language. We do include single languages though.
       "Modern languages",
@@ -192,7 +192,7 @@ const getSecondaryPublishSubjects = (subjectCount) => {
 
   // Dual subjects typically have one of a few common sets of subjects
   if (subjectCount == 2){
-    subjects = faker.helpers.randomize([
+    subjects = faker.helpers.arrayElement([
       // Multiple languages commented out as we will probably ask our users to specify languages
       // through the ui
       // randomisedLanguages.slice(0,2),                        // Two languages
@@ -209,7 +209,7 @@ const getSecondaryPublishSubjects = (subjectCount) => {
     // exclusive sets - just in case though ;)
     while (subjects[0] == subjects[1]){
       console.log("Err! both subjects are the same. Choosing a different second subject was:", subjects[0], subjects[1])
-      subjects[1] = faker.helpers.randomize(nonPrimaryPublishSubjects)
+      subjects[1] = faker.helpers.arrayElement(nonPrimaryPublishSubjects)
     }
   }
 
@@ -231,12 +231,12 @@ module.exports = (params) => {
   if (isEarlyYears){
     phase = 'Early years'
   }
-  // else phase = faker.helpers.randomize(['Primary', 'Secondary'])
+  // else phase = faker.helpers.arrayElement(['Primary', 'Secondary'])
   else phase = weighted.select(['Primary', 'Secondary'], [0.3, 0.7])
 
   let ageRanges = trainingRouteData.phases[phase].ageRanges
 
-  let ageRange = (Array.isArray(ageRanges)) ? faker.helpers.randomize(ageRanges) : null
+  let ageRange = (Array.isArray(ageRanges)) ? faker.helpers.arrayElement(ageRanges) : null
 
   let subjects, publishCourseSubjects
 
@@ -246,7 +246,7 @@ module.exports = (params) => {
   }
   else if (phase == 'Primary'){
     if (isPublishCourse){
-      publishCourseSubjects = faker.helpers.randomize(primaryPublishSubjects)
+      publishCourseSubjects = faker.helpers.arrayElement(primaryPublishSubjects)
     }
     else {
       subjects = getPrimarySubjects(weighted.select([1,2],[0.7,0.3])) // 70% just primary

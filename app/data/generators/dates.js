@@ -46,9 +46,11 @@ module.exports = ({updatedDate, submittedDate, deferredDate, withdrawalDate, qua
     // Assume all drafts are recent
     if (application.status == 'Draft'){
 
+      console.log(`Moment todate: ${moment().toISOString()}, ${moment().subtract(50, 'days').toISOString()}`)
+
       updatedDate = faker.date.between(
-        moment(),
-        moment().subtract(50, 'days')
+        moment().subtract(50, 'days'),
+        moment().toISOString()
       )
     }
 
@@ -78,8 +80,8 @@ module.exports = ({updatedDate, submittedDate, deferredDate, withdrawalDate, qua
       else {
         // Historic entries are most likely updated near to the year end date
         updatedDate = faker.date.between(
-          moment(yearEndDate).add(0, 'days'),
-          moment(yearEndDate).subtract(150, 'days')
+          moment(yearEndDate).subtract(150, 'days'),
+          moment(yearEndDate).add(0, 'days')
         )
       }
 

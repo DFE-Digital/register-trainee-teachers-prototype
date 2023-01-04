@@ -13,7 +13,7 @@ module.exports = (faker, isInternationalTrainee) => {
   let country = null
 
   if (isInternationalTrainee){
-    country = faker.helpers.randomize(['France','Italy','Germany','Ireland'])
+    country = faker.helpers.arrayElement(['France','Italy','Germany','Ireland'])
   }
 
   // GCSE grade values changed to numbers after 2017
@@ -22,7 +22,7 @@ module.exports = (faker, isInternationalTrainee) => {
   const subjects = gceData().subjects
 
   const item = (faker) => {
-    const subject = faker.helpers.randomize(subjects)
+    const subject = faker.helpers.arrayElement(subjects)
     const startDate = '2017'
     const endDate = '2020'
 
@@ -44,12 +44,12 @@ module.exports = (faker, isInternationalTrainee) => {
         startDate
       }
     } else {
-      const grade = faker.helpers.randomize(singleGrades)
+      const grade = faker.helpers.arrayElement(singleGrades)
 
       return {
         type,
         subject,
-        // org: faker.helpers.randomize(degreeData().orgs),
+        // org: faker.helpers.arrayElement(degreeData().orgs),
         country: 'United Kingdom',
         grade,
         // predicted,

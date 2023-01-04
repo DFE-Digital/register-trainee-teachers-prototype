@@ -28,18 +28,18 @@ const requiresEmployingSchool = params => {
 
 module.exports = (params) => {
 
-  let leadSchool = requiresLeadSchool(params) ? faker.helpers.randomize(filteredSchools) : null
+  let leadSchool = requiresLeadSchool(params) ? faker.helpers.arrayElement(filteredSchools) : null
 
   let employingSchool = null
 
   if (requiresEmployingSchool(params)) {
     // Attempt to pick an employing school with a similar postcode
-    let tempEmploying = faker.helpers.randomize(allSchools.filter(school => {
+    let tempEmploying = faker.helpers.arrayElement(allSchools.filter(school => {
       if (!school.postcode || !leadSchool?.postcode) return false
       else return school.postcode.startsWith(leadSchool.postcode.charAt(0))
     }))
     // Fall back to random school if we didn’t find a tempEmploying
-    employingSchool = (!tempEmploying) ? faker.helpers.randomize(allSchools) : tempEmploying
+    employingSchool = (!tempEmploying) ? faker.helpers.arrayElement(allSchools) : tempEmploying
   }
 
   return {

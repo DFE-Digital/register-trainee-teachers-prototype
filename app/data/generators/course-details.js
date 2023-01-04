@@ -34,7 +34,7 @@ const setSubjectSpecialisms = (courseDetails, pickRandom) => {
       // First specialism is always primary teaching
       subjects.first = "Primary teaching"
 
-      let randomLanguage = faker.helpers.randomize(['French language', 'Spanish language', 'German language', 'Modern languages'])
+      let randomLanguage = faker.helpers.arrayElement(['French language', 'Spanish language', 'German language', 'Modern languages'])
 
       switch(theSubject){
         case "Primary with English":
@@ -135,7 +135,7 @@ module.exports = (params, application) => {
 
     // Pick a random course for this trainee
     // Must use Object.assign or we could accidentally edit the source course
-    courseDetails = Object.assign({}, faker.helpers.randomize(limitedCourses))
+    courseDetails = Object.assign({}, faker.helpers.arrayElement(limitedCourses))
 
     // Set a one-time flag to confirm the course
     if (isApplyDraft && !sectionIsComplete){

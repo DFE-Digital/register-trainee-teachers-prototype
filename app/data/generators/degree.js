@@ -8,9 +8,9 @@ module.exports = (params, application) => {
   const isApplyDraft = (application.source == 'Apply' && application.status == "Draft")
   
   const item = (faker) => {
-    let subject = faker.helpers.randomize(degreeData().subjects)
+    let subject = faker.helpers.arrayElement(degreeData().subjects)
     const predicted = faker.datatype.boolean()
-    const endDate = faker.helpers.randomize(['2020','2019','2018','2017','2016','2015'])
+    const endDate = faker.helpers.arrayElement(['2020','2019','2018','2017','2016','2015'])
     const startDate = (parseInt(endDate) - 4).toString()
     const id = faker.datatype.uuid()
     const sectionIsComplete = (params?.degree?.status == "Completed")
@@ -19,7 +19,7 @@ module.exports = (params, application) => {
     // Make 1/3rd of subjects be invalid responses for Apply applications
     // But don’t spit out invalid data if the section is marked as completed
     if (isApplyDraft && !sectionIsComplete && invalidAllowed){
-      let invalidSubject = `**invalid**${faker.helpers.randomize(degreeData().invalidSubjects)}`
+      let invalidSubject = `**invalid**${faker.helpers.arrayElement(degreeData().invalidSubjects)}`
       subject = weighted.select([subject, invalidSubject], [0.7, 0.3])
     }
 
@@ -42,16 +42,16 @@ module.exports = (params, application) => {
         id
       }
     } else {
-      let type = faker.helpers.randomize(degreeData().types.all).text
-      let institution = faker.helpers.randomize(degreeInstitutions).name
+      let type = faker.helpers.arrayElement(degreeData().types.all).text
+      let institution = faker.helpers.arrayElement(degreeInstitutions).name
 
       // Make 1/3rd of types and institutions be invalid responses
       // But don’t spit out invalid data if the section is marked as completed
       if (isApplyDraft && !sectionIsComplete  && invalidAllowed){
-        let randomInvalidType = `**invalid**${faker.helpers.randomize(degreeData().invalidTypes)}`
+        let randomInvalidType = `**invalid**${faker.helpers.arrayElement(degreeData().invalidTypes)}`
         type = weighted.select([type, randomInvalidType], [0.7, 0.3])
 
-        let randomInvalidInstitution = `**invalid**${faker.helpers.randomize(degreeData().invalidInstitutions)}`
+        let randomInvalidInstitution = `**invalid**${faker.helpers.arrayElement(degreeData().invalidInstitutions)}`
         institution = weighted.select([institution, randomInvalidInstitution], [0.7, 0.3])
       }
 
@@ -59,7 +59,7 @@ module.exports = (params, application) => {
       let grade
 
       if (level <= 6){
-        grade = faker.helpers.randomize([
+        grade = faker.helpers.arrayElement([
           'First-class honours',
           'Upper second-class honours (2:1)',
           'Lower second-class honours (2:2)',
@@ -68,7 +68,7 @@ module.exports = (params, application) => {
         ])
       }
       else {
-        grade = faker.helpers.randomize([
+        grade = faker.helpers.arrayElement([
           'First-class honours',
           'Upper second-class honours (2:1)',
           'Lower second-class honours (2:2)',
@@ -110,7 +110,7 @@ module.exports = (params, application) => {
   // purposes of bursaries
   let degreeToBeUsedForBursaries
   if (items.length > 1 && !isApplyDraft){
-    degreeToBeUsedForBursaries = faker.helpers.randomize(items).id
+    degreeToBeUsedForBursaries = faker.helpers.arrayElement(items).id
   }
 
   return {

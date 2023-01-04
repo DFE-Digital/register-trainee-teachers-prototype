@@ -21,27 +21,27 @@ module.exports = (isInternationalTrainee, simpleGcseGrades) => {
 
   // Available grades
   const selectedMathsGrade = [{
-    grade: faker.helpers.randomize(singleGrades)
+    grade: faker.helpers.arrayElement(singleGrades)
   }]
 
   const scienceGrades = {
     singleAwardScience: [{
       exam: 'Single award',
-      grade: faker.helpers.randomize(singleGrades)
+      grade: faker.helpers.arrayElement(singleGrades)
     }],
     doubleAwardScience: [{
       exam: 'Double award',
-      grade: faker.helpers.randomize(doubleGrades)
+      grade: faker.helpers.arrayElement(doubleGrades)
     }],
     tripleAwardScience: [{
       exam: 'Biology',
-      grade: faker.helpers.randomize(singleGrades)
+      grade: faker.helpers.arrayElement(singleGrades)
     }, {
       exam: 'Chemistry',
-      grade: faker.helpers.randomize(singleGrades)
+      grade: faker.helpers.arrayElement(singleGrades)
     }, {
       exam: 'Physics',
-      grade: faker.helpers.randomize(singleGrades)
+      grade: faker.helpers.arrayElement(singleGrades)
     }]
   }
   const selectedScienceGrade = weighted.select({
@@ -53,25 +53,25 @@ module.exports = (isInternationalTrainee, simpleGcseGrades) => {
   const englishGrades = {
     singleAwardEnglish: [{
       exam: 'English Language',
-      grade: faker.helpers.randomize(singleGrades)
+      grade: faker.helpers.arrayElement(singleGrades)
     }],
     doubleAwardEnglish: [{
       exam: 'English',
-      grade: faker.helpers.randomize(doubleGrades)
+      grade: faker.helpers.arrayElement(doubleGrades)
     }],
     separateEnglish1: [{
       exam: 'English Language',
-      grade: faker.helpers.randomize(singleGrades)
+      grade: faker.helpers.arrayElement(singleGrades)
     }, {
       exam: 'English Literature',
-      grade: faker.helpers.randomize(singleGrades)
+      grade: faker.helpers.arrayElement(singleGrades)
     }],
     separateEnglish2: [{
       exam: 'English Language',
-      grade: faker.helpers.randomize(singleGrades)
+      grade: faker.helpers.arrayElement(singleGrades)
     }, {
       exam: 'English Studies',
-      grade: faker.helpers.randomize(singleGrades)
+      grade: faker.helpers.arrayElement(singleGrades)
     }]
   }
   const selectedEnglishGrade = weighted.select({

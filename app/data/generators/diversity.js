@@ -45,7 +45,7 @@ module.exports = () => {
     ]
   }
 
-    ethnicGroup = faker.helpers.randomize([
+    ethnicGroup = faker.helpers.arrayElement([
       "Asian or Asian British",
       "Black, African, Black British or Caribbean",
       "Mixed or multiple ethnic groups",
@@ -55,7 +55,7 @@ module.exports = () => {
     ])
 
     if (ethnicGroup != "Not provided"){
-      ethnicBackground = faker.helpers.randomize(
+      ethnicBackground = faker.helpers.arrayElement(
         ethnicGroups[ethnicGroup]
         )
     }

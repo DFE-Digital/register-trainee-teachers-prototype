@@ -26,7 +26,7 @@ ${faker.address.zipCode()}`
   }
 
   return {
-    phoneNumber: faker.phone.phoneNumber(),
+    // phoneNumber: faker.phone.number(),
     email: faker.internet.email(personalDetails.givenName, personalDetails.familyName).toLowerCase(),
     address,
     internationalAddress,

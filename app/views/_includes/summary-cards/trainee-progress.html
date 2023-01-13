@@ -55,6 +55,15 @@
   }
 } %}
 
+{% set hesaRow = {
+  key: {
+    text: "HESA ID / Numhus"
+  },
+  value: {
+    text: record.hesa.id or 'Not provided'
+  }
+} %}
+
 {% set regionRow = {
   key: {
     text: "Region"
@@ -109,6 +118,15 @@
       }
     ]
   } if canAmend and false
+} %}
+
+{% set endYearRow = {
+  key: {
+    text: "End year"
+  },
+  value: {
+    text: record.endAcademicYear or 'Not provided'
+  }
 } %}
 
 {% set submittedDateHtml %}
@@ -301,13 +319,16 @@
   providerRow if data.isAdmin or data.settings.userProviders | length > 1,
   recordSourceRow if data.isAdmin,
   trnRow if record.trn,
+  hesaRow if record | sourceIsHESA,
   referenceRow,
   traineeIdRow,
   regionRow if record | requiresField("region"),
-  startYearRow,
+
   pendingTrnRow if record | isPendingTrn,
-  updatedDate,
   recordCreatedRow,
+  updatedDateRow,
+   startYearRow,
+  endYearRow,
   traineeStartDateRow
 ] | removeEmpty %}
 

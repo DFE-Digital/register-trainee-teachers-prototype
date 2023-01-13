@@ -58,8 +58,8 @@
     "string": "^3.3.3",
     "sync-request": "^6.0.0",
     "universal-analytics": "^0.4.16",
-    "uuid": "^7.0.3",
-    "weighted": "^0.3.0"
+    "uuid": "^9.0.0",
+    "weighted": "^1.0.0"
   },
   "greenkeeper": {
     "ignore": [

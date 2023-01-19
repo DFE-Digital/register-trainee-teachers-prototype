@@ -97,10 +97,12 @@
 
         {# Upcoming #}
         {% set coursenNotYetStarted = registeredTrainees | filterByFunction('ittInTheFuture') %}
-        <a href="/records?&filterTrainingStatus=Course not started yet" class="status-card status-card--in-training">
-          <span class="status-card__count">{{coursenNotYetStarted | length}}</span>
-          <span class="status-card__status">Course not started yet</span><span class="govuk-visually-hidden"> records. View these records.</span>
-        </a>
+        {% if courseNotYetStarted | length %}
+          <a href="/records?&filterTrainingStatus=Course not started yet" class="status-card status-card--in-training">
+            <span class="status-card__count">{{coursenNotYetStarted | length}}</span>
+            <span class="status-card__status">Course not started yet</span><span class="govuk-visually-hidden"> records. View these records.</span>
+          </a>
+        {% endif %}
 
         {# Actively training #}
         {% set traineesInTraining = registeredTrainees | filterByFunction('isInTraining') %}

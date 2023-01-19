@@ -57,7 +57,7 @@
 
 {% set hesaRow = {
   key: {
-    text: "HESA ID / Numhus"
+    text: "HESA ID"
   },
   value: {
     text: record.hesa.id or 'Not provided'
@@ -217,7 +217,7 @@
     text: "Withdrawn",
     classes: record.status | getStatusClass
   })}} <br>
-  {# Withdrawal date: {{record.withdraw.date | govukDate}} <br>  #}
+  <p class="govuk-body">Withdrawal date: {{record.withdraw.date | govukDate}}</p>
 {% endset %}
 
 {% set withdrawnRow = {
@@ -226,6 +226,15 @@
   },
   value: {
     html: withdrawalContentHtml
+  },
+  actions: {
+    items: [
+      {
+        href: recordPath + "/training-year" | addReferrer(referrer),
+        text: "Change",
+        visuallyHiddenText: "start year"
+      }
+    ]
   }
 } %}
 
@@ -323,7 +332,6 @@
   referenceRow,
   traineeIdRow,
   regionRow if record | requiresField("region"),
-
   pendingTrnRow if record | isPendingTrn,
   recordCreatedRow,
   updatedDateRow,

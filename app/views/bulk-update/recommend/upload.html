@@ -15,6 +15,12 @@
 {% set filteredRecords = data.records | filterRecords(data) %}
 {% set traineesThatCanBeRecommended = filteredRecords | filterByReadyToRecommend %}
 
+
+{% set traineeCount = traineesThatCanBeRecommended | length %}
+
+
+{% set hasZeroTraineesToExport = true if traineeCount == 0 %}
+
 {% set needAcademicAward = traineesThatCanBeRecommended | filterByAcademicQualificationsApply %}
 
 {% set qualifications = traineesThatCanBeRecommended | getQualifications | orSeparate %}
@@ -24,6 +30,13 @@
 
 {% block content %}
 
+{% set aboutCsvDetails %}
+  {{ govukDetails({
+  summaryText: "What trainees are included?",
+  text: "We need to know your nationality so we can work out which elections you’re entitled to vote in. If you cannot provide your nationality, you’ll have to send copies of identity documents through the post."
+}) }}
+{% endset %}
+
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds-from-desktop">
       <h1 class="govuk-heading-l">
@@ -31,14 +44,34 @@
         {{ pageHeading }}
       </h1>
 
-      <p class="govuk-body">You can upload a CSV file to recommend multiple trainees for QTS or EYTS.</p>
+      {% set guidanceLink %}
+        <a href="#" class="govuk-link">Read guidance about how this new process works</a>.
+      {% endset %}
+
+{#       {{ govukInsetText({
+        html: guidanceLink
+      }) }} #}
+
+      <p class="govuk-body">You can upload a CSV file to recommend multiple trainees for QTS or EYTS. {{guidanceLink | safe}}</p>
+
+      {% set insetTraineeCountHtml %}
+        <p class="govuk-body">This export includes the details of {{traineeCount}} {{"trainee" | pluralise(traineeCount)}}.
+      {% endset %}
+
+      {# {{ govukInsetText({
+        html: insetTraineeCountHtml
+      }) }} #}
 
       {# <form action="/bulk-update/recommend/bulk-update-answer" method="post" novalidate> #}
       <form action="/bulk-update/recommend/upload-answer" method="post" novalidate>
 
         <ol class="govuk-list govuk-list--number">
 
-          <li><a href="/reports/trainees-you-can-recommend">Export a list of trainees you can bulk recommend</a>.</li>
+
+          {# <li><a href="/reports/trainees-you-can-recommend">Export a list of trainees you can bulk recommend</a>.</li> #}
+          <li><a class="govuk-link--no-visited-state" href="/public/downloads/bulk-update/recommendOnly.csv" download="{{ data.signedInProviders | slugify }}.csv">Download a CSV file with trainees you can recommend ({{traineeCount}} trainees)</a>.
+            {# {{aboutCsvDetails | safe}} #}
+          </li>
 
           <li>Fill in the date when each trainee met QTS or EYTS standards. If you leave the date blank for a trainee, they will not be recommended.</li>
 
@@ -59,8 +92,8 @@
 
         </ol>
 
-      <!-- {# Making thier own file #}
-      {% set detailsHtml %}
+      {# Making thier own file #}
+      {# {% set detailsHtml %}
 
         <p class="govuk-body">You can prepare your own CSV of trainees you would like to recommend for QTS.</p>
 
@@ -137,8 +170,7 @@
       {{ govukDetails({
         summaryText: "Can I use my own file?",
         html: detailsHtml
-      }) }} -->
-
+      }) }} #}
       
         
 

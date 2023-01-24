@@ -90,7 +90,7 @@
     </p>
     <span class="govuk-hint">
       {% if isPublishCourse %}
-        {{ row.trainee.courseDetails.courseNameLong }}
+        {{ row.trainee.courseDetails.courseNameShort }}
       {% else %}
         {{ row.trainee | getAllocationSubject }}
       {% endif %}

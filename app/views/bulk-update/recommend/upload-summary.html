@@ -14,12 +14,19 @@
 {% set unchangedCount = data.bulkUpload.processedRows | where("uploadStatus", "unchanged") | length  %}
 {% set updatedCount   = data.bulkUpload.processedRows | where("uploadStatus", "updated") | length  %}
 
+{% set simulateZeroTrainees = false %}
+
+{% if simulateZeroTrainees %}
+  {% set errorCount = 0 %}
+  {% set updatedCount = 0 %}
+{% endif %}
+
 {% set hasErrors = errorCount > 0 %}
 
 {% set hasUpdated = updatedCount > 0 %}
 
 {% block content %}
-{{super()}}
+  {{super()}}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds-from-desktop">
 
@@ -30,49 +37,61 @@
 
         <p class="govuk-body">You uploaded a CSV file with details of {{ totalCount }} {{ "trainee" | pluralise(totalCount) }}.</p>
 
-        <p class="govuk">
-          It included:
-        </p>
-        <ul class="govuk-list govuk-list--bullet">
-          {% if updatedCount %}
-            <li>
-              {{ updatedCount }} {{ "trainee" | pluralise(updatedCount) }} who will be recommended for QTS or EYTS
-            </li>
-          {% endif %}
-          {% if unchangedCount %}
-            <li>
-              {{ unchangedCount }} {{ "trainee" | pluralise(unchangedCount) }} who will not be recommended, as you did not give a date when they met the training standard
-            </li>
-          {% endif %}
-          {% if errorCount %}
-            <li>
-              {{ errorCount }} {{ "trainee" | pluralise(errorCount) }} with errors in their details
-            </li>
-          {% endif %}
+        {# Only show counts if there are at least some to recommend or address #}
+        {% if hasErrors or hasUpdated %}
 
-        </ul>
-        {%  if updatedCount == 0 %}
-          <p class="govuk-body">
-            You need to fix the errors before you can update the trainee records.
+          <p class="govuk">
+            It included:
           </p>
-        {% endif %}
+          <ul class="govuk-list govuk-list--bullet">
+            {% if updatedCount %}
+              <li>
+                {{ updatedCount }} {{ "trainee" | pluralise(updatedCount) }} who will be recommended for QTS or EYTS
+              </li>
+            {% endif %}
+            {% if unchangedCount %}
+              <li>
+                {{ unchangedCount }} {{ "trainee" | pluralise(unchangedCount) }} who will not be recommended, as you did not give a date when they met the teaching standards
+              </li>
+            {% endif %}
+            {% if errorCount %}
+              <li>
+                {{ errorCount }} {{ "trainee" | pluralise(errorCount) }} with errors in their details
+              </li>
+            {% endif %}
 
-        {% if hasErrors %}
-          {{ govukButton({
-            text: "Review errors",
-            href: '/bulk-update/recommend/fix-errors'
-          }) }}
-        {% elseif hasUpdated %}
-          {{ govukButton({
-            text: "Check who you’ll recommend",
-            href: '/bulk-update/recommend/check-pending-updates'
-          }) }}
+          </ul>
+          {% if errorCount %}
+            <p class="govuk-body">
+              You need to fix the errors before you can update the trainee records.
+            </p>
+          {% endif %}
+
+          {% if hasErrors %}
+            {{ govukButton({
+              text: "Review errors",
+              href: '/bulk-update/recommend/fix-errors'
+            }) }}
+          {% elseif hasUpdated %}
+            {{ govukButton({
+              text: "Check who you’ll recommend",
+              href: '/bulk-update/recommend/check-pending-updates'
+            }) }}
+          {% endif %}
+        
+        {# File only contains trainees that won't be recommended #}
         {% else %}
+
+          <p class="govuk-body">No trainees were found to be recommended because you did not give a date when they met the teaching standards.</p>
           {{ govukButton({
             text: "Return to upload",
             href: '/bulk-update/recommend/upload'
           }) }}
+
+
         {% endif %}
+
+        
 
         {# {% if hasErrors and hasUpdated %}
           <p class="govuk-body">

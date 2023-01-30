@@ -27,7 +27,7 @@
         classes: "app-table__column-30"
       },
       {
-        text: "Route and course",
+        text: "Route and subjects",
         classes: "app-table__column-30"
       },
       {
@@ -89,11 +89,12 @@
       {{ row.trainee.route }}
     </p>
     <span class="govuk-hint">
-      {% if isPublishCourse %}
+      {{ (row.trainee.courseDetails.subjects | prettifySubjects | falsify ) or row.trainee.courseDetails.courseNameShort }}
+      {# {% if isPublishCourse %}
         {{ row.trainee.courseDetails.courseNameShort }}
       {% else %}
         {{ row.trainee | getAllocationSubject }}
-      {% endif %}
+      {% endif %} #}
     </span>
   {% endset %}
 

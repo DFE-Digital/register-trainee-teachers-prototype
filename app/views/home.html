@@ -127,20 +127,7 @@
           <span class="status-card__status">Currently deferred</span><span class="govuk-visually-hidden"> records. View these records.</span>
         </a>
 
-        {# Incomplete #}
-        {% set incompleteTrainees = registeredTrainees | filterByIncomplete %}
-        {% set activeTrainees = registeredTrainees | filterByFunction('isActiveStatus') %}
-        {% set incompleteExplanation %}
-          <br>(out of {{activeTrainees | length}})
-        {% endset %}
 
-        {# Disabled for now #}
-        {% set incompleteExplanation = "" %}
-
-        <a href="/records?filterCompleteStatus=Incomplete" class="status-card status-card status-card--incomplete">
-          <span class="status-card__count">{{ incompleteTrainees | length }}</span>
-          <span class="status-card__status">Incomplete records{{incompleteExplanation | safe}}</span><span class="govuk-visually-hidden"> records. View these records.</span>
-        </a>
       </div>
       <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
     </div>
@@ -148,7 +135,7 @@
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds-from-desktop">
-      <h2 class="govuk-heading-l">Actions</h2>
+      <h2 class="govuk-heading-l">Available to do</h2>
     </div>
   </div>
 
@@ -158,19 +145,25 @@
 
       <div class="app-home-statuses app-home-statuses--3-up govuk-!-margin-bottom-4">
 
-        {% set filteredRecords = data.records | filterRecords(data) %}
         {% set traineesThatCanBeRecommended = filteredRecords | filterByReadyToRecommend %}
-
         {% set traineeCount = traineesThatCanBeRecommended | length %}
-
-
-        {% set hasZeroTraineesToExport = true if traineeCount == 0 %}
-
-        {# Academic year #}
+        {# Bulk recommend #}
         <a href="/bulk-update/recommend/upload" class="status-card">
           <span class="status-card__count">{{traineeCount}}</span>
           {# <span class="status-card__status">{{data.years.currentAcademicYear}} academic year</span><span class="govuk-visually-hidden"> records. View these records.</span> #}
           <span class="status-card__status">Trainees that can be bulk recommended</span><span class="govuk-visually-hidden"> records. View these records.</span>
+        </a>
+
+        {# Incomplete #}
+        {% set incompleteTrainees = registeredTrainees | filterByIncomplete %}
+        {% set activeTrainees = registeredTrainees | filterByFunction('isActiveStatus') %}
+        {% set incompleteExplanation %}
+          <br>(out of {{activeTrainees | length}})
+        {% endset %}
+
+        <a href="/records?filterCompleteStatus=Incomplete" class="status-card status-card status-card--incomplete">
+          <span class="status-card__count">{{ incompleteTrainees | length }}</span>
+          <span class="status-card__status">Incomplete records to complete</span><span class="govuk-visually-hidden"> records. View these records.</span>
         </a>
 
       </div>

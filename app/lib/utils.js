@@ -1294,8 +1294,9 @@ exports.isHesaAndLocked = record => {
   if (exports.sourceIsHESA(record)) {
 
      // Hardcoded to locked until we decide on rules for unlocking
-     shouldBeLocked = true
-
+     if (record?.hesa?.editingEnabled != true){
+       shouldBeLocked = true
+     }
      // if (exports.finishedEarlierThanThisAcademicYear(record)) {
      //    shouldBeLocked = false
      // } else if (exports.isFutureYear(record)) {

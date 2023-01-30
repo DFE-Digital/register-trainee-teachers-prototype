@@ -31,6 +31,50 @@ module.exports = router => {
     }
   })
 
+  // Toggle editing on hesa records
+  router.post('/record/:uuid/toggle-editing', (req, res) => {
+    const data = req.session.data
+    const record = data.record
+    // Update failed or no data
+    if (!record){
+      res.redirect(`/record/${req.params.uuid}`)
+    }
+    else {
+      let editingEnabled = record?.hesa?.editingEnabled || false
+      let timelineMessage, flashHtml
+
+      _.set(record, 'hesa.editingEnabled', !(editingEnabled))
+
+      if (editingEnabled) {
+        timelineMessage = "Disabling editing on record"
+
+        flashHtml = `
+        <p class="govuk-notification-banner__heading">
+          Disabling editing on record
+        </p>`
+      }
+      else {
+        timelineMessage = "Editing enabled on record"
+
+        flashHtml = `
+        <p class="govuk-notification-banner__heading">
+          Editing enabled
+        </p>
+        <p class="govuk-body">Changes made here will be overwritten by any future HESA updates to this trainee.
+        </p>`
+
+      }
+      console.log(timelineMessage)
+      utils.updateRecord(data, record, timelineMessage)
+      req.flash('success', {
+            html: flashHtml
+        })
+      res.redirect(`/record/${req.params.uuid}`)
+    }
+  })
+
+
+
   // Manually advance an application from Pending EYTS/QTS to EYTS/QTS.
   router.get('/record/:uuid/awarded', (req, res) => {
     const data = req.session.data

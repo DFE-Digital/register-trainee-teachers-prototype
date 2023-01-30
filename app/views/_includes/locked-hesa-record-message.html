@@ -14,6 +14,21 @@
       <h3 class="govuk-heading-s">
         This record was imported from HESA and cannot be edited except to {{ deferOrReinstateText }} or withdraw the trainee.
       </h3>
+
+      <form action="{{ recordPath }}/toggle-editing" method="POST">
+        {% if record.hesa.editingEnabled == true %}
+          {{ govukButton({
+            text: "Disable editing on this record"
+          }) }}
+        {# Won't currently get shown because this banner only shows if the record is locked - to consider later #}
+        {% else %}
+          {{ govukButton({
+            text: "Enable editing on this record"
+          }) }}
+        {% endif %}
+      </form>
+ 
+
       <p class="govuk-body">
         {# Assume sync has happened within in last 2 hours #}
         Last import for all HESA records at {{ moment().subtract(78, 'minutes') | govukDateTime }}

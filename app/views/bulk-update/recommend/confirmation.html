@@ -6,19 +6,18 @@
 {% set filteredRecords = data.records | filterRecords(data) %}
 {% set traineesThatCanBeRecommended = filteredRecords | filterByReadyToRecommend %}
 
+{# Sets numbers for errors summary #}
+{% set errorCount     = data.bulkUpload.processedRows | where("uploadStatus", "error") | length  %}
+{% set unchangedCount = data.bulkUpload.processedRows | where("uploadStatus", "unchanged") | length  %}
+{% set updatedCount   = data.bulkUpload.processedRows | where("uploadStatus", "updated") | length  %}
 
-{% if data.bulk.recommendFixErrors %}
-  {% set processedRows = data.bulkUpload.processedRows | where("uploadStatus", "error")  %}
-  {% set processedRows = processedRows | combineArrays(data.bulkUpload.processedRows | where("uploadStatus", "updated")) %}
-{% else %}
-  {% set processedRows = data.bulkUpload.processedRows | where("uploadStatus", "updated") %}
-{% endif %}
+{% set processedRows = data.bulkUpload.processedRows | where("uploadStatus", "updated") %}
 
 {# Get an array of the trainees #}
 {% set processedTrainees = processedRows | lodash("map", "trainee") %}
 
 
-{% set pageHeading = processedTrainees | length  + " trainees recommended for " + processedTrainees | getQualifications | orSeparate %}
+{% set pageHeading = updatedCount + " trainees recommended for " + processedTrainees | getQualifications | orSeparate %}
 
 {% set incompleteRecords = filteredRecords | filterByIncomplete %}
 
@@ -40,13 +39,19 @@
       </h2>
 
       <p class="govuk-body">
-        You can recommend 43 more trainees. You can now:
+        {% if traineesThatCanBeRecommended | length %}
+          You can recommend {{traineesThatCanBeRecommended | length }} more trainees. 
+        {% endif %}You can now:
       </p>
 
       <ul class="govuk-list govuk-list--bullet">
-        <li><a href="/bulk-update/recommend" class="govuk-link">bulk recommend more trainees</a></li>
+        {% if traineesThatCanBeRecommended | length %}
+          <li><a href="/bulk-update/recommend" class="govuk-link">bulk recommend more trainees</a></li>
+        {% endif %}
         <li><a href="/records" class="govuk-link">view your list of registered trainees</a> - if you mark a trainee as withdrawn or deferred, they will not appear in the list of trainees you can recommend</li>
       </ul>
+
+      {{data | log}}
     </div>
   </div>
 

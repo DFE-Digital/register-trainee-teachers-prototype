@@ -63,7 +63,7 @@
           </ul>
           {% if errorCount %}
             <p class="govuk-body">
-              You need to fix the errors before you can update the trainee records.
+              You need to review the errors before you can recommend trainees for QTS or EYTS.
             </p>
           {% endif %}
 
@@ -78,20 +78,22 @@
               href: '/bulk-update/recommend/check-pending-updates'
             }) }}
           {% endif %}
-        
+
         {# File only contains trainees that won't be recommended #}
         {% else %}
 
-          <p class="govuk-body">No trainees were found to be recommended because you did not give a date when they met the teaching standards.</p>
+          <p class="govuk-body">You did not enter any dates when trainees met the standards for QTS or EYTS. This means that you will not recommend any trainees.</p>
+
+          <p class="govuk-body">If you want to recommend trainees, you need to enter the dates in the CSV file and upload it again.</p>
           {{ govukButton({
-            text: "Return to upload",
+            text: "Return to upload CSV file again",
             href: '/bulk-update/recommend/upload'
           }) }}
 
 
         {% endif %}
 
-        
+
 
         {# {% if hasErrors and hasUpdated %}
           <p class="govuk-body">

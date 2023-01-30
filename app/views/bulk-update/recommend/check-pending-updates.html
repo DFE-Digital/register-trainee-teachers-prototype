@@ -9,7 +9,7 @@
 
 {% set qualificationText = traineesThatCanBeRecommended | getQualifications | orSeparate %}
 
-{% set pageHeading = "Check who you’ll recommend for " + qualificationText %}
+{% set pageHeading = "Check which trainees you’ll recommend for " + qualificationText %}
 {% set navActive = 'bulk' %}
 
 
@@ -98,7 +98,7 @@
     </span>
   {% endset %}
 
-  
+
     {% set qualArray = row.trainee.courseDetails.qualifications | toArray %}
     {% set qualification = qualArray | removeArrayItems(["QTS", "EYTS"]) %}
     {% if row.trainee | isPostgraduate and qualification.length == 0 %}
@@ -140,7 +140,7 @@
         { text: traineeHtml        | safe      },
         { text: routeAndCourseHtml | safe      },
         { html: dateAndAwardHtml }
-        
+
       ]%}
     {% else %}
       {% set tableRow = [
@@ -151,7 +151,7 @@
         { text: row.assessmentDate | govukDate('DD/MM/YYYY') }
       ]%}
     {% endif %}
-  
+
 
   {% if row.trainee | getQualificationText == "QTS" %}
     {% set qtsTableBodyRows = qtsTableBodyRows   | push(tableRow) %}
@@ -160,7 +160,7 @@
   {% endif %}
 
   {% set allAwardsTableBodyRows = allAwardsTableBodyRows | push(tableRow) %}
-  
+
 
 {% endfor %}
 
@@ -179,5 +179,3 @@
   {% include "_includes/bulk-update/check-pending-updates.html" %}
 
 {% endblock %}
-
-

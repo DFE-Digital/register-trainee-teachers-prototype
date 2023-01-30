@@ -37,7 +37,7 @@
       {% endif %}
 
       {% set accordionHeadingText %}
-        Trainees you’ll recommend for {{params.awardType}} ({{ chunkStart }} to {{ chunkEnd }})
+        Trainees {{ chunkStart }} to {{ chunkEnd }} you’ll recommend for {{params.awardType}}
       {%- endset %}
       {% set accordionItems = accordionItems | push({
         heading: {
@@ -131,7 +131,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
     <div class="js-stick-at-bottom-when-scrolling">
-      
+
       <form action="/bulk-update/{{ bulkPath }}/update" method="post" novalidate>
         {# <div class="govuk-button-group govuk-!-margin-bottom-0"> #}
 
@@ -141,9 +141,9 @@
 
           <p class="govuk-body">
             <a href="/bulk-update/cancel-bulk-updates" class="govuk-link">
-              Cancel bulk {{ "recommending trainees" if data.settings.bulkLinksInPrimaryNav == "Show bulk recommend" else "updates to records" }}</a> 
+              Cancel bulk {{ "recommending trainees" if data.settings.bulkLinksInPrimaryNav == "Show bulk recommend" else "updates to records" }}</a>
             or
-            <a href="upload-changes">change who you’ll recommend</a>
+            <a href="upload-changes">change which trainees you’ll recommend</a>
           </p>
 
         {# </div> #}

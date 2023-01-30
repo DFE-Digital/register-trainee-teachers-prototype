@@ -21,7 +21,7 @@
 {% set hasUpdated = updatedCount > 0 %}
 
 {% set pageHeading %}
-  Fix errors for {{errorCount}} {{ "trainee" | pluralise(errorCount) }} in the file you uploaded
+  Fix errors for {{errorCount}} {{ "trainee" | pluralise(errorCount) }} in the CSV file you uploaded
 {% endset %}
 
 {% set qualifications = traineesThatCanBeRecommended | getQualifications | orSeparate %}
@@ -74,13 +74,13 @@
         <input name="successFlash" type="hidden" value="File uploaded">
 
         {{ govukButton({
-          text: "Upload file and check who you’ll recommend"
+          text: "Upload file and check which trainees you’ll recommend"
         }) }}
 
         {% if hasUpdated %}
           <p class="govuk-body">
             <a href="/bulk-update/recommend/check-pending-updates" class="govuk-link">
-              Skip trainees with errors and check who you’ll recommend
+              Skip trainees with errors and check which trainees you’ll recommend
             </a>
           </p>
         {% endif %}

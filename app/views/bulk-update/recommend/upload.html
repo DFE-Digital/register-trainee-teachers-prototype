@@ -45,14 +45,14 @@
       </h1>
 
       {% set guidanceLink %}
-        Read <a href="/guidance/bulk-recommend-trainees" class="govuk-link">guidance about bulk recommending trainees</a> to find out how to fix mistakes and what to do if trainees have withdrawn or deferred.
+        Read <a href="/guidance/bulk-recommend-trainees" class="govuk-link">guidance about bulk recommending trainees</a> to find out how to make changes and what to do if trainees have withdrawn or deferred.
       {% endset %}
 
 {#       {{ govukInsetText({
         html: guidanceLink
       }) }} #}
 
-      <p class="govuk-body">You can upload a CSV file to recommend multiple trainees for QTS or EYTS.</p>
+      <p class="govuk-body">You can upload a CSV file to recommend multiple trainees for qualified teacher status (QTS) or early years teacher status (EYTS).</p>
 
       {% set insetTraineeCountHtml %}
         <p class="govuk-body">This export includes the details of {{traineeCount}} {{"trainee" | pluralise(traineeCount)}}.
@@ -178,7 +178,7 @@
 
 
         {{ govukButton({
-          text: "Upload CSV file and check who you’ll recommend"
+          text: "Upload file and check which trainees you’ll recommend"
         }) }}
       </form>
 

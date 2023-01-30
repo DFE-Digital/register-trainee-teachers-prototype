@@ -45,14 +45,14 @@
       </h1>
 
       {% set guidanceLink %}
-        <a href="#" class="govuk-link">Read guidance about how this new process works</a>.
+        Read <a href="/guidance/bulk-recommend-trainees" class="govuk-link">guidance about bulk recommending trainees</a> to find out how to fix mistakes and what to do if trainees have withdrawn or deferred.
       {% endset %}
 
 {#       {{ govukInsetText({
         html: guidanceLink
       }) }} #}
 
-      <p class="govuk-body">You can upload a CSV file to recommend multiple trainees for QTS or EYTS. {{guidanceLink | safe}}</p>
+      <p class="govuk-body">You can upload a CSV file to recommend multiple trainees for QTS or EYTS.</p>
 
       {% set insetTraineeCountHtml %}
         <p class="govuk-body">This export includes the details of {{traineeCount}} {{"trainee" | pluralise(traineeCount)}}.
@@ -69,11 +69,11 @@
 
 
           {# <li><a href="/reports/trainees-you-can-recommend">Export a list of trainees you can bulk recommend</a>.</li> #}
-          <li><a class="govuk-link--no-visited-state" href="/public/downloads/bulk-update/recommendOnly.csv" download="{{ data.signedInProviders | slugify }}.csv">Download a CSV file with trainees you can recommend ({{traineeCount}} trainees)</a>.
+          <li><a class="govuk-link--no-visited-state" href="/public/downloads/bulk-update/recommendOnly.csv" download="{{ data.signedInProviders | slugify }}.csv">Download a CSV file listing {{traineeCount}} trainees you can recommend</a>.
             {# {{aboutCsvDetails | safe}} #}
           </li>
 
-          <li>Fill in the date when each trainee met QTS or EYTS standards. If you leave the date blank for a trainee, they will not be recommended.</li>
+          <li>Fill in the date when each trainee met QTS or EYTS standards. If they have not met the standards, either delete the row or leave the date blank.</li>
 
           {# <li>Upload the CSV file.</li> #}
 
@@ -171,16 +171,14 @@
         summaryText: "Can I use my own file?",
         html: detailsHtml
       }) }} #}
-      
-        
 
-        <p class="govuk-inset-text">You cannot use this upload to make other changes to a trainee’s record.</p>
+        <p class="govuk-inset-text">You cannot use this upload to make other changes to a trainee’s record. {{guidanceLink | safe}}</p>
 
         <input name="successFlash" type="hidden" value="File uploaded">
 
 
         {{ govukButton({
-          text: "Upload file and check who you’ll recommend"
+          text: "Upload CSV file and check who you’ll recommend"
         }) }}
       </form>
 

@@ -4,6 +4,8 @@
 {% set backLink = 'false' %}
 
 {% set filteredRecords = data.records | filterRecords(data) %}
+
+{# Remaining trainees #}
 {% set traineesThatCanBeRecommended = filteredRecords | filterByReadyToRecommend %}
 
 {# Sets numbers for errors summary #}
@@ -16,10 +18,8 @@
 {# Get an array of the trainees #}
 {% set processedTrainees = processedRows | lodash("map", "trainee") %}
 
-
 {% set pageHeading = updatedCount + " trainees recommended for " + processedTrainees | getQualifications | orSeparate %}
 
-{% set incompleteRecords = filteredRecords | filterByIncomplete %}
 
 {% block content %}
 
@@ -31,25 +31,28 @@
       }) }}
 
       <p class="govuk-body">
-        The Department for Education will award {{ traineesThatCanBeRecommended | getQualifications | orSeparate }} within 3 working days.
+        The Department for Education will award {{ processedTrainees | getQualifications | orSeparate }} within 3 working days.
       </p>
 
       <h2 class="govuk-heading-m">
         Next steps
       </h2>
 
-      <p class="govuk-body">
-        {% if traineesThatCanBeRecommended | length %}
-          You can recommend {{traineesThatCanBeRecommended | length }} more trainees. 
-        {% endif %}You can now:
-      </p>
+      {% if traineesThatCanBeRecommended | length %}
+        <p class="govuk-body">
+          You can recommend {{traineesThatCanBeRecommended | length }} more trainees. You can now:
+        </p>
 
-      <ul class="govuk-list govuk-list--bullet">
-        {% if traineesThatCanBeRecommended | length %}
+        <ul class="govuk-list govuk-list--bullet">
           <li><a href="/bulk-update/recommend" class="govuk-link">bulk recommend more trainees</a></li>
-        {% endif %}
-        <li><a href="/records" class="govuk-link">view your list of registered trainees</a> - if you mark a trainee as withdrawn or deferred, they will not appear in the list of trainees you can recommend</li>
-      </ul>
+          <li><a href="/records" class="govuk-link">view your list of registered trainees</a></li>
+        </ul>
+
+      {% else %}
+        <p class="govuk-body">You can now <a href="/records" class="govuk-link">view your list of registered trainees</a>.</p>
+      {% endif %}
+
+      
 
       {{data | log}}
     </div>

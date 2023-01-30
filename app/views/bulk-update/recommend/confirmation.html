@@ -18,7 +18,7 @@
 {% set processedTrainees = processedRows | lodash("map", "trainee") %}
 
 
-{% set pageHeading = processedTrainees | length  + " trainee records recommended for " + processedTrainees | getQualifications | orSeparate %}
+{% set pageHeading = processedTrainees | length  + " trainees recommended for " + processedTrainees | getQualifications | orSeparate %}
 
 {% set incompleteRecords = filteredRecords | filterByIncomplete %}
 
@@ -40,18 +40,13 @@
       </h2>
 
       <p class="govuk-body">
-        You can now view your:
+        You can recommend 43 more trainees. You can now:
       </p>
 
       <ul class="govuk-list govuk-list--bullet">
-        <li><a href="/records" class="govuk-link">registered trainees</a></li>
-        <li><a href="/records?filterEndYears={{ data.years.currentAcademicYear }}" class="govuk-link">registered trainees whose course ends in the {{ data.years.currentAcademicYear }} academic year</a></li>
-        {% if incompleteRecords | length%}
-        <li><a href="/records?filterCompleteStatus=Incomplete" class="govuk-link">incomplete trainees</a></li>
-        {% endif %}
-        <li><a href="/drafts" class="govuk-link">draft trainees</a></li>
+        <li><a href="/bulk-update/recommend" class="govuk-link">bulk recommend more trainees</a></li>
+        <li><a href="/records" class="govuk-link">view your list of registered trainees</a> - if you mark a trainee as withdrawn or deferred, they will not appear in the list of trainees you can recommend</li>
       </ul>
-
     </div>
   </div>
 

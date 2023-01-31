@@ -14,7 +14,7 @@
 {% set pageHeading = 'Trainees who studied in the ' + previousAcademicYear + ' academic year' %}
 
 {% set endYear = data.years.currentAcademicYear | academicYearToYear + 1 %}
-{% set performanceProfilesDate =  "31-1" + endYear %}
+{% set performanceProfilesDate = endYear + "-1-31" %}
 
 {% set viewingUserIsScitt = data.settings.userActiveProvider | providerIsScitt %}
 
@@ -163,7 +163,7 @@
 
       <p class="govuk-body">You can read about <a href="/guidance/performance-profiles">how to check, fix and sign off your data</a>.</p>
 
-      <p class="govuk-body">You must sign off the data by {{ performanceProfilesDate | govukDate('D MMMM YYYY') }} at 11:59pm.</p>
+      <p class="govuk-body">You must sign off the data by {{ performanceProfilesDate | govukDate('YYYY-M-D') }} at 11:59pm.</p>
 
       <input name="successFlash" type="hidden" value="Export successfully downloaded">
 

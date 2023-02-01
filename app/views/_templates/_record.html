@@ -60,14 +60,16 @@
   <div class="record-header">
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-0">
       {{pageHeading}}
+
       {% if not record | recordIsComplete and isAuthorised('showIncomplete') and (not record | isHesaAndLocked) %}
-          <span style="display: inline-block;">
-            {{govukTag({
-              text: "Incomplete",
-              classes: "app-tag--record-incomplete"
-            })}}
-          </span>
-        {% endif %}
+        <span style="display: inline-block;">
+          {{govukTag({
+            text: "Incomplete",
+            classes: "app-tag--record-incomplete"
+          })}}
+        </span>
+      {% endif %}
+
       {{govukTag({
           text: record.status,
           classes: record.status | getStatusClass
@@ -80,9 +82,12 @@
     {% endif %}
   </div>
 
-  {% include "_includes/locked-hesa-record-message.html" %}
-
   {% include "_includes/actions-banner.njk" %}
+
+  {% include "_includes/locked-hesa-record-message.html" %}
+  {% include "_includes/unlocked-hesa-record-message.html" %}
+
+
 
   {% include "_includes/record-sub-nav.njk" %}
 

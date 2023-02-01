@@ -6,11 +6,12 @@
   {%- endif %}
 {% endset %}
 
-{% if record | isActiveStatus and record | isHesaAndLocked %}
+
+{% if record | isActiveStatus and record | sourceIsHESA and record.hesa.editingEnabled == true %}
 
   {% set hesaRecordSummary %}
     <h3 class="govuk-heading-s">
-      This record was imported from HESA and cannot be edited except to award, {{ deferOrReinstateText }} or withdraw the trainee.
+      Editing has been enabled on this HESA record.
     </h3>
 
     <form action="{{ recordPath }}/toggle-editing" method="POST">
@@ -34,13 +35,13 @@
 
   {% endset %}
 
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds-from-desktop">
-      {{ govukInsetText({
-        text: hesaRecordSummary | safe,
-        classes: "govuk-!-padding-top-0 govuk-!-padding-bottom-0"
-      }) }}
-    </div>
+    <div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    {{ govukInsetText({
+      text: hesaRecordSummary | safe,
+      classes: "govuk-!-padding-top-0 govuk-!-padding-bottom-0"
+    }) }}
   </div>
+</div>
 
 {% endif %}

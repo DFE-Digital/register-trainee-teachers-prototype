@@ -70,10 +70,10 @@
         </span>
       {% endif %}
 
-      {{govukTag({
+      {{ govukTag({
           text: record.status,
           classes: record.status | getStatusClass
-      })}}
+      }) }}
 
     </h1>
     {% if record.trn %}

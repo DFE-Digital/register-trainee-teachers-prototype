@@ -1287,8 +1287,6 @@ exports.dateHesaRecordUnlocked = record => {
 
 exports.isHesaAndLocked = record => {
 
-  const source = record?.source
-
   let shouldBeLocked = false
 
   if (exports.sourceIsHESA(record)) {

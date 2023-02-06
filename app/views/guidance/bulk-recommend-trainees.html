@@ -4,28 +4,40 @@
 
 {% block guidanceContent %}
 
-# Bulk recommend trainees for qualified teacher status or early years teacher status
+# Bulk recommend trainees for QTS or EYTS
 
-You can [recommend multiple trainees at the same time](/bulk-update/recommend/upload) for qualified teacher status (QTS) or early years teacher status (EYTS).
+You can [recommend multiple trainees at the same time](/bulk-update/recommend/upload) for QTS or EYTS.
 
-You cannot use this process to make other changes to trainee records.
+<div class="govuk-inset-text">
 
-## How to bulk recommend trainees
+You cannot use this process to indicate that trainees have withdrawn or deferred, or to make changes to trainee records. You need to do this separately for each trainee.
 
-1. Download a CSV file listing trainees you can recommend.
+You can also use the Higher Education Statistics Agency (HESA) service if you have access to it. You cannot use it to indicate that trainees have deferred.
+
+</div>
+
+## How to bulk recommend trainees for QTS or EYTS
+
+1. Download a CSV file listing trainees you can recommend for QTS or EYTS.
 2. Fill in the date when each trainee met QTS or EYTS standards.
 3. Upload the CSV file. If there are any errors, fix them and upload the file again.
 4. Check the list of trainees you are going to recommend then submit your recommendations.
 
-### 1. Download a CSV file listing trainees you can recommend
+### 1. Download a CSV file listing trainees you can recommend for QTS or EYTS
 
-The CSV file includes all trainees with a course end date between 26 July 2022 and 26 July 2023 (from 6 months ago until 6 months from now). You can recommend other trainees individually.
+The CSV file includes all trainees who:
 
-If you expect to see trainees who are not listed in the file, check their course end date.
+- have the ‘actively training’ status
+- have a course end date in the past 6 months or in the next 6 months
 
-The file does not include deferred or withdrawn trainees.
+You can recommend a trainee whose course end date is not within that period by viewing their record and either:
+
+- updating their course end date so that it’s in the period covered by the CSV file
+- recommending them for QTS or EYTS from within their record
 
 ### 2. Fill in the date when each trainee met QTS or EYTS standards
+
+The CSV file has a blank column for you to fill in the date when trainees met QTS or EYTS standards. This may be different to the date when they finish their course or get an academic qualification.
 
 If a trainee has not met the standards, either delete the row or leave the date blank in the CSV file.
 
@@ -38,47 +50,17 @@ You’ll get an error message when you upload the CSV file if you:
 - entered a date which cannot be accepted, such as a date in the future
 - edited any data in the CSV - you cannot change trainee or course details using this process
 
+If there are any errors in the CSV file, you'll be able to download a version showing the errors.
+
 You can choose to either:
 
 - fix the errors
-- ignore the errors and continue - you’ll only be able to recommend trainees whose data does not have errors
+- skip the errors and continue
+
+If you skip the errors, you’ll only be able to recommend trainees whose data does not have errors. You can fix the errors later and recommend the trainees.
 
 ### 4. Submit your recommendations
 
-After you submit your recommendations, WHAT
-
-## Making other changes to trainee records
-
-You cannot use the bulk recommendation process to:
-
-- change trainee details, such as the date their course will finish
-- mark a trainee as deferred
-- mark a trainee as withdrawn
-
-### Changing trainee details
-
-You should change trainee details either:
-
-- in this service, changing details one trainee at a time
-- in the Higher Education Statistics Agency (HESA) service if you use it - you can make the change in this service instead if you prefer
-
-The only changes you should make to the CSV file in the bulk recommendation process are:
-
-- adding the dates when trainees met the standards for QTS or EYTS
-- deleting rows for trainees who have not met the standards - you can also leave the date blank
-
-You’ll get an error message when you upload the CSV file if you edit any other data in it.
-
-### Deferring trainees
-
-If a trainee defers, you can mark this either:
-
-- in this service
-- in the Higher Education Statistics Agency (HESA) service if you use it - you can choose which service to use
-
-### Withdrawing trainees
-
-If a trainee withdraws from initial teacher training, you should mark it in this service.
-
+After you submit your recommendations, they’ll be immediately recommended for QTS or EYTS.
 
 {% endblock %}

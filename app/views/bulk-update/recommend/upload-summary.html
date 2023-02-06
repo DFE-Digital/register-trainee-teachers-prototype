@@ -25,6 +25,10 @@
 
 {% set hasUpdated = updatedCount > 0 %}
 
+{% set filteredRecords = data.records | filterRecords(data) %}
+{% set traineesThatCanBeRecommended = filteredRecords | filterByReadyToRecommend %}
+{% set qualifications = traineesThatCanBeRecommended | getQualifications | orSeparate %}
+
 {% block content %}
   {{super()}}
   <div class="govuk-grid-row">
@@ -46,12 +50,12 @@
           <ul class="govuk-list govuk-list--bullet">
             {% if updatedCount %}
               <li>
-                {{ updatedCount }} {{ "trainee" | pluralise(updatedCount) }} who will be recommended for QTS or EYTS
+                {{ updatedCount }} {{ "trainee" | pluralise(updatedCount) }} who will be recommended for {{qualifications}}
               </li>
             {% endif %}
             {% if unchangedCount %}
               <li>
-                {{ unchangedCount }} {{ "trainee" | pluralise(unchangedCount) }} who will not be recommended, as you did not give a date when they met the teaching standards
+                {{ unchangedCount }} {{ "trainee" | pluralise(unchangedCount) }} who will not be recommended, as you did not give a date when they met the {{qualifications}} standards
               </li>
             {% endif %}
             {% if errorCount %}
@@ -63,7 +67,7 @@
           </ul>
           {% if errorCount %}
             <p class="govuk-body">
-              You need to review the errors before you can recommend trainees for QTS or EYTS.
+              You need to review the errors before you can recommend trainees for {{qualifications}}.
             </p>
           {% endif %}
 
@@ -84,7 +88,7 @@
 
           <p class="govuk-body">You did not enter any dates when trainees met the standards for QTS or EYTS. This means that you will not recommend any trainees.</p>
 
-          <p class="govuk-body">If you want to recommend trainees, you need to enter the dates in the CSV file and upload it again.</p>
+          <p class="govuk-body">If you want to bulk recommend trainees, you need to enter the dates in the CSV file and upload it again.</p>
           {{ govukButton({
             text: "Return to upload CSV file again",
             href: '/bulk-update/recommend/upload'

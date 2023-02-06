@@ -21,7 +21,7 @@
 {% set hasUpdated = updatedCount > 0 %}
 
 {% set pageHeading %}
-  Fix errors for {{errorCount}} {{ "trainee" | pluralise(errorCount) }} in the CSV file you uploaded
+  Review errors for {{errorCount}} {{ "trainee" | pluralise(errorCount) }} in the CSV file you uploaded
 {% endset %}
 
 {% set qualifications = traineesThatCanBeRecommended | getQualifications | orSeparate %}
@@ -41,7 +41,9 @@
 
       <form action="/bulk-update/recommend/fix-errors-answer" method="post" novalidate>
 
-        <p class="govuk-body">You need to fix errors in the CSV file you uploaded before you can recommend trainees for QTS or EYTS.</p>
+        <p class="govuk-body">You cannot recommend trainees for QTS or EYTS if there’s an error in their row in the You need to fix errors in the CSV file you uploaded before you can recommend trainees for QTS or EYTS.</p>
+        <p class="govuk-body">You can skip the trainees with errors but will not be able to recommend any.</p>
+
         <ol class="govuk-list govuk-list--number">
 
           <li>

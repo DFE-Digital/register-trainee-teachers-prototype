@@ -45,7 +45,7 @@
       </h1>
 
       {% set guidanceLink %}
-        Read <a href="/guidance/bulk-recommend-trainees" class="govuk-link">guidance about bulk recommending trainees</a> to find out how to make changes and what to do if trainees have withdrawn or deferred.
+        <a href="/guidance/bulk-recommend-trainees" class="govuk-link">guidance about bulk recommending trainees</a>
       {% endset %}
 
 {#       {{ govukInsetText({
@@ -73,7 +73,7 @@
             {# {{aboutCsvDetails | safe}} #}
           </li>
 
-          <li>Fill in the date when each trainee met QTS or EYTS standards. If they have not met the standards, either delete the row or leave the date blank.</li>
+          <li>Fill in the date when each trainee met the {{qualifications}} standards. If they have not met the standards, either delete the row or leave the date column blank.</li>
 
           {# <li>Upload the CSV file.</li> #}
 
@@ -172,7 +172,7 @@
         html: detailsHtml
       }) }} #}
 
-        <p class="govuk-inset-text">You cannot use this upload to make other changes to a trainee’s record. {{guidanceLink | safe}}</p>
+        <p class="govuk-inset-text">You cannot use this upload to make other changes to a trainee’s record. Read {{guidanceLink | safe}} to find out how to make changes and what to do if trainees have withdrawn or deferred.</p>
 
         <input name="successFlash" type="hidden" value="File uploaded">
 

@@ -56,7 +56,6 @@
   {% endif %}
 
 
-
   <div class="record-header">
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-0">
       {{pageHeading}}
@@ -74,6 +73,12 @@
           text: record.status,
           classes: record.status | getStatusClass
       }) }}
+      {# {% if record.hesa.editingEnabled == true %}
+        {{ govukTag({
+          text: "HESA editing enabled",
+          classes: "govuk-tag--green"
+        }) }}
+      {% endif %} #}
 
     </h1>
     {% if record.trn %}

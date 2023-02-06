@@ -32,14 +32,17 @@ module.exports = router => {
   })
 
   // Toggle editing on hesa records
-  router.post('/record/:uuid/toggle-editing', (req, res) => {
+  // For the moment, the UI only lets you turn it on, not off
+  router.get('/record/:uuid/toggle-editing', (req, res) => {
     const data = req.session.data
     const record = data.record
+
     // Update failed or no data
     if (!record){
       res.redirect(`/record/${req.params.uuid}`)
     }
     else {
+
       let editingEnabled = record?.hesa?.editingEnabled || false
       let timelineMessage, flashHtml
 
@@ -64,12 +67,13 @@ module.exports = router => {
         </p>`
 
       }
-      console.log(timelineMessage)
+
       utils.updateRecord(data, record, timelineMessage)
-      req.flash('success', {
-            html: flashHtml
-        })
-      res.redirect(`/record/${req.params.uuid}`)
+      // req.flash('success', {
+      //       html: flashHtml
+      //   })
+      // req.flash('success', "Editing enabled")
+      res.redirect(`/record/${req.params.uuid}/editing-enabled`)
     }
   })
 

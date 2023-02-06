@@ -131,7 +131,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full record-actions">
 
-    <div class="">
+    <div class="govuk-button-group govuk-!-margin-bottom-0">
       {% if record.status | canRecommendForQts %}
         {% if record | ittInTheFuture %}
           {{ govukInsetText({
@@ -147,7 +147,7 @@
           {{ govukButton({
             text: "Recommend trainee for " + (record | getQualificationText),
             href: referrer + '/qualification/outcome-date',
-            classes: "govuk-!-margin-bottom-0"
+            classes: ""
           }) }}
         {% endif %}
       {% elseif record.status == "Pending TRN" %}
@@ -161,7 +161,25 @@
           classes: "govuk-!-margin-0"
         }) }}
       {% endif %}
+
+      {# <span class="govuk-body">or</span> #}
+      {# <form action="{{ recordPath }}/toggle-editing" method="POST"> #}
+        {% if record.hesa.editingEnabled != true %}
+          {# {{ govukButton({
+            text: "Disable editing on this record",
+            classes: "govuk-button--secondary"
+          }) }} #}
+        {# Won't currently get shown because this banner only shows if the record is locked - to consider later #}
+        {# {% else %} #}
+          {{ govukButton({
+            text: "Enable editing on this record",
+            classes: "govuk-button--secondary",
+            href: recordPath + "/toggle-editing"
+          }) }}
+        {% endif %}
+      {# </form> #}
     </div>
+
 
     <div class="">
       {{actionSentenceHtml | safe}}
@@ -177,7 +195,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
-    <hr class="govuk-section-break govuk-section-break--l govuk-!-margin-top-3 govuk-section-break--visible">
+    <hr class="govuk-section-break govuk-!-margin-top-s govuk-!-margin-bottom-3 govuk-section-break--visible">
   </div>
 </div>
 

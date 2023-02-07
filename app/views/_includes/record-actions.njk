@@ -136,12 +136,12 @@
         {% if record | ittInTheFuture %}
           {{ govukInsetText({
           text: "The trainee’s ITT starts on " + (record.courseDetails.startDate | govukDate),
-          classes: "govuk-!-margin-0"
+          classes: "govuk-!-margin-0 govuk-!-width-one-third"
         }) }}
         {% elseif record | hasOutstandingActions %}
           {{ govukInsetText({
             text: "This trainee record requires additional details",
-            classes: "govuk-!-margin-0"
+            classes: "govuk-!-margin-0 govuk-!-width-one-third"
           }) }}
         {% else %}
           {{ govukButton({
@@ -153,12 +153,12 @@
       {% elseif record.status == "Pending TRN" %}
         {{ govukInsetText({
           text: "This trainee is pending a TRN",
-          classes: "govuk-!-margin-0"
+          classes: "govuk-!-margin-0 govuk-!-width-one-third"
         }) }}
       {% elseif record.status == "Deferred" %}
         {{ govukInsetText({
           text: "This trainee is deferred",
-          classes: "govuk-!-margin-0"
+          classes: "govuk-!-margin-0 govuk-!-width-one-third"
         }) }}
       {% endif %}
 

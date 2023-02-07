@@ -19,7 +19,7 @@
 {% set traineeCount = traineesThatCanBeRecommended | length %}
 
 
-{% set hasZeroTraineesToExport = true if traineeCount == 0 %}
+{% set hasZeroTraineesToExport = true if traineesThatCanBeRecommended == 0 %}
 
 {% set needAcademicAward = traineesThatCanBeRecommended | filterByAcademicQualificationsApply %}
 
@@ -27,15 +27,7 @@
 
 {% set pageHeading = "Bulk recommend trainees for " + qualifications %}
 
-
 {% block content %}
-
-{% set aboutCsvDetails %}
-  {{ govukDetails({
-  summaryText: "What trainees are included?",
-  text: "We need to know your nationality so we can work out which elections you’re entitled to vote in. If you cannot provide your nationality, you’ll have to send copies of identity documents through the post."
-}) }}
-{% endset %}
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds-from-desktop">
@@ -44,53 +36,68 @@
         {{ pageHeading }}
       </h1>
 
-      {% set guidanceLink %}
-        <a href="/guidance/bulk-recommend-trainees" class="govuk-link">guidance about bulk recommending trainees</a>
-      {% endset %}
+  {% if hasZeroTraineesToExport %}
+
+    <p class="govuk-body">You cannot bulk recommend any trainees for qualified teacher status (QTS) or early years teacher status (EYTS).</p>
+
+    <p class="govuk-body">You can only bulk recommend trainees if they have:</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>a course end date in the past 6 months or in the next 6 months</li>
+      <li>‘actively training’ status - this means that they have not withdrawn, deferred or been awarded QTS or EYTS already</li>
+    </ul>
+
+    <p class="govuk-body">Read <a href="/guidance/bulk-recommend-trainees" class="govuk-link">guidance about how to bulk recommend trainees for QTS or EYTS</a>.</p>
+
+  {% else %}
+
+  {% set guidanceLink %}
+    <a href="/guidance/bulk-recommend-trainees" class="govuk-link">guidance about bulk recommending trainees</a>
+  {% endset %}
 
 {#       {{ govukInsetText({
         html: guidanceLink
       }) }} #}
 
-      <p class="govuk-body">You can upload a CSV file to recommend multiple trainees for qualified teacher status (QTS) or early years teacher status (EYTS).</p>
+    <p class="govuk-body">You can upload a CSV file to recommend multiple trainees for qualified teacher status (QTS) or early years teacher status (EYTS).</p>
 
-      {% set insetTraineeCountHtml %}
-        <p class="govuk-body">This export includes the details of {{traineeCount}} {{"trainee" | pluralise(traineeCount)}}.
-      {% endset %}
+    {% set insetTraineeCountHtml %}
+      <p class="govuk-body">This export includes the details of {{traineeCount}} {{"trainee" | pluralise(traineeCount)}}.
+    {% endset %}
 
-      {# {{ govukInsetText({
-        html: insetTraineeCountHtml
-      }) }} #}
+    {# {{ govukInsetText({
+      html: insetTraineeCountHtml
+    }) }} #}
 
-      {# <form action="/bulk-update/recommend/bulk-update-answer" method="post" novalidate> #}
-      <form action="/bulk-update/recommend/upload-answer" method="post" novalidate>
+    {# <form action="/bulk-update/recommend/bulk-update-answer" method="post" novalidate> #}
+    <form action="/bulk-update/recommend/upload-answer" method="post" novalidate>
 
-        <ol class="govuk-list govuk-list--number">
+      <ol class="govuk-list govuk-list--number">
 
 
-          {# <li><a href="/reports/trainees-you-can-recommend">Export a list of trainees you can bulk recommend</a>.</li> #}
-          <li><a class="govuk-link--no-visited-state" href="/public/downloads/bulk-update/recommendOnly.csv" download="{{ data.signedInProviders | slugify }}.csv">Download a CSV file listing {{traineeCount}} trainees you can recommend</a>.
+        {# <li><a href="/reports/trainees-you-can-recommend">Export a list of trainees you can bulk recommend</a>.</li> #}
+        <li><a class="govuk-link--no-visited-state" href="/public/downloads/bulk-update/recommendOnly.csv" download="{{ data.signedInProviders | slugify }}.csv">Download a CSV file listing {{traineeCount}} trainees you can recommend</a>.
             {# {{aboutCsvDetails | safe}} #}
-          </li>
+        </li>
 
-          <li>Fill in the date when each trainee met the {{qualifications}} standards. If they have not met the standards, either delete the row or leave the date column blank.</li>
+        <li>Fill in the date when each trainee met the {{qualifications}} standards. If a trainee has not met the standards, either delete the row or leave the date column blank.</li>
 
           {# <li>Upload the CSV file.</li> #}
 
-          <li>
-            {{ govukFileUpload({
-              id: "file-upload-1",
-              name: "file-upload-1",
-              label: {
-                text: "Upload the CSV file."
-              },
-              attributes: {
-                "accept": ".csv"
-              }
-            }) }}
-          </li>
+        <li>
+          {{ govukFileUpload({
+            id: "file-upload-1",
+            name: "file-upload-1",
+            label: {
+              text: "Upload the CSV file."
+            },
+            attributes: {
+              "accept": ".csv"
+            }
+          }) }}
+        </li>
 
-        </ol>
+      </ol>
 
       {# Making thier own file #}
       {# {% set detailsHtml %}
@@ -172,17 +179,21 @@
         html: detailsHtml
       }) }} #}
 
-        <p class="govuk-inset-text">You cannot use this upload to make other changes to a trainee’s record. Read {{guidanceLink | safe}} to find out how to make changes and what to do if trainees have withdrawn or deferred.</p>
+      <p class="govuk-inset-text">You cannot use this upload to make other changes to a trainee’s record. Read {{guidanceLink | safe}} to find out how to make changes and what to do if trainees have withdrawn or deferred.</p>
 
-        <input name="successFlash" type="hidden" value="File uploaded">
+      <input name="successFlash" type="hidden" value="File uploaded">
 
 
-        {{ govukButton({
-          text: "Upload file and check which trainees you’ll recommend"
-        }) }}
-      </form>
+      {{ govukButton({
+        text: "Upload file and check who you’ll recommend"
+      }) }}
+    </form>
+
+  {% endif %}
 
     </div>
   </div>
+
+
 
 {% endblock %}

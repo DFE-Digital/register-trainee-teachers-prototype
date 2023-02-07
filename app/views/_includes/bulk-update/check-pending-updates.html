@@ -16,7 +16,7 @@
 
   {% set totalCount = params.rows | length %}
 
-  {% if totalCount > chunkSize %}
+  {% if totalCount > 10000 %}
     {% set chunkedRows = params.rows | batch(chunkSize) %}
 
     {% set accordionItems = [] %}
@@ -139,11 +139,14 @@
             text: buttonText
           }) }}
 
+         <p class="govuk-body">
+            <a href="/bulk-update/upload-changes" class="govuk-link">
+              Change which trainees you’ll recommend</a>
+          </p>
+
           <p class="govuk-body">
             <a href="/bulk-update/cancel-bulk-updates" class="govuk-link">
               Cancel bulk {{ "recommending trainees" if data.settings.bulkLinksInPrimaryNav == "Show bulk recommend" else "updates to records" }}</a>
-            or
-            <a href="upload-changes">change which trainees you’ll recommend</a>
           </p>
 
         {# </div> #}

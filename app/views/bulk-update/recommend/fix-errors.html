@@ -41,8 +41,7 @@
 
       <form action="/bulk-update/recommend/fix-errors-answer" method="post" novalidate>
 
-        <p class="govuk-body">You cannot recommend trainees for QTS or EYTS if there’s an error in their row in the You need to fix errors in the CSV file you uploaded before you can recommend trainees for QTS or EYTS.</p>
-        <p class="govuk-body">You can skip the trainees with errors but will not be able to recommend any.</p>
+        <p class="govuk-body">You cannot recommend a trainee for QTS or EYTS if there’s an error in their row in the CSV file. You need to fix the errors if you want to recommend them.</p>
 
         <ol class="govuk-list govuk-list--number">
 
@@ -82,7 +81,7 @@
         {% if hasUpdated %}
           <p class="govuk-body">
             <a href="/bulk-update/recommend/check-pending-updates" class="govuk-link">
-              Skip trainees with errors and check which trainees you’ll recommend
+              Skip trainees with errors and check who you’ll recommend
             </a>
           </p>
         {% endif %}

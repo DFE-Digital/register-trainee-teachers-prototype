@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 
-{% set navActive = "records" %}
+{% set navActive = navActive or "records" %}
 
 {% if not backLink %}
     {% set backLink      = 'javascript:history.back();' %}

@@ -7,6 +7,8 @@
   text: "Return to the previous page"
 } %}
 
+{% set navActive = 'bulk' %}
+
 {% set bulkOnly = true if data.settings.bulkLinksInPrimaryNav == "Show bulk recommend" %}
 
 {% block formContent %}

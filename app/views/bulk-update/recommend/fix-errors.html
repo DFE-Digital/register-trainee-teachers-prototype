@@ -17,6 +17,7 @@
 {% set errorCount     = data.bulkUpload.processedRows | where("uploadStatus", "error") | length  %}
 {% set unchangedCount = data.bulkUpload.processedRows | where("uploadStatus", "unchanged") | length  %}
 {% set updatedCount   = data.bulkUpload.processedRows | where("uploadStatus", "updated") | length  %}
+
 {% set hasErrors = errorCount > 0 %}
 {% set hasUpdated = updatedCount > 0 %}
 
@@ -81,7 +82,7 @@
         {% if hasUpdated %}
           <p class="govuk-body">
             <a href="/bulk-update/recommend/check-pending-updates" class="govuk-link">
-              Skip trainees with errors and check who you’ll recommend
+              Skip {{ 'trainee' | pluralise(errorCount) }} with errors and check who you’ll recommend
             </a>
           </p>
         {% endif %}

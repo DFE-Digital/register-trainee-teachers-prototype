@@ -164,7 +164,7 @@
 
       {# <span class="govuk-body">or</span> #}
       {# <form action="{{ recordPath }}/toggle-editing" method="POST"> #}
-        {% if record.hesa.editingEnabled != true %}
+        {% if record | sourceIsHESA and record.hesa.editingEnabled != true %}
           {# {{ govukButton({
             text: "Disable editing on this record",
             classes: "govuk-button--secondary"

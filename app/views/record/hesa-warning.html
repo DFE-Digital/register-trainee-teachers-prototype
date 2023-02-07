@@ -1,0 +1,64 @@
+{% extends "_templates/_record-form.html" %}
+
+{% set pageHeading %}
+  You are editing a HESA record
+{% endset %}
+
+{% set deferOrReinstateText -%}
+  {%- if record | isDeferred -%}
+    reinstate
+  {%- else -%}
+    defer
+  {%- endif %}
+{% endset %}
+
+{% set hideReturnLink = true %}
+{# {% set backLink = 'false' %} #}
+
+{% set formAction = "./did-trainee-start-answer" %}
+
+{% block formContent %}
+
+  {% set deferUrl %}
+    {% if (record | ittInTheFuture) %}
+      {{ recordPath + "/defer/confirm" | addReferrer(referrer) }}
+    {% elseif (record | ittStartedButNoCommencementDate) %}
+      {{ recordPath + "/defer/did-trainee-start" | addReferrer(referrer) }}
+    {% else %}
+      {{ recordPath + "/defer" | addReferrer(referrer) }}
+    {% endif %}
+  {% endset %}
+
+  {% set reinstateUrl %}
+    {% if (record | ittInTheFuture) %}
+      {{ recordPath + "/reinstate/confirm" }}
+    {% else %}
+      {{ recordPath + "/reinstate" }}
+    {% endif %}
+  {% endset %}
+
+  {% if not record | isDeferred %}
+    {% set targetUrl = deferUrl %}
+  {% else %}
+    {% set targetUrl = reinstateUrl %}
+  {% endif %}
+
+  {% include "_includes/trainee-name-caption.njk" %}
+
+  <h1 class="govuk-heading-l">{{ pageHeading }}</h1>
+
+  <p class="govuk-body">
+    You can {{deferOrReinstateText}} this trainee now, but if you later update the record in the HESA service then any changes you’ve made in this service will be replaced by the data from HESA.
+  </p>
+
+
+
+
+
+
+  {{ govukButton({
+    "text": "Continue to " + deferOrReinstateText,
+    href: targetUrl
+  }) }}
+
+{% endblock %}

@@ -1,6 +1,8 @@
 
 {% set deferUrl %}
-  {% if (record | ittInTheFuture) %}
+  {% if record | isHesaAndLocked %}
+    {{ referrer + "/hesa-warning" | addReferrer(referrer) }}
+  {% elseif (record | ittInTheFuture) %}
     {{ referrer + "/defer/confirm" | addReferrer(referrer) }}
   {% elseif (record | ittStartedButNoCommencementDate) %}
     {{ referrer + "/defer/did-trainee-start" | addReferrer(referrer) }}
@@ -10,7 +12,9 @@
 {% endset %}
 
 {% set reinstateUrl %}
-  {% if (record | ittInTheFuture) %}
+  {% if record | isHesaAndLocked %}
+    {{ referrer + "/hesa-warning" | addReferrer(referrer) }}
+  {% elseif (record | ittInTheFuture) %}
     {{ referrer + "/reinstate/confirm" }}
   {% else %}
     {{ referrer + "/reinstate" }}
@@ -41,7 +45,7 @@
 
 {% if data.settings.useCombinedRemoveFlow == 'false' %}
   {# Remove record #}
-  {% if not record.trainingDetails.commencementDate %}
+  {% if not record.trainingDetails.commencementDate and not record | isHesaAndLocked %}
     {% set actionItems = actionItems | push(['remove', removeUrl]) %}
   {% endif %}
 {% endif %}
@@ -136,12 +140,12 @@
         {% if record | ittInTheFuture %}
           {{ govukInsetText({
           text: "The trainee’s ITT starts on " + (record.courseDetails.startDate | govukDate),
-          classes: "govuk-!-margin-0 govuk-!-width-one-third"
+          classes: "govuk-!-margin-0"
         }) }}
         {% elseif record | hasOutstandingActions %}
           {{ govukInsetText({
             text: "This trainee record requires additional details",
-            classes: "govuk-!-margin-0 govuk-!-width-one-third"
+            classes: "govuk-!-margin-0"
           }) }}
         {% else %}
           {{ govukButton({
@@ -153,12 +157,12 @@
       {% elseif record.status == "Pending TRN" %}
         {{ govukInsetText({
           text: "This trainee is pending a TRN",
-          classes: "govuk-!-margin-0 govuk-!-width-one-third"
+          classes: "govuk-!-margin-0"
         }) }}
       {% elseif record.status == "Deferred" %}
         {{ govukInsetText({
           text: "This trainee is deferred",
-          classes: "govuk-!-margin-0 govuk-!-width-one-third"
+          classes: "govuk-!-margin-0"
         }) }}
       {% endif %}
 

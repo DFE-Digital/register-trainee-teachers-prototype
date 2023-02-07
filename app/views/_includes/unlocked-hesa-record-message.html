@@ -12,9 +12,9 @@
 {% if record | isActiveStatus and record | sourceIsHESA and record.hesa.editingEnabled == true %}
 
   {% set hesaRecordSummary %}
-    <h3 class="govuk-heading-s">
-      Editing has been enabled on this HESA record.
-    </h3>
+    <p class="govuk-body">
+      Editing has been enabled for this record. If you update it in the HESA service then any changes you’ve made in this service will be replaced by the data from HESA.
+    </p>
 
     {% if showDisabledEditingButton %}
       <form action="{{ recordPath }}/toggle-editing" method="POST">
@@ -33,9 +33,14 @@
       </form>
     {% endif %}
 
+    {% set fakeHesaDateTime = moment()
+      .subtract(87, 'days')
+      .subtract(1, 'hours')
+      .add(32, 'minutes') | govukDateTime %}
+
     <p class="govuk-body">
-      {# Assume sync has happened within in last 2 hours #}
-      Last import for all HESA records at {{ moment().subtract(78, 'minutes') | govukDateTime }}
+      {# Assume sync has happened somewhat recently #}
+      Last updated from HESA on {{ fakeHesaDateTime }}
     </p>
 
   {% endset %}

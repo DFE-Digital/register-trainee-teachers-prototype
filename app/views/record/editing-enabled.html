@@ -13,18 +13,26 @@
 {% endset %}
 
 {% set hideReturnLink = true %}
-{% set backLink = 'false' %}
+{# {% set backLink = 'false' %} #}
 
 {% set formAction = "./did-trainee-start-answer" %}
 
 {% block formContent %}
 
+  {% include "_includes/trainee-name-caption.njk" %}
+
   <h1 class="govuk-heading-l">{{ pageHeading }}</h1>
 
-  <p class="govuk-body">Changes made to this record will be overwritten by any future HESA updates to this trainee.</p>
+  <p class="govuk-body">
+    You can now make changes to this trainee record.
+  </p>
+
+  <p class="govuk-body">
+    If you update the record in the HESA service then any changes you’ve made in this service will be replaced by the data from HESA.
+  </p>
 
   {{ govukButton({
-    "text": "Return to " + record.personalDetails.shortName + "’s record",
+    "text": "Return to trainee record",
     href: recordPath + ""
   }) }}
 

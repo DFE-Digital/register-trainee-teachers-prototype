@@ -15,11 +15,7 @@
 {% set filteredRecords = data.records | filterRecords(data) %}
 {% set traineesThatCanBeRecommended = filteredRecords | filterByReadyToRecommend %}
 
-
 {% set traineeCount = traineesThatCanBeRecommended | length %}
-
-
-{% set hasZeroTraineesToExport = true if traineesThatCanBeRecommended == 0 %}
 
 {% set needAcademicAward = traineesThatCanBeRecommended | filterByAcademicQualificationsApply %}
 
@@ -36,160 +32,147 @@
         {{ pageHeading }}
       </h1>
 
-  {% if hasZeroTraineesToExport %}
+      {% if traineeCount == 0 %}
 
-    <p class="govuk-body">You cannot bulk recommend any trainees for qualified teacher status (QTS) or early years teacher status (EYTS).</p>
+        <p class="govuk-body">You cannot bulk recommend any trainees for qualified teacher status (QTS) or early years teacher status (EYTS).</p>
 
-    <p class="govuk-body">You can only bulk recommend trainees if they have:</p>
-
-    <ul class="govuk-list govuk-list--bullet">
-      <li>a course end date in the past 6 months or in the next 6 months</li>
-      <li>‘actively training’ status - this means that they have not withdrawn, deferred or been awarded QTS or EYTS already</li>
-    </ul>
-
-    <p class="govuk-body">Read <a href="/guidance/bulk-recommend-trainees" class="govuk-link">guidance about how to bulk recommend trainees for QTS or EYTS</a>.</p>
-
-  {% else %}
-
-  {% set guidanceLink %}
-    <a href="/guidance/bulk-recommend-trainees" class="govuk-link">guidance about bulk recommending trainees</a>
-  {% endset %}
-
-{#       {{ govukInsetText({
-        html: guidanceLink
-      }) }} #}
-
-    <p class="govuk-body">You can upload a CSV file to recommend multiple trainees for qualified teacher status (QTS) or early years teacher status (EYTS).</p>
-
-    {% set insetTraineeCountHtml %}
-      <p class="govuk-body">This export includes the details of {{traineeCount}} {{"trainee" | pluralise(traineeCount)}}.
-    {% endset %}
-
-    {# {{ govukInsetText({
-      html: insetTraineeCountHtml
-    }) }} #}
-
-    {# <form action="/bulk-update/recommend/bulk-update-answer" method="post" novalidate> #}
-    <form action="/bulk-update/recommend/upload-answer" method="post" novalidate>
-
-      <ol class="govuk-list govuk-list--number">
-
-
-        {# <li><a href="/reports/trainees-you-can-recommend">Export a list of trainees you can bulk recommend</a>.</li> #}
-        <li><a class="govuk-link--no-visited-state" href="/public/downloads/bulk-update/recommendOnly.csv" download="{{ data.signedInProviders | slugify }}.csv">Download a CSV file listing {{traineeCount}} trainees you can recommend</a>.
-            {# {{aboutCsvDetails | safe}} #}
-        </li>
-
-        <li>Fill in the date when each trainee met the {{qualifications}} standards. If a trainee has not met the standards, either delete the row or leave the date column blank.</li>
-
-          {# <li>Upload the CSV file.</li> #}
-
-        <li>
-          {{ govukFileUpload({
-            id: "file-upload-1",
-            name: "file-upload-1",
-            label: {
-              text: "Upload the CSV file."
-            },
-            attributes: {
-              "accept": ".csv"
-            }
-          }) }}
-        </li>
-
-      </ol>
-
-      {# Making thier own file #}
-      {# {% set detailsHtml %}
-
-        <p class="govuk-body">You can prepare your own CSV of trainees you would like to recommend for QTS.</p>
-
-        <p class="govuk-body">Your spreadsheet must include:</p>
+        <p class="govuk-body">You can only bulk recommend trainees if they have:</p>
 
         <ul class="govuk-list govuk-list--bullet">
-          <li>a header row</li>
-          <li>an identifier column with one of TRN, Provider Trainee ID, or HESA ID</li>
-          <li>a date column labeled ‘Date QTS or EYTS standards met’</li>
+          <li>a course end date in the past 6 months or in the next 6 months</li>
+          <li>‘actively training’ status - this means that they have not withdrawn, deferred or been awarded QTS or EYTS already</li>
         </ul>
 
-        <p class="govuk-body">For each trainee you are awarding, provide their identifer and the date they met the teaching standards</p>
+        <p class="govuk-body">Read <a href="/guidance/bulk-recommend-trainees" class="govuk-link">guidance about how to bulk recommend trainees for QTS or EYTS</a>.</p>
 
-        <p class="govuk-body">An example of what your sheet should look like:</p>
+      {% else %}
 
-        <div class="spreadsheet" data-notify-module="fullscreen-table">
-          <div class="fullscreen-scrollable-table" role="region" aria-labelledby="example" tabindex="0" style="height: 155.888px;">
-            <table class="table table-font-xsmall">
-            <caption class="heading-medium table-heading govuk-visually-hidden" id="example">
-              Example
-            </caption>
-            <thead class="table-field-headings-visible">
-              <tr>
-                <th scope="col" class="table-field-heading-first" width="">
-                </th>
+        <p class="govuk-body">You can upload a CSV file to recommend multiple trainees for qualified teacher status (QTS) or early years teacher status (EYTS).</p>
 
-                <th scope="col" class="table-field-heading" width="">
-                  A
-                </th>
-                <th scope="col" class="table-field-heading" width="">
-                  B
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="table-row">
-                <td class="table-field-index">
-                  1
-                </td>
-                <td class="table-field-left-aligned  ">
-                  <div class="">
-                    TRN
-                  </div>
-                </td>
-                <td class="table-field-left-aligned  ">
-                  <div class="">
-                    Date QTS or EYTS standards met
-                  </div>
-                </td>
-              </tr>
-              <tr class="table-row">
-                <td class="table-field-index">
-                  2
-                </td>
-                <td class="table-field-left-aligned  ">
-                  <div class="">
-                    123456789
-                  </div>
-                </td>
-                <td class="table-field-left-aligned  ">
-                  <div class="">
-                    5/6/2023
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        <form action="/bulk-update/recommend/upload-answer" method="post" novalidate>
 
-        <a href="#" class="govuk-link">Download this example (CSV)</a>
+          <ol class="govuk-list govuk-list--number">
+            <li><a class="govuk-link--no-visited-state" href="/public/downloads/bulk-update/recommendOnly.csv" download="{{ data.signedInProviders | slugify }}.csv">Download a CSV file listing {{traineeCount}} trainees you can recommend</a>.
+            </li>
 
-      {% endset %}
+            <li>Fill in the date when each trainee met the {{qualifications}} standards. If a trainee has not met the standards, either delete the row or leave the date column blank.</li>
 
-      {{ govukDetails({
-        summaryText: "Can I use my own file?",
-        html: detailsHtml
-      }) }} #}
+            <li>
+              {{ govukFileUpload({
+                id: "file-upload-1",
+                name: "file-upload-1",
+                label: {
+                  text: "Upload the CSV file."
+                },
+                attributes: {
+                  "accept": ".csv"
+                }
+              }) }}
+            </li>
 
-      <p class="govuk-inset-text">You cannot use this upload to make other changes to a trainee’s record. Read {{guidanceLink | safe}} to find out how to make changes and what to do if trainees have withdrawn or deferred.</p>
+          </ol>
 
-      <input name="successFlash" type="hidden" value="File uploaded">
+          {# Making thier own file #}
+          {# {% set detailsHtml %}
+
+            <p class="govuk-body">You can prepare your own CSV of trainees you would like to recommend for QTS.</p>
+
+            <p class="govuk-body">Your spreadsheet must include:</p>
+
+            <ul class="govuk-list govuk-list--bullet">
+              <li>a header row</li>
+              <li>an identifier column with one of TRN, Provider Trainee ID, or HESA ID</li>
+              <li>a date column labeled ‘Date QTS or EYTS standards met’</li>
+            </ul>
+
+            <p class="govuk-body">For each trainee you are awarding, provide their identifer and the date they met the teaching standards</p>
+
+            <p class="govuk-body">An example of what your sheet should look like:</p>
+
+            <div class="spreadsheet" data-notify-module="fullscreen-table">
+              <div class="fullscreen-scrollable-table" role="region" aria-labelledby="example" tabindex="0" style="height: 155.888px;">
+                <table class="table table-font-xsmall">
+                <caption class="heading-medium table-heading govuk-visually-hidden" id="example">
+                  Example
+                </caption>
+                <thead class="table-field-headings-visible">
+                  <tr>
+                    <th scope="col" class="table-field-heading-first" width="">
+                    </th>
+
+                    <th scope="col" class="table-field-heading" width="">
+                      A
+                    </th>
+                    <th scope="col" class="table-field-heading" width="">
+                      B
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="table-row">
+                    <td class="table-field-index">
+                      1
+                    </td>
+                    <td class="table-field-left-aligned  ">
+                      <div class="">
+                        TRN
+                      </div>
+                    </td>
+                    <td class="table-field-left-aligned  ">
+                      <div class="">
+                        Date QTS or EYTS standards met
+                      </div>
+                    </td>
+                  </tr>
+                  <tr class="table-row">
+                    <td class="table-field-index">
+                      2
+                    </td>
+                    <td class="table-field-left-aligned  ">
+                      <div class="">
+                        123456789
+                      </div>
+                    </td>
+                    <td class="table-field-left-aligned  ">
+                      <div class="">
+                        5/6/2023
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <a href="#" class="govuk-link">Download this example (CSV)</a>
+
+          {% endset %}
+
+          {{ govukDetails({
+            summaryText: "Can I use my own file?",
+            html: detailsHtml
+          }) }} #}
+
+          {% set guidanceLink %}
+            <a href="/guidance/bulk-recommend-trainees" class="govuk-link">guidance about bulk recommending trainees</a>
+          {% endset %}
+
+          {% set insetTextHtml %}
+            <p class="govuk-body">You cannot use this upload to make other changes to a trainee’s record. Read {{ guidanceLink | safe }} to find out how to make changes and what to do if trainees have withdrawn or deferred.</p>
+          {% endset %}
+
+          {{ govukInsetText({
+            html: insetTextHtml
+          }) }}
+
+          <input name="successFlash" type="hidden" value="File uploaded">
 
 
-      {{ govukButton({
-        text: "Upload file and check who you’ll recommend"
-      }) }}
-    </form>
+          {{ govukButton({
+            text: "Upload file and check who you’ll recommend"
+          }) }}
+        </form>
 
-  {% endif %}
+      {% endif %}
 
     </div>
   </div>

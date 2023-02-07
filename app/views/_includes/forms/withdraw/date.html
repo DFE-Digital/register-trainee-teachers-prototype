@@ -12,7 +12,7 @@
     </p>
   {% endset %}
 
-  <h1 class="govuk-heading-l">Withdrawal date</h1>
+  <h1 class="govuk-heading-l">{{pageHeading}}</h1>
 
   {{ govukInsetText({
     html: deferredTextHtml
@@ -61,10 +61,13 @@
   {{ govukRadios({
     fieldset: {
       legend: {
-        text: "When did the trainee withdraw?",
+        text: pageHeading,
         isPageHeading: true,
         classes: "govuk-fieldset__legend--l"
       }
+    },
+    hint: {
+      text: "Date of their last day of training for " + record | getQualificationText
     },
     items: [
       {
@@ -74,7 +77,7 @@
         text: "Yesterday"
       },
       {
-        text: "On another day",
+        text: "Another date",
         conditional: {
           html: customWithdrawalDate
         }

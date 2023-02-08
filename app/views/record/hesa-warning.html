@@ -5,7 +5,7 @@
 {% endset %}
 
 {% set deferOrReinstateText -%}
-  {%- if record | isDeferred -%}
+  {%- if data.record | isDeferred -%}
     reinstate
   {%- else -%}
     defer

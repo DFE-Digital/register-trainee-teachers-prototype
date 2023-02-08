@@ -1,7 +1,7 @@
 {% extends "_templates/_record-form.html" %}
 
 {% set pageHeading %}
-  You are editing a HESA record
+  You’re editing a record imported from HESA
 {% endset %}
 
 {% set deferOrReinstateText -%}
@@ -48,13 +48,11 @@
   <h1 class="govuk-heading-l">{{ pageHeading }}</h1>
 
   <p class="govuk-body">
-    You can {{deferOrReinstateText}} this trainee now, but if you later update the record in the HESA service then any changes you’ve made in this service will be replaced by the data from HESA.
+    You can {{deferOrReinstateText}} this trainee.
   </p>
-
-
-
-
-
+  <p class="govuk-body">
+    If you later update the record in the HESA service then any changes you’ve made in this service will be replaced by the data from HESA.
+  </p>
 
   {{ govukButton({
     "text": "Continue to " + deferOrReinstateText,

@@ -49,7 +49,7 @@ module.exports = router => {
       _.set(record, 'hesa.editingEnabled', !(editingEnabled))
 
       if (editingEnabled) {
-        timelineMessage = "Editing disabled on record"
+        timelineMessage = "Editing disabled"
 
         flashHtml = `
         <p class="govuk-notification-banner__heading">
@@ -57,7 +57,7 @@ module.exports = router => {
         </p>`
       }
       else {
-        timelineMessage = "Editing enabled on record"
+        timelineMessage = "Editing enabled"
 
         flashHtml = `
         <p class="govuk-notification-banner__heading">

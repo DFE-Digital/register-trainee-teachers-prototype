@@ -1,7 +1,7 @@
 {% extends "_templates/_record-form.html" %}
 
 {% set pageHeading %}
-  You’re editing a record imported from HESA
+  You’re making changes to a trainee imported from HESA
 {% endset %}
 
 {% set deferOrReinstateText -%}
@@ -55,7 +55,7 @@
   </p>
 
   {{ govukButton({
-    "text": "Continue to " + deferOrReinstateText,
+    "text": "Continue to " + deferOrReinstateText + " trainee",
     href: targetUrl
   }) }}
 

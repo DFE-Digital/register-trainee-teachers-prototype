@@ -16,7 +16,7 @@
 
   {% set totalCount = params.rows | length %}
 
-  {% if totalCount > 10000 %}
+  {% if totalCount > chunkSize %}
     {% set chunkedRows = params.rows | batch(chunkSize) %}
 
     {% set accordionItems = [] %}
@@ -140,7 +140,7 @@
           }) }}
 
          <p class="govuk-body">
-            <a href="/bulk-update/upload-changes" class="govuk-link">
+            <a href="/bulk-update/recommend/upload-changes" class="govuk-link">
               Change which trainees you’ll recommend</a>
           </p>
 

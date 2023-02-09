@@ -34,14 +34,16 @@
 
       {% if traineeCount == 0 %}
 
-        <p class="govuk-body">You cannot bulk recommend any trainees for qualified teacher status (QTS) or early years teacher status (EYTS).</p>
+        <p class="govuk-body">You do not have any trainees who can be bulk recommended for qualified teacher status (QTS) or early years teacher status (EYTS).</p>
 
-        <p class="govuk-body">You can only bulk recommend trainees if they have:</p>
+        <p class="govuk-body">You can only bulk recommend trainees if they have a TRN and either:</p>
 
         <ul class="govuk-list govuk-list--bullet">
-          <li>a course end date in the past 6 months or in the next 6 months</li>
-          <li>‘actively training’ status - this means that they have not withdrawn, deferred or been awarded QTS or EYTS already</li>
+          <li>an estimated end date in the past 6 months or the next 6 months</li>
+          <li>no estimated end date</li>
         </ul>
+
+        <p class="govuk-body">You cannot bulk recommend trainees who have deferred or withdrawn from their course.</p>
 
         <p class="govuk-body">Read <a href="/guidance/bulk-recommend-trainees" class="govuk-link">guidance about how to bulk recommend trainees for QTS or EYTS</a>.</p>
 

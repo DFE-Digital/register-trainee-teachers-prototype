@@ -41,6 +41,7 @@ module.exports = [
     'Problems with their health',
     'Stopped responding to messages',
     'Teaching placement problems',
+    'Transferred to another accredited provider',
     'Unacceptable behaviour',
     'Unhappy with course, provider or employing school',
 

@@ -14,6 +14,9 @@
 {% set unchangedCount = data.bulkUpload.processedRows | where("uploadStatus", "unchanged") | length  %}
 {% set updatedCount   = data.bulkUpload.processedRows | where("uploadStatus", "updated") | length  %}
 
+{# {% set unchangedCount = 0 %} #}
+{# {% set updatedCount = 0 %} #}
+
 {% set simulateZeroTrainees = false %}
 
 {% if simulateZeroTrainees %}

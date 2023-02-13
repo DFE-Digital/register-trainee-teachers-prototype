@@ -7,6 +7,7 @@
 
 {# Remaining trainees #}
 {% set traineesThatCanBeRecommended = filteredRecords | filterByReadyToRecommend %}
+{# {% set traineesThatCanBeRecommended = 0 %} #}
 
 {# Sets numbers for errors summary #}
 {% set errorCount     = data.bulkUpload.processedRows | where("uploadStatus", "error") | length  %}

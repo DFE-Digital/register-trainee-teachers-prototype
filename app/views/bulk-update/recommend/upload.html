@@ -16,6 +16,7 @@
 {% set traineesThatCanBeRecommended = filteredRecords | filterByReadyToRecommend %}
 
 {% set traineeCount = traineesThatCanBeRecommended | length %}
+{# {% set traineeCount = 0 %} #}
 
 {% set needAcademicAward = traineesThatCanBeRecommended | filterByAcademicQualificationsApply %}
 

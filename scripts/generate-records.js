@@ -426,6 +426,7 @@ const generateFakeApplicationsForProvider = (provider, year, count) => {
  *
  */
 const generateApplicationsFile = (filePath) => {
+  console.log("Note: this script has a race condition which means it sometimes fails. Try re-running if it does.")
   const applications = generateFakeApplications()
   // console.log(applications)
   console.log(`Generated ${applications.length} records`)

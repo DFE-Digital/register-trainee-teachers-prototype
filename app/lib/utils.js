@@ -1422,7 +1422,8 @@ exports.sectionIsComplete = section => {
 }
 
 exports.academicQualificationsApply = record => {
-  return trainingRoutes?.[record?.route]?.academicQualificationsApply && exports.isPostgraduate(record)
+  // return trainingRoutes?.[record?.route]?.academicQualificationsApply && exports.isPostgraduate(record)
+  return false
 }
 
 // Check if all sections are complete
@@ -2462,7 +2463,7 @@ exports.recommendForAward = (record, params) => {
     console.log(`Recommending trainee ${record.trn}`)
     record.status = `${exports.getQualificationText(record)} recommended`
     _.set(record, 'qualificationDetails.standardsAssessedOutcome', "Passed")
-    record.qualificationRecommendedDate = record?.qualificationDetails?.outcomeDate || params?.date || new Date()
+    // record.qualificationRecommendedDate = record?.qualificationDetails?.outcomeDate || params?.date || new Date()
     record.updatedDate = new Date()
     exports.addEvent(record, `Trainee recommended for ${exports.getQualificationText(record)}`)
   }

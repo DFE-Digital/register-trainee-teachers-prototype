@@ -12,7 +12,7 @@
   <h1 class="govuk-heading-l">
     {{pageHeading}}
   </h1>
-  {% include "_includes/summary-cards/qts-assessment-details.html" %}
+  {% include "_includes/summary-cards/qualification-details.html" %}
 
   {{ govukButton({
     text: "Recommend trainee for " + (record | getQualificationText)

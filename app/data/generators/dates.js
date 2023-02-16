@@ -141,6 +141,10 @@ module.exports = ({updatedDate, submittedDate, deferredDate, withdrawalDate, qua
         date: withdrawalDate
       }
     }),
-    qualificationAwardedDate
+    ...(qualificationAwardedDate && {
+      qualificationDetails: {
+        outcomeDate: qualificationAwardedDate
+      }
+    })
   }
 }

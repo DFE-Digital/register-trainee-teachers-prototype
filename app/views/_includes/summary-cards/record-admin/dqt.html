@@ -1,0 +1,190 @@
+
+{% set code %}
+
+{% markdown %}
+```
+{
+  "data": [
+    {
+      "id": "11fc0d3b2f",
+      "type": "application",
+      "attributes": {
+        "support_reference": "AB1234",
+        "status": "awaiting_provider_decision",
+        "updated_at": "2019-06-13 10:44:31 UTC",
+        "submitted_at": "2019-06-13 10:44:31 UTC",
+        "recruited_at": "2019-06-13 23:59:59 UTC",
+        "candidate": {
+          "id": "C5432",
+          "first_name": "Boris",
+          "last_name": "Brown",
+          "date_of_birth": "1985-02-13",
+          "nationality": [
+            "NL"
+          ],
+          "domicile": "XF",
+          "uk_residency_status": "UK Citizen",
+          "uk_residency_status_code": "B",
+          "fee_payer": "02",
+          "english_main_language": true,
+          "english_language_qualifications": "Name: TOEFL, Grade: 20, Awarded: 1999",
+          "other_languages": "I am bilingual in Finnish and English",
+          "disability_disclosure": "I am dyslexic",
+          "gender": "male",
+          "disabilities": [
+            "blind"
+          ],
+          "ethnic_group": "Asian or Asian British",
+          "ethnic_background": "Chinese"
+        },
+        "contact_details": {
+          "address_line1": "45 Dialstone Lane",
+          "address_line2": "Stockport",
+          "address_line3": "Greater Manchester",
+          "address_line4": "England",
+          "postcode": "SK2 6AA",
+          "country": "GB",
+          "email": "boris.brown@example.com",
+          "phone_number": "07700 900000"
+        },
+        "course": {
+          "recruitment_cycle_year": 2020,
+          "training_provider_code": "2FR",
+          "training_provider_type": "scitt",
+          "accredited_provider_type": "university",
+          "accredited_provider_code": "2FR",
+          "course_code": "3CVK",
+          "course_uuid": "24a9590e-6b40-4096-9967-36b0a5904706",
+          "site_code": "K",
+          "study_mode": "full_time"
+        },
+        "qualifications": {
+          "gcses": [
+            {
+              "id": 123,
+              "qualification_type": "BA",
+              "degree_type_uuid": "7022c4c2-ec9a-4eec-98dc-315bfeb1ef3a",
+              "non_uk_qualification_type": "High School Diploma",
+              "subject": "History and Politics",
+              "subject_uuid": "917f70f0-5dce-e911-a985-000d3ab79618",
+              "grade": "AA*B",
+              "grade_uuid": "8741765a-13d8-4550-a413-c5a860a59d25",
+              "start_year": "1989",
+              "award_year": "1992",
+              "institution_details": "University of Huddersfield",
+              "institution_uuid": "5c9e1d2d-3fa2-e811-812b-5065f38ba241",
+              "equivalency_details": "Enic: 4000123456 - Between GCSE and GCSE AS Level - Equivalent to GCSE C",
+              "comparable_uk_degree": "masters_degree"
+            }
+          ],
+          "degrees": [
+            {
+              "id": 123,
+              "qualification_type": "BA",
+              "degree_type_uuid": "7022c4c2-ec9a-4eec-98dc-315bfeb1ef3a",
+              "non_uk_qualification_type": "High School Diploma",
+              "subject": "History and Politics",
+              "subject_uuid": "917f70f0-5dce-e911-a985-000d3ab79618",
+              "grade": "AA*B",
+              "grade_uuid": "8741765a-13d8-4550-a413-c5a860a59d25",
+              "start_year": "1989",
+              "award_year": "1992",
+              "institution_details": "University of Huddersfield",
+              "institution_uuid": "5c9e1d2d-3fa2-e811-812b-5065f38ba241",
+              "equivalency_details": "Enic: 4000123456 - Between GCSE and GCSE AS Level - Equivalent to GCSE C",
+              "comparable_uk_degree": "masters_degree"
+            }
+          ],
+          "other_qualifications": [
+            {
+              "id": 123,
+              "qualification_type": "BA",
+              "degree_type_uuid": "7022c4c2-ec9a-4eec-98dc-315bfeb1ef3a",
+              "non_uk_qualification_type": "High School Diploma",
+              "subject": "History and Politics",
+              "subject_uuid": "917f70f0-5dce-e911-a985-000d3ab79618",
+              "grade": "AA*B",
+              "grade_uuid": "8741765a-13d8-4550-a413-c5a860a59d25",
+              "start_year": "1989",
+              "award_year": "1992",
+              "institution_details": "University of Huddersfield",
+              "institution_uuid": "5c9e1d2d-3fa2-e811-812b-5065f38ba241",
+              "equivalency_details": "Enic: 4000123456 - Between GCSE and GCSE AS Level - Equivalent to GCSE C",
+              "comparable_uk_degree": "masters_degree"
+            }
+          ],
+          "missing_gcses_explanation": "Maths GCSE or equivalent: I will take Maths GCSE at my local training provider on 18th August 2020"
+        },
+        "hesa_itt_data": null
+      }
+    }
+  ]
+}
+```
+{% endmarkdown %}
+{% endset %}
+
+{% set collectionData1 %}
+  {{ govukDetails({
+  summaryText: "17 May 2021 at 5:43pm",
+  html: code
+}) }}
+{% endset %}
+
+{% set collectionData2 %}
+  {{ govukDetails({
+  summaryText: "4 December 2022 at 1:07pm",
+  html: code
+}) }}
+{% endset %}
+
+
+{% set dqtRows = [
+  {
+    key: {
+      text: "TRN"
+    },
+    value: {
+      text: record.trn
+    }
+  },
+  {
+    key: {
+      text: "firstName"
+    },
+    value: {
+      text: record.personalDetails.givenName
+    }
+  },
+  {
+    key: {
+      text: "lastName"
+    },
+    value: {
+      text: record.personalDetails.familyName
+    }
+  },
+  {
+    key: {
+      text: "dateOfBirth"
+    },
+    value: {
+      text: record.personalDetails.dateOfBirth
+    }
+  }
+] | removeEmpty %}
+
+{% set dqtHtml %}
+  {{ govukSummaryList({
+    rows: dqtRows,
+    attributes: {
+      style: "overflow:hidden;"
+    }
+  }) }}
+{% endset %}
+
+{{ appSummaryCard({
+  classes: "govuk-!-margin-bottom-6",
+  titleText: "DQT",
+  html: dqtHtml
+}) }}

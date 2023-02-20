@@ -100,6 +100,29 @@ module.exports = router => {
     }
   })
 
+  // Manually advance an application from Pending EYTS/QTS to EYTS/QTS.
+  router.get(['/record/:uuid/un-award','/record/:uuid/revert/teaching-status/update' ], (req, res) => {
+    const data = req.session.data
+    const record = data.record
+    // Update failed or no data
+    if (!record){
+      res.redirect(`/record/${req.params.uuid}`)
+    }
+    else {
+      if (record.status.includes('awarded')){
+        console.log('un-awarding trainee')
+        utils.revertAward(record) // Recommend a group of trainees for EYTS/QTS first so data is correct
+        utils.deleteTempData(data)
+        utils.updateRecord(data, record, false)
+        req.flash('success', `${utils.getQualificationText(record)} award reverted`)
+      }
+      else {
+        console.log("Error: can't un-award a trainee that is not awarded")
+      }
+      res.redirect(`/record/${req.params.uuid}`)
+    }
+  })
+
   // Collect the EYTS/QTS outcome date and set up the forking
   router.post('/record/:uuid/qualification/outcome-date-answer', (req, res) => {
     const data = req.session.data

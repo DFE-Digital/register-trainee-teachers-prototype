@@ -15,7 +15,7 @@
           visuallyHiddenText: "date standards met"
         }
       ]
-    } if canAmend
+    } if canAmend and false
   },
   {
     key: {
@@ -79,9 +79,22 @@
 
 {% else %}
 
+  {% if dqtAllowsReverts %}
+    {% set revertUrl = recordPath + "/revert/teaching-status/details" | addReferrer(referrer) %}
+  {% else %}
+    {% set revertUrl = recordPath + "/revert/teaching-status/cannot-revert" | addReferrer(referrer) %}
+  {% endif %}
+
   {{ appSummaryCard({
     classes: "govuk-!-margin-bottom-6",
     titleText: (record | getQualificationText) + " details",
+    actions: {
+      items: [{
+        href: revertUrl,
+        text: "Revert this teaching status",
+        classes: 'app-destructive-link'
+      }]
+    } if activeTab == 'admin',
     html: qualificationDetailsHtml
   }) }}
   

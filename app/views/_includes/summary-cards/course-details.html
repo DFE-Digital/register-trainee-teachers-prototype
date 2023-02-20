@@ -356,11 +356,11 @@
     classes: "govuk-!-margin-bottom-6",
     titleText: "Course details",
     actions: {
-    items: [{
-      href: recordPath + "/course-details/is-course-change" | addReferrer(referrer),
-      text: "Move the trainee to a new course"
-    }]
-  } if canAmend and showCourseChangeOption,
+      items: [{
+        href: recordPath + "/course-details/is-course-change" | addReferrer(referrer),
+        text: "Move the trainee to a new course"
+      }]
+    } if canAmend and showCourseChangeOption,
     html: courseDetailsHtml
   }) }}
   

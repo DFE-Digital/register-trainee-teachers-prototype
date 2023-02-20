@@ -2470,6 +2470,24 @@ exports.recommendForAward = (record, params) => {
   return true
 }
 
+// Revert a record back to TRN received
+exports.revertAward = (record, params) => {
+
+  if (!record || !record.status.includes('awarded')){
+    return false // nothing to do
+  }
+  else {
+    console.log(`Un-awarding trainee ${record.trn}`)
+
+    // Revert to in training status
+    record.status = `TRN received`
+    delete record.qualifcationDetails
+    record.updatedDate = new Date()
+    exports.addEvent(record, `${exports.getQualificationText(record)} award reverted`)
+  }
+  return true
+}
+
 // -------------------------------------------------------------------
 // Invalid answers / errors
 // -------------------------------------------------------------------

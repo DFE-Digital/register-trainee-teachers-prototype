@@ -133,5 +133,11 @@
 {{ appSummaryCard({
   classes: "govuk-!-margin-bottom-6",
   titleText: "Withdrawal details",
+  actions: {
+      items: [{
+        href: revertUrl,
+        text: "Un-withdraw this trainee"
+      }]
+    } if activeTab == 'admin',
   html: withdrawDetailsHtml
 }) }}

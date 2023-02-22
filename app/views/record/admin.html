@@ -39,6 +39,9 @@
     {% endif %}
   {% endset %}
 
+  {% set removeUrl = recordPath + "/admin/delete/details" | addReferrer(referrer) %}
+
+
     <p class="govuk-body govuk-!-margin-top-8"><a href="{{removeUrl}}" class="govuk-link app-destructive-link">Delete this trainee</a></p>
   {% endif %}
 

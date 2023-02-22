@@ -3,7 +3,7 @@
 {% set qualification = data.record | getQualificationText %}
 
 {% set pageHeading %}
-  Confirm revert of {{ qualification }} status
+  Confirm deletion of record
 {% endset %}
 
 {% set backLink = ("/record/" + data.record.id) | orReferrer(referrer) %}
@@ -21,7 +21,7 @@
   {# Needed as this is an awarded trainee #}
   {% set canAmend = true %}
 
-  {% include "_includes/summary-cards/record-admin/revert-teaching-status.html" %}
+  {% include "_includes/summary-cards/record-admin/delete-record.html" %}
 
   {# {{ govukCheckboxes({
   idPrefix: "waste",
@@ -36,7 +36,7 @@
   }) }} #}
 
   {{ govukButton({
-    text: "Revert " + qualification + " status",
+    text: "Delete record",
     classes: "govuk-button--warning"
   }) }}
 

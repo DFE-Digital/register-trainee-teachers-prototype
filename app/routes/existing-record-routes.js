@@ -431,6 +431,20 @@ module.exports = router => {
 
   })
 
+  // Admins deleting a record
+  router.post('/record/:uuid/admin/delete/update', (req, res) => {
+    const data = req.session.data
+    const records = data.records
+    let theRecord = data.record
+    if (theRecord.id){
+      let recordIndex = records.findIndex(record => record.id == theRecord.id)
+      _.pullAt(records, [recordIndex]) // delete item at index
+    }
+    utils.deleteTempData(data)
+    req.flash('success', 'Record deleted')
+    res.redirect('/records')
+  })
+
 
   // Defer route
   // If trainee has not started, skip deferred date

@@ -312,7 +312,7 @@ module.exports = router => {
   })
 
   // Revert QTS or EYTS status
-  router.post('/record/:uuid/revert/teaching-status/update', (req, res) => {
+  router.post('/record/:uuid/admin/revert/teaching-status/update', (req, res) => {
     const data = req.session.data
     const record = data.record
     let referrer = utils.getReferrer(req.query.referrer)
@@ -326,6 +326,9 @@ module.exports = router => {
         utils.revertAward(record) // Recommend a group of trainees for EYTS/QTS first so data is correct
         utils.deleteTempData(data)
         utils.updateRecord(data, record, false)
+        let reasonText = `Reason: ${record?.revert?.teachingStatus?.auditLogComment}`
+        utils.addEvent(record, `${utils.getQualificationText(record)} award reverted`, reasonText)
+
         req.flash('success', `${utils.getQualificationText(record)} award reverted`)
       }
       else {
@@ -600,7 +603,7 @@ module.exports = router => {
   })
 
     // Revert QTS or EYTS status
-  router.post('/record/:uuid/revert/withdraw/update', (req, res) => {
+  router.post('/record/:uuid/admin/revert/withdraw/update', (req, res) => {
     const data = req.session.data
     const record = data.record
     let referrer = utils.getReferrer(req.query.referrer)
@@ -613,8 +616,9 @@ module.exports = router => {
         console.log('un-withdrawing trainee')
         record.status = "TRN received"
         delete record.withdraw
-        let revertWithdrawalReasonText = `Reason: Provider withdrew trainee by accident`
-        utils.addEvent(record, "Withdrawal reverted", revertWithdrawalReasonText)
+        // let revertWithdrawalReasonText = `Reason: Provider withdrew trainee by accident`
+        let reasonText = `Reason: ${record?.revert?.withdraw?.auditLogComment}`
+        utils.addEvent(record, "Withdrawal reverted", reasonText)
         // utils.revertWithdrawal(record) // Recommend a group of trainees for EYTS/QTS first so data is correct
         utils.deleteTempData(data)
         utils.updateRecord(data, record, false)

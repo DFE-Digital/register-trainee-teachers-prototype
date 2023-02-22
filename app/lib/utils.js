@@ -2483,7 +2483,7 @@ exports.revertAward = (record, params) => {
     record.status = `TRN received`
     delete record.qualifcationDetails
     record.updatedDate = new Date()
-    exports.addEvent(record, `${exports.getQualificationText(record)} award reverted`)
+    // exports.addEvent(record, `${exports.getQualificationText(record)} award reverted`)
   }
   return true
 }

@@ -4,7 +4,7 @@
 {% set qualification = data.record | getQualificationText %}
 
 {% set pageHeading %}
-  Revert withdrawal
+  Revert {{ qualification }} status
 {% endset %}
 
 {% set returnLink = {
@@ -24,16 +24,11 @@
   </h1>
 
   <p class="govuk-body">
-    Withdrawals can be reverted where:
+    Reverting a teaching status is a significant step. DQT may need to contact the trainee to destroy their certificate.
   </p>
 
-  <ul class="govuk-list govuk-list--bullet">
-    <li>the trainee was withdrawn in error</li>
-    <li>the trainee withdrew and then changed their mind, and is now continuing on the same course</li>
-  </ul>
-
-  <p class="govuk-body">
-    Withdrawals cannot be reverted where the trainee will be returning to a new course. If this has happened, instruct the provider to register the trainee again on a new course.
+  <p class="govuk-body">Providers should be asked to provide sufficient justification
+     for why a teaching status needs to be reverted.
   </p>
 
 {#   {{ govukInsetText({
@@ -46,17 +41,18 @@
   </p>
 
   <ol class="govuk-list govuk-list--number">
-    <li>Check you have found the correct training instance in Register</li>
-    <li>Contact DQT to unwithdraw the instance</li>
+    <li>Ask provider to confirm they are sure</li>
+    <li>Check you have found the correct trainee in Register</li>
+    <li>Contact DQT to revert the trainee</li>
     <li>Wait until DQT confirms the update before making changes in Register</li>
     <li>Make the change in Register</li>
     <li>Notify the provdier that the change has been made</li>
   </ol>
 
   {% if dqtAllowsReverts %}
-    {% set revertUrl = recordPath + "/revert/withdraw/details" | addReferrer(referrer) %}
+    {% set revertUrl = recordPath + "/admin/revert/teaching-status/details" | addReferrer(referrer) %}
   {% else %}
-    {% set revertUrl = recordPath + "/revert/withdraw/cannot-revert" | addReferrer(referrer) %}
+    {% set revertUrl = recordPath + "/admin/revert/teaching-status/cannot-revert" | addReferrer(referrer) %}
   {% endif %}
 
   {{ govukButton({

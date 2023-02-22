@@ -79,11 +79,11 @@
 
 {% else %}
 
-  {% if dqtAllowsReverts %}
+{#   {% if dqtAllowsReverts %}
     {% set revertUrl = recordPath + "/revert/teaching-status/details" | addReferrer(referrer) %}
   {% else %}
     {% set revertUrl = recordPath + "/revert/teaching-status/cannot-revert" | addReferrer(referrer) %}
-  {% endif %}
+  {% endif %} #}
 
   {% set revertUrl = recordPath + "/revert/teaching-status/instructions" | addReferrer(referrer) %}
 

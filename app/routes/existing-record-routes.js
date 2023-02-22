@@ -100,37 +100,6 @@ module.exports = router => {
     }
   })
 
-  // Manually advance an application from Pending EYTS/QTS to EYTS/QTS.
-  router.get(['/record/:uuid/un-award','/record/:uuid/revert/teaching-status/update' ], (req, res) => {
-    const data = req.session.data
-    const record = data.record
-    let referrer = utils.getReferrer(req.query.referrer)
-    // Update failed or no data
-    if (!record){
-      res.redirect(`/record/${req.params.uuid}`)
-    }
-    else {
-      if (record.status.includes('awarded')){
-        console.log('un-awarding trainee')
-        utils.revertAward(record) // Recommend a group of trainees for EYTS/QTS first so data is correct
-        utils.deleteTempData(data)
-        utils.updateRecord(data, record, false)
-        req.flash('success', `${utils.getQualificationText(record)} award reverted`)
-      }
-      else {
-        console.log("Error: can't un-award a trainee that is not awarded")
-      }
-      delete record?.revert
-      if (referrer){
-        res.redirect(utils.getReferrerDestination(req.query.referrer))
-      }
-      else {
-        // More likely we've come from this tab where most things are on
-        res.redirect(`/record/${req.params.uuid}`)
-      }
-    }
-  })
-
   // Collect the EYTS/QTS outcome date and set up the forking
   router.post('/record/:uuid/qualification/outcome-date-answer', (req, res) => {
     const data = req.session.data
@@ -339,6 +308,37 @@ module.exports = router => {
       utils.updateRecord(data, record, "Trainee reinstated")
       req.flash('success', 'Trainee reinstated')
       res.redirect(`/record/${req.params.uuid}`)
+    }
+  })
+
+  // Revert QTS or EYTS status
+  router.post('/record/:uuid/revert/teaching-status/update', (req, res) => {
+    const data = req.session.data
+    const record = data.record
+    let referrer = utils.getReferrer(req.query.referrer)
+    // Update failed or no data
+    if (!record){
+      res.redirect(`/record/${req.params.uuid}`)
+    }
+    else {
+      if (record.status.includes('awarded')){
+        console.log('un-awarding trainee')
+        utils.revertAward(record) // Recommend a group of trainees for EYTS/QTS first so data is correct
+        utils.deleteTempData(data)
+        utils.updateRecord(data, record, false)
+        req.flash('success', `${utils.getQualificationText(record)} award reverted`)
+      }
+      else {
+        console.log("Error: can't un-award a trainee that is not awarded")
+      }
+      delete record?.revert
+      if (referrer){
+        res.redirect(utils.getReferrerDestination(req.query.referrer))
+      }
+      else {
+        // More likely we've come from this tab where most things are on
+        res.redirect(`/record/${req.params.uuid}`)
+      }
     }
   })
 
@@ -596,6 +596,42 @@ module.exports = router => {
       utils.addEvent(record, "Trainee withdrawn", withdrawalReasonText)
       req.flash('success', 'Trainee withdrawn')
       res.redirect('/record/' + req.params.uuid)
+    }
+  })
+
+    // Revert QTS or EYTS status
+  router.post('/record/:uuid/revert/withdraw/update', (req, res) => {
+    const data = req.session.data
+    const record = data.record
+    let referrer = utils.getReferrer(req.query.referrer)
+    // Update failed or no data
+    if (!record){
+      res.redirect(`/record/${req.params.uuid}`)
+    }
+    else {
+      if (record.status.includes('Withdrawn')){
+        console.log('un-withdrawing trainee')
+        record.status = "TRN received"
+        delete record.withdraw
+        let revertWithdrawalReasonText = `Reason: Provider withdrew trainee by accident`
+        utils.addEvent(record, "Withdrawal reverted", revertWithdrawalReasonText)
+        // utils.revertWithdrawal(record) // Recommend a group of trainees for EYTS/QTS first so data is correct
+        utils.deleteTempData(data)
+        utils.updateRecord(data, record, false)
+        req.flash('success', `Withdrawal reverted`)
+      }
+      else {
+        console.log("Error: can't un-withdraw a trainee that is not withdrawn")
+      }
+      // Delete temporary revert data
+      delete record?.revert
+      if (referrer){
+        res.redirect(utils.getReferrerDestination(req.query.referrer))
+      }
+      else {
+        // More likely we've come from this tab where most things are on
+        res.redirect(`/record/${req.params.uuid}`)
+      }
     }
   })
 

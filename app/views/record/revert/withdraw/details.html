@@ -1,0 +1,14 @@
+{% extends "_templates/_record-form.html" %}
+
+{% set pageHeading %}
+  Revert withdrawal details
+{% endset %}
+{# {% set pageHeading = "Revert award of teaching status" %} #}
+
+{% set formAction = "./confirm" | addReferrer(referrer) %}
+
+{% block formContent %}
+
+  {% include "_includes/forms/revert/withdraw/details.html" %}
+
+{% endblock %}

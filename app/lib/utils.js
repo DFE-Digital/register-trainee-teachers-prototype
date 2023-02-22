@@ -1108,11 +1108,11 @@ exports.isTrnReceived = record => {
 }
 
 exports.isRecommended = record => {
-  return record?.status.includes("recommended") //EYTS recommended and QTS recommended
+  return record?.status?.includes("recommended") //EYTS recommended and QTS recommended
 }
 
 exports.isAwarded = record => {
-  return record?.status.includes("awarded") // EYTS awarded and QTS awarded
+  return record?.status?.includes("awarded") // EYTS awarded and QTS awarded
 }
 
 exports.isDeferred = record => {
@@ -1153,7 +1153,7 @@ exports.isInTraining = record => {
     "TRN received",
     "QTS recommended",
     "EYTS recommended"
-  ].includes(record.status)
+  ].includes(record?.status)
 
   let ittInTheFuture = exports.ittInTheFuture(record)
   return isActiveStatus && !ittInTheFuture

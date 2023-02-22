@@ -1,0 +1,39 @@
+
+{% extends "_templates/_record-form.html" %}
+
+{% set pageHeading = 'Contact DQT before reverting this withdrawal' %}
+
+{% set returnLink = {
+ text: 'Cancel and return to record',
+ href: "/record/" + data.record.id + "/admin"
+} %}
+
+{% set formAction = './details' | addReferrer(referrer) %}
+
+{% block formContent %}
+
+
+
+  {% include "_includes/trainee-name-caption.njk" %}
+  <h1 class="govuk-heading-l">
+    {{ pageHeading }}
+  </h1>
+
+  <p class="govuk-body">
+    This trainee’s status has not been updated on DQT.
+  </p>
+
+  <p class="govuk-body">
+    You can only revert a withdrawal after the DQT record has been updated.
+  </p>
+
+  <p class="govuk-body">
+    Contact DQT first and ask them to revert the teaching status for this trainee.
+  </p>
+
+  {{ govukButton({
+    text: "Check again"
+  }) }}
+
+
+{% endblock %}

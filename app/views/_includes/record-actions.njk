@@ -180,14 +180,15 @@
 
     </div>
 
-
+  {# Only show action links where a record isn't final #}
+  {% if record | isActiveStatus %}
     <div class="">
-      {{actionSentenceHtml | safe}}
+      {{ actionSentenceHtml | safe}}
       {# {{ mojButtonMenu({
         items: buttonMenuItems
       }) }} #}
-
     </div>
+  {% endif %}
 
   </div>
 </div>

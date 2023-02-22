@@ -1,0 +1,68 @@
+
+{% extends "_templates/_record-form.html" %}
+
+{% set qualification = data.record | getQualificationText %}
+
+{% set pageHeading %}
+  Revert withdrawal
+{% endset %}
+
+{% set returnLink = {
+ text: 'Cancel and return to record',
+ href: "/record/" + data.record.id + "/admin"
+} %}
+
+{% set formAction = './details' | addReferrer(referrer) %}
+
+{% block formContent %}
+
+
+
+  {% include "_includes/trainee-name-caption.njk" %}
+  <h1 class="govuk-heading-l">
+    {{ pageHeading }}
+  </h1>
+
+  <p class="govuk-body">
+    Withdrawals can be reverted where:
+  </p>
+
+  <ul class="govuk-list govuk-list--bullet">
+    <li>the trainee was withdrawn in error</li>
+    <li>the trainee withdrew and then changed their mind, and is now continuing on the same course</li>
+  </ul>
+
+  <p class="govuk-body">
+    Withdrawals cannot be reverted where the trainee will be returning to a new course. If this has happened, instruct the provider to register the trainee again on a new course.
+  </p>
+
+{#   {{ govukInsetText({
+    text: "This trainee holds both QTS and EYTS. Check you are reverting the correct record."
+  }) }}
+ #}
+
+  <p class="govuk-body">
+    Instructions for reverting teaching status:
+  </p>
+
+  <ol class="govuk-list govuk-list--number">
+    <li>Check you have found the correct training instance in Register</li>
+    <li>Contact DQT to unwithdraw the instance</li>
+    <li>Wait until DQT confirms the update before making changes in Register</li>
+    <li>Make the change in Register</li>
+    <li>Notify the provdier that the change has been made</li>
+  </ol>
+
+  {% if dqtAllowsReverts %}
+    {% set revertUrl = recordPath + "/revert/withdraw/details" | addReferrer(referrer) %}
+  {% else %}
+    {% set revertUrl = recordPath + "/revert/withdraw/cannot-revert" | addReferrer(referrer) %}
+  {% endif %}
+
+  {{ govukButton({
+    text: "Continue",
+    href: revertUrl
+  }) }}
+
+
+{% endblock %}

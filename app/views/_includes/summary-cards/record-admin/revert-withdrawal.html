@@ -1,0 +1,72 @@
+
+
+{% set statusTag %}
+  {{ govukTag({
+    text: "TRN received",
+    classes: "TRN received" | getStatusClass
+  })}}
+{% endset %}
+
+
+{% set revertRows = [
+  {
+    key: {
+      text: "New record status"
+    },
+    value: {
+      html: statusTag | safe
+    },
+    actions: {
+      items: [{
+        href: recordPath + "/personal-details/edit" | addReferrer(referrer),
+        text: "Change",
+        visuallyHiddenText: "date of birth"
+      }]
+    } if canAmend
+  },
+  {
+    key: {
+      text: "Audit log comment"
+    },
+    value: {
+      text: record.revert.withdrawal.auditLogComment
+    },
+    actions: {
+      items: [{
+        href: "./details" | addReferrer(referrer),
+        text: "Change",
+        visuallyHiddenText: "audit log comment"
+      }]
+    } if canAmend
+  },
+  {
+    key: {
+      text: "Zendesk URL"
+    },
+    value: {
+      text: record.revert.withdrawal.zendeskUrl
+    },
+    actions: {
+      items: [{
+        href: "./details" | addReferrer(referrer),
+        text: "Change",
+        visuallyHiddenText: "audit log comment"
+      }]
+    } if canAmend
+  }
+] | removeEmpty %}
+
+{% set revertHtml %}
+  {{ govukSummaryList({
+    rows: revertRows,
+    attributes: {
+      style: "overflow:hidden;"
+    }
+  }) }}
+{% endset %}
+
+{{ appSummaryCard({
+  classes: "govuk-!-margin-bottom-6",
+  titleText: "Revert teaching status",
+  html: revertHtml
+}) }}

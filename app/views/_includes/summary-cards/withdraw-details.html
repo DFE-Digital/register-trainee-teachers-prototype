@@ -130,6 +130,9 @@
   }) }}
 {% endset %}
 
+{% set revertUrl = recordPath + "/revert/withdraw/instructions" | addReferrer(referrer) %}
+
+
 {{ appSummaryCard({
   classes: "govuk-!-margin-bottom-6",
   titleText: "Withdrawal details",

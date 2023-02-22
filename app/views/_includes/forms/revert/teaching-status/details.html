@@ -1,19 +1,36 @@
 
 {% include "_includes/trainee-name-caption.njk" %}
-{# <h1 class="govuk-heading-l">{{pageHeading}}</h1> #}
+<h1 class="govuk-heading-l">{{pageHeading}}</h1>
+
+{% set auditLogInputHint %}
+  For example, ‘Provider awarded the trainee in error’<br>
+  This will be visible to the provider on the trainee timeline
+{% endset %}
 
 {{ govukInput({
 
   label: {
-    text: "Details about why the trainee withdrew (optional)",
-    text: pageHeading,
-    classes: "govuk-label--l",
+    text: "Audit log comment",
+    classes: "govuk-label--m",
     isPageHeading: true
   },
   hint: {
-    text: 'For example, ‘Provider awarded the trainee in error’'
+    text: 'For example, ‘Provider awarded the trainee in error’',
+    html: auditLogInputHint
   }
-} | decorateAttributes(record, "record.withdraw.additionalDetail"))  }}
+} | decorateAttributes(record, "record.revert.teachingStatus.auditLogComment"))  }}
+
+{{ govukInput({
+
+  label: {
+    text: "Zendeask ticket URL (optional)",
+    classes: "govuk-label--m",
+    isPageHeading: false
+  },
+  hint: {
+    text: 'For example, http://becomingateacher.zendesk.com/agent/tickets/12345'
+  }
+} | decorateAttributes(record, "record.revert.teachingStatus.zendeskUrl"))  }}
 
 {{ govukButton({
   text: "Continue"

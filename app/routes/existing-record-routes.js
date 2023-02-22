@@ -104,6 +104,7 @@ module.exports = router => {
   router.get(['/record/:uuid/un-award','/record/:uuid/revert/teaching-status/update' ], (req, res) => {
     const data = req.session.data
     const record = data.record
+    let referrer = utils.getReferrer(req.query.referrer)
     // Update failed or no data
     if (!record){
       res.redirect(`/record/${req.params.uuid}`)
@@ -119,7 +120,14 @@ module.exports = router => {
       else {
         console.log("Error: can't un-award a trainee that is not awarded")
       }
-      res.redirect(`/record/${req.params.uuid}`)
+      delete record?.revert
+      if (referrer){
+        res.redirect(utils.getReferrerDestination(req.query.referrer))
+      }
+      else {
+        // More likely we've come from this tab where most things are on
+        res.redirect(`/record/${req.params.uuid}`)
+      }
     }
   })
 

@@ -1,11 +1,16 @@
 {% extends "_templates/_record-form.html" %}
-{% set pageHeading = "Confirm revert of teaching status" %}
+
+{% set qualification = data.record | getQualificationText %}
+
+{% set pageHeading %}
+  Confirm revert of {{ qualification }} status
+{% endset %}
 
 {% set backLink = ("/record/" + data.record.id) | orReferrer(referrer) %}
 {% set backText = "Back to record" %}
 
 {% set gridColumn = 'govuk-grid-column-full' %}
-{% set formAction = "./update" %}
+{% set formAction = "./update" | addReferrer(referrer) %}
 
 {% block formContent %}
   {% include "_includes/trainee-name-caption.njk" %}
@@ -13,7 +18,10 @@
     {{pageHeading}}
   </h1>
 
-  {# {% include "_includes/summary-cards/revert/teaching-status/details.html" %} #}
+  {# Needed as this is an awarded trainee #}
+  {% set canAmend = true %}
+
+  {% include "_includes/summary-cards/record-admin/revert-teaching-status.html" %}
 
   {# {{ govukCheckboxes({
   idPrefix: "waste",
@@ -28,7 +36,7 @@
   }) }} #}
 
   {{ govukButton({
-    text: "Un-award this trainee",
+    text: "Revert " + qualification + " status",
     classes: "govuk-button--warning"
   }) }}
 

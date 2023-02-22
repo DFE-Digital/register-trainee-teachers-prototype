@@ -1,6 +1,10 @@
 {% extends "_templates/_record-form.html" %}
+{% set qualification = data.record | getQualificationText %}
 
-{% set pageHeading = "Why is the teaching status being reverted?" %}
+{% set pageHeading %}
+  Revert {{ qualification }} details
+{% endset %}
+{# {% set pageHeading = "Revert award of teaching status" %} #}
 
 {% set formAction = "./confirm" | addReferrer(referrer) %}
 

@@ -15,14 +15,7 @@
     },
     value: {
       html: statusTag | safe
-    },
-    actions: {
-      items: [{
-        href: recordPath + "/personal-details/edit" | addReferrer(referrer),
-        text: "Change",
-        visuallyHiddenText: "date of birth"
-      }]
-    } if canAmend
+    }
   },
   {
     key: {

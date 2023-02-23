@@ -326,7 +326,7 @@ module.exports = router => {
         utils.revertAward(record) // Recommend a group of trainees for EYTS/QTS first so data is correct
         utils.deleteTempData(data)
         utils.updateRecord(data, record, false)
-        let reasonText = `Reason: ${record?.revert?.teachingStatus?.auditLogComment}`
+        let reasonText = `${record?.revert?.teachingStatus?.auditLogComment}`
         utils.addEvent(record, `${utils.getQualificationText(record)} award reverted`, reasonText)
 
         req.flash('success', `${utils.getQualificationText(record)} award reverted`)
@@ -631,7 +631,7 @@ module.exports = router => {
         record.status = "TRN received"
         delete record.withdraw
         // let revertWithdrawalReasonText = `Reason: Provider withdrew trainee by accident`
-        let reasonText = `Reason: ${record?.revert?.withdraw?.auditLogComment}`
+        let reasonText = `${record?.revert?.withdraw?.auditLogComment}`
         utils.addEvent(record, "Withdrawal reverted", reasonText)
         // utils.revertWithdrawal(record) // Recommend a group of trainees for EYTS/QTS first so data is correct
         utils.deleteTempData(data)

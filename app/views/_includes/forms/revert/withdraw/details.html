@@ -18,7 +18,7 @@
     text: 'For example, ‘Provider withdrew the trainee in error’',
     html: auditLogInputHint
   }
-} | decorateAttributes(record, "record.revert.withdrawal.auditLogComment"))  }}
+} | decorateAttributes(record, "record.revert.withdraw.auditLogComment"))  }}
 
 {{ govukInput({
 
@@ -30,7 +30,7 @@
   hint: {
     text: 'For example, http://becomingateacher.zendesk.com/agent/tickets/12345'
   }
-} | decorateAttributes(record, "record.revert.withdrawal.zendeskUrl"))  }}
+} | decorateAttributes(record, "record.revert.withdraw.zendeskUrl"))  }}
 
 {{ govukButton({
   text: "Continue"

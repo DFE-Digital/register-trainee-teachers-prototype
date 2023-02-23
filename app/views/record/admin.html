@@ -29,18 +29,9 @@
 
   {% include "_includes/summary-cards/record-admin/hesa.html" %}
 
-  {% if record | isActiveStatus %}
-
-  {% set removeUrl %}
-    {% if record | ittStartedButNoCommencementDate %}
-      {{ referrer + "/remove/did-trainee-start" | addReferrer(referrer) }}
-    {% else %}
-      {{ referrer + "/remove/confirm" | addReferrer(referrer) }}
-    {% endif %}
-  {% endset %}
+  {% if record | isActiveStatus or record | isWithdrawn %}
 
   {% set removeUrl = recordPath + "/admin/delete/details" | addReferrer(referrer) %}
-
 
     <p class="govuk-body govuk-!-margin-top-8"><a href="{{removeUrl}}" class="govuk-link app-destructive-link">Delete this trainee</a></p>
   {% endif %}

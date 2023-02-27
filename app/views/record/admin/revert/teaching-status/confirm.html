@@ -3,7 +3,7 @@
 {% set qualification = data.record | getQualificationText %}
 
 {% set pageHeading %}
-  Confirm revert of {{ qualification }} status
+  Confirm removal of {{ qualification }} award
 {% endset %}
 
 {% set backLink = ("/record/" + data.record.id) | orReferrer(referrer) %}
@@ -36,7 +36,7 @@
   }) }} #}
 
   {{ govukButton({
-    text: "Revert " + qualification + " status",
+    text: "Remove " + qualification + " award",
     classes: "govuk-button--warning"
   }) }}
 

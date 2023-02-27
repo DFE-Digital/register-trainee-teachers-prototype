@@ -4,7 +4,7 @@
 {% set qualification = data.record | getQualificationText %}
 
 {% set pageHeading %}
-  Revert {{ qualification }} status
+  Remove {{ qualification }} award
 {% endset %}
 
 {% set returnLink = {
@@ -24,29 +24,19 @@
   </h1>
 
   <p class="govuk-body">
-    Reverting a teaching status is a significant step. DQT may need to contact the trainee to destroy their certificate.
+    If you remove the trainee’s QTS award, they’ll no longer be allowed to work as a teacher in a state school. The DQT team may need to ask them to destroy their certificate.
   </p>
-
-  <p class="govuk-body">Providers should be asked to provide sufficient justification
-     for why a teaching status needs to be reverted.
-  </p>
-
-{#   {{ govukInsetText({
-    text: "This trainee holds both QTS and EYTS. Check you are reverting the correct record."
-  }) }}
- #}
 
   <p class="govuk-body">
-    Instructions for reverting teaching status:
+    You must follow this process when removing a {{ qualification }} award.
   </p>
 
   <ol class="govuk-list govuk-list--number">
-    <li>Ask provider to confirm they are sure</li>
-    <li>Check you have found the correct trainee in Register</li>
-    <li>Contact DQT to revert the trainee</li>
-    <li>Wait until DQT confirms the update before making changes in Register</li>
-    <li>Make the change in Register</li>
-    <li>Notify the provdier that the change has been made</li>
+    <li>Ask the training provider to confirm that they want to remove the {{ qualification }} award and why they want to remove it.</li>
+    <li>Check whether the trainee has more than one record in Register. Make sure you’re changing the correct record</li>
+    <li>Ask DQT to remove the trainee’s {{ qualification }} award. You will not be able to continue until they’ve done this.</li>
+    <li>Remove the QTS award in Register.</li>
+    <li>Tell the training provider that the {{ qualification }} award has been removed.</li>
   </ol>
 
   {% if dqtAllowsReverts %}

@@ -15,18 +15,11 @@
     },
     value: {
       html: statusTag | safe
-    },
-    actions: {
-      items: [{
-        href: recordPath + "/personal-details/edit" | addReferrer(referrer),
-        text: "Change",
-        visuallyHiddenText: "date of birth"
-      }]
-    } if false
+    }
   },
   {
     key: {
-      text: "Audit log comment"
+      text: "Trainee timeline comment"
     },
     value: {
       text: record.revert.teachingStatus.auditLogComment
@@ -35,7 +28,7 @@
       items: [{
         href: "./details" | addReferrer(referrer),
         text: "Change",
-        visuallyHiddenText: "audit log comment"
+        visuallyHiddenText: "trainee timeline comment"
       }]
     } if canAmend
   },
@@ -50,7 +43,7 @@
       items: [{
         href: "./details" | addReferrer(referrer),
         text: "Change",
-        visuallyHiddenText: "audit log comment"
+        visuallyHiddenText: "zendesk url"
       }]
     } if canAmend
   }
@@ -67,6 +60,6 @@
 
 {{ appSummaryCard({
   classes: "govuk-!-margin-bottom-6",
-  titleText: "Revert teaching status",
+  titleText: "Remove " + qualification + " award",
   html: revertHtml
 }) }}

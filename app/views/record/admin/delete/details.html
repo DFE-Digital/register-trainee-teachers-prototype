@@ -16,15 +16,15 @@
   {% set reasons = [
    'Duplicate record',
    'Record added in error',
-   'Trainee already holds teaching status',
+   'Trainee already ' + qualification,
    'Trainee did not start training'
   ] %}
 
   {% set anotherReasonHtml %}
     {{ govukInput({
       label: {
-        text: "Provide the reason",
-        classes: "govuk-label--s",
+        text: "Reason",
+        classes: "",
         isPageHeading: false
       },
       _hint: {
@@ -69,7 +69,7 @@
   {{ govukInput({
 
     label: {
-      text: "Zendeask ticket URL (optional)",
+      text: "Zendesk ticket URL (optional)",
       classes: "govuk-label--m",
       isPageHeading: false
     },

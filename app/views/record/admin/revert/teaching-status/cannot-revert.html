@@ -1,7 +1,11 @@
 
 {% extends "_templates/_record-form.html" %}
 
-{% set pageHeading = 'Contact DQT before reverting this teaching status' %}
+{% set qualification = data.record | getQualificationText %}
+
+{% set pageHeading %}
+  The trainee’s {{ qualification }} award has not been removed in DQT
+{% endset %}
 
 {% set returnLink = {
  text: 'Cancel and return to record',
@@ -20,15 +24,15 @@
   </h1>
 
   <p class="govuk-body">
-    This trainee’s status has not been updated on DQT.
+    This trainee’s DQT record still shows that they’ve been awarded {{ qualification }}.
   </p>
 
   <p class="govuk-body">
-    You can only revert a teaching status after the DQT record has been updated.
+    You cannot remove their {{ qualification }} award on Register until their DQT record has been updated.
   </p>
 
   <p class="govuk-body">
-    Contact DQT first and ask them to revert the teaching status for this trainee.
+    After you’ve asked DQT to remove the {{ qualification }} award, you can check again to see whether the record has been updated.
   </p>
 
   {{ govukButton({

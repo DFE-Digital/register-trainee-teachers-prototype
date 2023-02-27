@@ -327,9 +327,9 @@ module.exports = router => {
         utils.deleteTempData(data)
         utils.updateRecord(data, record, false)
         let reasonText = `${record?.revert?.teachingStatus?.auditLogComment}`
-        utils.addEvent(record, `${utils.getQualificationText(record)} award reverted`, reasonText)
+        utils.addEvent(record, `${utils.getQualificationText(record)} award removed`, reasonText)
 
-        req.flash('success', `${utils.getQualificationText(record)} award reverted`)
+        req.flash('success', `${utils.getQualificationText(record)} award removed`)
       }
       else {
         console.log("Error: can't un-award a trainee that is not awarded")
@@ -632,14 +632,14 @@ module.exports = router => {
         delete record.withdraw
         // let revertWithdrawalReasonText = `Reason: Provider withdrew trainee by accident`
         let reasonText = `${record?.revert?.withdraw?.auditLogComment}`
-        utils.addEvent(record, "Withdrawal reverted", reasonText)
+        utils.addEvent(record, "Withdrawal undone", reasonText)
         // utils.revertWithdrawal(record) // Recommend a group of trainees for EYTS/QTS first so data is correct
         utils.deleteTempData(data)
         utils.updateRecord(data, record, false)
-        req.flash('success', `Withdrawal reverted`)
+        req.flash('success', `Withdrawal undone`)
       }
       else {
-        console.log("Error: can't un-withdraw a trainee that is not withdrawn")
+        console.log("Error: cannot un-withdraw a trainee that is not currently withdrawn")
       }
       // Delete temporary revert data
       delete record?.revert

@@ -96,7 +96,7 @@
         text: "Revert this teaching status",
         classes: 'app-destructive-link'
       }]
-    } if activeTab == 'admin',
+    } if activeTab == 'trainee-details' and data.isAdmin,
     html: qualificationDetailsHtml
   }) }}
   

@@ -11,7 +11,7 @@
 
   {% set dqtAllowsReverts = false %}
 
-  {% if record | isAwarded or record | isRecommended %}
+  {# {% if record | isAwarded or record | isRecommended %}
     {% include "_includes/summary-cards/qualification-details.html" %}
   {% endif %}
 
@@ -21,7 +21,7 @@
 
   {% if record | isWithdrawn %}
     {% include "_includes/summary-cards/withdraw-details.html" %}
-  {% endif %}
+  {% endif %} #}
 
   {% set canAmend = false %}
 

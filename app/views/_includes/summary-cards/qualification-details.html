@@ -85,16 +85,21 @@
     {% set revertUrl = recordPath + "/revert/teaching-status/cannot-revert" | addReferrer(referrer) %}
   {% endif %} #}
 
-  {% set revertUrl = recordPath + "/admin/revert/teaching-status/instructions" | addReferrer(referrer) %}
+  {% set revertActionHtml %}
+    {% set revertUrl = recordPath + "/admin/revert/teaching-status/instructions" | addReferrer(referrer) %}
+    {# <strong class="govuk-tag govuk-tag--purple govuk-!-margin-right-2">Admin</strong> #}
+    <a href="{{revertUrl}}" class="govuk-link">Remove {{ record | getQualificationText }} award</a>
+  {% endset %}
 
   {{ appSummaryCard({
     classes: "govuk-!-margin-bottom-6",
     titleText: (record | getQualificationText) + " details",
     actions: {
       items: [{
-        href: revertUrl,
-        text: "Remove " + (record | getQualificationText) + " award",
-        classes: 'app-destructive-link'
+        html: revertActionHtml,
+        _href: revertUrl,
+        _text: "Remove " + (record | getQualificationText) + " award",
+        _classes: 'app-destructive-link'
       }]
     } if activeTab == 'trainee-details' and data.isAdmin,
     html: qualificationDetailsHtml

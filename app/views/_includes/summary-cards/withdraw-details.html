@@ -130,7 +130,13 @@
   }) }}
 {% endset %}
 
-{% set revertUrl = recordPath + "/admin/revert/withdraw/instructions" | addReferrer(referrer) %}
+
+
+{% set revertActionHtml %}
+  {% set revertUrl = recordPath + "/admin/revert/withdraw/instructions" | addReferrer(referrer) %}
+  {# <strong class="govuk-tag govuk-tag--purple govuk-!-margin-right-2">Admin</strong> #}
+  <a href="{{revertUrl}}" class="govuk-link">Undo withdrawal</a>
+{% endset %}
 
 
 {{ appSummaryCard({
@@ -138,6 +144,7 @@
   titleText: "Withdrawal details",
   actions: {
       items: [{
+        html: revertActionHtml,
         href: revertUrl,
         text: "Undo withdrawal",
         classes: 'app-destructive-link'

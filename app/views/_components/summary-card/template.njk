@@ -1,10 +1,15 @@
 {%- macro _actionLink(action) %}
-  <a class="govuk-link {%- if action.classes %} {{ action.classes }}{% endif %}" href="{{ action.href }}" {%- for attribute, value in action.attributes %} {{attribute}}="{{value}}"{% endfor %}>
-    {{ action.html | safe if action.html else action.text }}
-    {%- if action.visuallyHiddenText -%}
-      <span class="govuk-visually-hidden"> {{ action.visuallyHiddenText }}</span>
+ {% if action.html %}
+   {{ action.html | safe }}
+ {% else %}
+   <a class="govuk-link {%- if action.classes %} {{ action.classes }}{% endif %}" href="{{ action.href }}" {%- for attribute, value in action.attributes %} {{attribute}}="{{value}}"{% endfor %}>
+   {{ action.text }}
+   {%- if action.visuallyHiddenText -%}
+     <span class="govuk-visually-hidden"> {{ action.visuallyHiddenText }}</span>
     {% endif -%}
   </a>
+ {% endif %}
+  
 {% endmacro -%}
 
 <section class="app-summary-card

@@ -4,7 +4,7 @@
 {% set qualification = data.record | getQualificationText %}
 
 {% set pageHeading %}
-  Revert withdrawal
+  Undo withdrawal
 {% endset %}
 
 {% set returnLink = {
@@ -24,24 +24,19 @@
   </h1>
 
   <p class="govuk-body">
-    Withdrawals can be reverted where:
+    You should only undo this withdrawal if the trainee either:
   </p>
 
   <ul class="govuk-list govuk-list--bullet">
-    <li>the trainee was withdrawn in error</li>
-    <li>the trainee withdrew and then changed their mind, and is now continuing on the same course</li>
+    <li>decided to continue on the same course</li>
+    <li>was withdrawn in error</li>
   </ul>
 
   <p class="govuk-body">
-    Withdrawals cannot be reverted where the trainee will be returning to a new course. If this has happened, instruct the provider to register the trainee again on a new course.
+    Do not undo this withdrawal if the trainee is changing to a different course. Tell the provider to register the trainee again.
   </p>
 
-{#   {{ govukInsetText({
-    text: "This trainee holds both QTS and EYTS. Check you are reverting the correct record."
-  }) }}
- #}
-
-  <p class="govuk-body">
+{#   <p class="govuk-body">
     Instructions for reverting teaching status:
   </p>
 
@@ -51,7 +46,7 @@
     <li>Wait until DQT confirms the update before making changes in Register</li>
     <li>Make the change in Register</li>
     <li>Notify the provdier that the change has been made</li>
-  </ol>
+  </ol> #}
 
   {% if dqtAllowsReverts %}
     {% set revertUrl = recordPath + "/admin/revert/withdraw/details" | addReferrer(referrer) %}

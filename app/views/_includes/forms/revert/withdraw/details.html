@@ -2,21 +2,15 @@
 {% include "_includes/trainee-name-caption.njk" %}
 <h1 class="govuk-heading-l">{{pageHeading}}</h1>
 
-{% set auditLogInputHint %}
-  For example, ‘Provider withdrew the trainee in error’<br>
-  This will be visible to the provider on the trainee timeline
-{% endset %}
-
 {{ govukInput({
 
   label: {
-    text: "Audit log comment",
+    text: "Comment to appear on the trainee timeline",
     classes: "govuk-label--m",
     isPageHeading: true
   },
   hint: {
-    text: 'For example, ‘Provider withdrew the trainee in error’',
-    html: auditLogInputHint
+    text: 'For example, ‘Provider withdrew the trainee in error’'
   }
 } | decorateAttributes(record, "record.revert.withdraw.auditLogComment"))  }}
 

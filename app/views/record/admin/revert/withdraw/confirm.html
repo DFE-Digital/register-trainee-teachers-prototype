@@ -3,7 +3,7 @@
 {% set qualification = data.record | getQualificationText %}
 
 {% set pageHeading %}
-  Confirm revert of withdrawal
+  Confirm you want to undo the withdrawal
 {% endset %}
 
 {% set backLink = ("/record/" + data.record.id) | orReferrer(referrer) %}
@@ -36,7 +36,7 @@
   }) }} #}
 
   {{ govukButton({
-    text: "Confirm un-withdraw",
+    text: "Confirm undo withdrawal",
     classes: "govuk-button--warning"
   }) }}
 

@@ -60,6 +60,7 @@
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-0">
       {{pageHeading}}
 
+      {# Incomplete tag #}
       {% if not record | recordIsComplete and isAuthorised('showIncomplete') and (not record | isHesaAndLocked) %}
         <span style="display: inline-block;">
           {{govukTag({
@@ -69,6 +70,17 @@
         </span>
       {% endif %}
 
+      {# Problem tag #}
+        {% if record | recordHasProblem and isAuthorised('showProblem') %}
+          <span style="display: inline-block;">
+            {{govukTag({
+              text: "Problem",
+              classes: "govuk-tag--red"
+            })}}
+          </span>
+        {% endif %}
+
+      {# Status tag #}
       {{ govukTag({
           text: record.status,
           classes: record.status | getStatusClass

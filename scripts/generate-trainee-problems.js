@@ -16,20 +16,38 @@ const utils         = require('../app/lib/utils.js')
 let providers = require('../app/data/accrediting-providers')
 let trainees = require('../app/data/records.json')
 
+let traineesCache = []
+
+
+let randomDateInPast = () => {
+
+  let returnDate = faker.date.between(
+      moment().subtract(4, 'years'),
+      moment().subtract(6, 'months')
+    )
+
+  return returnDate
+}
 
 let problemTypes = {
 // templates for problems? function to generate problems?
-  duplicate: {
-    title: "These trainees appear to be duplicates",
-    description: "Review these trainees and either delete or withdraw one of them",
-    traineeCount: 2
+  duplicate: function () {
+
+    return {
+      title: "These trainees appear to be duplicates",
+      description: "Review these trainees and either delete or withdraw one of them",
+      traineeCount: 2
+    }
+
   },
-  forgotten: {
-    title: "These trainees have not been updated in some time",
-    description: `The expected end date of this trainee is more than 6 months ago. 
-    If the trainee is no longer in training you should award or withdraw them. If they are still in training you should
-    update the expected end date of their course.`,
-    traineeCount: 1
+  forgotten: function() {
+    return {
+      title: "This trainee may have been forgotten",
+      description: `The expected end date of this trainee was ${moment(randomDateInPast()).fromNow()}.
+      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should
+      update the expected end date of their course.`,
+      traineeCount: 1
+    }
   }
 }
 
@@ -41,21 +59,28 @@ const generateTraineeProblem = (provider, activeTrainees) => {
 
   let randomProblemType = faker.helpers.arrayElement(Object.keys(problemTypes))
 
-  let problem = Object.assign({}, problemTypes[randomProblemType])
+  // Generate a problem
+  let problem = Object.assign({}, problemTypes[randomProblemType]())
 
-  const pickRandomTrainee = () => faker.helpers.arrayElement(activeTrainees)?.id
+  // Pick a random trainee and remove it from the pool of available trainees
+  const pickRandomTrainee = () => {
+    let randomTrainee = faker.helpers.arrayElement(activeTrainees)?.id
 
+    // Remove this trainee so it doesn't appear again
+    _.remove(activeTrainees, trainee => trainee.id == randomTrainee)
+    return randomTrainee
+  }
+
+  // Allow for a problem having multiple trainees
   problem.trainees = []
 
   for (var i = 0; i < problem.traineeCount; i++) {
     problem.trainees.push(pickRandomTrainee())
   }
 
-  // problem.trainees = [faker.helpers.arrayElement(activeTrainees)?.id]
-
   problem.type = randomProblemType
   problem.id = faker.datatype.uuid()
-  problem.provider = provider
+  problem.provider = provider.name
 
   return problem
 }
@@ -68,18 +93,14 @@ const generateFakeTraineeProblems = () => {
 
     let providerTrainees = trainees.filter(trainee => trainee.provider == provider.name)
 
-    console.log(providerTrainees.length)
-
-
     let activeTrainees = providerTrainees.filter( trainee => utils.isActiveStatus(trainee) )
 
     // Create between 10 to 100 traineeProblems per provider
-    let numberOfTraineeProblemsToCreate = utils.getRandomArbitrary(10, 100)
+    let numberOfTraineeProblemsToCreate = utils.getRandomArbitrary(20, Math.min(activeTrainees.length / 2, 150))
 
     Array(numberOfTraineeProblemsToCreate).fill().map((item, index) => {
 
       let problem = generateTraineeProblem(provider, activeTrainees)
-
       traineeProblems.push(problem)
     })
 

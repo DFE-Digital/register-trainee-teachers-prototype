@@ -24,6 +24,7 @@
       </h3>
 
       <span class="app-application-card_tag-container">
+        {# Incomplete tag #}
         {% if not record | recordIsComplete and isAuthorised('showIncomplete') and (not record | isHesaAndLocked) %}
           <span style="display: inline-block;">
             {{govukTag({
@@ -32,6 +33,18 @@
             })}}
           </span>
         {% endif %}
+
+        {# Problem tag #}
+        {% if record | recordHasProblem and isAuthorised('showProblem') %}
+          <span style="display: inline-block;">
+            {{govukTag({
+              text: "Problem",
+              classes: "govuk-tag--red"
+            })}}
+          </span>
+        {% endif %}
+
+        {# Status tag #}
         <span style="display: inline-block;">
           {{govukTag({
             text: record | getStatusText,

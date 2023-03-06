@@ -73,6 +73,7 @@ filters.providerIsAuthorised = function(providers, action){
     'exportRecords',
     'recommendForAward',
     'showIncomplete',
+    'showProblem',
     'viewDiversity',
     'viewDrafts',
     'viewRecords',

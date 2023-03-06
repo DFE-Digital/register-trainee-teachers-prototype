@@ -11,9 +11,8 @@
 {% set registeredTrainees = filteredRecords | filterByStatus("Draft", true) %}
 {% set pageHeading = "Your trainee teachers" %}
 
-{# Todo: is there a better way of getting the current provider's problems? similar to filterRecords? #}
-{% set traineeProblems = data.traineeProblems | where('provider.name', data.signedInProviders) %}
-{# {% set currentTrainees = registeredTrainees | filterByActive %} #}
+{# Note: filterBySignedIn isn't designed to work on non-records, but as the name is the same, it works ok #}
+{% set traineeProblems = data.traineeProblems | filterBySignedIn(data) %}
 
 {% block content %}
 
@@ -164,16 +163,19 @@
           <br>(out of {{activeTrainees | length}})
         {% endset %}
 
-        <a href="/records?filterCompleteStatus=Incomplete" class="status-card status-card status-card--incomplete">
-          <span class="status-card__count">{{ incompleteTrainees | length }}</span>
-          <span class="status-card__status">Records you can complete</span><span class="govuk-visually-hidden"> records. View these records.</span>
-        </a>
+        {% if incompleteTrainees | length %}
+          <a href="/records?filterCompleteStatus=Incomplete" class="status-card status-card status-card--incomplete">
+            <span class="status-card__count">{{ incompleteTrainees | length }}</span>
+            <span class="status-card__status">Records you can complete</span><span class="govuk-visually-hidden"> records. View these records.</span>
+          </a>
+        {% endif %}
 
-        <a href="/records?filterCompleteStatus=Incomplete" cl
-        {# Todo: is there a better way of getting the current provider's problems? similar to filterRecords?ass="status-card status-card status-card--incomplete"> #}
-          <span class="status-card__count">{{ traineeProblems | length }}</span>
-          <span class="status-card__status">Problems with your records</span><span class="govuk-visually-hidden"></span>
-        </a>
+        {% if traineeProblems | length %}
+          <a href="/records?filterCompleteStatus=Incomplete" class="status-card status-card status-card--problem">
+            <span class="status-card__count">{{ traineeProblems | length }}</span>
+            <span class="status-card__status">Problems with your records</span><span class="govuk-visually-hidden"></span>
+          </a>
+        {% endif %}
 
       </div>
       <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">

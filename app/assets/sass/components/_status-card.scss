@@ -83,6 +83,11 @@ $statuses: (
     "background-colour": govuk-tint(govuk-colour("red"), 80),
     "hover":             govuk-tint(govuk-colour("red"), 70)
   ),
+  "problem": (
+    "colour":            govuk-shade(govuk-colour("red"), 30),
+    "background-colour": govuk-tint(govuk-colour("red"), 80),
+    "hover":             govuk-tint(govuk-colour("red"), 70)
+  ),
   "in-training": (
     "colour":            #fff,
     "background-colour": $govuk-brand-colour,

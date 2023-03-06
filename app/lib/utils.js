@@ -1821,8 +1821,13 @@ exports.filterRecords = (records, data, filters = {}) => {
 
   if (filters.completeStatus){
     filteredRecords = filteredRecords.filter(record => {
-      let completeStatus = (exports.recordIsComplete(record, data)) ? 'Complete' : 'Incomplete'
-      return filters.completeStatus.includes(completeStatus)
+      let status = (exports.recordIsComplete(record, data)) ? ['Complete'] : ['Incomplete']
+      let hasProblem = exports.recordHasProblem(record)
+      if (hasProblem) {
+        status.push('Has problems')
+      }
+
+      return filters.completeStatus.some( item => status.includes(item))
     })
   }
 

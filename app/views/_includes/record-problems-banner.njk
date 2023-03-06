@@ -1,0 +1,32 @@
+{% set hasProblems = record | recordHasProblem %}
+
+{% if hasProblems and canAmend %}
+
+{% set problems = record | getProblems %}
+
+{{problems | log}}
+
+{% set title %}
+  {% if problems | length == 1 %}
+    This trainee record has a problem
+  {% else %}
+    This traine record has problems
+  {% endif %}
+{% endset %}
+
+{% set items = [] %}
+
+{% for item in problems %}
+  {% set items = items | push({
+    text: item.title,
+    href: "#"
+  }) %}
+  
+{% endfor %}
+
+  {{ appNoticeBanner({
+    titleText: title,
+    itemList: items
+  }) }}
+
+{% endif %}

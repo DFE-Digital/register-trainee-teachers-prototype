@@ -15,6 +15,11 @@
     {
       text: "Incomplete",
       checked: checked(query.filterCompleteStatus, "Incomplete")
+    },
+    {
+      text: "Has problems",
+      value: "Has problems",
+      checked: checked(query.filterCompleteStatus, "Has problems")
     }
   ]
 } | decorateAttributes(data, "data.filterCompleteStatus"))}}

@@ -2,7 +2,7 @@
   classes: "govuk-checkboxes--small js-auto-submit",
   fieldset: {
     legend: {
-      text: "Draft completion" if (navActive == "drafts") else "Record completion",
+      text: "Draft completion" if (navActive == "drafts") else "Available to do",
       isPageHeading: false,
       classes: "govuk-fieldset__legend--s"
     }
@@ -11,15 +11,15 @@
     {
       text: "Complete",
       checked: checked(query.filterCompleteStatus, "Complete")
-    },
-    {
-      text: "Incomplete",
-      checked: checked(query.filterCompleteStatus, "Incomplete")
-    },
+    } if navActive == 'drafts',
     {
       text: "Has problems",
       value: "Has problems",
       checked: checked(query.filterCompleteStatus, "Has problems")
+    } if navActive == 'records',
+    {
+      text: "Incomplete",
+      checked: checked(query.filterCompleteStatus, "Incomplete")
     }
   ]
 } | decorateAttributes(data, "data.filterCompleteStatus"))}}

@@ -265,7 +265,7 @@ const getSelectedFilters = req => {
     })
   }
 
-  let completeFilterLabel = (pathname == '/drafts') ? "Draft completion" : "Record completion"
+  let completeFilterLabel = (pathname == '/drafts') ? "Draft completion" : "Available to do"
 
   if (filters.completeStatus) {
     selectedFilters.categories.push({

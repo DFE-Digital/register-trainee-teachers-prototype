@@ -1,0 +1,51 @@
+{% set hasProblems = record | recordHasProblem %}
+
+{% set isIncomplete = record | hasOutstandingActions %}
+
+{% if (hasProblems or isIncomplete) and canAmend %}
+
+  {% set recordProblems = record | getProblems %}
+
+  {{recordProblems | log}}
+
+  {% set title %}
+    {% if recordProblems | length == 1 %}
+      This trainee record has a problem
+    {% else %}
+      This traine record has problems
+    {% endif %}
+  {% endset %}
+
+  {% set problemItems = [] %}
+
+  {% for problem in recordProblems %}
+
+    {% set problemHtml %}
+
+      {% include "_includes/record-problems/" + problem.type + ".njk" %}
+
+    {% endset %}
+
+    {% set problemItems = problemItems | push({
+      html: problemHtml | safe
+    }) %}
+    
+  {% endfor %}
+
+  {% if isIncomplete %}
+    {% set problemHtml %}
+      {% include "_includes/record-problems/incomplete.njk" %}
+    {% endset %}
+
+    {% set problemItems = problemItems | push({
+      html: problemHtml | safe
+    }) %}
+    
+  {% endif %}
+
+  {{ appNoticeBanner({
+    titleText: title,
+    itemList: problemItems
+  }) }}
+
+{% endif %}

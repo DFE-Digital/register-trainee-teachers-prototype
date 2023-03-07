@@ -30,9 +30,13 @@
 .app-notice-banner__list {
   margin-top: 0;
   margin-bottom: 0;
+
+  & li:last-child .govuk-details {
+    margin-bottom: 0;
+  }
 }
 
-.app-notice-banner__list a {
+.app-notice-banner__link {
   @include govuk-typography-weight-bold;
   @include govuk-link-common;
   @include govuk-link-style-no-visited-state;

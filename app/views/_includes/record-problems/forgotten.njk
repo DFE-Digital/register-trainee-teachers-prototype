@@ -1,0 +1,36 @@
+{% set title = "This trainee appears to be forgotten" %}
+
+<h3 class="govuk-heading-s">{{ title }}</h3>
+
+<p class="govuk-body">{{problem.description}}</p>
+
+{# {% set detailsHtml %}
+  <p class="govuk-body">{{problem.description}}:</p>
+
+  <ul class="govuk-list govuk-list--bullet">
+    {% for traineeId in problem.trainees %}
+
+      {% set traineeRecord = data.records | getRecordById(traineeId) %}
+
+      {{traineeRecord | log}}
+
+      <li>
+        {% if traineeRecord.id == record.id %}
+          {{traineeRecord | getShortName}} (this record)
+        {% else %}
+          <a href="#" class="govuk-link"  rel="noreferrer noopener" target="_blank">{{traineeRecord | getShortName}} (opens in a new tab)</a>
+        {% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+
+{% endset %}
+
+
+
+
+{{ govukDetails({
+  summaryText: title,
+  html: detailsHtml
+}) }}
+ #}

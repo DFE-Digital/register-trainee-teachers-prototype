@@ -16,7 +16,11 @@ const utils         = require('../app/lib/utils.js')
 let providers = require('../app/data/accrediting-providers')
 let trainees = require('../app/data/records.json')
 
-let traineesCache = []
+// To keep track of which trainees have already been assigned to a problem
+let traineesCache = {
+  duplicate: [],
+  forgotten: []
+}
 
 
 let randomDateInPast = () => {
@@ -62,12 +66,17 @@ const generateTraineeProblem = (provider, activeTrainees) => {
   // Generate a problem
   let problem = Object.assign({}, problemTypes[randomProblemType]())
 
+
   // Pick a random trainee and remove it from the pool of available trainees
   const pickRandomTrainee = () => {
-    let randomTrainee = faker.helpers.arrayElement(activeTrainees)?.id
+    let filteredTrainees = activeTrainees.filter(trainee => !traineesCache[randomProblemType].includes(trainee.id))
 
+    let randomTrainee = faker.helpers.arrayElement(filteredTrainees)?.id
+
+    // Make a note of which we've used
+    traineesCache[randomProblemType].push(randomTrainee)
     // Remove this trainee so it doesn't appear again
-    _.remove(activeTrainees, trainee => trainee.id == randomTrainee)
+    // _.remove(activeTrainees, trainee => trainee.id == randomTrainee)
     return randomTrainee
   }
 
@@ -96,7 +105,7 @@ const generateFakeTraineeProblems = () => {
     let activeTrainees = providerTrainees.filter( trainee => utils.isActiveStatus(trainee) )
 
     // Create between 10 to 100 traineeProblems per provider
-    let numberOfTraineeProblemsToCreate = utils.getRandomArbitrary(20, Math.min(activeTrainees.length / 2, 150))
+    let numberOfTraineeProblemsToCreate = utils.getRandomArbitrary(20, Math.min(activeTrainees.length / 2, 250))
 
     Array(numberOfTraineeProblemsToCreate).fill().map((item, index) => {
 

@@ -3,6 +3,7 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
       "25255f93-f6a6-4acd-92ad-3268d76446e3",
       "deb99464-0f6f-4fad-a10b-3303d6c04bfb"
@@ -13,8 +14,9 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 9 months ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 9 months ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
       "6d525b9f-def5-4a5f-874e-2e1a1ef6c331"
     ],
@@ -26,8 +28,9 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "9a15c198-e67e-4194-8e97-d1a0373962be",
+      "7cf61624-0413-4513-90a7-8a0b7adb3d13",
       "1d770d07-0557-48e7-b830-0fded5b27a14"
     ],
     "type": "duplicate",
@@ -38,8 +41,9 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "9b19b0e1-bc6c-423e-9b84-ed34d4370cc2",
+      "cc0868e1-7978-4a54-907c-50dc878f8e2a",
       "ec95a251-18c2-480c-93f6-8d8d96d6bba9"
     ],
     "type": "duplicate",
@@ -48,8 +52,9 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 10 months ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 10 months ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
       "e5911f58-8276-47d3-ab4d-408e3dbf0e56"
     ],
@@ -61,6 +66,7 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
       "ee1db165-0d1c-48c3-a2b8-7f3334a34349",
       "0574f9a2-10d1-413f-a5a5-9e74de86e9ca"
@@ -71,10 +77,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 7 months ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 7 months ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "b1190f32-1628-4432-9f70-01606c274cf6"
+      "14376f69-10cb-4a87-9e79-9bd694db0b64"
     ],
     "type": "forgotten",
     "id": "31d49ca3-1db8-4a6e-b4c4-00b7bd2c68b0",
@@ -82,8 +89,9 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was a year ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was a year ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
       "7e810c34-30d9-485c-842b-d351cd88da40"
     ],
@@ -95,9 +103,10 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
       "4f6624e8-9e7c-4f46-9038-4feb369e2ca0",
-      "14ad2ee3-328e-484f-be25-7f7d4e0c23a9"
+      "e2864417-f99d-4baf-b4f6-e048bb274ade"
     ],
     "type": "duplicate",
     "id": "967b181e-201e-40a2-b49f-4a8a24b78a7d",
@@ -105,10 +114,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 2 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 2 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "bbb3063c-a28a-43c0-a4d3-3bbb28d74c64"
+      "a8239a7e-fd15-4b30-ae38-235e6238a165"
     ],
     "type": "forgotten",
     "id": "c0ec8054-928a-4775-802c-08b972cbeaf7",
@@ -118,9 +128,10 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "e2864417-f99d-4baf-b4f6-e048bb274ade",
-      "8986764b-ccad-4c6f-86f2-bcb819e31750"
+      "14ad2ee3-328e-484f-be25-7f7d4e0c23a9",
+      "3e0ebcef-8745-45ab-beb3-f5d156d35051"
     ],
     "type": "duplicate",
     "id": "e383560b-8ffb-4da6-a138-92321bb42553",
@@ -130,9 +141,10 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "7daad11c-2eff-44a3-92ea-6b89a051a8b0",
-      "3b9ac634-28fd-4a52-b9f5-c97f34474c02"
+      "22939cc3-baa8-41c4-a6d3-322ae891523c",
+      "358875bb-e242-4361-a2ce-7256404ee331"
     ],
     "type": "duplicate",
     "id": "8dcbe3a5-6407-4e00-886c-85a89dee36ab",
@@ -140,10 +152,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was a year ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was a year ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "a3dc11cc-8756-4153-90c5-28294fbe6aa3"
+      "2bdfa5f6-a20f-4ee8-91a6-30647a68adc2"
     ],
     "type": "forgotten",
     "id": "91db79eb-f23c-4e89-b0f1-0ec55c4d2485",
@@ -151,8 +164,9 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 2 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 2 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
       "9f0bbdbd-b0e5-4b95-adcf-db518970623c"
     ],
@@ -164,8 +178,9 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "c212c7ba-1fd5-4014-9406-c795acd9a6dd",
+      "847353bb-d090-4a97-8e34-61684819f325",
       "3ca897f9-5877-4504-9a72-16d399df0abe"
     ],
     "type": "duplicate",
@@ -174,10 +189,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 4 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 4 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "ff42ca8f-d65e-4683-9231-09e49a4bc541"
+      "e91c216c-0ec2-4316-ae5a-d0df185dff5d"
     ],
     "type": "forgotten",
     "id": "f3bf7fcf-a0a8-4eac-9edc-0037a7cf2a05",
@@ -187,9 +203,10 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "62b90de6-8019-46fe-a2cc-8f7e761f1137",
-      "15ff8910-82fe-47a1-a264-4a87965c85f0"
+      "9f371643-9ee9-42fb-b147-8f8148002c9f",
+      "e6378e7c-c28f-409e-8591-d1441f342d5e"
     ],
     "type": "duplicate",
     "id": "845f8f53-0d8d-4702-a904-04f822847fe4",
@@ -197,8 +214,9 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 4 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 4 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
       "47aa29db-ac66-4eba-ba35-067b68202e9a"
     ],
@@ -208,10 +226,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 8 months ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 8 months ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "2575e77d-c776-4ecb-940d-31ea09cd762b"
+      "095e539a-9311-47de-a275-bc2122b69a0d"
     ],
     "type": "forgotten",
     "id": "7916d48a-8dfa-4320-a312-da823f9e2892",
@@ -219,8 +238,9 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 4 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 4 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
       "c9290f83-73cd-4299-8dac-65477c6ea4c5"
     ],
@@ -230,10 +250,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 3 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 3 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "5c7045e6-2106-4a87-8948-62fd34658a20"
+      "25255f93-f6a6-4acd-92ad-3268d76446e3"
     ],
     "type": "forgotten",
     "id": "dddd5f2c-a3b6-4dee-ac7d-0784f9639d5e",
@@ -243,9 +264,10 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "d21bdd1c-e674-40b5-ae0f-9aad0e15bedc",
-      "01f9c956-2adf-4397-9e4f-e40807f91aef"
+      "b6d3d620-b8b8-444e-932e-d38e90fe907a",
+      "7a1c25bb-9905-4fbd-9bf2-c9772d830fcb"
     ],
     "type": "duplicate",
     "id": "b0e70062-c30c-4c9d-9216-eb837456169f",
@@ -253,10 +275,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 4 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 4 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "9ca7eccc-3937-4476-8559-25dea035ea32"
+      "ef8047ff-1e01-4fa2-97f8-1b768889f5a0"
     ],
     "type": "forgotten",
     "id": "1d6d44c7-bc92-4527-a2e0-cfa8c814906a",
@@ -264,8 +287,9 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was a year ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was a year ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
       "5338fb63-d41a-4317-a215-fd79c9df7a1e"
     ],
@@ -277,9 +301,10 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "0b8d6ff5-5777-42f5-ad5e-461acbb1ef07",
-      "c9c6c336-24e9-4c5b-854e-cdb38324f313"
+      "de513524-33ce-4431-8cea-53580263aa47",
+      "9a15c198-e67e-4194-8e97-d1a0373962be"
     ],
     "type": "duplicate",
     "id": "3bef3dfc-e1a9-42f2-8779-600715885e21",
@@ -287,8 +312,9 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 4 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 4 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
       "9f371643-9ee9-42fb-b147-8f8148002c9f"
     ],
@@ -300,6 +326,7 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
       "d63b1272-7402-41e5-b239-d575289039a0",
       "f29b504e-c4f0-4cd1-ac79-4ed296d60ab0"
@@ -310,139 +337,151 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was a year ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was a year ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "6ed846c7-4683-4eb4-9e41-16bed582ba8d"
+      "f3bb0043-4622-4a76-a644-032a5fd447b4"
     ],
     "type": "forgotten",
     "id": "bbd70540-15b4-4d69-9386-21fd349508c4",
-    "provider": "University of Lincoln"
+    "provider": "King’s Oak University"
   },
   {
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "637ff94d-6cd9-42da-a008-da1b120a7cdd",
-      "1699e60e-8295-46f8-a95c-81bafd2074d9"
+      "7f0ac8c2-9881-4356-8371-8a344421560b",
+      "924df744-51d0-417c-a022-81212a03ef48"
     ],
     "type": "duplicate",
     "id": "02dcaf1e-e251-4840-a51d-fc14c372fe02",
-    "provider": "University of Lincoln"
+    "provider": "King’s Oak University"
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was a year ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was a year ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "21d167a6-8319-4143-8781-8926bf48c1b7"
+      "ef824fb5-23cc-400a-934b-a0900ef4ac20"
     ],
     "type": "forgotten",
     "id": "c0a6762b-3210-419a-958f-85af1c1e276b",
-    "provider": "University of Lincoln"
+    "provider": "King’s Oak University"
   },
   {
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "363560b1-c953-4325-89ca-c9923b68bd06",
-      "f533bf7a-94f1-47ff-b98e-c37a390e6af4"
+      "6ded3a89-35f1-45d7-bc97-27e74a30d2d2",
+      "f340c498-e1d6-40f6-9e98-74d0959e471b"
     ],
     "type": "duplicate",
     "id": "3a52e394-6329-4222-998e-3bbfeb1209de",
-    "provider": "University of Lincoln"
+    "provider": "King’s Oak University"
   },
   {
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "3d8017e4-55ba-46d1-882c-6920a310ac2d",
-      "64061d72-1ee2-4b15-a3e9-620fa562728b"
+      "4afefbee-1139-4768-9a86-a94b31b3f9f7",
+      "00bf871b-4951-4a7e-9abd-5bfb33a0fcaa"
     ],
     "type": "duplicate",
     "id": "5fabc68d-442e-4e9e-b878-0025e1b05a43",
-    "provider": "University of Lincoln"
+    "provider": "King’s Oak University"
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was a year ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was a year ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "2346766f-7c46-44a8-9d01-32db5fff6a61"
+      "0a9a443f-c558-4e43-834f-85e400708c4d"
     ],
     "type": "forgotten",
     "id": "c1edc74a-8b74-4277-977a-82abe2535a23",
-    "provider": "University of Lincoln"
+    "provider": "King’s Oak University"
   },
   {
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "f5b7b3fd-ff71-4472-aaf7-de41ea066651",
-      "e1e83936-1261-4680-8f74-8a58ece11cfa"
+      "c917d6eb-3fc3-406f-b7c2-493a73d1b771",
+      "6e0d6edf-c476-487b-919e-7bd928569b5c"
     ],
     "type": "duplicate",
     "id": "a520c6d8-4723-4939-a76e-c508cc91e798",
-    "provider": "University of Lincoln"
+    "provider": "King’s Oak University"
   },
   {
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "5cc09632-2807-405e-a081-ea4308c687b0",
-      "a8239a7e-fd15-4b30-ae38-235e6238a165"
+      "af072dc8-158a-4018-9123-15112747a3a0",
+      "c73bbc7b-6fd8-45db-88f9-a04df9a65c9a"
     ],
     "type": "duplicate",
     "id": "1ccb0eaa-e59f-4d0d-8fa7-6c236f891ef8",
-    "provider": "University of Lincoln"
+    "provider": "King’s Oak University"
   },
   {
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "c2fd0947-275a-4b33-95f8-fe932ec2add5",
-      "3029024f-7549-41de-8211-87e3cb169f28"
+      "ec7ddd29-c294-4820-9a91-f5540f115117",
+      "e3c0ebb1-b926-4567-96d6-2dd0a692772d"
     ],
     "type": "duplicate",
     "id": "02d7c08d-7dcc-4f60-99d2-555a6933e8af",
-    "provider": "University of Lincoln"
+    "provider": "King’s Oak University"
   },
   {
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "47618426-c61e-475d-89cc-bd19d0ed39c3",
-      "011808ea-b62e-4088-9cf6-9d90d7627b47"
+      "6fe55b2c-ee11-4c95-9235-69fd29a3b82d",
+      "a801c723-da31-4d5b-8be3-119300436201"
     ],
     "type": "duplicate",
     "id": "34c705c7-3ff2-4685-9b1d-929a04a6abdb",
-    "provider": "University of Lincoln"
+    "provider": "King’s Oak University"
   },
   {
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "e91c216c-0ec2-4316-ae5a-d0df185dff5d",
-      "ef8047ff-1e01-4fa2-97f8-1b768889f5a0"
+      "ce7db800-8551-45dc-ba71-0209f7484c3e",
+      "3ff8abfd-95b8-4549-af93-c2f80869d6d2"
     ],
     "type": "duplicate",
     "id": "bc43b981-42f8-4b8b-9980-5079011d8b9b",
-    "provider": "University of Lincoln"
+    "provider": "King’s Oak University"
   },
   {
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "efb2dc0e-1048-4f65-b54f-b911acce0450",
+      "d9eee8f0-119e-4468-982d-0cb44ffda1a5",
       "58e40758-9836-48ec-8143-c9c0956ecae0"
     ],
     "type": "duplicate",
@@ -453,8 +492,9 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "19bf3fe1-b32b-41ae-a47e-a49ced6f42a0",
+      "6e49c37f-5234-482b-b6d4-8089cec5a0ed",
       "35c82936-0aee-493a-adf8-5973275dac74"
     ],
     "type": "duplicate",
@@ -465,9 +505,10 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
       "0adae14e-5ddf-4f74-b7cd-ebb050d35b77",
-      "b13d0ad2-0f7c-4171-979d-74a09c2ac615"
+      "7b6f443a-97a6-4ffb-b6b1-9a1204a2f166"
     ],
     "type": "duplicate",
     "id": "3f39eec0-04c1-466e-bd25-b6f4895e003c",
@@ -475,10 +516,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 2 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 2 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "f765a835-c576-4a8f-9a7f-50e242b2b25a"
+      "9bee9d4d-26e6-468b-bf23-dedc7558444c"
     ],
     "type": "forgotten",
     "id": "dcf19d31-8d92-4881-a568-c2804893a472",
@@ -486,10 +528,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 2 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 2 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "de05334b-70a3-44b8-a01a-2660f619744f"
+      "0ceb9f66-5638-4be8-b33c-fdcfd27a6238"
     ],
     "type": "forgotten",
     "id": "433d0a8e-8eed-4c2d-8756-a500558e2a89",
@@ -497,10 +540,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 2 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 2 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "12783a6b-6af0-41f2-90d5-a06174caa23c"
+      "07090586-d4b5-4f09-84cf-132793d63fc8"
     ],
     "type": "forgotten",
     "id": "8d10d1ce-3054-46f3-8f62-0d369f52c89f",
@@ -508,10 +552,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 2 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 2 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "f4616202-0e24-4743-bde8-6c432d09c9db"
+      "9d4d99a9-64d1-4ad1-93d4-6b539ffba6db"
     ],
     "type": "forgotten",
     "id": "bdef2098-20d5-4b45-8d31-2a328248e4bd",
@@ -521,9 +566,10 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
       "9c5c2464-84cb-4048-8a79-72b3030ba1f0",
-      "fc77c640-ceb8-436f-8fc0-9bf71b640e9d"
+      "27239046-eb18-47f7-b46c-5d0dbaa031e9"
     ],
     "type": "duplicate",
     "id": "4701f6d8-270c-4a3d-941c-9665547ca779",
@@ -531,10 +577,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 3 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 3 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "882abc31-ec88-4ecc-b462-5d0bfd5aba05"
+      "cd8f0ae3-8100-42a2-8df8-b37282e46258"
     ],
     "type": "forgotten",
     "id": "9ead5375-a5b1-40c5-a7eb-23a7a7617dec",
@@ -542,8 +589,9 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 3 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 3 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
       "aebffab8-adfb-4d36-8abc-c3d4a34792b6"
     ],
@@ -553,10 +601,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 2 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 2 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "dd18b46f-cfa1-40c5-8b5f-aaad47bc6b01"
+      "239cdaa7-d156-4721-92c9-36522d70c2df"
     ],
     "type": "forgotten",
     "id": "6c04f710-6a0d-42bc-afcc-1ce72c4eab77",
@@ -566,9 +615,10 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
       "d6acddab-7475-470d-b9f5-b279ba15762d",
-      "8eb6dd27-712b-40f6-aa41-3fb53c5469b4"
+      "f765a835-c576-4a8f-9a7f-50e242b2b25a"
     ],
     "type": "duplicate",
     "id": "4cc52938-9cfd-439a-b953-6ea01e1dfe75",
@@ -576,10 +626,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 3 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 3 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "2e1d2906-bf9a-444f-a95c-7852049e50f8"
+      "00bf871b-4951-4a7e-9abd-5bfb33a0fcaa"
     ],
     "type": "forgotten",
     "id": "3b751af5-ae4b-4547-ac9d-45c5a54def8d",
@@ -589,9 +640,10 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "c7208a90-52bb-4728-b43b-2629ae228f1a",
-      "3f971e10-a7a3-4901-9863-1165b8762c36"
+      "9bc9dd49-6846-4cca-9205-00845d909113",
+      "71a0ae12-19a0-4fc1-8da8-c04dd14cf1aa"
     ],
     "type": "duplicate",
     "id": "a9b3806d-47b8-476b-9fa2-b3a1a1a73ed2",
@@ -599,10 +651,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 2 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 2 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "9bc9dd49-6846-4cca-9205-00845d909113"
+      "7271d941-e2cd-4d5c-8b3c-7285c39440f3"
     ],
     "type": "forgotten",
     "id": "96e8bb9d-2224-438d-ac99-636745c41cf3",
@@ -612,8 +665,9 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "f1cb78bf-5cc0-40b8-8086-97060253c2d9",
+      "a0e27db2-172c-4e59-a7b3-dc015eed378c",
       "41308e12-454b-4b31-bbd3-cae7afc4a78a"
     ],
     "type": "duplicate",
@@ -624,8 +678,9 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "149a913c-436d-4879-9f38-ef40f3dd0e1b",
+      "7ff96b61-eb99-4d49-8b7e-5377bf5af5ef",
       "c366b422-8a1f-4fbb-84e0-f4fec4fa9570"
     ],
     "type": "duplicate",
@@ -634,8 +689,9 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 4 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 4 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
       "4110dddd-bc90-45d6-ab71-96f3bd6e51a0"
     ],
@@ -647,9 +703,10 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "dd8d8309-a1b9-49e8-aac1-ddb1bc2bac1f",
-      "4afefbee-1139-4768-9a86-a94b31b3f9f7"
+      "afb7a085-f36e-4b18-89cd-41e1caa86370",
+      "974fa0b5-f129-4e5c-9520-6bb687e28b00"
     ],
     "type": "duplicate",
     "id": "e7a0edce-ca0b-4524-bc4d-ae9bbf86c273",
@@ -657,10 +714,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 2 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 2 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "a3e0f8eb-d1af-47f5-a4d4-2d59c834eebd"
+      "71eee3da-fa1b-4212-8e79-1e2e4780f8e1"
     ],
     "type": "forgotten",
     "id": "3a4203e0-a54c-4e43-a1d3-d438b0077055",
@@ -668,10 +726,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 4 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 4 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "c98b742b-1829-4c06-8a58-f287d7c6ae13"
+      "12472efa-dbb2-487f-8d7d-8e0de059f778"
     ],
     "type": "forgotten",
     "id": "4c4f04ee-c637-4eb8-93c4-d97050b6bc5e",
@@ -679,10 +738,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was a year ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was a year ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "63028c95-845c-4589-96a5-801ef06c11bf"
+      "2e1d2906-bf9a-444f-a95c-7852049e50f8"
     ],
     "type": "forgotten",
     "id": "06db0b1d-cb53-4691-83dc-9820b150069f",
@@ -692,8 +752,9 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "f340c498-e1d6-40f6-9e98-74d0959e471b",
+      "45249893-8714-4083-a289-352896834409",
       "02167772-df8e-4989-ace1-3ff637a43c88"
     ],
     "type": "duplicate",
@@ -704,9 +765,10 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "c367fc42-6246-41de-a2e4-2ea7521957e7",
-      "3a13efbf-fb6a-443f-9b1d-6721fb81e4b9"
+      "14e1decf-6efc-4909-8f95-0e25d6357c82",
+      "21ed7a88-7066-4a88-a1cb-59a02d0156a8"
     ],
     "type": "duplicate",
     "id": "d993f60b-1df1-4fc7-9756-8663ca5519f4",
@@ -716,6 +778,7 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
       "ec9cdc05-564f-4c56-b3c8-891b93094353",
       "02257a23-00c0-4be7-bda1-6b701dba3c30"
@@ -728,9 +791,10 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
       "44eb6e3b-3980-47ca-a08c-c19627ade645",
-      "d974ffa6-1bef-4e32-bf78-f665d465615c"
+      "15a7c09c-2903-499d-8a01-202f8f94d3ef"
     ],
     "type": "duplicate",
     "id": "fc24beee-83e2-4933-a80c-dee082242522",
@@ -740,8 +804,9 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "5bc55c8f-492d-4156-9416-59cedab061f8",
+      "a59bc349-795d-48de-8778-b6f95c959e7f",
       "e4dfef30-21f6-4d6d-9430-9ce3d2819792"
     ],
     "type": "duplicate",
@@ -752,8 +817,9 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "65aa8779-d8e0-47cd-90b8-fb273fa87a54",
+      "a3f32866-35f7-4687-9642-bb5f9666bea8",
       "04756fd2-3e5c-454e-acfd-0b06a39a13fe"
     ],
     "type": "duplicate",
@@ -764,9 +830,10 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "3fc7c59d-0447-4874-a66f-19b49af44307",
-      "6e88d571-0bec-4589-bdaf-f321d7ccb004"
+      "1d5edbb4-fe16-458e-8357-04dc968935df",
+      "cd8f0ae3-8100-42a2-8df8-b37282e46258"
     ],
     "type": "duplicate",
     "id": "6cfb3909-34f7-4022-889e-2e10acab724b",
@@ -776,8 +843,9 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "54bcdaff-7a1c-4030-aae9-dba13253e89c",
+      "43b45011-049a-4424-8655-5d8922164606",
       "48294677-cfd1-4e01-9f90-911c936a8f00"
     ],
     "type": "duplicate",
@@ -788,9 +856,10 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
       "373d8800-6b0b-4c0c-8270-61d64a66ab50",
-      "99d535ea-9b2b-43dd-b7a3-ecf21d7b5373"
+      "c7208a90-52bb-4728-b43b-2629ae228f1a"
     ],
     "type": "duplicate",
     "id": "73d3eaa0-7e61-4cb2-93e5-2d5ffe8c0a52",
@@ -798,10 +867,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 6 months ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 6 months ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "b1f24196-9622-459e-a935-955c14d0652e"
+      "e38dff5e-8a1e-40e1-a412-afd46edf0fe0"
     ],
     "type": "forgotten",
     "id": "858e8543-acb5-4fad-ae9b-a759884f4561",
@@ -811,9 +881,10 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
       "0a1cb6df-8293-4635-9d86-7ec6e37276a5",
-      "1be8e478-eb34-4d17-9513-1b565a1a94e9"
+      "e44a1875-6e21-4eca-bbf7-25daa7c9c66f"
     ],
     "type": "duplicate",
     "id": "5bfc39d3-f737-42e4-9c93-9f9b2a417bb9",
@@ -821,10 +892,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 10 months ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 10 months ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "382570af-0837-4af6-860b-9a80b48c6d5a"
+      "c52eabfe-ed5d-42db-9868-21322aef3e1d"
     ],
     "type": "forgotten",
     "id": "5fe36b5b-cc75-4fa2-894f-c925546c46be",
@@ -832,10 +904,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 3 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 3 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "5c654644-9efd-465b-b36e-137c14508710"
+      "a9e66cc1-6e1b-4496-a97d-d3192c114233"
     ],
     "type": "forgotten",
     "id": "d77ff315-0120-4065-8e3e-e91e8fc19ffd",
@@ -845,9 +918,10 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "4c62928d-cb81-429a-95bf-fea5829c02c8",
-      "a0e27db2-172c-4e59-a7b3-dc015eed378c"
+      "035b883d-1fd0-4a71-aee8-34f8eb3bd8df",
+      "f1cb78bf-5cc0-40b8-8086-97060253c2d9"
     ],
     "type": "duplicate",
     "id": "9cee9ced-86cd-4eef-88ad-5af6022ac99f",
@@ -855,10 +929,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 8 months ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 8 months ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "25f6e14f-7091-4655-bce3-30476d9abc3a"
+      "bdb40328-9b26-411f-a85e-0f9b37ffe0d4"
     ],
     "type": "forgotten",
     "id": "1ca58aa4-eba8-4d73-9aab-4aa1995c6fa7",
@@ -866,10 +941,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 2 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 2 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "be6890b3-1f86-455e-beb3-8a65f951aefe"
+      "d162bea0-3e41-4cf1-8169-a17520754406"
     ],
     "type": "forgotten",
     "id": "8e158a47-036d-41cc-9c1e-8369ad6268e2",
@@ -879,9 +955,10 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "65179c38-c537-4740-9b62-36da750ee3e3",
-      "c3c2c500-487f-4ed0-92b8-a730bd22e24d"
+      "1e44f753-5b41-4f82-a59f-1409e411a73f",
+      "5c939330-b10f-4d57-bd62-80a9d33d7472"
     ],
     "type": "duplicate",
     "id": "5e36d4bf-b152-459e-8780-514c8d6a3701",
@@ -889,10 +966,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 2 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 2 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "ccb420da-34b5-4f4c-84d9-f6d2e590a4de"
+      "a1460a78-3152-46a1-ad52-f13c9502e468"
     ],
     "type": "forgotten",
     "id": "b57ced06-e109-4e74-be82-ff666880be48",
@@ -902,9 +980,10 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "47be1b36-c2e2-46b1-ae83-7875167f53f1",
-      "eeb2d87c-92cd-49f8-be67-8088cff04e79"
+      "7eb1f43f-483e-4704-97af-48b397148f97",
+      "a6380c47-9e9f-45a0-b5a6-d6e18bd43efd"
     ],
     "type": "duplicate",
     "id": "90fd96df-d136-433d-9df9-518dec02ace1",
@@ -914,9 +993,10 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
       "698131ff-ccfc-4c01-b34a-bba542e7ee65",
-      "035b883d-1fd0-4a71-aee8-34f8eb3bd8df"
+      "1e000617-bc30-4f34-ad66-caead0e4f6ac"
     ],
     "type": "duplicate",
     "id": "127c207b-0f6a-4c40-a205-1426da25d337",
@@ -924,10 +1004,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 2 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 2 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "83575f5d-4b8f-44d2-868b-b2d3d67b82cb"
+      "6e0d6edf-c476-487b-919e-7bd928569b5c"
     ],
     "type": "forgotten",
     "id": "d04086bc-b41f-4664-a237-92067d6c5eba",
@@ -935,10 +1016,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 2 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 2 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "a3f32866-35f7-4687-9642-bb5f9666bea8"
+      "c257104b-18c0-4cc7-a889-9bfb20b0be42"
     ],
     "type": "forgotten",
     "id": "20cdefd6-de21-4f0e-95ee-5219575cb873",
@@ -946,10 +1028,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 2 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 2 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "ffce4810-08ba-4950-95c3-0bac993ba53e"
+      "bb953d61-6b9d-4529-9c3b-da317bd05133"
     ],
     "type": "forgotten",
     "id": "2a534ab9-2465-4f1d-b8a0-d0b088dc1b7c",
@@ -957,10 +1040,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 2 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 2 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "510d5c63-ebf6-49ae-82a1-46c3b52ed30f"
+      "6e88d571-0bec-4589-bdaf-f321d7ccb004"
     ],
     "type": "forgotten",
     "id": "eb32a02e-d3f4-46f0-82dc-751dc50c9edf",
@@ -970,9 +1054,10 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "eea2ade4-e18c-47b8-9cf0-a15653b9c9b2",
-      "c6d0562f-c304-4b38-8093-d92f44d9c5f3"
+      "23b4818c-4781-493c-8924-21e9227804df",
+      "55f1d6ef-8f5d-4bfb-82be-f114471d3f1e"
     ],
     "type": "duplicate",
     "id": "e2518c2a-84ea-446c-86bc-1b71561f348a",
@@ -980,10 +1065,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 3 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 3 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "7d5b20cf-e881-4f21-8424-5a8b4ef7157a"
+      "a43f9e88-030e-454f-b661-5bcbf795b3ef"
     ],
     "type": "forgotten",
     "id": "b1d8d6c7-e379-4a44-958c-64c94017efe6",
@@ -993,9 +1079,10 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "1d5edbb4-fe16-458e-8357-04dc968935df",
-      "ab1f4719-0462-4154-a21e-700967dfbe34"
+      "240eec06-a815-400e-8836-f795021bfe0c",
+      "882abc31-ec88-4ecc-b462-5d0bfd5aba05"
     ],
     "type": "duplicate",
     "id": "6f2aa135-3b8d-4865-89bb-3d190d8348ba",
@@ -1003,10 +1090,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 3 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 3 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "89e60f57-9197-4d69-946b-1a903c84b6bb"
+      "c9385350-a8c8-41cc-9932-cb0629ef14d5"
     ],
     "type": "forgotten",
     "id": "2c1ed27a-9e75-4118-98e8-0faa5a5377d0",
@@ -1014,10 +1102,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 3 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 3 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "e022336c-db4f-4814-a4e7-ca5ed7cb5a8d"
+      "73d52b51-d982-4a47-a597-76c4e913ad0d"
     ],
     "type": "forgotten",
     "id": "3cf0ea25-c659-4719-be8b-28f04f00bcc1",
@@ -1027,9 +1116,10 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "5cedd5ea-9d17-4cf5-961f-c33d6676477e",
-      "1713c61d-d011-48e8-a23f-21bd226c0438"
+      "e9c95d5c-b684-41b6-a3c7-0fa7aa93eff0",
+      "7740d3f7-fc25-4f46-9d04-afbf69374ab3"
     ],
     "type": "duplicate",
     "id": "5baff008-9b63-4d97-b120-7b43d46d79b6",
@@ -1037,10 +1127,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 2 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 2 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "7271d941-e2cd-4d5c-8b3c-7285c39440f3"
+      "84668bda-5e22-48ad-9908-8b2c75530dd1"
     ],
     "type": "forgotten",
     "id": "db1c72d0-0bbb-41d0-8521-c2d5317fa757",
@@ -1048,10 +1139,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 2 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 2 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "419e805d-67d0-4678-bec0-0e4760ae7d24"
+      "4c944e77-f371-4b5d-98ff-7ba646cd89bb"
     ],
     "type": "forgotten",
     "id": "e684ac07-c41f-4a97-93a4-b6ca1f378227",
@@ -1059,10 +1151,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 2 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 2 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "7d402062-ebf1-4135-93e4-406e948e51ab"
+      "89134141-c772-4d9d-8963-99416a096c3a"
     ],
     "type": "forgotten",
     "id": "2fe01325-8696-406c-95c6-526450e27adc",
@@ -1072,8 +1165,9 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "ea5c6510-4eb0-4bd1-a315-67ea333ce0cc",
+      "71eee3da-fa1b-4212-8e79-1e2e4780f8e1",
       "e2435f5b-e4a8-4db3-bb5a-cecda39f90f6"
     ],
     "type": "duplicate",
@@ -1084,9 +1178,10 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "7495a5ec-5058-47ef-92a9-a32e215356ad",
-      "d355a5ce-aa3f-4637-983b-ec6a0ef5be51"
+      "f8b67027-b40d-4971-8a72-d8cc1c9c4ad5",
+      "74f951a3-5e5d-4d41-8a19-4f33af214269"
     ],
     "type": "duplicate",
     "id": "9c99e7eb-2a42-4bca-b365-03a5f0c5a55a",
@@ -1096,9 +1191,10 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "8f35e72a-99df-4877-b212-f8199268dd0f",
-      "6b7e7e01-0cda-4d7b-bbee-01c0c5426038"
+      "2bbf0127-ad6c-4529-b2b6-b3dc6595216f",
+      "18ab0eee-2e76-4fc9-b88b-4fdd40676eb4"
     ],
     "type": "duplicate",
     "id": "b82103f3-8cda-4880-9df3-91e9e6ba1bd7",
@@ -1106,10 +1202,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 6 months ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 6 months ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "bb953d61-6b9d-4529-9c3b-da317bd05133"
+      "892d63ab-8e54-465b-8ed5-cc4dac1f916a"
     ],
     "type": "forgotten",
     "id": "e386fad0-903b-4e30-896e-2bd0fc186b71",
@@ -1117,10 +1214,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 3 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 3 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "cd1dfa06-1c62-4848-881c-e33076794b25"
+      "c917d6eb-3fc3-406f-b7c2-493a73d1b771"
     ],
     "type": "forgotten",
     "id": "2c81056b-3f1c-4b09-bdfa-c325cf776a42",
@@ -1130,9 +1228,10 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "07033c7f-e9c0-45a0-a953-d2c6848018e0",
-      "d5d7f9cb-db9a-4496-9a0a-8f7323f7716e"
+      "fa20eef8-a5b9-4f12-91c9-f166e7168503",
+      "c7b426de-40d9-4cfe-97f2-a11f8c20979e"
     ],
     "type": "duplicate",
     "id": "c9ede105-81a1-4ffa-97aa-65d4d02c0da4",
@@ -1142,6 +1241,7 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
       "68d23991-f408-4a75-84e3-d588e2763c0e",
       "9cd2c6f6-0c96-4117-8a7b-c09878c5bf41"
@@ -1152,10 +1252,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 3 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 3 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "6a764ba6-8c10-444d-ad1e-fb3d0b8fe93a"
+      "535bb004-1f57-487b-9844-7c44b9db76d2"
     ],
     "type": "forgotten",
     "id": "55fbabe9-b3a6-4b6b-9931-cbc53b57061b",
@@ -1165,8 +1266,9 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "3ff8abfd-95b8-4549-af93-c2f80869d6d2",
+      "d4802079-a60f-46db-ae35-9ba891824e1f",
       "9d1b2588-3fcf-4905-8e82-d3c99e47474a"
     ],
     "type": "duplicate",
@@ -1175,10 +1277,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 3 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 3 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "84668bda-5e22-48ad-9908-8b2c75530dd1"
+      "d5d7f9cb-db9a-4496-9a0a-8f7323f7716e"
     ],
     "type": "forgotten",
     "id": "e4f2748c-ee66-4a40-a03d-e1f02cf65589",
@@ -1186,10 +1289,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 3 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 3 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "92e0feb9-6d33-4716-ad60-bfc36a951ad8"
+      "3ff8abfd-95b8-4549-af93-c2f80869d6d2"
     ],
     "type": "forgotten",
     "id": "f9128fbd-72d4-489a-8a59-e955bdf85345",
@@ -1199,9 +1303,10 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "64925a0c-118e-4674-9170-b5465aaf41ba",
-      "0c7e7c5e-a829-41c4-bdb8-529f5bedfa31"
+      "50e86558-000c-4aa0-8a14-5df42acfc4ce",
+      "1512f82d-6ae1-40a7-b490-dadde08e62c6"
     ],
     "type": "duplicate",
     "id": "72a9ff53-c532-4b98-993c-9ee039c39aa3",
@@ -1211,9 +1316,10 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "88521cec-ee59-47b5-9674-292a67a00fe1",
-      "e44a1875-6e21-4eca-bbf7-25daa7c9c66f"
+      "efcf1d4d-6e6e-4fa2-a0bf-b39c973c7a6f",
+      "2440e9f6-7369-4870-afe6-306b9b96df45"
     ],
     "type": "duplicate",
     "id": "dc46d0c8-4c94-4f47-b42f-555bd2df6aba",
@@ -1221,10 +1327,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 2 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 2 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "25303c81-8251-4f3a-afe7-dcc4e8e2d244"
+      "63e66880-4bbf-45e6-ba1c-919aa3112b9b"
     ],
     "type": "forgotten",
     "id": "e86f9ef8-35ae-45eb-8d7f-086589a97686",
@@ -1234,9 +1341,10 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
       "cc780fdd-b597-44be-b086-39ae29a9426d",
-      "b28d6727-ce15-4085-a020-77ce05857d72"
+      "b6f1ce39-982d-40cf-b966-82af5ea607cf"
     ],
     "type": "duplicate",
     "id": "ca431aeb-4e06-41ae-aca2-093e0b1ca45d",
@@ -1246,9 +1354,10 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "3544c904-703d-4d57-b422-4a0e46efc8b0",
-      "61bae911-9100-4490-8a1b-4acc74c0ec52"
+      "2f7a20f9-9e62-44c0-9c95-8789bf7949d4",
+      "10fae004-14b6-4adf-af51-a8cf6b0c35d7"
     ],
     "type": "duplicate",
     "id": "8f21acda-20ca-49ed-bf57-9c143c879f40",
@@ -1256,10 +1365,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 2 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 2 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "1512f82d-6ae1-40a7-b490-dadde08e62c6"
+      "e1398d11-a046-4466-8b33-0337a4d5c103"
     ],
     "type": "forgotten",
     "id": "1dcb5e8c-ad33-4e04-a095-7c24a08bd802",
@@ -1269,9 +1379,10 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "ed511d39-9af8-4506-bdec-34c253f4a116",
-      "97375e27-db95-469c-a9f1-6f7b3fbb3db5"
+      "24caa743-5014-42af-81f6-ebf2a63ed956",
+      "f36f8373-6e03-4f9b-91d1-e4d7a9b5015f"
     ],
     "type": "duplicate",
     "id": "65cf592e-ae3a-4695-be28-e22fba3c5f46",
@@ -1281,8 +1392,9 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "881eea35-c4a4-454d-b93e-c60cc6c61b27",
+      "9880af42-8fe4-474d-b065-db018afb7f72",
       "7b757478-e38b-48e7-ada7-be3957a7de12"
     ],
     "type": "duplicate",
@@ -1291,10 +1403,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 4 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 4 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "26a29ca8-5ddd-46ae-aee0-65ab671e8c2b"
+      "fc77c640-ceb8-436f-8fc0-9bf71b640e9d"
     ],
     "type": "forgotten",
     "id": "a56a6195-8034-410c-8e08-76c7dab65348",
@@ -1302,10 +1415,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 2 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 2 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "c7d3b144-6cd8-41c2-8e2f-632a0d98b54a"
+      "b08e3662-2dfd-4024-ba0e-495827df7fce"
     ],
     "type": "forgotten",
     "id": "b01d694a-af22-4fcd-af77-f86d26218057",
@@ -1315,9 +1429,10 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "1903f359-98f0-4181-aa33-586853a151c8",
-      "6a647364-bed0-4d77-864d-9c051fe575d5"
+      "0ceb9f66-5638-4be8-b33c-fdcfd27a6238",
+      "cbcebaf6-1578-4fd0-803d-1fc534305531"
     ],
     "type": "duplicate",
     "id": "02d3498a-7d25-4d95-b1b7-63a63717e7a8",
@@ -1327,9 +1442,10 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
       "603cc7e5-2810-43bf-a785-e9fb74dda2ab",
-      "e4e71119-a122-4fff-a13e-bc0fbed97579"
+      "6e88d571-0bec-4589-bdaf-f321d7ccb004"
     ],
     "type": "duplicate",
     "id": "176a2927-6096-430d-9bc0-63b5e8e00595",
@@ -1337,10 +1453,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 4 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 4 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "cb6d47f3-6b29-4169-9cf3-af5a557d4965"
+      "ee8f9fa3-65df-418f-b970-38d014d9e78a"
     ],
     "type": "forgotten",
     "id": "d5b3c985-1501-41d0-9508-e9043d9b5448",
@@ -1350,9 +1467,10 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "25d3504c-c313-4fc5-b9bf-22e4748fddd1",
-      "3ee939d8-8d3c-45af-abad-54377f78df89"
+      "9901c7c0-b0ae-45a8-aa7a-2700851bd0fc",
+      "cb6d47f3-6b29-4169-9cf3-af5a557d4965"
     ],
     "type": "duplicate",
     "id": "b4c7dddb-cc3f-4fcc-bceb-3737ccbcbbb9",
@@ -1360,10 +1478,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 3 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 3 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "2856b733-23b3-4eb9-a7c4-e55dc2f120b1"
+      "9901c7c0-b0ae-45a8-aa7a-2700851bd0fc"
     ],
     "type": "forgotten",
     "id": "0f14d02c-69b4-4083-bcae-119185812fde",
@@ -1371,10 +1490,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 4 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 4 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "8d30b1b0-f328-4018-9fa1-630d0baa2540"
+      "481d4a41-083c-48f0-822a-6979a76c628e"
     ],
     "type": "forgotten",
     "id": "46dc7140-5eef-435b-b036-d3ba7d4c6e7e",
@@ -1384,9 +1504,10 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "2418d4bb-3dce-4d6d-8564-39501a0c6dd2",
-      "6b0ac0be-0794-4873-a548-3bca91f0a2ae"
+      "7495a5ec-5058-47ef-92a9-a32e215356ad",
+      "6ac56937-6331-4d2a-b1e9-7d275e77cd71"
     ],
     "type": "duplicate",
     "id": "d971a337-0761-4cf9-919a-3bbd734f32b0",
@@ -1396,9 +1517,10 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "dbbb2c05-022f-4bfd-a5bd-7f802ce13d47",
-      "f257567f-8055-41d5-99de-dedeab5b04c0"
+      "8f062bb0-a4b7-4358-979e-7178b1ae82bb",
+      "9a9602f3-b262-4dd6-b159-0261cc419991"
     ],
     "type": "duplicate",
     "id": "a98cc5dd-4cb1-4a4f-ab46-92f9fc32ceeb",
@@ -1408,9 +1530,10 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "23b4818c-4781-493c-8924-21e9227804df",
-      "0048cb76-ae9c-4d2a-8b62-d646b436f1de"
+      "1d855c48-c55b-4a30-b3c0-82c080395691",
+      "47f35709-654b-4dcc-b3a5-9e68ea4517ca"
     ],
     "type": "duplicate",
     "id": "c188a673-fd22-4636-b838-dcb3708e870a",
@@ -1418,10 +1541,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 3 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 3 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "1f92de2d-2e2b-4fe2-bcc7-d960b8195e84"
+      "954b65b3-b6a6-4e25-8a17-ef6ae6636216"
     ],
     "type": "forgotten",
     "id": "2a6ee950-10ef-4117-bab1-ae388357dfe2",
@@ -1429,10 +1553,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 3 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 3 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "4b4a46db-d46b-4e0b-95da-95e346dedf01"
+      "0ff77bf9-d4f0-49be-acf6-cb026ba4028c"
     ],
     "type": "forgotten",
     "id": "19ad6509-9980-4e4e-92d6-1e2f2640b656",
@@ -1442,8 +1567,9 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "be1fa79d-d5fa-4c9d-9591-690e4b1c600a",
+      "ee8f9fa3-65df-418f-b970-38d014d9e78a",
       "67434437-df75-4094-89cc-09db617d8066"
     ],
     "type": "duplicate",
@@ -1452,8 +1578,9 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 3 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 3 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
       "fb2098db-5963-49d5-874e-7315b33d7f29"
     ],
@@ -1463,10 +1590,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 3 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 3 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "bda79ae5-02cd-4b89-bfa9-8359983978a8"
+      "d2a09ae1-67ed-400f-af71-4d2afe1636c4"
     ],
     "type": "forgotten",
     "id": "2119d12d-4ae1-4b2e-9e5e-1e2f46d3dcd4",
@@ -1474,8 +1602,9 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 2 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 2 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
       "05f37e62-aa12-4b6f-b18e-dc267689344c"
     ],
@@ -1487,9 +1616,10 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "39e3f997-b9c9-486f-a559-52cfdbc9d764",
-      "f8b67027-b40d-4971-8a72-d8cc1c9c4ad5"
+      "c0bdec3a-6844-4fc8-9297-59b1d5fb0efc",
+      "8c6f170d-2f85-489f-9639-a9d7faada960"
     ],
     "type": "duplicate",
     "id": "9e6c42b0-920b-4aeb-8863-925629af457c",
@@ -1497,10 +1627,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 3 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 3 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "62df11c7-143e-405a-b3fa-29a961231dc0"
+      "2cc1728a-7d5b-40e5-9b39-6c026f20e056"
     ],
     "type": "forgotten",
     "id": "6d2006d6-ad16-43c0-9f60-88f369aef331",
@@ -1510,9 +1641,10 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "dd9d5331-7087-4ffb-91b1-612c9ba2b023",
-      "bb255773-b8a2-4848-8656-20cab8971da0"
+      "f4616202-0e24-4743-bde8-6c432d09c9db",
+      "a2ea9505-2b09-4445-a188-a801ef74e5b2"
     ],
     "type": "duplicate",
     "id": "fb0ec1a9-0ec2-48ed-bef4-dd210ff62264",
@@ -1522,9 +1654,10 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "b58bfe26-ffc2-41ea-86e4-67022b6e9350",
-      "a2e5a8ff-dfb9-4f27-99dd-f1d53acb1e38"
+      "5abeed1b-d3f5-4893-8b9b-719255550807",
+      "621298c8-41a9-41b7-82e0-a49281d9ee8e"
     ],
     "type": "duplicate",
     "id": "f7e07795-6f5f-4f7d-a3b8-074674e1e3f8",
@@ -1532,10 +1665,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 10 months ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 10 months ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "ec9ad5d4-63f6-4443-bac9-3c2128fab05e"
+      "a5f62d50-d631-465f-8274-3f32cbca3a5e"
     ],
     "type": "forgotten",
     "id": "dff2298d-2f9a-4d58-afbc-442dcafeb376",
@@ -1543,10 +1677,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 3 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 3 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "dc6e9574-0a76-47b9-b52f-ce53ce20f07d"
+      "2418d4bb-3dce-4d6d-8564-39501a0c6dd2"
     ],
     "type": "forgotten",
     "id": "32c87c0e-d6b1-49c1-af09-29406ad78ceb",
@@ -1556,9 +1691,10 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "5eaf384b-363e-4a5b-8ba7-6d49af250487",
-      "91a65dca-8acd-40bd-8751-9bd36bce08f1"
+      "e91482e9-e3ec-44be-9fdc-30a9e47cdef1",
+      "8a20a291-f24e-48b4-82b1-807d148dd431"
     ],
     "type": "duplicate",
     "id": "b5774690-99cb-4af3-948e-76123d31b590",
@@ -1568,9 +1704,10 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "c47f81b7-8042-4d45-aa66-5eb0a8eef97c",
-      "98c468a6-a9f9-4835-997e-c33eaaa4a623"
+      "231ad665-9d42-4ae7-a0ab-2f6a645c03e8",
+      "a3f53a1e-2632-439b-82fb-c9b4fde08644"
     ],
     "type": "duplicate",
     "id": "364243ce-5a69-4002-8e13-59dabcf3ca1b",
@@ -1578,10 +1715,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 2 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 2 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "e2540386-66bb-426e-9d2f-7fdd71203411"
+      "9bc9dd49-6846-4cca-9205-00845d909113"
     ],
     "type": "forgotten",
     "id": "4ad7bebe-2bbf-4afd-9094-42a740b7a8d0",
@@ -1591,9 +1729,10 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "9a9602f3-b262-4dd6-b159-0261cc419991",
-      "6a7ed08c-74bc-4a71-8dc7-3c8b2db47f6c"
+      "f582f857-04a9-45ca-ae9a-93d976ab37ab",
+      "26a29ca8-5ddd-46ae-aee0-65ab671e8c2b"
     ],
     "type": "duplicate",
     "id": "f4ebedb8-eceb-490b-903e-ba25475b3fd1",
@@ -1603,9 +1742,10 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "c22f63ef-ce66-477f-b1c0-f73f5b96dc33",
-      "9ed0e5d7-88ce-456e-bf75-04ca1bec62b2"
+      "6ed004a8-abeb-4fac-ad13-862099c3fbdd",
+      "82b87e25-1aff-4766-8cb0-51c472217534"
     ],
     "type": "duplicate",
     "id": "f5836117-560e-41d9-8fc1-bd57bdc4ad99",
@@ -1613,10 +1753,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 4 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 4 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "6b6c3369-00fc-44fa-91fc-81847a4d0e7f"
+      "74f951a3-5e5d-4d41-8a19-4f33af214269"
     ],
     "type": "forgotten",
     "id": "73be0da1-1119-4a4f-b59d-c29a9cd187fb",
@@ -1626,8 +1767,9 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "57816c5d-151a-4d12-9ed5-14d136caa9fd",
+      "4b21b250-7e12-4f53-a3f6-65740cea0590",
       "4b7434ff-2508-44fb-a846-60a40838dc89"
     ],
     "type": "duplicate",
@@ -1638,9 +1780,10 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "723db7e5-6bdd-4599-903e-dd2af7034b8d",
-      "3ec23fe2-90fc-441a-a9bb-5c97f4a28a7e"
+      "e6ab7f3a-cfc9-4f3e-9f2b-38c1fbf80c5f",
+      "382570af-0837-4af6-860b-9a80b48c6d5a"
     ],
     "type": "duplicate",
     "id": "13fb374d-f34e-439f-b890-3f70a186d422",
@@ -1650,9 +1793,10 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "7753df1b-71e1-4775-a79d-44c43058d0cf",
-      "d9eee8f0-119e-4468-982d-0cb44ffda1a5"
+      "7ee3a190-beea-44c2-aff7-1346045a473e",
+      "2856b733-23b3-4eb9-a7c4-e55dc2f120b1"
     ],
     "type": "duplicate",
     "id": "039b5158-ef18-4d1f-a9aa-d262ab4ef384",
@@ -1660,10 +1804,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 2 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 2 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "e19a83a8-b51d-4425-b8f5-23f9f168195a"
+      "07d146ce-54dd-4bb8-a2cf-7879bbb2d03d"
     ],
     "type": "forgotten",
     "id": "bbab4f14-1ac4-4753-a25f-8359bd05e60f",
@@ -1671,10 +1816,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 3 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 3 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "83f61776-648e-4cc8-969a-bb2563e030c6"
+      "6ccf8e7d-a88a-4998-aeb3-6e649021ec3c"
     ],
     "type": "forgotten",
     "id": "9bd2789f-4b54-4c0d-a5f8-1e3011512d37",
@@ -1682,10 +1828,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 4 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 4 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "3f594b1e-548e-44de-acbc-c7f45831dd1e"
+      "15a7c09c-2903-499d-8a01-202f8f94d3ef"
     ],
     "type": "forgotten",
     "id": "46d4b5c7-4b9c-4813-90ff-44a4cfd7febe",
@@ -1695,8 +1842,9 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "50ca0fb0-63d0-4da3-8f00-13365719ee83",
+      "b1e37374-6e2e-4f19-a8ab-7fe4d301a1e7",
       "e471e5df-742f-4d7c-92fb-ceec4a2b6da1"
     ],
     "type": "duplicate",
@@ -1707,9 +1855,10 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "e788c9ec-3986-4c4e-a226-0f24cf785c78",
-      "231ad665-9d42-4ae7-a0ab-2f6a645c03e8"
+      "33ab6486-1ce6-4eea-b0e7-c2f526caa29a",
+      "97d81e3a-1a5d-4c60-817c-ecdfe5bb2386"
     ],
     "type": "duplicate",
     "id": "fb77ffcd-c137-47b5-bbda-80ca3aba06e0",
@@ -1719,9 +1868,10 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "a86e8072-3014-4810-ab71-d7ec3f7f95ac",
-      "d12036d2-5e9b-437f-b014-56aa0fb5957a"
+      "b2fd0836-b8ac-498c-8fec-792fcbf0a4d0",
+      "f733bbd9-0897-41b4-a83b-33c127980153"
     ],
     "type": "duplicate",
     "id": "8bdeb081-398a-4c42-9c01-7a7f54953f4f",
@@ -1731,8 +1881,9 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "a5337dc4-a2a0-4338-a44a-2296ae0ff95b",
+      "41ecb9dd-c0d1-4364-a2fc-40bc4c9574a4",
       "e3092ecd-6bea-47c0-a110-63f09004d400"
     ],
     "type": "duplicate",
@@ -1741,10 +1892,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 3 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 3 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "feab6f10-3e51-4601-b545-8b6e656daf02"
+      "673f9e5c-d1ec-46c9-aff7-0489148ab1cc"
     ],
     "type": "forgotten",
     "id": "75755d82-c23c-464d-ac0b-21ee915f414a",
@@ -1752,8 +1904,9 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 2 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 2 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
       "d4649fc0-430e-429b-b632-410901e8331c"
     ],
@@ -1765,8 +1918,9 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "f54327e1-e76a-49bc-aef4-88feb4f08917",
+      "5c1633ae-4f53-4d7d-8382-aa56812a588c",
       "f35dc1c1-d839-4d5c-95ff-71e5f83b09fd"
     ],
     "type": "duplicate",
@@ -1775,10 +1929,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 2 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 2 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "a4eec93f-5d35-4a0c-8b0f-18b7e785ad4b"
+      "04756fd2-3e5c-454e-acfd-0b06a39a13fe"
     ],
     "type": "forgotten",
     "id": "a86a80ed-21a8-44b9-964d-4c80f1847009",
@@ -1786,10 +1941,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 3 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 3 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "4a7a3d49-3388-4bd6-b74c-0a953c1edc52"
+      "47f35709-654b-4dcc-b3a5-9e68ea4517ca"
     ],
     "type": "forgotten",
     "id": "80b5fcbd-541a-4a48-aa1b-c59baceb72c4",
@@ -1797,10 +1953,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 3 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 3 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "065cc1ef-6f63-49a9-8cb8-9195e0455645"
+      "e6d716b0-99b4-4ce7-ba8d-dee9a7a42f55"
     ],
     "type": "forgotten",
     "id": "be050bf5-b503-4c90-b6cd-c9cf30c343d5",
@@ -1808,8 +1965,9 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 3 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 3 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
       "a59bc349-795d-48de-8778-b6f95c959e7f"
     ],
@@ -1819,10 +1977,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 2 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 2 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "c9d4a1a4-643f-4757-911b-f461c5a419eb"
+      "1d1f9e0a-3358-433f-9c8e-89861a05b56b"
     ],
     "type": "forgotten",
     "id": "3c3730d9-b0a3-4641-81f3-08b1c7216c95",
@@ -1832,9 +1991,10 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
       "391508cd-d678-47bd-ba3b-25143bcd579e",
-      "17343632-3946-4445-b372-ed41a1b4fff6"
+      "b58bfe26-ffc2-41ea-86e4-67022b6e9350"
     ],
     "type": "duplicate",
     "id": "33996477-35aa-4a62-aa58-cf8b22e4fefe",
@@ -1842,10 +2002,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was a year ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was a year ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "2a37cae0-a606-4ac8-bc55-f1e76a4f7108"
+      "104704c5-4811-4d7a-a251-89e1240ab8b0"
     ],
     "type": "forgotten",
     "id": "47ac76fa-9f40-499d-b1d4-362376ebc60d",
@@ -1853,10 +2014,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 4 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 4 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "e91482e9-e3ec-44be-9fdc-30a9e47cdef1"
+      "232273f9-e25e-4439-a062-52d1d841eb99"
     ],
     "type": "forgotten",
     "id": "e7d00875-1f8c-4b60-bf77-5f98ba695506",
@@ -1866,9 +2028,10 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
       "ef9399b7-9293-46ba-9330-9b7224fe2178",
-      "27239046-eb18-47f7-b46c-5d0dbaa031e9"
+      "dd020e52-c17e-40ba-92f9-395481d3f5ec"
     ],
     "type": "duplicate",
     "id": "d8de7943-27c9-4266-bb0a-10cb684016a5",
@@ -1878,9 +2041,10 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "27dec335-36a5-40d1-92f6-ef7182c00484",
-      "05c69ec3-3e79-4523-9284-4c4e94bf5a47"
+      "2418d4bb-3dce-4d6d-8564-39501a0c6dd2",
+      "889ab6d8-5e6b-4d7a-b52f-69ea94f0fe9a"
     ],
     "type": "duplicate",
     "id": "7e43cb61-00dc-4853-a571-a51024ff8de5",
@@ -1888,10 +2052,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 4 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 4 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "53abacb1-49b5-4d15-bd6c-4471662255f9"
+      "6a764ba6-8c10-444d-ad1e-fb3d0b8fe93a"
     ],
     "type": "forgotten",
     "id": "14c07a41-c9e3-4074-ab03-18f748f44782",
@@ -1899,10 +2064,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 2 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 2 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "22ccb62e-a59c-4b6d-8464-c217c896675f"
+      "c04366b5-9c34-4366-a4db-c131f6fb9a17"
     ],
     "type": "forgotten",
     "id": "cb902579-8701-418d-80cb-ae101bed7384",
@@ -1912,6 +2078,7 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
       "6d049d61-efb0-45f5-9888-f6d56b603f31",
       "9d4d99a9-64d1-4ad1-93d4-6b539ffba6db"
@@ -1922,10 +2089,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 3 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 3 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "f397a26b-0b26-4bb6-a8c1-d7663177f8b7"
+      "cbcebaf6-1578-4fd0-803d-1fc534305531"
     ],
     "type": "forgotten",
     "id": "faafc0df-7d92-4cce-b0c6-e53d3c4b3763",
@@ -1935,472 +2103,513 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "abcb3e41-e223-4595-9c59-36c2e96dac1d",
-      "2a4f4dc6-8653-4499-ae5c-22d2cdb5a3de"
+      "3a13efbf-fb6a-443f-9b1d-6721fb81e4b9",
+      "78153637-739a-4c8c-b667-af5ac6614881"
     ],
     "type": "duplicate",
     "id": "6cfa9bc5-eba2-489a-a909-801bf14bfdbd",
-    "provider": "Webury Hill SCITT"
+    "provider": "King’s Oak University"
   },
   {
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "c479c46a-87fe-4c74-aa62-eb0e8e09de79",
-      "cd475819-cd74-46e7-b6e7-4e6bb7808e66"
+      "e38dff5e-8a1e-40e1-a412-afd46edf0fe0",
+      "54d5918e-4151-4202-82ca-3b7ad48889a2"
     ],
     "type": "duplicate",
     "id": "a44ace9e-2134-48af-a058-6be0473e9f3d",
-    "provider": "Webury Hill SCITT"
+    "provider": "King’s Oak University"
   },
   {
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "dd9fc52a-d847-4efb-a025-16aab036e471",
-      "08755e94-d199-4263-807c-69d381ce0ecd"
+      "39352e42-7475-4984-8397-fb4949a477d2",
+      "104704c5-4811-4d7a-a251-89e1240ab8b0"
     ],
     "type": "duplicate",
     "id": "ec4a7b9a-3fd8-488d-9500-3cac12cb02fb",
-    "provider": "Webury Hill SCITT"
+    "provider": "King’s Oak University"
   },
   {
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "9a7e849f-81ad-4442-8584-5abf7f1694ed",
-      "498d8205-2c51-4e59-82e0-cb2d7d6ea26e"
+      "ac1b91ff-09dd-4069-853c-54405e06f19f",
+      "8e3006dc-bd8c-4d69-8441-c95ee00a46ce"
     ],
     "type": "duplicate",
     "id": "fb8d2ec2-0369-4b77-8c4c-519053a5228c",
-    "provider": "Webury Hill SCITT"
+    "provider": "King’s Oak University"
   },
   {
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "77114815-f157-4bfb-9181-60d4a2afb09d",
-      "e7277f51-90d1-41f9-a517-e9c5ab7f4b81"
+      "fe7eac50-3fc7-4c5a-bc27-291b057db98c",
+      "c25879b9-6300-4a59-a9c2-af79d14dd48e"
     ],
     "type": "duplicate",
     "id": "f4028dbd-74bd-43a2-be22-18af660712cf",
-    "provider": "Webury Hill SCITT"
+    "provider": "King’s Oak University"
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was a year ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was a year ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "2c2aa948-1cff-47c8-a383-fee96b9bd921"
+      "f36f8373-6e03-4f9b-91d1-e4d7a9b5015f"
     ],
     "type": "forgotten",
     "id": "960f4c94-2559-48ae-aa2d-71080c4cbf02",
-    "provider": "Webury Hill SCITT"
+    "provider": "King’s Oak University"
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 3 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 3 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "76d6379b-4bbb-4664-a3ff-0c1f95cba601"
+      "ec9ad5d4-63f6-4443-bac9-3c2128fab05e"
     ],
     "type": "forgotten",
     "id": "1448c741-b22a-478d-b7a9-3ab75f7ad2d9",
-    "provider": "Webury Hill SCITT"
+    "provider": "King’s Oak University"
   },
   {
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "0969e38f-e01d-4906-b800-12d4eb6e9f2c",
-      "6ac4126e-0d25-4a7c-9843-243634ec087a"
+      "51d10b71-44b0-4546-b489-39fcfdef97d8",
+      "89134141-c772-4d9d-8963-99416a096c3a"
     ],
     "type": "duplicate",
     "id": "aca4cbfc-227e-4db0-aa7d-89e34c5f268b",
-    "provider": "Webury Hill SCITT"
+    "provider": "King’s Oak University"
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 3 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 3 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "bfbd9222-9850-4016-9c29-488de295ea7a"
+      "82b87e25-1aff-4766-8cb0-51c472217534"
     ],
     "type": "forgotten",
     "id": "57f0fc61-313b-4430-afbe-9fc350bb206c",
-    "provider": "Webury Hill SCITT"
+    "provider": "King’s Oak University"
   },
   {
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "a226ae51-0bcd-421c-9faa-550e15e2a821",
-      "92708a24-14e7-49c4-81a0-18b67ca001e9"
+      "7271d941-e2cd-4d5c-8b3c-7285c39440f3",
+      "a0a180b4-e722-475d-afa7-486ec709959f"
     ],
     "type": "duplicate",
     "id": "8ece3ddb-621a-48a3-89c0-a303c346090a",
-    "provider": "Webury Hill SCITT"
+    "provider": "King’s Oak University"
   },
   {
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "68f28810-3055-45c8-b5ad-5e60a14b8ef4",
-      "429b235b-0ade-4648-841a-f5b6c4f79281"
+      "27dec335-36a5-40d1-92f6-ef7182c00484",
+      "dcb401a4-e7d7-447e-88d4-1920a0fd5919"
     ],
     "type": "duplicate",
     "id": "6d2a66ad-b122-4a8b-b14b-22db08b6e484",
-    "provider": "Webury Hill SCITT"
+    "provider": "King’s Oak University"
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 3 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 3 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "8d46d427-b8a7-412a-bf54-2231e5e45755"
+      "58834c45-83b8-4860-aaf9-762060ad4de6"
     ],
     "type": "forgotten",
     "id": "cb634847-48be-4ed3-b10c-2b668cc55427",
-    "provider": "Webury Hill SCITT"
+    "provider": "King’s Oak University"
   },
   {
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "7461a519-4acc-4635-a1e9-d9ad55d24f3f",
-      "5d910b78-4d06-42fb-ae76-e112c5e6d989"
+      "92b96090-2dde-4821-a42f-4bc671366c08",
+      "fca227fa-2d16-44a9-b43a-eb09c5376ddf"
     ],
     "type": "duplicate",
     "id": "baaea9c1-35e2-4c4e-ad9b-d26c272b6cbe",
-    "provider": "Webury Hill SCITT"
+    "provider": "King’s Oak University"
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 3 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 3 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "7478c160-2a4b-4ede-b27d-6a48202617ea"
+      "2993ef60-1a70-4d1c-beca-1538709a34ad"
     ],
     "type": "forgotten",
     "id": "26d903a6-2bce-4259-958d-a51d193b5e37",
-    "provider": "Webury Hill SCITT"
+    "provider": "King’s Oak University"
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 3 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 3 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "ba3518bb-c7ad-466c-8030-07c2b16ef3ae"
+      "9c251000-bea5-495c-9bc6-b414f7e33273"
     ],
     "type": "forgotten",
     "id": "a9f9e8ab-8d28-4ab0-ac46-96096f3497ef",
-    "provider": "Webury Hill SCITT"
+    "provider": "King’s Oak University"
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 3 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 3 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "3d04e791-7465-48e3-805e-97bb27d76e7f"
+      "e022336c-db4f-4814-a4e7-ca5ed7cb5a8d"
     ],
     "type": "forgotten",
     "id": "abfdb0b1-01da-4489-a6b7-5e7a890a0e4b",
-    "provider": "Webury Hill SCITT"
+    "provider": "King’s Oak University"
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 4 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 4 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "0eb962d8-bac7-4f23-acc5-00c5cb10e3ba"
+      "90ef9dd2-0a7a-4696-8f11-e0c6d3a0fa09"
     ],
     "type": "forgotten",
     "id": "0d711f28-496f-430f-8b5d-29789f61ad87",
-    "provider": "Webury Hill SCITT"
+    "provider": "King’s Oak University"
   },
   {
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "ff49ed28-1bf0-4b15-8d83-1f0f712ac119",
-      "828309a4-1559-460c-b662-56f597474bf7"
+      "0de21fa9-7543-4c46-8c1f-9a2e77e92150",
+      "419e805d-67d0-4678-bec0-0e4760ae7d24"
     ],
     "type": "duplicate",
     "id": "102c5ca4-4550-41a2-b236-65650a32a198",
-    "provider": "Webury Hill SCITT"
+    "provider": "King’s Oak University"
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 3 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 3 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "93b1949c-33ed-4b52-af83-c236f3df38c3"
+      "bc865a3f-41e6-4244-b2ee-884c1acf5674"
     ],
     "type": "forgotten",
     "id": "ec38218f-4cd6-46f9-8d95-bbeae49adf17",
-    "provider": "Webury Hill SCITT"
+    "provider": "King’s Oak University"
   },
   {
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "b4e6acbf-31f3-47b0-803e-47e2542ad2e0",
-      "a97c5893-20b0-4232-b8c9-89634d841072"
+      "a33c40e7-5055-46d6-bc5e-d5c8e103146d",
+      "98c468a6-a9f9-4835-997e-c33eaaa4a623"
     ],
     "type": "duplicate",
     "id": "2f380945-656d-481a-8b56-28e0106a0bf2",
-    "provider": "Webury Hill SCITT"
+    "provider": "King’s Oak University"
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 2 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 2 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "9e31ae24-ab4b-40e6-8ef3-e1c4ae6aa2dd"
+      "a5337dc4-a2a0-4338-a44a-2296ae0ff95b"
     ],
     "type": "forgotten",
     "id": "b84a68e0-9c5b-4b71-9d42-6bf80b010ff5",
-    "provider": "Webury Hill SCITT"
+    "provider": "King’s Oak University"
   },
   {
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "2613839c-2d4d-4580-abfd-b9ed4f8ddc77",
-      "5d11baa8-4a3a-4d7a-9a80-864d70ed6f2c"
+      "b14a6fa8-349e-4b86-b570-7b69ab4494ba",
+      "c9c84597-5379-47b1-832e-b426352a17b1"
     ],
     "type": "duplicate",
     "id": "9e05eaa9-061b-4c3f-8516-5e6209ea6f1d",
-    "provider": "Webury Hill SCITT"
+    "provider": "King’s Oak University"
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 10 months ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 10 months ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "65f9505b-213a-4193-a7d1-f467301b20bf"
+      "27239046-eb18-47f7-b46c-5d0dbaa031e9"
     ],
     "type": "forgotten",
     "id": "c5516bbf-544e-48e9-974b-d1c0ebf490a6",
-    "provider": "Webury Hill SCITT"
+    "provider": "King’s Oak University"
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 4 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 4 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "e7a816fb-c0d9-472e-8e20-2c699f76cc69"
+      "bda79ae5-02cd-4b89-bfa9-8359983978a8"
     ],
     "type": "forgotten",
     "id": "02e9f95b-8235-4af1-aed6-3f91c517fcfa",
-    "provider": "Webury Hill SCITT"
+    "provider": "King’s Oak University"
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 4 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 4 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "250ab56c-922b-4212-8981-e3600fc9fe93"
+      "911fe7bb-66b7-4b29-a62c-60c3975023f0"
     ],
     "type": "forgotten",
     "id": "e2740f80-5374-4da5-8b48-b43ab50c53da",
-    "provider": "Webury Hill SCITT"
+    "provider": "King’s Oak University"
   },
   {
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "cc566bc5-e2ba-4c7d-b0e8-d33e2b386d5f",
-      "104d22ef-79d0-4741-ab06-c26a1757090f"
+      "687dd840-1c10-4039-9695-eb8bdfb24b2b",
+      "b0674678-c717-46de-87af-830e4f474cd0"
     ],
     "type": "duplicate",
     "id": "e53e1d08-ce7b-4281-a4e2-6fb42121237b",
-    "provider": "Webury Hill SCITT"
+    "provider": "King’s Oak University"
   },
   {
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "2b119a62-8c63-4111-bdd1-09200ff241f6",
-      "0e74f2b2-a597-46a9-993c-ecbb6d81c4bf"
+      "34f9189b-8152-4ff9-a776-9131aa6b34e1",
+      "d0283319-1b08-4198-9f3a-abedf084b8ca"
     ],
     "type": "duplicate",
     "id": "079eacf2-eede-4cc5-a44b-a6ecbdf17516",
-    "provider": "Webury Hill SCITT"
+    "provider": "King’s Oak University"
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 2 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 2 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "04ad18c1-4cc2-4d3d-a979-0dc1f07fc6b4"
+      "cb6d47f3-6b29-4169-9cf3-af5a557d4965"
     ],
     "type": "forgotten",
     "id": "76d09b38-d2b1-48e5-89af-bc819edf6dd8",
-    "provider": "Webury Hill SCITT"
+    "provider": "King’s Oak University"
   },
   {
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "dc0cf8ce-0273-4cc6-8c6b-9b224e8a620d",
-      "5d997f1a-d198-4917-84f0-1194d4a20fa5"
+      "c7d3b144-6cd8-41c2-8e2f-632a0d98b54a",
+      "2a53cc64-33a1-4e7d-9b06-83a66533b5dc"
     ],
     "type": "duplicate",
     "id": "a9df8b58-eaa2-4cf3-b491-c47865c75a68",
-    "provider": "Webury Hill SCITT"
+    "provider": "King’s Oak University"
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 2 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 2 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "dfc7951f-89ca-4289-b56e-8a84ec1b8b1e"
+      "b021cbf0-a657-4a4f-8a3e-f14fe64dad61"
     ],
     "type": "forgotten",
     "id": "ded0529c-518d-45de-8720-53f366b3f62d",
-    "provider": "Webury Hill SCITT"
+    "provider": "King’s Oak University"
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was a year ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was a year ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "616f61a2-7cfe-44bc-a66b-79c062bbfcfc"
+      "2aed2916-138f-4308-8358-0b72a6f84b86"
     ],
     "type": "forgotten",
     "id": "515be8d7-c362-4647-998d-d9ead53974fb",
-    "provider": "Webury Hill SCITT"
+    "provider": "King’s Oak University"
   },
   {
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "a5b17c80-8e8f-42c4-ae50-37c75ab19df2",
-      "235644a7-1662-405a-9285-d96263326ea5"
+      "8ee59109-089b-4b11-9b55-9cfcf71a9dca",
+      "dd8d8309-a1b9-49e8-aac1-ddb1bc2bac1f"
     ],
     "type": "duplicate",
     "id": "b2cbf7d1-6076-4ed5-898b-ee940d40f22f",
-    "provider": "Webury Hill SCITT"
+    "provider": "King’s Oak University"
   },
   {
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "73fa75db-9a37-4300-9131-c45f9c0332ca",
-      "e8ebf77e-cd81-4b31-8111-5c38b1277184"
+      "dfd8f0b9-70d5-409a-b176-2ce0a862fdfc",
+      "5f69c87d-7e1e-499a-a552-630f8948cfda"
     ],
     "type": "duplicate",
     "id": "97ac0f9d-16b9-464f-9d2f-ca07f174e9f4",
-    "provider": "Webury Hill SCITT"
+    "provider": "King’s Oak University"
   },
   {
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "20527a7a-e2d9-43ae-970f-e354152f7244",
-      "35521401-a607-4e6c-b6b9-18e36e852a3e"
+      "911a4b06-cb74-4fbd-b16b-30ef52956688",
+      "08012080-21fb-4b38-871e-6a7773b9d8a1"
     ],
     "type": "duplicate",
     "id": "92a30348-0b50-42bb-9f96-ffc5826ed59d",
-    "provider": "Webury Hill SCITT"
+    "provider": "King’s Oak University"
   },
   {
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "82044f4d-df35-42fe-b20b-13dbe2ead036",
-      "1071dbaf-2ba6-42cf-83d5-e8eccfefe124"
+      "99b41b51-6060-489e-8c69-383e1b48ef88",
+      "8b1d2e00-2a9d-41ea-bc71-e9e5f4470501"
     ],
     "type": "duplicate",
     "id": "617bf0e2-6fde-40d6-9dbc-ce2164ddb795",
-    "provider": "Webury Hill SCITT"
+    "provider": "King’s Oak University"
   },
   {
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "fe466123-30b4-4f39-8eaf-21cf3a44d84d",
-      "919a3097-36ce-44bd-9633-36c1b9723364"
+      "d5749036-ae77-4727-9688-1bbd266ceb14",
+      "2c1d807b-689f-4024-8469-5c82f8882d7c"
     ],
     "type": "duplicate",
     "id": "cbf91676-d773-4d77-8b4a-aa93f2633ac3",
-    "provider": "Webury Hill SCITT"
+    "provider": "King’s Oak University"
   },
   {
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "62d4149e-e592-49a3-8454-35433dc82acb",
-      "30c8e220-f4f9-41fa-9961-4834f356e090"
+      "d4649fc0-430e-429b-b632-410901e8331c",
+      "65aa8779-d8e0-47cd-90b8-fb273fa87a54"
     ],
     "type": "duplicate",
     "id": "b31ffdd0-bac8-40b2-bae0-a3a038420f6e",
-    "provider": "Webury Hill SCITT"
+    "provider": "King’s Oak University"
   },
   {
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "910dcc82-a8e4-4d0b-920b-211a520d063e",
-      "ddd7f688-265c-4c60-9b3a-42ccd270dc97"
+      "83965c9c-d472-4f5e-851c-82732de38aab",
+      "836ea640-3496-456c-a4ad-9276bc5729f4"
     ],
     "type": "duplicate",
     "id": "4295555b-8dfa-40f3-bb2e-d14619b90896",
-    "provider": "Webury Hill SCITT"
+    "provider": "King’s Oak University"
   },
   {
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "fcf458f1-94c4-49fe-8b1d-4c98a26df245",
-      "1d001f39-1853-42a2-87d8-630737a5dd54"
+      "9bee9d4d-26e6-468b-bf23-dedc7558444c",
+      "9c251000-bea5-495c-9bc6-b414f7e33273"
     ],
     "type": "duplicate",
     "id": "df4eca09-5001-4a3b-9ce2-b53deb01f277",
-    "provider": "Webury Hill SCITT"
+    "provider": "King’s Oak University"
   },
   {
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "bcaca104-06aa-4abc-8565-862c09b4ff32",
-      "b39558e9-e020-4731-a02b-defffd138027"
+      "e94236b2-1403-4727-b83d-f01fef33230d",
+      "ec4c7d26-6697-41f7-8d61-c6811652e159"
     ],
     "type": "duplicate",
     "id": "c0a58b9b-48ac-440a-a37a-54071731e64b",
-    "provider": "Webury Hill SCITT"
+    "provider": "King’s Oak University"
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 3 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 3 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "45155fa4-93f9-4574-a330-5eca9e7f3cb6"
+      "828309a4-1559-460c-b662-56f597474bf7"
     ],
     "type": "forgotten",
     "id": "4bd087d6-0041-45fb-90c7-d8dedfc06d58",
@@ -2408,10 +2617,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 4 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 4 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "e432974c-e719-4ab0-96a2-a144532cec80"
+      "7408852d-ae4b-4bb5-a014-d18794aa9700"
     ],
     "type": "forgotten",
     "id": "19fce841-18bf-46bf-851b-4fee503d1e9c",
@@ -2419,10 +2629,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 2 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 2 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "450dd134-208b-458c-8e72-459c8fa0b73b"
+      "a6158595-12c8-441f-a7e3-f057d82084a7"
     ],
     "type": "forgotten",
     "id": "e24bff24-2d89-47c3-b222-9da4bd129f6e",
@@ -2432,9 +2643,10 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "70422bc9-4f9d-4614-afee-8dacd9fc24ce",
-      "b8e57b08-22d7-463e-a338-bd55cc251b34"
+      "0d999b09-61b6-4459-aa70-c636aff71cbb",
+      "903c340d-1e92-4029-b173-120a25fe4d9f"
     ],
     "type": "duplicate",
     "id": "35cce121-9b30-42ee-85dd-1ffa951b8ac2",
@@ -2442,10 +2654,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 3 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 3 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "6f8ed619-8bbe-4990-bbba-c5fe2300734d"
+      "3b452074-b54f-4b37-8a5d-9cde5a3b5d39"
     ],
     "type": "forgotten",
     "id": "d0096511-a51c-493e-82da-1461bfcc3f6a",
@@ -2455,9 +2668,10 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "552840e2-bbe0-4a97-b0c7-719fda0ca617",
-      "f0119bb1-d48c-4f28-a631-d57bbc98cbf3"
+      "30c8e220-f4f9-41fa-9961-4834f356e090",
+      "9f7e2312-6544-46d9-841b-ac6d3d3f0857"
     ],
     "type": "duplicate",
     "id": "30d5b2dd-0517-4610-9958-94b6bb2288fa",
@@ -2467,9 +2681,10 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "50c219c7-c386-4877-b4c4-8c827ef048c9",
-      "9ee4d6bd-3283-4db0-b3a9-ab9748ed5c16"
+      "45155fa4-93f9-4574-a330-5eca9e7f3cb6",
+      "fcf458f1-94c4-49fe-8b1d-4c98a26df245"
     ],
     "type": "duplicate",
     "id": "ae6f8380-253b-4d80-a39c-124debd4f9a8",
@@ -2477,10 +2692,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 2 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 2 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "3b452074-b54f-4b37-8a5d-9cde5a3b5d39"
+      "f258f999-eae2-451a-b355-3d7e5b351b25"
     ],
     "type": "forgotten",
     "id": "ffc9cbd5-df74-4c95-aaa0-bdbe7407aa65",
@@ -2488,8 +2704,9 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 2 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 2 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
       "d271d0ec-e067-4b95-9c5c-4f0b9a8bb17c"
     ],
@@ -2501,9 +2718,10 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "926ad644-a616-479a-9fa5-495d7f716bb1",
-      "c855e3a8-37a8-4289-b464-37ac05587060"
+      "1d001f39-1853-42a2-87d8-630737a5dd54",
+      "009f835c-444b-4d07-8d1c-33ace7f5aba7"
     ],
     "type": "duplicate",
     "id": "7e1a4ead-39d5-45ee-980f-0d8cb9806dee",
@@ -2511,10 +2729,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 7 months ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 7 months ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "1d0b2fac-d30e-4dac-ad87-b177b6db9b54"
+      "dfc7951f-89ca-4289-b56e-8a84ec1b8b1e"
     ],
     "type": "forgotten",
     "id": "6e809c72-750b-4201-bc8f-ed866fea1a5a",
@@ -2524,9 +2743,10 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "009f835c-444b-4d07-8d1c-33ace7f5aba7",
-      "083fdd99-959b-413c-8267-70b2b8edd61d"
+      "2a8d8d52-1762-402b-af31-e1710042113e",
+      "33ef63fa-f3bc-4e82-89d5-67a1fedda221"
     ],
     "type": "duplicate",
     "id": "cea206d3-ee65-47af-9315-f478c92e5ded",
@@ -2536,9 +2756,10 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "067818db-4e83-48c6-8b4e-ffd4e54439a3",
-      "e7a7aa7d-0472-4c14-8be7-bab5493da02f"
+      "4628aaf0-372a-4de1-bb79-b279625ba376",
+      "f0119bb1-d48c-4f28-a631-d57bbc98cbf3"
     ],
     "type": "duplicate",
     "id": "4ffe0dc0-9835-44ec-a90b-34fa56ba86c8",
@@ -2546,8 +2767,9 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was a year ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was a year ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
       "5d7eea83-fc3d-415b-8486-9d6e60ef9fab"
     ],
@@ -2557,10 +2779,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 6 months ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 6 months ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "d0decb62-7797-4a73-acda-55077be7ee40"
+      "dd9fc52a-d847-4efb-a025-16aab036e471"
     ],
     "type": "forgotten",
     "id": "dd87d541-386c-4fa9-89b4-6fe2e0cfa181",
@@ -2568,8 +2791,9 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 2 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 2 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
       "b274c5a6-2ad4-4e66-9e2c-f4f3522eba2e"
     ],
@@ -2579,10 +2803,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 3 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 3 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "33ef63fa-f3bc-4e82-89d5-67a1fedda221"
+      "f0119bb1-d48c-4f28-a631-d57bbc98cbf3"
     ],
     "type": "forgotten",
     "id": "6ef94bbd-12ff-496b-bc00-845a20804d60",
@@ -2592,8 +2817,9 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "380510a4-f4d3-4e34-887b-b63ee734a92d",
+      "e7277f51-90d1-41f9-a517-e9c5ab7f4b81",
       "f12e292b-f7d4-49a6-b084-0c67ccad1d88"
     ],
     "type": "duplicate",
@@ -2602,10 +2828,11 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 3 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 3 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "8151c9ef-a73d-4773-b824-8c091b4bf171"
+      "5d997f1a-d198-4917-84f0-1194d4a20fa5"
     ],
     "type": "forgotten",
     "id": "0f00acef-596c-4ac1-a5a2-565e00e1c1b4",
@@ -2615,9 +2842,10 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "af61d2ff-8480-44ac-870b-dc6f47e58b47",
-      "c111ca8a-e74a-4ec0-ab73-7abdb70c940e"
+      "c974fff3-e4ac-4177-bfa6-a237d4c94e5b",
+      "50c219c7-c386-4877-b4c4-8c827ef048c9"
     ],
     "type": "duplicate",
     "id": "84c91222-b9a0-4acb-a7f1-1f2776e5c789",
@@ -2627,8 +2855,9 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "af27e64d-91fa-4d0d-964b-c3c8b42480f5",
+      "552840e2-bbe0-4a97-b0c7-719fda0ca617",
       "5e81d6ae-b73e-4502-8b4f-3b61fb46d13f"
     ],
     "type": "duplicate",
@@ -2639,9 +2868,10 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
       "e90440de-65c5-4d48-af2a-73c72dd6f4ab",
-      "1d3adb00-9302-47ec-afe0-9bef4071ee6f"
+      "a6158595-12c8-441f-a7e3-f057d82084a7"
     ],
     "type": "duplicate",
     "id": "07636ac0-7a4b-475a-b0e3-46c9cb089c33",
@@ -2651,194 +2881,211 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "0f7aea01-3fe7-442a-b42d-f4c8283deb99",
-      "3fc6ca0b-c41f-4907-a13f-5f3f007c801a"
+      "d9888dde-4722-4246-b730-bb28cae30226",
+      "a9833a86-d6e3-4659-a798-1ff5931206b1"
     ],
     "type": "duplicate",
     "id": "b76ec3bd-c68b-4d22-88ab-5dae711d6d58",
-    "provider": "Webury Hill SCITT"
+    "provider": "The John Taylor SCITT"
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was a year ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was a year ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "50b33b95-aa23-487c-b4a1-4763f25177b2"
+      "ea3fd0fe-c4ce-4d5b-8d0b-28e701defee8"
     ],
     "type": "forgotten",
     "id": "07c04b4c-71e9-4238-ac32-c1db104f997b",
-    "provider": "Webury Hill SCITT"
+    "provider": "The John Taylor SCITT"
   },
   {
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "ede9eecd-a944-4879-b101-ef18d6628419",
-      "d689153b-560d-499b-8401-d24cffd42d16"
+      "43285503-1e82-438d-99b9-fa5f73312e3e",
+      "71f08b25-8bc8-4fdc-b623-548ac41c73e8"
     ],
     "type": "duplicate",
     "id": "f37acf63-bebc-419d-b340-70dd24d31dd5",
-    "provider": "Webury Hill SCITT"
+    "provider": "The John Taylor SCITT"
   },
   {
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "21f8b1b2-609f-4986-8583-e643e032f4a4",
-      "c440d69c-ddbd-490b-8797-b0104844df58"
+      "b0f6e1f5-2436-43ee-931c-fa464d06597c",
+      "a90e3160-6f5a-4b2c-91f6-6fda2ed46832"
     ],
     "type": "duplicate",
     "id": "1409f99a-c913-425b-989c-218f1025eeb2",
-    "provider": "Webury Hill SCITT"
+    "provider": "The John Taylor SCITT"
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was a year ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was a year ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "129b154a-a1b4-43d3-953e-7b0b1a834ffb"
+      "ffdfd3fd-78c1-41fb-94b9-fd362af6eb4d"
     ],
     "type": "forgotten",
     "id": "60789794-97a6-4edc-a687-d75ea8ba7eff",
-    "provider": "Webury Hill SCITT"
+    "provider": "The John Taylor SCITT"
   },
   {
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "7b0a545e-16c9-4f00-a3de-26380c2de1d3",
-      "b3cae0b4-48ff-42b2-8ccd-8ca0581d87e7"
+      "a12ed746-164d-4403-9775-2c89d8263272",
+      "20d646ae-0b71-40a6-94f0-ae80a0a5e0ea"
     ],
     "type": "duplicate",
     "id": "d6c410da-1fbf-4286-8cef-e8629868aba2",
-    "provider": "Webury Hill SCITT"
+    "provider": "The John Taylor SCITT"
   },
   {
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "41d97526-3d91-4174-b083-88b854e61657",
-      "114eb384-6fee-4e5d-8eb9-89d8ccb4f83a"
+      "1235c839-aaea-4c7e-9195-d3e68c7fd44a",
+      "f285efce-87d8-49f3-a9e3-3f09e5700ebf"
     ],
     "type": "duplicate",
     "id": "d468c48a-b4e1-43cf-a825-075555b6f515",
-    "provider": "Webury Hill SCITT"
+    "provider": "The John Taylor SCITT"
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was a year ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was a year ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "4c42e6e7-17b0-4651-9bf5-025cda91d08e"
+      "5557047f-56a8-4b5a-ad8e-0c7d152c8390"
     ],
     "type": "forgotten",
     "id": "f6d31d13-3f17-4ff5-9b28-78215d9af4c9",
-    "provider": "Webury Hill SCITT"
+    "provider": "The John Taylor SCITT"
   },
   {
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "a2f222fc-5033-48a5-a75d-497ef799644a",
-      "977daa94-c7e6-4579-86ab-9c95c428c4f5"
+      "68c9f79c-7d5b-4436-9a0e-664f0584fc8b",
+      "6e276f86-fbaf-4ba9-bd78-2a8f1fae1349"
     ],
     "type": "duplicate",
     "id": "a610ff1b-ecdc-4d90-9ffb-158993d1530d",
-    "provider": "Webury Hill SCITT"
+    "provider": "The John Taylor SCITT"
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 4 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 4 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "03135664-32ed-429a-bafe-105e6d49fc94"
+      "67746461-baee-41c5-821d-4dc90cbd35bc"
     ],
     "type": "forgotten",
     "id": "4f72e0d9-6edf-40a4-8e69-3e1a579935a8",
-    "provider": "Webury Hill SCITT"
+    "provider": "The John Taylor SCITT"
   },
   {
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "76ec7957-51bf-4954-b743-e66b623e25ac",
-      "9f568d24-5482-43f7-b983-fed5a97a4f3e"
+      "ea3fd0fe-c4ce-4d5b-8d0b-28e701defee8",
+      "644c7dbf-03cc-4d20-bf16-2d29eec5565e"
     ],
     "type": "duplicate",
     "id": "7bfc9645-1200-4b48-8c4b-668c6d30ce0c",
-    "provider": "Webury Hill SCITT"
+    "provider": "The John Taylor SCITT"
   },
   {
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "3875f606-7ea6-40a6-a7eb-cb537c3a0d1a",
-      "960b64b1-1a0e-4232-bebb-ea39ed4513f6"
+      "5b49ef1f-32a1-428f-adae-fd9ea345aa1f",
+      "4355b2c6-18fa-4d2a-8990-752b16254d64"
     ],
     "type": "duplicate",
     "id": "821504cd-6f7e-44f7-869a-dc2d96c8640e",
-    "provider": "Webury Hill SCITT"
+    "provider": "The John Taylor SCITT"
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 10 months ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 10 months ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "37dc47ab-d7e1-4685-b6dd-ae1849ad0c45"
+      "bebbfbe7-60fa-41c7-9aac-1f635d4f7e6b"
     ],
     "type": "forgotten",
     "id": "76536737-7b72-4fb5-b55f-acb1b2416b29",
-    "provider": "Webury Hill SCITT"
+    "provider": "The John Taylor SCITT"
   },
   {
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "4628aaf0-372a-4de1-bb79-b279625ba376",
-      "8c7b1484-a488-4a5b-bc98-864f079b7f02"
+      "37b081a1-7d28-4ebb-86ea-e5c5dac8d94c",
+      "5f40ff56-da7d-441d-a401-12a4c33cf522"
     ],
     "type": "duplicate",
     "id": "2ab1dff7-30a5-44fd-bcc0-65a5351ebd5f",
-    "provider": "Webury Hill SCITT"
+    "provider": "The John Taylor SCITT"
   },
   {
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "0d999b09-61b6-4459-aa70-c636aff71cbb",
-      "1a5470b6-ae10-49f6-a720-928404da78e8"
+      "6a8b799a-7a57-488c-ae6a-ce3bd17beef1",
+      "d6128d54-3e49-4f06-a155-3ff061c1f8ac"
     ],
     "type": "duplicate",
     "id": "960bf70c-4a84-4d1e-bb12-2c43139bdcfe",
-    "provider": "Webury Hill SCITT"
+    "provider": "The John Taylor SCITT"
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 2 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 2 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "02fd18df-2902-4317-bc37-ea0bf2e73172"
+      "aaece092-117a-4377-91bb-71b014669801"
     ],
     "type": "forgotten",
     "id": "62796b68-1cc0-452c-9ab5-b2fc3ebb2f4c",
-    "provider": "Webury Hill SCITT"
+    "provider": "The John Taylor SCITT"
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 8 months ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 8 months ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "e0b2bcb2-fd79-4146-b8bd-4d9fc74760ab"
+      "37b081a1-7d28-4ebb-86ea-e5c5dac8d94c"
     ],
     "type": "forgotten",
     "id": "ae262c4f-108a-4ce4-b374-619234b45b2d",
@@ -2846,8 +3093,9 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 4 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 4 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
       "6a8b799a-7a57-488c-ae6a-ce3bd17beef1"
     ],
@@ -2859,9 +3107,10 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "c7aef4de-e96d-4176-8361-fe1ef6f987d7",
-      "29fbf98d-1014-4ef8-95d5-607c3434b507"
+      "de0b6a4b-207d-44f1-bfa9-067694531e02",
+      "8cdcb5a1-be7d-4a66-be74-35b66640eb3c"
     ],
     "type": "duplicate",
     "id": "f876a632-0150-416f-a378-8b98e506c65a",
@@ -2869,8 +3118,9 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 2 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 2 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
       "9e61a44f-2870-41d7-9b9e-861eb578d5c6"
     ],
@@ -2882,9 +3132,10 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "a2044f63-05a2-48aa-be6a-05c14438e47c",
-      "2d2208e9-3a2d-4317-9359-27bfb34d549c"
+      "37a03911-12a5-49aa-910b-5f4187c6b453",
+      "67746461-baee-41c5-821d-4dc90cbd35bc"
     ],
     "type": "duplicate",
     "id": "6e0547b2-ffde-42b9-8b8d-c5cdc5f75401",
@@ -2894,6 +3145,7 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
       "83210159-451d-43e5-a807-aee2d37a267d",
       "bebbfbe7-60fa-41c7-9aac-1f635d4f7e6b"
@@ -2906,8 +3158,9 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "a90e3160-6f5a-4b2c-91f6-6fda2ed46832",
+      "2d2208e9-3a2d-4317-9359-27bfb34d549c",
       "5faf3bca-560d-4976-9d79-d50b1dba1250"
     ],
     "type": "duplicate",
@@ -2918,9 +3171,10 @@
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either delete or withdraw one of them",
     "traineeCount": 2,
+    "usedTrainees": [],
     "trainees": [
-      "d63e24fd-bd0f-4173-a9bd-0a91741deb54",
-      "5557047f-56a8-4b5a-ad8e-0c7d152c8390"
+      "482e212e-a6ff-47fa-9de3-70ab6311ff22",
+      "5571ec52-e0cd-4d0e-865a-9c5adbc626b7"
     ],
     "type": "duplicate",
     "id": "6ee7f9bf-d1e8-4426-8a04-087f399a31c6",
@@ -2928,165 +3182,14 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 3 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "description": "The expected end date of this trainee was 3 years ago.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
+    "usedTrainees": [],
     "trainees": [
-      "7183189a-a479-4e02-937c-7f44cca4a678"
+      "89660dbd-2a06-4e01-97b8-f8f0fd0e3d08"
     ],
     "type": "forgotten",
     "id": "c1d735ef-3214-4df5-9e21-35999f575120",
-    "provider": "The John Taylor SCITT"
-  },
-  {
-    "title": "These trainees appear to be duplicates",
-    "description": "Review these trainees and either delete or withdraw one of them",
-    "traineeCount": 2,
-    "trainees": [
-      "69790080-9d26-4fcd-8a48-4b3099172354",
-      "3e8ad6cb-a42f-4ac4-aea3-fd2393a43ea2"
-    ],
-    "type": "duplicate",
-    "id": "1c57e040-fc3e-4753-999a-096be3df163d",
-    "provider": "The John Taylor SCITT"
-  },
-  {
-    "title": "These trainees appear to be duplicates",
-    "description": "Review these trainees and either delete or withdraw one of them",
-    "traineeCount": 2,
-    "trainees": [
-      "6e276f86-fbaf-4ba9-bd78-2a8f1fae1349",
-      "3ccc0bbe-6327-4b62-a8bf-a372a824ea53"
-    ],
-    "type": "duplicate",
-    "id": "3f6a9680-21f3-4f20-8902-a987302552d1",
-    "provider": "The John Taylor SCITT"
-  },
-  {
-    "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 4 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
-    "traineeCount": 1,
-    "trainees": [
-      "ef6f8efa-76ed-4a43-817f-9abfbd018ba8"
-    ],
-    "type": "forgotten",
-    "id": "d56fc579-abe0-4a47-a85e-f5727a7e4697",
-    "provider": "The John Taylor SCITT"
-  },
-  {
-    "title": "These trainees appear to be duplicates",
-    "description": "Review these trainees and either delete or withdraw one of them",
-    "traineeCount": 2,
-    "trainees": [
-      "d40c33dc-1723-4441-a110-d1a3cd9a4916",
-      "5210a873-2efc-4865-b604-0f78a6c2bdbb"
-    ],
-    "type": "duplicate",
-    "id": "db4bf9a0-b9da-4a97-be32-0777e56b6d30",
-    "provider": "The John Taylor SCITT"
-  },
-  {
-    "title": "These trainees appear to be duplicates",
-    "description": "Review these trainees and either delete or withdraw one of them",
-    "traineeCount": 2,
-    "trainees": [
-      "9627f0cd-5f41-472a-b927-3002ab9aeaee",
-      "253ec07c-0a54-4a4a-940f-d3c6c69377c4"
-    ],
-    "type": "duplicate",
-    "id": "490600af-fe19-4581-84bb-15f77aef8f55",
-    "provider": "The John Taylor SCITT"
-  },
-  {
-    "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 3 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
-    "traineeCount": 1,
-    "trainees": [
-      "5ccfa5f9-bed8-4778-a4ad-3b62341cf520"
-    ],
-    "type": "forgotten",
-    "id": "8f3e390d-eca7-4fc6-b4a6-0ec12a719a15",
-    "provider": "The John Taylor SCITT"
-  },
-  {
-    "title": "These trainees appear to be duplicates",
-    "description": "Review these trainees and either delete or withdraw one of them",
-    "traineeCount": 2,
-    "trainees": [
-      "30b9e22a-bc91-411a-8b7f-369fe1fe096d",
-      "7f855025-64cc-4399-9f0c-1d1d576bd831"
-    ],
-    "type": "duplicate",
-    "id": "a68c8113-a713-400a-8eec-33d6cc72dd9f",
-    "provider": "The John Taylor SCITT"
-  },
-  {
-    "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 3 years ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
-    "traineeCount": 1,
-    "trainees": [
-      "b5c51807-67bf-419d-a7ee-b8431ee9fb30"
-    ],
-    "type": "forgotten",
-    "id": "9567ab74-740c-47de-92c8-e944a55168aa",
-    "provider": "The John Taylor SCITT"
-  },
-  {
-    "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was 10 months ago. \n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
-    "traineeCount": 1,
-    "trainees": [
-      "5ba71f46-90a5-44c5-8849-0366835ff0da"
-    ],
-    "type": "forgotten",
-    "id": "045ee714-de9c-4def-93bc-c990b2ccbc30",
-    "provider": "The John Taylor SCITT"
-  },
-  {
-    "title": "These trainees appear to be duplicates",
-    "description": "Review these trainees and either delete or withdraw one of them",
-    "traineeCount": 2,
-    "trainees": [
-      "d9888dde-4722-4246-b730-bb28cae30226",
-      "768ed7dc-9b6f-483c-8442-312075b956db"
-    ],
-    "type": "duplicate",
-    "id": "6b20c60c-3d67-4dc5-8a98-0c5f3f50de5c",
-    "provider": "The John Taylor SCITT"
-  },
-  {
-    "title": "These trainees appear to be duplicates",
-    "description": "Review these trainees and either delete or withdraw one of them",
-    "traineeCount": 2,
-    "trainees": [
-      "de0b6a4b-207d-44f1-bfa9-067694531e02",
-      "482e212e-a6ff-47fa-9de3-70ab6311ff22"
-    ],
-    "type": "duplicate",
-    "id": "18b7f218-8e02-40a1-a8a2-27aab400aa53",
-    "provider": "The John Taylor SCITT"
-  },
-  {
-    "title": "These trainees appear to be duplicates",
-    "description": "Review these trainees and either delete or withdraw one of them",
-    "traineeCount": 2,
-    "trainees": [
-      "57fa6f6f-946f-4b96-a054-6bb8eddcc4c5",
-      "5b49ef1f-32a1-428f-adae-fd9ea345aa1f"
-    ],
-    "type": "duplicate",
-    "id": "a8f5fab8-c945-4446-9296-6f582905b62b",
-    "provider": "The John Taylor SCITT"
-  },
-  {
-    "title": "These trainees appear to be duplicates",
-    "description": "Review these trainees and either delete or withdraw one of them",
-    "traineeCount": 2,
-    "trainees": [
-      "d27d1d1a-3be8-46fa-af82-cf676c4c367c",
-      "d6128d54-3e49-4f06-a155-3ff061c1f8ac"
-    ],
-    "type": "duplicate",
-    "id": "d88067ea-59fb-459b-b495-d15b51627ac9",
     "provider": "The John Taylor SCITT"
   }
 ]

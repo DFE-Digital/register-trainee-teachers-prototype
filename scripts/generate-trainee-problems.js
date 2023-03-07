@@ -39,7 +39,7 @@ let problemTypes = {
 
     return {
       title: "These trainees appear to be duplicates",
-      description: "Review these trainees and either delete or withdraw one of them",
+      description: "Review these trainees and either withdraw one, or email us with an action to take",
       traineeCount: 2
     }
 
@@ -47,7 +47,7 @@ let problemTypes = {
   forgotten: function() {
     return {
       title: "This trainee may have been forgotten",
-      description: `The expected end date of this trainee was ${moment(randomDateInPast()).fromNow()}.
+      description: `The expected end date of this trainee was <span class="govuk-!-font-weight-bold">${moment(randomDateInPast()).fromNow()}</span>.
       If the trainee is no longer in training you should award or withdraw them. If they are still in training you should
       update the expected end date of their course.`,
       traineeCount: 1

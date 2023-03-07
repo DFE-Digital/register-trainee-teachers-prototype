@@ -8,8 +8,14 @@
 
   {{recordProblems | log}}
 
+  {% set countOfIssues = recordProblems | length %}
+
+  {% if isIncomplete %}
+    {% set countOfIssues = countOfIssues + 1 %}
+  {% endif %}
+
   {% set title %}
-    {% if recordProblems | length == 1 %}
+    {% if countOfIssues == 1 %}
       This trainee record has a problem
     {% else %}
       This traine record has problems

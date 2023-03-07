@@ -22,7 +22,7 @@
         {% if traineeRecord.id == record.id %}
           {{traineeRecord | getShortName}} (this record)
         {% else %}
-          <a href="#" class="govuk-link"  rel="noreferrer noopener" target="_blank">{{traineeRecord | getShortName}} (opens in a new tab)</a>
+          <a href="#" class="govuk-link"  rel="noreferrer noopener" target="_blank">{{record | getShortName}} (opens in a new tab)</a>
         {% endif %}
       </li>
     {% endfor %}

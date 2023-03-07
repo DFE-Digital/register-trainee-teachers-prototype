@@ -2,7 +2,7 @@
 
 <h3 class="govuk-heading-s">{{ title }}</h3>
 
-<p class="govuk-body">{{problem.description}}</p>
+<p class="govuk-body">{{problem.description | safe}}</p>
 
 {# {% set detailsHtml %}
   <p class="govuk-body">{{problem.description}}:</p>

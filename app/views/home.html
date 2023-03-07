@@ -171,7 +171,7 @@
         {% endif %}
 
         {% if traineeProblems | length %}
-          <a href="/records?filterCompleteStatus=Incomplete" class="status-card status-card status-card--problem">
+          <a href="/records?filterCompleteStatus=Has problems" class="status-card status-card status-card--problem">
             <span class="status-card__count">{{ traineeProblems | length }}</span>
             <span class="status-card__status">Problems with your records</span><span class="govuk-visually-hidden"></span>
           </a>

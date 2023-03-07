@@ -10,7 +10,8 @@
   {% endif %}
   
   {% if not record.trainingDetails.commencementDate | length > 0 %}
-     <a href='{{ recordPath + "/trainee-start-date" | addReferrer(referrer) }}' class="govuk-link">Provide a trainee start date</a>
+    <li>
+      <a href='{{ recordPath + "/trainee-start-date" | addReferrer(referrer) }}' class="govuk-link">Provide a trainee start date</a>
     </li>
   {% endif %}
 </ul>

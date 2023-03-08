@@ -68,7 +68,7 @@ let problemTypes = {
       update the expected end date of their course.`,
       traineeCount: 1,
       filterTrainees: function(trainees) {
-        return trainees.filter(trainee => utils.isActiveStatus(trainee))
+        return trainees.filter(trainee => utils.isActiveStatus(trainee) && !utils.isDeferred(trainee))
       }
     }
   },
@@ -150,7 +150,7 @@ const generateFakeTraineeProblems = () => {
     // let activeTrainees = providerTrainees.filter( trainee => utils.isActiveStatus(trainee) )
 
     // Create random number of problems per provider with some limits
-    let numberOfTraineeProblemsToCreate = utils.getRandomArbitrary(20, Math.min(providerTrainees.length / 3, 250))
+    let numberOfTraineeProblemsToCreate = utils.getRandomArbitrary(20, Math.min(providerTrainees.length / 3, 60))
 
     Array(numberOfTraineeProblemsToCreate).fill().map((item, index) => {
 

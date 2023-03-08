@@ -5,7 +5,7 @@
 {% set miscTagsHtml %}
 {# <div class="app-application-card__tags"> #}
   {# Incomplete tag #}
-  {% if not record | recordIsComplete and isAuthorised('showIncomplete') and (not record | isHesaAndLocked) %}
+  {% if not (record | recordIsComplete) and isAuthorised('showIncomplete') and (not record | isHesaAndLocked) and not (record | isDraft) %}
     <span style="display: inline-block;">
       {{govukTag({
         text: "Incomplete",

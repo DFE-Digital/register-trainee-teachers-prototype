@@ -12,7 +12,9 @@
 {% set pageHeading = "Your trainee teachers" %}
 
 {# Note: filterBySignedIn isn't designed to work on non-records, but as the name is the same, it works ok #}
-{% set traineeProblems = data.traineeProblems | filterBySignedIn(data) %}
+
+{% set traineesWithProblems = registeredTrainees | filterByFunction('recordHasProblem') %}
+{# {% set traineeProblems = data.traineeProblems | filterBySignedIn(data) %} #}
 
 {% block content %}
 
@@ -170,10 +172,10 @@
           </a>
         {% endif %}
 
-        {% if traineeProblems | length %}
+        {% if traineesWithProblems | length %}
           <a href="/records?filterCompleteStatus=Has problems" class="status-card status-card status-card--problem">
-            <span class="status-card__count">{{ traineeProblems | length }}</span>
-            <span class="status-card__status">Problems with your records</span><span class="govuk-visually-hidden"></span>
+            <span class="status-card__count">{{ traineesWithProblems | length }}</span>
+            <span class="status-card__status">Trainees with problems</span><span class="govuk-visually-hidden"></span>
           </a>
         {% endif %}
 

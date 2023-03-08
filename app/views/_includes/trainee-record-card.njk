@@ -2,6 +2,31 @@
   {% set justNowClass = "app-just-now" %}
 {% endif %}
 
+{% set miscTagsHtml %}
+{# <div class="app-application-card__tags"> #}
+  {# Incomplete tag #}
+  {% if not record | recordIsComplete and isAuthorised('showIncomplete') and (not record | isHesaAndLocked) %}
+    <span style="display: inline-block;">
+      {{govukTag({
+        text: "Incomplete",
+        classes: "app-tag--record-incomplete"
+      })}}
+    </span>
+  {% endif %}
+
+  {# Problem tag #}
+  {% if record | recordHasProblem and isAuthorised('showProblem') %}
+    <span style="display: inline-block;">
+      {{govukTag({
+        text: "Problem",
+        classes: "govuk-tag--red"
+      })}}
+    </span>
+  {% endif %}
+{# </div> #}
+
+{% endset %}
+
 <div class="app-application-card {{justNowClass}}">
 
   <div class="app-application-card_row app-application-card_row--header">
@@ -25,26 +50,27 @@
 
       <span class="app-application-card_tag-container">
         {# Incomplete tag #}
-        {% if not record | recordIsComplete and isAuthorised('showIncomplete') and (not record | isHesaAndLocked) %}
+        {# {% if not record | recordIsComplete and isAuthorised('showIncomplete') and (not record | isHesaAndLocked) %}
           <span style="display: inline-block;">
             {{govukTag({
               text: "Incomplete",
               classes: "app-tag--record-incomplete"
             })}}
           </span>
-        {% endif %}
+        {% endif %} #}
 
         {# Problem tag #}
-        {% if record | recordHasProblem and isAuthorised('showProblem') %}
+        {# {% if record | recordHasProblem and isAuthorised('showProblem') %}
           <span style="display: inline-block;">
             {{govukTag({
               text: "Problem",
               classes: "govuk-tag--red"
             })}}
           </span>
-        {% endif %}
+        {% endif %} #}
 
         {# Status tag #}
+        {{ miscTagsHtml | safe }}
         <span style="display: inline-block;">
           {{govukTag({
             text: record | getStatusText,
@@ -135,5 +161,5 @@
         </span></p>
     </div>
   </div>
-
+  {# {{ miscTagsHtml | safe }} #}
 </div>

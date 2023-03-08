@@ -1,35 +1,36 @@
 {% set hasProblems = record | recordHasProblem %}
-
+{% set recordProblems = record | getProblems %}
 {% set isIncomplete = record | hasOutstandingActions %}
+{% set countOfIssues = recordProblems | length %}
 
-{% if (hasProblems or isIncomplete) and canAmend %}
+{# Combine incomplete with problems to get a total count #}
+{% if isIncomplete %}
+  {% set countOfIssues = countOfIssues + 1 %}
+{% endif %}
 
-  {% set recordProblems = record | getProblems %}
+{% if hasProblems %}
+  {{recordProblems | log("Record problems:")}}
+{% endif %}
 
-  {{recordProblems | log}}
+{% set recordType = "record" if navActive == "records" else "draft" %}
 
-  {% set countOfIssues = recordProblems | length %}
+{% if (countOfIssues > 0) and canAmend %}
 
-  {% if isIncomplete %}
-    {% set countOfIssues = countOfIssues + 1 %}
-  {% endif %}
-
+  {# Correctly pluralise the title #}
   {% set title %}
     {% if countOfIssues == 1 %}
-      This trainee record has a problem
+      This trainee {{ recordType }} has a problem
     {% else %}
-      This trainee record has problems
+      This trainee {{ recordType }} has problems
     {% endif %}
   {% endset %}
 
   {% set problemItems = [] %}
 
-  {% for problem in recordProblems %}
+  {% for problem in recordProblems | sort(attribute='type') %}
 
     {% set problemHtml %}
-
       {% include "_includes/record-problems/" + problem.type + ".njk" %}
-
     {% endset %}
 
     {% set problemItems = problemItems | push({
@@ -38,6 +39,7 @@
     
   {% endfor %}
 
+  {# Add incomplete to the end #}
   {% if isIncomplete %}
     {% set problemHtml %}
       {% include "_includes/record-problems/incomplete.njk" %}
@@ -46,7 +48,6 @@
     {% set problemItems = problemItems | push({
       html: problemHtml | safe
     }) %}
-    
   {% endif %}
 
   {{ appNoticeBanner({

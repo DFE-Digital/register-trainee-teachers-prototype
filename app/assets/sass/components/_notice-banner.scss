@@ -31,8 +31,10 @@
   margin-top: 0;
   margin-bottom: 0;
 
-  & li:last-child .govuk-details {
-    margin-bottom: 0;
+  li:last-child {
+    .govuk-details, .govuk-list {
+      margin-bottom: 0;
+    }
   }
 }
 

@@ -33,7 +33,7 @@ let problemRatios = {
   duplicate: 0.2,
   duplicateDraft: 0.0,
   forgotten: 0.3,
-  deferredForgotten: 0.05
+  deferredForgotten: 0.03
 }
 
 let problemTypes = {
@@ -78,7 +78,7 @@ let problemTypes = {
     return {
       title: "Confirm the deferral is still correct",
       description: `This trainee has been deferred for <span class="govuk-!-font-weight-bold">${relativeDate}</span>.
-      If the trianee is still deferred, please update their expected end date. If they have left the course you should withdraw them.`,
+      If the trainee is still deferred, please update their expected end date. If they have left the course you should withdraw them.`,
       traineeCount: 1,
       filterTrainees: function(trainees) {
         return trainees.filter(trainee => utils.isDeferred(trainee))

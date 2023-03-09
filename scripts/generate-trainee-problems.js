@@ -109,7 +109,7 @@ const generateTraineeProblem = (provider, providerTrainees) => {
     let traineesNotUsed = filteredTrainees.filter(trainee => !traineesCache[randomProblemType]?.includes(trainee.id))
 
     if (traineesNotUsed.length == 0) {
-      console.log(`Error with pickRandomTrainee: ran out of trainees for ${randomProblemType}!`)
+      // console.log(`Error with pickRandomTrainee: ran out of trainees for ${randomProblemType}!`)
       return false
     }
     else {
@@ -132,9 +132,18 @@ const generateTraineeProblem = (provider, providerTrainees) => {
   problem.trainees = problem.trainees.filter(Boolean)
 
 
+
+
   problem.type = randomProblemType
   problem.id = faker.datatype.uuid()
   problem.provider = provider.name
+
+  // Make sure we have populated some trainees.
+  if (problem.trainees.length != problem.traineeCount) {
+    console.log("Error: insufficient trainees for given problem type. Exiting")
+    console.log(problem.id)
+    return null
+  }
 
   return problem
 }
@@ -152,10 +161,14 @@ const generateFakeTraineeProblems = () => {
     // Create random number of problems per provider with some limits
     let numberOfTraineeProblemsToCreate = utils.getRandomArbitrary(20, Math.min(providerTrainees.length / 3, 60))
 
+    console.log(`Generating ${numberOfTraineeProblemsToCreate} problems`)
+
     Array(numberOfTraineeProblemsToCreate).fill().map((item, index) => {
 
       let problem = generateTraineeProblem(provider, providerTrainees)
-      traineeProblems.push(problem)
+      if (problem) {
+        traineeProblems.push(problem)
+      }
     })
 
   })

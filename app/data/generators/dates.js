@@ -1,6 +1,16 @@
 const { faker } = require('@faker-js/faker')
 const moment    = require('moment')
 
+// Faker has a bug that faker.helpers.dateBetween requires the input dates to be in order
+const sortDates = (date1, date2) => {
+  if ( moment(date1).isBefore(moment(date2))  ){
+    return [date1, date2]
+  }
+  else return [date2, date1]
+}
+
+
+
 // Dates here a bit complex! In general makes updated date be after
 // submitted date, and historic records likely to be updated near to the
 // end of the accademic year.
@@ -46,8 +56,6 @@ module.exports = ({updatedDate, submittedDate, deferredDate, withdrawalDate, qua
     // Assume all drafts are recent
     if (application.status == 'Draft'){
 
-      console.log(`Moment todate: ${moment().toISOString()}, ${moment().subtract(50, 'days').toISOString()}`)
-
       updatedDate = faker.date.between(
         moment().subtract(50, 'days'),
         moment().toISOString()
@@ -71,10 +79,14 @@ module.exports = ({updatedDate, submittedDate, deferredDate, withdrawalDate, qua
       let lastPossibleUpdatedDate = (moment(yearEndDate).isAfter() ? moment() : yearEndDate)
 
       if (isCurrentYear) {
+
+        let sortedDates = sortDates(yearStartDate, yearEndDate)
+
         updatedDate = faker.date.between(
-          moment(yearStartDate),
-          moment(lastPossibleUpdatedDate)
+          moment(sortedDates[0]),
+          moment(sortedDates[1])
         )
+
       }
 
       else {

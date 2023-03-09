@@ -26,8 +26,8 @@ const statusFilters     = require('./../app/filters/statuses.js').filters
 let simpleGcseGrades    = true //output pass/fail rather than full detail
 
 // Todo: get this from the years.js file?
-const defaultYearsToGenerate = [2017, 2018, 2019, 2020, 2021, 2022]
-const reducedYearsToGenerate = [2020, 2021, 2022]
+const defaultYearsToGenerate = [2018, 2019, 2020, 2021, 2022, 2023]
+const reducedYearsToGenerate = [2020, 2021, 2022, 2023]
 
 const currentYear     = years.currentAcademicYearSimple
 
@@ -90,8 +90,7 @@ const generateFakeApplication = (params = {}) => {
   application.route           = (params.route === null) ? undefined : (params.route || generateRoute(params))
   // application.status          = params.status || faker.helpers.arrayElement(statuses)
 
-  application.source          = (params.source) ? params.source : generateSource(application)
-
+  application.source          = (params.source) ? params.source : generateSource({...params, ...application, })
 
 
   // Needed in particular order
@@ -99,7 +98,7 @@ const generateFakeApplication = (params = {}) => {
 
   // TODO: fix this hack. We ignore the status except where it's draft.
   application.status          = (params.status == "Draft") ? params.status : generateStatus(application)
-  
+ 
   if (application.status == "Deferred") {
     application.previousStatus = "TRN received" // set a state to go back to
   }

@@ -8,8 +8,9 @@ module.exports = application => {
 
   // All drafts are implicitly manual
   // TODO: how does this work with apply drafts?
-  if (application.status == "Draft") return "Manual"
-
+  if (application.status == "Draft") {
+    return "Manual"
+  }
   else {
 
     // HEI records are nearly all HESA

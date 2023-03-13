@@ -1,36 +1,8 @@
-{% set title = "This trainee appears to be forgotten" %}
 
-<h3 class="govuk-heading-s">{{ title }}</h3>
+<p class="govuk-body">
+  The expected end date for the trainee’s course was 12 Februrary 2022.
+</p>
 
-<p class="govuk-body">{{problem.description | safe}}</p>
-
-{# {% set detailsHtml %}
-  <p class="govuk-body">{{problem.description}}:</p>
-
-  <ul class="govuk-list govuk-list--bullet">
-    {% for traineeId in problem.trainees %}
-
-      {% set traineeRecord = data.records | getRecordById(traineeId) %}
-
-      {{traineeRecord | log}}
-
-      <li>
-        {% if traineeRecord.id == record.id %}
-          {{traineeRecord | getShortName}} (this record)
-        {% else %}
-          <a href="#" class="govuk-link"  rel="noreferrer noopener" target="_blank">{{traineeRecord | getShortName}} (opens in a new tab)</a>
-        {% endif %}
-      </li>
-    {% endfor %}
-  </ul>
-
-{% endset %}
-
-
-
-
-{{ govukDetails({
-  summaryText: title,
-  html: detailsHtml
-}) }}
- #}
+<p class="govuk-body">
+  If the trainee is no longer training then you should either recommend them for QTS or withdraw them. If they’re still training then you should update the expected end date for their course.
+</p>

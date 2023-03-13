@@ -31,7 +31,7 @@ let randomDateInPast = (max=false, min=false) => {
 
 let problemRatios = {
   duplicate: 0.2,
-  duplicateDraft: 0.0,
+  duplicateDraft: 0.1,
   forgotten: 0.3,
   deferredForgotten: 0.03
 }
@@ -137,6 +137,7 @@ const generateTraineeProblem = (provider, providerTrainees) => {
   problem.type = randomProblemType
   problem.id = faker.datatype.uuid()
   problem.provider = provider.name
+  problem.date = randomDateInPast(12, 0)
 
   // Make sure we have populated some trainees.
   if (problem.trainees.length != problem.traineeCount) {

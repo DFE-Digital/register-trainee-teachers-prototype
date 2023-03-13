@@ -29,6 +29,8 @@
       }) }}
     {% endif %}
 
+    {% include "_includes/record-problems/draft-banner.njk" %}
+
     {% set draftRecordName %}
       {% if record.personalDetails.shortName %}
        for {{record.personalDetails.shortName | safe}}

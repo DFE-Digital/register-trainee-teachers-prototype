@@ -1,24 +1,16 @@
 {% set hasProblems = record | recordHasProblem %}
 {% set recordProblems = record | getProblems %}
-{% set isIncomplete = record | hasOutstandingActions %}
+
 {% set countOfIssues = recordProblems | length %}
 
-{# Combine incomplete with problems to get a total count #}
-{% if isIncomplete %}
-  {% set countOfIssues = countOfIssues + 1 %}
-{% endif %}
-
 {% if hasProblems %}
-  {{recordProblems | log("Record problems:")}}
+  {{recordProblems | log("Draft problems:")}}
 {% endif %}
 
-{% set recordType = "record" if navActive == "records" else "draft" %}
+{% set recordType = "draft" %}
 
 {% set problemHeadings = {
-  duplicate: "This trainee is a duplicate",
-  forgotten: "This trainee should have finished their training",
-  deferredForgotten: "Something about updating stuff",
-  incomplete: "This trainee is incomplete"
+  duplicateDraft: "This draft is a duplicate"
 } %}
 
 {% if (countOfIssues > 0) and canAmend %}
@@ -26,7 +18,7 @@
   {# Either use the specific problem as a title, or a generic one #}
   {% set title %}
     {% if countOfIssues > 1 %}
-      There are problems with this trainee
+      There are problems with this draft
     {% else %}
       {% if hasProblems %}
         {{ problemHeadings[recordProblems[0].type] }}
@@ -35,14 +27,13 @@
       {% endif %}
     {% endif %}
   {% endset %}
-
   {% set problemItems = [] %}
 
   {% for problem in recordProblems | sort(attribute='type') %}
 
     {% set problemHtml %}
       {% if countOfIssues > 1 %}
-        <h3 class="govuk-heading-s">
+        <h3 class="govuk-heading-s">fesgfes
           {{ problemHeadings[problem.type] }}
         </h3>
       {% endif %}
@@ -54,23 +45,6 @@
     }) %}
     
   {% endfor %}
-
-  {# Add incomplete to the end #}
-  {% if isIncomplete %}
-    {% set problemHtml %}
-      {% if countOfIssues > 1 %}
-
-        <h3 class="govuk-heading-s">
-          {{ problemHeadings.incomplete }}
-        </h3>
-      {% endif %}
-      {% include "_includes/record-problems/incomplete.njk" %}
-    {% endset %}
-
-    {% set problemItems = problemItems | push({
-      html: problemHtml | safe
-    }) %}
-  {% endif %}
 
   {{ appNoticeBanner({
     titleText: title,

@@ -40,7 +40,7 @@ of the page. #}
 {% set hasInvalidAnswers = record | hasInvalidAnswers and data.settings.highlightInvalidAnswers | falsify %}
 
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds-from-desktop">
+  <div class="govuk-grid-column-full">
 
     {% if query.errors %}
       {% set invalidAnswerCount = record | countInvalidAnswers %}
@@ -76,7 +76,11 @@ of the page. #}
       
     {% endif %}
 
+  </div>
+</div>
 
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
     {% set draftRecordName %}
       {% if record.personalDetails.shortName %}
        for {{record.personalDetails.shortName | safe }}
@@ -85,43 +89,28 @@ of the page. #}
 
     <span class="govuk-caption-l">{{'Draft record' + draftRecordName}}</span>
     <h1 class="govuk-heading-l govuk-!-margin-bottom-8">{{pageHeading}}</h1>
-
-    
-
-    {# Text shown if user belongs to multiple providers #}
-    {# {% include "_includes/providerAndRouteInsetText.njk" %} #}
-
   </div>
 </div>
 
 {{ allSummaryCards | safe }}
 
-{# {% if hasInvalidAnswers %}
-
-  {{ govukInsetText({
-    text: "You need to amend this record before you can mark it as reviewed."
-  }) }}
-
-{% else %}
- #}
-
- {% if hasInvalidAnswers %}
-    <input name='[temp][pageHasErrors]' type="hidden" id="school-picker-name" value="true">
- {% endif %}
+{% if hasInvalidAnswers %}
+  <input name='[temp][pageHasErrors]' type="hidden" id="school-picker-name" value="true">
+{% endif %}
 
 
 
-  {{ govukCheckboxes({
-    idPrefix: "apply-trainee-application-checkbox",
-    name: "record[applyData][status]",
-    items: [
-      {
-        value: "Completed",
-        text: "I have reviewed the trainee data",
-        checked: checked(record.applyData.status, "Completed")
-      }
-    ]
-  }) }}
+{{ govukCheckboxes({
+  idPrefix: "apply-trainee-application-checkbox",
+  name: "record[applyData][status]",
+  items: [
+    {
+      value: "Completed",
+      text: "I have reviewed the trainee data",
+      checked: checked(record.applyData.status, "Completed")
+    }
+  ]
+}) }}
 
 {# {% endif %} #}
 

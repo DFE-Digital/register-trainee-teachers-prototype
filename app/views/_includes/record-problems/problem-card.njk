@@ -1,0 +1,71 @@
+{% set miscTagsHtml %}
+
+  <span style="display: inline-block;">
+    {{govukTag({
+      text: "Problem",
+      classes: "govuk-tag--red"
+    })}}
+  </span>
+
+{% endset %}
+
+<div class="app-application-card {{justNowClass}}">
+
+  <div class="app-application-card_row app-application-card_row--header">
+      <h3 class="app-application-card__trainee-name govuk-heading-m govuk-!-margin-bottom-0">
+        <a href="/record/{{ record.id }}" class="govuk-link govuk-link--no-visited-state">
+          {{problem.title}}
+        </a>
+      </h3>
+
+      <span class="app-application-card_tag-container">
+
+
+        {# Status tag #}
+        {{ miscTagsHtml | safe }}
+      </span>
+  </div>
+  
+
+  <div class="app-application-card_row app-application-card_row--body">
+    <div class="app-application-card_col">
+
+      <div>
+
+        {% if problem.type %}
+          <p class="govuk-caption-m govuk-!-font-size-16 govuk-!-margin-bottom-1">Type: {{problem.type}}</p>
+        {% endif %}
+
+        {% if data.isAdmin or (data.signedInProviders | length > 1) or (accessLevel == 'leadSchool') %}
+          <p class="govuk-caption-m govuk-!-font-size-16 app-application-card__provider govuk-!-margin-bottom-0 govuk-!-margin-top-2">
+            <span class="govuk-visually-hidden">Provider: </span>{{problem.provider}}</p>
+        {% endif %}
+      </div>
+
+      <div>
+
+        <p class="govuk-body govuk-!-font-size-16 govuk-!-margin-bottom-1">
+          {# If subject spcialisms are incomplete, prefer course name. Else prefer the specialisms. #}
+          {% set subjects %}
+            {% if record.courseDetails | subjectsAreIncomplete %}
+              {{ record.courseDetails.courseNameShort or record.courseDetails.subjects | prettifySubjects }}
+            {% else %}
+              {{ (record.courseDetails.subjects | prettifySubjects | falsify ) or record.courseDetails.courseNameShort }}
+            {% endif %}
+          {% endset %}
+          
+          <span class="govuk-visually-hidden">Course: </span>{{ subjects }}</p>
+        <p class="govuk-body govuk-!-font-size-16 govuk-hint govuk-!-margin-bottom-0">
+          <span class="govuk-visually-hidden">Route: </span>{{ record.route }}</p>
+      </div>
+
+    </div>
+
+    <div class="app-application-card_col">
+      <p class="govuk-caption-m govuk-!-font-size-16 govuk-!-margin-bottom-1 app-application-card__submitted">
+          Date: <span>{{problem.date | govukDate}}
+        </span></p>
+    </div>
+  </div>
+  {# {{ miscTagsHtml | safe }} #}
+</div>

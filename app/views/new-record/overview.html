@@ -10,6 +10,8 @@
 {% set backLink = '/drafts' %}
 {% set backText = "All drafts" %}
 
+{% set gridColumn = 'govuk-grid-column-full' %}
+
 
 {% block formContent %}
 
@@ -21,171 +23,186 @@
   {% endif %}
 {% endset %}
 
-<span class="govuk-caption-l">Draft</span>
-<h1 class="govuk-heading-l govuk-!-margin-bottom-8">{{pageHeading}}</h1>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    {% include "_includes/record-problems/draft-banner.njk" %}
+  </div>
+</div>
 
-{# Inset text about the provider and route #}
-{% include "_includes/providerAndRouteInsetText.njk" %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <span class="govuk-caption-l">Draft</span>
+    <h1 class="govuk-heading-l govuk-!-margin-bottom-8">{{pageHeading}}</h1>
 
-<h2 class="govuk-heading-m">Personal details{{ " and education" if record | requiresSection("degree") }}</h2>
-{{ appTaskList({
-  classes: "govuk-!-margin-bottom-8",
-  items: [{
-    text: "Personal details",
-    href: "personal-details/edit" | reviewIfInProgress(record.personalDetails, "personal-details"),
-    id: "personal-details",
-    tag: {
-      classes: record.personalDetails | getStatusText | getStatusClass,
-      text: record.personalDetails | getStatusText
-    }
-  } if record | requiresSection("personalDetails"),
-  {
-    text: "Contact details",
-    href: "contact-details" | reviewIfInProgress(record.contactDetails),
-    id: "contact-details",
-    tag: {
-      classes: record.contactDetails | getStatusText | getStatusClass,
-      text: record.contactDetails | getStatusText
-    }
-  } if record | requiresSection("contactDetails"),
-  {
-    text: "Diversity information",
-    href: "diversity/ethnic-group" | reviewIfInProgress(record.diversity, 'diversity'),
-    id: "diversity",
-    tag: {
-      classes: record.diversity | getStatusText | getStatusClass,
-      text: record.diversity | getStatusText
-    }
-  } if record | requiresSection("diversity"),
-  {
-    text: "GCSE",
-    href: "gcse-details" | reviewIfInProgress(record.gcse, 'gcse'),
-    id: "qualification-gcse",
-    tag: {
-      classes: record.gcse | getStatusText | getStatusClass,
-      text: record.gcse | getStatusText
-    }
-  } if record | requiresSection("gcse"),
-  {
-    text: "Degree",
-    href: "degree/confirm" if (record.degree.items | length) else "degree/add",
-    id: "qualification-degree",
-    tag: {
-      classes: record.degree | getStatusText | getStatusClass,
-      text: record.degree | getStatusText
-    }
-  } if record | requiresSection("degree"),
-  {
-    text: "Qualifications on entry",
-    href: "undergraduate-qualification/confirm" if (record.undergraduateQualification) else "undergraduate-qualification",
-    id: "entry-qualification",
-    tag: {
-      classes: record.undergraduateQualification | getStatusText | getStatusClass,
-      text: record.undergraduateQualification | getStatusText
-    }
-  } if record | requiresSection("undergraduateQualification")
-  ]
-}) if not closed }}
+    {# Inset text about the provider and route #}
+    {% include "_includes/providerAndRouteInsetText.njk" %}
+
+    <h2 class="govuk-heading-m">Personal details{{ " and education" if record | requiresSection("degree") }}</h2>
+    {{ appTaskList({
+      classes: "govuk-!-margin-bottom-8",
+      items: [{
+        text: "Personal details",
+        href: "personal-details/edit" | reviewIfInProgress(record.personalDetails, "personal-details"),
+        id: "personal-details",
+        tag: {
+          classes: record.personalDetails | getStatusText | getStatusClass,
+          text: record.personalDetails | getStatusText
+        }
+      } if record | requiresSection("personalDetails"),
+      {
+        text: "Contact details",
+        href: "contact-details" | reviewIfInProgress(record.contactDetails),
+        id: "contact-details",
+        tag: {
+          classes: record.contactDetails | getStatusText | getStatusClass,
+          text: record.contactDetails | getStatusText
+        }
+      } if record | requiresSection("contactDetails"),
+      {
+        text: "Diversity information",
+        href: "diversity/ethnic-group" | reviewIfInProgress(record.diversity, 'diversity'),
+        id: "diversity",
+        tag: {
+          classes: record.diversity | getStatusText | getStatusClass,
+          text: record.diversity | getStatusText
+        }
+      } if record | requiresSection("diversity"),
+      {
+        text: "GCSE",
+        href: "gcse-details" | reviewIfInProgress(record.gcse, 'gcse'),
+        id: "qualification-gcse",
+        tag: {
+          classes: record.gcse | getStatusText | getStatusClass,
+          text: record.gcse | getStatusText
+        }
+      } if record | requiresSection("gcse"),
+      {
+        text: "Degree",
+        href: "degree/confirm" if (record.degree.items | length) else "degree/add",
+        id: "qualification-degree",
+        tag: {
+          classes: record.degree | getStatusText | getStatusClass,
+          text: record.degree | getStatusText
+        }
+      } if record | requiresSection("degree"),
+      {
+        text: "Qualifications on entry",
+        href: "undergraduate-qualification/confirm" if (record.undergraduateQualification) else "undergraduate-qualification",
+        id: "entry-qualification",
+        tag: {
+          classes: record.undergraduateQualification | getStatusText | getStatusClass,
+          text: record.undergraduateQualification | getStatusText
+        }
+      } if record | requiresSection("undergraduateQualification")
+      ]
+    }) if not closed }}
 
 
-<h2 class="govuk-heading-m">About their teacher training</h2>
+    <h2 class="govuk-heading-m">About their teacher training</h2>
 
-{% set fundingHint %}
-  {% if not record | canStartFundingSection %}
-    Complete the degree details section first
-  {% endif %}
-{% endset %}
+    {% set fundingHint %}
+      {% if not record | canStartFundingSection %}
+        Complete the degree details section first
+      {% endif %}
+    {% endset %}
 
-{# Conditional section label #}
-{% set includesSchools = record | requiresField(["leadSchool", "employingSchool"]) %}
-{% if includesSchools %}
-  {% if (record | requiresField("leadSchool")) and (record | requiresField("employingSchool")) %}
-    {% set schoolSectionLabel = "Lead and employing schools" %}
-  {% elseif record | requiresField(["leadSchool"]) %}
-    {% set schoolSectionLabel = "Lead school" %}
-  {% elseif record | requiresField(["employingSchool"]) %}
-    {% set schoolSectionLabel = "Employing school" %}
-  {% endif %}
-{% endif %}
+    {# Conditional section label #}
+    {% set includesSchools = record | requiresField(["leadSchool", "employingSchool"]) %}
+    {% if includesSchools %}
+      {% if (record | requiresField("leadSchool")) and (record | requiresField("employingSchool")) %}
+        {% set schoolSectionLabel = "Lead and employing schools" %}
+      {% elseif record | requiresField(["leadSchool"]) %}
+        {% set schoolSectionLabel = "Lead school" %}
+      {% elseif record | requiresField(["employingSchool"]) %}
+        {% set schoolSectionLabel = "Employing school" %}
+      {% endif %}
+    {% endif %}
 
-{{ appTaskList({
-  classes: "govuk-!-margin-bottom-8",
-  items: [{
-    text: "Type of training",
-    href: "record-setup",
-    id: "record-type",
-    tag: {
-      classes: 'Completed' | getStatusClass,
-      text: 'Completed'
-    }
-  } if record | requiresSection("recordSetup"),
-  {
-    text: "Course details",
-    href: "course-details" | reviewIfInProgress(record.courseDetails),
-    id: "course-details",
-    tag: {
-      classes: record.courseDetails | getStatusText | getStatusClass,
-      text: record.courseDetails | getStatusText
-    }
-  } if record | requiresSection("courseDetails"),
-  {
-    text: "International training details",
-    href: "iqts" | reviewIfInProgress(record.iqts),
-    id: "iqts",
-    tag: {
-      classes: record.iqts | getStatusText | getStatusClass,
-      text: record.iqts | getStatusText
-    }
-  } if record | requiresSection("iqts"),
-  {
-    text: "Trainee ID",
-    href: "training-details" | reviewIfInProgress(record.trainingDetails),
-    id: "training-details",
-    tag: {
-      classes: record.trainingDetails | getStatusText | getStatusClass,
-      text: record.trainingDetails | getStatusText
-    }
-  } if record | requiresSection("trainingDetails"),
-  {
-    text: schoolSectionLabel,
-    href: "schools" | reviewIfInProgress(record.schools),
-    id: "schools",
-    tag: {
-      classes: record.schools | getStatusText | getStatusClass,
-      text: record.schools | getStatusText
-    }
-  } if record | requiresSection("schools"),
-  {
-    text: "Placements",
-    href: "placements/confirm" if (record.placement) else "placements/can-add-placement",
-    id: "placement-details",
-    tag: {
-      classes: record.placement | getStatusText | getStatusClass,
-      text: record.placement | getStatusText
-    }
-  } if record | requiresSection("placement"),
-  {
-    text: "Funding",
-    href: "funding" | reviewIfInProgress(record.funding) if record | canStartFundingSection,
-    hint: "Complete course details first" if not record | canStartFundingSection,
-    id: "funding",
-    tag: {
-      classes: record.funding | getStatusText | getStatusClass,
-      text: record.funding | getStatusText("Cannot start yet" if not record | canStartFundingSection, "Cannot start yet" if not record | canStartFundingSection)
-    }
-  } if record | requiresSection("funding")
-  ]
-}) if not closed }}
+    {{ appTaskList({
+      classes: "govuk-!-margin-bottom-8",
+      items: [{
+        text: "Type of training",
+        href: "record-setup",
+        id: "record-type",
+        tag: {
+          classes: 'Completed' | getStatusClass,
+          text: 'Completed'
+        }
+      } if record | requiresSection("recordSetup"),
+      {
+        text: "Course details",
+        href: "course-details" | reviewIfInProgress(record.courseDetails),
+        id: "course-details",
+        tag: {
+          classes: record.courseDetails | getStatusText | getStatusClass,
+          text: record.courseDetails | getStatusText
+        }
+      } if record | requiresSection("courseDetails"),
+      {
+        text: "International training details",
+        href: "iqts" | reviewIfInProgress(record.iqts),
+        id: "iqts",
+        tag: {
+          classes: record.iqts | getStatusText | getStatusClass,
+          text: record.iqts | getStatusText
+        }
+      } if record | requiresSection("iqts"),
+      {
+        text: "Trainee ID",
+        href: "training-details" | reviewIfInProgress(record.trainingDetails),
+        id: "training-details",
+        tag: {
+          classes: record.trainingDetails | getStatusText | getStatusClass,
+          text: record.trainingDetails | getStatusText
+        }
+      } if record | requiresSection("trainingDetails"),
+      {
+        text: schoolSectionLabel,
+        href: "schools" | reviewIfInProgress(record.schools),
+        id: "schools",
+        tag: {
+          classes: record.schools | getStatusText | getStatusClass,
+          text: record.schools | getStatusText
+        }
+      } if record | requiresSection("schools"),
+      {
+        text: "Placements",
+        href: "placements/confirm" if (record.placement) else "placements/can-add-placement",
+        id: "placement-details",
+        tag: {
+          classes: record.placement | getStatusText | getStatusClass,
+          text: record.placement | getStatusText
+        }
+      } if record | requiresSection("placement"),
+      {
+        text: "Funding",
+        href: "funding" | reviewIfInProgress(record.funding) if record | canStartFundingSection,
+        hint: "Complete course details first" if not record | canStartFundingSection,
+        id: "funding",
+        tag: {
+          classes: record.funding | getStatusText | getStatusClass,
+          text: record.funding | getStatusText("Cannot start yet" if not record | canStartFundingSection, "Cannot start yet" if not record | canStartFundingSection)
+        }
+      } if record | requiresSection("funding")
+      ]
+    }) if not closed }}
 
-<h2 class="govuk-heading-m">Final check</h2>
+    <h2 class="govuk-heading-m">Final check</h2>
 
-{{ govukButton({
-  text: "Check this record",
-  href: "check-record"
-}) }}
+    {{ govukButton({
+      text: "Check this record",
+      href: "check-record"
+    }) }}
 
-<p class="govuk-body"><a href="./save-as-draft" class="govuk-link govuk-link--no-visited-state">Return to this draft later</a></p>
+    <p class="govuk-body"><a href="./save-as-draft" class="govuk-link govuk-link--no-visited-state">Return to this draft later</a></p>
 
-<p class="govuk-body govuk-!-margin-top-8"><a href="./delete-draft/confirm" class="govuk-link app-destructive-link">Delete this draft</a></p>
+    <p class="govuk-body govuk-!-margin-top-8"><a href="./delete-draft/confirm" class="govuk-link app-destructive-link">Delete this draft</a></p>
+  </div>
+</div>
+
+
+
+
+
 
 {% endblock %}

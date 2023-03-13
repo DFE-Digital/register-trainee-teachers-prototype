@@ -1,3 +1,27 @@
+{% set complete = {
+  text: "Complete",
+  checked: checked(query.filterCompleteStatus, "Complete")
+} %}
+
+{% set hasProblems = {
+  text: "Has problems",
+  value: "Has problems",
+  checked: checked(query.filterCompleteStatus, "Has problems")
+} %}
+
+{% set incomplete = {
+  text: "Incomplete",
+  checked: checked(query.filterCompleteStatus, "Incomplete")
+} %}
+
+{% set draftItems = [complete, incomplete, hasProblems] %}
+
+{% set recordItems = [
+  incomplete,
+  hasProblems
+] %}
+
+
 {{ govukCheckboxes({
   classes: "govuk-checkboxes--small js-auto-submit",
   fieldset: {
@@ -7,19 +31,5 @@
       classes: "govuk-fieldset__legend--s"
     }
   },
-  items: [
-    {
-      text: "Complete",
-      checked: checked(query.filterCompleteStatus, "Complete")
-    } if navActive == 'drafts',
-    {
-      text: "Has problems",
-      value: "Has problems",
-      checked: checked(query.filterCompleteStatus, "Has problems")
-    } if navActive == 'records',
-    {
-      text: "Incomplete",
-      checked: checked(query.filterCompleteStatus, "Incomplete")
-    }
-  ]
+  items: draftItems if navActive == "drafts" else recordItems
 } | decorateAttributes(data, "data.filterCompleteStatus"))}}

@@ -1,0 +1,248 @@
+{% extends "_templates/_page.html" %}
+
+{# {% set traineesPageHeading = "Registered trainees" %} #}
+
+{% set problems = data.traineeProblems | filterBySignedIn(data) %}
+{% set problemCount = problems | length %}
+
+{% set baseHeading = "Problems" %}
+{% set pageHeading %}
+  {{ baseHeading }} ({{problemCount}})
+{% endset %}
+
+{% set backText = "Home" %}
+{% set backLink = '/home' %}
+{# {% set navActive = "records" %} #}
+
+{# Dual skip links to support skipping to results rather than #main-content #}
+{% block skipLink %}
+  <div class="app-skip-link__container">
+    <span class="app-skip-link__item">
+      {{ govukSkipLink({
+        href: '#main-content',
+        text: 'Skip to main content'
+      }) }}
+    </span>
+    <span class="app-skip-link__item">
+      {{ govukSkipLink({
+        href: '#records-list',
+        text: 'Skip to results' if selectedFilters else 'Skip to records'
+      }) }}
+    </span>
+  </div>
+{% endblock %}
+
+{% block content %}
+{# super pulls in flash message banner #}
+{{super()}}
+
+
+{% set academicYearsTabsHtml %}
+
+  {% set academicYearRecentlyChanged = data.years.academicYearStartDate | isInLast(3, 'months') %}
+
+  {% set academicYearChangeUpcoming = data.years.academicYearStartDate | isInNext(1, 'months') %}
+  {# Compile tabs  #}
+  {% set tabItems = [
+    {
+      text: data.years.currentAcademicYear + " (current)",
+      href: "/records/" + "current-year",
+      active: (activeTab == "current-year" or not activeTab)
+    },
+    {
+      text: data.years.nextAcademicYear + " (upcoming)",
+      href: "/records/" + "next-year",
+      active: (activeTab == "next-year")
+    } if academicYearChangeUpcoming,
+    {
+      text: data.years.previousAcademicYear + " (last year)",
+      href: "/records/" + "previous-year",
+      active: (activeTab == "previous-year")
+    } if academicYearRecentlyChanged,
+    {
+      text: "All years",
+      href: "/records/" + "all-years",
+      active: (activeTab == "all-years")
+    }
+  ] %}
+
+  {{ appSubNavigation({
+    label: 'Sub navigation',
+    classes: 'govuk-!-margin-bottom-7',
+    items: tabItems
+  }) }}
+
+{% endset %}
+
+{% set filterOptionsHtml %}
+
+  {# {% include "_includes/filter-panel/trainee-search.njk" %} #}
+
+  {% if data.isAdmin %}
+
+    {% set adminOnlyFilters %}
+      {% include "_includes/filter-panel/all-accrediting-providers.njk" %}
+    {% endset %}
+
+    {{ appAdminFeature({
+      classes: "app-status-box--filter-outdent",
+      html: adminOnlyFilters
+    }) }}
+    {% else %}
+
+  {% endif %}
+
+  {# {% include "_includes/filter-panel/training-status.njk" %} #}
+
+  {# {% include "_includes/filter-panel/cohort-filter.njk" %} #}
+
+  {% include "_includes/filter-panel/years.njk" %}
+
+{#   {% if isAuthorised('showIncomplete') %}
+    {% include "_includes/filter-panel/completeStatus.njk" %}
+  {% endif %} #}
+
+  {# {% include "_includes/filter-panel/phase.njk" %} #}
+
+  {# {% include "_includes/filter-panel/course-level.njk" %} #}
+
+  {# {% include "_includes/filter-panel/signed-in-providers.njk" %} #}
+
+  {# {% include "_includes/filter-panel/training-routes.njk" %} #}
+
+  {# {% include "_includes/filter-panel/statuses.njk" %} #}
+
+{#   {% include "_includes/filter-panel/subjects.njk" %}
+
+  {% include "_includes/filter-panel/studyMode.njk" %}
+
+  {% include "_includes/filter-panel/source.njk" %} #}
+
+
+{% endset %}
+
+{% set filterContentHtml %}
+  {% if problemCount > 0 %}
+
+    <div class="app-records-actions">
+      <div class="app-records-actions__col">
+      </div>
+      <div class="app-records-actions__col">
+        <div class="moj-action-bar">
+          <div class="moj-action-bar__filter">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="app-application-cards">
+
+      {% if problemCount > 0 %}
+
+        {% for problem in problems %}
+          {% include "_includes/record-problems/problem-card.njk" %}
+        {% endfor %}
+
+      {% endif %}
+    </div>
+
+    {# Dummy pagination - not hooked up to data yet #}
+    {# Don't show pagination when it's clear there's not many results #}
+    {% if problems | length > 100 %}
+      {% set count = problemCount %}
+      {% include "_includes/pagination.njk" %}
+    {% endif %}
+
+  {% else %}
+    <h2 class="govuk-heading-m">No problems found</h2>
+    <p class="govuk-body">Try <a href="/records">clearing your search and filters</a>.</p>
+  {% endif %}
+
+{% endset %}
+
+
+<div class="govuk-grid-row">
+
+  <div class="govuk-grid-column-full">
+
+    {% if data.settings.academicYearsUiStyle == "Tabs" %}
+      {{ academicYearsTabsHtml | safe }}
+    {% endif %}
+
+    <h1 class="govuk-heading-xl">
+      {{ baseHeading }} 
+      <span class="govuk-!-font-weight-regular">
+        ({{ problemCount }}<span class="govuk-visually-hidden">{{ " problem" | pluralise(problemCount)}}</span>)
+      </span>
+    </h1>
+
+  </div>
+
+  {% if data.settings.showBulkLinks %}
+    <div class="govuk-grid-column-one-third">
+      <aside class="app-related-items" role="complementary">
+        <h2 class="govuk-heading-m" id="subsection-title">
+          Actions
+        </h2>
+        <nav role="navigation" aria-labelledby="subsection-title">
+          <ul class="govuk-list govuk-!-font-size-16">
+            <li>
+              <a href="#">
+                Submit a group of draft records
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                Recommend a group of trainees for EYTS or QTS
+              </a>
+            </li>
+          </ul>
+        </nav>
+        <div class="js-bulk-menu govuk-!-margin-bottom-3">
+          {{bulkButton | safe}}
+        </div>
+      </aside>
+    </div>
+  {% endif %}
+
+</div>
+
+<div class="govuk-grid-row">
+
+  <div class="govuk-grid-column-full">
+
+    {# Main page content - filters and trainees #}
+    {{ appFilterPage({
+      filterOptions: filterOptionsHtml,
+      selectedFilters: selectedFilters,
+      filterContent: filterContentHtml
+      })
+    }}
+
+  </div>
+
+</div>
+
+{% endblock %}
+
+{% block pageScripts %}
+  <script>
+    new MOJFrontend.FilterToggleButton({
+    bigModeMediaQuery: '(min-width: 48.063em)',
+    startHidden: false,
+    toggleButton: {
+      container: $('.moj-action-bar__filter'),
+      showText: 'Show filter',
+      hideText: 'Hide filter',
+      classes: 'govuk-button--secondary'
+    },
+    closeButton: {
+      container: $('.moj-filter__header-action'),
+      text: 'Close'
+    },
+    filter: {
+      container: $('.moj-filter')
+    }
+  });
+  </script>
+{% endblock %}

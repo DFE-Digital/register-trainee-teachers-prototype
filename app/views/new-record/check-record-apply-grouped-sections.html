@@ -14,10 +14,8 @@
 
 {# Add an extra referrer as this is a compound referral path #}
 {% set referrer = referrer | pushReferrer(recordPath + "/check-record") %}
-
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds-from-desktop">
-
+  <div class="govuk-grid-column-full">
     {% if errorList %}
       {{ govukErrorSummary({
         titleText: "There is a problem",
@@ -30,6 +28,11 @@
     {% endif %}
 
     {% include "_includes/record-problems/draft-banner.njk" %}
+  </div>
+</div>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+
 
     {% set draftRecordName %}
       {% if record.personalDetails.shortName %}

@@ -3,52 +3,42 @@
 
 {% set countOfIssues = recordProblems | length %}
 
-{% if hasProblems %}
-  {{recordProblems | log("Draft problems:")}}
-{% endif %}
-
-{% set recordType = "draft" %}
-
+{# List out possible headings here #}
 {% set problemHeadings = {
-  duplicateDraft: "This draft is a duplicate"
+  duplicateDraft: "This draft trainee is a duplicate"
 } %}
 
-{% if (countOfIssues > 0) and canAmend %}
-
-  {# Either use the specific problem as a title, or a generic one #}
-  {% set title %}
-    {% if countOfIssues > 1 %}
-      There are problems with this draft
-    {% else %}
-      {% if hasProblems %}
-        {{ problemHeadings[recordProblems[0].type] }}
-      {% elseif isIncomplete %}
-        {{ problemHeadings.incomplete }}
-      {% endif %}
+{# Use a generic heading if there is more than one issue #}
+{% set title %}
+  {% if countOfIssues > 1 %}
+    There are problems with this draft trainee
+  {% else %}
+    {% if hasProblems %}
+      {{ problemHeadings[recordProblems[0].type] }}
     {% endif %}
-  {% endset %}
-  {% set problemItems = [] %}
+  {% endif %}
+{% endset %}
 
+{% set notificationBannerHtml %}
+
+  <h3 class="govuk-notification-banner__heading">
+    {{ title }}
+  </h3>
   {% for problem in recordProblems | sort(attribute='type') %}
 
-    {% set problemHtml %}
-      {% if countOfIssues > 1 %}
-        <h3 class="govuk-heading-s">fesgfes
-          {{ problemHeadings[problem.type] }}
-        </h3>
-      {% endif %}
-      {% include "_includes/record-problems/" + problem.type + ".njk" %}
-    {% endset %}
+    {% if countOfIssues > 1 %}
+      <h4 class="govuk-heading-s">fesgfes
+        {{ problemHeadings[problem.type] }}
+      </h4>
+    {% endif %}
+    {% include "_includes/record-problems/" + problem.type + ".njk" %}
 
-    {% set problemItems = problemItems | push({
-      html: problemHtml | safe
-    }) %}
-    
   {% endfor %}
 
-  {{ appNoticeBanner({
-    titleText: title,
-    itemList: problemItems
-  }) }}
+{% endset %}
 
+{% if (countOfIssues > 0) and canAmend %}
+  {{ govukNotificationBanner({
+    html: notificationBannerHtml
+  }) }}
 {% endif %}

@@ -21,60 +21,51 @@
   incomplete: "This trainee is incomplete"
 } %}
 
-{% if (countOfIssues > 0) and canAmend %}
-
-  {# Either use the specific problem as a title, or a generic one #}
-  {% set title %}
-    {% if countOfIssues > 1 %}
-      There are problems with this trainee
-    {% else %}
-      {% if hasProblems %}
-        {{ problemHeadings[recordProblems[0].type] }}
-      {% elseif isIncomplete %}
-        {{ problemHeadings.incomplete }}
-      {% endif %}
+{# Use a generic heading if there is more than one issue #}
+{% set title %}
+  {% if countOfIssues > 1 %}
+    There are problems with this trainee
+  {% else %}
+    {% if hasProblems %}
+      {{ problemHeadings[recordProblems[0].type] }}
+    {% elseif isIncomplete %}
+      {{ problemHeadings.incomplete }}
     {% endif %}
-  {% endset %}
+  {% endif %}
+{% endset %}
 
-  {% set problemItems = [] %}
+
+{% set notificationBannerHtml %}
+  <h3 class="govuk-notification-banner__heading">
+    {{ title }}
+  </h3>
 
   {% for problem in recordProblems | sort(attribute='type') %}
 
-    {% set problemHtml %}
-      {% if countOfIssues > 1 %}
-        <h3 class="govuk-heading-s">
-          {{ problemHeadings[problem.type] }}
-        </h3>
-      {% endif %}
-      {% include "_includes/record-problems/" + problem.type + ".njk" %}
-    {% endset %}
+    {% if countOfIssues > 1 %}
+      <h4 class="govuk-heading-s">
+        {{ problemHeadings[problem.type] }}
+      </h4>
+    {% endif %}
+    {% include "_includes/record-problems/" + problem.type + ".njk" %}
 
-    {% set problemItems = problemItems | push({
-      html: problemHtml | safe
-    }) %}
-    
   {% endfor %}
 
   {# Add incomplete to the end #}
   {% if isIncomplete %}
-    {% set problemHtml %}
-      {% if countOfIssues > 1 %}
+    {% if countOfIssues > 1 %}
+      <h3 class="govuk-heading-s">
+        {{ problemHeadings.incomplete }}
+      </h3>
+    {% endif %}
+    {% include "_includes/record-problems/incomplete.njk" %}
 
-        <h3 class="govuk-heading-s">
-          {{ problemHeadings.incomplete }}
-        </h3>
-      {% endif %}
-      {% include "_includes/record-problems/incomplete.njk" %}
-    {% endset %}
-
-    {% set problemItems = problemItems | push({
-      html: problemHtml | safe
-    }) %}
   {% endif %}
 
-  {{ appNoticeBanner({
-    titleText: title,
-    itemList: problemItems
-  }) }}
+{% endset %}
 
+{% if (countOfIssues > 0) and canAmend %}
+  {{ govukNotificationBanner({
+    html: notificationBannerHtml
+  }) }}
 {% endif %}

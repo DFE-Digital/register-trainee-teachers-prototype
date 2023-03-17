@@ -7,6 +7,7 @@
 {% set draftRecords = filteredRecords | filterByStatus("Draft") %}
 {% set totalDraftCount = draftRecords | length %}
 {% set applyDraftCount = draftRecords | where("source", "Apply") | length %}
+{% set applyPendingRecordsCount = data.records | filterRecords(data) | filterByStatus("Apply pending conditions") | length %}
 
 {% set registeredTrainees = filteredRecords | filterByStatus("Draft", true) %}
 {% set pageHeading = "Your trainee teachers" %}
@@ -38,6 +39,12 @@
           {%  endif %}
           {% if applyDraftCount > 0 %}
             <li><a class="govuk-link" href="/drafts?filterSource=Apply">View draft trainees imported from Apply ({{applyDraftCount}}{% if totalDraftCount != applyDraftCount %} out of {{totalDraftCount}} draft trainees{% endif %})</a></li>
+          {% endif %}
+          {# {% if applyPendingRecordsCount > 0 %}
+            <li><a class="govuk-link" href="/drafts/apply-importable">{{ applyPendingRecordsCount }} Apply offer available to import</a></li>
+          {% endif %} #}
+          {% if applyPendingRecordsCount > 0 %}
+            <li><a class="govuk-link" href="/drafts/apply-importable">Import Apply applications with pending conditions ({{applyPendingRecordsCount}} available)</a></li>
           {% endif %}
 
           {% if isAuthorised('addTrainees') %}

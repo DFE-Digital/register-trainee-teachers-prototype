@@ -1,0 +1,72 @@
+
+{% set checkboxItems = [] %}
+
+{% for trainee in applyPendingRecords  %}
+{{trainee | log}}
+  {% set subjects -%}
+    {%- if trainee.courseDetails | subjectsAreIncomplete -%}
+      {{- trainee.courseDetails.courseNameShort or trainee.courseDetails.subjects | prettifySubjects -}}
+    {%- else -%}
+      {{- (trainee.courseDetails.subjects | prettifySubjects | falsify ) or trainee.courseDetails.courseNameShort -}}
+    {%- endif %}
+  {%- endset %}
+
+  {% set traineeHintHtml %}
+    <div class="govuk-hint">{{ subjects }}, {{trainee.route | lower}}</div>
+    <p class="govuk-hint">Pending conditions:</p>
+    <ul class="govuk-list govuk-list--bullet">
+      {% for condition in trainee.applyData.requiredConditions %}
+        <li class="govuk-hint">{{condition}}</li>
+      {% endfor %}
+    </ul>
+    {# {{govukTag({
+      text: trainee.status,
+      classes: trainee.status | getStatusClass
+    })}} #}
+  {% endset %}
+
+  {% set checkboxItems = checkboxItems | push({
+    value: trainee.id,
+    _text: trainee.personalDetails.fullName,
+    checked: checked(selectedTrainees, trainee.id),
+    text: trainee.personalDetails.fullName,
+    hint: {
+      html: traineeHintHtml
+    }
+  }) %}
+
+{% endfor %}
+
+
+
+
+{% if applyPendingRecords | length > 0 %}
+
+  {{ govukCheckboxes({
+    fieldset: {
+      legend: {
+        text: pageHeading,
+        isPageHeading: true,
+        classes: "govuk-fieldset__legend--l"
+      }
+    },
+    hint: {
+      text: "Your Apply offers in ‘conditions pending’ status"
+    },
+    items: checkboxItems
+  } | decorateAttributes(data, "data.temp.importApplyTrainees")) }}
+
+  {% set buttonText %}
+    {% if applyPendingRecords | length == 1 %}
+      Import application as draft
+    {% else %}
+      Import applications as drafts
+    {% endif %}
+  {% endset %}
+  
+  {{ govukButton({
+    text: buttonText
+  }) }}
+
+
+{% endif %}

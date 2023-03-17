@@ -10,6 +10,8 @@
 {% set backLink = '/home' %}
 {% set navActive = "drafts" %}
 
+{% set applyPendingRecords = data.records | filterRecords(data) | filterByStatus("Apply pending conditions") %}
+
 {# Dual skip links to support skipping to results rather than #main-content #}
 {% block skipLink %}
   <div class="app-skip-link__container">
@@ -27,6 +29,30 @@
     </span>
   </div>
 {% endblock %}
+
+{% set applyPendingUi %}
+
+  {% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
+
+  {% if applyPendingRecords | length %}
+    {# <div class="app-home-statuses app-home-statuses--1-up govuk-!-margin-bottom-4">
+      <a href="/drafts/apply-importable" class="status-card status-card status-card--draft">
+        <span class="status-card__count">{{applyPendingRecords | length}}</span>
+        <span class="status-card__status">Apply ‘conditions pending’ {{'offer' | pluralise(applyPendingRecords | length)}} available to import</span>
+      </a>
+    </div> #}
+    {% set linkHtml %}
+      <p class="govuk-body"><a class="govuk-link" href="/drafts/apply-importable">Import Apply applications with pending conditions ({{ applyPendingRecords | length }} available)</a></p>
+    {% endset %}
+
+    {{linkHtml | safe}}
+    
+    {# {{ govukInsetText({
+      html: linkHtml
+    }) }} #}
+  {% endif %}
+{% endset %}
+
 
 {% block content %}
 {# super pulls in flash message banner #}
@@ -97,6 +123,10 @@
 
 {% set filterContentHtml %}
   {% if filteredRecords | length %}
+
+
+    {{applyPendingUi | safe}}
+
 
     <div class="app-records-actions">
       <div class="app-records-actions__col">
@@ -291,6 +321,13 @@
         href: "./new-record/new",
         isStartButton: true
       }) }}
+      {# {{applyPendingUi | safe}} #}
+      {# <div>
+        {{ govukButton({
+          text: "Review importable Apply applications",
+          classes: "govuk-button--secondary"
+        }) }}
+      </div> #}
     {% endif %}
 
   </div>

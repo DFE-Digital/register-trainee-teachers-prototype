@@ -107,10 +107,14 @@ module.exports = ({updatedDate, submittedDate, deferredDate, withdrawalDate, qua
       submittedDate = updatedDate
     }
     else {
+
+      let sortedDates = sortDates(moment(yearStartDate).subtract(60, 'days'), moment(updatedDate).subtract(50, 'days'))
+
       submittedDate = faker.date.between(
-        moment(yearStartDate).subtract(60, 'days'), // let applications start before the accademic year
-        moment(updatedDate).subtract(50, 'days')
+        moment(sortedDates[0]),
+        moment(sortedDates[1])
       )
+
     }
   }
 

@@ -11,6 +11,10 @@
     grid-auto-rows: 1fr;
   }
 
+.app-home-statuses--1-up {
+  grid-template-columns: 1fr;
+}
+
 .app-home-statuses--2-up {
   grid-template-columns: 1fr;
   @include govuk-media-query($from: tablet) {

@@ -271,4 +271,39 @@ module.exports = router => {
     }
   })
 
+  // Let users pick Apply applications to import.
+  router.post('/drafts/apply-importable-answer', (req, res) => {
+    let data = req.session.data
+    let selectedRecordIds = data?.temp?.importApplyTrainees || []
+
+    let selectedCount = selectedRecordIds.length
+    // console.log(`Apply importable selected trainees: ${selectedCount}`)
+
+    if (selectedCount > 0) {
+      let selectedRecords = utils.getRecordsById(data.records, selectedRecordIds)
+
+      // Advance the records to Draft and remove old data
+      selectedRecords.forEach(record => {
+        record.status = "Draft"
+        delete record?.applyData?.applyStatus
+        delete record?.applyData?.requiredConditions
+      })
+
+      let flashMessage
+      if (selectedCount == 1) {
+        flashMessage = `1 Apply application imported as a draft`
+      }
+      else {
+        flashMessage = `${selectedCount} Apply applications imported as drafts`
+      }
+      req.flash('success', flashMessage)
+    }
+
+    utils.deleteTempData(data)
+
+    // Return with Apply filter applied. In reality we should probably restore previous filters?
+    res.redirect(`/drafts?filterSource=Apply`)
+
+  })
+
 }

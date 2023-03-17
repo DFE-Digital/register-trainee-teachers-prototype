@@ -107,7 +107,10 @@ const generateFakeApplication = (params = {}) => {
   application                  = { ...application, ...generateDates(params, application) }
   // Training
   if (application.source == "Apply"){
-    application.applyData = { ...generateApplyData(application), ...params.applyData}
+    application.applyData = { ...generateApplyData(application, params), ...params.applyData }
+    if (params?.applyData?.applyStatus == "Pending conditions"){
+      application.status = "Apply pending conditions"
+    }
     // if (params.applyData) application.applyData = params.applyData
   }
 
@@ -271,7 +274,8 @@ const generateFakeApplicationsForProvider = (provider, year, count) => {
     // Only SCITTs should have Apply drafts
     let isScitt = (provider?.accreditingProviderType != "HEI")
     targetCounts = {
-      draft: (isScitt) ? 0.20 : 0.9,
+      draft: (isScitt) ? 0.10 : 0.9,
+      applyPending: (isScitt) ? 0.20 : 0,
       applyEnrolled: (isScitt) ? 0.70 : 0,
       pendingTrn: 0.01,
       trnReceived: 0.01,
@@ -335,6 +339,42 @@ const generateFakeApplicationsForProvider = (provider, year, count) => {
     moment().subtract(16, 'days'),
     moment()
   )
+
+  stubApplication.applyPending = {
+    source: "Apply",
+    status: "Draft",
+    updatedDate: applyStubUpdatedDate,
+    applyData: {
+      recruitedDate: applyStubUpdatedDate,
+      applicationDate: faker.date.between(
+        moment().subtract(60, 'days'),
+        moment().subtract(30, 'days')
+      ),
+      applyStatus: "Pending conditions",
+      status: 'Review'
+    },
+    personalDetails: {
+      status: 'Review'
+    },
+    contactDetails: {
+      status: 'Review'
+    },
+    diversity: {
+      status: 'Review'
+    },
+    degree: {
+      status: 'Review'
+    },
+    academicYearSimple: currentYear,
+    courseDetails: {
+      isPublishCourse: true,
+      status: 'Review'
+    },
+    placement: null,
+    trainingDetails: null,
+    schools: null,
+    funding: null
+  }
 
   stubApplication.applyEnrolled = {
     source: "Apply",

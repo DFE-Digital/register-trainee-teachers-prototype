@@ -518,7 +518,7 @@ module.exports = router => {
 
     // All records except drafts
     let draftRecords = utils.filterRecordsBy(filteredRecords, 'status', "Draft")
-    let registeredRecords = objectFilters.removeWhere(filteredRecords, 'status', "Draft")
+    let registeredRecords = objectFilters.removeWhere(filteredRecords, 'status', ["Draft", "Apply pending conditions"])
     let draftRecordsCount = hasFilters ? draftRecords.length : null
 
     // Truncate records in case there's lots - and as we don't have working pagination

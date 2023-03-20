@@ -34,7 +34,7 @@
         {% set providersByType = userProviders | groupby("type") %}
 
         {% if providersByType.accreditingProvider %}
-          <h2 class="govuk-heading-m">Accrediting providers</h2>
+          <h2 class="govuk-heading-m">Accredited providers</h2>
 
           <ul class="govuk-list">
             {% for provider in providersByType.accreditingProvider %}

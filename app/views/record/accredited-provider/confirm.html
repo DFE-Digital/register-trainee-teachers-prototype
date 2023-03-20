@@ -14,7 +14,7 @@
     {{pageHeading}}
   </h1>
 
-  {% include "_includes/summary-cards/accrediting-provider.html" %}
+  {% include "_includes/summary-cards/accredited-provider.html" %}
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds-from-desktop">
@@ -24,6 +24,8 @@
       }) }}
     </div>
   </div>
+
+  <input name="successFlash" type="hidden" value="Accredited provider updated">
 
   {{ govukButton({
     text: "Update record"

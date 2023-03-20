@@ -25,7 +25,7 @@
     </div>
   </div>
 
-  <input name="successFlash" type="hidden" value="Accredited provider updated">
+  <input name="record[temp][oldProvider]" type="hidden" value="{{data.record.provider}}">
 
   {{ govukButton({
     text: "Update record"

@@ -345,6 +345,39 @@ module.exports = router => {
     }
   })
 
+  // Support changing accredited provider of a trainee
+  router.post('/record/:uuid/accredited-provider/update', (req, res) => {
+    const data = req.session.data
+    const record = data.record
+    let referrer = utils.getReferrer(req.query.referrer)
+    // Update failed or no data
+    if (!record){
+      res.redirect(`/record/${req.params.uuid}`)
+    }
+    else {
+
+      console.log(`Changing accredited provider to ${record.provider}`)
+
+      record?.revert?.withdraw?.auditLogComment
+      let reasonText = `${record.temp.auditLogComment}`
+
+      utils.addEvent(record, `Accredited provider changed from ${record.temp.oldProvider}`, reasonText)
+      utils.deleteTempData(data)
+      utils.updateRecord(data, record, false)
+      req.flash('success', `Accredited provider changed`)
+
+      // Delete temporary data
+      delete record?.temp
+      if (referrer){
+        res.redirect(utils.getReferrerDestination(req.query.referrer))
+      }
+      else {
+        // More likely we've come from this tab where most things are on
+        res.redirect(`/record/${req.params.uuid}`)
+      }
+    }
+  })
+
   // Get timeline items and pass to view
   router.get('/record/:uuid/timeline', (req, res) => {
     const data = req.session.data
@@ -616,7 +649,7 @@ module.exports = router => {
     }
   })
 
-    // Revert QTS or EYTS status
+  // Revert withdrawal
   router.post('/record/:uuid/admin/revert/withdraw/update', (req, res) => {
     const data = req.session.data
     const record = data.record

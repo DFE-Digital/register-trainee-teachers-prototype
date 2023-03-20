@@ -2348,6 +2348,8 @@ exports.deleteTempData = (data) => {
   delete data.record
   delete data.submittedRecordId
   delete data.placementTemp
+  delete data.temp
+  return data
 }
 
 // Stolen from Manage

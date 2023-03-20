@@ -13,13 +13,13 @@
 
 {# {% set providerItems = providerItems | push({divider: 'or'}) %}
  #}
-
+{% include "_includes/trainee-name-caption.njk" %}
 <h1 class="govuk-heading-l">{{pageHeading}}</h1>
 
 {% set adminInsetContentHtml %}
 
   <p class="govuk-body">
-    Only change the accredited provider if the current provider, <strong>{{record.provider}}</strong>, has instructed you to.
+    Only change the accredited provider if the current provider, <strong class="app-nowrap">{{record.provider}}</strong>, has instructed you to.
   </p>
 
   <p class="govuk-body">
@@ -35,7 +35,7 @@
 
 {{ appAutocompleteFromSelect({
   label: {
-    text: "Select a new accredited provider",
+    text: "Select new accredited provider",
     classes: "govuk-label--s"
   },
   hint: {

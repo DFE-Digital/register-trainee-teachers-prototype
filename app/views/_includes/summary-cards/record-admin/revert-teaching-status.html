@@ -34,7 +34,7 @@
   },
   {
     key: {
-      text: "Zendesk URL"
+      text: "Zendesk ticket URL"
     },
     value: {
       text: record.revert.teachingStatus.zendeskUrl or "Not provided"
@@ -43,7 +43,7 @@
       items: [{
         href: "./details" | addReferrer(referrer),
         text: "Change",
-        visuallyHiddenText: "zendesk url"
+        visuallyHiddenText: "Zendesk ticket URL"
       }]
     } if canAmend
   }

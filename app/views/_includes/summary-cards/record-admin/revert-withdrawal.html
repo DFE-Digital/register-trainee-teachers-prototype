@@ -34,7 +34,7 @@
   },
   {
     key: {
-      text: "Zendesk URL"
+      text: "Zendesk ticket URL"
     },
     value: {
       text: record.revert.withdraw.zendeskUrl
@@ -43,7 +43,7 @@
       items: [{
         href: "./details" | addReferrer(referrer),
         text: "Change",
-        visuallyHiddenText: "zendesk URL"
+        visuallyHiddenText: "Zendesk ticket URL"
       }]
     } if canAmend
   }

@@ -11,8 +11,6 @@
   }) %}
 {% endfor %}
 
-{# {% set providerItems = providerItems | push({divider: 'or'}) %}
- #}
 {% include "_includes/trainee-name-caption.njk" %}
 <h1 class="govuk-heading-l">{{pageHeading}}</h1>
 
@@ -22,16 +20,15 @@
     Only change the accredited provider if {{record.provider}} (the current accredited provider) has asked you to.
   </p>
 
-  <p class="govuk-body">
+  <p class="govuk-body govuk-!-margin-bottom-0">
     The current and new accredited providers will be sent an email confirming the change.
   </p>
-{% endset %}
 
+{% endset %}
 
 {{ appAdminFeature({
   html: adminInsetContentHtml
 }) }}
-
 
 {{ appAutocompleteFromSelect({
   label: {
@@ -43,7 +40,6 @@
   },
   id: 'provider',
   name: "record[provider]",
-  _items: providers | toSelectItems,
   items: providerItems,
   classes: "govuk-!-width-two-thirds",
   value: null,
@@ -55,16 +51,10 @@
   }
 }) }}
 
-{# {{ govukRadios({
-  fieldset: {
-    legend: {
-      text: pageHeading,
-      isPageHeading: true,
-      classes: "govuk-fieldset__legend--l"
-    }
-  },
-  items: providerItems
-} | decorateAttributes(record, "record.provider")) }} #}
+{{ govukWarningText({
+  text: "Choosing the wrong accredited provider could lead to a data breach.",
+  iconFallbackText: "Warning"
+}) }}
 
 {{ govukButton({
   text: "Continue"

@@ -16,16 +16,8 @@
 
   {% include "_includes/summary-cards/accredited-provider.html" %}
 
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds-from-desktop">
-      {{ govukWarningText({
-        text: "Choosing the wrong accredited provider could lead to a data breach. The new accredited provider will be able to view and make changes to the trainee’s record.",
-        iconFallbackText: "Warning"
-      }) }}
-    </div>
-  </div>
-
-  <input name="record[temp][oldProvider]" type="hidden" value="{{data.record.provider}}">
+  {# Save temporarily for use in timeline message #}
+  <input name="record[temp][oldProvider]" type="hidden" value="{{ data.record.provider }}">
 
   {{ govukButton({
     text: "Update record"

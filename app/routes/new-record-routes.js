@@ -272,9 +272,9 @@ module.exports = router => {
   })
 
   // Let users pick Apply applications to import.
-  router.post('/drafts/apply-importable-answer', (req, res) => {
+  router.post('/drafts/apply-importable/update', (req, res) => {
     let data = req.session.data
-    let selectedRecordIds = data?.temp?.importApplyTrainees || []
+    let selectedRecordIds = data?.applyImportable?.selectedTrainees || []
 
     let selectedCount = selectedRecordIds.length
     // console.log(`Apply importable selected trainees: ${selectedCount}`)
@@ -299,7 +299,7 @@ module.exports = router => {
       req.flash('success', flashMessage)
     }
 
-    utils.deleteTempData(data)
+    delete data.applyImportable
 
     // Return with Apply filter applied. In reality we should probably restore previous filters?
     res.redirect(`/drafts?filterSource=Apply`)

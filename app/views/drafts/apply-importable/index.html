@@ -17,11 +17,11 @@
   text: "Cancel"
 } %}
 
-{% set formAction = "./apply-importable-answer" | addReferrer(referrer) %}
+{% set formAction = "./apply-importable/confirm" | addReferrer(referrer) %}
 
 {% set hideReturnLink = true if filteredRecords | length == 0 %}
 
 {% block formContent %}
-  {% include "_includes/forms/apply-pending-conditions-select-trainees.html" %}
+  {% include "_includes/forms/apply-importable/select-trainees.html" %}
 
 {% endblock %}

@@ -5,7 +5,7 @@
   {% if selectedTrainees | length > 1 %}
     <ul class="govuk-list">
   {% endif %}
-      
+
   {% for trainee in selectedTrainees %}
 
     {% set subjects -%}
@@ -40,7 +40,7 @@
 {% set rows = [
   {
     key: {
-      text: "Application selected" if (selectedTrainees | length == 1) else "Applications selected"
+      text: "Candidate to import" if (selectedTrainees | length == 1) else "Candidates to import"
     },
     value: {
       text: traineeList | safe or 'Not provided'
@@ -64,6 +64,6 @@
 
 {{ appSummaryCard({
   classes: "govuk-!-margin-bottom-6",
-  titleText: "Import Apply applications",
+  titleText: "Candidate import details",
   html: summaryListHtml
 }) }}

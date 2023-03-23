@@ -40,7 +40,7 @@
 <h1 class="govuk-heading-l">{{pageHeading}}</h1>
 
 <p class="govuk-body">
-  Trainees are automatically imported from the Manage teavher training applications (Manage) service when they’re marked as recruited.
+  Candidates are automatically imported from the Apply for teacher training (Apply) service when all their conditions are marked as met. They appear as draft trainees in this service.
 </p>
 
 <p class="govuk-body">
@@ -53,13 +53,10 @@
   {{ govukCheckboxes({
     fieldset: {
       legend: {
-        text: "Trainees to import",
+        text: "Candidates with conditions pending to import",
         isPageHeading: false,
         classes: "govuk-fieldset__legend--m"
       }
-    },
-    hint: {
-      text: "Your Apply offers in ‘conditions pending’ status"
     },
     items: checkboxItems
   } | decorateAttributes(data, "data.applyImportable.selectedTrainees")) }}
@@ -71,7 +68,7 @@
       Import applications as drafts
     {% endif %}
   {% endset %} #}
-  
+
   {{ govukButton({
     text: "Continue"
   }) }}

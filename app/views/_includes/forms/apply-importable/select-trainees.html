@@ -37,7 +37,15 @@
 
 {% endfor %}
 
+<h1 class="govuk-heading-l">{{pageHeading}}</h1>
 
+<p class="govuk-body">
+  Trainees are automatically imported from the Manage teavher training applications (Manage) service when they’re marked as recruited.
+</p>
+
+<p class="govuk-body">
+  You can manually import trainees who still have conditions pending. Only do this if you expect the trainees will meet their conditions.
+</p>
 
 
 {% if applyPendingRecords | length > 0 %}
@@ -45,9 +53,9 @@
   {{ govukCheckboxes({
     fieldset: {
       legend: {
-        text: pageHeading,
-        isPageHeading: true,
-        classes: "govuk-fieldset__legend--l"
+        text: "Trainees to import",
+        isPageHeading: false,
+        classes: "govuk-fieldset__legend--m"
       }
     },
     hint: {

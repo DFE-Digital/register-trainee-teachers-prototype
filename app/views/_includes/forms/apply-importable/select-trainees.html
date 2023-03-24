@@ -13,12 +13,26 @@
 
   {% set traineeHintHtml %}
     <div class="govuk-hint">{{ subjects }}, {{trainee.route | lower}}</div>
-    <p class="govuk-hint">Pending conditions:</p>
-    <ul class="govuk-list govuk-list--bullet">
-      {% for condition in trainee.applyData.requiredConditions %}
-        <li class="govuk-hint">{{condition}}</li>
-      {% endfor %}
-    </ul>
+
+    {% set conditionsHtml %}
+      {# <p class="govuk-hint">Pending conditions:</p> #}
+      {% if trainee.applyData.requiredConditions | length >1 %}
+        <ul class="govuk-list govuk-list--bullet">
+          {% for condition in trainee.applyData.requiredConditions %}
+            <li class="govuk-hint">{{condition}}</li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        {{ trainee.applyData.requiredConditions[0] }}
+      {% endif %}
+      
+    {% endset %}
+
+    {{ govukDetails({
+      summaryText: "View pending " + ("condition" | pluralise(trainee.applyData.requiredConditions | length)),
+      html: conditionsHtml
+    }) }}
+
     {# {{govukTag({
       text: trainee.status,
       classes: trainee.status | getStatusClass

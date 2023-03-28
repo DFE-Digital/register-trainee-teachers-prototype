@@ -58,26 +58,35 @@
 <h1 class="govuk-heading-l">{{pageHeading}}</h1>
 
 <p class="govuk-body">
-  Trainees are automatically imported from the Manage teavher training applications (Manage) service when they’re marked as recruited.
+  Applications are automatically imported from the Apply for teacher training (Apply) service when they reach ‘recruited’ status. If an application has any offer conditions, this will only happen once all conditions have been met.
 </p>
 
 <p class="govuk-body">
-  You can manually import trainees who still have conditions pending. Only do this if you expect the trainees will meet their conditions.
+  Imported applications become draft trainee records in this service.
 </p>
 
+<p class="govuk-body">
+You can manually import applications early if they:
+</p>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>have ‘conditions pending’ status in Apply</li>
+  <li>are for a course with a start date between the beginning of last month and the end of next month</li>
+</ul>
+
+<p class="govuk-body">
+  Only manually import applications if you expect that the offer conditions will be met. You should still mark the conditions as met in Apply.
+</p>
 
 {% if applyPendingRecords | length > 0 %}
 
   {{ govukCheckboxes({
     fieldset: {
       legend: {
-        text: "Trainees to import",
+        text: "Applications to import with conditions pending",
         isPageHeading: false,
         classes: "govuk-fieldset__legend--m"
       }
-    },
-    hint: {
-      text: "Your Apply offers in ‘conditions pending’ status"
     },
     items: checkboxItems
   } | decorateAttributes(data, "data.applyImportable.selectedTrainees")) }}
@@ -89,7 +98,7 @@
       Import applications as drafts
     {% endif %}
   {% endset %} #}
-  
+
   {{ govukButton({
     text: "Continue"
   }) }}

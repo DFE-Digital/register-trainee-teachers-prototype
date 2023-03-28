@@ -41,12 +41,12 @@
         <span class="status-card__status">Apply ‘conditions pending’ {{'offer' | pluralise(applyPendingRecords | length)}} available to import</span>
       </a>
     </div> #}
-    {% set linkHtml %}
+    {# {% set linkHtml %}
       <p class="govuk-body"><a class="govuk-link" href="/drafts/apply-importable">Import Apply applications with pending conditions ({{ applyPendingRecords | length }} available)</a></p>
-    {% endset %}
+    {% endset %} #}
 
     {{linkHtml | safe}}
-    
+
     {# {{ govukInsetText({
       html: linkHtml
     }) }} #}

@@ -1,13 +1,13 @@
 {% extends "_templates/_form.html" %}
 
-{% set pageHeading = "Import candidates with conditions pending from Apply" %}
+{% set pageHeading = "Import applications from Apply with conditions pending" %}
 
 {% set filteredRecords = data.records | filterRecords(data) %}
 
 {% set applyPendingRecords = filteredRecords | filterByStatus("Apply pending conditions") %}
 
 {% if filteredRecords | length == 0 %}
-  {% set pageHeading = "No Apply offers to import" %}
+  {% set pageHeading = "No applications to import from Apply" %}
 {% endif %}
 
 {% set navActive = 'drafts' %}

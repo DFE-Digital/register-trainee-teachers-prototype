@@ -1,6 +1,6 @@
 {% extends "_templates/_new-record.html" %}
 
-{% set pageHeading = "Check candidate import details" %}
+{% set pageHeading = "Check application import details" %}
 {# {% set backLink = './../overview' %}
 {% set backText = "Back to draft record" %} #}
 {% set gridColumn = 'govuk-grid-column-full' %}
@@ -22,9 +22,9 @@
 
   {% set buttonText %}
     {% if applyPendingRecords | length == 1 %}
-      Import candidate as draft trainee
+      Import application as draft trainee
     {% else %}
-      Import candidates as draft trainees
+      Import applications as draft trainees
     {% endif %}
   {% endset %}
 

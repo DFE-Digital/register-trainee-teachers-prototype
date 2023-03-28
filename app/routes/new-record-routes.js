@@ -169,7 +169,7 @@ module.exports = router => {
     let record = _.get(data, 'record') // copy record
     let isComplete = utils.recordIsComplete(record)
     let errorList = (errors) ? true : false
-    
+
     if (utils.sourceIsApply(record) && data.settings.groupApplySections){
       res.render('new-record/check-record-apply-grouped-sections', {errorList, recordIsComplete: isComplete})
     }
@@ -248,7 +248,7 @@ module.exports = router => {
     let courseStartDate = record?.courseDetails?.startDate
     let traineeStarted = record?.trainingDetails?.traineeStarted
     let commencementDate = record?.trainingDetails?.commencementDate
-    
+
     if ((!traineeStarted) || (traineeStarted == 'started-itt-later' && !commencementDate)) {
       res.redirect('/new-record/trainee-start-date')
     } else {
@@ -291,10 +291,10 @@ module.exports = router => {
 
       let flashMessage
       if (selectedCount == 1) {
-        flashMessage = `1 Apply application imported as a draft`
+        flashMessage = `One application from Apply imported as a draft trainee`
       }
       else {
-        flashMessage = `${selectedCount} Apply applications imported as drafts`
+        flashMessage = `${selectedCount} applications from Apply imported as draft trainees`
       }
       req.flash('success', flashMessage)
     }

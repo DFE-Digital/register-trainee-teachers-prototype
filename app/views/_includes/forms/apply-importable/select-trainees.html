@@ -28,8 +28,12 @@
       
     {% endset %}
 
+    {% set detailsSummaryText -%}
+      View pending {{"condition" | pluralise(trainee.applyData.requiredConditions | length) }}<span class="govuk-visually-hidden"> for {{trainee.personalDetails.fullName}}</span>
+    {% endset %}
+
     {{ govukDetails({
-      summaryText: "View pending " + ("condition" | pluralise(trainee.applyData.requiredConditions | length)),
+      summaryText: detailsSummaryText | safe,
       html: conditionsHtml
     }) }}
 

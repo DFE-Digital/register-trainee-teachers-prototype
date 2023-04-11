@@ -1,0 +1,14 @@
+{% extends "_templates/_guidance-page.html" %}
+
+
+{% set endYear = data.years.currentAcademicYear | academicYearToYear + 1 %}
+
+{% set performanceProfilesDate = endYear + "-1-31" %}
+
+{% set pageHeading = 'Sign off your list of trainees from {{ data.years.previousAcademicYear }} for the performance profiles publication' %}
+
+{% block guidanceContent %}
+
+
+
+{% endblock %}

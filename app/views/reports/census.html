@@ -1,7 +1,5 @@
 {% extends "_templates/_page.html" %}
 
-{% set pageHeading = 'Export census records' %}
-
 {# {% set formAction = "./reinstate/confirm" %} #}
 {% set backLink = '/reports' %}
 {% set backText = "Reports" %}
@@ -9,7 +7,9 @@
 
 {% set academicYear = data.years.currentAcademicYear %}
 {% set academicYearShort = data.years.currentAcademicYear | academicYearToYear %}
-  
+
+{% set pageHeading = 'New trainees for the ' + academicYear + ' academic year' %}
+
 {% block content %}
 {{super()}}
 
@@ -41,10 +41,10 @@
 
       <ul class="govuk-list govuk-list--bullet">
         <li>
-          that are registered (so their records are not drafts in Register) 
+          that are registered (so their records are not drafts in Register)
         </li>
         <li>
-          on their first year of training 
+          on their first year of training
         </li>
         <li>
           on ITT courses starting from 1 August {{ academicYearShort }} and the census date
@@ -70,7 +70,7 @@
           trainees without a start date because we cannot know if a trainee started their course on or before the census date without a start date
         </li>
         <li>
-          trainees that are self funded (not eligible for UK financial support and do not have a DfE allocated place) — the ITT census excludes these trainees. 
+          trainees that are self funded (not eligible for UK financial support and do not have a DfE allocated place) — the ITT census excludes these trainees.
         </li>
       </ul>
 
@@ -83,5 +83,5 @@
     </form>
   </div>
 </div>
-  
+
 {% endblock %}

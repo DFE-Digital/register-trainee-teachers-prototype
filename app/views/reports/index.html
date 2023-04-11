@@ -11,6 +11,8 @@
 {% set needAcademicAward = traineesThatCanBeRecommended | filterByAcademicQualificationsApply %}
 {% set qualifications = traineesThatCanBeRecommended | getQualifications | orSeparate %}
 
+{% set census_signoff = false %}
+{% set profiles_signoff = false %}
 
 {% block content %}
 {{super()}}
@@ -33,13 +35,6 @@
         </a>
       </li> #}
 
-      <li>
-        <a class="govuk-link" href="/reports/itt-new-starter-data-sign-off">New trainees for the {{data.years.currentAcademicYear}} academic year</a> - for census sign off
-      </li>
-      <li>
-        <a class="govuk-link" href="/reports/performance-profiles">Trainees who studied in the {{data.years.previousAcademicYear}} academic year</a> - for performance profiles sign off
-      </li>
-
       {# HESA export only relevant to HEIs #}
       {% if activeProvider.accreditingProviderType == "HEI" %}
         <li>
@@ -48,6 +43,20 @@
           </a>
         </li>
       {% endif %}
+      <li>
+        {% if census_signoff %}
+          <a class="govuk-link" href="/reports/itt-new-starter-data-sign-off">New trainees for the {{data.years.currentAcademicYear}} academic year</a> - for census sign off
+        {% else %}
+          New trainees for the {{data.years.currentAcademicYear}} academic year - report will be available for census sign off
+        {% endif %}
+      </li>
+      <li>
+        {% if census_signoff %}
+          <a class="govuk-link" href="/reports/performance-profiles">Trainees who studied in the {{data.years.previousAcademicYear}} academic year</a> - for performance profiles sign off
+        {% else %}
+          Trainees who studied in the {{data.years.previousAcademicYear}} academic year</a> - report will be available for performance profiles sign off
+        {% endif %}
+      </li>
     </ul>
 
   </div>

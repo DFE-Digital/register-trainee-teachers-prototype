@@ -5,9 +5,21 @@
 
 {% set performanceProfilesDate = endYear + "-1-31" %}
 
+{% set signoff = false %}
+
+{% if signoff %}
+
 {% set pageHeading = 'Sign off your list of trainees from {{ data.years.previousAcademicYear }} for the performance profiles publication' %}
 
+{% else %}
+
+{% set pageHeading = 'Signing off your list of trainees for the performance profiles publication' %}
+
+{% endif %}
+
 {% block guidanceContent %}
+
+{% if signoff %}
 
 # Sign off your list of trainees from {{ data.years.previousAcademicYear }} for the performance profiles publication
 
@@ -59,5 +71,41 @@ A senior person from your organisation must [complete a form to sign off the dat
 Read the [ITT performance profiles methodology (opens in a new tab)](https://explore-education-statistics.service.gov.uk/methodology/initial-teacher-training-performance-profiles-methodology) to find out how your trainee data will be used.
 
 Some trainees will not be included in the ITT performance profiles publication. For example, trainees who withdrew within 90 days of the course start will not be included.
+
+{% else %}
+
+# Signing off your list of trainees for the performance profiles publication
+
+Each year you need to sign off your list of trainee teachers from the previous academic year.
+
+This is so that the data can be included in the annual initial teacher training performance profiles publication. This will be published on GOV.UK.
+
+## Finding your trainee data
+
+You’ll need a list of all registered trainees who studied in the previous academic year. A report will be available showing the data you need to check.
+
+## Checking your trainee data
+
+You’ll need to check that all your trainees for the previous academic year are listed. For each trainee you’ll need to check:
+
+- course details
+- status
+- the date they were awarded qualified teacher status (QTS) or early years teacher status (EYTS), or deferred or withdrew from the course - unless they’re still studying
+
+## Fixing mistakes in your trainee data
+
+You’ll need to fix any mistakes before you sign off the data. How you’ll do this depends on whether you’re a provider of school centred initial teacher training (SCITT) or a higher education institution (HEI).
+
+## Signing off your trainee data
+
+A senior person from your organisation will need to complete a form to sign off the data. This should not be the same person who entered the data.
+
+## How your trainee data will be used
+
+Read the ITT performance profiles methodology (opens in a new tab) to find out how your trainee data will be used.
+
+Some trainees will not be included in the ITT performance profiles publication. For example, trainees who withdrew within 90 days of the course start will not be included.
+
+{% endif %}
 
 {% endblock %}

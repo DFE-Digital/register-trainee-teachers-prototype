@@ -5,9 +5,7 @@
 
 {% set performanceProfilesDate = endYear + "-1-31" %}
 
-{% set signoff = false %}
-
-{% if signoff %}
+{% if signoff == "profiles" %}
 
 {% set pageHeading = 'Sign off your list of trainees from {{ data.years.previousAcademicYear }} for the performance profiles publication' %}
 
@@ -19,7 +17,7 @@
 
 {% block guidanceContent %}
 
-{% if signoff %}
+{% if signoff == "profiles" %}
 
 # Sign off your list of trainees from {{ data.years.previousAcademicYear }} for the performance profiles publication
 

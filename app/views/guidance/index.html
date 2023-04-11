@@ -47,9 +47,15 @@
     <h2 class="govuk-heading-m">Signing off data</h2>
 
     <ul class="govuk-list govuk-list--spaced">
-      <li>
-        <a class="govuk-link" href="/guidance/performance-profiles">Sign off your list of trainees from {{ data.years.previousAcademicYear }} for the performance profiles publication</a>
-      </li>
+      {% if signoff == "profiles" %}
+        <li>
+          <a class="govuk-link" href="/guidance/performance-profiles">Sign off your list of trainees from {{ data.years.previousAcademicYear }} for the performance profiles publication</a>
+        </li>
+      {% else %}
+        <li>
+          <a class="govuk-link" href="/guidance/performance-profiles">Signing off your list of trainees for the performance profiles publication</a>
+      {% endif %}
+        </li>
     </ul>
 
     <h2 class="govuk-heading-m">Understanding data</h2>

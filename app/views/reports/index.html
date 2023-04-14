@@ -17,55 +17,55 @@
   <div class="govuk-grid-column-two-thirds-from-desktop">
     <h1 class="govuk-heading-l">{{pageHeading}}</h1>
 
-    {% if signoff == "none" %}
+    {% if data.settings.signOffPeriods == "none" %}
 
-    <p class="govuk-body">No reports are currently available.</p>
+      <p class="govuk-body">No reports are currently available.</p>
 
-    <p>When they’re available, you’ll be able to download reports showing:</p>
+      <p>When they’re available, you’ll be able to download reports showing:</p>
 
-    <ul class="govuk-list govuk-list--bullet">
+      <ul class="govuk-list govuk-list--bullet">
 
-      <li>new trainees for the {{data.years.currentAcademicYear}} academic year - for census sign off</li>
-      <li>trainees who studied in the {{data.years.previousAcademicYear}} academic year - for performance profiles sign off</li>
+        <li>new trainees for the {{data.years.currentAcademicYear}} academic year - for census sign off</li>
+        <li>trainees who studied in the {{data.years.previousAcademicYear}} academic year - for performance profiles sign off</li>
 
-    </ul>
+      </ul>
 
-    <p class="govuk-body"> You can read <a class="govuk-link" href="#">guidance about signing off performance profiles</a>.</p>
+      <p class="govuk-body"> You can read <a class="govuk-link" href="#">guidance about signing off performance profiles</a>.</p>
 
     {% else %}
 
-    <ul class="govuk-list govuk-list--spaced">
-      {# Hidden for user research as not available in production #}
-      {# <li>
-        <a class="govuk-link" href="/reports/choose-trainee-records">
-          Choose trainee records to export
-        </a>
-      </li> #}
-
-      {# HESA export only relevant to HEIs - hidden as not available in production #}
-      {# {% if activeProvider.accreditingProviderType == "HEI" %}
-        <li>
-          <a class="govuk-link" href="/reports/hesa">
-            Export HESA (Higher Education Statistics Agency) records
+      <ul class="govuk-list govuk-list--spaced">
+        {# Hidden for user research as not available in production #}
+        {# <li>
+          <a class="govuk-link" href="/reports/choose-trainee-records">
+            Choose trainee records to export
           </a>
-        </li>
-      {% endif %} #}
+        </li> #}
 
-      <li>
-        {% if signoff == "census" %}
-          <a class="govuk-link" href="/reports/itt-new-starter-data-sign-off">New trainees for the {{data.years.currentAcademicYear}} academic year</a> - for census sign off
-        {% else %}
-          New trainees for the {{data.years.currentAcademicYear}} academic year - will be available for census sign off
-        {% endif %}
-      </li>
-      <li>
-        {% if signoff == "profiles" %}
-          <a class="govuk-link" href="/reports/performance-profiles">Trainees who studied in the {{data.years.previousAcademicYear}} academic year</a> - for performance profiles sign off
-        {% else %}
-          Trainees who studied in the {{data.years.previousAcademicYear}} academic year</a> - will be available for performance profiles sign off
-        {% endif %}
-      </li>
-    </ul>
+        {# HESA export only relevant to HEIs - hidden as not available in production #}
+        {# {% if activeProvider.accreditingProviderType == "HEI" %}
+          <li>
+            <a class="govuk-link" href="/reports/hesa">
+              Export HESA (Higher Education Statistics Agency) records
+            </a>
+          </li>
+        {% endif %} #}
+
+        <li>
+          {% if data.settings.signOffPeriods == "census" %}
+            <a class="govuk-link" href="/reports/itt-new-starter-data-sign-off">New trainees for the {{data.years.currentAcademicYear}} academic year</a> - for census sign off
+          {% else %}
+            New trainees for the {{data.years.currentAcademicYear}} academic year - will be available for census sign off
+          {% endif %}
+        </li>
+        <li>
+          {% if data.settings.signOffPeriods == "profiles" %}
+            <a class="govuk-link" href="/reports/performance-profiles">Trainees who studied in the {{data.years.previousAcademicYear}} academic year</a> - for performance profiles sign off
+          {% else %}
+            Trainees who studied in the {{data.years.previousAcademicYear}} academic year</a> - will be available for performance profiles sign off
+          {% endif %}
+        </li>
+      </ul>
 
     {% endif %}
 

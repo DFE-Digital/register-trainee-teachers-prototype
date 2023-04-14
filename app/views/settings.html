@@ -189,6 +189,29 @@
         ]
       } | decorateAttributes(data, "data.settings.traineeExportQuestionStyle")) }}
 
+      {{ govukRadios({
+        fieldset: {
+          legend: {
+            text: "Sign-off periods",
+            classes: "govuk-fieldset__legend--s"
+          }
+        },
+        items: [
+          {
+            text: "None",
+            value: "none"
+          },
+          {
+            text: "Census",
+            value: "census"
+          },
+          {
+            text: "Performance profiles",
+            value: "performanceProfiles"
+          }
+        ]
+      } | decorateAttributes(data, "data.settings.signOffPeriods")) }}
+
       {{ govukSelect({
         id: "hesa-guidance-style",
         name: "settings[hesaGuidanceStyle]",

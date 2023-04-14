@@ -162,6 +162,8 @@ settings.courseLimit = 12
 // the minimum number of placements before EYTS/QTS can be awarded
 settings.minPlacementsRequired = 2
 
+settings.signOffPeriods = 'none'
+
 settings.hesaGuidanceStyle = 'tabs'
 
 

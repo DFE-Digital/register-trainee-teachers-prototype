@@ -64,7 +64,7 @@
           }
         ]
       } | decorateAttributes(data, "data.settings.highlightInvalidAnswers")) }}
-      
+
       {{ govukCheckboxes({
         items: [
           {
@@ -192,12 +192,12 @@
       {{ govukRadios({
         fieldset: {
           legend: {
-            text: "Sign-off periods",
+            text: "Sign off period",
             classes: "govuk-fieldset__legend--s"
           }
         },
         hint: {
-          text: "Affects which reports are available"
+          text: "This affects which reports and guidance are available."
         },
         items: [
           {
@@ -259,7 +259,7 @@
           items: allTrainingRoutes
         } | decorateAttributes(data, "data.settings.enabledTrainingRoutes")) }}
       {% endset %}
-      
+
 
       {{ govukDetails({
         summaryText: "Enabled training routes",

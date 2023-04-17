@@ -47,7 +47,7 @@
     <h2 class="govuk-heading-m">Signing off data</h2>
 
     <ul class="govuk-list govuk-list--spaced">
-      {% if signoff == "profiles" %}
+      {% if data.settings.signOffPeriods == "performanceProfiles" %}
         <li>
           <a class="govuk-link" href="/guidance/performance-profiles">Sign off your list of trainees from {{ data.years.previousAcademicYear }} for the performance profiles publication</a>
         </li>

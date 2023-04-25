@@ -38,20 +38,24 @@ module.exports = router => {
     const records = req.session.data.records
     const record = records.find(record => record.id == req.params.uuid)
     if (!record){
+      console.log(`Trainee (${req.params.uuid}) not found, redirecting to records`)
       res.redirect('/records')
     }
-    // Save record to session to be used by views
-    req.session.data.record = record
-
-    // Redirect to task draft journey if still a draft
-    if (utils.isDraft(record)){
-      res.redirect('/new-record/overview')
-    }
-    // Only submitted records
     else {
-      res.locals.record = record
-      res.render('record')
+      // Save record to session to be used by views
+      req.session.data.record = record
+
+      // Redirect to task draft journey if still a draft
+      if (utils.isDraft(record)){
+        res.redirect('/new-record/overview')
+      }
+      // Only submitted records
+      else {
+        res.locals.record = record
+        res.render('record')
+      }
     }
+
   })
 
   // =============================================================================

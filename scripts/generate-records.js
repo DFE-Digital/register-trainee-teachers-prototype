@@ -233,7 +233,7 @@ const generateFakeApplications = () => {
     let yearsToGenerate = defaultYearsToGenerate
     if (provider?.name == "Webury Hill SCITT") providerSize = 130
     if (provider?.name == "King’s Oak University") {
-      providerSize = 400
+      providerSize = 200
       yearsToGenerate = reducedYearsToGenerate // generate fewer years as there's so many records
     }
 
@@ -470,7 +470,7 @@ const generateApplicationsFile = (filePath) => {
   // console.log(applications)
   console.log(`Generated ${applications.length} records`)
 
-  console.log("Now run node scripts/generate-trainee-problems.js")
+  
 
   // Logging
   let applicationCounts = {}
@@ -490,6 +490,10 @@ const generateApplicationsFile = (filePath) => {
       console.log(`Application data generated: ${filePath}`)
     }
   )
+  console.log("!!!!!!!!!!!!!!!!!!!!!!")
+  console.log("ALERT! Now run `node scripts/generate-trainee-problems.js`")
+  console.log("!!!!!!!!!!!!!!!!!!!!!!")
 }
 
 generateApplicationsFile(path.join(__dirname, '../app/data/records.json'))
+

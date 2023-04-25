@@ -1,5 +1,5 @@
 // To generate new traineeProblem:
-// $ node scripts/generate-traineeProblem.js
+// $ node scripts/generate-trainee-problems.js
 
 
 const fs            = require('fs')
@@ -58,7 +58,6 @@ let problemTypes = {
         return trainees.filter(trainee => utils.isDraft(trainee))
       }
     }
-
   },
   forgotten: function() {
     return {

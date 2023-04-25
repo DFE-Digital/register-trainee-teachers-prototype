@@ -22,6 +22,7 @@ seedRecords.push({
       "1987"
     ],
     "sex": "Female",
+    "email": "j.smith@example.com",
     "status": [
       "Completed"
     ]
@@ -36,7 +37,6 @@ seedRecords.push({
       "postcode": "B12 0QY"
     },
     "phoneNumber": "07700 900941",
-    "email": "j.smith@example.com",
     "status": [
       "Completed"
     ]
@@ -169,7 +169,8 @@ seedRecords.push({
     givenName: "Jill",
     familyName: "Bachmann",
     sex: 'Female',
-    status: 'Completed'
+    status: 'Completed',
+    email: 'j.bachmann@gmail.com'
   },
   route: 'School direct (salaried)',
   "trainingDetails": {
@@ -394,7 +395,8 @@ seedRecords.push({
   route: 'Provider-led (postgrad)',
   courseDetails: {
     isPublishCourse: false,
-    startDate: "2022-09-01T00:00:00.000Z"
+    startDate: "2020-09-01T00:00:00.000Z",
+    endDate: "2021-07-12T00:00:00.000Z",  // 12 July specifically to match with problem feature to show this record is forgotten
   },
   trainingDetails: {
     commencementDate: null
@@ -481,13 +483,67 @@ seedRecords.push({
   },
   route: 'Provider-led (postgrad)',
   trainingDetails: {
-    commencementDate: null
+    commencementDate: "2022-09-01T00:00:00.000Z"
   },
   courseDetails: {
-    isPublishCourse: true,
-    startDate: "2022-09-01T00:00:00.000Z"
+    "ageRange": "11 to 18",
+    "duration": 1,
+    "endDate": "2023-06-30T23:00:00.000Z",
+    "isPublishCourse": false,
+    "phase": "Secondary",
+    "qualifications": [
+        "QTS",
+        "PGCE"
+    ],
+    "qualificationsSummary": "PGCE with QTS full time",
+    "route": "Provider-led (postgrad)",
+    "startDate": "2022-09-01T00:00:00.000Z",
+    "academicYear": "2022 to 2023",
+    "studyMode": "Full time",
+    "subjects": {
+        "first": "Music education and teaching"
+    }
+  },
+  placement: {
+    status: 'Completed'
   },
   id: "2a4f4dc6-8653-4499-ae5c-22d2cdb5a3de"
+})
+
+seedRecords.push({
+  status: "Pending TRN",
+  personalDetails: {
+    givenName: "Lana",
+    familyName: "Cardno",
+    sex: "Female"
+  },
+  route: 'Provider-led (postgrad)',
+  trainingDetails: {
+    commencementDate: "2022-09-01T00:00:00.000Z"
+  },
+  courseDetails: {
+    "ageRange": "11 to 18",
+    "duration": 1,
+    "endDate": "2023-06-30T23:00:00.000Z",
+    "isPublishCourse": false,
+    "phase": "Secondary",
+    "qualifications": [
+        "QTS",
+        "PGCE"
+    ],
+    "qualificationsSummary": "PGCE with QTS full time",
+    "route": "Provider-led (postgrad)",
+    "startDate": "2022-09-01T00:00:00.000Z",
+    "academicYear": "2022 to 2023",
+    "studyMode": "Full time",
+    "subjects": {
+        "first": "Music education and teaching"
+    }
+  },
+  placement: {
+    status: 'Completed'
+  },
+  id: "02c1179f-0bab-4cb5-9800-44864e6b5d16"
 })
 
 seedRecords.push({

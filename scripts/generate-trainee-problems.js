@@ -16,8 +16,18 @@ const utils         = require('../app/lib/utils.js')
 let providers = require('../app/data/accrediting-providers')
 let trainees = require('../app/data/records.json')
 
+let seedTraineeProblems = require('./../app/data/seed-trainee-problems.json')
+
 // To keep track of which trainees have already been assigned to a problem
 let traineesCache = {}
+
+seedTraineeProblems.forEach(problem => {
+  if (!traineesCache[problem.type]){
+    traineesCache[problem.type] = []
+  }
+
+  traineesCache[problem.type].concat(problem.trainees)
+})
 
 
 let randomDateInPast = (max=false, min=false) => {
@@ -150,7 +160,7 @@ const generateTraineeProblem = (provider, providerTrainees) => {
 
 // Generates a bunch of problems per provider
 const generateFakeTraineeProblems = () => {
-  let traineeProblems = []
+  let traineeProblems = seedTraineeProblems
 
   providers.selected.forEach(provider => {
 
@@ -179,6 +189,8 @@ const generateFakeTraineeProblems = () => {
 
 const generateTraineeProblemsFile = (filePath) => {
   const problems = generateFakeTraineeProblems()
+
+  console.log(traineesCache)
 
   console.log(`Generated ${problems.length} fake trainee problems`)
 

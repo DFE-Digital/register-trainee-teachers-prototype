@@ -97,7 +97,7 @@ const generateFakeApplication = (params = {}) => {
   application.courseDetails = (params.courseDetails === null) ? undefined : { ...generateCourseDetails(params, application), ...params.courseDetails }
 
   // TODO: fix this hack. We ignore the status except where it's draft.
-  application.status          = (params.status == "Draft") ? params.status : generateStatus(application)
+  application.status          = (params.status == "Draft" || params.isSeed) ? params.status : generateStatus(application)
  
   if (application.status == "Deferred") {
     application.previousStatus = "TRN received" // set a state to go back to
@@ -218,7 +218,8 @@ const generateFakeApplications = () => {
     let seed = {...seedRecord, ...{
       provider: "Webury Hill SCITT",
       accreditingProviderType: "SCITT",
-      academicYearSimple: currentYear
+      academicYearSimple: currentYear,
+      isSeed: true
     }}
     applications.push(generateFakeApplication(seed))
   })

@@ -1,7 +1,15 @@
 
+{% set otherTraineeUrl = "#" %}
+
+{% for trainee in problem.trainees %}
+  {{trainee | log}}
+  {% if  trainee != record.id %}
+    {% set otherTraineeUrl = "/record/" + trainee %}
+  {% endif %}
+{% endfor %}
 
 <p class="govuk-body">
-  This trainee has the same details as <a href="#" class="govuk-link">{{record | getShortName}} (opens in a new tab)</a>.
+  This trainee has the same details as <a href="{{otherTraineeUrl}}" class="govuk-link" rel="noreferrer noopener" target="_blank">{{record | getShortName}} (opens in a new tab)</a>.
 </p>
 
 <p class="govuk-body">

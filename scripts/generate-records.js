@@ -216,8 +216,8 @@ const generateFakeApplications = () => {
     // Hardcode provider and year
     // Todo - apply these back to seed records?
     let seed = {...seedRecord, ...{
-      provider: "Webury Hill SCITT",
-      accreditingProviderType: "SCITT",
+      provider: seedRecord.provider || "Webury Hill SCITT",
+      accreditingProviderType: seedRecord.accreditingProviderType || "SCITT",
       academicYearSimple: currentYear,
       isSeed: true
     }}

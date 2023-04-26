@@ -650,4 +650,117 @@ seedRecords.push({
   }
 })
 
+// HEI seeds
+
+// To match with a trainee problem for 'duplicate'
+seedRecords.push({
+  status: "TRN received",
+  provider: "King’s Oak University",
+  accreditingProviderType: "HEI",
+  source: "HESA",
+  personalDetails: {
+    givenName: "Sarah",
+    familyName: "Cardno",
+    sex: "Female"
+  },
+  route: 'Provider-led (postgrad)',
+  trainingDetails: {
+    commencementDate: "2022-09-01T00:00:00.000Z"
+  },
+  courseDetails: {
+    "ageRange": "11 to 18",
+    "duration": 1,
+    "endDate": "2023-06-30T23:00:00.000Z",
+    "isPublishCourse": false,
+    "phase": "Secondary",
+    "qualifications": [
+        "QTS",
+        "PGCE"
+    ],
+    "qualificationsSummary": "PGCE with QTS full time",
+    "route": "Provider-led (postgrad)",
+    "startDate": "2022-09-01T00:00:00.000Z",
+    "academicYear": "2022 to 2023",
+    "studyMode": "Full time",
+    "subjects": {
+        "first": "Music education and teaching"
+    }
+  },
+  placement: {
+    status: 'Completed'
+  },
+  id: "cb689a26-f817-47e2-b3c3-42d5e825d2f4"
+})
+
+// To match with a trainee problem for 'duplicate'
+seedRecords.push({
+  status: "TRN received",
+  provider: "King’s Oak University",
+  accreditingProviderType: "HEI",
+  source: "HESA",
+  personalDetails: {
+    givenName: "Sarah",
+    familyName: "Cardno",
+    sex: "Female"
+  },
+  route: 'Provider-led (postgrad)',
+  trainingDetails: {
+    commencementDate: "2022-09-01T00:00:00.000Z"
+  },
+  courseDetails: {
+    "ageRange": "11 to 18",
+    "duration": 1,
+    "endDate": "2023-06-30T23:00:00.000Z",
+    "isPublishCourse": false,
+    "phase": "Secondary",
+    "qualifications": [
+        "QTS",
+        "PGCE"
+    ],
+    "qualificationsSummary": "PGCE with QTS full time",
+    "route": "Provider-led (postgrad)",
+    "startDate": "2022-09-01T00:00:00.000Z",
+    "academicYear": "2022 to 2023",
+    "studyMode": "Full time",
+    "subjects": {
+        "first": "Music education and teaching"
+    }
+  },
+  placement: {
+    status: 'Completed'
+  },
+  id: "54cf335d-d298-4f14-8441-db1361d7f6e5"
+})
+
+// To match with a trainee problem for 'forgotten'
+seedRecords.push({
+  status: "TRN received",
+  "reference": "KG4872",
+  provider: "King’s Oak University",
+  accreditingProviderType: "HEI",
+  source: "HESA",
+  trainingDetails: {
+    traineeId: "2020/21-092"
+  },
+  route: 'Provider-led (postgrad)',
+  courseDetails: {
+    isPublishCourse: false,
+    startDate: "2020-09-01T00:00:00.000Z",
+    endDate: "2021-07-12T00:00:00.000Z",  // 12 July specifically to match with problem feature to show this record is forgotten
+  },
+  trainingDetails: {
+    commencementDate: null
+  },
+  // submittedDate: "2020-05-28T12:37:21.384Z",
+  // updatedDate: "2020-07-15T04:26:19.269Z",
+  trn: "8694898",
+  personalDetails: {
+    givenName: "Martin",
+    familyName: "Johnson",
+    sex: "Male"
+  },
+  
+  "id": "b9148397-6424-40bb-a5a9-ca7b4e347645"
+})
+
 module.exports = seedRecords

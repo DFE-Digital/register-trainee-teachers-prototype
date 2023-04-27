@@ -246,7 +246,36 @@ seedRecords.push({
   },
   funding: {
     status: 'Completed'
-  }
+  },
+  id: "e34074ed-b68e-4371-9278-d0824fcc5192"
+})
+
+// Duplicate of draft Rachel Laverty to test duplicates flow.
+seedRecords.push({
+  status: 'TRN received',
+  "reference": "MA3203",
+  personalDetails: {
+    givenName: "Rachel",
+    familyName: "Laverty",
+    sex: 'Female',
+    status: 'Completed'
+  },
+  route: 'Provider-led (postgrad)',
+  trainingDetails: {
+    "traineeStarted": false,
+    "commencementDate": false,
+    "traineeId": "2020/21-085",
+    status: [
+      "Completed"
+    ]
+  },
+  source: "Apply",
+  applyData: {
+    recruitedDate: "2022-05-23T18:24:34.886Z",
+    applicationDate: "2022-04-10T18:17:24.509Z",
+    status: "Completed"
+  },
+  id: "25e9b940-b056-467f-b990-ceb8a24a4265"
 })
 
 seedRecords.push({
@@ -447,6 +476,8 @@ seedRecords.push({
       }
     ]
   },
+  academicYear: "2020 to 2021",
+  submittedDate: "2020-09-01T00:00:00.000Z",
   "id": "d4777456-34db-4f38-8e51-7f45910827b1"
 })
 
@@ -748,9 +779,6 @@ seedRecords.push({
     startDate: "2020-09-01T00:00:00.000Z",
     endDate: "2021-07-12T00:00:00.000Z",  // 12 July specifically to match with problem feature to show this record is forgotten
   },
-  trainingDetails: {
-    commencementDate: null
-  },
   // submittedDate: "2020-05-28T12:37:21.384Z",
   // updatedDate: "2020-07-15T04:26:19.269Z",
   trn: "8694898",
@@ -759,7 +787,7 @@ seedRecords.push({
     familyName: "Johnson",
     sex: "Male"
   },
-  
+  submittedDate: "2020-09-01T00:00:00.000Z",
   "id": "b9148397-6424-40bb-a5a9-ca7b4e347645"
 })
 

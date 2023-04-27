@@ -2,7 +2,7 @@ const { faker } = require('@faker-js/faker')
 const moment    = require('moment')
 const weighted   = require('weighted')
 
-let percentageMissing = [0.8,0.2]
+let percentageMissing = [0,1] //disabled
 
 module.exports = record => {
 

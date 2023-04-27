@@ -64,7 +64,8 @@
 
 {% endset %}
 
-{% if (countOfIssues > 0) and canAmend %}
+{# Checking the status rather than canAmend, as we want the banner to show on locked hesa records #}
+{% if (countOfIssues > 0) and record.status | canBeAmended %}
   {{ govukNotificationBanner({
     html: notificationBannerHtml
   }) }}

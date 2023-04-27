@@ -30,7 +30,7 @@ module.exports = (params) => {
   let traineeStarted
 
   // Some statuses implicitly *must* have a commencement date
-  if (statusesWhereTraineesMustHaveStarted.includes(params?.status)){
+  if (statusesWhereTraineesMustHaveStarted.includes(params?.status) || params?.source == "HESA"){
     traineeStarted = "true"
   }
   else if (params?.status == "Draft") {

@@ -1,12 +1,12 @@
 {% extends "_templates/_record-form.html" %}
 
-{% set pageHeading = "Edit personal details" %}
+{% set pageHeading = "Email address" %}
 
 {% set formAction = "./confirm" | addReferrer(referrer) %}
 
 {% block formContent %}
 
-  {% include "_includes/forms/personal-details/main-details.html" %}
+  {% include "_includes/forms/personal-details/email.html" %}
 
 {% endblock %}
 

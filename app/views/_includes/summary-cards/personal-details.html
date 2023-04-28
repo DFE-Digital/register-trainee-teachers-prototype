@@ -63,7 +63,24 @@
         }
       ]
     } if canAmend
-  } if isAuthorised('viewDiversity')
+  } if isAuthorised('viewDiversity'),
+  {
+    key: {
+      text: "Email address"
+    },
+    value: {
+      text: record.personalDetails.email or 'Not provided'
+    },
+    actions: {
+      items: [
+        {
+          href: recordPath + "/personal-details/email" | addReferrer(referrer),
+          text: "Change",
+          visuallyHiddenText: "email"
+        }
+      ]
+    } if canAmend
+  }
 ] | removeEmpty %}
 
 {% set personalDetailsHtml %}

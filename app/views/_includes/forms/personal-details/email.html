@@ -1,0 +1,22 @@
+{% include "_includes/trainee-name-caption.njk" %}
+
+{{ govukInput({
+  id: "email-address",
+  name: "record[personalDetails][email]",
+  value: record.personalDetails.email,
+  classes: "govuk-!-width-two-thirds",
+  isPageHeading: true,
+  label: {
+    text: pageHeading,
+    classes: "govuk-label--l"
+  },
+  hint: {
+    text: "Use the trainee’s personal email address. This is so they can access their ongoing teaching records with DfE."
+  }
+}) }}
+
+{{ govukButton({
+  text: "Continue"
+}) }}
+
+

@@ -52,7 +52,6 @@ const generateReference = require('../app/data/generators/reference-number')
 const generateTrn = require('../app/data/generators/trn')
 const generateCourseDetails = require('../app/data/generators/course-details')
 const generatePersonalDetails = require('../app/data/generators/personal-details')
-const generateContactDetails = require('../app/data/generators/contact-details')
 const generateDiversity = require('../app/data/generators/diversity')
 const generateDegree = require('../app/data/generators/degree')
 const generateGce = require('../app/data/generators/gce')
@@ -138,11 +137,9 @@ const generateFakeApplication = (params = {}) => {
 
   application.trainingDetails  = (params.trainingDetails === null) ? undefined : { ...generateTrainingDetails(application), ...params.trainingDetails }
 
-
-  // Contact details
   let nationality = application?.personalDetails?.nationality
   application.isInternationalTrainee = !(nationality && (nationality.includes('British') || nationality.includes('Irish')))
-  application.contactDetails   = (params.contactDetails === null) ? undefined : { ...generateContactDetails(application), ...params.contactDetails } 
+
   // Education
   application.gcse             = (params.gcse === null) ? undefined : { ...generateGcse(application.isInternationalTrainee, simpleGcseGrades), ...params.gcse }
 
@@ -321,9 +318,6 @@ const generateFakeApplicationsForProvider = (provider, year, count) => {
     personalDetails: {
       status: 'Completed'
     },
-    contactDetails: {
-      status: 'Completed'
-    },
     diversity: {
       status: 'Completed'
     },
@@ -356,9 +350,6 @@ const generateFakeApplicationsForProvider = (provider, year, count) => {
     personalDetails: {
       status: 'Review'
     },
-    contactDetails: {
-      status: 'Review'
-    },
     diversity: {
       status: 'Review'
     },
@@ -389,9 +380,6 @@ const generateFakeApplicationsForProvider = (provider, year, count) => {
       status: 'Review'
     },
     personalDetails: {
-      status: 'Review'
-    },
-    contactDetails: {
       status: 'Review'
     },
     diversity: {

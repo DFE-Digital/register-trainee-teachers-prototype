@@ -19,7 +19,8 @@
         "sex": "Male",
         "dateOfBirth": "1972-08-25T12:58:09.016Z",
         "fullName": "Carl Clayton Clifton Berge",
-        "shortName": "Carl Berge"
+        "shortName": "Carl Berge",
+        "email": "nadia.will2@yahoo.com",
     },
     "provider": "Webury Hill SCITT",
     "accreditingProviderType": "SCITT",
@@ -89,17 +90,6 @@
         "commencementDate": "2022-03-21T19:29:36.093Z"
     },
     "isInternationalTrainee": false,
-    "contactDetails": {
-        "phoneNumber": "0967 519 7344",
-        "email": "nadia.will2@yahoo.com",
-        "address": {
-            "line1": "780 Blick Run",
-            "line2": "",
-            "level2": "North Richmond",
-            "postcode": "CN57 0IV"
-        },
-        "addressType": "domestic"
-    },
     "gcse": {
         "maths": {
             "type": "GCSE",

@@ -7,6 +7,7 @@
   "provider": "King’s Oak University",
   "route": "Provider-led (postgrad)",
   "personalDetails": {
+    "email": "s.jones@example.com",
     "nationality": [
       "Irish",
       "American"
@@ -20,21 +21,6 @@
       "1987"
     ],
     "sex": "Female",
-    "status": [
-      "Completed"
-    ]
-  },
-  "contactDetails": {
-    "internationalAddress": "",
-    "addressType": "domestic",
-    "address": {
-      "line1": "260 Bradford Street",
-      "line2": "Deritend",
-      "level2": "Birmingham",
-      "postcode": "B12 0QY"
-    },
-    "phoneNumber": "07700 900941",
-    "email": "s.jones@example.com",
     "status": [
       "Completed"
     ]

@@ -2384,12 +2384,6 @@ exports.updateRecord = (data, newRecord, timelineMessage) => {
     let message = (timelineMessage) ? timelineMessage : "Record updated"
     exports.addEvent(newRecord, message)
   }
-  if (newRecord.addressType == "domestic"){
-    delete newRecord?.contactDetails?.internationalAddress
-  }
-  if (newRecord.addressType == "international"){
-    delete newRecord?.contactDetails?.address
-  }
   data.record = newRecord
 
   if (newRecord.personalDetails){

@@ -23,18 +23,6 @@
 
   {% include "_includes/summary-cards/record-admin/revert-teaching-status.html" %}
 
-  {# {{ govukCheckboxes({
-  idPrefix: "waste",
-  name: "record[contactDetails][status]",
-  items: [
-    {
-      value: "Completed",
-      text: "I have completed this section",
-      checked: checked(record.contactDetails.status, "Completed")
-    }
-  ]
-  }) }} #}
-
   {{ govukButton({
     text: "Remove " + qualification + " award",
     classes: "govuk-button--warning"

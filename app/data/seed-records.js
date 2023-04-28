@@ -27,20 +27,6 @@ seedRecords.push({
       "Completed"
     ]
   },
-  "contactDetails": {
-    "internationalAddress": "",
-    "addressType": "domestic",
-    "address": {
-      "line1": "260 Bradford Street",
-      "line2": "Deritend",
-      "level2": "Birmingham",
-      "postcode": "B12 0QY"
-    },
-    "phoneNumber": "07700 900941",
-    "status": [
-      "Completed"
-    ]
-  },
   "diversity": {
     "diversityDisclosed": "true",
     "ethnicGroup": "White",
@@ -185,9 +171,6 @@ seedRecords.push({
     "isPublishCourse" : true,
     status: 'Completed'
   },
-  contactDetails: {
-    status: 'Completed'
-  },
   diversity: {
     status: 'Completed'
   },
@@ -230,9 +213,6 @@ seedRecords.push({
     status: "Completed"
   },
   courseDetails: {
-    status: 'Completed'
-  },
-  contactDetails: {
     status: 'Completed'
   },
   diversity: {
@@ -297,9 +277,6 @@ seedRecords.push({
     ]
   },
   courseDetails: {
-    status: 'Completed'
-  },
-  contactDetails: {
     status: 'Completed'
   },
   diversity: {
@@ -646,9 +623,6 @@ seedRecords.push({
     ]
   },
   personalDetails: {
-    status: 'Completed'
-  },
-  contactDetails: {
     status: 'Completed'
   },
   diversity: {

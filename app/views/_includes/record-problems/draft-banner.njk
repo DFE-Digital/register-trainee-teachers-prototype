@@ -5,7 +5,7 @@
 
 {# List out possible headings here #}
 {% set problemHeadings = {
-  duplicateDraft: "This draft trainee is a duplicate"
+  duplicate: "This draft trainee is a duplicate"
 } %}
 
 {# Use a generic heading if there is more than one issue #}
@@ -27,7 +27,7 @@
   {% for problem in recordProblems | sort(attribute='type') %}
 
     {% if countOfIssues > 1 %}
-      <h4 class="govuk-heading-s">fesgfes
+      <h4 class="govuk-heading-s">
         {{ problemHeadings[problem.type] }}
       </h4>
     {% endif %}

@@ -2,7 +2,7 @@ const { faker } = require('@faker-js/faker')
 const moment    = require('moment')
 const weighted   = require('weighted')
 
-let percentageMissing = [0.8,0.2]
+let percentageMissing = [0,1] //disabled
 
 module.exports = record => {
 
@@ -19,8 +19,6 @@ module.exports = record => {
 
   let hesaId = `2294839475${faker.datatype.number({'min': 1000000, 'max': 9999999})}`
 
-  delete record.contactDetails.address
-  delete record.contactDetails.addressType
   record.hesa = {
     id: hesaId
   }

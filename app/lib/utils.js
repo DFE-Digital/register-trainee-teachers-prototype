@@ -15,7 +15,6 @@ const ittSubjects            = require('./../data/itt-subjects')
 const generateReference      = require('./../data/generators/reference-number')
 const academicQualifications = require('./../data/academic-qualifications.js')
 const years                  = require('./../data/years.js')
-const traineeProblems        = require('./../data/trainee-problems.json')
 
 let skipCourseDatesPage = false
 
@@ -1484,7 +1483,7 @@ exports.recordIsComplete = function(record, data=false ) {
 
 // Check if a record is mentioned in our problems file
 exports.recordHasProblem = (record) => {
-
+  const traineeProblems        = require('./../data/trainee-problems.json')
   if (!record) {
     console.log("Error with recordHasProblem: record not provided")
     return false
@@ -1496,7 +1495,7 @@ exports.recordHasProblem = (record) => {
 
 // Return array of problems for a given record
 exports.getProblems = (record) => {
-
+  const traineeProblems        = require('./../data/trainee-problems.json')
   if (!record) {
     console.log("Error with getProblems: record not provided")
     return false

@@ -50,15 +50,6 @@
         }
       } if record | requiresSection("personalDetails"),
       {
-        text: "Contact details",
-        href: "contact-details" | reviewIfInProgress(record.contactDetails),
-        id: "contact-details",
-        tag: {
-          classes: record.contactDetails | getStatusText | getStatusClass,
-          text: record.contactDetails | getStatusText
-        }
-      } if record | requiresSection("contactDetails"),
-      {
         text: "Diversity information",
         href: "diversity/ethnic-group" | reviewIfInProgress(record.diversity, 'diversity'),
         id: "diversity",

@@ -1,5 +1,5 @@
 // To generate new traineeProblem:
-// $ node scripts/generate-traineeProblem.js
+// $ node scripts/generate-trainee-problems.js
 
 
 const fs            = require('fs')
@@ -16,8 +16,18 @@ const utils         = require('../app/lib/utils.js')
 let providers = require('../app/data/accrediting-providers')
 let trainees = require('../app/data/records.json')
 
+let seedTraineeProblems = require('./../app/data/seed-trainee-problems.json')
+
 // To keep track of which trainees have already been assigned to a problem
 let traineesCache = {}
+
+seedTraineeProblems.forEach(problem => {
+  if (!traineesCache[problem.type]){
+    traineesCache[problem.type] = []
+  }
+
+  traineesCache[problem.type].concat(problem.trainees)
+})
 
 
 let randomDateInPast = (max=false, min=false) => {
@@ -58,7 +68,6 @@ let problemTypes = {
         return trainees.filter(trainee => utils.isDraft(trainee))
       }
     }
-
   },
   forgotten: function() {
     return {
@@ -135,6 +144,8 @@ const generateTraineeProblem = (provider, providerTrainees) => {
 
 
   problem.type = randomProblemType
+  // Remap duplicate drafts as regular duplicate type
+  if (problem.type == 'duplicateDraft') problem.type = "duplicate"
   problem.id = faker.datatype.uuid()
   problem.provider = provider.name
   problem.date = randomDateInPast(12, 0)
@@ -151,7 +162,7 @@ const generateTraineeProblem = (provider, providerTrainees) => {
 
 // Generates a bunch of problems per provider
 const generateFakeTraineeProblems = () => {
-  let traineeProblems = []
+  let traineeProblems = seedTraineeProblems
 
   providers.selected.forEach(provider => {
 
@@ -180,6 +191,8 @@ const generateFakeTraineeProblems = () => {
 
 const generateTraineeProblemsFile = (filePath) => {
   const problems = generateFakeTraineeProblems()
+
+  console.log(traineesCache)
 
   console.log(`Generated ${problems.length} fake trainee problems`)
 

@@ -65,7 +65,9 @@ let allTrainingRoutes       = Object.keys(trainingRoutes)
 
 let courses                 = require('./courses.json')
 
+
 let traineeProblems = require('./trainee-problems.json')
+
 // let schools                 = require('./gis-schools.js') // too big to load in to session
 
 // Super hacky method of picking 5 schools randomly from the list to

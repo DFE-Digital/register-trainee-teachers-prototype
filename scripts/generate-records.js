@@ -97,7 +97,7 @@ const generateFakeApplication = (params = {}) => {
   application.courseDetails = (params.courseDetails === null) ? undefined : { ...generateCourseDetails(params, application), ...params.courseDetails }
 
   // TODO: fix this hack. We ignore the status except where it's draft.
-  application.status          = (params.status == "Draft") ? params.status : generateStatus(application)
+  application.status          = (params.status == "Draft" || params.isSeed) ? params.status : generateStatus(application)
  
   if (application.status == "Deferred") {
     application.previousStatus = "TRN received" // set a state to go back to
@@ -200,6 +200,8 @@ const generateFakeApplication = (params = {}) => {
     application = utils.setEndAcademicYear(application)
   }
 
+  application = utils.setStartAcademicYear(application)
+
   application = utils.setAcademicYears(application)
 
   application.outcome = (params.outcome === null) ? undefined : { ...generateOutcomes(application), ...params.outcome }
@@ -216,9 +218,10 @@ const generateFakeApplications = () => {
     // Hardcode provider and year
     // Todo - apply these back to seed records?
     let seed = {...seedRecord, ...{
-      provider: "Webury Hill SCITT",
-      accreditingProviderType: "SCITT",
-      academicYearSimple: currentYear
+      provider: seedRecord.provider || "Webury Hill SCITT",
+      accreditingProviderType: seedRecord.accreditingProviderType || "SCITT",
+      academicYearSimple: currentYear,
+      isSeed: true
     }}
     applications.push(generateFakeApplication(seed))
   })
@@ -233,7 +236,7 @@ const generateFakeApplications = () => {
     let yearsToGenerate = defaultYearsToGenerate
     if (provider?.name == "Webury Hill SCITT") providerSize = 130
     if (provider?.name == "King’s Oak University") {
-      providerSize = 400
+      providerSize = 200
       yearsToGenerate = reducedYearsToGenerate // generate fewer years as there's so many records
     }
 
@@ -470,7 +473,7 @@ const generateApplicationsFile = (filePath) => {
   // console.log(applications)
   console.log(`Generated ${applications.length} records`)
 
-  console.log("Now run node scripts/generate-trainee-problems.js")
+  
 
   // Logging
   let applicationCounts = {}
@@ -490,6 +493,10 @@ const generateApplicationsFile = (filePath) => {
       console.log(`Application data generated: ${filePath}`)
     }
   )
+  console.log("!!!!!!!!!!!!!!!!!!!!!!")
+  console.log("ALERT! Now run `node scripts/generate-trainee-problems.js`")
+  console.log("!!!!!!!!!!!!!!!!!!!!!!")
 }
 
 generateApplicationsFile(path.join(__dirname, '../app/data/records.json'))
+

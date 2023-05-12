@@ -66,8 +66,8 @@ module.exports = ({updatedDate, submittedDate, deferredDate, withdrawalDate, qua
     else if (application.status == 'Pending TRN'){
 
       updatedDate = faker.date.between(
-        moment(),
-        moment().subtract(6, 'days')
+        moment().subtract(6, 'days'),
+        moment()
       )
     }
 

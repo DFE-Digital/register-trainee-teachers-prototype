@@ -1,6 +1,6 @@
 {% extends "_templates/_new-record.html" %}
 
-{% set pageHeading = "Trainee email address" %}
+{% set pageHeading = "Personal email address" %}
 
 {% if data.record | sourceIsApply %}
   {% set formAction = "./../overview" | orReferrer(referrer) %}
@@ -13,4 +13,3 @@
   {% include "_includes/forms/personal-details/email.html" %}
 
 {% endblock %}
-

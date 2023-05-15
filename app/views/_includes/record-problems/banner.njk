@@ -15,7 +15,7 @@
 {% set recordType = "record" if navActive == "records" else "draft" %}
 
 {% set problemHeadings = {
-  duplicate: "This trainee is a duplicate",
+  duplicate: "There’s a duplicate of this trainee",
   forgotten: "This trainee should have finished their training",
   deferredForgotten: "This trainee was deferred more than 3 years ago",
   incomplete: "This trainee has missing information"
@@ -65,8 +65,16 @@
 {% endset %}
 
 {# Checking the status rather than canAmend, as we want the banner to show on locked hesa records #}
-{% if (countOfIssues > 0) and record.status | canBeAmended %}
+{% if (countOfIssues == 1) and record.status | canBeAmended %}
   {{ govukNotificationBanner({
-    html: notificationBannerHtml
+    html: notificationBannerHtml,
+    titleText: "Problem"
+  }) }}
+{% endif %}
+
+{% if (countOfIssues > 1) and record.status | canBeAmended %}
+  {{ govukNotificationBanner({
+    html: notificationBannerHtml,
+    titleText: "Problems"
   }) }}
 {% endif %}

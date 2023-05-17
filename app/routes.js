@@ -198,6 +198,12 @@ router.get("/guidance/hesa-register-data-mapping/:tabName", function (req, res) 
 
 })
 
+// Used for UR setup where we are setting things on the query string, but don't want users to see a prototype page at the end
+router.get('/set-up', function(req, res, next){
+  // return text string of 'done' in res
+  res.send("Set up complete")
+})
+
 // =============================================================================
 // Individual route files
 // =============================================================================

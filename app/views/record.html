@@ -3,6 +3,12 @@
 
 {% set backLink = '/records' %}
 {% set backText = 'All registered trainees' %}
+
+{# A hack to simulate preserving filters - used for testing 'problems' in research #}
+{% if record | recordHasProblem %}
+  {% set backLink = '/records?filterCompleteStatus=Has+problems' %}
+{% endif %}
+
 {% set pageHeading = record.personalDetails.shortName %}
 {% set activeTab = 'trainee-details' %}
 

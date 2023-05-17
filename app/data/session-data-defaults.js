@@ -148,7 +148,7 @@ settings.includeDeclaration = false
 settings.bulkLinksInPrimaryNav = "Show bulk recommend"
 
 // Flow that combines withdrawing and removing in one
-settings.useCombinedRemoveFlow = "false"
+settings.useCombinedRemoveFlow = "true"
 
 settings.academicYearsUiStyle = "Checkboxes"
 

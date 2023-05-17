@@ -536,7 +536,42 @@ seedRecords.push({
     }
   },
   placement: {
-    status: 'Completed'
+    items: [
+      {
+        "school": {
+          "urn": "401031",
+          "localAuthority": "Bridgend",
+          "schoolName": "Cefn Cribwr Primary School",
+          "type": "Welsh establishment",
+          "status": "Open",
+          "phase": "Not applicable",
+          "ukprn": "",
+          "addressLine1": "Cefn Road",
+          "addressLine2": "Cefn Cribbwr",
+          "town": "Bridgend",
+          "postcode": "CF32 0AW",
+          "uuid": "451d029a-ab6e-4981-8f40-b2fd87ace7ee"
+        },
+        "id": "4d0eae93-1c3d-4ad4-b36b-37be99b2c96f"
+      },
+      {
+        "school": {
+          "urn": "117488",
+          "localAuthority": "Hertfordshire",
+          "schoolName": "Sacred Heart Catholic Primary School and Nursery",
+          "type": "Voluntary aided school",
+          "status": "Open",
+          "phase": "Primary",
+          "ukprn": "10076821",
+          "addressLine1": "Merry Hill Road",
+          "addressLine2": "",
+          "town": "Bushey",
+          "postcode": "WD23 1SU",
+          "uuid": "f594857d-9de1-407c-b386-c53acd93fcc0"
+        },
+        "id": "5645a53b-5e3e-4cf6-b15b-330c86207d91"
+      }
+    ]
   },
   id: "2a4f4dc6-8653-4499-ae5c-22d2cdb5a3de"
 })
@@ -572,7 +607,42 @@ seedRecords.push({
     }
   },
   placement: {
-    status: 'Completed'
+    items: [
+      {
+        "school": {
+          "urn": "401031",
+          "localAuthority": "Bridgend",
+          "schoolName": "Cefn Cribwr Primary School",
+          "type": "Welsh establishment",
+          "status": "Open",
+          "phase": "Not applicable",
+          "ukprn": "",
+          "addressLine1": "Cefn Road",
+          "addressLine2": "Cefn Cribbwr",
+          "town": "Bridgend",
+          "postcode": "CF32 0AW",
+          "uuid": "451d029a-ab6e-4981-8f40-b2fd87ace7ee"
+        },
+        "id": "5b3a98e2-53d7-44c6-9584-b1fdd6700d37"
+      },
+      {
+        "school": {
+          "urn": "117488",
+          "localAuthority": "Hertfordshire",
+          "schoolName": "Sacred Heart Catholic Primary School and Nursery",
+          "type": "Voluntary aided school",
+          "status": "Open",
+          "phase": "Primary",
+          "ukprn": "10076821",
+          "addressLine1": "Merry Hill Road",
+          "addressLine2": "",
+          "town": "Bushey",
+          "postcode": "WD23 1SU",
+          "uuid": "f594857d-9de1-407c-b386-c53acd93fcc0"
+        },
+        "id": "7a76e529-9adb-48ca-9cd6-89e204ca5dd6"
+      }
+    ]
   },
   id: "02c1179f-0bab-4cb5-9800-44864e6b5d16"
 })
@@ -718,7 +788,42 @@ seedRecords.push({
     }
   },
   placement: {
-    status: 'Completed'
+    items: [
+      {
+        "school": {
+          "urn": "401031",
+          "localAuthority": "Bridgend",
+          "schoolName": "Cefn Cribwr Primary School",
+          "type": "Welsh establishment",
+          "status": "Open",
+          "phase": "Not applicable",
+          "ukprn": "",
+          "addressLine1": "Cefn Road",
+          "addressLine2": "Cefn Cribbwr",
+          "town": "Bridgend",
+          "postcode": "CF32 0AW",
+          "uuid": "451d029a-ab6e-4981-8f40-b2fd87ace7ee"
+        },
+        "id": "1dea71a6-d8cd-4562-81f2-86630735765b"
+      },
+      {
+        "school": {
+          "urn": "117488",
+          "localAuthority": "Hertfordshire",
+          "schoolName": "Sacred Heart Catholic Primary School and Nursery",
+          "type": "Voluntary aided school",
+          "status": "Open",
+          "phase": "Primary",
+          "ukprn": "10076821",
+          "addressLine1": "Merry Hill Road",
+          "addressLine2": "",
+          "town": "Bushey",
+          "postcode": "WD23 1SU",
+          "uuid": "f594857d-9de1-407c-b386-c53acd93fcc0"
+        },
+        "id": "7de9e2e0-2990-49c4-ae48-efad58373257"
+      }
+    ]
   },
   id: "cb689a26-f817-47e2-b3c3-42d5e825d2f4"
 })
@@ -758,7 +863,42 @@ seedRecords.push({
     }
   },
   placement: {
-    status: 'Completed'
+    items: [
+      {
+        "school": {
+          "urn": "401031",
+          "localAuthority": "Bridgend",
+          "schoolName": "Cefn Cribwr Primary School",
+          "type": "Welsh establishment",
+          "status": "Open",
+          "phase": "Not applicable",
+          "ukprn": "",
+          "addressLine1": "Cefn Road",
+          "addressLine2": "Cefn Cribbwr",
+          "town": "Bridgend",
+          "postcode": "CF32 0AW",
+          "uuid": "451d029a-ab6e-4981-8f40-b2fd87ace7ee"
+        },
+        "id": "065a7c50-33a8-4e33-9bb6-27cb2c2a70f7"
+      },
+      {
+        "school": {
+          "urn": "117488",
+          "localAuthority": "Hertfordshire",
+          "schoolName": "Sacred Heart Catholic Primary School and Nursery",
+          "type": "Voluntary aided school",
+          "status": "Open",
+          "phase": "Primary",
+          "ukprn": "10076821",
+          "addressLine1": "Merry Hill Road",
+          "addressLine2": "",
+          "town": "Bushey",
+          "postcode": "WD23 1SU",
+          "uuid": "f594857d-9de1-407c-b386-c53acd93fcc0"
+        },
+        "id": "611347e0-7ed5-493e-9a50-ba996f600ed7"
+      }
+    ]
   },
   id: "54cf335d-d298-4f14-8441-db1361d7f6e5"
 })
@@ -771,7 +911,8 @@ seedRecords.push({
   accreditingProviderType: "HEI",
   source: "HESA",
   trainingDetails: {
-    traineeId: "2020/21-092"
+    traineeId: "2020/21-092",
+    commencementDate: null
   },
   route: 'Provider-led (postgrad)',
   courseDetails: {

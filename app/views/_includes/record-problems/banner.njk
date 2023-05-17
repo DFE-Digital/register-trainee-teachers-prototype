@@ -40,25 +40,31 @@
     {{ title }}
   </h3>
 
-  {% for problem in recordProblems | sort(attribute='type') %}
 
-    {% if countOfIssues > 1 %}
-      <h4 class="govuk-heading-s">
-        {{ problemHeadings[problem.type] }}
-      </h4>
-    {% endif %}
-    {% include "_includes/record-problems/" + problem.type + ".njk" %}
+    {% for problem in recordProblems | sort(attribute='type') %}
 
-  {% endfor %}
+        {% if countOfIssues > 1 %}
+
+          <h4 class="govuk-heading-s">
+            {{loop.index}}. {{ problemHeadings[problem.type] }}
+          </h4>
+
+        {% endif %}
+
+        {% include "_includes/record-problems/" + problem.type + ".njk" %}
+
+    {% endfor %}
+
 
   {# Add incomplete to the end #}
   {% if isIncomplete %}
-    {% if countOfIssues > 1 %}
-      <h3 class="govuk-heading-s">
-        {{ problemHeadings.incomplete }}
-      </h3>
-    {% endif %}
-    {% include "_includes/record-problems/incomplete.njk" %}
+
+      {% if countOfIssues > 1 %}
+        <h3 class="govuk-heading-s">
+         {{countOfIssues}}. {{ problemHeadings.incomplete }}
+        </h3>
+      {% endif %}
+      {% include "_includes/record-problems/incomplete.njk" %}
 
   {% endif %}
 
@@ -67,6 +73,7 @@
 {# Checking the status rather than canAmend, as we want the banner to show on locked hesa records #}
 {% if (countOfIssues > 0) and record.status | canBeAmended %}
   {{ govukNotificationBanner({
-    html: notificationBannerHtml
+    html: notificationBannerHtml,
+    titleText: "Problem" | pluralise(countOfIssues)
   }) }}
 {% endif %}

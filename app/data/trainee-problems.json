@@ -301,18 +301,6 @@
   },
   {
     "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was <span class=\"govuk-!-font-weight-bold\">2 years ago</span>.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
-    "traineeCount": 1,
-    "trainees": [
-      "2a4f4dc6-8653-4499-ae5c-22d2cdb5a3de"
-    ],
-    "type": "forgotten",
-    "id": "9e15922f-ee7c-48d1-b83e-3f536da0922d",
-    "provider": "Webury Hill SCITT",
-    "date": "2022-07-29T23:43:25.644Z"
-  },
-  {
-    "title": "This trainee may have been forgotten",
     "description": "The expected end date of this trainee was <span class=\"govuk-!-font-weight-bold\">6 months ago</span>.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
     "trainees": [

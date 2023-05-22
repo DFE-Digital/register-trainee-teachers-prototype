@@ -30,6 +30,7 @@
     {% include "_includes/summary-cards/trainee-progress.html" %}
 
     {% if record | isAwarded or record | isRecommended %}
+      {% set showAwardDateRow = true %}
       {% include "_includes/summary-cards/qualification-details.html" %}
     {% endif %}
 

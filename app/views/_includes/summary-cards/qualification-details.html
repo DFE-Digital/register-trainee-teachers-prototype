@@ -19,6 +19,14 @@
   },
   {
     key: {
+      text: "Award date"
+    },
+    value: {
+      text: (moment(record.qualificationDetails.outcomeDate).add(1, 'days') | govukDate or 'Not provided') if record | isAwarded else "Waiting for award"
+    }
+  } if showAwardDateRow,
+  {
+    key: {
       text: "Qualification with " + record | getQualificationText
     },
     value: {

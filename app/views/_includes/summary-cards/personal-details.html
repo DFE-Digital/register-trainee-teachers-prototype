@@ -66,10 +66,10 @@
   } if isAuthorised('viewDiversity'),
   {
     key: {
-      text: "Email address"
+      text: "Personal email address"
     },
     value: {
-      text: record.personalDetails.email or 'Not provided'
+      text: record.personalDetails.email or 'Not entered'
     },
     actions: {
       items: [
@@ -126,5 +126,5 @@
     titleText: "Personal details",
     html: personalDetailsHtml
   }) }}
-  
+
 {% endif %}

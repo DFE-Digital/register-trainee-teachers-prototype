@@ -171,7 +171,7 @@ const generateFakeTraineeProblems = () => {
     // let activeTrainees = providerTrainees.filter( trainee => utils.isActiveStatus(trainee) )
 
     // Create random number of problems per provider with some limits
-    let numberOfTraineeProblemsToCreate = utils.getRandomArbitrary(20, Math.min(providerTrainees.length / 3, 60))
+    let numberOfTraineeProblemsToCreate = utils.getRandomArbitrary(5, Math.min(providerTrainees.length / 5, 10))
 
     console.log(`Generating ${numberOfTraineeProblemsToCreate} problems`)
 

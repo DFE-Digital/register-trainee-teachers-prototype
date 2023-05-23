@@ -14,17 +14,16 @@
   </p>
 
   <p class="govuk-body">
-    You should withdraw or delete one trainee. Email us if the draft trainee is not a duplicate.
+    You should withdraw or delete one trainee.
   </p>
 {% else %}
 
   <p class="govuk-body">
-    This trainee has the same details as <a href="{{otherTraineeUrl}}" class="govuk-link" rel="noreferrer noopener" target="_blank">{{record | getShortName}} (opens in a new tab)</a>.
+    You have 2 trainees with the same name and date of birth.
   </p>
 
   <p class="govuk-body">
-    You should withdraw one trainee. Email us if the trainee is not a duplicate.
+    You should remove one trainee. <a href="{{otherTraineeUrl}}" class="govuk-link" rel="noreferrer noopener" target="_blank">Open the duplicate trainee in a new tab</a>.
   </p>
 
 {% endif %}
-

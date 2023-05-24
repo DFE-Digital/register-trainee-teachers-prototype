@@ -1,13 +1,30 @@
 
-{% set outcomeDate = record.qualificationDetails.outcomeDate | toDateObject %}
+{% set outcomeDate = record.qualificationDetails.outcomeDate | govukDate %}
 
 {% set qualificationDetailsRows = [
+  {
+    key: {
+      text: "Date standards met"
+    },
+    value: {
+      text: record.qualificationDetails.outcomeDate | govukDate or 'Not provided'
+    },
+    actions: {
+      items: [
+        {
+          href: recordPath + "/qualification/outcome-date" | addReferrer(referrer),
+          text: "Change",
+          visuallyHiddenText: "date standards met"
+        }
+      ]
+    } if canAmend and false
+  } if not showAwardDateRow,
   {
     key: {
       text: "Award date"
     },
     value: {
-      text: (outcomeDate | govukDate or 'Not provided') if record | isAwarded else "Waiting for award - standards met on " + outcomeDate | govukDate
+      text: (outcomeDate or 'Not provided') if record | isAwarded else "Waiting for award - met standards on " + outcomeDate
     }
   } if showAwardDateRow,
   {

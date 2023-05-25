@@ -10,18 +10,10 @@
 
 {% set isManualEntry = isManualEntry or (placementTemp.school.manualEntry | falsify) %}
 
-{% set schoolOrOrganisation -%}
-  {%- if record | isEarlyYears -%}
-    organisation
-  {%- else -%}
-    school
-  {%- endif -%}
-{%- endset %}
-
 
 {{ govukInput({
   label: {
-    text: (schoolOrOrganisation | sentenceCase) + " name",
+    text: "School or organisation name",
     classes: "govuk-label--s"
   },
   classes: "govuk-!-width-two-thirds",
@@ -34,33 +26,11 @@
     classes: "govuk-label--s"
   },
   hint: {
-    text: "Only if this early years setting has a URN"
-  } if record | isEarlyYears,
+    text: "Only if this early years setting has a URN" if record | isEarlyYears else "If available"
+  },
   classes: "govuk-!-width-one-third",
   value: placementTemp.school.urn if isManualEntry
 } | decorateAttributes(placementTemp, "placementTemp.school.urn"))}}
-
-{# Addresses stored in two ways - this maps between them #}
-{% set address -%}
-  {%- if placementTemp.school.address -%}
-    {{- placementTemp.school.address -}}
-  {%- else -%}
-    {{ [
-    placementTemp.school.addressLine1,
-    placementTemp.school.addressLine2,
-    placementTemp.school.town
-    ] | removeEmpty | separateLines }}
-  {%- endif -%}
-{%- endset %}
-
-{{ govukTextarea({
-  label: {
-    text: "Address",
-    classes: "govuk-label--s"
-  },
-  classes: "govuk-!-width-two-thirds",
-  value: address if isManualEntry
-} | decorateAttributes(placementTemp, "placementTemp.school.address"))}}
 
 {{ govukInput({
   label: {

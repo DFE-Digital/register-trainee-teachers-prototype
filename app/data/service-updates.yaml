@@ -21,7 +21,7 @@ items:
   - date: '2023-05-26'
     title: Editing data for trainees imported from HESA
     content: >-
-      Higher education institutions can now enable editing for trainees who were imported from HESA.
+      Higher education institutions (HEIs) can now enable editing for trainees who were imported from HESA.
 
 
       The edited trainee record will still be linked to the HESA service. If you update it later using the HESA service then any changes you’ve made in Register will be replaced by the data from HESA.

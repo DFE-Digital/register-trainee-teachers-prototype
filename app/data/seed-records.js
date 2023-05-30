@@ -493,6 +493,7 @@ seedRecords.push({
   trainingDetails: {
     commencementDate: "2022-09-01T00:00:00.000Z"
   },
+  updatedDate: "2022-04-02T19:41:29.490Z",
   courseDetails: {
     "ageRange": "11 to 18",
     "duration": 1,

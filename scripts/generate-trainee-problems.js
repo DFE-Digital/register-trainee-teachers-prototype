@@ -18,6 +18,24 @@ let trainees = require('../app/data/records.json')
 
 let seedTraineeProblems = require('./../app/data/seed-trainee-problems.json')
 
+// Create an array of trainees from the seed problems - todo: this should probably be a map
+let getTraineesInSeeds = (seedTraineeProblems) => {
+  let trainees = [];
+
+  seedTraineeProblems.forEach((problem) => {
+    trainees = [...trainees, ...problem.trainees];
+  });
+
+  return [...new Set(trainees)]; // Set ensures that the trainees array has only unique values
+}
+
+let traineesInSeeds = getTraineesInSeeds(seedTraineeProblems)
+
+// Filter out trainees that exist in the hardcoded seeds. This means they can only get assigned
+// problems if the problem is in the seed. Comment out to let them be included.
+trainees = trainees.filter(trainee => !traineesInSeeds.includes(trainee.id))
+
+
 // To keep track of which trainees have already been assigned to a problem
 let traineesCache = {}
 
@@ -26,6 +44,7 @@ seedTraineeProblems.forEach(problem => {
     traineesCache[problem.type] = []
   }
 
+  // Add in any trainees from the seeds. This won't have any impact if they're already filtered out above.
   traineesCache[problem.type].concat(problem.trainees)
 })
 
@@ -167,6 +186,10 @@ const generateFakeTraineeProblems = () => {
   providers.selected.forEach(provider => {
 
     let providerTrainees = trainees.filter(trainee => trainee.provider == provider.name)
+
+    providerTrainees = providerTrainees.filter(trainee => {
+      return !traineesInSeeds.includes(trainee.id)
+    })
 
     // let activeTrainees = providerTrainees.filter( trainee => utils.isActiveStatus(trainee) )
 

@@ -13,7 +13,13 @@ items:
   - date: '2023-05-26'
     title: This service has replaced the TRA initial teacher training provider portal
     content: >-
-      Higher education institutions (HEIs) must now use this service to record outcomes for trainees registered using the Higher Education Statistics Agency (HESA) service.
+      Higher education institutions (HEIs) must now use this service instead of the provider portal to:
+
+      - withdraw trainees who are no longer training for qualified teacher status (QTS) or early years teacher status (EYTS)
+
+      - defer trainees or reinstate them when they return to training - you can also do this through the Higher Education Statistics Authority (HESA) service if you used it to register the trainee
+
+      - recommend trainees for QTS or EYTS
 
 
       Read about [how to withdraw, defer, reinstate or recommend a trainee for QTS or EYTS](/guidance/withdraw-defer-reinstate-or-recommend-a-trainee).

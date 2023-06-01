@@ -81,7 +81,7 @@ let defaultRouteData = {
     "Future Teaching Scholars",
     "Get an International Relocation Payment",
     "Now Teach",
-    "Troops to Teachers bursary"
+    "Veteran teachcing undergraduate bursary"
   ],
   financialSupportAvailable: false
 }
@@ -147,11 +147,6 @@ let baseRouteData = {
     hasAllocatedPlaces: true,
     fields: [
       "studyMode",
-    ],
-    initiatives: [
-      "Maths and physics chairs programme / Researchers in schools",
-      "Now teach",
-      "Transition to teach"
     ],
     financialSupportAvailable: true,
     financialSupport: [
@@ -365,10 +360,6 @@ let baseRouteData = {
     ],
     fields: [
       "studyMode"
-    ],
-    initiatives: [
-      "Now teach",
-      "Transition to teach"
     ],
     financialSupportAvailable: true,
     financialSupport: [

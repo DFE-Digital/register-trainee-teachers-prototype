@@ -17,8 +17,8 @@
 {% set traineesWithProblems = registeredTrainees | filterByFunction('recordHasProblem') %}
 {# {% set traineeProblems = data.traineeProblems | filterBySignedIn(data) %} #}
 
-{% set newAcademicYearUpcoming = false %}
-{% set newAcademicYear = true %}
+{% set newAcademicYearUpcoming = true %}
+{% set newAcademicYear = false %}
 
 
 {% block content %}

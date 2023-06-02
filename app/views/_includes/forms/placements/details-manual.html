@@ -13,7 +13,7 @@
 
 {{ govukInput({
   label: {
-    text: "School or organisation name",
+    text: "School or setting name",
     classes: "govuk-label--s"
   },
   classes: "govuk-!-width-two-thirds",
@@ -22,11 +22,11 @@
 
 {{ govukInput({
   label: {
-    text: "School unique reference number (URN)",
+    text: "School unique reference number (if available)",
     classes: "govuk-label--s"
   },
-  hint: {
-    text: "Only if this early years setting has a URN" if record | isEarlyYears else "If available"
+  _hint: {
+    text: "Only if this early years setting is a school" if record | isEarlyYears
   },
   classes: "govuk-!-width-one-third",
   value: placementTemp.school.urn if isManualEntry

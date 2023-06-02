@@ -15,7 +15,8 @@
 
 {% set placementLocationRow = {
   key: {
-    text: "Placement " + record | schoolOrSettingText
+    text: "Placement " + record | schoolOrSettingText,
+    text: "School or setting"
   },
   value: {
     text: placementSchoolHtml | safe or 'Not provided'

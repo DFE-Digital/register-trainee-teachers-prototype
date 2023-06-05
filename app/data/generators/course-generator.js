@@ -157,10 +157,10 @@ const getSecondaryPublishSubjects = (subjectCount) => {
     return publishSubjects[subject].allocationSubject == "Modern languages"
   })
 
-  // Pull out languages (derived from where the allocation subject is Ancient languages)
-  let ancientLanguageSubjects = Object.keys(publishSubjects).filter(subject => {
-    return publishSubjects[subject].allocationSubject == "Ancient languages"
-  })
+  // // Pull out languages (derived from where the allocation subject is Ancient languages)
+  // let ancientLanguageSubjects = Object.keys(publishSubjects).filter(subject => {
+  //   return publishSubjects[subject].allocationSubject == "Ancient languages"
+  // })
 
   // All subjects that don't include 'Primary' and are not a language
   let nonPrimaryPublishSubjects = Object.keys(publishSubjects).filter(subject => {
@@ -170,7 +170,6 @@ const getSecondaryPublishSubjects = (subjectCount) => {
 
   // Shuffle our data so we can get n values from them by slicing
   let randomisedLanguages = faker.helpers.shuffle(modernLanguagesSubjects)
-  let randomisedAncientLanguages = faker.helpers.shuffle(ancientLanguageSubjects)
   let randomisedSecondarySubjects = faker.helpers.shuffle(nonPrimaryPublishSubjects)
   let randomisedScienceSubjects = faker.helpers.shuffle(['Physics', 'Chemistry', 'Biology'])
 
@@ -197,7 +196,8 @@ const getSecondaryPublishSubjects = (subjectCount) => {
       // through the ui
       // randomisedLanguages.slice(0,2),                        // Two languages
       // A subject with modern languages isn't likely, but is included as a test case
-      // ["Modern languages", "Biology"],  //
+      ["Modern languages", "Biology"],  //
+      ["Biology", "Modern languages"],  //
       // [randomisedSecondarySubjects[0], randomisedLanguages[0]], // One subject and one language
       randomisedScienceSubjects.slice(0,2),                     // Two sciences
       [randomisedScienceSubjects[0], randomisedSecondarySubjects[0]], // Science with another subject

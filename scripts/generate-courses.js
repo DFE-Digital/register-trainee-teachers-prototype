@@ -18,8 +18,8 @@ const generateCourseDetails = require('../app/data/generators/course-generator')
 // Publish is generally a year ahead - courses are registered for the next academic year
 // Thus we generate one more year of courses than trainees
 // Todo: grab these from the years.js file?
-const yearsToGenerate = [2017, 2018, 2019, 2020, 2021, 2022, 2023]
-const currentYear     = 2021
+const yearsToGenerate = [2018, 2019, 2020, 2021, 2022, 2023]
+const currentYear     = 2022
 
 // Volumes loosely based on number of courses per provider as seen on Publish
 // Most have 1-3, but then about 1/3 have up to 80

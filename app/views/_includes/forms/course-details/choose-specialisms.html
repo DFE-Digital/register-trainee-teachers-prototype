@@ -47,6 +47,8 @@ first umampped subject #}
     {# Should only contain modern languages #}
     {% set possibleSpecialisms = subject | publishSubjectToPossibleSpecialisms | sort %}
 
+    {% set possibleSpecialismsShortened = [] %}
+
     {# Special handling for languages, where the ui is different. Rather than radios, users can pick multiple languages #}
     {% if subject == "Modern languages" %}
 
@@ -57,6 +59,9 @@ first umampped subject #}
         {# Strip out 'language' from languages - eg Spanish language => Spanish. But don’t touch
         those that are plural - eg Chinese languages #}
         {% set shortenedSubject = specialism | replace("languages", "_lang") | replace(" language", "") | replace("_lang", "languages") %}
+
+        {% set possibleSpecialismsShortened = possibleSpecialismsShortened | push(shortenedSubject) %}
+        
 
         {# {% set items = items | push({
           text: shortenedSubject,
@@ -93,7 +98,7 @@ first umampped subject #}
             {{ item | getOrdinalName | sentenceCase }} language {{ "(optional)" if not loop.first }}
           {% endset %}
 
-          {{ appAutocompleteFromSelect({
+          {# {{ appAutocompleteFromSelect({
             label: {
               text: label,
               classes: "govuk-label--s"
@@ -112,7 +117,17 @@ first umampped subject #}
               values: subjectsForAutocomplete
             }
           }
-          ) }}
+          ) }} #}
+
+          {{ govukSelect({
+            id: 'subject_' + (loop.index + 1),
+            name: "record[courseDetails][subjectsArrayTemp]",
+            label: {
+              text: label,
+              classes: "govuk-label--s"
+            },
+            items: possibleSpecialismsShortened | toSelectItems(true, true)
+          }) }}
         {% endfor %}
       {% endset %}
 
@@ -127,12 +142,12 @@ first umampped subject #}
       with languages combined with a non language subject. The exception is "Primary with modern languages" #}
       {% set hintText %}
 
-        <p class="govuk-body">These language specialisms are recorded on the trainee’s QTS award.</p>
+        {# <p class="govuk-body">These language specialisms are recorded on the trainee’s QTS award.</p> #}
         <p class="govuk-body">
 
           {# In nearly all cases modern languages is on its own #}
           {% if record.courseDetails.publishSubjects | length == 1 -%}
-            Choose up to three.
+            
           {%- else %}
             {# Get the opposite subject to the current one - if this one is first, the other is second
             if this one is second, the other is first #}
@@ -144,7 +159,7 @@ first umampped subject #}
                 {{ (record.courseDetails.subjects.first or record.courseDetails.publishSubjects.first) }}
               {% endif %}
             {% endset %}
-            Choose up to two languages with {{ subjectName | trim | dynamicLowercase}}.
+            Choose the languages the trainee will study with {{ subjectName | trim | dynamicLowercase}}.
           {%- endif %}
 
         </p>

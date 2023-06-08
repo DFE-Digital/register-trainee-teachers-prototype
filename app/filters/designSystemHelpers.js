@@ -213,9 +213,17 @@ filters.csvToSummaryList = (csvString) => {
 //       value: 'three'
 //     }
 //   ]
-filters.toSelectItems = (array) => {
+filters.toSelectItems = (array, includeDefaultEmpty=false, defaultSelected=false) => {
 
-  return array.map(item => {
+  let defaultItem = [{
+    value: "",
+    text: "Please select",
+    disabled: true,
+    selected: defaultSelected
+  }]
+
+  let items = array.map(item => {
+
     if (Array.isArray(item)){
       return {
         text: item[0],
@@ -231,7 +239,13 @@ filters.toSelectItems = (array) => {
     else if (item instanceof Object){
       return item
     }
+
   })
+
+  if (includeDefaultEmpty){
+    return defaultItem.concat(items)
+  }
+  else return items
 
 }
 

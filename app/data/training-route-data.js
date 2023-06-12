@@ -158,25 +158,39 @@ let baseRouteData = {
           "Mathematics",
           "Physics"
           ],
-        value: "24000",
-        scholarshipValue: "26000"
+        value: "27000",
+        scholarship: "29000"
+      },
+      {
+        type: "bursary",
+        subjects: [
+          "Languages",
+          ],
+        value: "25000",
+        scholarship: "27000"
+      },
+      {
+        type: "bursary",
+        subjects: [
+          "Geography",
+          "Ancient languages"
+          ],
+        value: "25000"
       },
       {
         type: "bursary",
         subjects: [
           "Design and technology",
-          "Geography",
-          "Languages",
-          "Ancient languages"
+          "Biology"
           ],
-        value: "15000"
+        value: "20000"
       },
       {
         type: "bursary",
         subjects: [
-          "Biology"
+          "English"
           ],
-        value: "10000"
+        value: "15000"
       }
     ]
   },
@@ -212,24 +226,31 @@ let baseRouteData = {
           "Mathematics",
           "Physics"
           ],
-        value: "24000"
+        value: "27000"
+      },
+      {
+        type: "bursary",
+        subjects: [
+          "Geography",
+          "Languages",
+          "Ancient languages"
+          ],
+        value: "25000"
       },
       {
         type: "bursary",
         subjects: [
           "Design and technology",
-          "Geography",
-          "Languages",
-          "Ancient languages"
+          "Biology"
           ],
-        value: "15000"
+        value: "20000"
       },
       {
         type: "bursary",
         subjects: [
-          "Biology"
+          "English"
           ],
-        value: "10000"
+        value: "15000"
       }
     ]
   },
@@ -265,25 +286,39 @@ let baseRouteData = {
           "Mathematics",
           "Physics"
           ],
-        value: "24000",
-        scholarshipValue: "26000"
+        value: "27000",
+        scholarship: "29000"
+      },
+      {
+        type: "bursary",
+        subjects: [
+          "Languages",
+          ],
+        value: "25000",
+        scholarship: "27000"
+      },
+      {
+        type: "bursary",
+        subjects: [
+          "Geography",
+          "Ancient languages"
+          ],
+        value: "25000"
       },
       {
         type: "bursary",
         subjects: [
           "Design and technology",
-          "Geography",
-          "Languages",
-          "Ancient languages"
+          "Biology"
           ],
-        value: "15000"
+        value: "20000"
       },
       {
         type: "bursary",
         subjects: [
-          "Biology"
+          "English"
           ],
-        value: "10000"
+        value: "15000"
       }
     ]
   },
@@ -321,22 +356,29 @@ let baseRouteData = {
           "Mathematics",
           "Physics"
           ],
-        value: "15000"
+        value: "18000"
+      },
+      {
+        type: "grant",
+        subjects: [
+          "Geography",
+          "Languages",
+          "Ancient languages"
+          ],
+        value: "16000"
       },
       {
         type: "grant",
         subjects: [
           "Design and technology",
-          "Geography",
-          "Languages",
-          "Ancient languages"
+          "Biology"
           ],
-        value: "6000"
+        value: "11000"
       },
       {
         type: "grant",
         subjects: [
-          "Biology"
+          "English"
           ],
         value: "1000"
       }

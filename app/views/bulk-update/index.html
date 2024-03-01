@@ -17,16 +17,36 @@
         <span class="govuk-caption-xl">{{ data.signedInProviders | andSeparate }}</span>
         {{ pageHeading }}
       </h1>
-      <p class="govuk-body">
-        Make changes to multiple trainee records at the same time.
-      </p>
+
+      <p class="govuk-body">Make changes to multiple trainee records at the same time. You can:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>add new draft trainees</li>
+        <li>complete trainees imported from the Apply for teacher training (Apply) service</li>
+        <li>add missing placement data</li>
+        <li>recommend trainees for QTS</li>
+      </ul>
+
+      <h2 class="govuk-heading-m">
+        Add new draft trainees
+      </h2>
+
+      <p class="govuk-body">You can bulk add new draft trainees.</p>
+
+      <p class="govuk-body"><a href="/bulk-update/add-new/" class="govuk-link">Bulk add new draft trainees</a></p>
+
+<!--      <h2 class="govuk-heading-m">-->
+<!--        Complete trainees imported from the Apply for teacher training (Apply) service-->
+<!--      </h2>-->
+
+<!--      &lt;!&ndash; TODO: filter the Apply trainee count and display here &ndash;&gt;-->
+<!--      <p class="govuk-body">You can bulk add {{ x }} trainee records from the Apply service.</p>-->
+
+<!--      <p class="govuk-body"><a href="/bulk-update/add-details-apply/" class="govuk-link">Bulk complete trainees from the Apply service</a></p>-->
+
       {% if traineesWithoutPlacements %}
         <h2 class="govuk-heading-m">
           Add missing placement data
         </h2>
-      <p class="govuk-body">
-        You’ll be asked to include placement data as part of performance profile sign off for registered trainees with a course outcome in the previous academic year.
-      </p>
         <p class="govuk-body">
             You can bulk add missing placement data to {{ traineesThatCanBeUpdated.length }} trainee records. Add school placement URNs for 2 school or setting placements.
         </p>
@@ -34,6 +54,9 @@
           <a href="/bulk-update/add-details" class="govuk-link">
             Bulk add missing placement data to trainee records
           </a>
+        </p>
+        <p class="govuk-body">
+          You’ll be asked to include placement data as part of performance profile sign off for registered trainees with a course outcome in the previous academic year.
         </p>
       {% else %}
         <p class="govuk-body">

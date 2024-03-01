@@ -7,7 +7,7 @@
 {% set traineesThatCanBeUpdated = filteredRecords | filterByCanBulkUpdate %}
 
 {% set traineesThatCanBeRecommended = filteredRecords | filterByReadyToRecommend %}
-{% set pageHeading = "Draft trainees submitted" %}
+{% set pageHeading = "Trainees submitted" %}
 
 {% block content %}
 
@@ -19,8 +19,8 @@
       }) }}
 
       <p class="govuk-body">
-        <a href="/drafts" class="govuk-link">
-          View your draft trainee records
+        <a href="/records" class="govuk-link">
+          View your trainee records
         </a>
       </p>
     </div>

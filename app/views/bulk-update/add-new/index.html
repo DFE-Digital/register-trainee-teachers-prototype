@@ -46,17 +46,17 @@
         1. Download empty template CSV file
       </h2>
       {{ appDownloadLink({
-        linkText: "Download empty CSV file to add new draft trainees",
+        linkText: "Download empty CSV file to add new trainees",
         fileName: "bulk-update/add-new",
         showDownloadedFileName: true,
         downloadedFileName: (data.signedInProviders + "-new trainees to add") | slugify,
         fileType: "csv"
       })}}
       <h2 class="govuk-heading-m">
-        2. Add new draft trainee details
+        2. Add new trainee details
       </h2>
       <p class="govuk-body">
-        Open as a CSV file and add draft trainee information:
+        Open as a CSV file and add trainee information:
       </p>
       <ul class="govuk-list govuk-list--bullet">
         <li>type of training</li>
@@ -73,7 +73,7 @@
         <li>funding</li>
       </ul>
       <p class="govuk-body">
-        You can leave rows or cells empty if you do not want to update those trainee records.
+        You can leave non mandatory rows or cells empty if you do not want to upload those fields.
       </p>
       <h2 class="govuk-heading-m">
         3. Upload your trainee records

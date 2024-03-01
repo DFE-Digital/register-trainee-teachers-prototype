@@ -27,6 +27,22 @@ const rowsHaveUpdates = rows => {
 }
 
 module.exports = router => {
+
+  /*
+    =========================================================
+    Add brand new trainees
+    =========================================================
+  */
+
+
+  /* Review errors or skip */
+  router.get('/bulk-update/add-new/bulk-add-answer', function(req, res) {
+    const data = req.session.data
+    // Add straight redirect to a confirmation page for the time being
+    res.redirect('/bulk-update/add-new/confirmation')
+  })
+
+
   /*
   =========================================================
   Add (missing) details routes
@@ -64,7 +80,7 @@ module.exports = router => {
   // });
 
   /* Get trainees to add missing details */
-  router.post('/bulk-update/add-details/bulk-update-answer', function(req, res) {
+  router.post('/bulk-update/add-details/bulk-add-answer', function(req, res) {
 
     // Decided for MVP at least not to validate the contents of the CSV file.
     res.redirect('/bulk-update/add-details/confirmation')

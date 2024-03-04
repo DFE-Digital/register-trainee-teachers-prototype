@@ -1,6 +1,6 @@
 {% extends "_templates/_page.html" %}
 
-{% set pageHeading = "Bulk add new draft trainees" %}
+{% set pageHeading = "Bulk add new trainees" %}
 {% set navActive = 'bulk' %}
 
 {% set filteredRecords = data.records | filterRecords(data) %}
@@ -40,7 +40,7 @@
         {{ pageHeading }}
       </h1>
       <p class="govuk-body">
-        Training providers can register their trainees in bulk by creating draft trainee records and adding the required data.
+        Training providers can register their trainees in bulk by creating trainee records and adding the required data.
       </p>
       <h2 class="govuk-heading-m">
         1. Download empty template CSV file
@@ -55,26 +55,16 @@
       <h2 class="govuk-heading-m">
         2. Add new trainee details
       </h2>
-      <p class="govuk-body">
-        Open as a CSV file and add trainee information:
-      </p>
+      <p class="govuk-body">Open as a CSV file to add trainee details in bulk.</p>
+      <p class="govuk-body">You will need to include trainee information such as:</p>
       <ul class="govuk-list govuk-list--bullet">
-        <li>type of training</li>
-        <li>first name</li>
-        <li>last name</li>
-        <li>date of birth</li>
-        <li>gender</li>
-        <li>nationality</li>
-        <li>personal email address</li>
-        <li>ethnicity</li>
-        <li>disabilities and health conditions</li>
-        <li>degree</li>
+        <li>personal information</li>
         <li>course details</li>
-        <li>funding</li>
+        <li>funding (if eligible)</li>
       </ul>
-      <p class="govuk-body">
-        You can leave non mandatory rows or cells empty if you do not want to upload those fields.
-      </p>
+      <p class="govuk-body">You can leave non mandatory rows or cells empty if you do not want to upload those fields.</p>
+      <!-- Placeholder link added, the guidance hasn't been written yet so we don't have a URL to point to -->
+      <p class="govuk-body">Check <a class="govuk-link" href="#">guidance on how add trainee information to the CSV template</a>.</p>
       <h2 class="govuk-heading-m">
         3. Upload your trainee records
       </h2>

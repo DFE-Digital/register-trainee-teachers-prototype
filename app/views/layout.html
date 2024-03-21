@@ -249,6 +249,9 @@
 {% block beforeContent %}
 
   {{ govukPhaseBanner({
+    attributes: {
+      "role": "status"
+    },
     tag: {
       text: "prototype"
     },

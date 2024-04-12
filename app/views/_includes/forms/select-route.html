@@ -1,42 +1,120 @@
-
-{% set enabledTrainingRoutes = [] %}
-{% for route in data.settings.enabledTrainingRoutes %}
-  {% if not data.trainingRoutes[route].disableForNewDrafts %}
-    {% set hint = false %}
-
-    {% if route | includes("Provider-led") %}
-      {% set hint = {
-        text: "Training run by higher education institutions (HEIs) or school centred
-          initial teacher training (SCITT) providers"
-      } %}
-
-    {% elseif route | includes("iQTS") %}
-      {% set hint = {
-        text: "This is a pilot programme that selected training providers are offering for the 2022 to 2023 academic year"
-      } %}
-    {% endif %}
-
-    {% set enabledTrainingRoutes = enabledTrainingRoutes | push({
-      text: route,
-      hint: hint
-    }) %}
-  {% endif %}
-{% endfor %}
+<!-- TODO: Refactor this template to use a component with a for loop on the group array and then filter the routes within each from the data.settings.enabledTrainingRoutes array. -->
 
 {% include "_includes/trainee-name-caption.njk" %}
+<h1 class="govuk-heading-l">What type of training are they doing?</h1>
 
 {{ govukRadios({
-  fieldset: {
-    legend: {
-      text: pageHeading,
-      isPageHeading: true,
-      classes: "govuk-fieldset__legend--l"
-    }
-  },
-  hint: {
-    text: ""
-  },
-  items: enabledTrainingRoutes
+fieldset: {
+legend: {
+text: "Postgrad (fee funded)",
+isPageHeading: false,
+classes: "govuk-fieldset__legend--s"
+}
+},
+hint: {
+text: ""
+},
+items: [
+{
+value: "Provider-led (postgrad)",
+text: "Provider-led",
+hint: {
+text: "Training run by higher education institutions (HEIs) or school centred initial teacher training (SCITT) providers"
+}
+},
+{
+value: "Early years graduate entry",
+text: "Early years"
+}
+]
+} | decorateAttributes(record, "record.route")) }}
+
+{{ govukRadios({
+fieldset:
+{
+legend: {
+text: "Postgrad (salaried)",
+isPageHeading: false,
+classes: "govuk-fieldset__legend--s govuk-!-padding-top-4"
+}
+},
+hint: {
+text: ""
+},
+items: [
+{
+value: "Provider-led (postgrad salaried)",
+text: "Provider-led salaried"
+},
+{
+value: "Teaching apprenticeship (postgrad)",
+text: "Teacher apprenticeship"
+},
+{
+value: "Early years graduate employment based",
+text: "Early years"
+}
+]
+} | decorateAttributes(record, "record.route")) }}
+
+{{ govukRadios({
+fieldset: {
+legend: {
+text: "Undergrad (fee funded)",
+isPageHeading: false,
+classes: "govuk-fieldset__legend--s govuk-!-padding-top-4"
+}
+},
+hint: {
+text: ""
+},
+items: [
+{
+value: "Provider-led (undergrad)",
+text: "Provider-led",
+hint: {
+text: "Training run by higher education institutions (HEIs) or school centred initial teacher training (SCITT) providers"
+}
+},
+{
+value: "Opt-in (undergrad)",
+text: "Opt-in"
+},
+{
+value: "Early years undergraduate",
+text: "Early years"
+}
+]
+} | decorateAttributes(record, "record.route")) }}
+
+{{ govukRadios({
+fieldset: {
+legend: {
+text: "Other",
+isPageHeading: false,
+classes: "govuk-fieldset__legend--s govuk-!-padding-top-4"
+}
+},
+hint: {
+text: ""
+},
+items: [
+{
+value: "Assessment only",
+text: "Assessment only"
+},
+{
+value: "Early years assessment only",
+text: "Early years assessment only"
+},
+{
+value: "International qualified teacher status (iQTS)",
+text: "International qualified teacher status (iQTS)",
+hint: {
+text: "This is a pilot programme that selected training providers are offering for the 2022 to 2023 academic year"
+}
+}
+]
 } | decorateAttributes(record, "record.route")) }}
 
 

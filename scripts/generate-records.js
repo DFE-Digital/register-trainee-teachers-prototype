@@ -26,8 +26,8 @@ const statusFilters     = require('./../app/filters/statuses.js').filters
 let simpleGcseGrades    = true //output pass/fail rather than full detail
 
 // Todo: get this from the years.js file?
-const defaultYearsToGenerate = [2018, 2019, 2020, 2021, 2022, 2023]
-const reducedYearsToGenerate = [2020, 2021, 2022, 2023]
+const defaultYearsToGenerate = [2018, 2019, 2020, 2021, 2022, 2023, 2024]
+const reducedYearsToGenerate = [2020, 2021, 2022, 2023, 2024]
 
 const currentYear     = years.currentAcademicYearSimple
 

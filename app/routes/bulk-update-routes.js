@@ -82,65 +82,62 @@ module.exports = router => {
   /* Get trainees to add missing details */
   router.post('/bulk-update/add-details/bulk-add-answer', function(req, res) {
 
-    // Decided for MVP at least not to validate the contents of the CSV file.
-    res.redirect('/bulk-update/add-details/confirmation')
+    const data = req.session.data
+    let filteredRecords  = utils.filterRecords(data.records, data)
+    let uploadedTrainees = utils.filterByCanBulkUpdate(filteredRecords)
+    let randomSeeded = seedRandom("update")
 
-    // const data = req.session.data
-    // let filteredRecords  = utils.filterRecords(data.records, data)
-    // let uploadedTrainees = utils.filterByCanBulkUpdate(filteredRecords)
-    // let randomSeeded = seedRandom("update")
-    //
-    // let templateErrors = [
-    //   "TRN not recognised",
-    //   "TRN missing",
-    //   "Trainee start date: '07/20/2023' — enter a valid start date",
-    //   "Trainee start date: '20/07/2023' — trainee start date must be in the past",
-    //   "URN not recognised",
-    //   "school is closed"
-    // ]
-    //
-    // /* For each record, randomly pick whether it's ok, in error, or unchanged. If in error, pick a random error */
-    // let processedRows = uploadedTrainees.map((trainee, index) => {
-    //
-    //   let row = {
-    //     rowNumber: index + 1,
-    //     trainee,
-    //     uploadStatus: weighted.select(["error", "unchanged", "updated"], [0.25, 0.05, 0.7], randomSeeded)
-    //   }
-    //
-    //   if (row.uploadStatus == "error") {
-    //     row.errorMessage = utils.pickRandom(templateErrors, randomSeeded)
-    //   }
-    //
-    //   // if (!row.trainee.trainingDetails.commencementDate) {
-    //   //   row.trainee.trainingDetails.commencementDate = utils.getRandomArbitrary(6, 8) + "/" + utils.getRandomArbitrary(1, 28) + "/" + data.years.defaultCourseYear
-    //   // }
-    //
-    //   if (row.errorMessage == "URN not recognised" || row.errorMessage == "school is closed") {
-    //
-    //     if (row.trainee?.placement?.items && row.trainee?.placement?.items.length) {
-    //       row.errorMessage = "URN: '" + row.trainee.placement?.items[0]?.school?.urn + "' — " + row.errorMessage
-    //     } else {
-    //       row.errorMessage = "URN: '231231' – URN not recognised"
-    //     }
-    //   }
-    //   return row
-    // })
-    //
-    // data.bulkUpload = {
-    //   processedRows
-    // }
-    //
-    // if (rowsHaveErrors(processedRows) && rowsHaveUpdates(processedRows)) {
-    //   res.redirect('/bulk-update/add-details/errors-found')
-    // } else if (rowsHaveErrors(processedRows) && !rowsHaveUpdates(processedRows)) {
-    //   res.redirect('/bulk-update/add-details/fix-errors')
-    // } else if (!rowsHaveErrors(processedRows) && rowsHaveUpdates(processedRows)) {
-    //   res.redirect('/bulk-update/add-details/check-pending-updates')
-    // }
-    // else {
-    //   res.redirect('/bulk-update/add-details/confirmation')
-    // }
+    let templateErrors = [
+      "TRN not recognised",
+      "TRN missing",
+      "Trainee start date: '07/20/2023' — enter a valid start date",
+      "Trainee start date: '20/07/2023' — trainee start date must be in the past",
+      "URN not recognised",
+      "school is closed"
+    ]
+
+    /* For each record, randomly pick whether it's ok, in error, or unchanged. If in error, pick a random error */
+    let processedRows = uploadedTrainees.map((trainee, index) => {
+
+      let row = {
+        rowNumber: index + 1,
+        trainee,
+        uploadStatus: weighted.select(["error", "unchanged", "updated"], [0.25, 0.05, 0.7], randomSeeded)
+      }
+
+      if (row.uploadStatus == "error") {
+        row.errorMessage = utils.pickRandom(templateErrors, randomSeeded)
+      }
+
+      if (!row.trainee.trainingDetails.commencementDate) {
+        row.trainee.trainingDetails.commencementDate = utils.getRandomArbitrary(6, 8) + "/" + utils.getRandomArbitrary(1, 28) + "/" + data.years.defaultCourseYear
+      }
+
+      if (row.errorMessage == "URN not recognised" || row.errorMessage == "school is closed") {
+
+        if (row.trainee?.placement?.items && row.trainee?.placement?.items.length) {
+          row.errorMessage = "URN: '" + row.trainee.placement?.items[0]?.school?.urn + "' — " + row.errorMessage
+        } else {
+          row.errorMessage = "URN: '231231' – URN not recognised"
+        }
+      }
+      return row
+    })
+
+    data.bulkUpload = {
+      processedRows
+    }
+
+    if (rowsHaveErrors(processedRows) && rowsHaveUpdates(processedRows)) {
+      res.redirect('/bulk-update/add-details/errors-found')
+    } else if (rowsHaveErrors(processedRows) && !rowsHaveUpdates(processedRows)) {
+      res.redirect('/bulk-update/add-details/fix-errors')
+    } else if (!rowsHaveErrors(processedRows) && rowsHaveUpdates(processedRows)) {
+      res.redirect('/bulk-update/add-details/check-pending-updates')
+    }
+    else {
+      res.redirect('/bulk-update/add-details/confirmation')
+    }
   })
 
   /*

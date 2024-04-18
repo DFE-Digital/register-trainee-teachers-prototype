@@ -20,11 +20,7 @@
 {# Get an array of the trainees #}
 {% set processedTrainees = processedRows | lodash("map", "trainee") %}
 
-<!--TODO: Added some fixed values for testing as validation is out of scope for MVP and we've shortened the flow -->
-
-
-<!--{% set pageHeading = updatedCount + " trainees recommended for " + processedTrainees | getQualifications | orSeparate %}-->
-{% set pageHeading = "57 trainees recommended for QTS or EYTS" %}
+{% set pageHeading = updatedCount + " trainees recommended for " + processedTrainees | getQualifications | orSeparate %}
 
 {% block content %}
 

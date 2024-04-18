@@ -145,7 +145,7 @@ module.exports = router => {
 
   /*
   =========================================================
-  Recommened trainees for QTS or EYTS routes
+  Recommend trainees for QTS or EYTS routes
   =========================================================
   */
 

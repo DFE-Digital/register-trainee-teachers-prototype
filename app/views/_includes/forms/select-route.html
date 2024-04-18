@@ -2,6 +2,7 @@
 
 {% include "_includes/trainee-name-caption.njk" %}
 <h1 class="govuk-heading-l">What type of training are they doing?</h1>
+<p class="govuk-body govuk-!-margin-bottom-6">Provider-led training is run by higher education institutions (HEIs) or school centred initial teacher training (SCITT) providers.</p>
 
 {{ govukRadios({
 fieldset: {
@@ -17,10 +18,7 @@ text: ""
 items: [
 {
 value: "Provider-led (postgrad)",
-text: "Provider-led",
-hint: {
-text: "Training run by higher education institutions (HEIs) or school centred initial teacher training (SCITT) providers"
-}
+text: "Provider-led"
 },
 {
 value: "Early years graduate entry",
@@ -44,7 +42,7 @@ text: ""
 items: [
 {
 value: "Provider-led (postgrad salaried)",
-text: "Provider-led salaried"
+text: "Provider-led"
 },
 {
 value: "Teaching apprenticeship (postgrad)",
@@ -71,10 +69,7 @@ text: ""
 items: [
 {
 value: "Provider-led (undergrad)",
-text: "Provider-led",
-hint: {
-text: "Training run by higher education institutions (HEIs) or school centred initial teacher training (SCITT) providers"
-}
+text: "Provider-led"
 },
 {
 value: "Opt-in (undergrad)",
@@ -109,10 +104,7 @@ text: "Early years assessment only"
 },
 {
 value: "International qualified teacher status (iQTS)",
-text: "International qualified teacher status (iQTS)",
-hint: {
-text: "This is a pilot programme that selected training providers are offering for the 2022 to 2023 academic year"
-}
+text: "International qualified teacher status (iQTS)"
 }
 ]
 } | decorateAttributes(record, "record.route")) }}

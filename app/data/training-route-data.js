@@ -196,7 +196,7 @@ let baseRouteData = {
       }
     ]
   },
-  // New route  Provider-led postgrad (salaried) as part of the ITT reforms
+  // New route  Provider-led postgrad (salaried) as part of the ITT reforms. Replaces the School direct (salaried) route
   'Provider-led (postgrad salaried)': {
     defaultEnabled: true,
     courseLevel: "Postgraduate",
@@ -257,6 +257,7 @@ let baseRouteData = {
       }
     ]
   },
+  // This has been replaced by the Provider-led postgrad (salaried) route but kept for example legacy records
   "School direct (salaried)": {
     defaultEnabled: true,
     courseLevel: "Postgraduate",
@@ -696,7 +697,7 @@ let phases = {
       "3 to 7", // 6.51%
       "3 to 11", // 9.76%
       "5 to 11", // 40.97%
-    ], 
+    ],
     "otherAgeRanges": [
       "3 to 8",
       "3 to 9",

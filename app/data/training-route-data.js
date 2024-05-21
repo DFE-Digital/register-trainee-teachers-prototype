@@ -120,12 +120,15 @@ let baseRouteData = {
       'courseDetails',
       'personalDetails',
       'diversity',
+      'schools',
       // 'undergraduateQualification',
       'placement',
       'funding'
     ],
     fields: [
-      "studyMode",
+      "leadSchool",
+      "employingSchool",
+      "studyMode"
     ],
     financialSupportAvailable: true,
     financialSupport: [
@@ -145,10 +148,22 @@ let baseRouteData = {
     qualifications: [
       "QTS"
     ],
+    sections: [
+      // 'trainingDetails',
+      'courseDetails',
+      'personalDetails',
+      'diversity',
+      'degree',
+      'schools',
+      'placement',
+      'funding'
+    ],
     qualificationsSummary: "QTS",
     hasAllocatedPlaces: true,
     fields: [
-      "studyMode",
+      "leadSchool",
+      "employingSchool",
+      "studyMode"
     ],
     financialSupportAvailable: true,
     financialSupport: [

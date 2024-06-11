@@ -1,0 +1,77 @@
+{% extends "_templates/_page.html" %}
+
+{% set pageHeading = "Change who you’ll recommend for QTS or EYTS" %}
+{% set navActive = 'bulk' %}
+
+{# Sets numbers for errors summary #}
+{% set errorCount     = data.bulkUpload.processedRows | where("uploadStatus", "error") | length  %}
+{% set unchangedCount = data.bulkUpload.processedRows | where("uploadStatus", "unchanged") | length  %}
+{% set updatedCount   = data.bulkUpload.processedRows | where("uploadStatus", "updated") | length  %}
+{% set hasErrors = errorCount > 0 %}
+{% set hasUpdated = updatedCount > 0 %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+
+      <h1 class="govuk-heading-l">
+        <span class="govuk-caption-l">{{ data.signedInProviders | andSeparate }}</span>
+        {{ pageHeading }}
+      </h1>
+
+      <form action="/bulk-update/recommend/upload-changes-answer" method="post" novalidate>
+
+        <p class="govuk-body">You can upload an edited CSV file to change which trainees you’ll recommend.</p>
+
+        <ol class="govuk-list govuk-list--number">
+
+          <li>
+            Use the CSV file which you uploaded with details of trainees you wanted to recommend. You can
+            <a class="govuk-link--no-visited-state" href="/public/downloads/bulk-update/recommendOnly-with-data.csv" download="{{ (data.signedInProviders + '-with-pending') | slugify }}.csv">download your CSV file</a> if you need it.
+            {# <a href="#">Download your CSV file with errors indicated</a>. #}
+          </li>
+
+          <li>To recommend a trainee, add the date when they met QTS or EYTS standards. If you remove the date then the trainee will not be recommended.</li>
+
+          {# <li>Upload the CSV file.</li> #}
+
+          <li>
+            {{ govukFileUpload({
+              id: "file-upload-1",
+              name: "file-upload-1",
+              label: {
+                text: "Upload the CSV file."
+              },
+              attributes: {
+                "accept": ".csv"
+              }
+            }) }}
+          </li>
+
+        </ol>
+
+        <input name="successFlash" type="hidden" value="File uploaded">
+
+        {{ govukButton({
+          text: "Upload file and check who you’ll recommend"
+        }) }}
+
+        {% if hasUpdated %}
+          <p class="govuk-body">
+            <a href="/bulk-update/recommend/check-pending-updates" class="govuk-link">
+              Return to check who you’ll recommend without making changes
+            </a>
+          </p>
+        {% endif %}
+
+        <p class="govuk-body">
+          <a href="/bulk-update/recommend/cancel-bulk-updates" class="govuk-link">Cancel bulk {{ "recommending trainees" if data.settings.bulkLinksInPrimaryNav == "Show bulk recommend" else "updates to records" }}</a>
+        </p>
+      </form>
+
+    </div>
+  </div>
+
+  {# {% include "_includes/bulk-update/fix-file.html" %} #}
+
+{% endblock %}

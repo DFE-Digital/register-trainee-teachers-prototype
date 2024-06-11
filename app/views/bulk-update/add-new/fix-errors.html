@@ -1,0 +1,98 @@
+{% extends "_templates/_page.html" %}
+{% set navActive = 'bulk' %}
+
+{% set filteredRecords = data.records | filterRecords(data) %}
+{% set traineesThatCanBeRecommended = filteredRecords | filterByReadyToRecommend %}
+
+{% set bulkOnly = true if data.settings.bulkLinksInPrimaryNav == "Show bulk recommend" %}
+{% set pageContent = "fixErrors" %}
+
+
+
+{% set bulkPath = "recommend" %}
+
+{% set rowsWithErrors = data.bulkUpload.processedRows | where("uploadStatus", "error") %}
+
+{# Sets numbers for errors summary #}
+{% set errorCount     = data.bulkUpload.processedRows | where("uploadStatus", "error") | length  %}
+{% set unchangedCount = data.bulkUpload.processedRows | where("uploadStatus", "unchanged") | length  %}
+{% set updatedCount   = data.bulkUpload.processedRows | where("uploadStatus", "updated") | length  %}
+
+{% set hasErrors = errorCount > 0 %}
+{% set hasUpdated = updatedCount > 0 %}
+
+{% set pageHeading %}
+  Review errors for {{errorCount}} {{ "trainee" | pluralise(errorCount) }} in the CSV file you uploaded
+{% endset %}
+
+{% set qualifications = traineesThatCanBeRecommended | getQualifications | orSeparate %}
+{% set linkText = "Download trainees ready to be recommened for " + qualifications + " — with errors" %}
+
+{% set downloadedFileName = "-fix-errors" %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+
+      <h1 class="govuk-heading-l">
+        <span class="govuk-caption-l">{{ data.signedInProviders | andSeparate }}</span>
+        {{ pageHeading }}
+      </h1>
+
+      <form action="/bulk-update/recommend/fix-errors-answer" method="post" novalidate>
+
+        <p class="govuk-body">You cannot recommend a trainee for QTS or EYTS if there’s an error in their row in the CSV file. You need to fix the errors if you want to recommend them.</p>
+
+        <ol class="govuk-list govuk-list--number">
+
+          <li>
+
+            <a class="govuk-link--no-visited-state" href="/public/downloads/bulk-update/recommendOnly-with-errors.csv" download="{{ (data.signedInProviders + '-fix-errors') | slugify }}.csv">Download your CSV file with errors indicated</a>.
+            {# <a href="#">Download your CSV file with errors indicated</a>. #}
+          </li>
+
+          <li>Fix the errors. If you cannot fix an error, you can delete the row and the trainee will not be recommended.</li>
+
+          {# <li>Upload the CSV file.</li> #}
+
+          <li>
+            {{ govukFileUpload({
+              id: "file-upload-1",
+              name: "file-upload-1",
+              label: {
+                text: "Upload the CSV file."
+              },
+              attributes: {
+                "accept": ".csv"
+              }
+            }) }}
+          </li>
+
+        </ol>
+
+        {#   <p class="govuk-inset-text">You cannot use this upload to make other changes to a trainee’s record.</p> #}
+
+        <input name="successFlash" type="hidden" value="File uploaded">
+
+        {{ govukButton({
+          text: "Upload file and check who you’ll recommend"
+        }) }}
+
+        {% if hasUpdated %}
+          <p class="govuk-body">
+            <a href="/bulk-update/recommend/check-pending-updates" class="govuk-link">
+              Skip {{ 'trainee' | pluralise(errorCount) }} with errors and check who you’ll recommend
+            </a>
+          </p>
+        {% endif %}
+
+        <p class="govuk-body">
+          <a href="/bulk-update/recommend/cancel-bulk-updates" class="govuk-link">Cancel bulk {{ "recommending trainees" if data.settings.bulkLinksInPrimaryNav == "Show bulk recommend" else "updates to records" }}</a>
+        </p>
+      </form>
+
+    </div>
+  </div>
+
+{% endblock %}

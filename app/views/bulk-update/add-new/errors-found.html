@@ -1,0 +1,17 @@
+{% extends "_templates/_page.html" %}
+
+{% set navActive = 'bulk' %}
+
+{% set pageHeading = "File uploaded with some errors" %}
+
+{% set bulkPath =  "recommend" %}
+{% set bulkRoute = "recommend" %}
+
+{# Sets numbers for errors summary #}
+{% set errorCount     = data.bulkUpload.processedRows | where("uploadStatus", "error") | length  %}
+{% set unchangedCount = data.bulkUpload.processedRows | where("uploadStatus", "unchanged") | length  %}
+{% set updatedCount   = data.bulkUpload.processedRows | where("uploadStatus", "updated") | length  %}
+
+{% block content %}
+  {% include "_includes/bulk-update/errors-found.html" %}
+{% endblock %}

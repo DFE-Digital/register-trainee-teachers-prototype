@@ -1,0 +1,181 @@
+{% extends "_templates/_page.html" %}
+
+{% block pageScripts %}
+  <script src="/public/javascripts/stick-to-window-when-scrolling.js"></script>
+{% endblock %}
+
+{% set filteredRecords = data.records | filterRecords(data) %}
+{% set traineesThatCanBeRecommended = filteredRecords | filterByReadyToRecommend %}
+
+{% set qualificationText = traineesThatCanBeRecommended | getQualifications | orSeparate %}
+
+{% set pageHeading = "Check who you’ll recommend for " + qualificationText %}
+{% set navActive = 'bulk' %}
+
+
+
+{% set bulkOnly = true if data.settings.bulkLinksInPrimaryNav == "Show bulk recommend" %}
+
+{% if bulkOnly %}
+  {% set tableHeadRow = [
+      {
+        text: "CSV row",
+        classes: "app-table__column-5"
+      },
+      {
+        text: "Trainee",
+        classes: "app-table__column-30"
+      },
+      {
+        text: "Type of training and subject",
+        classes: "app-table__column-30"
+      },
+      {
+        text: "Date standards met and award type",
+        classes: "app-table__column-20"
+      }
+    ]%}
+{% else %}
+    {% set tableHeadRow = [
+      {
+        text: "Row",
+        classes: "app-table__column-10"
+      },
+      {
+        text: "Name",
+        classes: "app-table__column-20"
+      },
+      {
+        text: "ID",
+        classes: "app-table__column-20"
+      },
+      {
+        text: "Route and subject",
+        classes: "app-table__column-20"
+      },
+      {
+        text: "Postgraduate qualification",
+        classes: "app-table__column-20"
+      },
+      {
+        text: "Date standards met",
+        classes: "app-table__column-20"
+      }
+    ]%}
+{% endif %}
+
+{% set qtsTableBodyRows  = [] %}
+{% set eytsTableBodyRows = [] %}
+{% set allAwardsTableBodyRows = [] %}
+
+{# Combines errors and processed if the user has 'fixed the errors' #}
+{% if data.bulk.recommendFixErrors %}
+  {% set processedRows = data.bulkUpload.processedRows | removeWhere("uploadStatus", "unchanged")  %}
+{% else %}
+  {% set processedRows = data.bulkUpload.processedRows | where("uploadStatus", "updated") %}
+{% endif %}
+
+{# Sets numbers for errors summary – No errors if you're seeing the summary on this page #}
+{% set errorCount     = 0 %}
+{% set unchangedCount = data.bulkUpload.processedRows | where("uploadStatus", "unchanged") | length %}
+{% set updatedCount   = processedRows | length  %}
+
+{% for row in processedRows %}
+
+  {% set routeAndCourseHtml %}
+
+    {% set isPublishCourse = row.trainee.courseDetails.isPublishCourse | falsify %}
+    <p class="govuk-body govuk-!-margin-bottom-1">
+      {{ row.trainee.route }}
+    </p>
+    <span class="govuk-hint">
+      {{ (row.trainee.courseDetails.subjects | prettifySubjects | falsify ) or row.trainee.courseDetails.courseNameShort }}
+      {# {% if isPublishCourse %}
+        {{ row.trainee.courseDetails.courseNameShort }}
+      {% else %}
+        {{ row.trainee | getAllocationSubject }}
+      {% endif %} #}
+    </span>
+  {% endset %}
+
+
+    {% set qualArray = row.trainee.courseDetails.qualifications | toArray %}
+    {% set qualification = qualArray | removeArrayItems(["QTS", "EYTS"]) %}
+    {% if row.trainee | isPostgraduate and qualification.length == 0 %}
+      {% set qualification = "None" %}
+    {% elseif qualification.length == 0 %}
+      {% set qualification = "—" %}
+    {% endif %}
+
+    {% set traineeHtml %}
+      <p class="govuk-body govuk-!-margin-bottom-1">
+        {{ row.trainee.personalDetails.familyName }}, {{ row.trainee.personalDetails.givenName }}
+      </p>
+      <div class="app-trainee-ids"></div>
+      <p class="govuk-body govuk-!-margin-bottom-0 govuk-hint app-trainee-id">
+        TRN: {{ row.trainee.trn }}
+      </p>
+      <p class="govuk-body govuk-!-margin-bottom-0 govuk-hint app-trainee-id">
+        <span class="app-trainee-id">Provider trainee ID: {{ row.trainee.reference }}</span>
+      </p>
+      {% if row.trainee.hesa.id %}
+        <p class="govuk-body govuk-!-margin-bottom-0 govuk-hint app-trainee-id">
+          <span class="app-trainee-id">HESA ID: {{ row.trainee.hesa.id }}</span>
+        </p>
+      {% endif %}
+    {% endset %}
+
+    {% set dateAndAwardHtml %}
+      <p class="govuk-body govuk-!-margin-bottom-1">
+        {{ row.assessmentDate | govukDate('DD/MM/YYYY')}}
+      </p>
+      <p class="govuk-body govuk-!-margin-bottom-0 govuk-hint">
+        {{ row.trainee | getQualificationText }}
+      </p>
+    {% endset %}
+
+    {% if bulkOnly %}
+      {% set tableRow = [
+        { text: row.rowNumber       | safe      },
+        { text: traineeHtml        | safe      },
+        { text: routeAndCourseHtml | safe      },
+        { html: dateAndAwardHtml }
+
+      ]%}
+    {% else %}
+      {% set tableRow = [
+        { text: row.rowNumber    | safe },
+        { html: traineeInfoHtml    | safe },
+        { html: routeAndCourseHtml | safe },
+        { text: qualification },
+        { text: row.assessmentDate | govukDate('DD/MM/YYYY') }
+      ]%}
+    {% endif %}
+
+
+  {% if row.trainee | getQualificationText == "QTS" %}
+    {% set qtsTableBodyRows = qtsTableBodyRows   | push(tableRow) %}
+  {% else %}
+    {% set eytsTableBodyRows = eytsTableBodyRows | push(tableRow) %}
+  {% endif %}
+
+  {% set allAwardsTableBodyRows = allAwardsTableBodyRows | push(tableRow) %}
+
+
+{% endfor %}
+
+{% set qtsTableCaption  = "Trainees being recommended for QTS (" + qtsTableBodyRows.length + ")" %}
+{% set eytsTableCaption = "Trainees being recommended for EYTS (" + eytsTableBodyRows.length + ")" %}
+{% set tableCaptionClasses = "govuk-table__caption--m" %}
+
+{% set buttonText %}
+  Recommend {{processedRows.length}} {{ "trainee" | pluralise(processedRows.length) }} for {{ qualificationText }}
+{% endset %}
+
+{% set bulkPath = "recommend" %}
+
+{% block content %}
+
+  {% include "_includes/bulk-update/check-pending-updates.html" %}
+
+{% endblock %}

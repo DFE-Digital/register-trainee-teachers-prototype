@@ -9,7 +9,7 @@
 
 {% set navActive = 'bulk' %}
 
-{% set bulkOnly = true if data.settings.bulkLinksInPrimaryNav == "Show bulk recommend" %}
+{% set bulkOnly = true if data.settings.bulkLinksInPrimaryNav == "Show bulk add new" %}
 
 {% block formContent %}
   {% include "_includes/trainee-name-caption.njk" %}
@@ -18,7 +18,7 @@
     {# {{pageHeading}} #}
     Confirm you want to cancel
     {% if bulkOnly %}
-      bulk recommending trainees
+      bulk adding new trainees
     {% else %}
       your <span class="app-nowrap">bulk updates</span>
     {% endif %}
@@ -29,7 +29,7 @@
   </p>
 
   {{ govukButton({
-    text: "Cancel bulk recommending trainees",
+    text: "Cancel bulk adding new trainees",
     href: "/bulk-update/add-new/upload" if bulkOnly else "/bulk-update",
     classes: "govuk-button--warning"
   }) }}

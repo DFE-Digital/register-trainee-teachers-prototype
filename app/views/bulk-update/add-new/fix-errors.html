@@ -42,17 +42,17 @@
 
       <form action="/bulk-update/add-new/fix-errors-answer" method="post" novalidate>
 
-        <p class="govuk-body">You cannot recommend a trainee for QTS or EYTS if there’s an error in their row in the CSV file. You need to fix the errors if you want to recommend them.</p>
+        <p class="govuk-body">You cannot add new trainees if there’s an error in their row in the CSV file. You need to fix the errors if you want to add them.</p>
 
         <ol class="govuk-list govuk-list--number">
 
           <li>
 
-            <a class="govuk-link--no-visited-state" href="/public/downloads/bulk-update/recommendOnly-with-errors.csv" download="{{ (data.signedInProviders + '-fix-errors') | slugify }}.csv">Download your CSV file with errors indicated</a>.
+            <a class="govuk-link--no-visited-state" href="/public/downloads/bulk-update/add-new-with-errors.csv" download="{{ (data.signedInProviders + '-fix-errors') | slugify }}.csv">Download your CSV file with errors indicated</a>.
             {# <a href="#">Download your CSV file with errors indicated</a>. #}
           </li>
 
-          <li>Fix the errors. If you cannot fix an error, you can delete the row and the trainee will not be recommended.</li>
+          <li>Fix the errors. If you cannot fix an error, you can delete the row and the trainee will not be included.</li>
 
           {# <li>Upload the CSV file.</li> #}
 
@@ -76,16 +76,8 @@
         <input name="successFlash" type="hidden" value="File uploaded">
 
         {{ govukButton({
-          text: "Upload file and check who you’ll recommend"
+          text: "Upload file"
         }) }}
-
-        {% if hasUpdated %}
-          <p class="govuk-body">
-            <a href="/bulk-update/recommend/check-pending-updates" class="govuk-link">
-              Skip {{ 'trainee' | pluralise(errorCount) }} with errors and check who you’ll recommend
-            </a>
-          </p>
-        {% endif %}
 
         <p class="govuk-body">
           <a href="/bulk-update/add-new/cancel-bulk-updates" class="govuk-link">Cancel bulk updates to records</a>

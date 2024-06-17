@@ -19,7 +19,7 @@
         {{ pageHeading }}
       </h1>
 
-      <form action="/bulk-update/recommend/upload-changes-answer" method="post" novalidate>
+      <form action="/bulk-update/add-new/upload-changes-answer" method="post" novalidate>
 
         <p class="govuk-body">You can upload an edited CSV file to change which trainees you’ll recommend.</p>
 
@@ -58,14 +58,14 @@
 
         {% if hasUpdated %}
           <p class="govuk-body">
-            <a href="/bulk-update/recommend/check-pending-updates" class="govuk-link">
+            <a href="/bulk-update/add-new/check-pending-updates" class="govuk-link">
               Return to check who you’ll recommend without making changes
             </a>
           </p>
         {% endif %}
 
         <p class="govuk-body">
-          <a href="/bulk-update/recommend/cancel-bulk-updates" class="govuk-link">Cancel bulk {{ "recommending trainees" if data.settings.bulkLinksInPrimaryNav == "Show bulk recommend" else "updates to records" }}</a>
+          <a href="/bulk-update/add-new/cancel-bulk-updates" class="govuk-link">Cancel bulk {{ "recommending trainees" if data.settings.bulkLinksInPrimaryNav == "Show bulk recommend" else "updates to records" }}</a>
         </p>
       </form>
 

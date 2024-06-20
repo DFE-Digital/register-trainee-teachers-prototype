@@ -80,7 +80,6 @@ let defaultRouteData = {
     'funding'
   ],
   initiatives: [
-    "Future Teaching Scholars",
     "Get an International Relocation Payment",
     "Now Teach",
     "Veteran teaching undergraduate bursary"

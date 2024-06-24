@@ -81,8 +81,7 @@ let defaultRouteData = {
   ],
   initiatives: [
     "Get an International Relocation Payment",
-    "Now Teach",
-    "Veteran teaching undergraduate bursary"
+    "Now Teach"
   ],
   financialSupportAvailable: false
 }

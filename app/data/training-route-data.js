@@ -11,7 +11,6 @@ let modernLanguages = ittSubjects.modernLanguagesSubjects
 
 let applyRoutes = [
   'Teaching apprenticeship (postgrad)',
-  'Provider-led (postgrad salaried)', // New route as part of the ITT reforms
   'Primary and secondary (postgrad)',
   'School direct (salaried)',
   'School direct (fee funded)',
@@ -206,67 +205,6 @@ let baseRouteData = {
         subjects: [
           "English"
           ],
-        value: "15000"
-      }
-    ]
-  },
-  // New route  Provider-led postgrad (salaried) as part of the ITT reforms. Replaces the School direct (salaried) route
-  'Provider-led (postgrad salaried)': {
-    defaultEnabled: true,
-    courseLevel: "Postgraduate",
-    qualifications: [
-      "QTS"
-    ],
-    qualificationsSummary: "QTS",
-    sections: [
-      // 'trainingDetails',
-      'courseDetails',
-      'personalDetails',
-      'diversity',
-      'degree',
-      'schools',
-      'placement',
-      'funding'
-    ],
-    fields: [
-      "leadSchool",
-      "employingSchool",
-      "studyMode"
-    ],
-    financialSupportAvailable: true,
-    financialSupport: [
-      {
-        type: "bursary",
-        subjects: [
-          "Chemistry",
-          "Computing",
-          "Mathematics",
-          "Physics"
-        ],
-        value: "27000"
-      },
-      {
-        type: "bursary",
-        subjects: [
-          "Geography",
-          "Languages",
-          "Ancient languages"
-        ],
-        value: "25000"
-      },
-      {
-        type: "bursary",
-        subjects: [
-          "Design and technology",
-          "Biology"
-        ],
-        value: "20000"
-      },
-      {
-        type: "bursary",
-        subjects: [
-          "English"
-        ],
         value: "15000"
       }
     ]

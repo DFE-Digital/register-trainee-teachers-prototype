@@ -6,7 +6,7 @@ seedRecords.push({
   "events": {
     "items": []
   },
-  "route": "Provider-led (postgrad)",
+  "route": "Primary and secondary (postgrad)",
   "reference": "LK5849",
   "personalDetails": {
     "nationality": [
@@ -92,7 +92,7 @@ seedRecords.push({
     applicationDate: "2022-04-10T18:17:24.509Z"
   },
   "updatedDate": "2022-08-13T19:28:56.667Z",
-  route: 'Provider-led (postgrad)',
+  route: 'Primary and secondary (postgrad)',
   "courseDetails": {
     "ageRange": "11 to 19",
     "code": "P369",
@@ -105,7 +105,7 @@ seedRecords.push({
       "PGCE"
     ],
     "qualificationsSummary": "PGCE with QTS full time",
-    "route": "Provider-led (postgrad)",
+    "route": "Primary and secondary (postgrad)",
     "startDateVague": "2022-09-01T01:00:00.000Z",
     "studyMode": "Full time",
     "courseNameLong": "Mathematics (X348)",
@@ -197,7 +197,7 @@ seedRecords.push({
     sex: 'Female',
     status: 'Completed'
   },
-  route: 'Provider-led (postgrad)',
+  route: 'Primary and secondary (postgrad)',
   trainingDetails: {
     "traineeStarted": false,
     "commencementDate": false,
@@ -240,7 +240,7 @@ seedRecords.push({
     sex: 'Female',
     status: 'Completed'
   },
-  route: 'Provider-led (postgrad)',
+  route: 'Primary and secondary (postgrad)',
   trainingDetails: {
     "traineeStarted": false,
     "commencementDate": false,
@@ -267,7 +267,7 @@ seedRecords.push({
     sex: 'Male',
     status: 'Completed'
   },
-  route: 'Provider-led (postgrad)',
+  route: 'Primary and secondary (postgrad)',
   trainingDetails: {
     "traineeStarted": false,
     "commencementDate": false,
@@ -358,7 +358,7 @@ seedRecords.push({
   // submittedDate: "2020-06-28T12:37:21.384Z",
   // updatedDate: "2020-07-04T04:26:19.269Z",
   trn: "8594837",
-  route: 'Provider-led (postgrad)',
+  route: 'Primary and secondary (postgrad)',
   courseDetails: {
     isPublishCourse: 'false',
     startDate: "2021-09-01T00:00:00.000Z"
@@ -398,7 +398,7 @@ seedRecords.push({
   trainingDetails: {
     traineeId: "2020/21-092"
   },
-  route: 'Provider-led (postgrad)',
+  route: 'Primary and secondary (postgrad)',
   courseDetails: {
     isPublishCourse: false,
     startDate: "2020-09-01T00:00:00.000Z",
@@ -489,7 +489,7 @@ seedRecords.push({
     familyName: "Cardno",
     sex: "Female"
   },
-  route: 'Provider-led (postgrad)',
+  route: 'Primary and secondary (postgrad)',
   trainingDetails: {
     commencementDate: "2022-09-01T00:00:00.000Z"
   },
@@ -504,7 +504,7 @@ seedRecords.push({
         "PGCE"
     ],
     "qualificationsSummary": "PGCE with QTS full time",
-    "route": "Provider-led (postgrad)",
+    "route": "Primary and secondary (postgrad)",
     "startDate": "2022-09-01T00:00:00.000Z",
     "academicYear": "2022 to 2023",
     "studyMode": "Full time",
@@ -560,7 +560,7 @@ seedRecords.push({
     familyName: "Cardno",
     sex: "Female"
   },
-  route: 'Provider-led (postgrad)',
+  route: 'Primary and secondary (postgrad)',
   trainingDetails: {
     commencementDate: "2022-09-01T00:00:00.000Z"
   },
@@ -575,7 +575,7 @@ seedRecords.push({
         "PGCE"
     ],
     "qualificationsSummary": "PGCE with QTS full time",
-    "route": "Provider-led (postgrad)",
+    "route": "Primary and secondary (postgrad)",
     "startDate": "2022-09-01T00:00:00.000Z",
     "academicYear": "2022 to 2023",
     "studyMode": "Full time",
@@ -631,7 +631,7 @@ seedRecords.push({
     familyName: "Perry",
     sex: "Male"
   },
-  route: 'Provider-led (postgrad)',
+  route: 'Primary and secondary (postgrad)',
   trainingDetails: {
     commencementDate: null
   },
@@ -649,7 +649,7 @@ seedRecords.push({
     familyName: "Fletcher",
     sex: "Female"
   },
-  route: 'Provider-led (postgrad)',
+  route: 'Primary and secondary (postgrad)',
   trainingDetails: {
     commencementDate: null
   },
@@ -667,7 +667,7 @@ seedRecords.push({
     familyName: "Scholz",
     sex: "Female"
   },
-  route: 'Provider-led (postgrad)',
+  route: 'Primary and secondary (postgrad)',
   trainingDetails: {
     commencementDate: null
   },
@@ -738,7 +738,7 @@ seedRecords.push({
     familyName: "Cardno",
     sex: "Female"
   },
-  route: 'Provider-led (postgrad)',
+  route: 'Primary and secondary (postgrad)',
   trainingDetails: {
     commencementDate: "2022-09-01T00:00:00.000Z"
   },
@@ -753,7 +753,7 @@ seedRecords.push({
         "PGCE"
     ],
     "qualificationsSummary": "PGCE with QTS full time",
-    "route": "Provider-led (postgrad)",
+    "route": "Primary and secondary (postgrad)",
     "startDate": "2022-09-01T00:00:00.000Z",
     "academicYear": "2022 to 2023",
     "studyMode": "Full time",
@@ -813,7 +813,7 @@ seedRecords.push({
     familyName: "Cardno",
     sex: "Female"
   },
-  route: 'Provider-led (postgrad)',
+  route: 'Primary and secondary (postgrad)',
   trainingDetails: {
     commencementDate: "2022-09-01T00:00:00.000Z"
   },
@@ -828,7 +828,7 @@ seedRecords.push({
         "PGCE"
     ],
     "qualificationsSummary": "PGCE with QTS full time",
-    "route": "Provider-led (postgrad)",
+    "route": "Primary and secondary (postgrad)",
     "startDate": "2022-09-01T00:00:00.000Z",
     "academicYear": "2022 to 2023",
     "studyMode": "Full time",
@@ -888,7 +888,7 @@ seedRecords.push({
     traineeId: "2020/21-092",
     commencementDate: null
   },
-  route: 'Provider-led (postgrad)',
+  route: 'Primary and secondary (postgrad)',
   courseDetails: {
     isPublishCourse: false,
     startDate: "2020-09-01T00:00:00.000Z",

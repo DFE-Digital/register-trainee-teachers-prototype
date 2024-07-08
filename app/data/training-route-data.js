@@ -11,8 +11,7 @@ let modernLanguages = ittSubjects.modernLanguagesSubjects
 
 let applyRoutes = [
   'Teaching apprenticeship (postgrad)',
-  'Provider-led (postgrad)',
-  'Provider-led (postgrad salaried)', // New route as part of the ITT reforms
+  'Primary and secondary (postgrad)',
   'School direct (salaried)',
   'School direct (fee funded)',
 ]
@@ -20,15 +19,15 @@ let applyRoutes = [
 // Not all these routes will be enabled
 let publishRoutes = [
   'Teaching apprenticeship (postgrad)',
-  'Provider-led (postgrad)',
-  'Provider-led (postgrad salaried)', // New route as part of the ITT reforms
+  'Primary and secondary (postgrad)',
+  'Primary and secondary (postgrad salaried)', // New route as part of the ITT reforms
   'School direct (salaried)',
   'School direct (fee funded)',
 ]
 
 let nonPublishRoutes = [
-  'Provider-led (postgrad)',
-  'Provider-led (undergrad)',
+  'Primary and secondary (postgrad)',
+  'Primary and secondary (undergrad)',
   'Assessment only',
   // 'Teach First (postgrad)',
   'Early years graduate employment based',
@@ -107,7 +106,7 @@ let baseRouteData = {
     ],
     financialSupportAvailable: false
   },
-  "Provider-led (undergrad)": {
+  "Primary and secondary (undergrad)": {
     defaultEnabled: true,
     courseLevel: "Undergraduate",
     qualifications: [
@@ -141,7 +140,7 @@ let baseRouteData = {
       }
     ]
   },
-  "Provider-led (postgrad)": {
+  "Primary and secondary (postgrad)": {
     defaultEnabled: true,
     courseLevel: "Postgraduate",
     qualifications: [
@@ -210,68 +209,6 @@ let baseRouteData = {
       }
     ]
   },
-  // New route  Provider-led postgrad (salaried) as part of the ITT reforms. Replaces the School direct (salaried) route
-  'Provider-led (postgrad salaried)': {
-    defaultEnabled: true,
-    courseLevel: "Postgraduate",
-    qualifications: [
-      "QTS"
-    ],
-    qualificationsSummary: "QTS",
-    sections: [
-      // 'trainingDetails',
-      'courseDetails',
-      'personalDetails',
-      'diversity',
-      'degree',
-      'schools',
-      'placement',
-      'funding'
-    ],
-    fields: [
-      "leadSchool",
-      "employingSchool",
-      "studyMode"
-    ],
-    financialSupportAvailable: true,
-    financialSupport: [
-      {
-        type: "bursary",
-        subjects: [
-          "Chemistry",
-          "Computing",
-          "Mathematics",
-          "Physics"
-        ],
-        value: "27000"
-      },
-      {
-        type: "bursary",
-        subjects: [
-          "Geography",
-          "Languages",
-          "Ancient languages"
-        ],
-        value: "25000"
-      },
-      {
-        type: "bursary",
-        subjects: [
-          "Design and technology",
-          "Biology"
-        ],
-        value: "20000"
-      },
-      {
-        type: "bursary",
-        subjects: [
-          "English"
-        ],
-        value: "15000"
-      }
-    ]
-  },
-  // This has been replaced by the Provider-led postgrad (salaried) route but kept for example legacy records
   "School direct (salaried)": {
     defaultEnabled: true,
     courseLevel: "Postgraduate",

@@ -209,7 +209,6 @@ let baseRouteData = {
       }
     ]
   },
-  // This has been replaced by the Provider-led postgrad (salaried) route but kept for example legacy records
   "School direct (salaried)": {
     defaultEnabled: true,
     courseLevel: "Postgraduate",

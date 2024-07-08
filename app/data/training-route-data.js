@@ -11,8 +11,8 @@ let modernLanguages = ittSubjects.modernLanguagesSubjects
 
 let applyRoutes = [
   'Teaching apprenticeship (postgrad)',
-  'Provider-led (postgrad)',
   'Provider-led (postgrad salaried)', // New route as part of the ITT reforms
+  'Primary and secondary (postgrad)',
   'School direct (salaried)',
   'School direct (fee funded)',
 ]
@@ -20,15 +20,15 @@ let applyRoutes = [
 // Not all these routes will be enabled
 let publishRoutes = [
   'Teaching apprenticeship (postgrad)',
-  'Provider-led (postgrad)',
-  'Provider-led (postgrad salaried)', // New route as part of the ITT reforms
+  'Primary and secondary (postgrad)',
+  'Primary and secondary (postgrad salaried)', // New route as part of the ITT reforms
   'School direct (salaried)',
   'School direct (fee funded)',
 ]
 
 let nonPublishRoutes = [
-  'Provider-led (postgrad)',
-  'Provider-led (undergrad)',
+  'Primary and secondary (postgrad)',
+  'Primary and secondary (undergrad)',
   'Assessment only',
   // 'Teach First (postgrad)',
   'Early years graduate employment based',
@@ -107,7 +107,7 @@ let baseRouteData = {
     ],
     financialSupportAvailable: false
   },
-  "Provider-led (undergrad)": {
+  "Primary and secondary (undergrad)": {
     defaultEnabled: true,
     courseLevel: "Undergraduate",
     qualifications: [
@@ -141,7 +141,7 @@ let baseRouteData = {
       }
     ]
   },
-  "Provider-led (postgrad)": {
+  "Primary and secondary (postgrad)": {
     defaultEnabled: true,
     courseLevel: "Postgraduate",
     qualifications: [

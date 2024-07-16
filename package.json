@@ -48,7 +48,7 @@
     "marked": "^4.0.17",
     "moment": "^2.27.0",
     "node-sass": "^9.0.0",
-    "notifications-node-client": "^4.7.2",
+    "notifications-node-client": "^8.2.0",
     "nunjucks": "^3.2.3",
     "nunjucks-markdown": "^2.0.1",
     "pluralize": "^8.0.0",

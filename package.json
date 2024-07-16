@@ -12,7 +12,7 @@
     "test": "npm run lint && gulp generate-assets && jest"
   },
   "dependencies": {
-    "@faker-js/faker": "^7.6.0",
+    "@faker-js/faker": "^8.4.1",
     "@ministryofjustice/frontend": "^1.6.6",
     "acorn": "^7.1.1",
     "ansi-colors": "^4.1.1",

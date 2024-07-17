@@ -95,7 +95,7 @@ generators.generateSchoolWithUncommonName = () => {
 
 
 // Frequency of mix between common school names, faith names, and uncommon names
-// Chosen arbitrarily to provide a mix of very similar names, familiar names, and 
+// Chosen arbitrarily to provide a mix of very similar names, familiar names, and
 // less common names.
 let schoolNameMix = {
   generateSchoolWithCommonName: 0.5,
@@ -108,8 +108,8 @@ const generateSchool = (params = {}) => {
   let selectedGenerator = weighted.select(schoolNameMix)
 
   let schoolName = params.schoolName || generators[selectedGenerator]()
-  let uuid = params.uuid || faker.datatype.uuid()
-  
+  let uuid = params.uuid || faker.string.uuid()
+
   // 5 or 6 digits
   let urn = params.urn || faker.datatype.number({
     'min': 100000,
@@ -207,4 +207,3 @@ generateSchoolsFile(path.join(__dirname, '../app/data/fake-schools.json'))
 // cortedCities.forEach(city =>{
 //   weightedCities[city] = city / 1000
 // })
-

@@ -66,7 +66,7 @@ let selectedLeadSchools = [
   // },
   // {
   //   name: "Tarporley High School and Sixth Form College",
-  //   postcode: "CW6 0BL", 
+  //   postcode: "CW6 0BL",
   //   urn: "138483"
   // },
   // {
@@ -97,7 +97,7 @@ module.exports = {
     return {
       type: "leadSchool",
       ...school,
-      id: faker.datatype.uuid()
+      id: faker.string.uuid()
     }
   })
 }

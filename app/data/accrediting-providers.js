@@ -330,10 +330,10 @@ const scitt = [
 // // Returns a smaller set of providers as the real set is too big
 // const getSelectedProviders = (providers, permanentProviders) => {
 //   // One in 50 providers
-//   let reducedProviders = providers.filter((provider, index) => { 
+//   let reducedProviders = providers.filter((provider, index) => {
 //     return (index % 50 === 0)
 //   })
-  
+
 //   reducedProviders = reducedProviders.concat(permanentAccreditingProviders).sort()
 //   return [...new Set(reducedProviders)] // Uniq
 // }
@@ -344,7 +344,7 @@ const makeObject = (providers, type) => {
       name: provider,
       type: "accreditingProvider",
       accreditingProviderType: type,
-      id: faker.datatype.uuid(),
+      id: faker.string.uuid(),
       ukprn: faker.datatype.number({ min: 100000, max: 999999 }),
       providerCode: faker.random.alphaNumeric(3).toUpperCase(),
       accreditationId: faker.datatype.number({ min: 1000, max: 9999 }),

@@ -19,7 +19,7 @@ const statusesWhereTraineesMustHaveStarted = [
 module.exports = (params) => {
 
   // Todo: make traineeId closer to what Providers user (20/21-1234, etc)
-  const traineeIdNumber = faker.random.alphaNumeric(8).toUpperCase()
+  const traineeIdNumber = faker.string.alphanumeric(8).toUpperCase()
 
   // Much better to use submitted date
   let commencementDate = params?.submittedDate || faker.date.between(

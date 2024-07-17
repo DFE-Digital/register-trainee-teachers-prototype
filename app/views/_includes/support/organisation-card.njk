@@ -44,7 +44,7 @@
         {% endif %} #}
 
         {# Provider code #}
-        <p class="govuk-caption-m govuk-!-font-size-16 govuk-!-margin-bottom-1">Provider code: {{ provider.providerCode or faker.random.alphaNumeric(3) | upper }}</p>
+        <p class="govuk-caption-m govuk-!-font-size-16 govuk-!-margin-bottom-1">Provider code: {{ provider.providerCode or faker.string.alphanumeric(3) | upper }}</p>
 
         {# URN or UKPRN #}
         {% if provider.urn %}

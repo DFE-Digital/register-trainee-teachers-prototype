@@ -25,7 +25,7 @@
             })}}
           </span>
         {% endif %}
-        
+
         {# <span style="display: inline-block;">
           {{govukTag({
             text: school | getStatusText,
@@ -54,9 +54,9 @@
         {% endif %}
 
         {% if school.ukprn %}
-          <p class="govuk-caption-m govuk-!-font-size-16 govuk-!-margin-bottom-1">UKRPRN: {{ school.ukprn or faker.datatype.number({
-            'min': 1000000,
-            'max': 9999999
+          <p class="govuk-caption-m govuk-!-font-size-16 govuk-!-margin-bottom-1">UKRPRN: {{ school.ukprn or faker.number.int({
+            min: 1000000,
+            max: 9999999
           })}}</p>
         {% endif %}
 
@@ -64,12 +64,12 @@
           <p class="govuk-caption-m govuk-!-font-size-16 govuk-!-margin-bottom-1">Postcode: {{ school.postcode}}</p>
         {% endif %}
 
-        
+
       </div>
 
       <div>
 
-        
+
       </div>
 
     </div>

@@ -30,9 +30,9 @@ const generateCourseCode = () => {
   let chars = 'ABCDEFGHGKLMNPQRSTWXYZ' // without I or O
   let code = chars.charAt(Math.floor(Math.random() * chars.length));
   for (var i = 0; i < 3; i++){
-    code += faker.datatype.number({
-      'min': 0,
-      'max': 9
+    code += faker.number.int({
+      min: 0,
+      max: 9
     })
   }
   return code

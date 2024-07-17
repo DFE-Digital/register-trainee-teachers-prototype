@@ -20,9 +20,9 @@ module.exports = router => {
     else {
       if (newRecord.status == 'Pending TRN'){
         newRecord.status = 'TRN received'
-        newRecord.trn = String(faker.datatype.number({
-          'min': 1000000,
-          'max': 9999999
+        newRecord.trn = String(faker.number.int({
+          min: 1000000,
+          max: 9999999
         }))
         utils.deleteTempData(data)
         utils.updateRecord(data, newRecord, "TRN received")

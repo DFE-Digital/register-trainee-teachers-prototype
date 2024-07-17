@@ -10,7 +10,7 @@ module.exports = application => {
   let trn
 
   if (!statusesWithoutTRNs.includes(application.status)){
-    trn = faker.datatype.number({
+    trn = faker.number.int({
       'min': 1000000,
       'max': 9999999
     })

@@ -61,7 +61,7 @@ const setSubjectSpecialisms = (courseDetails, pickRandom) => {
           courseDetails.publishSubjects.second = "Modern languages"
           break
       }
-      
+
       courseDetails.subjects = subjects
 
     }
@@ -98,7 +98,7 @@ module.exports = (params, application) => {
   const isNonDraft = utils.isNonDraft(params)
   const isApplyDraft = utils.sourceIsApply(application) && isDraft
   const isManualDraft = utils.sourceIsManual(application) && isDraft
-  
+
   const sectionIsComplete = (params?.courseDetails?.status == "Completed")
 
   // Whether to pretend that missing or ambiguous data hase already been set
@@ -124,7 +124,7 @@ module.exports = (params, application) => {
     // Grab course details from seed courses
     let routeCourses = providerCoursesByYear.filter(course => course.route == application.route)
 
-    // Todo: seed courses for a provider might not align with selected or enabled routes. 
+    // Todo: seed courses for a provider might not align with selected or enabled routes.
     // Think of a better way of handling this
     if (!routeCourses.length) {
       console.log(`No courses found for ${application.route} for ${application.provider}. Using all routes`)
@@ -154,9 +154,9 @@ module.exports = (params, application) => {
     // for them. We're not saving these back to the course though (awkward to do) as we are probably
     // more interested in the new user journey.
     if (pretendDataIsComplete){
-      let randomDay = faker.datatype.number({
-        'min': 1,
-        'max': 28
+      let randomDay = faker.number.int({
+        min: 1,
+        max: 28
       })
       let startDateVague = moment(courseDetails.startDateVague).toDate()
       let startMonth = startDateVague.getMonth() + 1 // Month 0 is Jan
@@ -166,7 +166,7 @@ module.exports = (params, application) => {
     }
 
     // Some Pubish courses are set to `Full time or part time` - when a user adds one of these
-    // courses we’ll assume `Full time` but let the user override it. 
+    // courses we’ll assume `Full time` but let the user override it.
     if (pretendDataIsComplete && courseDetails.studyMode == "Full time or part time"){
       courseDetails.studyMode = "Full time"
     }

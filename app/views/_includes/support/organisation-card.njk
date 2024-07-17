@@ -14,7 +14,7 @@
       </h3>
 
       <span class="app-application-card_tag-container">
-        
+
         <span style="display: inline-block;">
           {{govukTag({
             text: providerTypeString,
@@ -50,9 +50,9 @@
         {% if provider.urn %}
           <p class="govuk-caption-m govuk-!-font-size-16 govuk-!-margin-bottom-1">URN: {{provider.urn}}</p>
         {% else %}
-          <p class="govuk-caption-m govuk-!-font-size-16 govuk-!-margin-bottom-1">UKRPRN: {{ provider.ukprn or faker.datatype.number({
-            'min': 1000000,
-            'max': 9999999
+          <p class="govuk-caption-m govuk-!-font-size-16 govuk-!-margin-bottom-1">UKRPRN: {{ provider.ukprn or faker.number.int({
+            min: 1000000,
+            max: 9999999
           })}}</p>
         {% endif %}
 
@@ -101,7 +101,7 @@
               {{ (provider.courseDetails.subjects | prettifySubjects | falsify ) or provider.courseDetails.courseNameShort }}
             {% endif %}
           {% endset %}
-          
+
           <span class="govuk-visually-hidden">Course: </span>{{ subjects }}</p>
         <p class="govuk-body govuk-!-font-size-16 govuk-hint govuk-!-margin-bottom-0">
           <span class="govuk-visually-hidden">Route: </span>{{ provider.route }}</p>

@@ -111,9 +111,9 @@ const generateSchool = (params = {}) => {
   let uuid = params.uuid || faker.string.uuid()
 
   // 5 or 6 digits
-  let urn = params.urn || faker.datatype.number({
-    'min': 100000,
-    'max': 9999999
+  let urn = params.urn || faker.number.int({
+    min: 100000,
+    max: 9999999
   })
 
   // Not all schools have addresses
@@ -126,7 +126,7 @@ const generateSchool = (params = {}) => {
     let fakePostcode = faker.address.zipCode()
     if (town == "London"){
       fakePostcode = fakePostcode.split(" ").pop()
-      fakePostcode = `${faker.helpers.arrayElement(cardinalDirections)}${faker.datatype.number({'min': 1, 'max': 20})} ${fakePostcode}`
+      fakePostcode = `${faker.helpers.arrayElement(cardinalDirections)}${faker.number.int({min: 1, max: 20})} ${fakePostcode}`
     }
     postcode = params.postcode || fakePostcode
   }

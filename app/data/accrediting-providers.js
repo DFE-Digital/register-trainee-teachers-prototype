@@ -345,9 +345,9 @@ const makeObject = (providers, type) => {
       type: "accreditingProvider",
       accreditingProviderType: type,
       id: faker.string.uuid(),
-      ukprn: faker.datatype.number({ min: 100000, max: 999999 }),
+      ukprn: faker.number.int({ min: 100000, max: 999999 }),
       providerCode: faker.random.alphaNumeric(3).toUpperCase(),
-      accreditationId: faker.datatype.number({ min: 1000, max: 9999 }),
+      accreditationId: faker.number.int({ min: 1000, max: 9999 }),
       shouldImportFromApply: faker.random.boolean
     }
   } )

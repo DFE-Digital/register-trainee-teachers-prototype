@@ -8,9 +8,9 @@ const generateReference = () => {
   let getRandomChar = () => chars.charAt(Math.floor(Math.random() * chars.length));
   let code = getRandomChar() + getRandomChar()
   for (var i = 0; i < 4; i++){
-    code += faker.datatype.number({
-      'min': 0,
-      'max': 9
+    code += faker.number.int({
+      min: 0,
+      max: 9
     })
   }
   return code

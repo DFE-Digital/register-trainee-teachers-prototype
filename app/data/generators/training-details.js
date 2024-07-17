@@ -2,10 +2,8 @@
 
 const moment      = require('moment')
 const weighted    = require('weighted')
-const { faker }   = require('@faker-js/faker')
+const { fakerUK: faker }   = require('@faker-js/faker')
 const schools     = require('../gis-schools.js')
-
-faker.locale  = 'en_GB'
 
 // Not all trainees have start dates - but to get these statuses you must have
 const statusesWhereTraineesMustHaveStarted = [

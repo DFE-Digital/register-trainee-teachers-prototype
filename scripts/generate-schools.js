@@ -1,8 +1,7 @@
-const { faker }  = require('@faker-js/faker')
+const { fakerUK: faker }  = require('@faker-js/faker')
 const fs         = require('fs')
 const path       = require('path')
 const weighted   = require('weighted')
-faker.locale     = 'en_GB'
 const placesData = require('../app/data/places.js')
 const fakePlaces = placesData.fakePlaces
 

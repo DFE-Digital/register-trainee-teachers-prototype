@@ -5,8 +5,7 @@
 
 const fs            = require('fs')
 const path          = require('path')
-const { faker }     = require('@faker-js/faker')
-faker.locale        = 'en_GB'
+const { fakerUK: faker }     = require('@faker-js/faker')
 const weighted      = require('weighted')
 const moment        = require('moment')
 const _             = require('lodash')
@@ -49,7 +48,7 @@ const generateFakeCourses = () => {
   providers.forEach(provider => {
     let providerCourses = []
     let courseCount = generateCourseCount() // semi-random number of courses per provider
-    
+
     // Hardcode lots courses our default providers
     // A separate setting limits this later so that we can quickly change the number of courses offered in the ui
     if (provider.name == "King’s Oak University" || provider.name == "University of Buckingham") courseCount = 100

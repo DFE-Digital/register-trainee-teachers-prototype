@@ -1,8 +1,7 @@
 
 const moment            = require('moment')
 const weighted          = require('weighted')
-const { faker }         = require('@faker-js/faker')
-faker.locale            = 'en_GB'
+const { fakerUK: faker }         = require('@faker-js/faker')
 const trainingRouteData = require('./../training-route-data')
 const ittSubjects       = require('./../itt-subjects')
 const courses           = require('./../courses.json')

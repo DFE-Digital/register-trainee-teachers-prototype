@@ -1,25 +1,25 @@
-const { fakerUK: fakerFR } = require('@faker-js/faker')
+const { fakerFR: fakerFR } = require('@faker-js/faker')
 const { fakerUK: faker } = require('@faker-js/faker')
 
 
 module.exports = (personalDetails) => {
   let address, internationalAddress = undefined
-  let county = undefined // faker.address.county()
+  let county = undefined // faker.location.county()
 
   if (personalDetails.isInternationalTrainee) {
-    internationalAddress = `${fakerFR.address.streetAddress()}
-${fakerFR.address.city()}
-${fakerFR.address.state()}
-${fakerFR.address.zipCode()}`
+    internationalAddress = `${fakerFR.location.streetAddress()}
+${fakerFR.location.city()}
+${fakerFR.location.state()}
+${fakerFR.location.zipCode()}`
   }
   else {
 
     address = {
-      line1: faker.address.streetAddress(),
+      line1: faker.location.streetAddress(),
       line2: '',
-      level2: faker.address.city(),
-      level1: personalDetails.isInternationalTrainee ? faker.address.state() : county,
-      postcode: faker.address.zipCode(),
+      level2: faker.location.city(),
+      level1: personalDetails.isInternationalTrainee ? faker.location.state() : county,
+      postcode: faker.location.zipCode(),
       ...(personalDetails.isInternationalTrainee && { country: 'France' })
     }
   }

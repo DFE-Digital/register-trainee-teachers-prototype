@@ -359,6 +359,17 @@ module.exports = router => {
 
   })
 
+
+  // Filter all course choices first via a provider selection page
+  router.get(['/:recordtype/:uuid/course-details/','/:recordtype/course-details/'], function (req, res) {
+    let recordPath = utils.getRecordPath(req)
+    let referrer = utils.getReferrer(req.query.referrer)
+    let provider = data.record?.provider
+
+    // TODO: Maybe add some further logic once the Accredited Provider and Lead Partners are clarified and implemented. For the time being the full list will be displayed regardless of which hardcoded provider is selected.
+    res.redirect(`${recordPath}/course-details/select-course-provider${referrer}`)
+  })
+
   // Decide whether to go down Publish pick-course journey or directly to manual course details
   router.get(['/:recordtype/:uuid/course-details','/:recordtype/course-details'], function (req, res) {
     const data = req.session.data

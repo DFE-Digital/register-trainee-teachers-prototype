@@ -28,7 +28,6 @@ const middleware = [
   require('./lib/middleware/extensions/extensions.js')
 ]
 const config = require('./app/config.js')
-const documentationRoutes = require('./docs/documentation_routes.js')
 const packageJson = require('./package.json')
 const routes = require('./app/routes.js')
 const utils = require('./lib/utils.js')
@@ -46,7 +45,6 @@ if (fs.existsSync('./app/v6/routes.js')) {
 }
 
 const app = express()
-const documentationApp = express()
 
 if (useV6) {
   console.log('/app/v6/routes.js detected - using v6 compatibility mode')
@@ -71,9 +69,7 @@ app.use(compression({ filter: shouldCompress }))
 
 // Set cookies for use in cookie banner.
 app.use(cookieParser())
-documentationApp.use(cookieParser())
 app.use(utils.handleCookies(app))
-documentationApp.use(utils.handleCookies(documentationApp))
 
 // Set up configuration variables
 var releaseVersion = packageJson.version
@@ -153,24 +149,6 @@ app.use('/node_modules/govuk-frontend', express.static(path.join(__dirname, '/no
 
 app.use('/node_modules/moj-frontend', express.static(path.join(__dirname, '/node_modules/@ministryofjustice/frontend')))
 
-// Set up documentation app
-if (useDocumentation) {
-  var documentationViews = [
-    path.join(__dirname, '/node_modules/govuk-frontend/'),
-    path.join(__dirname, '/node_modules/govuk-frontend/components'),
-    path.join(__dirname, '/docs/views/'),
-    path.join(__dirname, '/lib/')
-  ]
-
-  nunjucksConfig.express = documentationApp
-  var nunjucksDocumentationEnv = nunjucks.configure(documentationViews, nunjucksConfig)
-  // Nunjucks filters
-  utils.addNunjucksFilters(nunjucksDocumentationEnv)
-
-  // Set views engine
-  documentationApp.set('view engine', 'html')
-}
-
 // Support for parsing data in POSTs
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({
@@ -243,9 +221,6 @@ app.use(flash())
 if (useAutoStoreData === 'true') {
   app.use(utils.autoStoreData)
   utils.addCheckedFunction(nunjucksAppEnv)
-  if (useDocumentation) {
-    utils.addCheckedFunction(nunjucksDocumentationEnv)
-  }
   if (useV6) {
     utils.addCheckedFunction(nunjucksV6Env)
   }
@@ -296,20 +271,6 @@ if (typeof (routes) !== 'function') {
   app.use('/', routes)
 }
 
-if (useDocumentation) {
-  // Clone app locals to documentation app locals
-  // Use Object.assign to ensure app.locals is cloned to prevent additions from
-  // updating the original app.locals
-  documentationApp.locals = Object.assign({}, app.locals)
-  documentationApp.locals.serviceName = 'Prototype Kit'
-
-  // Create separate router for docs
-  app.use('/docs', documentationApp)
-
-  // Docs under the /docs namespace
-  documentationApp.use('/', documentationRoutes)
-}
-
 if (useV6) {
   // Clone app locals to v6 app locals
   v6App.locals = Object.assign({}, app.locals)
@@ -337,15 +298,6 @@ app.get(/\.html?$/i, function (req, res) {
 app.get(/^([^.]+)$/, function (req, res, next) {
   utils.matchRoutes(req, res, next)
 })
-
-if (useDocumentation) {
-  // Documentation  routes
-  documentationApp.get(/^([^.]+)$/, function (req, res, next) {
-    if (!utils.matchMdRoutes(req, res)) {
-      utils.matchRoutes(req, res, next)
-    }
-  })
-}
 
 if (useV6) {
   // App folder routes get priority

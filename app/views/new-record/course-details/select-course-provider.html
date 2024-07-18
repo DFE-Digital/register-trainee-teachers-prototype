@@ -1,0 +1,16 @@
+{% extends "_templates/_new-record.html" %}
+
+{% set pageHeading %}
+  {% if filteredRoute %}
+    Your {{filteredRoute | lower | replace("(", "") | replace(")", "")}} courses starting in {{courseStartYear | yearToAcademicYearString }}
+  {% else %}
+    Your courses starting in {{courseStartYear | yearToAcademicYearString }}
+  {% endif %}
+{% endset %}
+
+{% set formAction = "./select-course-provider-answer" | addReferrer(referrer) %}
+
+{% block formContent %}
+  {% include "_includes/forms/course-details/select-course-provider.html" %}
+{% endblock %}
+

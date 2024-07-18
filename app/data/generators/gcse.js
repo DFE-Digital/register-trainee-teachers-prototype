@@ -1,4 +1,4 @@
-const { faker } = require('@faker-js/faker')
+const { fakerUK: faker } = require('@faker-js/faker')
 const weighted  = require('weighted')
 const gcseData  = require('../gcse')
 
@@ -116,7 +116,7 @@ module.exports = (isInternationalTrainee, simpleGcseGrades) => {
               comparable: 'GCSE grades A*-C/9-4'
             },
             grade: [{
-              grade: faker.datatype.number({ min: 10, max: 20 })
+              grade: faker.number.int({ min: 10, max: 20 })
             }],
             year
           },
@@ -133,7 +133,7 @@ module.exports = (isInternationalTrainee, simpleGcseGrades) => {
               comparable: 'GCSE (grades A*-C / 9-4)'
             },
             grade: [{
-              grade: faker.datatype.number({ min: 10, max: 20 })
+              grade: faker.number.int({ min: 10, max: 20 })
             }],
             year
           },
@@ -150,7 +150,7 @@ module.exports = (isInternationalTrainee, simpleGcseGrades) => {
               comparable: 'GCSE (grades A*-C / 9-4)'
             },
             grade: [{
-              grade: faker.datatype.number({ min: 10, max: 20 })
+              grade: faker.number.int({ min: 10, max: 20 })
             }],
             year
           }

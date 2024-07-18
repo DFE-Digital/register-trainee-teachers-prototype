@@ -79,7 +79,7 @@ exports.getOrdinalName = integer => {
     'ninth',
     'tenth'
   ]
-  
+
   if (!_.isNumber(integer) || integer < 1 || integer > 10){
     console.log("Error in getOrdinalName: input out of bounds")
     return ""
@@ -224,7 +224,7 @@ exports.setAcademicYears = record => {
 
 // Calculates academic years for a trainee
 // Academic years are all the years that the trainee was in training for
-// A trainee that started in 2019 to 2020 and is still in training in 2022 to 2023 
+// A trainee that started in 2019 to 2020 and is still in training in 2022 to 2023
 // will have academic years of: ['2019 to 2020','2020 to 2021', '2021 to 2022', '2022 to 2023']
 
 // For finished trainees, it'll be all the years between start year and end year. For trainees
@@ -636,7 +636,7 @@ exports.getFinancialSupport = record => {
 
   // Allocation subject may be falsy. For some routes this will mean we can’t calulate the financialSupport
   // for Early years, it doesn't matter
-  let allocationSubject = exports.getAllocationSubject(record) 
+  let allocationSubject = exports.getAllocationSubject(record)
   return exports.getFinancialSupportByRouteAndSubject(record.route, allocationSubject)
 }
 
@@ -793,7 +793,7 @@ exports.updatePublishCourse = function(course, data=false){
     return foundCourse
   })
 
-  if (!foundCourse) console.log(`Error: course ${course?.courseNameLong} not found, so couldn’t be 
+  if (!foundCourse) console.log(`Error: course ${course?.courseNameLong} not found, so couldn’t be
     updated`)
 
   // This overwrites the one we found by reference. There's probably a cleaner way of
@@ -837,7 +837,7 @@ exports.routeHasPublishCourses = function(record){
 // Lowercase array excluding some proper nouns
 exports.dynamicLowercase = input => {
   if (!input) return input
-  
+
   // These things shouldn’t get lowercased
   let ignoreSubjects = [
   "Arabic",
@@ -1214,7 +1214,7 @@ exports.isPreviousYears = record => {
 exports.getEndAcademicYear = record => record.endAcademicYear
 
 // Use the course duration to derive an end academic year
-// This is used where we don’t have course end dates - such as for 
+// This is used where we don’t have course end dates - such as for
 // HESA records
 exports.calculateCourseEndAcademicYear = record => {
   if (record?.courseDetails?.duration){
@@ -1279,7 +1279,7 @@ exports.dateHesaRecordUnlocked = record => {
   return moment(`${endCalendarYear}-04-14`).format("YYYY-MM-DD")
 }
 
-/* 
+/*
   A HESA record should be read only if:
   - its not finishing this academic year
   - or its finishing this year, but today’s date is before the cut-off
@@ -1313,7 +1313,7 @@ exports.isHesaAndLocked = record => {
 exports.isCurrentYear = record => {
   let isStartingThisYear = record?.academicYear == years.currentAcademicYear
 
-  // HESA records are sometimes missing course end dates. If 
+  // HESA records are sometimes missing course end dates. If
   let endAcademicYear
   if (record?.courseDetails?.endDate){
     endAcademicYear = exports.dateToAcademicYear(record?.courseDetails?.endDate)
@@ -1324,7 +1324,7 @@ exports.isCurrentYear = record => {
     }
     else if (exports.isPartTime(record)){
       endAcademicYear = record?.academicYear + 1
-    } 
+    }
     else if (exports.isFullTime(record)){
       endAcademicYear = record?.academicYear
     }
@@ -1381,7 +1381,7 @@ exports.routeIsEarlyYears = route => {
   return route && route.includes("Early years")
 }
 
-// Used by placements - for Early years the locations you go to are settings and not 
+// Used by placements - for Early years the locations you go to are settings and not
 // necessarily schools
 exports.schoolOrSettingText = record => {
   if (exports.isEarlyYears(record)) {
@@ -1457,7 +1457,7 @@ exports.recordIsComplete = function(record, data=false ) {
   let recordIsComplete = requiredSections.every(section => {
 
     let sectionStatus = record[section]?.status == "Completed"
-    
+
     // Default
     if (exports.sourceIsManual(record)){
       return sectionStatus
@@ -1542,7 +1542,7 @@ exports.needsStartDate = function(record) {
 exports.hasOutstandingActions = function(record, data = false) {
 
   data = Object.assign({}, (data || this?.ctx?.data || false))
-  
+
   let hasOutstandingActions = false
 
   if (exports.needsStartDate(record)) {
@@ -1913,7 +1913,7 @@ exports.filterRecords = (records, data, filters = {}) => {
         return specialismsMatch || allocationSubjectsMatch || publishSubjectsMatch || publishAllocationSubjectsMatch
 
       })
-      
+
     })
   }
 
@@ -2185,7 +2185,7 @@ exports.sortRecordsByDateUpdated = records => {
 // Look up provider data using the provider name.
 // Works with strings and arrays of strings
 // eg
-// "Coventry University" => 
+// "Coventry University" =>
 // {
 //   name: 'Coventry University',
 //   type: 'accreditingProvider'
@@ -2420,7 +2420,7 @@ exports.updateRecord = (data, newRecord, timelineMessage) => {
 
   // Must be a new record
   if (!newRecord.id){
-    newRecord.id = faker.datatype.uuid()
+    newRecord.id = faker.string.uuid()
     records.push(newRecord)
   }
   // Is an existing record
@@ -2525,7 +2525,7 @@ exports.addToErrorArray = function(item){
   if (!this?.ctx?.data){
     console.log("Error with addToErrorArray: ctx not passed in")
     return false
-  } 
+  }
   let errorArray = this.ctx?.data?.temp?.errorArray || []
   errorArray.push(item)
   _.set(this.ctx, 'data.temp.errorArray', errorArray)
@@ -2561,7 +2561,7 @@ exports.stripPlaceholders = (value, items=false) => {
 Highlight invalid summary list rows
 
 This is filter patches in the ability to highlight rows on a summary list which
-contain invalid answers. 
+contain invalid answers.
 
 We indicate invalid answers by prefacing them with the string **invalid** or **missing**
 
@@ -2569,7 +2569,7 @@ This filter loops through each row, looking for this string in value.html or val
 If found, it adds some classes and messaging, and moves the action link within the value.
 
 It also pushes the name of the row with the error to a temporary array stored
-in the Nunjucks context. This is a hacky way that we can get a list of each of the 
+in the Nunjucks context. This is a hacky way that we can get a list of each of the
 errors visible in a set of summary lists without knowing about the data structure of a
 record. The very act of running this filter on each summary list builds up this array.
 We can then use that array to display a summary at the top of the page. This is combined
@@ -2608,7 +2608,7 @@ exports.highlightInvalidRows = function(rows, params=false) {
       // Values are stored two possible places
       let value = theRow?.value?.html || theRow?.value?.text || ""
       if (_.isString(value)) value = value.trim()
-      
+
       if (featureEnabled){
 
         if (params?.treatEmptyAsMissing && (!value || value == "")) {
@@ -2721,7 +2721,7 @@ exports.markSummaryRow = function(row, params) {
   _.set(row, "value.html", exports.stripPlaceholders(value))// strip any placeholder tags
 
   // Generate an id so we can anchor to this row
-  let id = `summary-list--row-invalid--${faker.datatype.uuid()}`
+  let id = `summary-list--row-invalid--${faker.string.uuid()}`
 
   let message, linkText, linkTextAppendHidden
 
@@ -2799,7 +2799,7 @@ exports.markInput = function(data, params){
   let valueCleaned = exports.stripPlaceholders(data.value) // strip any placeholder tags
 
   // Generate an id so we can anchor to this row
-  let id = data?.id || `app-input-invalid--${faker.datatype.uuid()}`
+  let id = data?.id || `app-input-invalid--${faker.string.uuid()}`
 
   let message
 
@@ -2824,7 +2824,7 @@ exports.markInput = function(data, params){
   }
   else if (type == 'missing'){
     message = `${key} is missing`
-    
+
     data.errorMessage = {
       html: message
     }
@@ -2839,16 +2839,16 @@ exports.markInput = function(data, params){
 
 exports.markInputError = function(data) {
   return exports.markInput.apply(this, [data, 'error'])
-} 
+}
 
 exports.markInputInvalid = function(data) {
   return exports.markInput.apply(this, [data, 'invalid'])
-} 
+}
 
 exports.markInputMissing = function(data) {
   return exports.markInput.apply(this, [data, 'missing'])
-} 
-// Take in a form object to 
+}
+// Take in a form object to
 
 exports.highlightInvalidInputs = function(data, params={}){
 

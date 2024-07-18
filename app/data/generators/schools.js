@@ -2,7 +2,7 @@
 
 const moment      = require('moment')
 const weighted    = require('weighted')
-const { faker }   = require('@faker-js/faker')
+const { fakerUK: faker }   = require('@faker-js/faker')
 const allSchools  = require('../gis-schools.js')
 
 // Using the urn to match against
@@ -13,8 +13,6 @@ const leadSchoolUrns = require('./../lead-schools.js').selected.map(school => sc
 const filteredSchools = allSchools.filter(school => leadSchoolUrns.includes(school?.urn))
 
 const trainingRouteData = require('../training-route-data')
-
-faker.locale  = 'en_GB'
 
 const requiresLeadSchool = params => {
   let routeData = trainingRouteData.trainingRoutes[params.route]

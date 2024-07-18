@@ -1,4 +1,4 @@
-const { faker } = require('@faker-js/faker')
+const { fakerUK: faker } = require('@faker-js/faker')
 const moment    = require('moment')
 const weighted  = require('weighted')
 

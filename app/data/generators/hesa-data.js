@@ -1,4 +1,4 @@
-const { faker } = require('@faker-js/faker')
+const { fakerUK: faker } = require('@faker-js/faker')
 const moment    = require('moment')
 const weighted   = require('weighted')
 
@@ -17,11 +17,10 @@ module.exports = record => {
     record.courseDetails.endDate = weighted.select([null, endDate], percentageMissing)
   }
 
-  let hesaId = `2294839475${faker.datatype.number({'min': 1000000, 'max': 9999999})}`
+  let hesaId = `2294839475${faker.number.int({min: 1000000, max: 9999999})}`
 
   record.hesa = {
     id: hesaId
   }
   return record
 }
-

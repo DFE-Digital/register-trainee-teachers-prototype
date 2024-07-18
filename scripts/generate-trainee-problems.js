@@ -4,8 +4,7 @@
 
 const fs            = require('fs')
 const path          = require('path')
-const { faker }     = require('@faker-js/faker')
-faker.locale        = 'en_GB'
+const { fakerUK: faker }     = require('@faker-js/faker')
 const weighted      = require('weighted')
 const moment        = require('moment')
 const _             = require('lodash')
@@ -146,7 +145,7 @@ const generateTraineeProblem = (provider, providerTrainees) => {
   problem.type = randomProblemType
   // Remap duplicate drafts as regular duplicate type
   if (problem.type == 'duplicateDraft') problem.type = "duplicate"
-  problem.id = faker.datatype.uuid()
+  problem.id = faker.string.uuid()
   problem.provider = provider.name
   problem.date = randomDateInPast(12, 0)
 

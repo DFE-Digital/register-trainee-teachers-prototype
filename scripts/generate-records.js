@@ -5,8 +5,7 @@
 // Re-run this script after generating new courses
 const fs                = require('fs')
 const path              = require('path')
-const { faker }         = require('@faker-js/faker')
-faker.locale            = 'en_GB'
+const { fakerUK: faker }         = require('@faker-js/faker')
 const moment            = require('moment')
 const _                 = require('lodash')
 const weighted          = require('weighted')
@@ -82,7 +81,7 @@ const generateFakeApplication = (params = {}) => {
   }
 
   application.diversity       = (params.diversity === null) ? undefined : { ...generateDiversity(), ...params.diversity }
-  application.id              = params.id || faker.datatype.uuid()
+  application.id              = params.id || faker.string.uuid()
   application.personalDetails = (params.personalDetails === null) ? undefined : { ...generatePersonalDetails(), ...params.personalDetails }
   application.provider        = params.provider || faker.helpers.arrayElement(providers).name
   application.accreditingProviderType    = params.accreditingProviderType || "SCITT" // TODO: this should look up the accrediting provider type from the provider's name
@@ -97,7 +96,7 @@ const generateFakeApplication = (params = {}) => {
 
   // TODO: fix this hack. We ignore the status except where it's draft.
   application.status          = (params.status == "Draft" || params.isSeed) ? params.status : generateStatus(application)
- 
+
   if (application.status == "Deferred") {
     application.previousStatus = "TRN received" // set a state to go back to
   }
@@ -145,7 +144,7 @@ const generateFakeApplication = (params = {}) => {
 
   // A Levels - not used currently
   // application.gce = (params.gce === null) ? undefined : generateGce(faker, isInternationalTrainee)
-  
+
   let requiredSections = trainingRouteData.trainingRoutes[application.route].sections
 
   // Lead and employing school
@@ -162,12 +161,12 @@ const generateFakeApplication = (params = {}) => {
 
   // Undergraduate Qualification
   if (requiredSections.includes('undergraduateQualification')) {
-    application.undergraduateQualification           = (params.undergraduateQualification === null) ? undefined : { ...generateUndergraduateQualification(), ...params.undergraduateQualification }  
+    application.undergraduateQualification           = (params.undergraduateQualification === null) ? undefined : { ...generateUndergraduateQualification(), ...params.undergraduateQualification }
   }
-  
+
   // Placements
   if (requiredSections.includes('placement')) {
-    application.placement        = (params.placement === null) ? undefined : { ...generatePlacement(application), ...params.placement } 
+    application.placement        = (params.placement === null) ? undefined : { ...generatePlacement(application), ...params.placement }
   }
 
   // iQTS
@@ -177,7 +176,7 @@ const generateFakeApplication = (params = {}) => {
 
   // Make sure statuses match qualifications
   let routeQualifications = trainingRouteData.trainingRoutes[application.route].qualifications
-  if (routeQualifications.includes('EYTS')) {  
+  if (routeQualifications.includes('EYTS')) {
     application.status = application.status.replace('QTS', 'EYTS')
   }
 
@@ -310,7 +309,7 @@ const generateFakeApplicationsForProvider = (provider, year, count) => {
     }
   }
 
-  const stubApplication = {} 
+  const stubApplication = {}
 
   // Todo: make these drafts more random
   stubApplication.draft = {
@@ -437,7 +436,7 @@ const generateFakeApplicationsForProvider = (provider, year, count) => {
         provider: provider.name,
         accreditingProviderType: provider.accreditingProviderType,
         academicYearSimple: year
-      }, 
+      },
       ...stubApplication[statusPick]
     }
 
@@ -485,4 +484,3 @@ const generateApplicationsFile = (filePath) => {
 }
 
 generateApplicationsFile(path.join(__dirname, '../app/data/records.json'))
-

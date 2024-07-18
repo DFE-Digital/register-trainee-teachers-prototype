@@ -4,8 +4,7 @@
 
 const fs            = require('fs')
 const path          = require('path')
-const { faker }     = require('@faker-js/faker')
-faker.locale        = 'en_GB'
+const { fakerUK: faker }     = require('@faker-js/faker')
 const weighted      = require('weighted')
 const moment        = require('moment')
 const _             = require('lodash')
@@ -30,7 +29,7 @@ const generateUser = (provider, role='team member') => {
 
   let user = {}
 
-  user.id = faker.datatype.uuid()
+  user.id = faker.string.uuid()
   let firstName = faker.name.firstName()
   let familyName = faker.name.lastName()
   user.fullName = `${firstName} ${familyName}`
@@ -40,7 +39,7 @@ const generateUser = (provider, role='team member') => {
 
   // Shuffle the possible permissions - used so that we can pick the first n and to get some selected randomly
   let shuffledPermissions = faker.helpers.shuffle(permissions.allUserPermissions[provider.type])
-  
+
   let userPermissions = []
 
   // Team members have a varied number of permissions

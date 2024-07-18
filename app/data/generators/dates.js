@@ -1,4 +1,4 @@
-const { faker } = require('@faker-js/faker')
+const { fakerUK: faker } = require('@faker-js/faker')
 const moment    = require('moment')
 
 // Faker has a bug that faker.helpers.dateBetween requires the input dates to be in order
@@ -122,12 +122,12 @@ module.exports = ({updatedDate, submittedDate, deferredDate, withdrawalDate, qua
     deferredDate = deferredDate || updatedDate
   }
 
-  if (application.status === 'Withdrawn') {    
+  if (application.status === 'Withdrawn') {
     // Make sure withdrawal date is the same as the last updated date
     withdrawalDate = withdrawalDate || updatedDate
   }
 
-  if (application.status.includes('awarded')) {    
+  if (application.status.includes('awarded')) {
     let courseEndDate = application.courseDetails.endDate
 
     qualificationAwardedDate = faker.date.between(

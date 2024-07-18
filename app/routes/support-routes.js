@@ -6,7 +6,7 @@ const seedRandom = require('seedrandom')
 const url = require('url')
 const utils = require('./../lib/utils')
 const weighted = require('weighted')
-const { faker } = require('@faker-js/faker')
+const { fakerUK: faker } = require('@faker-js/faker')
 
 // In function because this is too big to pass around in session
 const getSchools = () => {
@@ -230,7 +230,7 @@ module.exports = router => {
         navActive: 'organisations'
       })
     }
-    
+
   })
 
   // Render organisation pages, passing along the organisation UUID
@@ -281,7 +281,7 @@ module.exports = router => {
     const data = req.session.data
     let uuid = req.params.uuid
     let provider = data.providers.all.find(provider => provider.id == uuid)
-    
+
     // Use our own render as some templates live at /index.html
     let providerUrl = `/support/organisations/${uuid}`
 
@@ -323,12 +323,12 @@ module.exports = router => {
     const allSchools = getSchools()
 
     // const first100Schools = allSchools.slice(0, 100)
-    
+
     res.render('support/schools/index', {
       schools: allSchools,
       navActive: 'schools'
     })
-    
+
 
   })
 

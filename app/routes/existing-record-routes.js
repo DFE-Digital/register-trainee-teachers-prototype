@@ -1,4 +1,4 @@
-const { faker } = require('@faker-js/faker')
+const { fakerUK: faker } = require('@faker-js/faker')
 const path      = require('path')
 const moment    = require('moment')
 const filters   = require('./../filters.js')()
@@ -20,9 +20,9 @@ module.exports = router => {
     else {
       if (newRecord.status == 'Pending TRN'){
         newRecord.status = 'TRN received'
-        newRecord.trn = String(faker.datatype.number({
-          'min': 1000000,
-          'max': 9999999
+        newRecord.trn = String(faker.number.int({
+          min: 1000000,
+          max: 9999999
         }))
         utils.deleteTempData(data)
         utils.updateRecord(data, newRecord, "TRN received")

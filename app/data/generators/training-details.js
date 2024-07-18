@@ -2,10 +2,8 @@
 
 const moment      = require('moment')
 const weighted    = require('weighted')
-const { faker }   = require('@faker-js/faker')
+const { fakerUK: faker }   = require('@faker-js/faker')
 const schools     = require('../gis-schools.js')
-
-faker.locale  = 'en_GB'
 
 // Not all trainees have start dates - but to get these statuses you must have
 const statusesWhereTraineesMustHaveStarted = [
@@ -19,7 +17,7 @@ const statusesWhereTraineesMustHaveStarted = [
 module.exports = (params) => {
 
   // Todo: make traineeId closer to what Providers user (20/21-1234, etc)
-  const traineeIdNumber = faker.random.alphaNumeric(8).toUpperCase()
+  const traineeIdNumber = faker.string.alphanumeric(8).toUpperCase()
 
   // Much better to use submitted date
   let commencementDate = params?.submittedDate || faker.date.between(

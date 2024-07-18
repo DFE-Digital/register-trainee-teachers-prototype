@@ -1,4 +1,4 @@
-const { faker } = require('@faker-js/faker')
+const { fakerUK: faker } = require('@faker-js/faker')
 
 // Seed allows the UUIDs to be consistent each time we run this. The seed should be different than that used by lead-schools.js so we get different UUIDs for each.
 faker.seed(123);
@@ -66,7 +66,7 @@ let selectedLeadSchools = [
   // },
   // {
   //   name: "Tarporley High School and Sixth Form College",
-  //   postcode: "CW6 0BL", 
+  //   postcode: "CW6 0BL",
   //   urn: "138483"
   // },
   // {
@@ -97,7 +97,7 @@ module.exports = {
     return {
       type: "leadSchool",
       ...school,
-      id: faker.datatype.uuid()
+      id: faker.string.uuid()
     }
   })
 }

@@ -5,8 +5,7 @@
 
 const moment            = require('moment')
 const weighted = require('weighted')
-const { faker }         = require('@faker-js/faker')
-faker.locale            = 'en_GB'
+const { fakerUK: faker }         = require('@faker-js/faker')
 const trainingRouteData = require('./../training-route-data')
 
 const utils             = require('./../../lib/utils.js')
@@ -30,9 +29,9 @@ const generateCourseCode = () => {
   let chars = 'ABCDEFGHGKLMNPQRSTWXYZ' // without I or O
   let code = chars.charAt(Math.floor(Math.random() * chars.length));
   for (var i = 0; i < 3; i++){
-    code += faker.datatype.number({
-      'min': 0,
-      'max': 9
+    code += faker.number.int({
+      min: 0,
+      max: 9
     })
   }
   return code
@@ -82,7 +81,7 @@ const pickRoute = (isPublishCourse = false) => {
 // Return some realistic subjects a primary teacher might train in
 // Only used for 'manually added' trainees
 const getPrimarySubjects = subjectCount => {
-  
+
   // Assumption that all primary courses have `Primary` as the first subject
   let subjects = ["Primary teaching"]
 
@@ -179,7 +178,7 @@ const getSecondaryPublishSubjects = (subjectCount) => {
     subjects = faker.helpers.arrayElement([
       faker.helpers.arrayElement(ittSubjects.corePublishSubjects),
       faker.helpers.arrayElement(nonPrimaryPublishSubjects),
-      // In Publish users pick specific languages - this isn't modelled here - instead we just set 
+      // In Publish users pick specific languages - this isn't modelled here - instead we just set
       // 'Modern languages' and the ui will ask which language. We do include single languages though.
       "Modern languages",
       randomisedLanguages.slice(0,1), // One language
@@ -263,7 +262,7 @@ module.exports = (params) => {
       subjectCount = weighted.select([1,2,3],[0.6,0.3,0.1]) // 40% multiple subjects
       subjects = getSecondarySubjects(subjectCount)
     }
-    
+
   }
 
   publishCourseSubjects = [].concat(publishCourseSubjects) // coerce to array just in case
@@ -330,7 +329,7 @@ module.exports = (params) => {
         }
       }
     }
-    
+
   }
   // Part time
   else {
@@ -373,7 +372,7 @@ module.exports = (params) => {
 
     const code = generateCourseCode() // G568
 
-    const id = faker.datatype.uuid()
+    const id = faker.string.uuid()
 
     // English with biology
     let courseNameShort = `${utils.prettifySubjects(publishCourseSubjects)}`

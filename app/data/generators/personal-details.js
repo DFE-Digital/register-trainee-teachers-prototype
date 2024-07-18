@@ -1,5 +1,4 @@
-const { faker }  = require('@faker-js/faker')
-faker.locale     = 'en_GB'
+const { fakerUK: faker }  = require('@faker-js/faker')
 const weighted   = require('weighted')
 
 module.exports = () => {

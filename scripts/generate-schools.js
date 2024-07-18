@@ -1,8 +1,7 @@
-const { faker }  = require('@faker-js/faker')
+const { fakerUK: faker }  = require('@faker-js/faker')
 const fs         = require('fs')
 const path       = require('path')
 const weighted   = require('weighted')
-faker.locale     = 'en_GB'
 const placesData = require('../app/data/places.js')
 const fakePlaces = placesData.fakePlaces
 
@@ -95,7 +94,7 @@ generators.generateSchoolWithUncommonName = () => {
 
 
 // Frequency of mix between common school names, faith names, and uncommon names
-// Chosen arbitrarily to provide a mix of very similar names, familiar names, and 
+// Chosen arbitrarily to provide a mix of very similar names, familiar names, and
 // less common names.
 let schoolNameMix = {
   generateSchoolWithCommonName: 0.5,
@@ -108,12 +107,12 @@ const generateSchool = (params = {}) => {
   let selectedGenerator = weighted.select(schoolNameMix)
 
   let schoolName = params.schoolName || generators[selectedGenerator]()
-  let uuid = params.uuid || faker.datatype.uuid()
-  
+  let uuid = params.uuid || faker.string.uuid()
+
   // 5 or 6 digits
-  let urn = params.urn || faker.datatype.number({
-    'min': 100000,
-    'max': 9999999
+  let urn = params.urn || faker.number.int({
+    min: 100000,
+    max: 9999999
   })
 
   // Not all schools have addresses
@@ -121,12 +120,12 @@ const generateSchool = (params = {}) => {
   let ukprn, addressLine1, town, postcode
 
   if (hasAddress) {
-    addressLine1 = params.addressLine1 || faker.address.streetAddress()
+    addressLine1 = params.addressLine1 || faker.location.streetAddress()
     town = params.town || weighted.select(placesData.weightedCities)
-    let fakePostcode = faker.address.zipCode()
+    let fakePostcode = faker.location.zipCode()
     if (town == "London"){
       fakePostcode = fakePostcode.split(" ").pop()
-      fakePostcode = `${faker.helpers.arrayElement(cardinalDirections)}${faker.datatype.number({'min': 1, 'max': 20})} ${fakePostcode}`
+      fakePostcode = `${faker.helpers.arrayElement(cardinalDirections)}${faker.number.int({min: 1, max: 20})} ${fakePostcode}`
     }
     postcode = params.postcode || fakePostcode
   }
@@ -207,4 +206,3 @@ generateSchoolsFile(path.join(__dirname, '../app/data/fake-schools.json'))
 // cortedCities.forEach(city =>{
 //   weightedCities[city] = city / 1000
 // })
-

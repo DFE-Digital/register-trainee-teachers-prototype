@@ -1,5 +1,5 @@
 const weighted  = require('weighted')
-const { faker } = require('@faker-js/faker')
+const { fakerUK: faker } = require('@faker-js/faker')
 
 const allSchools = require('../gis-schools.js')
 
@@ -14,7 +14,7 @@ module.exports = (params) => {
       school,
       // startMonth,
       // duration,
-      id: faker.datatype.uuid()
+      id: faker.string.uuid()
     }
   }
 
@@ -53,7 +53,7 @@ module.exports = (params) => {
     return {}
   } else {
     return {
-      items: items, 
+      items: items,
       status
     }
   }

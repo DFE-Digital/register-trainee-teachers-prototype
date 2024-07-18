@@ -1,0 +1,28 @@
+{{ govukRadios({
+name: "courseProvider",
+fieldset: {
+legend: {
+text: "Which training organisation will deliver the course?",
+isPageHeading: true,
+classes: "govuk-fieldset__legend--l"
+}
+},
+items: [
+{
+value: "accreditedProvider_1",
+text: "Webury Hill SCITT, Accredited provider"
+},
+{
+value: "leadPartner_1",
+text: "University of BAT, Lead partner"
+},
+{
+value: "leadPartner_2",
+text: "Ironbarrow High, Lead partner, "
+}
+]
+}) }}
+
+{{ govukButton({
+  text: "Continue"
+}) }}

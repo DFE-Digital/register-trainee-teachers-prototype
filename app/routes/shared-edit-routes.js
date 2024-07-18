@@ -371,7 +371,7 @@ module.exports = router => {
   })
 
   // Decide whether to go down Publish pick-course journey or directly to manual course details
-  router.get(['/:recordtype/:uuid/course-details','/:recordtype/course-details'], function (req, res) {
+  router.get(['/:recordtype/:uuid/course-details/select-course-provider-answer','/:recordtype/course-details/select-course-provider-answer',], function (req, res) {
     const data = req.session.data
     const record = data.record
     let recordPath = utils.getRecordPath(req)

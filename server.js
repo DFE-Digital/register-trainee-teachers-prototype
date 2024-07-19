@@ -28,30 +28,12 @@ const middleware = [
   require('./lib/middleware/extensions/extensions.js')
 ]
 const config = require('./app/config.js')
-const documentationRoutes = require('./docs/documentation_routes.js')
 const packageJson = require('./package.json')
 const routes = require('./app/routes.js')
 const utils = require('./lib/utils.js')
 const extensions = require('./lib/extensions/extensions.js')
 
-// Variables for v6 backwards compatibility
-// Set false by default, then turn on if we find /app/v6/routes.js
-var useV6 = false
-var v6App
-var v6Routes
-
-if (fs.existsSync('./app/v6/routes.js')) {
-  v6Routes = require('./app/v6/routes.js')
-  useV6 = true
-}
-
 const app = express()
-const documentationApp = express()
-
-if (useV6) {
-  console.log('/app/v6/routes.js detected - using v6 compatibility mode')
-  v6App = express()
-}
 
 // Compression
 // https://expressjs.com/en/resources/middleware/compression.html
@@ -71,9 +53,7 @@ app.use(compression({ filter: shouldCompress }))
 
 // Set cookies for use in cookie banner.
 app.use(cookieParser())
-documentationApp.use(cookieParser())
 app.use(utils.handleCookies(app))
-documentationApp.use(utils.handleCookies(documentationApp))
 
 // Set up configuration variables
 var releaseVersion = packageJson.version
@@ -153,51 +133,11 @@ app.use('/node_modules/govuk-frontend', express.static(path.join(__dirname, '/no
 
 app.use('/node_modules/moj-frontend', express.static(path.join(__dirname, '/node_modules/@ministryofjustice/frontend')))
 
-// Set up documentation app
-if (useDocumentation) {
-  var documentationViews = [
-    path.join(__dirname, '/node_modules/govuk-frontend/'),
-    path.join(__dirname, '/node_modules/govuk-frontend/components'),
-    path.join(__dirname, '/docs/views/'),
-    path.join(__dirname, '/lib/')
-  ]
-
-  nunjucksConfig.express = documentationApp
-  var nunjucksDocumentationEnv = nunjucks.configure(documentationViews, nunjucksConfig)
-  // Nunjucks filters
-  utils.addNunjucksFilters(nunjucksDocumentationEnv)
-
-  // Set views engine
-  documentationApp.set('view engine', 'html')
-}
-
 // Support for parsing data in POSTs
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({
   extended: true
 }))
-
-// Set up v6 app for backwards compatibility
-if (useV6) {
-  var v6Views = [
-    path.join(__dirname, '/node_modules/govuk_template_jinja/views/layouts'),
-    path.join(__dirname, '/app/v6/views/'),
-    path.join(__dirname, '/lib/v6') // for old unbranded template
-  ]
-  nunjucksConfig.express = v6App
-  var nunjucksV6Env = nunjucks.configure(v6Views, nunjucksConfig)
-
-  // Nunjucks filters
-  utils.addNunjucksFilters(nunjucksV6Env)
-
-  // Set views engine
-  v6App.set('view engine', 'html')
-
-  // Backward compatibility with GOV.UK Elements
-  app.use('/public/v6/', express.static(path.join(__dirname, '/node_modules/govuk_template_jinja/assets')))
-  app.use('/public/v6/', express.static(path.join(__dirname, '/node_modules/govuk_frontend_toolkit')))
-  app.use('/public/v6/javascripts/govuk/', express.static(path.join(__dirname, '/node_modules/govuk_frontend_toolkit/javascripts/govuk/')))
-}
 
 // Add variables that are available in all views
 app.locals.asset_path = '/public/'
@@ -243,12 +183,6 @@ app.use(flash())
 if (useAutoStoreData === 'true') {
   app.use(utils.autoStoreData)
   utils.addCheckedFunction(nunjucksAppEnv)
-  if (useDocumentation) {
-    utils.addCheckedFunction(nunjucksDocumentationEnv)
-  }
-  if (useV6) {
-    utils.addCheckedFunction(nunjucksV6Env)
-  }
 }
 
 // Clear all data in session if you open /prototype-admin/clear-data
@@ -296,32 +230,6 @@ if (typeof (routes) !== 'function') {
   app.use('/', routes)
 }
 
-if (useDocumentation) {
-  // Clone app locals to documentation app locals
-  // Use Object.assign to ensure app.locals is cloned to prevent additions from
-  // updating the original app.locals
-  documentationApp.locals = Object.assign({}, app.locals)
-  documentationApp.locals.serviceName = 'Prototype Kit'
-
-  // Create separate router for docs
-  app.use('/docs', documentationApp)
-
-  // Docs under the /docs namespace
-  documentationApp.use('/', documentationRoutes)
-}
-
-if (useV6) {
-  // Clone app locals to v6 app locals
-  v6App.locals = Object.assign({}, app.locals)
-  v6App.locals.asset_path = '/public/v6/'
-
-  // Create separate router for v6
-  app.use('/', v6App)
-
-  // Docs under the /docs namespace
-  v6App.use('/', v6Routes)
-}
-
 // Strip .html and .htm if provided
 app.get(/\.html?$/i, function (req, res) {
   var path = req.path
@@ -337,22 +245,6 @@ app.get(/\.html?$/i, function (req, res) {
 app.get(/^([^.]+)$/, function (req, res, next) {
   utils.matchRoutes(req, res, next)
 })
-
-if (useDocumentation) {
-  // Documentation  routes
-  documentationApp.get(/^([^.]+)$/, function (req, res, next) {
-    if (!utils.matchMdRoutes(req, res)) {
-      utils.matchRoutes(req, res, next)
-    }
-  })
-}
-
-if (useV6) {
-  // App folder routes get priority
-  v6App.get(/^([^.]+)$/, function (req, res, next) {
-    utils.matchRoutes(req, res, next)
-  })
-}
 
 // Redirect all POSTs to GETs - this allows users to use POST for autoStoreData
 // EXTRA added by Ed Horsford: preserve query params

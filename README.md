@@ -31,7 +31,7 @@ This version deploys automatically from merges to master and is the 'latest' ver
 
 ## Design history
 
-URL: https://bat-design-history.netlify.app/register-trainee-teachers/
+URL: <https://bat-design-history.netlify.app/register-trainee-teachers/>
 
 A history of the design of this service
 

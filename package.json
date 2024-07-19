@@ -1,6 +1,6 @@
 {
-  "name": "Register trainee teachers prototype",
-  "description": "Prototype for the Register trainee teachers service by the Department for Education",
+  "name": "register-trainee-teachers-prototype",
+  "description": "A prototype for the ‘Register trainee teachers’ service by the Department for Education",
   "version": "9.8.0",
   "private": true,
   "engines": {

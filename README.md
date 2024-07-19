@@ -1,12 +1,17 @@
-# Register trainee teachers (prototype)
+# Register trainee teachers prototype
 
-This prototype is based on the [GOV.UK prototype kit](https://github.com/alphagov/govuk-prototype-kit)
+A service for collecting and managing trainee teacher registration data.
+
+This prototype is based on the:
+
+- [GOV.UK Design System](https://design-system.service.gov.uk/)
+- [GOV.UK Prototype Kit](https://prototype-kit.service.gov.uk/docs/)
 
 ## Installation
 
 ### Requirements
 
-- node.js - version 16.x.x or later
+- node.js - version 20.x.x or later
 
 ### Install dependencies
 
@@ -16,7 +21,7 @@ This prototype is based on the [GOV.UK prototype kit](https://github.com/alphago
 
 `npm start`
 
-Go to [http://localhost:3000]() in your browser.
+Go to <http://localhost:3000> in your browser.
 
 ## Deployed prototype
 
@@ -66,20 +71,28 @@ Most training route and funding data is kept in `app/data/training-route-data.js
 
 This file controls:
 
-* The types of training route available
-* What data / task list section each route should have
-* Funding available for each route
-
+- The types of training route available
+- What data / task list section each route should have
+- Funding available for each route
 
 ## Changes needed each academic year
 
 Things that need to be updated in the new academic year:
 
-* Update course generator to generate courses for next year (a year ahead of current), removing the oldest year
-* Update `app/data/years.js` to update the current academic year, removing the oldest year
-* Update `app/data/training-route-data.js` to update the funding available for each route
-* Regenerate courses
-* Regenerate trainees
-* Regenerate trainee problems
+- Update course generator to generate courses for next year (a year ahead of current), removing the oldest year
+- Update `app/data/years.js` to update the current academic year, removing the oldest year
+- Update `app/data/training-route-data.js` to update the funding available for each route
+- Regenerate courses
+- Regenerate trainees
+- Regenerate trainee problems
 
+## Tools
 
+If you’re using [Visual Studio (VS) Code](https://code.visualstudio.com/) for prototyping, we recommend you install the following extensions:
+
+- [GOV.UK Design System snippets](https://marketplace.visualstudio.com/items?itemName=simonwhatley.govuk-design-system-snippets)
+- [EditorConfig for VS Code](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig)
+- [Nunjucks for VS Code](https://marketplace.visualstudio.com/items?itemName=ronnidc.nunjucks)
+- [Nunjucks snippets](https://marketplace.visualstudio.com/items?itemName=luwenjiechn.nunjucks-vscode-snippets)
+
+We also recommend you update your VS Code settings to make sure you’re trimming whitespace: `Files: Trim Trailing Whitespace`.

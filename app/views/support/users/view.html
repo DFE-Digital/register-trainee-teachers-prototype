@@ -42,7 +42,7 @@
       {% else %}
         <a href="{{userUrl}}/schools/{{organisation.id}}/edit" class="govuk-link">Remove<span class="govuk-visually-hidden"> access to {{organisation.name}}</span></a>
       {% endif %}
-      
+
     {% endset %}
 
     {% set tableRows = tableRows | push([
@@ -99,7 +99,7 @@
       {% else %}
         <p class="govuk-body govuk-hint">User is not a member of any organisations</p>
       {% endif %}
-      
+
 
       {{ govukButton({
         "text": "Add a user to an organisation",
@@ -107,21 +107,21 @@
         classes: "govuk-button--secondary"
       }) }}
 
-      <h2 class="govuk-heading-m">Lead schools</h2>
+      <h2 class="govuk-heading-m">Lead partners</h2>
 
-      {% set leadSchools = userProviders | where('type', 'leadSchool') %}
+      {% set leadPartners = userProviders | where('type', 'leadPartner') %}
 
-      {% if leadSchools | length %}
+      {% if leadPartners | length %}
         {{ providerTable({
-        organisations: leadSchools
+        organisations: leadPartners
       })}}
       {% else %}
-        <p class="govuk-body govuk-hint">User is not a member of any lead schools</p>
+        <p class="govuk-body govuk-hint">User is not a member of any lead partners</p>
       {% endif %}
-      
+
 
       {{ govukButton({
-        "text": "Add a user to a lead school",
+        "text": "Add a user to a lead partner",
         href: currentPageUrl + '/schools/add',
         classes: "govuk-button--secondary"
       }) }}
@@ -133,9 +133,9 @@
       {% endif %}
 
 
-      
 
-      
+
+
 
       <p class="govuk-body govuk-!-margin-top-8"><a href="{{currentPageUrl}}/confirm-delete" class="govuk-link app-destructive-link">Delete this user</a></p>
 

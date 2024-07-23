@@ -52,7 +52,7 @@
   }
 ] %}
 
-{# 
+{#
   --------------  Monthly payment schedule | Accredited provider --------------
 #}
 
@@ -91,7 +91,7 @@
 {% set scittPaymentScheduleBodyFinalRow = scittPaymentScheduleBodyFinalRow | push ({ text: scittPaymentScheduleTotal | currencyForCsv, format: "numeric" }) %}
 {% set scittPaymentScheduleBodyRows = scittPaymentScheduleBodyRows | push(scittPaymentScheduleBodyFinalRow)%}
 
-{# 
+{#
   --------------  Bursaries and scholarships | Accredited provider --------------
 #}
 
@@ -101,7 +101,7 @@
   { text: "Funding type" },
   { text: "Route" },
   { text: "Course" },
-  { text: "Lead school" },
+  { text: "Lead partner" },
   { text: "Tier" },
   { text: "Number of trainees" },
   { text: "Amount per trainee" },
@@ -110,7 +110,7 @@
 {% set scittTraineeSummaryBodyRows = [] %}
 
 {% for item in scittTraineeSummary %}
-  
+
   {% if item.numberOfTraineesScholarship > 0 %}
     {% set fundingType = "ITT scholarship" %}
     {% set numberOfTrainees = item.numberOfTraineesScholarship %}
@@ -125,7 +125,7 @@
       { text: fundingType },
       { text: item.route },
       { text: item.subject },
-      { text: item.leadSchool },
+      { text: item.leadPartner },
       { text: "Not applicable" },
       { text: numberOfTrainees,
         format: "numeric" },
@@ -142,7 +142,7 @@
       { text: "EYITT bursary" },
       { text: item.route },
       { text: item.subject },
-      { text: item.leadSchool },
+      { text: item.leadPartner },
       { text: "Tier 1" },
       { text: item.numberOfTraineesPgIttOrTier1EyItt,
         format: "numeric" },
@@ -159,7 +159,7 @@
       { text: "EYITT bursary" },
       { text: item.route },
       { text: item.subject },
-      { text: item.leadSchool },
+      { text: item.leadPartner },
       { text: "Tier 2" },
       { text: item.numberOfTraineesTier2EyItt,
         format: "numeric" },
@@ -175,7 +175,7 @@
       { text: "EYITT bursary" },
       { text: item.route },
       { text: item.subject },
-      { text: item.leadSchool },
+      { text: item.leadPartner },
       { text: "Tier 3" },
       { text: item.numberOfTraineesTier3EyItt,
         format: "numeric" },
@@ -188,52 +188,52 @@
   {% endif %}
 {% endfor %}
 
-{# 
+{#
   --------------  Monthly payment schedule | Lead shool --------------
 #}
 
-{% set leadSchoolPaymentScheduleHeadRow = [
+{% set leadPartnerPaymentScheduleHeadRow = [
   { text: "Month" }
 ] %}
 
-{% set leadSchoolPaymentSchedule = data.funding.monthlyFundingLeadSchools | sort(attribute = "descriptions") %}
+{% set leadPartnerPaymentSchedule = data.funding.monthlyFundingLeadPartners | sort(attribute = "descriptions") %}
 
-{% for item in leadSchoolPaymentSchedule %}
-  {% set leadSchoolPaymentScheduleHeadRow = leadSchoolPaymentScheduleHeadRow | push ({ text: item.descriptions | fixNamesFromFunding | sentenceCase | formatYearRange | safe }) %}
+{% for item in leadPartnerPaymentSchedule %}
+  {% set leadPartnerPaymentScheduleHeadRow = leadPartnerPaymentScheduleHeadRow | push ({ text: item.descriptions | fixNamesFromFunding | sentenceCase | formatYearRange | safe }) %}
 {% endfor %}
-{% set leadSchoolPaymentScheduleHeadRow = leadSchoolPaymentScheduleHeadRow | push ({ text: "Month total" }) %}
-{% set leadSchoolPaymentScheduleTotal = 0 %}
+{% set leadPartnerPaymentScheduleHeadRow = leadPartnerPaymentScheduleHeadRow | push ({ text: "Month total" }) %}
+{% set leadPartnerPaymentScheduleTotal = 0 %}
 
-{% set leadSchoolPaymentScheduleBodyRows = [] %}
+{% set leadPartnerPaymentScheduleBodyRows = [] %}
 {% for month in months %}
   {% set row = [{ text: month.name + " " + month.year }] %}
   {% set monthTotal = 0 %}
   {% set monthIndex = loop.index0 %}
-  {% for item in leadSchoolPaymentSchedule %}
+  {% for item in leadPartnerPaymentSchedule %}
     {% set row = row | push({ text: item.monthlyPayments[monthIndex] | currencyForCsv, format: "numeric" }) %}
     {% set monthTotal = monthTotal +  item.monthlyPayments[monthIndex] %}
-    {% set leadSchoolPaymentScheduleTotal = leadSchoolPaymentScheduleTotal + monthTotal %}
+    {% set leadPartnerPaymentScheduleTotal = leadPartnerPaymentScheduleTotal + monthTotal %}
   {% endfor %}
   {% set row = row | push({ text: monthTotal | currencyForCsv, format: "numeric" }) %}
-  {% set leadSchoolPaymentScheduleBodyRows = leadSchoolPaymentScheduleBodyRows | push(row) %}
+  {% set leadPartnerPaymentScheduleBodyRows = leadPartnerPaymentScheduleBodyRows | push(row) %}
 {% endfor %}
 
-{% set leadSchoolPaymentScheduleBodyFinalRow = [{ text: "Total", classes: "govuk-!-font-weight-bold" }] %}
+{% set leadPartnerPaymentScheduleBodyFinalRow = [{ text: "Total", classes: "govuk-!-font-weight-bold" }] %}
 
-{% for item in leadSchoolPaymentSchedule %}
-  {% set leadSchoolPaymentScheduleBodyFinalRow = leadSchoolPaymentScheduleBodyFinalRow | push({ text: item.cumulativeMonthlyPayments | last | currencyForCsv, format: "numeric" }) %}
+{% for item in leadPartnerPaymentSchedule %}
+  {% set leadPartnerPaymentScheduleBodyFinalRow = leadPartnerPaymentScheduleBodyFinalRow | push({ text: item.cumulativeMonthlyPayments | last | currencyForCsv, format: "numeric" }) %}
 {% endfor %}
 
-{% set leadSchoolPaymentScheduleBodyFinalRow = leadSchoolPaymentScheduleBodyFinalRow | push ({ text: leadSchoolPaymentScheduleTotal | currencyForCsv, format: "numeric" }) %}
-{% set leadSchoolPaymentScheduleBodyRows = leadSchoolPaymentScheduleBodyRows | push(leadSchoolPaymentScheduleBodyFinalRow)%}
+{% set leadPartnerPaymentScheduleBodyFinalRow = leadPartnerPaymentScheduleBodyFinalRow | push ({ text: leadPartnerPaymentScheduleTotal | currencyForCsv, format: "numeric" }) %}
+{% set leadPartnerPaymentScheduleBodyRows = leadPartnerPaymentScheduleBodyRows | push(leadPartnerPaymentScheduleBodyFinalRow)%}
 
-{# 
+{#
   --------------  Trainee summary | Lead shool --------------
 #}
 
-{% set leadSchoolTraineeSummary = data.funding.annualFundingLeadSchools | sort(attribute = "route") %}
+{% set leadPartnerTraineeSummary = data.funding.annualFundingLeadPartners | sort(attribute = "route") %}
 
-{% set leadSchoolTraineeSummaryHeadRow = [
+{% set leadPartnerTraineeSummaryHeadRow = [
   { text: "Route" },
   { text: "Course" },
   { text: "Trainees" },
@@ -241,8 +241,8 @@
   { text: "Total" }
   ] %}
 
-{% set leadSchoolTraineeSummaryBodyRows = [] %}
-{% for item in leadSchoolTraineeSummary %}
+{% set leadPartnerTraineeSummaryBodyRows = [] %}
+{% for item in leadPartnerTraineeSummary %}
   {% if item.numberOfTrainees > 0 and item.amountPerTrainee > 0 %}
     {% set row = [
       { text: item.route },
@@ -254,7 +254,7 @@
       { text: (item.numberOfTrainees * item.amountPerTrainee) | currencyForCsv,
         format: "numeric" }
     ] %}
-    {% set leadSchoolTraineeSummaryBodyRows = leadSchoolTraineeSummaryBodyRows | push(row) %}
+    {% set leadPartnerTraineeSummaryBodyRows = leadPartnerTraineeSummaryBodyRows | push(row) %}
   {% endif %}
 {% endfor %}
 
@@ -266,7 +266,7 @@
       <ol class="govuk-list govuk-list--number">
         <li>Copy and paste this into spreadsheet software (for example, <span class="app-nowrap">Microsoft Excel</span>)</li>
         <li>Export the file as a ‘CSV’.</li>
-        <li>Save the file in ‘/app/assets/downloads/funding/’. Theres a folder for accredited providers, and a folder for lead schools.</li>
+        <li>Save the file in ‘/app/assets/downloads/funding/’. Theres a folder for accredited providers, and a folder for lead partners.</li>
         <li>Restart the prototype for the CSV to appear in folder you need to point the download link to ‘/public/downloads/funding/’.</li>
       </ol>
       {% endset %}
@@ -306,7 +306,7 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds-from-desktop">
       <h2 class="govuk-heading-l">
-        Lead schools
+        Lead partners
       </h2>
     </div>
   </div>
@@ -315,8 +315,8 @@
       {{ govukTable({
         caption: "Payment schedule",
         captionClasses: "govuk-table__caption--s",
-        head: leadSchoolPaymentScheduleHeadRow,
-        rows: leadSchoolPaymentScheduleBodyRows
+        head: leadPartnerPaymentScheduleHeadRow,
+        rows: leadPartnerPaymentScheduleBodyRows
       }) }}
     </div>
   </div>
@@ -325,8 +325,8 @@
       {{ govukTable({
         caption: "Trainee summary",
         captionClasses: "govuk-table__caption--s",
-        head: leadSchoolTraineeSummaryHeadRow,
-        rows: leadSchoolTraineeSummaryBodyRows
+        head: leadPartnerTraineeSummaryHeadRow,
+        rows: leadPartnerTraineeSummaryBodyRows
       }) }}
     </div>
   </div>

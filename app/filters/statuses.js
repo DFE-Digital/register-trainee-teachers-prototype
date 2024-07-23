@@ -79,8 +79,8 @@ filters.getStatusClass = (status) => {
       return 'govuk-tag--green'
     case 'SCITT':
       return 'govuk-tag--yellow'
-    case 'Lead school':
-    case 'leadSchool':
+    case 'Lead partner':
+    case 'leadPartner':
       return 'govuk-tag--purple'
     case 'accreditingProvider':
       return 'govuk-tag--blue'

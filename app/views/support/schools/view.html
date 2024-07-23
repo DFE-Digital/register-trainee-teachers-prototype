@@ -12,14 +12,14 @@
 {% block content %}
 {{super()}}
 
-{% set isRandomLeadSchool = (school.urn % 6) == 0 %} {# 1/6 chance of being lead school #}
+{% set isRandomLeadPartner = (school.urn % 6) == 0 %} {# 1/6 chance of being lead partner #}
 
-{% set isLeadSchool = school | schoolIsLeadSchool or isRandomLeadSchool %}
+{% set isLeadPartner = school | schoolIsLeadPartner or isRandomLeadPartner %}
 
 
 {% set showMetadata = true %}
 
-{% if isLeadSchool %}
+{% if isLeadPartner %}
   {% include "_includes/support/impersonate-provider-cta.njk" %}
 {% endif %}
 
@@ -27,16 +27,16 @@
     <div class="govuk-grid-column-two-thirds-from-desktop">
 
 {#       <span class="govuk-caption-xl">{{ school | getSchoolTypeString(true) }}</span> #}
-      <span class="govuk-caption-l">{{"Lead school" if isLeadSchool else "School"}}</span>
+      <span class="govuk-caption-l">{{"Lead partner" if isLeadPartner else "School"}}</span>
       <h1 class="govuk-heading-xl">
 
         {{school.schoolName}}
 
-        {% if isLeadSchool %}
+        {% if isLeadPartner %}
           <span style="display: inline-block;">
             {{govukTag({
-              text: 'Lead school',
-              classes: 'Lead school' | getStatusClass
+              text: 'Lead partner',
+              classes: 'Lead partner' | getStatusClass
             })}}
           </span>
         {% endif %}
@@ -48,7 +48,7 @@
 
       {% include "_includes/summary-cards/support/school.html" %}
 
-      {% if isLeadSchool %}
+      {% if isLeadPartner %}
       <h2 class="govuk-heading-m">Courses</h2>
 
       {% set publishLinkHtml -%}

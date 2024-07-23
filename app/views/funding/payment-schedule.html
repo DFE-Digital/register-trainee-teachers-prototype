@@ -10,7 +10,7 @@
 {% if accessLevel == 'accreditingProvider' %}
   {% set dataSource = data.funding.monthlyFundingScitts %}
 {% else %}
-  {% set dataSource = data.funding.monthlyFundingLeadSchools %}
+  {% set dataSource = data.funding.monthlyFundingLeadPartners %}
 {% endif %}
 {% set dataSource = dataSource | sort(attribute = "descriptions") %}
 
@@ -34,7 +34,7 @@
     "October" : 3,
     "November" : 4,
     "December" : 5
-  } %} 
+  } %}
 
   {% if fundingYear == data.years.currentAcademicYear %}
     {% set thisMonth = monthOffsets[currentMonth('nameOfMonth')] %}
@@ -52,7 +52,7 @@
       </p>
       {{ appDownloadLink({
           linkText: "Export " + tabName | startLowerCase,
-          fileName: 
+          fileName:
             "funding/accredited-provider/payment-schedule" if accessLevel == 'accreditingProvider'
              else "funding/lead-school/payment-schedule",
           classes: "govuk-!-margin-bottom-7",
@@ -101,7 +101,7 @@
     {% set row = [{ text: month }] %}
 
     {% set monthIndex = loop.index0 %}
-    
+
     {% for item in dataSource %}
       {% set monthTotal = monthTotal + item.monthlyPayments[monthIndex] %}
     {% endfor %}
@@ -121,7 +121,7 @@
   {% set tableCaption %}
     Payments to {{ months[thisMonth - 1] }}
   {% endset %}
-  
+
   {% set pastRows = pastRows | push(totalPerStreamRowPast) %}
   {% set futureRows = futureRows | push(totalPerStreamRow) %}
 
@@ -148,7 +148,7 @@
       {% set runningMonthTotal = 0 %}
 
       {% for month in months %}
-      
+
         {% set bodyRows = [] %}
         {% set monthIndex = loop.index0 %}
         {% set expandedState = false %}
@@ -172,7 +172,7 @@
         {% set runningMonthTotal = runningMonthTotal + monthTotal %}
 
         {% set bodyRows = bodyRows | push([
-          { text: "Total", classes: "govuk-!-font-weight-bold" }, 
+          { text: "Total", classes: "govuk-!-font-weight-bold" },
           { text: monthTotal | currency, format: "numeric", classes: "govuk-!-font-weight-bold" },
           { text: runningMonthTotal | currency, format: "numeric", classes: "govuk-!-font-weight-bold" }
         ]) %}
@@ -189,8 +189,8 @@
               caption: month + " payments",
               captionClasses: "govuk-visually-hidden",
               head: [
-                { text: "Payment type", classes: rowHeadingCellClasses }, 
-                { text: "Amount", format: "numeric", classes: dataCellClasses }, 
+                { text: "Payment type", classes: rowHeadingCellClasses },
+                { text: "Amount", format: "numeric", classes: dataCellClasses },
                 { text: "Running total for payment type", format: "numeric", classes: dataCellClasses }],
               rows: bodyRows
             }) }}
@@ -206,7 +206,7 @@
         {% endif %}
 
         {% set accordionItems = accordionItems | push(
-          { 
+          {
             heading: { text: accordionTitle },
             content: { html: accordionHtml },
             expanded: expandedState

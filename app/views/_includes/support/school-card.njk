@@ -2,9 +2,9 @@
   {% set justNowClass = "app-just-now" %}
 {% endif %}
 
-{% set isRandomLeadSchool = (school.urn % 6) == 0 %} {# 1/6 chance of being lead school #}
+{% set isRandomLeadPartner = (school.urn % 6) == 0 %} {# 1/6 chance of being lead partner #}
 
-{% set isLeadSchool = school | schoolIsLeadSchool or isRandomLeadSchool %}
+{% set isLeadPartner = school | schoolIsLeadPartner or isRandomLeadPartner %}
 
 <div class="app-application-card {{justNowClass}}">
 
@@ -17,11 +17,11 @@
 
       <span class="app-application-card_tag-container">
 
-        {% if isLeadSchool %}
+        {% if isLeadPartner %}
           <span style="display: inline-block;">
             {{govukTag({
-              text: "Lead school",
-              classes: "Lead school" | getStatusClass
+              text: "Lead partner",
+              classes: "Lead partner" | getStatusClass
             })}}
           </span>
         {% endif %}

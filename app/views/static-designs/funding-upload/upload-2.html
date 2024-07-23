@@ -9,7 +9,7 @@
 {% set applyDraftCount = draftRecords | where("source", "Apply") | length %}
 
 {% set registeredTrainees = filteredRecords | filterByStatus("Draft", true) %}
-{% set pageHeading = "Upload trainee summary for lead schools" %}
+{% set pageHeading = "Upload trainee summary for lead partners" %}
 {# {% set currentTrainees = registeredTrainees | filterByActive %} #}
 
 {% block content %}
@@ -203,7 +203,7 @@
             <a class="govuk-link app-tab-navigation__link" href="#">Schools</a>
         </li>
         <li class="app-tab-navigation__item">
-            <a class="govuk-link app-tab-navigation__link" href="#">Lead schools</a>
+            <a class="govuk-link app-tab-navigation__link" href="#">Lead partners</a>
         </li>
         <li class="app-tab-navigation__item">
             <a class="govuk-link app-tab-navigation__link" aria-current="page" href="index.html">Funding</a>

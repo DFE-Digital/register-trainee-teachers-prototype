@@ -260,7 +260,7 @@
                     }
                 },
                 "schools": {
-                    "leadSchool": {
+                    "leadPartner": {
                         "urn": "137628",
                         "localAuthority": "Nottinghamshire",
                         "schoolName": "The Joseph Whitaker School",
@@ -451,7 +451,7 @@
                     }
                 },
                 "schools": {
-                    "leadSchool": {
+                    "leadPartner": {
                         "urn": "137628",
                         "localAuthority": "Nottinghamshire",
                         "schoolName": "The Joseph Whitaker School",

@@ -411,7 +411,7 @@ exports.getCourseChangeMissingItems = (record) => {
 
   let isMissingDegree = exports.needsDegree(record)
   let isMissingSchools = exports.needsSchools(record)
-  let isMissingLeadSchool = exports.needsLeadSchool(record)
+  let isMissingLeadPartner = exports.needsLeadPartner(record)
   let isMissingEmployingSchool = exports.needsEmployingSchool(record)
   let isMissingFundingSource = exports.needsFundingSource(record)
 
@@ -420,7 +420,7 @@ exports.getCourseChangeMissingItems = (record) => {
   if (isMissingDegree) missing.push("degree")
   if (isMissingSchools) missing.push("schools")
   else {
-    if (isMissingLeadSchool) missing.push("lead school")
+    if (isMissingLeadPartner) missing.push("lead partner")
     if (isMissingEmployingSchool) missing.push("employing school")
   }
 
@@ -443,7 +443,7 @@ exports.getNextCourseChangeUrl = (record, recordPath, referrer) => {
   else if (missingItems.includes("degree")){
     return `${recordPath}/degree/add${referrer}`
   }
-  else if (missingItems.includes("schools") || missingItems.includes("lead school")){
+  else if (missingItems.includes("schools") || missingItems.includes("lead partner")){
     return `${recordPath}/schools/lead-school${referrer}`
   }
   else if (missingItems.includes("employing-school")){
@@ -1192,12 +1192,12 @@ exports.isSchoolDirect = record => {
   return record.route && record?.route.includes("School")
 }
 
-exports.hasLeadSchool = record => {
-  return Boolean(record?.schools?.leadSchool?.schoolName)
+exports.hasLeadPartner = record => {
+  return Boolean(record?.schools?.leadPartner?.schoolName)
 }
 
-exports.getLeadSchoolName = record => {
-  return record?.schools?.leadSchool?.schoolName
+exports.getLeadPartnerName = record => {
+  return record?.schools?.leadPartner?.schoolName
 }
 
 // Active, Future, Historic
@@ -1580,12 +1580,12 @@ exports.needsDegree = record => {
 }
 
 exports.needsSchools = record => {
-  return exports.needsLeadSchool(record) || exports.needsEmployingSchool(record)
+  return exports.needsLeadPartner(record) || exports.needsEmployingSchool(record)
 }
 
-exports.needsLeadSchool = record => {
-  let routeRequiresLeadSchool = exports.requiresField(record, "leadSchool")
-  return routeRequiresLeadSchool && !Boolean(record?.schools?.leadSchool)
+exports.needsLeadPartner = record => {
+  let routeRequiresLeadPartner = exports.requiresField(record, "leadPartner")
+  return routeRequiresLeadPartner && !Boolean(record?.schools?.leadPartner)
 }
 
 exports.needsEmployingSchool = record => {
@@ -1975,8 +1975,8 @@ exports.filterByProvider = function(records, array, data=false){
       if (provider.type == "accreditingProvider"){
         return record.provider == provider.name
       }
-      else if (provider.type == "leadSchool"){
-        return provider.name == record?.schools?.leadSchool?.schoolName
+      else if (provider.type == "leadPartner"){
+        return provider.name == record?.schools?.leadPartner?.schoolName
       }
       else return false
     })
@@ -1990,8 +1990,8 @@ exports.filterByAccreditingProvider = (records, array) => {
 }
 
 // Filter records for particular providers
-exports.filterByLeadSchool = (records, array) => {
-  return exports.filterRecordsBy(records, 'schools.leadSchool.schoolName', array)
+exports.filterByLeadPartner = (records, array) => {
+  return exports.filterRecordsBy(records, 'schools.leadPartner.schoolName', array)
 }
 
 // Filter records for currently signed in providers
@@ -2220,7 +2220,7 @@ exports.getProviderData = function(input, data=false){
   else return lookUpProvider(input)
 }
 
-// Gets the type of a provider - currently `accreditingProvider` or `leadSchool`
+// Gets the type of a provider - currently `accreditingProvider` or `leadPartner`
 exports.getProviderType = function(provider, data=false){
   data = data || this?.ctx?.data || false
 
@@ -2249,7 +2249,7 @@ exports.getProviderType = function(provider, data=false){
 
 }
 
-// Get a human readable provider type eg `lead school`,
+// Get a human readable provider type eg `lead partner`,
 exports.getProviderTypeString = (input, includeAccreditingProviderDetail=false) => {
 
   let type
@@ -2269,8 +2269,8 @@ exports.getProviderTypeString = (input, includeAccreditingProviderDetail=false) 
         }
         else return 'Accrediting provider'
       break;
-    case 'leadSchool':
-      return 'Lead school'
+    case 'leadPartner':
+      return 'Lead partner'
       break;
     default:
       return type
@@ -2311,18 +2311,18 @@ exports.providerIsScitt = function(provider, data=false){
   return type == "SCITT"
 }
 
-exports.providerIsLeadSchool = function(provider, data=false){
+exports.providerIsLeadPartner = function(provider, data=false){
   data = data || this?.ctx?.data || false
-  return exports.getProviderType.apply(this, [provider, data]) == 'leadSchool'
+  return exports.getProviderType.apply(this, [provider, data]) == 'leadPartner'
 }
 
-// Used to take a school from GIAS and see if it’s in our lead school list
-exports.schoolIsLeadSchool = function(school, data=false){
+// Used to take a school from GIAS and see if it’s in our lead partner list
+exports.schoolIsLeadPartner = function(school, data=false){
   data = data || this?.ctx?.data || false
 
-  let leadSchools = data.providers.leadSchools.all
+  let leadPartners = data.providers.leadPartners.all
 
-  return leadSchools.some(leadSchool => leadSchool.urn == school.urn )
+  return leadPartners.some(leadPartner => leadPartner.urn == school.urn )
 }
 
 

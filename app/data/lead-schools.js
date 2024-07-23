@@ -3,7 +3,7 @@ const { fakerUK: faker } = require('@faker-js/faker')
 // Seed allows the UUIDs to be consistent each time we run this. The seed should be different than that used by lead-schools.js so we get different UUIDs for each.
 faker.seed(123);
 
-let selectedLeadSchools = [
+let selectedLeadPartners = [
   {
     name: "Whitmore High School",
     postcode: "HA2 0AD",
@@ -93,9 +93,9 @@ let selectedLeadSchools = [
 
 
 module.exports = {
-  selected: selectedLeadSchools.map(school => {
+  selected: selectedLeadPartners.map(school => {
     return {
-      type: "leadSchool",
+      type: "leadPartner",
       ...school,
       id: faker.string.uuid()
     }

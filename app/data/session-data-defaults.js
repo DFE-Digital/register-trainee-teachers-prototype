@@ -80,13 +80,13 @@ let providers = {}
 
 providers.accreditingProviders    = require('./accrediting-providers')
 
-providers.leadSchools = require('./lead-schools')
+providers.leadPartners = require('./lead-schools')
 
-providers.leadSchools.all = providers.leadSchools.selected
+providers.leadPartners.all = providers.leadPartners.selected
 
-providers.all = providers.accreditingProviders.all.concat(providers.leadSchools.selected)
+providers.all = providers.accreditingProviders.all.concat(providers.leadPartners.selected)
 
-providers.selected = providers.accreditingProviders.selected.concat(providers.leadSchools.selected)
+providers.selected = providers.accreditingProviders.selected.concat(providers.leadPartners.selected)
 
 
 
@@ -258,7 +258,7 @@ records = records.map(record => {
       enumerable: true
     })
   }
-  
+
   return record
 })
 

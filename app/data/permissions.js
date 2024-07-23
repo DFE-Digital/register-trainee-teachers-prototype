@@ -6,7 +6,7 @@ let allUserPermissions = {
     "export trainees",
     "view funding"
   ],
-  "leadSchool": [
+  "leadPartner": [
     "view trainees",
     "view funding",
     // "export trainees"

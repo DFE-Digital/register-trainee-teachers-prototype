@@ -147,7 +147,7 @@ const generateFakeApplication = (params = {}) => {
 
   let requiredSections = trainingRouteData.trainingRoutes[application.route].sections
 
-  // Lead and employing school
+  // Lead partner and employing school
   if (requiredSections.includes('schools')){
       application.schools = (params.schools === null) ? undefined : { ...generateSchools(application), ...params.schools }
   }

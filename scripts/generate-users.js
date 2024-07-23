@@ -30,8 +30,8 @@ const generateUser = (provider, role='team member') => {
   let user = {}
 
   user.id = faker.string.uuid()
-  let firstName = faker.name.firstName()
-  let familyName = faker.name.lastName()
+  let firstName = faker.person.firstName()
+  let familyName = faker.person.lastName()
   user.fullName = `${firstName} ${familyName}`
 
   let emailDomain = userFilters.makeFakeSchoolDomain(provider.name)

@@ -7,13 +7,13 @@ module.exports = () => {
 
   let sex = { 0: "Male", 1: "Female" }[sexInteger]
 
-  const givenName = faker.name.firstName(sexInteger)
+  const givenName = faker.person.firstName(sexInteger)
 
-  const familyName = faker.name.lastName(sexInteger)
+  const familyName = faker.person.lastName(sexInteger)
 
   const middleNameOptions = {
-    hasMiddleName: faker.name.firstName(sexInteger),
-    hasDoubleMiddleName: faker.name.firstName(sexInteger) + " " + faker.name.firstName(sexInteger),
+    hasMiddleName: faker.person.firstName(sexInteger),
+    hasDoubleMiddleName: faker.person.firstName(sexInteger) + " " + faker.person.firstName(sexInteger),
     doesNotHaveMiddleName: null
   }
   const selectedMiddleName = weighted.select({

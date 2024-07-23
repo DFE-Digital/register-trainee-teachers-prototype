@@ -24,7 +24,7 @@
 
 {% set ittBursaryAndScholarshipHeadRow = [
   { text: "Route and course" },
-  { text: "Lead school" },
+  { text: "Lead partner" },
   { text: "Number of trainees",
     format: "numeric" },
   { text: "Amount per trainee",
@@ -71,7 +71,7 @@
     {% if numberOfTrainees > 0 and amountPerTrainee > 0 %}
       {% set row = [
         { text: routeAndCourseHtml | safe },
-        { text: item.leadSchool if item.leadSchool else "—" },
+        { text: item.leadPartner if item.leadPartner else "—" },
         { text: numberOfTrainees,
           format: "numeric" },
         { text: amountPerTrainee | currency,
@@ -142,10 +142,10 @@
   ------------------ Trainee summary | Grants | Lead shool ------------------
 #}
 
-{% set leadSchoolTraineeSummary = data.funding.annualFundingLeadSchools | sort(attribute = "route") %}
-{% set totalForAllLeadSchoolTrainees = 0 %}
+{% set leadPartnerTraineeSummary = data.funding.annualFundingLeadPartners | sort(attribute = "route") %}
+{% set totalForAllLeadPartnerTrainees = 0 %}
 
-{% set leadSchoolTraineeSummaryHeadRow = [
+{% set leadPartnerTraineeSummaryHeadRow = [
   { text: "Route and course" },
   { text: "Trainees" },
   { text: "Amount per trainee",
@@ -154,8 +154,8 @@
     format: "numeric" }
   ] %}
 
-{% set leadSchoolTraineeSummaryBodyRows = [] %}
-{% for item in leadSchoolTraineeSummary %}
+{% set leadPartnerTraineeSummaryBodyRows = [] %}
+{% for item in leadPartnerTraineeSummary %}
   {% if item.numberOfTrainees > 0 and item.amountPerTrainee > 0 %}
     {% set routeAndCourseHtml %}
       {{ item.route }}<br>
@@ -171,8 +171,8 @@
       { text: totalForRouteAndCourse | currency,
         format: "numeric" }
     ] %}
-    {% set totalForAllLeadSchoolTrainees = totalForAllLeadSchoolTrainees + totalForRouteAndCourse %}
-    {% set leadSchoolTraineeSummaryBodyRows = leadSchoolTraineeSummaryBodyRows | push(row) %}
+    {% set totalForAllLeadPartnerTrainees = totalForAllLeadPartnerTrainees + totalForRouteAndCourse %}
+    {% set leadPartnerTraineeSummaryBodyRows = leadPartnerTraineeSummaryBodyRows | push(row) %}
   {% endif %}
 {% endfor %}
 
@@ -185,9 +185,9 @@
         {{ tabName }}
       </h2>
       {% if false %}
-      {# {% if 
-        (accessLevel == 'accreditingProvider' and annualTotal == 0) or 
-        (accessLevel != 'accreditingProvider' and totalForAllLeadSchoolTrainees == 0)
+      {# {% if
+        (accessLevel == 'accreditingProvider' and annualTotal == 0) or
+        (accessLevel != 'accreditingProvider' and totalForAllLeadPartnerTrainees == 0)
       %} #}
         <p class="govuk-body">
           There are no trainees eligible for {{ fundingTypes | orSeparate }} right now.
@@ -201,7 +201,7 @@
         </p>
         {{ appDownloadLink({
             linkText: "Export " + tabName | startLowerCase,
-            fileName: 
+            fileName:
               "funding/accredited-provider/trainee-summary" if accessLevel == 'accreditingProvider'
                else "funding/lead-school/trainee-summary",
             classes: "govuk-!-margin-bottom-7",
@@ -305,7 +305,7 @@
           Total grants
         </h3>
         <p class="govuk-body">
-          {{ totalForAllLeadSchoolTrainees | currency }}
+          {{ totalForAllLeadPartnerTrainees | currency }}
         </p>
       </div>
     </div>
@@ -314,8 +314,8 @@
         {{ govukTable({
           caption: "Grants breakdown",
           captionClasses: "govuk-table__caption--m",
-          head: leadSchoolTraineeSummaryHeadRow,
-          rows: leadSchoolTraineeSummaryBodyRows
+          head: leadPartnerTraineeSummaryHeadRow,
+          rows: leadPartnerTraineeSummaryBodyRows
         }) }}
       </div>
     </div>

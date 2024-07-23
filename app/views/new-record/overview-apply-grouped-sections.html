@@ -83,12 +83,13 @@
     <h2 class="govuk-heading-m">About their teacher training</h2>
 
     {# Conditional section label #}
-    {% set includesSchools = record | requiresField(["leadSchool", "employingSchool"]) %}
+    {% set includesSchools = record | requiresField(["leadPartner", "employingSchool"]) %}
     {% if includesSchools %}
-      {% if (record | requiresField("leadSchool")) and (record | requiresField("employingSchool")) %}
-        {% set schoolSectionLabel = "Lead and employing schools" %}
-      {% elseif record | requiresField(["leadSchool"]) %}
-        {% set schoolSectionLabel = "Lead school" %}
+      {% if (record | requiresField("leadPartner")) and (record | requiresField("employingSchool")) %}
+        {% set schoolSectionLabel = "
+Lead partners and employing schools" %}
+      {% elseif record | requiresField(["leadPartner"]) %}
+        {% set schoolSectionLabel = "Lead partner" %}
       {% elseif record | requiresField(["employingSchool"]) %}
         {% set schoolSectionLabel = "Employing school" %}
       {% endif %}

@@ -64,7 +64,7 @@ We collect these as part of a section in the service called ‘Personal details�
 
 There are various combinations of identifiable data which may be collected about a provider (depending on route), these extend to:
 
-- lead school ID
+- lead partner ID
 - employing school ID
 - unique reference number (URN)
 - organisation name
@@ -82,7 +82,7 @@ Part of the data that the DfE collects for each trainee includes sensitive data,
 
 When data is directly entered into Register, the accredited provider collects this information from the trainee and enters it into Register manually and keeps it up to date. The accredited providers remain Data Controllers as they need this data for their student records.
 
-When lead schools import Register’s data they have an obligation to ensure the data is used in accordance with the rules stated in the Third party section of this document.
+When lead partners import Register’s data they have an obligation to ensure the data is used in accordance with the rules stated in the Third party section of this document.
 
 ### What the DfE can use personal data shared with the DfE for
 
@@ -136,7 +136,7 @@ The systems-based connection in which Register may share data:
 - Register retrieves course information from the Publish teacher training (Publish) service
 - organisations connect to Register to add, view or update their trainee data. Users can only access data connected to their organisation
 - Register reads and writes trainee record data to systems within the DfE for the purpose of allocating or retrieving a TRN for trainees and for registering their QTS or EYTS
-- lead schools connect to Register to view their funding information and trainees’ information
+- lead partners connect to Register to view their funding information and trainees’ information
 
 The DfE uses [Zendesk](https://www.zendesk.co.uk/company/privacy-and-data-protection/#faq-general-1), a customer relationship management system, to handle queries from provider staff.
 
@@ -268,6 +268,6 @@ A relevant person at your organisation who deals with initial teacher training (
 
 To notify the DfE with your consent to the terms of this data sharing agreement, email [becomingateacher@digital.education.gov.uk](mailto:becomingateacher@digital.education.gov.uk?subject=Register%20DSA%20consent) with confirmation.
 
-### If you’re a lead school
+### If you’re a lead partner
 
 You will have received an email from us asking you to fill out a form where a relevant person from your organisation needs to consent to this data sharing agreement.

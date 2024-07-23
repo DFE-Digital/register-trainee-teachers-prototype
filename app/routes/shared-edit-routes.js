@@ -69,7 +69,7 @@ module.exports = router => {
     let recordPath = utils.getRecordPath(req)
     let referrer = utils.getReferrer(req.query.referrer)
 
-    if (utils.requiresField(record, 'leadSchool')){
+    if (utils.requiresField(record, 'leadPartner')){
       res.redirect(`${recordPath}/schools/lead-school${referrer}`)
     }
     else if (utils.requiresField(record, 'employingSchool')){
@@ -114,9 +114,9 @@ module.exports = router => {
     const schools = getSchools()
 
     // default to applicable unless checkbox set
-    let leadSchoolApplicable = true
-    if (record?.schools?.leadSchool?.notApplicable && record?.schools?.leadSchool?.notApplicable.includes('true') ){
-      leadSchoolApplicable = false
+    let leadPartnerApplicable = true
+    if (record?.schools?.leadPartner?.notApplicable && record?.schools?.leadPartner?.notApplicable.includes('true') ){
+      leadPartnerApplicable = false
     }
 
     // Input added with js by the autocomplete
@@ -148,20 +148,20 @@ module.exports = router => {
     // Uuid could come via two form inputs
     let schoolUuid = autocompleteUuid || schoolResultUuid || false
 
-    let leadSchoolIsEmployingSchool = (record?.schools?.leadSchoolIsEmployingSchool == "true") ? true : false
-    delete record?.schools?.leadSchoolIsEmployingSchool // Checkbox no longer needed
+    let leadPartnerIsEmployingSchool = (record?.schools?.leadPartnerIsEmployingSchool == "true") ? true : false
+    delete record?.schools?.leadPartnerIsEmployingSchool // Checkbox no longer needed
 
     // Search again
-    if (schoolSearchTerm && !schoolUuid && leadSchoolApplicable){
+    if (schoolSearchTerm && !schoolUuid && leadPartnerApplicable){
       let queryParams = utils.addQueryParam(referrer, `_schoolSearch=${schoolSearchTerm}`)
       res.redirect(`${recordPath}/schools/lead-school${queryParams}`)
     }
     // No answer given and no search term
-    else if (!schoolUuid && leadSchoolApplicable){
+    else if (!schoolUuid && leadPartnerApplicable){
       res.redirect(`${recordPath}/schools/lead-school${referrer}`)
     }
     else {
-      if (leadSchoolApplicable){
+      if (leadPartnerApplicable){
         let selectedSchool = schools.find(school => school.uuid == schoolUuid)
 
         // Seed records might have schools that aren't in our schools list
@@ -170,8 +170,8 @@ module.exports = router => {
           console.log(`School not found - you probably need to update the seed records`)
         }
         else {
-          // Using _.set as lead school might not exist yet
-          _.set(record, 'schools.leadSchool', selectedSchool)
+          // Using _.set as lead partner might not exist yet
+          _.set(record, 'schools.leadPartner', selectedSchool)
         }
       }
 
@@ -181,7 +181,7 @@ module.exports = router => {
 
         // If an employing school isn’t already set, users can tell us the employing school
         // is the same as the employing school
-        if (leadSchoolIsEmployingSchool && !record?.schools?.employingSchool) {
+        if (leadPartnerIsEmployingSchool && !record?.schools?.employingSchool) {
           // record.schools.employingSchool = selectedSchool
           _.set(record, 'schools.employingSchool', selectedSchool)
           // Skip to next page
@@ -294,7 +294,7 @@ module.exports = router => {
           console.log(`School not found - you probably need to update the seed records`)
         }
         else {
-          // Using _.set as lead school might not exist yet
+          // Using _.set as lead partner might not exist yet
           _.set(record, 'schools.employingSchool', selectedSchool)
         }
       }

@@ -15,7 +15,7 @@
 {% block formContent %}
 
 {% set isAccreditingProvider = provider | providerIsAccrediting %}
-{% set isLeadSchool = provider | providerIsLeadSchool %}
+{% set isLeadPartner = provider | providerIsLeadPartner %}
 
 {# Merge with temp store #}
 {% set providerTemp = provider | mergeObjects(data.providerTemp) %}

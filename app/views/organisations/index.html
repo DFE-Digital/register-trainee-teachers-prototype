@@ -21,7 +21,7 @@
 
           <h2 class="govuk-heading-m">
             Accredited providers
-          </h2> 
+          </h2>
           <ol class="govuk-list">
             {% for organisation in data.providers.accreditingProviders.selected %}
             <li>
@@ -31,10 +31,10 @@
           </ol>
 
           <h2 class="govuk-heading-m">
-            Lead schools
-          </h2> 
+            Lead partners
+          </h2>
           <ol class="govuk-list">
-            {% for organisation in data.providers.leadSchools.selected %}
+            {% for organisation in data.providers.leadPartners.selected %}
             <li>
               <a href="/organisations/{{organisation.id}}" class="govuk-link">{{organisation.name}}</a>
             </li>

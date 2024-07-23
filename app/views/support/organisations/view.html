@@ -13,7 +13,7 @@
 {{super()}}
 
 {% set isAccreditingProvider = provider | providerIsAccrediting %}
-{% set isLeadSchool = provider | providerIsLeadSchool %}
+{% set isLeadPartner = provider | providerIsLeadPartner %}
 
 {% macro userTable(params) %}
 
@@ -193,7 +193,7 @@
 
       {% set providerUsers = data.users.byProvider[provider.name] | sort(attribute = "fullName") %}
       <h2 class="govuk-heading-m">Users ({{providerUsers | length}})</h2>
-      
+
 
       {{userTable({users: providerUsers})}}
 

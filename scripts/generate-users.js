@@ -17,9 +17,9 @@ let providers = {}
 // Combine the two provider files together
 // todo: should a single file provide these? the same code exists in session data defaults
 providers.accreditingProviders    = require('../app/data/accrediting-providers')
-providers.leadSchools = require('../app/data/lead-schools')
-providers.all = providers.accreditingProviders.all.concat(providers.leadSchools.selected)
-providers.selected = providers.accreditingProviders.selected.concat(providers.leadSchools.selected)
+providers.leadPartners = require('../app/data/lead-schools')
+providers.all = providers.accreditingProviders.all.concat(providers.leadPartners.selected)
+providers.selected = providers.accreditingProviders.selected.concat(providers.leadPartners.selected)
 
 
 // Create a single user
@@ -30,8 +30,8 @@ const generateUser = (provider, role='team member') => {
   let user = {}
 
   user.id = faker.string.uuid()
-  let firstName = faker.name.firstName()
-  let familyName = faker.name.lastName()
+  let firstName = faker.person.firstName()
+  let familyName = faker.person.lastName()
   user.fullName = `${firstName} ${familyName}`
 
   let emailDomain = userFilters.makeFakeSchoolDomain(provider.name)

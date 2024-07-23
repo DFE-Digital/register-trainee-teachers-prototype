@@ -112,11 +112,11 @@
           <span class="status-card__status">Organisations</span><span class="govuk-visually-hidden">. View these providers.</span>
         </a>
 
-        {# Lead schools #}
-        {% set leadSchools = data.providers.leadSchools.all %}
+        {# Lead partners #}
+        {% set leadPartners = data.providers.leadPartners.all %}
         <a href="support/organisations" class="status-card status-card--in-training">
-          <span class="status-card__count">{{leadSchools | length}}</span>
-          <span class="status-card__status">Lead schools</span><span class="govuk-visually-hidden">. View these schools.</span>
+          <span class="status-card__count">{{leadPartners | length}}</span>
+          <span class="status-card__status">Lead partners</span><span class="govuk-visually-hidden">. View these schools.</span>
         </a>
 
       </div>

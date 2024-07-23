@@ -575,7 +575,7 @@
     "email": "benjamin.carter@whitmore-high.ac.uk",
     "providers": [
       {
-        "type": "leadSchool",
+        "type": "leadPartner",
         "name": "Whitmore High School",
         "postcode": "HA2 0AD",
         "urn": "102239",
@@ -597,7 +597,7 @@
     "email": "petra.boyle@whitmore-high.ac.uk",
     "providers": [
       {
-        "type": "leadSchool",
+        "type": "leadPartner",
         "name": "Whitmore High School",
         "postcode": "HA2 0AD",
         "urn": "102239",
@@ -619,7 +619,7 @@
     "email": "anissa.schimmel@crispin-school.ac.uk",
     "providers": [
       {
-        "type": "leadSchool",
+        "type": "leadPartner",
         "name": "Crispin School Academy",
         "postcode": "BA16 0AD",
         "urn": "136913",
@@ -642,7 +642,7 @@
     "email": "bridgette.braun@crispin-school.ac.uk",
     "providers": [
       {
-        "type": "leadSchool",
+        "type": "leadPartner",
         "name": "Crispin School Academy",
         "postcode": "BA16 0AD",
         "urn": "136913",
@@ -665,7 +665,7 @@
     "email": "odessa.windler@watford-school.ac.uk",
     "providers": [
       {
-        "type": "leadSchool",
+        "type": "leadPartner",
         "name": "Watford Grammar School for Girls",
         "postcode": "WD18 0AE",
         "urn": "136289",
@@ -688,7 +688,7 @@
     "email": "rolando.mcdermott@watford-school.ac.uk",
     "providers": [
       {
-        "type": "leadSchool",
+        "type": "leadPartner",
         "name": "Watford Grammar School for Girls",
         "postcode": "WD18 0AE",
         "urn": "136289",
@@ -711,7 +711,7 @@
     "email": "felipe.wisoky@joseph-whitaker.ac.uk",
     "providers": [
       {
-        "type": "leadSchool",
+        "type": "leadPartner",
         "name": "The Joseph Whitaker School",
         "postcode": "NG21 0AG",
         "urn": "137628",
@@ -734,7 +734,7 @@
     "email": "marianne.kuhic@joseph-whitaker.ac.uk",
     "providers": [
       {
-        "type": "leadSchool",
+        "type": "leadPartner",
         "name": "The Joseph Whitaker School",
         "postcode": "NG21 0AG",
         "urn": "137628",
@@ -757,7 +757,7 @@
     "email": "mary.hamill@heckmondwike-school.ac.uk",
     "providers": [
       {
-        "type": "leadSchool",
+        "type": "leadPartner",
         "name": "Heckmondwike Grammar School",
         "postcode": "WF16 0AH",
         "urn": "136283",
@@ -779,7 +779,7 @@
     "email": "alana.johns@heckmondwike-school.ac.uk",
     "providers": [
       {
-        "type": "leadSchool",
+        "type": "leadPartner",
         "name": "Heckmondwike Grammar School",
         "postcode": "WF16 0AH",
         "urn": "136283",
@@ -801,7 +801,7 @@
     "email": "marcelina.franey@emmanuel-school.ac.uk",
     "providers": [
       {
-        "type": "leadSchool",
+        "type": "leadPartner",
         "name": "Emmanuel College",
         "postcode": "NE11 0AN",
         "urn": "108420",
@@ -823,7 +823,7 @@
     "email": "greg.schuster@emmanuel-school.ac.uk",
     "providers": [
       {
-        "type": "leadSchool",
+        "type": "leadPartner",
         "name": "Emmanuel College",
         "postcode": "NE11 0AN",
         "urn": "108420",
@@ -845,7 +845,7 @@
     "email": "nina.miller@moorside-high.ac.uk",
     "providers": [
       {
-        "type": "leadSchool",
+        "type": "leadPartner",
         "name": "Moorside High School",
         "postcode": "M27 0AP",
         "urn": "144199",
@@ -867,7 +867,7 @@
     "email": "theresa.homenick@moorside-high.ac.uk",
     "providers": [
       {
-        "type": "leadSchool",
+        "type": "leadPartner",
         "name": "Moorside High School",
         "postcode": "M27 0AP",
         "urn": "144199",
@@ -889,7 +889,7 @@
     "email": "maud.raynor@hope-school.ac.uk",
     "providers": [
       {
-        "type": "leadSchool",
+        "type": "leadPartner",
         "name": "Hope Academy",
         "postcode": "WA12 0AQ",
         "urn": "136421",
@@ -911,7 +911,7 @@
     "email": "diana.armstrong@hope-school.ac.uk",
     "providers": [
       {
-        "type": "leadSchool",
+        "type": "leadPartner",
         "name": "Hope Academy",
         "postcode": "WA12 0AQ",
         "urn": "136421",
@@ -933,7 +933,7 @@
     "email": "arlie.hayes@west-park-primary.ac.uk",
     "providers": [
       {
-        "type": "leadSchool",
+        "type": "leadPartner",
         "name": "West Park Primary School",
         "postcode": "TS26 0BU",
         "urn": "141717",
@@ -955,7 +955,7 @@
     "email": "lucious.klein@west-park-primary.ac.uk",
     "providers": [
       {
-        "type": "leadSchool",
+        "type": "leadPartner",
         "name": "West Park Primary School",
         "postcode": "TS26 0BU",
         "urn": "141717",
@@ -977,7 +977,7 @@
     "email": "emerald.hartmann@beam-primary.ac.uk",
     "providers": [
       {
-        "type": "leadSchool",
+        "type": "leadPartner",
         "name": "Beam Primary School",
         "postcode": "RM10 9ED",
         "urn": "101202",
@@ -1000,7 +1000,7 @@
     "email": "madison.nikolaus@beam-primary.ac.uk",
     "providers": [
       {
-        "type": "leadSchool",
+        "type": "leadPartner",
         "name": "Beam Primary School",
         "postcode": "RM10 9ED",
         "urn": "101202",

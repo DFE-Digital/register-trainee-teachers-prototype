@@ -12,7 +12,7 @@ filters.getHighestLevel = array => {
   if (!array || !Array.isArray(array)) return false
   else if (array.includes("admin")) return "admin"
   else if (array.includes("accreditingProvider")) return "accreditingProvider"
-  else if (array.includes("leadSchool")) return "leadSchool"
+  else if (array.includes("leadPartner")) return "leadPartner"
   else return false
 }
 
@@ -23,7 +23,7 @@ filters.getHighestLevel = array => {
 
 // Returns an array of the access levels of each signed-in providers
 // This is mostly an internal utility function
-// eg ['accreditingProvider', 'leadSchool', 'admin']
+// eg ['accreditingProvider', 'leadPartner', 'admin']
 filters.getAccessLevels = function(providers, data){
   data = data || this?.ctx?.data || false
 
@@ -54,12 +54,12 @@ filters.providerIsAuthorised = function(providers, action){
     return false
   }
 
-  // `admin` / `accreditingProvider` / `leadSchool`
+  // `admin` / `accreditingProvider` / `leadPartner`
   const providerType = filters.getAccessLevel.apply(this, [providers])
 
   // Access on a record might be different - for instance might be signed in as
-  // an accrediting provider *and* a lead school, but viewing the record only as the
-  // lead school - in which case their access level for that record is as a lead 
+  // an accrediting provider *and* a lead partner, but viewing the record only as the
+  // lead partner - in which case their access level for that record is as a lead
   // school only.
   const recordAccessLevel = filters.recordAccessLevel.apply(this, [record])
 
@@ -79,7 +79,7 @@ filters.providerIsAuthorised = function(providers, action){
     'viewRecords',
   ]
 
-  const leadSchoolActions = [
+  const leadPartnerActions = [
     'viewRecords'
   ]
 
@@ -92,8 +92,8 @@ filters.providerIsAuthorised = function(providers, action){
     return accreditingProviderActions.includes(action)
   }
 
-  else if (accessLevel == "leadSchool"){
-    return leadSchoolActions.includes(action)
+  else if (accessLevel == "leadPartner"){
+    return leadPartnerActions.includes(action)
   }
 
   else {
@@ -108,7 +108,7 @@ filters.providerIsAuthorised = function(providers, action){
 
 
 // Returns an array of the access levels of each signed-in provider
-// eg ['accreditingProvider', 'leadSchool', 'admin']
+// eg ['accreditingProvider', 'leadPartner', 'admin']
 filters.getRecordAccessLevels = function(record, data=false){
   data = data || this?.ctx?.data || false
 
@@ -118,7 +118,7 @@ filters.getRecordAccessLevels = function(record, data=false){
   // record.
   let accessLevels = signedInProviders.map(provider => {
     if (record?.provider == provider) return 'accreditingProvider'
-    else if (record?.schools?.leadSchool?.schoolName == provider) return 'leadSchool'
+    else if (record?.schools?.leadPartner?.schoolName == provider) return 'leadPartner'
     else return false
   }).filter(Boolean)
   if (data?.isAdmin) accessLevels.push("admin")

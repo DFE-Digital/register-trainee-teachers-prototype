@@ -2,7 +2,7 @@ var CSV = require('csv-string')
 const _ = require('lodash')
 
 // csv of monthly funding for SCITTS
-let monthlyFundingScittsCsv = 
+let monthlyFundingScittsCsv =
 `Academic year,Provider ID,Provider name,Description,Total funding,August,September,October,November,December,January,February,March,April,May,June,July
 2021/22,0,Weybury SCITT,Course extension trainee payments for AY 20/21,3900,975,975,975,487.5,487.5,0,0,0,0,0,0,0
 2021/22,0,Weybury SCITT,Training bursary trainees,245000,0,25245,25245,25245,12465,22050,22050,31850,22050,22050,22050,14700
@@ -30,7 +30,7 @@ monthlyFundingScittsArray.forEach(row => {
 
 // csv training bursaries and scholarships for SCITTS
 let annualFundingScittsCsv =
-`Provider,Provider name,Academic Year,Subject,Route,Lead School,Lead School ID,Cohort Level,Core Allocated places,Final Bursary Awards PG ITT/Tier 1 EYITT,Final Bursary Awards Tier 2 EYITT,Final Bursary Awards Tier 3 EYITT,Final Bursary Awards UG ITT/Tier 4 EYITT,Final Bursary Awards Scholarship,Final Bursary Awards No Bursary Awarded,Bursary Funding Data PG ITT/Tier 1 EYITT,Bursary Funding Data Tier 2 EYITT,Bursary Funding Data Tier £ EYITT,Bursary Funding Data UG ITT/Tier 4 EYITT,Bursary Funding Data Scholarship,Initial Bursary Funding PG ITT/Tier 1 EYITT,Initial Bursary Funding Tier 2 EYITT,Initial Bursary Funding Tier 3 EYITT,Initial Bursary Funding UG ITT/Tier 4 EYITT,Initial Bursary Funding Scholarship,Total Bursary Funding
+`Provider,Provider name,Academic Year,Subject,Route,Lead Partner,Lead Partner ID,Cohort Level,Core Allocated places,Final Bursary Awards PG ITT/Tier 1 EYITT,Final Bursary Awards Tier 2 EYITT,Final Bursary Awards Tier 3 EYITT,Final Bursary Awards UG ITT/Tier 4 EYITT,Final Bursary Awards Scholarship,Final Bursary Awards No Bursary Awarded,Bursary Funding Data PG ITT/Tier 1 EYITT,Bursary Funding Data Tier 2 EYITT,Bursary Funding Data Tier £ EYITT,Bursary Funding Data UG ITT/Tier 4 EYITT,Bursary Funding Data Scholarship,Initial Bursary Funding PG ITT/Tier 1 EYITT,Initial Bursary Funding Tier 2 EYITT,Initial Bursary Funding Tier 3 EYITT,Initial Bursary Funding UG ITT/Tier 4 EYITT,Initial Bursary Funding Scholarship,Total Bursary Funding
 0,Weybury SCITT,2021/22,Physics,Provider-led,,,PG,0,2,0,0,0,0,0,24000,0,0,0,26000,48000,0,0,0,0,48000
 0,Weybury SCITT,2021/22,English,Provider-led,,,PG,0,0,0,0,0,5,0,0,0,0,0,0,0,0,0,0,0,0
 0,Weybury SCITT,2021/22,Mathematics,Provider-led,,,PG,0,6,0,0,0,0,0,24000,0,0,0,26000,144000,0,0,0,0,144000
@@ -60,7 +60,7 @@ annualFundingScittsArray.forEach(row => {
   let provider                           =          row[2]
   let subject                            =          row[3]
   let route                              =          row[4]
-  let leadSchool                         =          row[5]
+  let leadPartner                         =          row[5]
   let cohortLevel                        =          row[7]
   let coreAllocatedPlaces                = parseInt(row[8],  10)
   let numberOfTraineesPgIttOrTier1EyItt  = parseInt(row[9],  10)
@@ -88,7 +88,7 @@ annualFundingScittsArray.forEach(row => {
       { provider,
         subject,
         route,
-        leadSchool,
+        leadPartner,
         cohortLevel,
         coreAllocatedPlaces,
         numberOfTraineesPgIttOrTier1EyItt,
@@ -106,52 +106,52 @@ annualFundingScittsArray.forEach(row => {
   }
 })
 
-let monthlyFundingLeadSchoolsCsv = 
-`Academic year,Lead school URN,Lead school name,Provider ID,Provider name,Description,Total funding,August,September,October,November,December,January,February,March,April,May,June,July
-2021/22,12345,example lead school,,,Course extension trainee funding,6500,0,1625,1625,1625,1625,0,0,0,0,0,0,0
-2021/22,12345,example lead school,,,Course extension provider funding,2000,0,500,500,500,500,0,0,0,0,0,0,0
-2021/22,12345,example lead school,,,School Direct (salaried),82000,0,5220,5220,5220,13860,7380,7380,10660,7380,7380,7380,4920
-2021/22,12345,example lead school,,,Postgraduate Teaching Apprenticeship,30000,0,1350,1350,1350,6750,2700,2700,3900,2700,2700,2700,1800`
+let monthlyFundingLeadPartnersCsv =
+`Academic year,Lead partner URN,Lead partner name,Provider ID,Provider name,Description,Total funding,August,September,October,November,December,January,February,March,April,May,June,July
+2021/22,12345,example lead partner,,,Course extension trainee funding,6500,0,1625,1625,1625,1625,0,0,0,0,0,0,0
+2021/22,12345,example lead partner,,,Course extension provider funding,2000,0,500,500,500,500,0,0,0,0,0,0,0
+2021/22,12345,example lead partner,,,School Direct (salaried),82000,0,5220,5220,5220,13860,7380,7380,10660,7380,7380,7380,4920
+2021/22,12345,example lead partner,,,Postgraduate Teaching Apprenticeship,30000,0,1350,1350,1350,6750,2700,2700,3900,2700,2700,2700,1800`
 
-let monthlyFundingLeadSchoolsArray = CSV.parse(monthlyFundingLeadSchoolsCsv)
-monthlyFundingLeadSchoolsArray.shift()
+let monthlyFundingLeadPartnersArray = CSV.parse(monthlyFundingLeadPartnersCsv)
+monthlyFundingLeadPartnersArray.shift()
 
-let monthlyFundingLeadSchools = []
-monthlyFundingLeadSchoolsArray.forEach(row => {
+let monthlyFundingLeadPartners = []
+monthlyFundingLeadPartnersArray.forEach(row => {
   let descriptions = row[5]
   let monthlyPayments = row.slice(7, 19).map(value => parseInt(value))
   let cumulativeMonthlyPayments = monthlyPayments.map((payment, index, array) => {
     return array.slice(0, index + 1).reduce((a, b) => a + b, 0)
   })
-  monthlyFundingLeadSchools.push({
+  monthlyFundingLeadPartners.push({
     descriptions,
     monthlyPayments,
     cumulativeMonthlyPayments
   })
 })
 
-let annualFundingLeadSchoolsCsv =
-`Academic year,Lead school URN,Lead school name,Subject,Description,Funding/trainee,Trainees
-2021/22,12345, example lead school,Physics,School Direct salaried,24000,2
-2021/22,12345, example lead school,English,School Direct salaried,0,0
-2021/22,12345, example lead school,Biology,School Direct salaried,7000,0
-2021/22,12345, example lead school,Business studies,School Direct salaried,0,0
-2021/22,12345, example lead school,Religious education,School Direct salaried,0,0
-2021/22,12345, example lead school,Modern Languages,School Direct salaried,10000,2
-2021/22,12345, example lead school,Chemistry,School Direct salaried,24000,0
-2021/22,12345, example lead school,Primary with mathematics,School Direct salaried,0,0
-2021/22,12345, example lead school,History,School Direct salaried,0,0`
+let annualFundingLeadPartnersCsv =
+`Academic year,Lead partner URN,Lead partner name,Subject,Description,Funding/trainee,Trainees
+2021/22,12345, example lead partner,Physics,School Direct salaried,24000,2
+2021/22,12345, example lead partner,English,School Direct salaried,0,0
+2021/22,12345, example lead partner,Biology,School Direct salaried,7000,0
+2021/22,12345, example lead partner,Business studies,School Direct salaried,0,0
+2021/22,12345, example lead partner,Religious education,School Direct salaried,0,0
+2021/22,12345, example lead partner,Modern Languages,School Direct salaried,10000,2
+2021/22,12345, example lead partner,Chemistry,School Direct salaried,24000,0
+2021/22,12345, example lead partner,Primary with mathematics,School Direct salaried,0,0
+2021/22,12345, example lead partner,History,School Direct salaried,0,0`
 
-let annualFundingLeadSchoolsArray = CSV.parse(annualFundingLeadSchoolsCsv)
-annualFundingLeadSchoolsArray.shift() // remove header row
+let annualFundingLeadPartnersArray = CSV.parse(annualFundingLeadPartnersCsv)
+annualFundingLeadPartnersArray.shift() // remove header row
 
-let annualFundingLeadSchools = []
-annualFundingLeadSchoolsArray.forEach(row => {
+let annualFundingLeadPartners = []
+annualFundingLeadPartnersArray.forEach(row => {
   let subject          =          row[3]
   let route            =          row[4]
   let numberOfTrainees = parseInt(row[6], 10)
   let amountPerTrainee = parseInt(row[5], 10)
-  annualFundingLeadSchools.push({
+  annualFundingLeadPartners.push({
     subject,
     route,
     numberOfTrainees,
@@ -162,6 +162,6 @@ annualFundingLeadSchoolsArray.forEach(row => {
 module.exports = {
   monthlyFundingScitts,
   annualFundingScitts,
-  monthlyFundingLeadSchools,
-  annualFundingLeadSchools
+  monthlyFundingLeadPartners,
+  annualFundingLeadPartners
 }

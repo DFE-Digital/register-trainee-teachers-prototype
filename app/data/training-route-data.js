@@ -124,7 +124,7 @@ let baseRouteData = {
       'funding'
     ],
     fields: [
-      "leadSchool",
+      "leadPartner",
       "employingSchool",
       "studyMode"
     ],
@@ -159,7 +159,7 @@ let baseRouteData = {
     qualificationsSummary: "QTS",
     hasAllocatedPlaces: true,
     fields: [
-      "leadSchool",
+      "leadPartner",
       "employingSchool",
       "studyMode"
     ],
@@ -227,7 +227,7 @@ let baseRouteData = {
       'funding'
     ],
     fields: [
-      "leadSchool",
+      "leadPartner",
       "employingSchool",
       "studyMode"
     ],
@@ -288,7 +288,7 @@ let baseRouteData = {
       'funding'
     ],
     fields: [
-      "leadSchool",
+      "leadPartner",
       "studyMode"
     ],
     financialSupportAvailable: true,
@@ -356,7 +356,7 @@ let baseRouteData = {
       'funding'
     ],
     fields: [
-      "leadSchool",
+      "leadPartner",
       'employingSchool',
       "studyMode"
       // "apprenticeshipStartDate"
@@ -592,7 +592,7 @@ let baseRouteData = {
       // 'funding'
     ],
     // fields: [
-    //   "leadSchool",
+    //   "leadPartner",
     //   "studyMode"
     // ],
 

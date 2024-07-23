@@ -1,29 +1,29 @@
 
-{# Lead school name #}
-{% if record.schools.leadSchool %}
-  {% set leadSchoolHtml %}
-    {% if record.schools.leadSchool.notApplicable | falsify %}
+{# Lead partner name #}
+{% if record.schools.leadPartner %}
+  {% set leadPartnerHtml %}
+    {% if record.schools.leadPartner.notApplicable | falsify %}
       Not applicable
     {% else %}
-      <p class="govuk-body">{{record.schools.leadSchool.schoolName}}</p>
-      <div class="govuk-hint">{{record.schools.leadSchool | getSchoolHint}}</div>
+      <p class="govuk-body">{{record.schools.leadPartner.schoolName}}</p>
+      <div class="govuk-hint">{{record.schools.leadPartner | getSchoolHint}}</div>
     {% endif %}
   {% endset %}
 {% endif %}
 
-{% set leadSchoolRow = {
+{% set leadPartnerRow = {
   key: {
-    text: "Lead school"
+    text: "Lead partner"
   },
   value: {
-    text: leadSchoolHtml | safe or "Not provided"
+    text: leadPartnerHtml | safe or "Not provided"
   },
   actions: {
     items: [
       {
         href: recordPath + "/schools/lead-school" | addReferrer(referrer),
         text: "Change",
-        visuallyHiddenText: "lead school"
+        visuallyHiddenText: "lead partner"
       }
     ]
   } if canAmend
@@ -60,7 +60,7 @@
 
 
 {% set schoolsRows = [
-  leadSchoolRow if record | requiresField("leadSchool"),
+  leadPartnerRow if record | requiresField("leadPartner"),
   employingSchoolRow if record | requiresField("employingSchool")
 ] %}
 

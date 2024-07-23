@@ -37,7 +37,7 @@
               {{ record.personalDetails | getShortNameReversed | safe }}
             {% else %}
               {{ record | getShortName | safe }}
-            {% endif %} 
+            {% endif %}
           {% else %}
             {% if record.status | isDraft %}
               Draft record
@@ -79,7 +79,7 @@
         </span>
       </span>
   </div>
-  
+
   {% if data.settings.showBulkLinks %}
     <div class="app-application-card_col">
       <div class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
@@ -121,7 +121,7 @@
           </p>
         {% endif %}
 
-        {% if data.isAdmin or (data.signedInProviders | length > 1) or (accessLevel == 'leadSchool') %}
+        {% if data.isAdmin or (data.signedInProviders | length > 1) or (accessLevel == 'leadPartner') %}
           <p class="govuk-caption-m govuk-!-font-size-16 app-application-card__provider govuk-!-margin-bottom-0 govuk-!-margin-top-2">
             <span class="govuk-visually-hidden">Provider: </span>{{record.provider}}</p>
         {% endif %}
@@ -143,7 +143,7 @@
               {{ (record.courseDetails.subjects | prettifySubjects | falsify ) or record.courseDetails.courseNameShort }}
             {% endif %}
           {% endset %}
-          
+
           <span class="govuk-visually-hidden">Course: </span>{{ subjects }}</p>
         <p class="govuk-body govuk-!-font-size-16 govuk-hint govuk-!-margin-bottom-0">
           <span class="govuk-visually-hidden">Route: </span>{{ record.route }}</p>

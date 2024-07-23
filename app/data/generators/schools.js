@@ -6,17 +6,17 @@ const { fakerUK: faker }   = require('@faker-js/faker')
 const allSchools  = require('../gis-schools.js')
 
 // Using the urn to match against
-const leadSchoolUrns = require('./../lead-schools.js').selected.map(school => school.urn)
+const leadPartnerUrns = require('./../lead-schools.js').selected.map(school => school.urn)
 
-// We'll only pick lead schools from our reduced set so there's more chance the same school gets
-// picked repeatedly - so that we can then simulate accounts for lead schools
-const filteredSchools = allSchools.filter(school => leadSchoolUrns.includes(school?.urn))
+// We'll only pick lead partners from our reduced set so there's more chance the same school gets
+// picked repeatedly - so that we can then simulate accounts for lead partners
+const filteredSchools = allSchools.filter(school => leadPartnerUrns.includes(school?.urn))
 
 const trainingRouteData = require('../training-route-data')
 
-const requiresLeadSchool = params => {
+const requiresLeadPartner = params => {
   let routeData = trainingRouteData.trainingRoutes[params.route]
-  return routeData.fields && routeData.fields.includes("leadSchool")
+  return routeData.fields && routeData.fields.includes("leadPartner")
 }
 
 const requiresEmployingSchool = params => {
@@ -26,22 +26,22 @@ const requiresEmployingSchool = params => {
 
 module.exports = (params) => {
 
-  let leadSchool = requiresLeadSchool(params) ? faker.helpers.arrayElement(filteredSchools) : null
+  let leadPartner = requiresLeadPartner(params) ? faker.helpers.arrayElement(filteredSchools) : null
 
   let employingSchool = null
 
   if (requiresEmployingSchool(params)) {
     // Attempt to pick an employing school with a similar postcode
     let tempEmploying = faker.helpers.arrayElement(allSchools.filter(school => {
-      if (!school.postcode || !leadSchool?.postcode) return false
-      else return school.postcode.startsWith(leadSchool.postcode.charAt(0))
+      if (!school.postcode || !leadPartner?.postcode) return false
+      else return school.postcode.startsWith(leadPartner.postcode.charAt(0))
     }))
     // Fall back to random school if we didn’t find a tempEmploying
     employingSchool = (!tempEmploying) ? faker.helpers.arrayElement(allSchools) : tempEmploying
   }
 
   return {
-    ...(leadSchool ? {leadSchool} : {}), // conditional
+    ...(leadPartner ? {leadPartner} : {}), // conditional
     ...(employingSchool ? {employingSchool} : {}), // conditional
   }
 }

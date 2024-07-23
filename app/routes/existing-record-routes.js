@@ -794,8 +794,8 @@ module.exports = router => {
     }
 
     // Schools have individual fields
-    if (!utils.requiresField(record, "leadSchool")){
-      delete record?.schools?.leadSchool
+    if (!utils.requiresField(record, "leadPartner")){
+      delete record?.schools?.leadPartner
     }
     if (!utils.requiresField(record, "employingSchool")){
       delete record?.schools?.employingSchool

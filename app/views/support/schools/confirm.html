@@ -15,8 +15,8 @@
 {% set formAction = './../' + uuid %}
 {% block formContent %}
 
-<!--TODO: Fix this lead school assignment -->
-{# set isLeadSchool = schoolTemp | schoolIsLeadSchool #}
+<!--TODO: Fix this lead partner assignment -->
+{# set isLeadPartner = schoolTemp | schoolIsLeadPartner #}
 
 {# Merge with temp store #}
 {% set schoolTemp = provider | mergeObjects(data.schoolTemp) %}

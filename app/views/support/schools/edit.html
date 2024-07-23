@@ -26,8 +26,8 @@
 {% set schoolTemp = school | setAttribute('name', school.schoolName) %}
 {% set schoolTemp = school | setAttribute('type', school.type) %}
 
-<!--TODO: Fix this lead school assignment -->
-{# set isLeadSchool = schoolTemp | schoolIsLeadSchool #}
+<!--TODO: Fix this lead partner assignment -->
+{# set isLeadPartner = schoolTemp | schoolIsLeadPartner #}
 
 {% set schoolTemp = school | setAttribute('urn', school.urn) %}
 {% set schoolTemp = school | setAttribute('ukprn', school.ukprn) %}
@@ -53,11 +53,11 @@ classes: "govuk-label--s"
 classes: "govuk-!-width-two-thirds"
 }| decorateAttributes(schoolTemp, "schoolTemp.type"))}}
 
-<!--TODO: Fix these radio states based on lead school assignment -->
+<!--TODO: Fix these radio states based on lead partner assignment -->
 {{ govukRadios({
   fieldset: {
     legend: {
-      text: 'Is a lead school?',
+      text: 'Is a lead partner?',
       classes: "govuk-fieldset__legend--s"
     }
   },

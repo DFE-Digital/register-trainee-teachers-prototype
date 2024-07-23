@@ -8,7 +8,7 @@
 
 {% set backText = "Back" %}
 {# {% set backLink = '/home' %} #}
-{# 
+{#
 {% set returnLink = {
   text: 'Cancel',
   href: './../' + uuid
@@ -72,8 +72,8 @@
       value: "SCITT"
     },
     {
-      text: "Lead school",
-      value: "Lead school"
+      text: "Lead partner",
+      value: "Lead partner"
     }
   ]
 } | decorateAttributes(providerTemp, "providerTemp.type")) }}
@@ -104,7 +104,7 @@
   }| decorateAttributes(providerTemp, "providerTemp.accreditationId"))}}
 {% endif %}
 
-{% if isLeadSchool %}
+{% if isLeadPartner %}
   {{ govukInput({
     label: {
       text: "URN",

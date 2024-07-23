@@ -46,13 +46,13 @@
           </ul>
         {% endif %}
 
-        {% if providersByType.leadSchool %}
-          <h2 class="govuk-heading-m">Lead schools</h2>
+        {% if providersByType.leadPartner %}
+          <h2 class="govuk-heading-m">Lead partners</h2>
 
-          <p class="govuk-body">As a lead school you can only view records. You cannot change them.<p>
+          <p class="govuk-body">As a lead partner you can only view records. You cannot change them.<p>
 
           <ul class="govuk-list">
-            {% for provider in providersByType.leadSchool %}
+            {% for provider in providersByType.leadPartner %}
               <li class="govuk-!-margin-bottom-2">
                 {# TODO: make real styles for this element #}
                 <a href="/home?settings[userActiveProvider]={{provider.name}}&clearQuery=true" class="govuk-!-font-size-24 govuk-!-font-weight-bold govuk-link govuk-link--no-visited-state">{{provider.name}}</a>

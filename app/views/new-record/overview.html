@@ -101,7 +101,8 @@
     {% set includesSchools = record | requiresField(["leadPartner", "employingSchool"]) %}
     {% if includesSchools %}
       {% if (record | requiresField("leadPartner")) and (record | requiresField("employingSchool")) %}
-        {% set schoolSectionLabel = "Lead and employing schools" %}
+        {% set schoolSectionLabel = "
+Lead partners and employing schools" %}
       {% elseif record | requiresField(["leadPartner"]) %}
         {% set schoolSectionLabel = "Lead partner" %}
       {% elseif record | requiresField(["employingSchool"]) %}

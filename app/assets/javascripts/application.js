@@ -8,8 +8,8 @@ if (window.console && window.console.info) {
 $(document).ready(function () {
   window.GOVUKFrontend.initAll()
   window.MOJFrontend.initAll()
-  $(() => window.GOVUK.stickAtTopWhenScrolling.init());
-  $(() => window.GOVUK.stickAtBottomWhenScrolling.init());
+  // $(() => window.GOVUK.stickAtTopWhenScrolling.init());
+  // $(() => window.GOVUK.stickAtBottomWhenScrolling.init());
 })
 
 // Submit form when any change detected

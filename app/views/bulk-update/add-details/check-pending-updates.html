@@ -1,8 +1,8 @@
 {% extends "_templates/_page.html" %}
 
-{% block pageScripts %}
+{# % block pageScripts %}
   <script src="/public/javascripts/stick-to-window-when-scrolling.js"></script>
-{% endblock %}
+{% endblock % #}
 
 {% set pageHeading = "Check pending updates to trainee records" %}
 {% set navActive = 'bulk' %}
@@ -72,7 +72,7 @@
       {{ row.trainee.placement.items[1].school.urn  if row.trainee.placement.items[1] else "142426" }}
     </p>
   {% endset %}
-  
+
   {% set tableRow = [
     { text: traineeInfoHtml | safe },
     { text: row.trainee.trainingDetails.commencementDate | govukDate },
@@ -95,5 +95,3 @@
   {% include "_includes/bulk-update/check-pending-updates.html" %}
 
 {% endblock %}
-
-

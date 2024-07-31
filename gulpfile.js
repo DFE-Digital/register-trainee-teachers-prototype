@@ -22,7 +22,10 @@ gulp.task('generate-assets', gulp.series(
   'school-search-index',
   gulp.parallel(
     'sass',
-    'copy-assets'
+    'copy-images',
+    'copy-javascripts',
+    'copy-data',
+    'copy-downloads'
   )
 ))
 gulp.task('watch', gulp.parallel(

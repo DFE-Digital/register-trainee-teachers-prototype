@@ -1,5 +1,5 @@
 const { fakerFR: fakerFR } = require('@faker-js/faker')
-const { fakerUK: faker } = require('@faker-js/faker')
+const { fakerEN_GB: faker } = require('@faker-js/faker')
 
 
 module.exports = (personalDetails) => {

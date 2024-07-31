@@ -1,4 +1,4 @@
-const { fakerUK: faker } = require('@faker-js/faker')
+const { fakerEN_GB: faker } = require('@faker-js/faker')
 
 const countries = require('../countries')
 const countriesExcludingUK = countries.filter(country => country != "United Kingdom")

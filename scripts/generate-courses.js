@@ -5,10 +5,7 @@
 
 const fs            = require('fs')
 const path          = require('path')
-const { fakerUK: faker }     = require('@faker-js/faker')
 const weighted      = require('weighted')
-const moment        = require('moment')
-const _             = require('lodash')
 const providerData  = require('../app/data/accrediting-providers')
 const providers     = providerData.selected
 
@@ -18,7 +15,6 @@ const generateCourseDetails = require('../app/data/generators/course-generator')
 // Thus we generate one more year of courses than trainees
 // Todo: grab these from the years.js file?
 const yearsToGenerate = [2018, 2019, 2020, 2021, 2022, 2023, 2024]
-const currentYear     = 2024
 
 // Volumes loosely based on number of courses per provider as seen on Publish
 // Most have 1-3, but then about 1/3 have up to 80

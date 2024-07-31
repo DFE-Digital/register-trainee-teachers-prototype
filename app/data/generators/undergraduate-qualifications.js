@@ -1,4 +1,4 @@
-const { faker }             = require('@faker-js/faker')
+const { fakerEN_GB: faker } = require('@faker-js/faker')
 const ugEntryQualifications = require('../undergraduate-qualifications.js')
 
 module.exports = () => {
@@ -11,6 +11,6 @@ module.exports = () => {
     tarrifPoints
   }
 
-  // TODO: be smarter about the a tarrif points. Move it to a dev task ! 
+  // TODO: be smarter about the a tarrif points. Move it to a dev task !
 
 }

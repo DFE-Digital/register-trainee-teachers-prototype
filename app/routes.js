@@ -1,6 +1,6 @@
 const _ = require('lodash')
 const express = require('express')
-const { faker }         = require('@faker-js/faker')
+const { fakerEN_GB: faker } = require('@faker-js/faker')
 const moment = require('moment')
 const path = require('path')
 const router = express.Router()

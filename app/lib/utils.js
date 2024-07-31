@@ -2,7 +2,7 @@
 // Imports and setup
 // -------------------------------------------------------------------
 const _                      = require('lodash')
-const { faker }              = require('@faker-js/faker')
+const { fakerEN_GB: faker }  = require('@faker-js/faker')
 const moment                 = require('moment')
 const path                   = require('path')
 const url                    = require('url')

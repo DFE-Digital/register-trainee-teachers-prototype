@@ -5,7 +5,7 @@ const individualFunctionsFolder = path.join(__dirname, './functions')
 const moment = require("moment");
 const _ = require('lodash')
 const permissions = require('./filters/permissions.js').filters
-const { faker }              = require('@faker-js/faker')
+const { fakerEN_GB: faker } = require('@faker-js/faker')
 faker.seed(123)
 
 module.exports = function (env) {
@@ -37,7 +37,7 @@ module.exports = function (env) {
     return Date.now()
   }
 
-  /* 
+  /*
    ---------------------------------------
     Get current month
    ---------------------------------------
@@ -54,7 +54,7 @@ module.exports = function (env) {
   }
 
 
-  // Get current year 
+  // Get current year
   functions.currentYear = (type) => {
     return moment().add(type, 'years').format('YYYY')
   }

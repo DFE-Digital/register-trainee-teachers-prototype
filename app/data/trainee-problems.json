@@ -63,354 +63,328 @@
     "date": "2022-08-12T13:15:05.879Z"
   },
   {
-    "title": "These trainees appear to be duplicates",
-    "description": "Review these trainees and either withdraw one, or email us with an action to take",
+    "title": "This draft appears to be a duplicate",
+    "description": "Review whether this draft is a duplicate and either delete it or withdraw the existing trainee",
     "traineeCount": 2,
     "trainees": [
-      "dd359202-c1fb-4a6a-924b-b9773ab797e7",
-      "1c3e3186-a5db-4c72-900f-ee0cd434d8ca"
+      "7487ef8d-340e-4f5d-b131-f563b4092b5e",
+      "d341e789-9403-46d2-b1b1-e67a9ccc1d66"
     ],
     "type": "duplicate",
-    "id": "fdf17ca8-42aa-4d19-8407-8a59f56b09ee",
+    "id": "5befe322-fdba-41f6-a45b-d7ff9ebf775b",
     "provider": "University of Lincoln",
-    "date": "2024-07-23T13:44:43.254Z"
-  },
-  {
-    "title": "These trainees appear to be duplicates",
-    "description": "Review these trainees and either withdraw one, or email us with an action to take",
-    "traineeCount": 2,
-    "trainees": [
-      "23410120-04dc-405b-9a82-b914dccf4d9a",
-      "0bfb4412-2589-4292-bf6f-9e488365c514"
-    ],
-    "type": "duplicate",
-    "id": "f1de012b-7718-4fad-9c5a-cc8390251ce0",
-    "provider": "University of Lincoln",
-    "date": "2024-07-23T13:44:43.254Z"
-  },
-  {
-    "title": "These trainees appear to be duplicates",
-    "description": "Review these trainees and either withdraw one, or email us with an action to take",
-    "traineeCount": 2,
-    "trainees": [
-      "56847f38-6605-4a38-ada4-646fcc3f13c0",
-      "1920241e-32e5-48f0-b1de-829cf07b16f5"
-    ],
-    "type": "duplicate",
-    "id": "83e78c86-62c9-4112-9bc5-ea89b0320f9e",
-    "provider": "University of Lincoln",
-    "date": "2024-07-23T13:44:43.254Z"
+    "date": "2024-07-31T15:56:40.183Z"
   },
   {
     "title": "This trainee may have been forgotten",
     "description": "The expected end date of this trainee was <span class=\"govuk-!-font-weight-bold\">a few seconds ago</span>.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
     "trainees": [
-      "23410120-04dc-405b-9a82-b914dccf4d9a"
+      "4dcc6197-8c11-4ed8-bb58-135fa874fd7a"
     ],
     "type": "forgotten",
-    "id": "7c62bb31-85a2-411f-89a2-155fe18ce347",
+    "id": "af0a5107-5ca5-4996-ae7b-31b60b3861b6",
     "provider": "University of Lincoln",
-    "date": "2024-07-23T13:44:43.255Z"
+    "date": "2024-07-31T15:56:40.184Z"
+  },
+  {
+    "title": "This draft appears to be a duplicate",
+    "description": "Review whether this draft is a duplicate and either delete it or withdraw the existing trainee",
+    "traineeCount": 2,
+    "trainees": [
+      "c59cb009-0ed7-4fde-ba97-8ec7d466411f",
+      "04b51cdb-345d-4e0b-b1fc-486e6c28b793"
+    ],
+    "type": "duplicate",
+    "id": "67507663-d4f7-4f2e-97a6-8d85b920e0c6",
+    "provider": "University of Lincoln",
+    "date": "2024-07-31T15:56:40.184Z"
   },
   {
     "title": "These trainees appear to be duplicates",
     "description": "Review these trainees and either withdraw one, or email us with an action to take",
     "traineeCount": 2,
     "trainees": [
-      "258ba513-a38b-4f8f-b122-4ac92cb20434",
-      "8552de1f-63e9-4f4c-b960-249fdd71c5b8"
+      "6abf72e0-3d9c-452f-b841-98cff20917f5",
+      "986a98c3-9652-47c1-b035-c7165313e4e8"
     ],
     "type": "duplicate",
-    "id": "ef928da9-1024-4ea6-aa76-652b199ce906",
+    "id": "737ee1eb-74d7-42c7-b556-3e1d8ce37e9f",
     "provider": "University of Lincoln",
-    "date": "2024-07-23T13:44:43.255Z"
+    "date": "2024-07-31T15:56:40.184Z"
   },
   {
     "title": "This trainee may have been forgotten",
     "description": "The expected end date of this trainee was <span class=\"govuk-!-font-weight-bold\">a few seconds ago</span>.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
     "trainees": [
-      "3bd031a7-c667-42cd-aa17-c2c8400b5c23"
+      "a50070ff-74c9-4ce8-858b-3eb6b85bed2d"
     ],
     "type": "forgotten",
-    "id": "b25b4040-a4bc-495b-9872-c4823ea53641",
+    "id": "f76d13e0-c483-478a-a8d7-2b6d2ad88862",
     "provider": "University of Lincoln",
-    "date": "2024-07-23T13:44:43.255Z"
+    "date": "2024-07-31T15:56:40.184Z"
+  },
+  {
+    "title": "This draft appears to be a duplicate",
+    "description": "Review whether this draft is a duplicate and either delete it or withdraw the existing trainee",
+    "traineeCount": 2,
+    "trainees": [
+      "88b09696-d1b5-410b-bb17-3f77ba7737e3",
+      "99f0fbf1-48a3-42b8-87b3-e65cb472b8aa"
+    ],
+    "type": "duplicate",
+    "id": "fb691c97-3d60-4c08-898f-43cb07b214fd",
+    "provider": "University of Lincoln",
+    "date": "2024-07-31T15:56:40.184Z"
   },
   {
     "title": "This trainee may have been forgotten",
     "description": "The expected end date of this trainee was <span class=\"govuk-!-font-weight-bold\">a few seconds ago</span>.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
     "trainees": [
-      "00c4147f-9f14-4588-9b98-120a0c9768ac"
+      "4df7a806-569a-4098-a303-0dba59fcb535"
     ],
     "type": "forgotten",
-    "id": "39dbfd31-d49c-4a31-bdb8-a6ef4c400b7b",
+    "id": "781034ba-f348-43cc-8621-04ab9993b459",
     "provider": "University of Lincoln",
-    "date": "2024-07-23T13:44:43.255Z"
+    "date": "2024-07-31T15:56:40.184Z"
   },
   {
     "title": "Confirm the deferral is still correct",
     "description": "This trainee has been deferred for <span class=\"govuk-!-font-weight-bold\">a few seconds</span>.\n      If the trainee is still deferred, please update their expected end date. If they have left the course you should withdraw them.",
     "traineeCount": 1,
     "trainees": [
-      "f1bbfd47-2b5e-49f6-b8ea-a61b14a5bafd"
+      "4fb8aa7a-5cb1-4bc2-bd2f-c784a32c076f"
     ],
     "type": "deferredForgotten",
-    "id": "c68b0cbe-d092-4783-a2aa-ac739083c8b0",
+    "id": "7ca81723-9c88-4c5a-8d50-bff844b2abb1",
     "provider": "University of Lincoln",
-    "date": "2024-07-23T13:44:43.256Z"
+    "date": "2024-07-31T15:56:40.185Z"
+  },
+  {
+    "title": "These trainees appear to be duplicates",
+    "description": "Review these trainees and either withdraw one, or email us with an action to take",
+    "traineeCount": 2,
+    "trainees": [
+      "6b3ef651-e507-47b4-8e9c-d76b08b5c635",
+      "bc787770-67d0-4732-9841-f9843a3dc304"
+    ],
+    "type": "duplicate",
+    "id": "76e79090-a030-4fcf-8cb3-53a6587d33d7",
+    "provider": "King’s Oak University",
+    "date": "2024-07-31T15:56:40.185Z"
   },
   {
     "title": "This trainee may have been forgotten",
     "description": "The expected end date of this trainee was <span class=\"govuk-!-font-weight-bold\">a few seconds ago</span>.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
     "trainees": [
-      "196bad51-fbe7-4541-9c4d-5d2a321315de"
+      "973b223d-05f7-4ff4-8881-10e4df56cbe1"
     ],
     "type": "forgotten",
-    "id": "1b8b79a7-0096-47b1-a81e-201e0a2f49f4",
+    "id": "76a94654-6084-458e-ad2f-7e39528d24f0",
     "provider": "King’s Oak University",
-    "date": "2024-07-23T13:44:43.256Z"
+    "date": "2024-07-31T15:56:40.185Z"
   },
   {
     "title": "This trainee may have been forgotten",
     "description": "The expected end date of this trainee was <span class=\"govuk-!-font-weight-bold\">a few seconds ago</span>.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
     "trainees": [
-      "9aadf24e-cf5e-4843-bdff-65ae8954206d"
+      "f9e39b5c-9716-4d63-8486-302fc4faa5b7"
     ],
     "type": "forgotten",
-    "id": "a24b78a7-df9e-4c0e-bc80-54928a775802",
+    "id": "6385347b-e5ac-4bd2-b416-c297ea644c3e",
     "provider": "King’s Oak University",
-    "date": "2024-07-23T13:44:43.256Z"
+    "date": "2024-07-31T15:56:40.185Z"
   },
   {
     "title": "This draft appears to be a duplicate",
     "description": "Review whether this draft is a duplicate and either delete it or withdraw the existing trainee",
     "traineeCount": 2,
     "trainees": [
-      "4969a0a8-f732-43f7-b716-e6973fc96b6b",
-      "ad459e01-06dc-46b0-9819-e4a11ae3a1e8"
+      "d8fc6341-305b-4f96-8aea-35875da4a16d",
+      "8030c1ac-ae82-41bd-b387-0055254c4d06"
     ],
     "type": "duplicate",
-    "id": "b972cbea-f740-45e3-8835-60b8ffbda661",
+    "id": "7cebb061-2be2-4490-b457-40f8e72726cc",
     "provider": "King’s Oak University",
-    "date": "2024-07-23T13:44:43.256Z"
+    "date": "2024-07-31T15:56:40.185Z"
   },
   {
-    "title": "These trainees appear to be duplicates",
-    "description": "Review these trainees and either withdraw one, or email us with an action to take",
-    "traineeCount": 2,
+    "title": "This trainee may have been forgotten",
+    "description": "The expected end date of this trainee was <span class=\"govuk-!-font-weight-bold\">a few seconds ago</span>.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "traineeCount": 1,
     "trainees": [
-      "5dacaa62-9c73-406c-a18b-f2a62a439215",
-      "01b8dfe6-47ce-40bb-b4e0-eaf336f4e997"
+      "1e98d406-ac97-4e85-970d-5a79b035a61a"
     ],
-    "type": "duplicate",
-    "id": "2321bb42-5537-4c98-adcb-e3a56407e00c",
+    "type": "forgotten",
+    "id": "9bb193dd-3ddd-4730-9ffa-1d0db0b6ad94",
     "provider": "King’s Oak University",
-    "date": "2024-07-23T13:44:43.257Z"
+    "date": "2024-07-31T15:56:40.185Z"
   },
   {
     "title": "This trainee may have been forgotten",
     "description": "The expected end date of this trainee was <span class=\"govuk-!-font-weight-bold\">a few seconds ago</span>.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
     "traineeCount": 1,
     "trainees": [
-      "666cdf51-efee-4b53-8abd-bb32b8365aed"
+      "d4777456-34db-4f38-8e51-7f45910827b1"
     ],
     "type": "forgotten",
-    "id": "c85a89de-e36a-4bce-a891-db79ebf23ce8",
-    "provider": "King’s Oak University",
-    "date": "2024-07-23T13:44:43.257Z"
-  },
-  {
-    "title": "These trainees appear to be duplicates",
-    "description": "Review these trainees and either withdraw one, or email us with an action to take",
-    "traineeCount": 2,
-    "trainees": [
-      "66ceab33-8ecd-470e-b983-9ca6724ce6d2",
-      "fca25c1c-ce9f-42da-b1c2-5a3f21f138d4"
-    ],
-    "type": "duplicate",
-    "id": "f10ec55c-4d24-485d-aaf6-0db38fb5a353",
-    "provider": "King’s Oak University",
-    "date": "2024-07-23T13:44:43.257Z"
-  },
-  {
-    "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was <span class=\"govuk-!-font-weight-bold\">a few seconds ago</span>.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
-    "traineeCount": 1,
-    "trainees": [
-      "2a4f4dc6-8653-4499-ae5c-22d2cdb5a3de"
-    ],
-    "type": "forgotten",
-    "id": "6053f1bf-3aff-40b1-895a-11141ee43fe6",
+    "id": "9eb8dc0b-1f90-471b-95e0-e7bd096c8b9d",
     "provider": "Webury Hill SCITT",
-    "date": "2024-07-23T13:44:43.257Z"
-  },
-  {
-    "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was <span class=\"govuk-!-font-weight-bold\">a few seconds ago</span>.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
-    "traineeCount": 1,
-    "trainees": [
-      "f24aa8be-4a7d-4d5d-b1be-8c180ab194c3"
-    ],
-    "type": "forgotten",
-    "id": "88488439-77e0-4fe7-8f8e-c02f3bf7fcfa",
-    "provider": "Webury Hill SCITT",
-    "date": "2024-07-23T13:44:43.257Z"
-  },
-  {
-    "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was <span class=\"govuk-!-font-weight-bold\">a few seconds ago</span>.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
-    "traineeCount": 1,
-    "trainees": [
-      "b5f731f3-4c74-4552-8163-1576bc1ac85d"
-    ],
-    "type": "forgotten",
-    "id": "8eac1edc-0037-4a7c-8f2a-0566e845f8f5",
-    "provider": "Webury Hill SCITT",
-    "date": "2024-07-23T13:44:43.257Z"
-  },
-  {
-    "title": "These trainees appear to be duplicates",
-    "description": "Review these trainees and either withdraw one, or email us with an action to take",
-    "traineeCount": 2,
-    "trainees": [
-      "04ad18c1-4cc2-4d3d-a979-0dc1f07fc6b4",
-      "f061987e-6c14-4890-8aa5-dfcea90ea744"
-    ],
-    "type": "duplicate",
-    "id": "8d702e90-404f-4822-a847-fe4f1aea8654",
-    "provider": "Webury Hill SCITT",
-    "date": "2024-07-23T13:44:43.257Z"
-  },
-  {
-    "title": "This draft appears to be a duplicate",
-    "description": "Review whether this draft is a duplicate and either delete it or withdraw the existing trainee",
-    "traineeCount": 2,
-    "trainees": [
-      "04126812-ef25-47cd-840d-9d42fcad9bae",
-      "7107f844-fa6b-47d2-b452-b160195d5d75"
-    ],
-    "type": "duplicate",
-    "id": "98ced25e-2df9-4aff-960d-a153af57916d",
-    "provider": "Webury Hill SCITT",
-    "date": "2024-07-23T13:44:43.257Z"
-  },
-  {
-    "title": "This draft appears to be a duplicate",
-    "description": "Review whether this draft is a duplicate and either delete it or withdraw the existing trainee",
-    "traineeCount": 2,
-    "trainees": [
-      "12639475-42d2-47fd-8c69-7f53529599f5",
-      "72dfbcfd-d28a-4110-a00d-35aef5ab2c39"
-    ],
-    "type": "duplicate",
-    "id": "8dfa3206-312d-4a82-83f9-e2892909e159",
-    "provider": "Webury Hill SCITT",
-    "date": "2024-07-23T13:44:43.258Z"
-  },
-  {
-    "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was <span class=\"govuk-!-font-weight-bold\">a few seconds ago</span>.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
-    "traineeCount": 1,
-    "trainees": [
-      "e432974c-e719-4ab0-96a2-a144532cec80"
-    ],
-    "type": "forgotten",
-    "id": "fee7c8d1-783e-43f5-b36d-a0922d6f57dd",
-    "provider": "Webury Hill SCITT",
-    "date": "2024-07-23T13:44:43.258Z"
-  },
-  {
-    "title": "These trainees appear to be duplicates",
-    "description": "Review these trainees and either withdraw one, or email us with an action to take",
-    "traineeCount": 2,
-    "trainees": [
-      "ff275334-d2e2-4b00-bb8e-71d6819917cb",
-      "ea9416f4-b7fd-47ea-bff0-9fd4fb5cc26f"
-    ],
-    "type": "duplicate",
-    "id": "f2ca3b6d-eeac-47d0-8784-f9639d5e00db",
-    "provider": "Webury Hill SCITT",
-    "date": "2024-07-23T13:44:43.258Z"
-  },
-  {
-    "title": "This draft appears to be a duplicate",
-    "description": "Review whether this draft is a duplicate and either delete it or withdraw the existing trainee",
-    "traineeCount": 2,
-    "trainees": [
-      "96be396f-8466-4b24-b733-b3f653e637bf",
-      "a60a9e1f-6a35-4550-b008-b5dc643a1a5d"
-    ],
-    "type": "duplicate",
-    "id": "0062c30c-c9d5-4216-8eb8-37456169fe18",
-    "provider": "Webury Hill SCITT",
-    "date": "2024-07-23T13:44:43.258Z"
-  },
-  {
-    "title": "These trainees appear to be duplicates",
-    "description": "Review these trainees and either withdraw one, or email us with an action to take",
-    "traineeCount": 2,
-    "trainees": [
-      "3325140a-7213-4ccc-b924-db4564f12b33",
-      "c0225303-c818-4251-bf3a-efe7dcc4e8e2"
-    ],
-    "type": "duplicate",
-    "id": "d44c7bc9-2527-4a2e-a0cf-a8c814906a8d",
-    "provider": "The John Taylor SCITT",
-    "date": "2024-07-23T13:44:43.258Z"
-  },
-  {
-    "title": "These trainees appear to be duplicates",
-    "description": "Review these trainees and either withdraw one, or email us with an action to take",
-    "traineeCount": 2,
-    "trainees": [
-      "ac68575c-f690-470c-a33a-5b96099c91b7",
-      "b8bbbd7b-a0ff-42cc-9be6-22e67ddd1f79"
-    ],
-    "type": "duplicate",
-    "id": "7c5f79c8-86a2-4b63-9ca2-f849225255f4",
-    "provider": "The John Taylor SCITT",
-    "date": "2024-07-23T13:44:43.258Z"
-  },
-  {
-    "title": "This trainee may have been forgotten",
-    "description": "The expected end date of this trainee was <span class=\"govuk-!-font-weight-bold\">a few seconds ago</span>.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
-    "traineeCount": 1,
-    "trainees": [
-      "3174e00b-9fe6-4357-82f3-1ffbc319b777"
-    ],
-    "type": "forgotten",
-    "id": "3bef3dfc-e1a9-42f2-8c77-9600715885e2",
-    "provider": "The John Taylor SCITT",
-    "date": "2024-07-23T13:44:43.258Z"
-  },
-  {
-    "title": "These trainees appear to be duplicates",
-    "description": "Review these trainees and either withdraw one, or email us with an action to take",
-    "traineeCount": 2,
-    "trainees": [
-      "2e9c5b65-a247-4d57-83d8-1c5af0542365",
-      "3ea334a9-aa01-475f-bc23-3da449441823"
-    ],
-    "type": "duplicate",
-    "id": "66769bd4-188e-486d-8942-096b722ce446",
-    "provider": "The John Taylor SCITT",
-    "date": "2024-07-23T13:44:43.258Z"
+    "date": "2024-07-31T15:56:40.186Z"
   },
   {
     "title": "Confirm the deferral is still correct",
     "description": "This trainee has been deferred for <span class=\"govuk-!-font-weight-bold\">a few seconds</span>.\n      If the trainee is still deferred, please update their expected end date. If they have left the course you should withdraw them.",
     "traineeCount": 1,
     "trainees": [
-      "51ebab2f-91ae-4e73-89ee-e64c5ed7db38"
+      "0425ab83-88a2-4683-a057-ea7870df765d"
     ],
     "type": "deferredForgotten",
-    "id": "223174c7-02a1-4b84-a474-008bd973f39e",
+    "id": "9960e4fb-62f9-46d2-bdf1-070e7a334d09",
+    "provider": "Webury Hill SCITT",
+    "date": "2024-07-31T15:56:40.186Z"
+  },
+  {
+    "title": "This trainee may have been forgotten",
+    "description": "The expected end date of this trainee was <span class=\"govuk-!-font-weight-bold\">a few seconds ago</span>.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "traineeCount": 1,
+    "trainees": [
+      "570ce362-97f7-44ef-a2cf-e13007327831"
+    ],
+    "type": "forgotten",
+    "id": "29383600-9eb3-4f79-aff2-5cde7b6b2517",
+    "provider": "Webury Hill SCITT",
+    "date": "2024-07-31T15:56:40.186Z"
+  },
+  {
+    "title": "These trainees appear to be duplicates",
+    "description": "Review these trainees and either withdraw one, or email us with an action to take",
+    "traineeCount": 2,
+    "trainees": [
+      "6b496bae-9ce0-4dfb-b7e4-5a7279a0ae59",
+      "8a0b1545-2415-49d5-a6fa-c3b0ae26c5c1"
+    ],
+    "type": "duplicate",
+    "id": "45f20bef-eb94-4a7c-9585-04636445099a",
+    "provider": "Webury Hill SCITT",
+    "date": "2024-07-31T15:56:40.186Z"
+  },
+  {
+    "title": "This trainee may have been forgotten",
+    "description": "The expected end date of this trainee was <span class=\"govuk-!-font-weight-bold\">a few seconds ago</span>.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "traineeCount": 1,
+    "trainees": [
+      "6b496bae-9ce0-4dfb-b7e4-5a7279a0ae59"
+    ],
+    "type": "forgotten",
+    "id": "d17c967c-07e5-43e5-99fd-adfdc336d8e7",
+    "provider": "Webury Hill SCITT",
+    "date": "2024-07-31T15:56:40.186Z"
+  },
+  {
+    "title": "These trainees appear to be duplicates",
+    "description": "Review these trainees and either withdraw one, or email us with an action to take",
+    "traineeCount": 2,
+    "trainees": [
+      "b0e8c1db-5a21-43df-9219-60c4980f9709",
+      "0e45ec46-5960-4006-ba76-de7376ca8e8d"
+    ],
+    "type": "duplicate",
+    "id": "b0740986-2a37-4a25-bfb6-442642643107",
     "provider": "The John Taylor SCITT",
-    "date": "2024-07-23T13:44:43.258Z"
+    "date": "2024-07-31T15:56:40.186Z"
+  },
+  {
+    "title": "These trainees appear to be duplicates",
+    "description": "Review these trainees and either withdraw one, or email us with an action to take",
+    "traineeCount": 2,
+    "trainees": [
+      "5f6136a2-8af6-4bf5-9f67-c2100cf10e11",
+      "5af8ce36-17ce-4b44-9362-01772ab68d9e"
+    ],
+    "type": "duplicate",
+    "id": "5c6a26c3-a726-45f2-9bff-a3e8c968ead4",
+    "provider": "The John Taylor SCITT",
+    "date": "2024-07-31T15:56:40.186Z"
+  },
+  {
+    "title": "These trainees appear to be duplicates",
+    "description": "Review these trainees and either withdraw one, or email us with an action to take",
+    "traineeCount": 2,
+    "trainees": [
+      "637b6a8b-dd8e-42c4-966c-82f6cc34adc7",
+      "4ea03799-ce55-475b-a946-829cbf3862b2"
+    ],
+    "type": "duplicate",
+    "id": "e0b9f7b7-ff62-4101-8c0d-ddedb4f5dc07",
+    "provider": "The John Taylor SCITT",
+    "date": "2024-07-31T15:56:40.186Z"
+  },
+  {
+    "title": "This trainee may have been forgotten",
+    "description": "The expected end date of this trainee was <span class=\"govuk-!-font-weight-bold\">a few seconds ago</span>.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "traineeCount": 1,
+    "trainees": [
+      "3c7168da-cef4-4979-b9c0-415af75b88f9"
+    ],
+    "type": "forgotten",
+    "id": "57208775-5f1e-47e8-8021-85c9d3e959bb",
+    "provider": "The John Taylor SCITT",
+    "date": "2024-07-31T15:56:40.187Z"
+  },
+  {
+    "title": "These trainees appear to be duplicates",
+    "description": "Review these trainees and either withdraw one, or email us with an action to take",
+    "traineeCount": 2,
+    "trainees": [
+      "10c6501d-1081-4db2-a70b-16bdeaac6c56",
+      "ee9824a9-a3d7-40ff-9fcd-e5091e76567e"
+    ],
+    "type": "duplicate",
+    "id": "ae017e9f-2e9e-4fc2-b27f-5e0d17ecdcc6",
+    "provider": "The John Taylor SCITT",
+    "date": "2024-07-31T15:56:40.187Z"
+  },
+  {
+    "title": "These trainees appear to be duplicates",
+    "description": "Review these trainees and either withdraw one, or email us with an action to take",
+    "traineeCount": 2,
+    "trainees": [
+      "1babd825-906f-48a8-a61b-d292822f9585",
+      "615bde83-be66-4da8-b7f7-f6bf536245c8"
+    ],
+    "type": "duplicate",
+    "id": "a0f7dc0e-6b83-4f75-9dc3-b6f9c354c5a4",
+    "provider": "The John Taylor SCITT",
+    "date": "2024-07-31T15:56:40.187Z"
+  },
+  {
+    "title": "This draft appears to be a duplicate",
+    "description": "Review whether this draft is a duplicate and either delete it or withdraw the existing trainee",
+    "traineeCount": 2,
+    "trainees": [
+      "4127bef1-4f65-40c5-9a17-d4f81d413df6",
+      "9a9ba37b-0874-4377-8032-263bd35d40b0"
+    ],
+    "type": "duplicate",
+    "id": "9aaf4d09-4db1-4d76-a6c8-bb159140bc25",
+    "provider": "The John Taylor SCITT",
+    "date": "2024-07-31T15:56:40.187Z"
+  },
+  {
+    "title": "This trainee may have been forgotten",
+    "description": "The expected end date of this trainee was <span class=\"govuk-!-font-weight-bold\">a few seconds ago</span>.\n      If the trainee is no longer in training you should award or withdraw them. If they are still in training you should\n      update the expected end date of their course.",
+    "traineeCount": 1,
+    "trainees": [
+      "5af8ce36-17ce-4b44-9362-01772ab68d9e"
+    ],
+    "type": "forgotten",
+    "id": "70495e6b-84a1-4ac3-8c7d-39f09cbdc7b6",
+    "provider": "The John Taylor SCITT",
+    "date": "2024-07-31T15:56:40.187Z"
   }
 ]

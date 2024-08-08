@@ -1,4 +1,4 @@
-const { fakerUK: faker } = require('@faker-js/faker')
+const { fakerEN_GB: faker } = require('@faker-js/faker')
 const moment    = require('moment')
 
 // Faker has a bug that faker.helpers.dateBetween requires the input dates to be in order

@@ -2,24 +2,20 @@
 
 // node scripts/generate-records.js
 
-// Re-run this script after generating new courses
 const fs                = require('fs')
 const path              = require('path')
 const { fakerUK: faker }         = require('@faker-js/faker')
 const moment            = require('moment')
-const _                 = require('lodash')
 const weighted          = require('weighted')
 
 // Data
 const trainingRouteData = require('../app/data/training-route-data')
 const seedRecords       = require('../app/data/seed-records')
 const statuses          = require('../app/data/status')
-const courses           = require('../app/data/courses.json')
 const utils             = require('../app/lib/utils.js')
 const years             = require('../app/data/years.js')
 const accreditingProviderData      = require('../app/data/accrediting-providers.js')
 const providers         = accreditingProviderData.selected
-const statusFilters     = require('./../app/filters/statuses.js').filters
 
 // Settings
 let simpleGcseGrades    = true //output pass/fail rather than full detail
@@ -41,7 +37,7 @@ const getRandomInt = (max) => {
 }
 
 // Training routes
-const trainingRoutes = Object.keys(trainingRouteData.trainingRoutes)
+// const trainingRoutes = Object.keys(trainingRouteData.trainingRoutes)
 
 // Generators
 const generateRoute = require('../app/data/generators/route.js')
@@ -53,7 +49,7 @@ const generateCourseDetails = require('../app/data/generators/course-details')
 const generatePersonalDetails = require('../app/data/generators/personal-details')
 const generateDiversity = require('../app/data/generators/diversity')
 const generateDegree = require('../app/data/generators/degree')
-const generateGce = require('../app/data/generators/gce')
+// const generateGce = require('../app/data/generators/gce')
 const generateGcse = require('../app/data/generators/gcse')
 const generateEvents = require('../app/data/generators/events')
 const generateFunding = require('../app/data/generators/funding')
@@ -179,13 +175,6 @@ const generateFakeApplication = (params = {}) => {
   if (routeQualifications.includes('EYTS')) {
     application.status = application.status.replace('QTS', 'EYTS')
   }
-
-  // Outcomes
-  // let academicQualificationsApply = trainingRouteData.trainingRoutes[application.route]?.academicQualificationsApply || false
-
-  // if (academicQualificationsApply && statusFilters.isRecommendedOrAwarded(application.status)) {
-  //   _.set(application, "outcome.academicQualification", "PGCE")
-  // }
 
   if (application.source == "HESA"){
     application = generateHesaData(application)

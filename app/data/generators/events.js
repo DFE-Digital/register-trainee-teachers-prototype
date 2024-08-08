@@ -1,4 +1,4 @@
-const { faker }         = require('@faker-js/faker')
+const { fakerEN_GB: faker } = require('@faker-js/faker')
 
 module.exports = (application) => {
   const events = { items: [] }

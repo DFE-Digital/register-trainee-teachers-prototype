@@ -1,4 +1,4 @@
-const { faker }           = require('@faker-js/faker')
+const { fakerEN_GB: faker } = require('@faker-js/faker')
 const path                = require('path')
 const moment              = require('moment')
 const filters             = require('./../filters.js')()

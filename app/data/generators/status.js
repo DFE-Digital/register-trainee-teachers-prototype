@@ -1,4 +1,4 @@
-const { faker }         = require('@faker-js/faker')
+const { fakerEN_GB: faker } = require('@faker-js/faker')
 const weighted          = require('weighted')
 const moment            = require('moment')
 const utils = require('../../lib/utils.js')
@@ -23,7 +23,7 @@ module.exports = application => {
   else if (weighted.select([true, false], [0.02, 0.98])){
     status = 'Withdrawn'
   }
-  // If it's not deferred or withdrawn and the course has finished, assume 
+  // If it's not deferred or withdrawn and the course has finished, assume
   // they're awarded
   else if (moment(courseEndDate).isBefore(todaysDate)){
     status = "QTS awarded"

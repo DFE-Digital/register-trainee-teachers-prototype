@@ -1,19 +1,18 @@
-const { fakerUK: faker }  = require('@faker-js/faker')
+const { fakerEN_GB: faker }  = require('@faker-js/faker')
 const weighted   = require('weighted')
 
 module.exports = () => {
-
   const sexInteger = faker.helpers.arrayElement([0, 1])
 
-  let sex = { 0: "Male", 1: "Female" }[sexInteger]
+  let sex = { 0: 'Male', 1: 'Female' }[sexInteger]
 
-  const givenName = faker.person.firstName(sexInteger)
+  const givenName = faker.person.firstName(sex)
 
-  const familyName = faker.person.lastName(sexInteger)
+  const familyName = faker.person.lastName(sex)
 
   const middleNameOptions = {
-    hasMiddleName: faker.person.firstName(sexInteger),
-    hasDoubleMiddleName: faker.person.firstName(sexInteger) + " " + faker.person.firstName(sexInteger),
+    hasMiddleName: faker.person.firstName(sex),
+    hasDoubleMiddleName: faker.person.firstName(sex) + " " + faker.person.firstName(sex),
     doesNotHaveMiddleName: null
   }
   const selectedMiddleName = weighted.select({

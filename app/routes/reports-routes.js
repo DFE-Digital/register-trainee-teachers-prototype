@@ -6,7 +6,7 @@ const path = require('path')
 const url = require('url')
 const utils = require('./../lib/utils')
 const weighted = require('weighted')
-const { fakerUK: faker } = require('@faker-js/faker')
+const { fakerEN_GB: faker } = require('@faker-js/faker')
 
 
 module.exports = router => {

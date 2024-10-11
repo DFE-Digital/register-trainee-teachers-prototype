@@ -5,5 +5,6 @@
   <p class="govuk-body govuk-!-margin-bottom-2">
     {{ update.date | govukDate }}
   </p>
-  {{ update.content | markdown | safe }}
+  {# TODO: Fix markdown rendering #}
+  {# update.content | markdown | safe #}
 </section>

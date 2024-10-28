@@ -55,7 +55,7 @@
     "string": "^3.3.3",
     "sync-request": "^6.0.0",
     "universal-analytics": "^0.5.3",
-    "uuid": "^10.0.0",
+    "uuid": "^11.0.1",
     "weighted": "^1.0.0"
   },
   "greenkeeper": {

@@ -25,6 +25,8 @@
         <li>recommend trainees for QTS</li>
       </ul>
 
+      <!-- Only allow HEI's (or Accrediting Providers APs post ITT reforms) to bulk upload new trainees -->
+      {% if activeProvider.accreditingProviderType == "HEI" %}
       <h2 class="govuk-heading-m">
         Add new trainees
       </h2>
@@ -32,6 +34,7 @@
       <p class="govuk-body">You can bulk add new trainees.</p>
 
       <p class="govuk-body"><a href="/bulk-update/add-new/start" class="govuk-link">Bulk add new trainees</a></p>
+      {% endif %}
 
 <!--      <h2 class="govuk-heading-m">-->
 <!--        Complete trainees imported from the Apply for teacher training (Apply) service-->

@@ -1,0 +1,63 @@
+{% extends "_templates/_page.html" %}
+
+{% set formAction = "./performance-profile/confirm" | addReferrer(referrer) %}
+{% set previousAcademicYear = data.years.previousAcademicYear %}
+{% set academicYear = data.years.currentAcademicYear %}
+{% set academicYearShort = data.years.currentAcademicYear | academicYearToYear %}
+{% set nextAcademicYearShort = data.years.nextAcademicYear | academicYearToYear %}
+
+{% set pageHeading %}
+  Performance profile sign off
+{% endset %}
+
+{% set backLink = '/reports' %}
+{% set backText = "Reports" %}
+{% set navActive = 'reports' %}
+
+{% block content %}
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds-from-desktop">
+          <h1 class="govuk-heading-l">Export trainee data for the {{ previousAcademicYear }} performance profile sign off</h1>
+
+          <p class="govuk-body">Signing off your list of trainees for the performance profiles publication deadline is 31 January 2025.</p>
+
+          <p class="govuk-body">As an accredited provider, you need to sign off your teacher trainee data from the previous 2023 to 2024 academic year.</p>
+
+          <p class="govuk-body">If you’re in a partnership, you’re also responsible for ensuring your lead partners’ trainee data is accurate and signed off by the deadline.</p>
+
+          <p class="govuk-body">The data you sign off will be included in the annual initial teacher training performance profiles publication. This will be published on GOV.UK.</p>
+
+          <h2 class="govuk-heading-m">Finding your trainee data</h2>
+
+          <p class="govuk-body">You need to check all registered trainees who studied in the previous 2023 to 2024 academic year.</p>
+
+        <p class="govuk-body"><a class="govuk-link" href="#">Export 2023-2024 trainee data (237 trainees)</a>.</p>
+
+          <h4 class="govuk-heading-m">Checking your trainee data</h4>
+
+        <p class="govuk-body">You’ll need to check that all your trainees from the 2023 to 2024 academic year are listed. For each trainee you’ll need to check:</p>
+
+        <ul class="govuk-list govuk-list--bullet">
+          <li>course details</li>
+          <li>status</li>
+          <li>the date they were awarded qualified teacher status (QTS) or early years teacher status (EYTS), or deferred or withdrew from the course - unless they’re still studying</li>
+          <li>2 placements for trainees that were QTS awarded</li>
+        </ul>
+
+        <h4 class="govuk-heading-m">Fixing mistakes in your trainee data</h4>
+        <p class="govuk-body">You’ll need to fix any mistakes before you sign off the data.</p>
+
+        <h4 class="govuk-heading-m">Signing off your trainee data</h4>
+        <p class="govuk-body">If you have checked your data.</p>
+
+        <div class="govuk-form-group">
+          {{ govukButton({
+          text: "Continue to performance profile sign off",
+          href: "form"
+          }) }}
+        </div>
+
+      </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,73 @@
+{% set performanceProfileRows = [
+  {
+    key: {
+      text: "Provider name"
+    },
+    value: {
+      text: providerName or "Not provided"
+    },
+    actions: {
+      items: [
+        {
+          href: "./change" | addReferrer(referrer),
+          text: "Change",
+          visuallyHiddenText: "provider name"
+        }
+      ]
+    } if canAmend
+  },
+  {
+    key: {
+      text: "UKPRN"
+    },
+    value: {
+      text: record.temp.auditLogComment or "Not provided"
+    },
+    actions: {
+      items: [{
+        href: "./details" | addReferrer(referrer),
+        text: "Change",
+        visuallyHiddenText: "UKPRN"
+      }]
+    } if canAmend
+  },
+  {
+    key: {
+      text: "Name of signing officer"
+    },
+    value: {
+      text: officerName or "Not provided"
+    },
+    actions: {
+      items: [{
+        href: "./details" | addReferrer(referrer),
+        text: "Change",
+        visuallyHiddenText: "Zendesk ticket URL"
+      }]
+    } if canAmend
+  }
+  ] %}
+
+
+
+
+
+
+
+
+
+
+
+  {% set performanceProfileHtml %}
+    {{ govukSummaryList({
+      rows: performanceProfileRows
+    }) }}
+  {% endset %}
+
+
+
+  {{ appSummaryCard({
+    classes: "govuk-!-margin-bottom-6",
+    titleText: "Performance profile information",
+    html: performanceProfileHtml
+  }) }}

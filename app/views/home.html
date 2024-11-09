@@ -17,8 +17,10 @@
 {% set traineesWithProblems = registeredTrainees | filterByFunction('recordHasProblem') %}
 {# {% set traineeProblems = data.traineeProblems | filterBySignedIn(data) %} #}
 
-{% set newAcademicYearUpcoming = true %}
-{% set newAcademicYear = false %}
+{# set newAcademicYearUpcoming = true #}
+{# set newAcademicYear = false #}
+{% set performanceProfileDue = true %}
+{% set performanceProfileOutstanding = true %}
 
 
 {% block content %}
@@ -30,6 +32,20 @@
       The 2024 to 2025 academic year will start on 1 August
     </h3>
     <p class="govuk-body"><a class="govuk-notification-banner__link" href="#">View dates and deadlines</a> for the upcoming academic year.</p>
+  {% endset %}
+
+  {{ govukNotificationBanner({
+    html: html
+  }) }}
+
+
+<!-- Show banner if the Performance profile window is open and it hasn't been completed, variables need to be set -->
+{% elseif performanceProfileDue and performanceProfileOutstanding %}
+  {% set html %}
+    <h3 class="govuk-notification-banner__heading">
+      The 2023 to 2024 performance profile sign off deadline is 31 January 2025.
+    </h3>
+Find out <a class="govuk-notification-banner__link" href="https://www.register-trainee-teachers.service.gov.uk/guidance/performance-profiles">how to check your 2023 to 2024 trainee data is accurate for the performance profile publication</a> and how to <a class="govuk-notification-banner__link" href="/performance-profile/">sign off to confirm</a>.</p>
   {% endset %}
 
   {{ govukNotificationBanner({

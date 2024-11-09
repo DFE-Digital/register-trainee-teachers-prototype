@@ -1,0 +1,61 @@
+{% extends "_templates/_page.html" %}
+
+{% set formAction = "./performance-profile/confirm" | addReferrer(referrer) %}
+{% set previousAcademicYear = data.years.previousAcademicYear %}
+{% set academicYear = data.years.currentAcademicYear %}
+{% set academicYearShort = data.years.currentAcademicYear | academicYearToYear %}
+{% set nextAcademicYearShort = data.years.nextAcademicYear | academicYearToYear %}
+
+
+{% set providerName = data.settings.userActiveProvider %}
+{% set ukprn = data.provider.ukprn %}
+{% set officerName = "Joe Bloggs" %}
+{% set officerEmail = "test@gmail.com" %}
+
+
+{% set pageHeading %}
+  Performance profile sign off
+{% endset %}
+
+{% set backLink = '/reports' %}
+{% set backText = "Reports" %}
+{% set navActive = 'reports' %}
+
+{% block content %}
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds-from-desktop">
+          <h1 class="govuk-heading-l">ITT performance profile sign off for the {{ previousAcademicYear }} academic year</h1>
+
+          <p class="govuk-body">Once you've checked your data is correct, you can sign off on behalf of your organisation.</p>
+
+        {% include "_includes/summary-cards/performance-profiles.html" %}
+
+        {{ govukCheckboxes({
+        name: "performance-profile-signed-off",
+        fieldset: {
+        legend: {
+        text: "Confirm you have checked organisation's trainee data is correct in Register, and you’re signing it off.",
+        isPageHeading: false,
+        classes: "govuk-fieldset__legend--s"
+        }
+        },
+        items: [
+        {
+        value: "performance-profile-signed-off",
+        text: "Yes, the trainee data is correct to the best of my knowledge"
+        }
+        ]
+        }) }}
+
+        <div class="govuk-form-group">
+          {{ govukButton({
+          text: "Sign off performance profile",
+          href: "confirmation"
+          }) }}
+        </div>
+
+
+      </div>
+    </div>
+{% endblock %}

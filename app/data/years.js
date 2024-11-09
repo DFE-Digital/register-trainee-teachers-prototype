@@ -10,6 +10,7 @@
 // ]
 
 let startAcademicYears = [
+  "2024 to 2025",
   "2023 to 2024",
   "2022 to 2023",
   "2021 to 2022",
@@ -18,6 +19,7 @@ let startAcademicYears = [
 ]
 
 let endAcademicYears = [
+  "2026 to 2027",
   "2025 to 2026",
   "2024 to 2025",
   "2023 to 2024",
@@ -31,20 +33,21 @@ let endAcademicYears = [
 ]
 
 let academicYears = [
+  "2024 to 2025",
   "2023 to 2024",
   "2022 to 2023",
   "2021 to 2022",
   "2020 to 2021 and prior"
 ]
 
-let currentAcademicYear = "2023 to 2024"
-let currentAcademicYearSimple = 2023
+let currentAcademicYear = "2024 to 2025"
+let currentAcademicYearSimple = 2024
 
 // First of August of current academic year
 // Todo: use this in publish course generator
 let academicYearStartDate = new Date(`${currentAcademicYearSimple}-8-1`)
 
-let defaultCourseYear = 2023
+let defaultCourseYear = 2024
 
 
 // Todo: this is a duplicate from utils - should have only one

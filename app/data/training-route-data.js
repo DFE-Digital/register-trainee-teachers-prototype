@@ -19,6 +19,7 @@ let applyRoutes = [
 // Not all these routes will be enabled
 let publishRoutes = [
   'Teaching apprenticeship (postgrad)',
+  'Teaching apprenticeship (salaried)', // This is the Teaching Degree Apprenticeship (TDA) route, name matches Publish's implementation
   'Primary and secondary (postgrad)',
   'Primary and secondary (postgrad salaried)', // New route as part of the ITT reforms
   'School direct (salaried)',

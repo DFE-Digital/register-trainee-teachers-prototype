@@ -33,10 +33,10 @@
   },
   {
     key: {
-      text: "Name of signing officer"
+      text: "Approver name"
     },
     value: {
-      text: officerName or "Not provided"
+      text: approverName or "Not provided"
     },
     actions: {
       items: [{
@@ -48,23 +48,11 @@
   }
   ] %}
 
-
-
-
-
-
-
-
-
-
-
   {% set performanceProfileHtml %}
     {{ govukSummaryList({
       rows: performanceProfileRows
     }) }}
   {% endset %}
-
-
 
   {{ appSummaryCard({
     classes: "govuk-!-margin-bottom-6",

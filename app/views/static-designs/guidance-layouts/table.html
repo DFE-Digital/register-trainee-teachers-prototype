@@ -251,104 +251,233 @@ href: backLink
         </ul>
       </nav>
 
-      <table class="govuk-table">
-        <caption class="govuk-table__caption govuk-visually-hidden">Field name</caption>
-        <thead class="govuk-table__head">
-        <tr class="govuk-table__row">
-          <th class="govuk-table__header">Field name</th>
-          <th class="govuk-table__header">Technical</th>
-          <th class="govuk-table__header">HESA alignment</th>
-          <th class="govuk-table__header">Description</th>
-          <th class="govuk-table__header">Format</th>
-          <th class="govuk-table__header">Example</th>
-        </tr>
-        </thead>
-        <tbody class="govuk-table__body"><tr class="govuk-table__row">
-          <td class="govuk-table__cell">first_names</td>
-          <td class="govuk-table__cell">Full name</td>
-          <td class="govuk-table__cell"><a class="govuk-link" href="https://www.hesa.ac.uk/collection/c24053/e/fnames">FNAMES</a> (forenames)</td>
-          <td class="govuk-table__cell">A trainee’s first name and middle name (if they have one) will go into the Register CSV column called ‘first_names’. The column ‘middle_names’ will be empty.</td>
-        </tr>
-        <tr class="govuk-table__row">
-          <td class="govuk-table__cell">last_names</td>
-          <td class="govuk-table__cell">Full name</td>
-          <td class="govuk-table__cell"><a class="govuk-link" href="https://www.hesa.ac.uk/collection/c24053/e/surname">SURNAME</a> (family name)</td>
-          <td class="govuk-table__cell">–</td>
-        </tr>
-        <tr class="govuk-table__row">
-          <td class="govuk-table__cell">date_of_birth</td>
-          <td class="govuk-table__cell">Date of birth</td>
-          <td class="govuk-table__cell"><a class="govuk-link" href="https://www.hesa.ac.uk/collection/c24053/e/birthdte">BIRTHDTE</a> (date of birth)</td>
-          <td class="govuk-table__cell">–</td>
-        </tr>
-        <tr class="govuk-table__row">
-          <td class="govuk-table__cell">sex</td>
-          <td class="govuk-table__cell">Sex</td>
-          <td class="govuk-table__cell"><a class="govuk-link" href="https://www.hesa.ac.uk/collection/c24053/e/sexid">SEXID</a> (sex identifier)</td>
-          <td class="govuk-table__cell">HESA code 96 ‘Information refused’ imports into Register as ‘Prefer not to say’<br><br>HESA code 99 ‘Not available’ imports into Register as ‘Gender not provided’</td>
-        </tr>
-        <tr class="govuk-table__row">
-          <td class="govuk-table__cell">nationality</td>
-          <td class="govuk-table__cell">Nationality</td>
-          <td class="govuk-table__cell"><a class="govuk-link" href="https://www.hesa.ac.uk/collection/c24053/e/nation">NATION</a> (nationality)</td>
-          <td class="govuk-table__cell">–</td>
-        </tr>
-        <tr class="govuk-table__row">
-          <td class="govuk-table__cell">email_address</td>
-          <td class="govuk-table__cell">Email address</td>
-          <td class="govuk-table__cell"><a class="govuk-link" href="https://www.hesa.ac.uk/collection/c24053/e/nqtemail">NQTEMAIL</a> (email addresses)</td>
-          <td class="govuk-table__cell">This must be a current personal email address and not a university email address.</td>
-        </tr>
-        <tr class="govuk-table__row">
-          <td class="govuk-table__cell">diversity_disclosure<br>ehnic_group<br>ethnic_background<br>ethnic_background_additional</td>
-          <td class="govuk-table__cell">Ethnicity</td>
-          <td class="govuk-table__cell"><a class="govuk-link" href="https://www.hesa.ac.uk/collection/c24053/e/ethnic">ETHNIC</a> (ethnicity)</td>
-          <td class="govuk-table__cell">–</td>
-        </tr>
-        <tr class="govuk-table__row">
-          <td class="govuk-table__cell">diversity_disclosure<br>disability_disclosure<br>disabilities</td>
-          <td class="govuk-table__cell">Disability</td>
-          <td class="govuk-table__cell"><a class="govuk-link" href="https://www.hesa.ac.uk/collection/c24053/e/disable">DISABLE</a> (disability)</td>
-          <td class="govuk-table__cell">–</td>
-        </tr>
-        <tr class="govuk-table__row">
-          <td class="govuk-table__cell">number_of_degrees degree_1_subject</td>
-          <td class="govuk-table__cell">Subject (within personal details and education)</td>
-          <td class="govuk-table__cell"><a class="govuk-link" href="https://www.hesa.ac.uk/collection/c24053/e/degsbj">DEGSBJ</a> (previous degree subject)</td>
-          <td class="govuk-table__cell">Register only supports 1 degree subject at the moment. If you add multiple subjects for a trainee’s degree, Register will take the first one.</td>
-        </tr>
-        <tr class="govuk-table__row">
-          <td class="govuk-table__cell">degree_1_type_non_uk degree_1_type_uk (for UK degrees only)</td>
-          <td class="govuk-table__cell">Degree type</td>
-          <td class="govuk-table__cell"><a class="govuk-link" href="https://www.hesa.ac.uk/collection/c24053/e/degtype">DEGTYPE</a> (previous degree type)</td>
-          <td class="govuk-table__cell">The CSV export from Register does not display degree types with ‘Honours’. For example, in HESA a BEd is code 001 and a BEd (Hons) is code 002. Both these codes will show as ‘Bachelor of Education’ in the CSV.</td>
-        </tr>
-        <tr class="govuk-table__row">
-          <td class="govuk-table__cell">degree_1_awarding_institution</td>
-          <td class="govuk-table__cell">Awarding institution</td>
-          <td class="govuk-table__cell"><a class="govuk-link" href="https://www.hesa.ac.uk/collection/c24053/e/degest">DEGEST</a> (previous degree establishment)</td>
-          <td class="govuk-table__cell">–</td>
-        </tr>
-        <tr class="govuk-table__row">
-          <td class="govuk-table__cell">degree_1_uk_or_non_uk<br>degree_1_country</td>
-          <td class="govuk-table__cell">Country</td>
-          <td class="govuk-table__cell"><a class="govuk-link" href="https://www.hesa.ac.uk/collection/c24053/e/degctry">DEGCTRY</a> (previous degree country)</td>
-          <td class="govuk-table__cell">The ‘degree_1_uk_or_non_uk’ column in the Register CSV will show as ‘UK’ when the following HESA codes are used:<br>XF England<br>XG Northern Ireland<br>XH Scotland<br>XI Wales<br>XK United Kingdom, not otherwise specified<br><br>The ‘degree_1_country’ column in the Register CSV will only populate with countries outside the UK.<br></td>
-        </tr>
-        <tr class="govuk-table__row">
-          <td class="govuk-table__cell">degree_1_grade</td>
-          <td class="govuk-table__cell">Grade</td>
-          <td class="govuk-table__cell"><a class="govuk-link" href="https://www.hesa.ac.uk/collection/c24053/e/degclss">DEGCLSS</a> (previous degree class)</td>
-          <td class="govuk-table__cell">This information will only show in the Register service and CSV for UK degrees.</td>
-        </tr>
-        <tr class="govuk-table__row">
-          <td class="govuk-table__cell">degree_1_graduation_year</td>
-          <td class="govuk-table__cell">Graduation year</td>
-          <td class="govuk-table__cell"><a class="govuk-link" href="https://www.hesa.ac.uk/collection/c24053/e/degenddt">DEGENDDT</a> (previous degree end date)</td>
-          <td class="govuk-table__cell">Register will show the year the trainee graduated from their degree. For example, 2010.</td>
-        </tr>
-        </tbody>
-      </table>
+      {% from "govuk/components/table/macro.njk" import govukTable %}
+
+      {{ govukTable({
+      caption: "CSV guidance",
+      captionClasses: "govuk-table__caption--m",
+      firstCellIsHeader: false,
+      head: [
+      {
+      text: "Field name"
+      },
+      {
+      text: "Technical"
+      },
+      {
+      text: "HESA alignment"
+      },
+      {
+      text: "Description"
+      },
+      {
+      text: "Format"
+      },
+      {
+      text: "Example"
+      }
+      ],
+      rows: [
+      [
+      {
+      text: "Provider trainee ID"
+      },
+      {
+      text: "provider_trainee_id"
+      },
+      {
+      text: "OWNSTU"
+      },
+      {
+      text: "Provider's own internal identifier for the student."
+      },
+      {
+      text: "20 character max length"
+      },
+      {
+      text: "99157234"
+      }
+      ],
+      [
+      {
+      text: "Apply ID"
+      },
+      {
+      text: "application_id"
+      },
+      {
+      text: "APPLYAPPLICATIONID"
+      },
+      {
+      text: "Unique Application ID, also called Application Number, used by the Department for Education’s apply for teacher training online service."
+      },
+      {
+      text: "10 character max length"
+      },
+      {
+      text: "11fc0d3b2f"
+      }
+      ],
+      [
+      {
+      text: "HESA ID"
+      },
+      {
+      text: ""
+      },
+      {
+      text: ""
+      },
+      {
+      text: ""
+      },
+      {
+      text: ""
+      },
+      {
+      text: ""
+      }
+      ],
+      [
+      {
+      text: "First name"
+      },
+      {
+      text: "first_names"
+      },
+      {
+      text: "FNAMES"
+      },
+      {
+      text: "This field records the forenames of the student"
+      },
+      {
+      text: "60 character maxlength"
+      },
+      {
+      text: "Jane"
+      }
+      ],
+      [
+      {
+      text: "Last name"
+      },
+      {
+      text: "last_name"
+      },
+      {
+      text: "SURNAME"
+      },
+      {
+      text: "This field is the student's family name."
+      },
+      {
+      text: "60 character length"
+      },
+      {
+      text: "Smith"
+      }
+      ],
+      [
+      {
+      text: "Previous last name"
+      },
+      {
+      text: "previous_last_name"
+      },
+      {
+      text: "PSURNAME"
+      },
+      {
+      text: "This is the trainee's surname immediately prior to the current surname, if applicable."
+      },
+      {
+      text: "60 character length"
+      },
+      {
+      text: "Jordan-smith"
+      }
+      ],
+      [
+      {
+      text: "Date of birth"
+      },
+      {
+      text: "date_of_birth"
+      },
+      {
+      text: "BIRTHDTE"
+      },
+      {
+      text: "This field records the date of birth of the student."
+      },
+      {
+      text: "YYYY-MM-DD"
+      },
+      {
+      text: "1985-02-13"
+      }
+      ],
+      [
+      {
+      text: "Additional training initiative"
+      },
+      {
+      text: "additional_training_initiative"
+      },
+      {
+      text: "INITIATIVES"
+      },
+      {
+      text: "This field records the student identifier which is to be unique to each student. It is intended that the identifier is to be transferred with the student to each provider of higher education he or she may attend. The objective is that the use of this number will facilitate the accurate tracking of students throughout their experience within the sector for which HESA collects data. "
+      },
+      {
+      text: "001
+      Abridged ITT course
+
+      009
+      Maths and Physics Chairs Programme
+
+      011
+      Primary mathematics specialist
+
+      019
+      Additional ITT place for PE with a priority subject
+
+      025
+      Transition to Teach
+
+      026
+      Now Teach
+
+      036
+      International relocation payment"
+      },
+      {
+      text: "“026” is an example of using the code for Now Teach
+
+      HESA allows you to add 2 initiatives, but Register will only import the first one.
+
+      The following HESA codes are not mapped to Register:
+      001 Abridged ITT course
+      011 Primary with mathematics specialist
+      019 Additional ITT place for PE with a priority subject
+
+      "
+      }
+      ]
+
+      ]
+      }) }}
+
+
+
+
+
+
+
+
+
 
     </div>
 

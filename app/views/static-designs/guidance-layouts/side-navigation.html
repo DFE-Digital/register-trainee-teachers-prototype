@@ -1,0 +1,471 @@
+{% extends "layout.html" %}
+
+{% if not backLink %}
+{% set backLink      = 'javascript:history.back();' %}
+{% endif %}
+{% if not backText %}
+{% set backText      = 'Back'  %}
+{% endif %}
+
+{% if backLink == 'false' %}
+{% set backLink = false %}
+{% endif %}
+
+{% if backText == 'false' %}
+{% set backText = '' %}
+{% endif %}
+
+
+{% block pageTitle %}
+{{ pageHeading }} - {{serviceName}} - GOV.UK
+{% endblock %}
+
+{# {% set breadcrumbs  = {
+items: [
+{
+text: "How to use this service",
+href: "/guidance"
+}
+]
+} %}
+#}
+{% set backLink = '/guidance' %}
+{% set backText = "How to use this service" %}
+
+{% block pageNavigation %}
+{% if breadcrumbs %}
+{{ govukBreadcrumbs(breadcrumbs)}}
+{% elseif backLink %}
+{{ govukBackLink({
+text: backText,
+href: backLink
+}) }}
+{% endif %}
+{% endblock %}
+
+{% set gridColumn = "govuk-grid-column-full" %}
+{% from "govuk/components/table/macro.njk" import govukTable %}
+
+{% block content %}
+
+
+
+<div class="govuk-grid-row">
+  <div class="{{ gridColumn or 'govuk-grid-column-two-thirds-from-desktop' }}">
+
+    <h1 class="govuk-heading-l">Formatting variations</h1>
+    <p class="govuk-body-l">Here is a page showing a couple of variations of </p>
+
+    <h2 class="govuk-heading-m">Summary cards</h2>
+
+
+    <ul class="govuk-list">
+      <li>
+        <a class="govuk-link" href="#providerTraineeId">Provider trainee ID</a>
+      </li>
+      <li>
+        <a class="govuk-link" href="#applyId">Apply ID</a>
+      </li>
+    </ul>
+
+
+
+      {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+
+      {{ govukSummaryList({
+      card: {
+      title: {
+      text: "Provider trainee ID"
+      }
+      },
+      rows: [
+      {
+      key: {
+      text: "Field name"
+      },
+      value: {
+      html: "<a id=\"providerTraineeId\" class=\"govuk-link--no-underline\">Provider trainee ID</a>"
+      },
+      actions: {
+      items: [
+      ]
+      }
+      },
+      {
+      key: {
+      text: "Technical"
+      },
+      value: {
+      html: "provider_trainee_id"
+      },
+      actions: {
+      items: [
+      ]
+      }
+      },
+      {
+      key: {
+      text: "HESA alignment"
+      },
+      value: {
+      html: "OWNSTU"
+      },
+      actions: {
+      items: [
+      ]
+      }
+      },
+      {
+      key: {
+      text: "Description"
+      },
+      value: {
+      html: "Provider\'s own internal identifier for the student."
+      },
+      actions: {
+      items: [
+      ]
+      }
+      },
+      {
+      key: {
+      text: "Format"
+      },
+      value: {
+      html: "20 character max length"
+      },
+      actions: {
+      items: [
+      ]
+      }
+      },
+      {
+      key: {
+      text: "Example"
+      },
+      value: {
+      html: "99157234"
+      },
+      actions: {
+      items: [
+      ]
+      }
+      }
+      ]
+      }) }}
+
+      {# Long example #}
+      {{ govukSummaryList({
+      card: {
+      title: {
+      text: "Apply ID"
+      }
+      },
+      rows: [
+      {
+      key: {
+      text: "Field name"
+      },
+      value: {
+      html: "<a id=\"applyid\" class=\"govuk-link--no-underline\">Apply ID</a>"
+      },
+      actions: {
+      items: [
+      ]
+      }
+      },
+      {
+      key: {
+      text: "Technical"
+      },
+      value: {
+      html: "additional_training_initiative"
+      },
+      actions: {
+      items: [
+      ]
+      }
+      },
+      {
+      key: {
+      text: "HESA alignment"
+      },
+      value: {
+      html: "INITIATIVES"
+      },
+      actions: {
+      items: [
+      ]
+      }
+      },
+      {
+      key: {
+      text: "Description"
+      },
+      value: {
+      html: "<p>This field records the student identifier which is to be unique to each student.</p><p>It is intended that the identifier is to be transferred with the student to each provider of higher education he or she may attend. <p>The objective is that the use of this number will facilitate the accurate tracking of students throughout their experience within the sector for which HESA collects data.</p>"
+      },
+      actions: {
+      items: [
+      ]
+      }
+      },
+      {
+      key: {
+      text: "Format"
+      },
+      value: {
+      html: "<p>001 Abridged ITT course</p><p>009 Maths and Physics Chairs Programme</p><p>011 Primary mathematics specialist</p><p>019 Additional ITT place for PE with a priority subject</p><p>025 Transition to Teach</p><p>026 Now Teach</p><p>036 International relocation payment</p>"
+      },
+      actions: {
+      items: [
+      ]
+      }
+      },
+      {
+      key: {
+      text: "Example"
+      },
+      value: {
+      html: "<p>“026” is an example of using the code for Now Teach</p><p>HESA allows you to add 2 initiatives, but Register will only import the first one.</p><p>The following HESA codes are not mapped to Register:</p><ul><li>001 Abridged ITT course</li><li>011 Primary with mathematics specialist</li><li>019 Additional ITT place for PE with a priority subject</li></ul>"
+      },
+      actions: {
+      items: [
+      ]
+      }
+      }
+      ]
+      }) }}
+
+
+      <h2 class="govuk-heading-m">Table</h2>
+      <p class="govuk-body">As you can see the tables make more efficient use of space for some rows but many of them have lots of content. I've included a few examples below of a row without any data, one with lots of content which is hard to read when wrapped in a column and a few shorter examples.</p>
+      <p class="govuk-body">I've also explored horizontal tables which led me to the definition list used within the summary cards above.</p>
+
+      {% from "govuk/components/table/macro.njk" import govukTable %}
+
+      {{ govukTable({
+      caption: "CSV guidance",
+      captionClasses: "govuk-table__caption--m",
+      firstCellIsHeader: false,
+      head: [
+      {
+      text: "Field name"
+      },
+      {
+      text: "Technical"
+      },
+      {
+      text: "HESA alignment"
+      },
+      {
+      text: "Description"
+      },
+      {
+      text: "Format"
+      },
+      {
+      text: "Example"
+      }
+      ],
+      rows: [
+      [
+      {
+      text: "Provider trainee ID"
+      },
+      {
+      text: "provider_trainee_id"
+      },
+      {
+      text: "OWNSTU"
+      },
+      {
+      text: "Provider's own internal identifier for the student."
+      },
+      {
+      text: "20 character max length"
+      },
+      {
+      text: "99157234"
+      }
+      ],
+      [
+      {
+      text: "Apply ID"
+      },
+      {
+      text: "application_id"
+      },
+      {
+      text: "APPLYAPPLICATIONID"
+      },
+      {
+      text: "Unique Application ID, also called Application Number, used by the Department for Education’s apply for teacher training online service."
+      },
+      {
+      text: "10 character max length"
+      },
+      {
+      text: "11fc0d3b2f"
+      }
+      ],
+      [
+      {
+      text: "HESA ID"
+      },
+      {
+      text: ""
+      },
+      {
+      text: ""
+      },
+      {
+      text: ""
+      },
+      {
+      text: ""
+      },
+      {
+      text: ""
+      }
+      ],
+      [
+      {
+      text: "First name"
+      },
+      {
+      text: "first_names"
+      },
+      {
+      text: "FNAMES"
+      },
+      {
+      text: "This field records the forenames of the student"
+      },
+      {
+      text: "60 character maxlength"
+      },
+      {
+      text: "Jane"
+      }
+      ],
+      [
+      {
+      text: "Last name"
+      },
+      {
+      text: "last_name"
+      },
+      {
+      text: "SURNAME"
+      },
+      {
+      text: "This field is the student's family name."
+      },
+      {
+      text: "60 character length"
+      },
+      {
+      text: "Smith"
+      }
+      ],
+      [
+      {
+      text: "Previous last name"
+      },
+      {
+      text: "previous_last_name"
+      },
+      {
+      text: "PSURNAME"
+      },
+      {
+      text: "This is the trainee's surname immediately prior to the current surname, if applicable."
+      },
+      {
+      text: "60 character length"
+      },
+      {
+      text: "Jordan-smith"
+      }
+      ],
+      [
+      {
+      text: "Date of birth"
+      },
+      {
+      text: "date_of_birth"
+      },
+      {
+      text: "BIRTHDTE"
+      },
+      {
+      text: "This field records the date of birth of the student."
+      },
+      {
+      text: "YYYY-MM-DD"
+      },
+      {
+      text: "1985-02-13"
+      }
+      ],
+      [
+      {
+      text: "Additional training initiative"
+      },
+      {
+      text: "additional_training_initiative"
+      },
+      {
+      text: "INITIATIVES"
+      },
+      {
+      text: "This field records the student identifier which is to be unique to each student. It is intended that the identifier is to be transferred with the student to each provider of higher education he or she may attend. The objective is that the use of this number will facilitate the accurate tracking of students throughout their experience within the sector for which HESA collects data. "
+      },
+      {
+      text: "001
+      Abridged ITT course
+
+      009
+      Maths and Physics Chairs Programme
+
+      011
+      Primary mathematics specialist
+
+      019
+      Additional ITT place for PE with a priority subject
+
+      025
+      Transition to Teach
+
+      026
+      Now Teach
+
+      036
+      International relocation payment"
+      },
+      {
+      text: "“026” is an example of using the code for Now Teach
+
+      HESA allows you to add 2 initiatives, but Register will only import the first one.
+
+      The following HESA codes are not mapped to Register:
+      001 Abridged ITT course
+      011 Primary with mathematics specialist
+      019 Additional ITT place for PE with a priority subject
+
+      "
+      }
+      ]
+
+      ]
+      }) }}
+
+  </div>
+</div>
+
+{% endblock %}
+
+
+
+

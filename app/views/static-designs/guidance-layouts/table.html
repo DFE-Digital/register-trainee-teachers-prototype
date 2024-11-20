@@ -1,0 +1,362 @@
+{% extends "layout.html" %}
+
+{% if not backLink %}
+{% set backLink      = 'javascript:history.back();' %}
+{% endif %}
+{% if not backText %}
+{% set backText      = 'Back'  %}
+{% endif %}
+
+{% if backLink == 'false' %}
+{% set backLink = false %}
+{% endif %}
+
+{% if backText == 'false' %}
+{% set backText = '' %}
+{% endif %}
+
+
+{% block pageTitle %}
+{{ pageHeading }} - {{serviceName}} - GOV.UK
+{% endblock %}
+
+{# {% set breadcrumbs  = {
+items: [
+{
+text: "How to use this service",
+href: "/guidance"
+}
+]
+} %}
+#}
+{% set backLink = '/guidance' %}
+{% set backText = "How to use this service" %}
+
+{% block pageNavigation %}
+{% if breadcrumbs %}
+{{ govukBreadcrumbs(breadcrumbs)}}
+{% elseif backLink %}
+{{ govukBackLink({
+text: backText,
+href: backLink
+}) }}
+{% endif %}
+{% endblock %}
+
+{% set gridColumn = "govuk-grid-column-full" %}
+{% from "govuk/components/table/macro.njk" import govukTable %}
+
+{% block content %}
+
+<!-- This is a hack to add a matching secondary nav element from QA into this design -->
+<style>
+  .app-tab-navigation {
+    margin-bottom: 40px
+  }
+
+  .app-tab-navigation__list {
+    font-size: 0;
+    list-style: none;
+    margin: 0;
+    padding: 0
+  }
+
+  @media(min-width: 23.4375em) {
+    .app-tab-navigation__list {
+      box-shadow:inset 0 -1px 0 #b1b4b6;
+      width: 100%
+    }
+  }
+
+  .app-tab-navigation__item {
+    font-family: GDS Transport,arial,sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-weight: 400;
+    font-size: 16px;
+    font-size: 1rem;
+    line-height: 1.25;
+    box-shadow: inset 0 -1px 0 #b1b4b6;
+    display: block;
+    margin-top: -1px
+  }
+
+  /*! Copyright (c) 2011 by Margaret Calvert & Henrik Kubel. All rights reserved. The font has been customised for exclusive use on gov.uk. This cut is not commercially available. */
+  @media print {
+    .app-tab-navigation__item {
+      font-family: sans-serif
+    }
+  }
+
+  @media(min-width: 40.0625em) {
+    .app-tab-navigation__item {
+      font-size:19px;
+      font-size: 1.1875rem;
+      line-height: 1.3157894737
+    }
+  }
+
+  @media print {
+    .app-tab-navigation__item {
+      font-size: 14pt;
+      line-height: 1.15
+    }
+  }
+
+  .app-tab-navigation__item:last-child {
+    box-shadow: none
+  }
+
+  @media(min-width: 23.4375em) {
+    .app-tab-navigation__item {
+      box-shadow:none;
+      display: inline-block;
+      margin-right: 20px;
+      margin-top: 0
+    }
+  }
+
+  .app-tab-navigation__link {
+    font-family: GDS Transport,arial,sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-decoration: underline;
+    display: block;
+    padding-top: 12px;
+    padding-bottom: 17px;
+    padding-left: 15px;
+    position: relative;
+    font-weight: 700;
+    text-decoration: none
+  }
+
+  @media print {
+    .app-tab-navigation__link {
+      font-family: sans-serif
+    }
+  }
+
+  .app-tab-navigation__link:focus {
+    outline: 3px solid transparent;
+    background-color: #fd0;
+    box-shadow: 0 -2px #fd0,0 4px #0b0c0c;
+    text-decoration: none;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone
+  }
+
+  .app-tab-navigation__link:link {
+    color: #1d70b8
+  }
+
+  .app-tab-navigation__link:visited {
+    color: #4c2c92
+  }
+
+  .app-tab-navigation__link:active {
+    color: #0b0c0c
+  }
+
+  @media(min-width: 23.4375em) {
+    .app-tab-navigation__link {
+      padding-left:0
+    }
+  }
+
+  .app-tab-navigation__link:link,.app-tab-navigation__link:visited {
+    color: #1d70b8
+  }
+
+  .app-tab-navigation__link:hover {
+    color: #003078
+  }
+
+  .app-tab-navigation__link:focus {
+    color: #0b0c0c;
+    position: relative;
+    box-shadow: none
+  }
+
+  .app-tab-navigation__link:focus:before {
+    background-color: #0b0c0c;
+    content: "";
+    display: block;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 5px
+  }
+
+  .app-tab-navigation__link[aria-current=page] {
+    color: #0b0c0c;
+    position: relative;
+    text-decoration: none
+  }
+
+  .app-tab-navigation__link[aria-current=page]:focus:before {
+    height: 7px
+  }
+
+  .app-tab-navigation__link[aria-current=page]:before {
+    background-color: #1d70b8;
+    content: "";
+    display: block;
+    height: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 5px
+  }
+
+  @media(min-width: 23.4375em) {
+    .app-tab-navigation__link[aria-current=page]:before {
+      height:5px;
+      width: 100%
+    }
+  }
+
+  .app-tab-navigation__link[aria-current=page]:focus:before {
+    background-color: #0b0c0c
+  }
+
+</style>
+
+<div class="govuk-grid-row">
+  <div class="{{ gridColumn or 'govuk-grid-column-two-thirds-from-desktop' }}">
+
+
+    <div class="govuk-grid-column-full">
+      <nav class="app-tab-navigation govuk-!-margin-bottom-4" aria-label="Sub navigation">
+        <ul class="app-tab-navigation__list">
+          <li class="app-tab-navigation__item">
+            <a class="govuk-link app-tab-navigation__link" href="#">Field name</a>
+          </li>
+          <li class="app-tab-navigation__item">
+            <a class="govuk-link app-tab-navigation__link" aria-current="page" href="#">Technical</a>
+          </li>
+          <li class="app-tab-navigation__item">
+            <a class="govuk-link app-tab-navigation__link" href="#">HESA Alignment</a>
+          </li>
+          <li class="app-tab-navigation__item">
+            <a class="govuk-link app-tab-navigation__link" href="#">Description</a>
+          </li>
+          <li class="app-tab-navigation__item">
+            <a class="govuk-link app-tab-navigation__link" href="#">Format</a>
+          </li>
+          <li class="app-tab-navigation__item">
+            <a class="govuk-link app-tab-navigation__link" href="#">Example</a>
+          </li>
+        </ul>
+      </nav>
+
+      <table class="govuk-table">
+        <caption class="govuk-table__caption govuk-visually-hidden">Field name</caption>
+        <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header">Field name</th>
+          <th class="govuk-table__header">Technical</th>
+          <th class="govuk-table__header">HESA alignment</th>
+          <th class="govuk-table__header">Description</th>
+          <th class="govuk-table__header">Format</th>
+          <th class="govuk-table__header">Example</th>
+        </tr>
+        </thead>
+        <tbody class="govuk-table__body"><tr class="govuk-table__row">
+          <td class="govuk-table__cell">first_names</td>
+          <td class="govuk-table__cell">Full name</td>
+          <td class="govuk-table__cell"><a class="govuk-link" href="https://www.hesa.ac.uk/collection/c24053/e/fnames">FNAMES</a> (forenames)</td>
+          <td class="govuk-table__cell">A trainee’s first name and middle name (if they have one) will go into the Register CSV column called ‘first_names’. The column ‘middle_names’ will be empty.</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">last_names</td>
+          <td class="govuk-table__cell">Full name</td>
+          <td class="govuk-table__cell"><a class="govuk-link" href="https://www.hesa.ac.uk/collection/c24053/e/surname">SURNAME</a> (family name)</td>
+          <td class="govuk-table__cell">–</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">date_of_birth</td>
+          <td class="govuk-table__cell">Date of birth</td>
+          <td class="govuk-table__cell"><a class="govuk-link" href="https://www.hesa.ac.uk/collection/c24053/e/birthdte">BIRTHDTE</a> (date of birth)</td>
+          <td class="govuk-table__cell">–</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">sex</td>
+          <td class="govuk-table__cell">Sex</td>
+          <td class="govuk-table__cell"><a class="govuk-link" href="https://www.hesa.ac.uk/collection/c24053/e/sexid">SEXID</a> (sex identifier)</td>
+          <td class="govuk-table__cell">HESA code 96 ‘Information refused’ imports into Register as ‘Prefer not to say’<br><br>HESA code 99 ‘Not available’ imports into Register as ‘Gender not provided’</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">nationality</td>
+          <td class="govuk-table__cell">Nationality</td>
+          <td class="govuk-table__cell"><a class="govuk-link" href="https://www.hesa.ac.uk/collection/c24053/e/nation">NATION</a> (nationality)</td>
+          <td class="govuk-table__cell">–</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">email_address</td>
+          <td class="govuk-table__cell">Email address</td>
+          <td class="govuk-table__cell"><a class="govuk-link" href="https://www.hesa.ac.uk/collection/c24053/e/nqtemail">NQTEMAIL</a> (email addresses)</td>
+          <td class="govuk-table__cell">This must be a current personal email address and not a university email address.</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">diversity_disclosure<br>ehnic_group<br>ethnic_background<br>ethnic_background_additional</td>
+          <td class="govuk-table__cell">Ethnicity</td>
+          <td class="govuk-table__cell"><a class="govuk-link" href="https://www.hesa.ac.uk/collection/c24053/e/ethnic">ETHNIC</a> (ethnicity)</td>
+          <td class="govuk-table__cell">–</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">diversity_disclosure<br>disability_disclosure<br>disabilities</td>
+          <td class="govuk-table__cell">Disability</td>
+          <td class="govuk-table__cell"><a class="govuk-link" href="https://www.hesa.ac.uk/collection/c24053/e/disable">DISABLE</a> (disability)</td>
+          <td class="govuk-table__cell">–</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">number_of_degrees degree_1_subject</td>
+          <td class="govuk-table__cell">Subject (within personal details and education)</td>
+          <td class="govuk-table__cell"><a class="govuk-link" href="https://www.hesa.ac.uk/collection/c24053/e/degsbj">DEGSBJ</a> (previous degree subject)</td>
+          <td class="govuk-table__cell">Register only supports 1 degree subject at the moment. If you add multiple subjects for a trainee’s degree, Register will take the first one.</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">degree_1_type_non_uk degree_1_type_uk (for UK degrees only)</td>
+          <td class="govuk-table__cell">Degree type</td>
+          <td class="govuk-table__cell"><a class="govuk-link" href="https://www.hesa.ac.uk/collection/c24053/e/degtype">DEGTYPE</a> (previous degree type)</td>
+          <td class="govuk-table__cell">The CSV export from Register does not display degree types with ‘Honours’. For example, in HESA a BEd is code 001 and a BEd (Hons) is code 002. Both these codes will show as ‘Bachelor of Education’ in the CSV.</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">degree_1_awarding_institution</td>
+          <td class="govuk-table__cell">Awarding institution</td>
+          <td class="govuk-table__cell"><a class="govuk-link" href="https://www.hesa.ac.uk/collection/c24053/e/degest">DEGEST</a> (previous degree establishment)</td>
+          <td class="govuk-table__cell">–</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">degree_1_uk_or_non_uk<br>degree_1_country</td>
+          <td class="govuk-table__cell">Country</td>
+          <td class="govuk-table__cell"><a class="govuk-link" href="https://www.hesa.ac.uk/collection/c24053/e/degctry">DEGCTRY</a> (previous degree country)</td>
+          <td class="govuk-table__cell">The ‘degree_1_uk_or_non_uk’ column in the Register CSV will show as ‘UK’ when the following HESA codes are used:<br>XF England<br>XG Northern Ireland<br>XH Scotland<br>XI Wales<br>XK United Kingdom, not otherwise specified<br><br>The ‘degree_1_country’ column in the Register CSV will only populate with countries outside the UK.<br></td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">degree_1_grade</td>
+          <td class="govuk-table__cell">Grade</td>
+          <td class="govuk-table__cell"><a class="govuk-link" href="https://www.hesa.ac.uk/collection/c24053/e/degclss">DEGCLSS</a> (previous degree class)</td>
+          <td class="govuk-table__cell">This information will only show in the Register service and CSV for UK degrees.</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">degree_1_graduation_year</td>
+          <td class="govuk-table__cell">Graduation year</td>
+          <td class="govuk-table__cell"><a class="govuk-link" href="https://www.hesa.ac.uk/collection/c24053/e/degenddt">DEGENDDT</a> (previous degree end date)</td>
+          <td class="govuk-table__cell">Register will show the year the trainee graduated from their degree. For example, 2010.</td>
+        </tr>
+        </tbody>
+      </table>
+
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}
+
+
+
+

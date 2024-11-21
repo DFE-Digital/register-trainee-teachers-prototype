@@ -54,9 +54,25 @@ href: backLink
   <div class="{{ gridColumn or 'govuk-grid-column-two-thirds-from-desktop' }}">
 
     <h1 class="govuk-heading-l">Formatting variations</h1>
-    <p class="govuk-body-l">Here is a page showing a couple of variations of </p>
+    <p class="govuk-body-l">Here is a page showing a couple of variations of structuring the CSV / HESA guidance content in Register for a discussion within the team.</p>
 
-    <h2 class="govuk-heading-m">Summary cards</h2>
+    <ul class="govuk-list">
+      <li>
+        <a class="govuk-link" href="#option1">Option 1: Summary cards</a>
+      </li>
+      <li>
+        <a class="govuk-link" href="#option2">Option 2: Table</a>
+      </li>
+      <li>
+        <a class="govuk-link" href="#option3">Option 3: Patterns used in API ref docs</a>
+      </li>
+    </ul>
+
+    <h2 class="govuk-heading-m"><a id="option1" class="govuk-link--no-underline">Option 1: Summary cards</a></h2>
+
+    <p class="govuk-body">We use them throughout Register but semantically they're correct as it's how definition lists are formatted within GOV.UK. We have a large amount of guidance for the CSV fields which this method scales well to accommodate.</p>
+
+    <p class="govuk-body">It may be worth including some navigation within the page for users to lookup a specific field. This hasn't been looked into yet but could be through links or a search within a sidebar or at the top of the page.</p>
 
 
     <ul class="govuk-list">
@@ -238,14 +254,19 @@ href: backLink
       }) }}
 
 
-      <h2 class="govuk-heading-m">Table</h2>
-      <p class="govuk-body">As you can see the tables make more efficient use of space for some rows but many of them have lots of content. I've included a few examples below of a row without any data, one with lots of content which is hard to read when wrapped in a column and a few shorter examples.</p>
-      <p class="govuk-body">I've also explored horizontal tables which led me to the definition list used within the summary cards above.</p>
+      <h2 class="govuk-heading-m"><a id="option2" class="govuk-link--no-underline">Option 2: Table</a></h2>
+      <p class="govuk-body">We use tables currently for HESA guidance and they make better use of vertical space.</p>
+
+    <p class="govuk-body">However, as you can see from these examples with the new content they don't scale well for a lot of the new content.</p>
+
+    <p class="govuk-body">I've included a few examples below of; a row without any data, one with lots of content which is hard to read when wrapped in a column and a few shorter examples.</p>
+
+    <p class="govuk-body">I've also explored horizontal tables which don't work but led me to the definition list used within the summary cards above.</p>
 
       {% from "govuk/components/table/macro.njk" import govukTable %}
 
       {{ govukTable({
-      caption: "CSV guidance",
+      caption: "",
       captionClasses: "govuk-table__caption--m",
       firstCellIsHeader: false,
       head: [
@@ -460,6 +481,15 @@ href: backLink
 
       ]
       }) }}
+
+    <h2 class="govuk-heading-m"><a id="option3" class="govuk-link--no-underline">Option 3: Patterns used in API ref docs</a></h2>
+
+    <p>I have considered using the template and styling we use in the <a class="govuk-link" href="https://sandbox.register-trainee-teachers.service.gov.uk/api-docs/reference">api-reference docs</a>.</p>
+
+    <p>The standard headings and paragraphs would work but we'd have similar issues if we continued to incorporate tables (see above). I have mixed feelings about hiding lots of content within a details component.</p>
+    <p>It would be better to use an index page with links to separate pages if it was deemed necessary from a users perspective.</p>
+
+
 
   </div>
 </div>

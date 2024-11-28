@@ -1,0 +1,301 @@
+
+{% extends "layout.html" %}
+
+{% if not backLink %}
+{% set backLink      = 'javascript:history.back();' %}
+{% endif %}
+{% if not backText %}
+{% set backText      = 'Back'  %}
+{% endif %}
+
+{% if backLink == 'false' %}
+{% set backLink = false %}
+{% endif %}
+
+{% if backText == 'false' %}
+{% set backText = '' %}
+{% endif %}
+
+{% block pageTitle %}
+{{ pageHeading }} - {{serviceName}} - GOV.UK
+{% endblock %}
+
+{# {% set breadcrumbs  = {
+items: [
+{
+text: "How to use this service",
+href: "/guidance"
+}
+]
+} %}
+#}
+{% set backLink = '/guidance' %}
+{% set backText = "How to use this service" %}
+
+{% block pageNavigation %}
+{% if breadcrumbs %}
+{{ govukBreadcrumbs(breadcrumbs)}}
+{% elseif backLink %}
+{{ govukBackLink({
+text: backText,
+href: backLink
+}) }}
+{% endif %}
+{% endblock %}
+
+{% block content %}
+{% include "_includes/app-flash-message.html" %}
+
+<div class="govuk-grid-row">
+  <div class="{{ gridColumn or 'govuk-grid-column-two-thirds-from-desktop' }}">
+    <h1 class="govuk-heading-l">How to add trainee information to the bulk add new trainee CSV template</h1>
+
+    <p class="govuk-body">Training providers can register their trainees in bulk by creating trainee records and adding the required data.
+
+    <div class="govuk-inset-text">
+
+      <h3 class="govuk-heading-s">Important</h3>
+
+      <p class="govuk-body">This draft guidance is for review and testing purposes only. Send your feedback or questions to <a class="govuk-link" href="">Registertraineeteachers@education.gov.uk</a>.</p>
+
+      <p class="govuk-body">CSV bulk add new trainees will be available in Register trainee teachers (Register) before the start of the 2025 to 2026 academic year.</p>
+
+    </div>
+
+
+    <h2 class="govuk-heading-m">Download an empty CSV file template</h2>
+
+    <p class="govuk-body">You must only use this CSV file template to register new trainees in Register trainee teachers (Register).</p>
+
+    <p class="govuk-body">If you use this to update already existing trainees, it will come back as an error.</p>
+
+    <p class="govuk-body">The CSV template uses HESA reference data.</p>
+
+    <p class="govuk-body"><a href="https://educationgovuk.sharepoint.com.mcas.ms/:x:/r/sites/TeacherServices/_layouts/15/Doc.aspx?sourcedoc=%7B6E8834FC-EF86-4ACC-958E-A29EDFF61A96%7D&file=Bulk_Upload_Sheet_V.0.1%20(1).csv&action=default&mobileredirect=true" >Download empty bulk add new trainees CSV template</a></p>
+
+
+    <h2 class="govuk-heading-m">Use this guidance to complete the CSV file template</h2>
+
+    <p class="govuk-body">Use the guidance to check how new trainee data maps between your student record system and Register, using the CSV upload found in the ‘Bulk updates section’ in Register.</p>
+
+    <p class="govuk-body">If mandatory fields are not filled in correctly, the CSV upload will come back as an error.</p>
+
+
+    <h3 class="govuk-heading-m">Contents</h3>
+
+    <ul class="govuk-list">
+      <li><a class="govuk-link" href="#providerTraineeId">Provider</a></li>
+      <li>Trainee ID</li>
+      <li><a class="govuk-link" href="#applyId">Application ID</a></li>
+      <li>HESA ID</li>
+      <li>First Names</li>
+      <li>Last Name</li>
+      <li>Previous Last Name</li>
+      <li>Date of Birth</li>
+      <li>NI Number</li>
+      <li>Sex</li>
+      <li>Email</li>
+      <li>Nationality</li>
+      <li>Ethnicity</li>
+      <li>Disability 1 to 9</li>
+      <li>ITT Aim</li>
+      <li>Training Route</li>
+      <li>Qualification Aim</li>
+      <li>Course Subject 1 to 3</li>
+      <li>Study Mode</li>
+      <li>ITT Start Date</li>
+      <li>ITT End Date</li>
+      <li>Course Age Range</li>
+      <li>Course Year</li>
+      <li>Lead Partner URN</li>
+      <li>Employing School URN</li>
+      <li>Trainee Start Date</li>
+      <li>PG Apprenticeship Start Date</li>
+      <li>First Placement URN</li>
+      <li>Fund Code</li>
+      <li>Funding Method</li>
+      <li>Training Initiative</li>
+      <li>Additional Training Initiative</li>
+      <li>UK Degree Type</li>
+      <li>Non-UK Degree Type</li>
+      <li>Degree Subject</li>
+      <li>Degree Grade</li>
+      <li>Degree Graduation Year</li>
+      <li>Degree UK Awarding Institution</li>
+      <li>Degree Country</li>
+    </ul>
+  </div>
+</div>
+<div class="govuk-grid-row">
+  <div class="{{ gridColumn or 'govuk-grid-column-full' }}">
+
+    {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+
+    {{ govukSummaryList({
+    card: {
+    title: {
+    text: "Provider trainee ID"
+    }
+    },
+    rows: [
+    {
+    key: {
+    text: "Field name"
+    },
+    value: {
+    html: "<a id=\"providerTraineeId\" class=\"govuk-link--no-underline\">Provider trainee ID</a>"
+    },
+    actions: {
+    items: [
+    ]
+    }
+    },
+    {
+    key: {
+    text: "Technical"
+    },
+    value: {
+    html: "provider_trainee_id"
+    },
+    actions: {
+    items: [
+    ]
+    }
+    },
+    {
+    key: {
+    text: "HESA alignment"
+    },
+    value: {
+    html: "OWNSTU"
+    },
+    actions: {
+    items: [
+    ]
+    }
+    },
+    {
+    key: {
+    text: "Description"
+    },
+    value: {
+    html: "Provider\'s own internal identifier for the student."
+    },
+    actions: {
+    items: [
+    ]
+    }
+    },
+    {
+    key: {
+    text: "Format"
+    },
+    value: {
+    html: "20 character max length"
+    },
+    actions: {
+    items: [
+    ]
+    }
+    },
+    {
+    key: {
+    text: "Example"
+    },
+    value: {
+    html: "99157234"
+    },
+    actions: {
+    items: [
+    ]
+    }
+    }
+    ]
+    }) }}
+
+    {# Long example #}
+    {{ govukSummaryList({
+    card: {
+    title: {
+    text: "Apply ID"
+    }
+    },
+    rows: [
+    {
+    key: {
+    text: "Field name"
+    },
+    value: {
+    html: "<a id=\"applyId\" class=\"govuk-link--no-underline\">Apply ID</a>"
+    },
+    actions: {
+    items: [
+    ]
+    }
+    },
+    {
+    key: {
+    text: "Technical"
+    },
+    value: {
+    html: "additional_training_initiative"
+    },
+    actions: {
+    items: [
+    ]
+    }
+    },
+    {
+    key: {
+    text: "HESA alignment"
+    },
+    value: {
+    html: "INITIATIVES"
+    },
+    actions: {
+    items: [
+    ]
+    }
+    },
+    {
+    key: {
+    text: "Description"
+    },
+    value: {
+    html: "<p>This field records the student identifier which is to be unique to each student.</p><p>It is intended that the identifier is to be transferred with the student to each provider of higher education he or she may attend. <p>The objective is that the use of this number will facilitate the accurate tracking of students throughout their experience within the sector for which HESA collects data.</p>"
+    },
+    actions: {
+    items: [
+    ]
+    }
+    },
+    {
+    key: {
+    text: "Format"
+    },
+    value: {
+    html: "<p>001 Abridged ITT course</p><p>009 Maths and Physics Chairs Programme</p><p>011 Primary mathematics specialist</p><p>019 Additional ITT place for PE with a priority subject</p><p>025 Transition to Teach</p><p>026 Now Teach</p><p>036 International relocation payment</p>"
+    },
+    actions: {
+    items: [
+    ]
+    }
+    },
+    {
+    key: {
+    text: "Example"
+    },
+    value: {
+    html: "<p>“026” is an example of using the code for Now Teach</p><p>HESA allows you to add 2 initiatives, but Register will only import the first one.</p><p>The following HESA codes are not mapped to Register:</p><ul><li>001 Abridged ITT course</li><li>011 Primary with mathematics specialist</li><li>019 Additional ITT place for PE with a priority subject</li></ul>"
+    },
+    actions: {
+    items: [
+    ]
+    }
+    }
+    ]
+    }) }}
+  </div>
+</div>
+
+{% endblock %}

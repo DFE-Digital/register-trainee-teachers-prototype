@@ -1,0 +1,128 @@
+
+{% extends "layout.html" %}
+
+{% if not backLink %}
+{% set backLink      = 'javascript:history.back();' %}
+{% endif %}
+{% if not backText %}
+{% set backText      = 'Back'  %}
+{% endif %}
+
+{% if backLink == 'false' %}
+{% set backLink = false %}
+{% endif %}
+
+{% if backText == 'false' %}
+{% set backText = '' %}
+{% endif %}
+
+{% block pageTitle %}
+{{ pageHeading }} - {{serviceName}} - GOV.UK
+{% endblock %}
+
+{# {% set breadcrumbs  = {
+items: [
+{
+text: "How to use this service",
+href: "/guidance"
+}
+]
+} %}
+#}
+{% set backLink = '/guidance' %}
+{% set backText = "How to use this service" %}
+
+{% block pageNavigation %}
+{% if breadcrumbs %}
+{{ govukBreadcrumbs(breadcrumbs)}}
+{% elseif backLink %}
+{{ govukBackLink({
+text: backText,
+href: backLink
+}) }}
+{% endif %}
+{% endblock %}
+
+{% block content %}
+{% include "_includes/app-flash-message.html" %}
+
+<div class="govuk-grid-row">
+  <div class="{{ gridColumn or 'govuk-grid-column-two-thirds-from-desktop' }}">
+    <h1 class="govuk-heading-l">How to add trainee information to the bulk add new trainee CSV template</h1>
+
+    <p class="govuk-body">Training providers can register their trainees in bulk by creating trainee records and adding the required data.
+
+    <div class="govuk-inset-text">
+
+    <h3 class="govuk-heading-s">Important</h3>
+
+    <p class="govuk-body">This draft guidance is for review and testing purposes only. Send your feedback or questions to <a class="govuk-link" href="">Registertraineeteachers@education.gov.uk</a>.
+
+    <p class="govuk-body">CSV bulk add new trainees will be available in Register trainee teachers (Register) before the start of the 2025 to 2026 academic year.
+  </div>
+
+    <h2 class="govuk-heading-m">Download an empty CSV file template</h2>
+
+    <p class="govuk-body">You must only use this CSV file template to register new trainees in Register trainee teachers (Register).</p>
+
+    <p class="govuk-body">If you use this to update already existing trainees, it will come back as an error.</p>
+
+    <p class="govuk-body">The CSV template uses HESA reference data.</p>
+
+    <p class="govuk-body"><a href="https://educationgovuk.sharepoint.com.mcas.ms/:x:/r/sites/TeacherServices/_layouts/15/Doc.aspx?sourcedoc=%7B6E8834FC-EF86-4ACC-958E-A29EDFF61A96%7D&file=Bulk_Upload_Sheet_V.0.1%20(1).csv&action=default&mobileredirect=true" >Download empty bulk add new trainees CSV template</a></p>
+
+
+    <h2 class="govuk-heading-m">Use this guidance to complete the CSV file template</h2>
+
+    <p class="govuk-body">Use the guidance to check how new trainee data maps between your student record system and Register, using the CSV upload found in the ‘Bulk updates section’ in Register.</p>
+
+    <p class="govuk-body">If mandatory fields are not filled in correctly, the CSV upload will come back as an error.</p>
+
+
+    <h3 class="govuk-heading-m">Contents</h3>
+
+    <ul class="govuk-list">
+    <li><a class="govuk-link" href="#">Provider</a></li>
+    <li><a class="govuk-link" href="#">Trainee ID</a></li>
+    <li><a class="govuk-link" href="#">Application ID</a></li>
+    <li><a class="govuk-link" href="#">HESA ID</a></li>
+    <li><a class="govuk-link" href="#">First Names</a></li>
+    <li><a class="govuk-link" href="#">Last Name</a></li>
+    <li><a class="govuk-link" href="#">Previous Last Name</a></li>
+    <li><a class="govuk-link" href="#">Date of Birth</a></li>
+    <li><a class="govuk-link" href="#">NI Number</a></li>
+    <li><a class="govuk-link" href="#">Sex</a></li>
+    <li><a class="govuk-link" href="#">Email</a></li>
+    <li><a class="govuk-link" href="#">Nationality</a></li>
+    <li><a class="govuk-link" href="#">Ethnicity</a></li>
+    <li><a class="govuk-link" href="#">Disability 1 to 9</a></li>
+    <li><a class="govuk-link" href="#">ITT Aim</a></li>
+    <li><a class="govuk-link" href="#">Training Route</a></li>
+    <li><a class="govuk-link" href="#">Qualification Aim</a></li>
+    <li><a class="govuk-link" href="#">Course Subject 1 to 3</a></li>
+    <li><a class="govuk-link" href="#">Study Mode</a></li>
+    <li><a class="govuk-link" href="#">ITT Start Date</a></li>
+    <li><a class="govuk-link" href="#">ITT End Date</a></li>
+    <li><a class="govuk-link" href="#">Course Age Range</a></li>
+    <li><a class="govuk-link" href="#">Course Year</a></li>
+    <li><a class="govuk-link" href="#">Lead Partner URN</a></li>
+    <li><a class="govuk-link" href="#">Employing School URN</a></li>
+    <li><a class="govuk-link" href="#">Trainee Start Date</a></li>
+    <li><a class="govuk-link" href="#">PG Apprenticeship Start Date</a></li>
+    <li><a class="govuk-link" href="#">First Placement URN</a></li>
+    <li><a class="govuk-link" href="#">Fund Code</a></li>
+    <li><a class="govuk-link" href="#">Funding Method</a></li>
+    <li><a class="govuk-link" href="#">Training Initiative</a></li>
+    <li><a class="govuk-link" href="#">Additional Training Initiative</a></li>
+    <li><a class="govuk-link" href="#">UK Degree Type</a></li>
+    <li><a class="govuk-link" href="#">Non-UK Degree Type</a></li>
+    <li><a class="govuk-link" href="#">Degree Subject</a></li>
+    <li><a class="govuk-link" href="#">Degree Grade</a></li>
+    <li><a class="govuk-link" href="#">Degree Graduation Year</a></li>
+    <li><a class="govuk-link" href="#">Degree UK Awarding Institution</a></li>
+    <li><a class="govuk-link" href="#">Degree Country</a></li>
+    </ul>
+  </div>
+</div>
+
+{% endblock %}

@@ -126,5 +126,176 @@ href: backLink
     </ul>
   </div>
 </div>
+<div class="govuk-grid-row">
+  <div class="{{ gridColumn or 'govuk-grid-column-full' }}">
+
+    {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+
+    {{ govukSummaryList({
+    card: {
+    title: {
+    text: "Provider trainee ID"
+    }
+    },
+    rows: [
+    {
+    key: {
+    text: "Field name"
+    },
+    value: {
+    html: "<a id=\"providerTraineeId\" class=\"govuk-link--no-underline\">Provider trainee ID</a>"
+    },
+    actions: {
+    items: [
+    ]
+    }
+    },
+    {
+    key: {
+    text: "Technical"
+    },
+    value: {
+    html: "provider_trainee_id"
+    },
+    actions: {
+    items: [
+    ]
+    }
+    },
+    {
+    key: {
+    text: "HESA alignment"
+    },
+    value: {
+    html: "OWNSTU"
+    },
+    actions: {
+    items: [
+    ]
+    }
+    },
+    {
+    key: {
+    text: "Description"
+    },
+    value: {
+    html: "Provider\'s own internal identifier for the student."
+    },
+    actions: {
+    items: [
+    ]
+    }
+    },
+    {
+    key: {
+    text: "Format"
+    },
+    value: {
+    html: "20 character max length"
+    },
+    actions: {
+    items: [
+    ]
+    }
+    },
+    {
+    key: {
+    text: "Example"
+    },
+    value: {
+    html: "99157234"
+    },
+    actions: {
+    items: [
+    ]
+    }
+    }
+    ]
+    }) }}
+
+    {# Long example #}
+    {{ govukSummaryList({
+    card: {
+    title: {
+    text: "Apply ID"
+    }
+    },
+    rows: [
+    {
+    key: {
+    text: "Field name"
+    },
+    value: {
+    html: "<a id=\"applyId\" class=\"govuk-link--no-underline\">Apply ID</a>"
+    },
+    actions: {
+    items: [
+    ]
+    }
+    },
+    {
+    key: {
+    text: "Technical"
+    },
+    value: {
+    html: "additional_training_initiative"
+    },
+    actions: {
+    items: [
+    ]
+    }
+    },
+    {
+    key: {
+    text: "HESA alignment"
+    },
+    value: {
+    html: "INITIATIVES"
+    },
+    actions: {
+    items: [
+    ]
+    }
+    },
+    {
+    key: {
+    text: "Description"
+    },
+    value: {
+    html: "<p>This field records the student identifier which is to be unique to each student.</p><p>It is intended that the identifier is to be transferred with the student to each provider of higher education he or she may attend. <p>The objective is that the use of this number will facilitate the accurate tracking of students throughout their experience within the sector for which HESA collects data.</p>"
+    },
+    actions: {
+    items: [
+    ]
+    }
+    },
+    {
+    key: {
+    text: "Format"
+    },
+    value: {
+    html: "<p>001 Abridged ITT course</p><p>009 Maths and Physics Chairs Programme</p><p>011 Primary mathematics specialist</p><p>019 Additional ITT place for PE with a priority subject</p><p>025 Transition to Teach</p><p>026 Now Teach</p><p>036 International relocation payment</p>"
+    },
+    actions: {
+    items: [
+    ]
+    }
+    },
+    {
+    key: {
+    text: "Example"
+    },
+    value: {
+    html: "<p>“026” is an example of using the code for Now Teach</p><p>HESA allows you to add 2 initiatives, but Register will only import the first one.</p><p>The following HESA codes are not mapped to Register:</p><ul><li>001 Abridged ITT course</li><li>011 Primary with mathematics specialist</li><li>019 Additional ITT place for PE with a priority subject</li></ul>"
+    },
+    actions: {
+    items: [
+    ]
+    }
+    }
+    ]
+    }) }}
+  </div>
+</div>
 
 {% endblock %}

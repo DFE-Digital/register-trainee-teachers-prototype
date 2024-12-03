@@ -10,6 +10,8 @@
 {% set traineesThatCanBeRecommended = filteredRecords | filterByReadyToRecommend %}
 {% set needAcademicAward = traineesThatCanBeRecommended | filterByAcademicQualificationsApply %}
 {% set qualifications = traineesThatCanBeRecommended | getQualifications | orSeparate %}
+{% set previousAcademicYear = data.years.previousAcademicYear %}
+{% set nextAcademicYearSimple = data.years.nextAcademicYearSimple %}
 
 {% block content %}
 {{super()}}
@@ -19,7 +21,7 @@
 
     <!-- Dummy text prior to content designer supplying it -->
     <h2 class="govuk-heading-m">Census sign off</h2>
-    <p class="govuk-body"><a class="govuk-link" href="#">New trainees for the 2024 to 2025 academic year</a> - for performance profiles sign off</p>
+    <p class="govuk-body"><a class="govuk-link" href="#">New trainees for the {{ previousAcademicYear }} academic year</a> - for performance profiles sign off</p>
     <p class="govuk-body">Trainees who studied in the 2023 to 2024 academic year - will be available for performance profiles sign off.</p>
 
     <h2 class="govuk-heading-m">Performance profiles</h2>
@@ -30,13 +32,13 @@
 <!--    <p class="govuk-body">When they’re available, you’ll be able to download report showing:</p>-->
 
 <!--    <ul class="govuk-list govuk-list&#45;&#45;bullet">-->
-<!--      <li>trainees who studied in the 2023 to 2024 academic year - for performance profiles sign off with a deadline of 31 January 2025</li>-->
+<!--      <li>trainees who studied in the 2023 to 2024 academic year - for performance profiles sign off with a deadline of 28 February 2025</li>-->
 <!--    </ul>-->
 
 <!--    <p class="govuk-body">You can read guidance about signing off performance profiles.</p>-->
 
     <!-- From 1 Dec - 31st January -->
-    <p class="govuk-body"><a class="govuk-link" href="/performance-profile/">Trainees who studied in the 2023 to 2024 academic year report</a> - for performance profiles sign off with a deadline of 31 January 2025.</p>
+    <p class="govuk-body"><a class="govuk-link" href="/performance-profile/">Trainees who studied in the 2023 to 2024 academic year report</a> - for performance profiles sign off with a deadline of 28 February {{ nextAcademicYearSimple }}.</p>
 
 
 

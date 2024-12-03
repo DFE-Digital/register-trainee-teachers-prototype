@@ -4,6 +4,9 @@
 
 {% set filteredRecords = data.records | filterRecords(data) %}
 
+{% set previousAcademicYear = data.years.previousAcademicYear %}
+{% set nextAcademicYearSimple = data.years.nextAcademicYearSimple %}
+
 {% set draftRecords = filteredRecords | filterByStatus("Draft") %}
 {% set totalDraftCount = draftRecords | length %}
 {% set applyDraftCount = draftRecords | where("source", "Apply") | length %}
@@ -43,9 +46,9 @@
 {% elseif performanceProfileDue and performanceProfileOutstanding %}
   {% set html %}
     <h3 class="govuk-notification-banner__heading">
-      The 2023 to 2024 performance profile sign off deadline is 31 January 2025.
+      The {{ previousAcademicYear }} ITT performance profile sign off is due.
     </h3>
-Find out <a class="govuk-notification-banner__link" href="https://www.register-trainee-teachers.service.gov.uk/guidance/performance-profiles">how to check your 2023 to 2024 trainee data is accurate for the performance profile publication</a> and how to <a class="govuk-notification-banner__link" href="/performance-profile/">sign off to confirm</a>.</p>
+    <p class="govuk-body"><a class="govuk-notification-banner__link" href="/performance-profile/">Sign off your performance profile</a> by the 28 February {{ nextAcademicYearSimple }} deadline.</p>
   {% endset %}
 
   {{ govukNotificationBanner({
@@ -55,7 +58,7 @@ Find out <a class="govuk-notification-banner__link" href="https://www.register-t
 {% elseif newAcademicYear %}
   {% set html %}
     <h3 class="govuk-notification-banner__heading">
-      The 2023 to 2024 academic year started on 1 August
+      The {{ previousAcademicYear }} academic year started on 1 August
     </h3>
     <p class="govuk-body"><a class="govuk-notification-banner__link" href="#">View dates and deadlines</a> for this academic year.</p>
   {% endset %}

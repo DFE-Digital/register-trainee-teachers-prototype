@@ -42,6 +42,7 @@ let academicYears = [
 
 let currentAcademicYear = "2024 to 2025"
 let currentAcademicYearSimple = 2024
+let nextAcademicYearSimple = 2025
 
 // First of August of current academic year
 // Todo: use this in publish course generator
@@ -93,6 +94,7 @@ module.exports = {
     endAcademicYears,
     endOfCurrentCycle,
     nextAcademicYear,
+    nextAcademicYearSimple,
     previousAcademicYear,
    // academicYears
   }

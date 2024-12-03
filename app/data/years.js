@@ -10,6 +10,8 @@
 // ]
 
 let startAcademicYears = [
+  "2026 to 2027",
+  "2025 to 2026",
   "2024 to 2025",
   "2023 to 2024",
   "2022 to 2023",
@@ -19,6 +21,7 @@ let startAcademicYears = [
 ]
 
 let endAcademicYears = [
+  "2027 to 2028",
   "2026 to 2027",
   "2025 to 2026",
   "2024 to 2025",
@@ -33,6 +36,7 @@ let endAcademicYears = [
 ]
 
 let academicYears = [
+  "2025 to 2026",
   "2024 to 2025",
   "2023 to 2024",
   "2022 to 2023",

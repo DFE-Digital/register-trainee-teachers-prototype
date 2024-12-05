@@ -1,0 +1,11 @@
+{% extends "_templates/_record-form.njk" %}
+
+{% set pageHeading = "Why did the trainee withdraw from the course?" %}
+
+{% set formAction = "./additional-details" | addReferrer(referrer) %}
+
+{% block formContent %}
+
+  {% include "_includes/forms/withdraw/details.njk" %}
+
+{% endblock %}

@@ -1,0 +1,72 @@
+{% extends "_templates/_page.njk" %}
+{% set navActive = 'bulk' %}
+
+{% set pageContent = "fixErrors" %}
+{% set pageHeading = "Fix errors in your pending updates" %}
+
+{% set filePath = "add-details-with-errors" %}
+{% set rowsWithErrors = data.bulkUpload.processedRows | where("uploadStatus", "error") %}
+
+{% set tableBodyRows = [] %}
+
+{% set errorCount     = data.bulkUpload.processedRows | where("uploadStatus", "error") | length  %}
+{% set unchangedCount = data.bulkUpload.processedRows | where("uploadStatus", "unchanged") | length  %}
+{% set updatedCount   = data.bulkUpload.processedRows | where("uploadStatus", "updated") | length  %}
+
+{% for row in rowsWithErrors %}
+  {% set traineeInfoHtml %}
+    <p class="govuk-body govuk-!-margin-bottom-1">
+      {{ row.trainee.personalDetails.shortName }}
+    </p>
+    <p class="govuk-body govuk-hint govuk-!-margin-bottom-0">
+      {# To do — don't only use TRNs to identify trainees #}
+      {{ row.trainee.trn if row.trainee.trn else 'Pending TRN' }}
+    </p>
+  {% endset %}
+  {% set errorMessage = row.errorMessage %}
+  {% if row.errorMessage == "Date standards met provided without a TRN — add a TRN or remove the date standards met" %}
+    {% set traineeInfoHtml = "–" %}
+  {% endif %}
+  {% if row.errorMessage == "TRN not recognised" %}
+    {% set traineeInfoHtml = row.trainee.reference %}
+    {% set errorMessage = "TRN: ‘" + row.trainee.reference + "’ — TRN not recognised" %}
+  {% endif %}
+
+  {% set tableRow = [
+    { text: row.rowNumber },
+    { text: traineeInfoHtml | safe },
+    { text: errorMessage }
+  ] %}
+  {% set tableBodyRows = tableBodyRows | push(tableRow) %}
+{% endfor %}
+
+{% set tableCaption = "Trainee " + 'record' | pluralise(tableBodyRows.length) + " with errors (" + tableBodyRows.length + ")" %}
+{% set tableCaptionClasses = "govuk-table__caption--m" %}
+{% set tableHeadRow =
+  [
+    {
+      text: "Row",
+      classes: "app-table__column-5"
+    },
+    {
+      text: "Trainee",
+      classes: "app-table__column-25"
+    },
+    {
+      text: "Error"
+    }
+  ]
+%}
+
+{% set bulkPath = "add-details" %}
+
+{% set linkText = "trainees with missing details — with errors" %}
+{% set fileName = "add-details-with-errors" %}
+{% set downloadedFileName = "-fix-errors" %}
+
+
+{% block content %}
+
+  {% include "_includes/bulk-update/fix-file.njk" %}
+
+{% endblock %}

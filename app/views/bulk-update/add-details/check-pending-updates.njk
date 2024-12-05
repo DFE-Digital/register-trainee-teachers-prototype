@@ -1,0 +1,97 @@
+{% extends "_templates/_page.njk" %}
+
+{# % block pageScripts %}
+  <script src="/public/javascripts/stick-to-window-when-scrolling.js"></script>
+{% endblock % #}
+
+{% set pageHeading = "Check pending updates to trainee records" %}
+{% set navActive = 'bulk' %}
+
+{# These counts are used by include "_includes/bulk-update/upload-summary-panel.njk  #}
+{# Combines errors and processed if the user has 'fixed the errors' #}
+{% if data.bulk.addDetailsFixErrors %}
+  {% set processedRows = data.bulkUpload.processedRows | where("uploadStatus", "error")  %}
+  {% set processedRows = processedRows | combineArrays(data.bulkUpload.processedRows | where("uploadStatus", "updated")) %}
+{% else %}
+  {% set processedRows = data.bulkUpload.processedRows | where("uploadStatus", "updated") %}
+{% endif %}
+
+{# Sets numbers for errors summary – No errors if you're seeing the summary on this page #}
+{% set errorCount     = 0 %}
+{% set unchangedCount = data.bulkUpload.processedRows | where("uploadStatus", "unchanged") | length %}
+{% set updatedCount   = processedRows | length  %}
+
+{% set tableHeadRow = [
+    {
+      text: "Trainee",
+      classes: "app-table__column-25"
+    },
+    {
+      text: "Trainee start date",
+      classes: "app-table__column-25"
+    },
+    {
+      text: "First placement school",
+      classes: "app-table__column-25"
+    },
+    {
+      text: "Second placement school",
+      classes: "app-table__column-25"
+    }
+  ]
+%}
+
+{% set tableBodyRows = [] %}
+
+{% for row in processedRows %}
+  {% set traineeInfoHtml %}
+    <p class="govuk-body govuk-!-margin-bottom-1">
+      {{ row.trainee.personalDetails.shortName }}
+    </p>
+    <p class="govuk-body govuk-hint govuk-!-margin-bottom-1">
+      TRN: {{ row.trainee.trn }}
+    </p>
+    <p class="govuk-body govuk-hint govuk-!-margin-bottom-0">
+      Trainee ID: {{ row.trainee.reference }}
+    </p>
+  {% endset %}
+  {# To do — set more shools in the data #}
+  {% set placementOneHtml %}
+    <p class="govuk-body govuk-!-margin-bottom-1">
+      {{ row.trainee.placement.items[0].school.schoolName if row.trainee.placement.items[0] else "Lightwater Village School" }}
+    </p>
+    <p class="govuk-body govuk-hint govuk-!-margin-bottom-0">
+      {{ row.trainee.placement.items[0].school.urn  if row.trainee.placement.items[0] else "142433" }}
+    </p>
+  {% endset %}
+  {% set placementTwoHtml %}
+    <p class="govuk-body govuk-!-margin-bottom-1">
+      {{ row.trainee.placement.items[1].school.schoolName if row.trainee.placement.items[1] else "Hammond School" }}
+    </p>
+    <p class="govuk-body govuk-hint govuk-!-margin-bottom-0">
+      {{ row.trainee.placement.items[1].school.urn  if row.trainee.placement.items[1] else "142426" }}
+    </p>
+  {% endset %}
+
+  {% set tableRow = [
+    { text: traineeInfoHtml | safe },
+    { text: row.trainee.trainingDetails.commencementDate | govukDate },
+    { text: placementOneHtml | safe },
+    { text: placementTwoHtml | safe }
+  ] %}
+  {% set tableBodyRows = tableBodyRows | push(tableRow) %}
+{% endfor %}
+
+
+{% set tableCaption = "Pending updates to trainee records (" + tableBodyRows.length + ")" %}
+{% set tableCaptionClasses = "govuk-table__caption--m" %}
+
+{% set buttonText = "Confirm updates to records" %}
+
+{% set bulkPath = "add-details" %}
+
+{% block content %}
+
+  {% include "_includes/bulk-update/check-pending-updates.njk" %}
+
+{% endblock %}

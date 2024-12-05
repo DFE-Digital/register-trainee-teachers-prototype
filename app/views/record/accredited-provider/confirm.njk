@@ -1,0 +1,26 @@
+{% extends "_templates/_record-form.njk" %}
+
+{% set pageHeading = "Check change of accredited provider details" %}
+
+{% set backLink = ("/record/" + data.record.id) | orReferrer(referrer) %}
+{% set backText = "Back to record" %}
+
+{% set gridColumn = 'govuk-grid-column-full' %}
+{% set formAction = "./update" | addReferrer(referrer) %}
+
+{% block formContent %}
+  {% include "_includes/trainee-name-caption.njk" %}
+  <h1 class="govuk-heading-l">
+    {{pageHeading}}
+  </h1>
+
+  {% include "_includes/summary-cards/accredited-provider.njk" %}
+
+  {# Save temporarily for use in timeline message #}
+  <input name="record[temp][oldProvider]" type="hidden" value="{{ data.record.provider }}">
+
+  {{ govukButton({
+    text: "Update record"
+  }) }}
+
+{% endblock %}

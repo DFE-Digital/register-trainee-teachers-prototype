@@ -1,0 +1,18 @@
+{% extends "_templates/_record-form.njk" %}
+
+{% set pageHeading = "When did the trainee return?" %}
+
+{% set formAction = "./reinstate/reinstate-date-answer" %}
+
+{% block formContent %}
+
+  {% set headingHtml %}
+    {% include "_includes/trainee-name-caption.njk" %}
+    <h1 class="govuk-heading-l govuk-!-margin-bottom-0">
+      {{pageHeading}}
+    </h1>
+  {% endset %}
+
+  {% include "_includes/forms/reinstate/date.njk" %}
+
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "_templates/_record-form.njk" %}
+
+{% set pageHeading %}
+  Why you’re changing the accredited provider
+{% endset %}
+
+
+{% set formAction = "./confirm" | addReferrer(referrer) %}
+
+{% block formContent %}
+
+  {% include "_includes/forms/support/change-accredited-provider-details.njk" %}
+
+{% endblock %}

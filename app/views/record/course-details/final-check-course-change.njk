@@ -1,0 +1,56 @@
+{% extends "_templates/_record-form.njk" %}
+
+{% set pageHeading -%}
+  Check training details
+{% endset %}
+
+{% set backLink = ("/record/" + data.record.id) | orReferrer(referrer) %}
+{% set backText = "Back to record" %}
+
+{% set gridColumn = 'govuk-grid-column-full' %}
+
+{% set formAction = "./final-check-course-change-answer" | addReferrer("/record/" + data.record.id) %}
+
+{% set returnLink = {
+  href: "./cancel-course-change" | addReferrer(referrer),
+  text: "Cancel and return to record"
+} %}
+
+{% block formContent %}
+
+  {# Add an extra referrer as this is a compound referral path #}
+  {% set referrer = referrer | pushReferrer(recordPath + "/course-details/check-training-details") %}
+
+  {% include "_includes/trainee-name-caption.njk" %}
+  <h1 class="govuk-heading-l">
+    {{pageHeading}}
+  </h1>
+
+  {% set previousRecord = data.records | getRecordById(record.id) %}
+
+  {# Use minimal summary to provide a way to change, but not promote the full course #}
+  {% set minimalPublishSummary = true %}
+
+  {% set showCourseMoveRow = true %}
+  {% if record.temp.courseMoveTemp.isCourseMove | falsify %}
+    {% set showPreviousCourse = true %}
+  {% endif %}
+
+  {% include "_includes/summary-cards/course-details.njk" %}
+
+  {# Only show the degree section if they’ve changed from a course that didn't need degrees
+  and now does need one #}
+  {% if not previousRecord | requiresSection("degree") %}
+    {% include "_includes/summary-cards/degree/details.njk" %}
+  {% endif %}
+
+  {% include "_includes/summary-cards/schools.njk" %}
+
+  {% set showBursaryRow = true %}
+  {% include "_includes/summary-cards/funding.njk" %}
+
+  {{ govukButton({
+    text: "Update record"
+  }) }}
+
+{% endblock %}

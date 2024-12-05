@@ -1,0 +1,39 @@
+{% set deferOrReinstateText -%}
+  {%- if record | isDeferred -%}
+    reinstate
+  {%- else -%}
+    defer
+  {%- endif %}
+{% endset %}
+
+{% if record | isActiveStatus and record | isHesaAndLocked %}
+
+  {% set hesaRecordSummary %}
+    <p class="govuk-body">
+      This trainee was imported from HESA. You can recommend, {{deferOrReinstateText}} or withdraw them. You need to enable editing to make other changes.
+    </p>
+
+    {# {% set randomDayOffset = [1,2,3,4,5,6,7,8,9] | random %} #}
+
+    {% set fakeHesaDateTime = moment()
+      .subtract(2, 'days')
+      .subtract(1, 'hours')
+      .add(32, 'minutes') | govukDateTime %}
+
+    <p class="govuk-body">
+      {# Assume sync has happened somewhat recently #}
+      Last updated from HESA on {{ fakeHesaDateTime }}
+    </p>
+
+  {% endset %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+      {{ govukInsetText({
+        text: hesaRecordSummary | safe,
+        classes: "govuk-!-padding-top-0 govuk-!-padding-bottom-0"
+      }) }}
+    </div>
+  </div>
+
+{% endif %}

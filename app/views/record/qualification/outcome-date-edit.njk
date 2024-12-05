@@ -1,0 +1,19 @@
+{% extends "_templates/_record-form.njk" %}
+
+{# {% set pageHeading %}
+  {% if data.record.qtsDetails.standardsAssessedOutcome == "Yes" %}
+    When did they meet the standards
+  {% else %}
+    When should they be recorded as having not met the standards?
+  {% endif %}
+{% endset %} #}
+
+{% set pageHeading = "When did they meet the " + (data.record | getQualificationText) + " standards?" %}
+
+{% set formAction = "./outcome-date-edit-confirm" %}
+
+{% block formContent %}
+
+  {% include "_includes/forms/qualification/outcome-date-edit.njk" %}
+
+{% endblock %}

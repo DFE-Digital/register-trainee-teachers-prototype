@@ -1,0 +1,57 @@
+{% set deferOrReinstateText -%}
+  {%- if record | isDeferred -%}
+    reinstate
+  {%- else -%}
+    defer
+  {%- endif %}
+{% endset %}
+
+{% set showDisabledEditingButton = false %}
+
+
+{% if record | isActiveStatus and record | sourceIsHESA and record.hesa.editingEnabled == true %}
+
+  {% set hesaRecordSummary %}
+    <p class="govuk-body">
+      Editing has been enabled for this trainee. The record is still linked to the HESA service. If you update it using HESA then any changes you’ve made in this service will be replaced by the data from HESA.
+    </p>
+
+    {% if showDisabledEditingButton %}
+      <form action="{{ recordPath }}/toggle-editing" method="POST">
+        {% if record.hesa.editingEnabled == true %}
+          {{ govukButton({
+            text: "Disable editing on this record",
+            classes: "govuk-button--secondary"
+          }) }}
+        {# Won't currently get shown because this banner only shows if the record is locked - to consider later #}
+        {% else %}
+          {{ govukButton({
+            text: "Enable editing on this record",
+            classes: "govuk-button--secondary"
+          }) }}
+        {% endif %}
+      </form>
+    {% endif %}
+
+    {% set fakeHesaDateTime = moment()
+      .subtract(87, 'days')
+      .subtract(1, 'hours')
+      .add(32, 'minutes') | govukDateTime %}
+
+    <p class="govuk-body">
+      {# Assume sync has happened somewhat recently #}
+      Last updated from HESA on {{ fakeHesaDateTime }}
+    </p>
+
+  {% endset %}
+
+    <div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    {{ govukInsetText({
+      text: hesaRecordSummary | safe,
+      classes: "govuk-!-padding-top-0 govuk-!-padding-bottom-0"
+    }) }}
+  </div>
+</div>
+
+{% endif %}

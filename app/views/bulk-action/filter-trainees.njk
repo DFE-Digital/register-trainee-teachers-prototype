@@ -1,0 +1,16 @@
+{% extends "_templates/_form.njk" %}
+
+{% set pageHeading = 'Filter your records' %}
+{% set navActive = 'bulk' %}
+
+{% set formAction = "./select-trainees" | addReferrer(referrer) %}
+
+
+
+{% block formContent %}
+
+  {% include "_includes/forms/bulk/filter-trainees.njk" %}
+
+
+
+{% endblock %}

@@ -1,0 +1,62 @@
+{% include "_includes/trainee-name-caption.njk" %}
+<h1 class="govuk-heading-l">
+  {{pageHeading}}
+</h1>
+
+{% set placementCount = record.placement.items | length %}
+
+{# Placement data is stored in a temp location before being merged back to array #}
+
+{# Get placement (if it exists) from existing data #}
+{% set placement = {} %}
+
+{% if record.placement.items %}
+  {% set placement = record.placement.items | getRecordById(placementUuid) %}
+{% endif %}
+
+{# Merge with temp store #}
+{% set placementTemp = placement | mergeObjects(data.placementTemp) %}
+
+{% set label = "Search for a school by its unique reference number (URN), name or postcode" %}
+
+{# Todo - this could probably be the default that the autocomplete progressively enhances #}
+<div class="app-no-js-only">
+  {{ govukInput({
+    id: "schoolSearch",
+    name: "_schoolSearch",
+    label: {
+      text: label
+    },
+    value: query._schoolSearch,
+    classes: 'app-!-max-width-two-thirds'
+  }) }}
+</div>
+
+<div class="app-js-only">
+  {{ appSchoolAutocomplete({
+    name: "_schoolSearch",
+    value: (placementTemp.school.schoolName | safe),
+    uuid: placementTemp.school.uuid,
+    label: {
+      text: label
+    }
+  }) }}
+</div>
+
+{# Manual entry #}
+{% set detailsHtml %}
+  {# {% set isManualEntry = (placementTemp.school.manualEntry | falsify) == true %} #}
+  {% include "_includes/forms/placements/details-manual.njk" %}
+{% endset %}
+
+<div class="app-js-only">
+  {{ govukDetails({
+    summaryText: "Placement school or setting is not listed",
+    html: detailsHtml,
+    open: true if placementTemp.school.manualEntry == "true"
+  }) }}
+</div>
+
+{{ govukButton({
+  text: "Continue"
+}) }}

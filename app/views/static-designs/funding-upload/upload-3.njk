@@ -1,0 +1,51 @@
+{% extends "layout.njk" %}
+
+{% set navActive = "home" %}
+
+{% set filteredRecords = data.records %}
+
+{% set draftRecords = filteredRecords | filterByStatus("Draft") %}
+{% set totalDraftCount = draftRecords | length %}
+{% set applyDraftCount = draftRecords | where("source", "Apply") | length %}
+
+{% set registeredTrainees = filteredRecords | filterByStatus("Draft", true) %}
+{% set pageHeading = "Support for Register" %}
+{# {% set currentTrainees = registeredTrainees | filterByActive %} #}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+        <h1 class="govuk-heading-l">Check your uploaded files</h1>
+
+        <h2 class="govuk-heading-m">Files added</h2>
+
+        <dl class="govuk-summary-list">
+
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    data.csv
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    <a download href="/" class="govuk-link">data.csv</a>
+                </dd>
+
+                <dd class="govuk-summary-list__actions">
+
+                    <a class="govuk-link" href="#">
+                        Delete<span class="govuk-visually-hidden"> file 1</span>
+                    </a>
+
+                </dd>
+
+            </div>
+
+        </dl>
+
+        <form class="form" action="index" method="post">
+            {{ govukButton({ text: 'Continue' }) }}
+        </form>
+    </div>
+</div>
+{% endblock %}

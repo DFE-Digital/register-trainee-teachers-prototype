@@ -1,0 +1,19 @@
+{% extends "_templates/_page.njk" %}
+
+{% set navActive = 'bulk' %}
+
+{% set pageHeading = "Errors in your trainee records file" %}
+
+{% set bulkPath =  "add-details" %}
+{% set bulkRoute = "addDetails"  %}
+
+{# Sets numbers for errors summary #}
+{% set errorCount     = data.bulkUpload.processedRows | where("uploadStatus", "error") | length  %}
+{% set unchangedCount = data.bulkUpload.processedRows | where("uploadStatus", "unchanged") | length  %}
+{% set updatedCount   = data.bulkUpload.processedRows | where("uploadStatus", "updated") | length  %}
+
+{% block content %}
+
+  {% include "_includes/bulk-update/errors-found.njk" %}
+
+{% endblock %}

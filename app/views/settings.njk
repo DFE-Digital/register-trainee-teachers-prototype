@@ -1,0 +1,281 @@
+
+{% extends "_templates/_page.njk" %}
+
+{% set backLink = '/records' %}
+{% set backText = 'All registered trainees' %}
+{% set pageHeading = 'Prototype settings' %}
+{# {% set pageAction = value %} #}
+
+{% block content %}
+{{super()}}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <h1 class="govuk-heading-l">{{pageHeading}}</h1>
+    <form action="" method="post">
+
+      {% set insetHtml %}
+        More settings: <a href="/admin-providers">providers</a>.
+      {% endset %}
+
+      {{ govukInsetText({
+        html: insetHtml
+      }) }}
+
+      {% set insetHtml %}
+        <a href="/direct-set-data">Directly set data</a>
+      {% endset %}
+
+      {{ govukInsetText({
+        html: insetHtml
+      }) }}
+
+      {% if not data.isAdmin %}
+        {% set hrefHtml %}
+          ./settings?settings[userActiveProvider]={{data.settings.defaultAdminName}}&clearQuery=true&settings[previousUserActiveProvider]={{data.settings.userActiveProvider}}
+        {% endset %}
+        {{ govukButton({
+          "text": "Sign in as Admin",
+          href: hrefHtml
+        }) }}
+      {% else %}
+        {% set hrefHtml %}
+          ./settings?settings[userActiveProvider]={{data.settings.previousUserActiveProvider}}&clearQuery=true&settings[previousUserActiveProvider]=
+        {% endset %}
+        {{ govukButton({
+          "text": "Sign out as Admin",
+          href: hrefHtml
+        }) }}
+      {% endif %}
+
+      {{ govukCheckboxes({
+        items: [
+          {
+            value: 'true',
+            text: "Group apply sections together"
+          }
+        ]
+      } | decorateAttributes(data, "data.settings.groupApplySections")) }}
+
+      {{ govukCheckboxes({
+        items: [
+          {
+            value: 'true',
+            text: "Highlight invalid answers"
+          }
+        ]
+      } | decorateAttributes(data, "data.settings.highlightInvalidAnswers")) }}
+
+      {{ govukCheckboxes({
+        items: [
+          {
+            value: 'true',
+            text: "Show declaration page"
+          }
+        ]
+      } | decorateAttributes(data, "data.settings.includeDeclaration")) }}
+
+      {{ govukCheckboxes({
+        items: [
+          {
+            value: 'true',
+            text: "Show WIP bulk links"
+          }
+        ]
+      } | decorateAttributes(data, "data.settings.showBulkLinks")) }}
+
+      {{ govukCheckboxes({
+        items: [
+          {
+            value: 'true',
+            text: "Show funding in nav"
+          }
+        ]
+      } | decorateAttributes(data, "data.settings.showFundingInPrimaryNav")) }}
+
+      {{ govukInput({
+        label: {
+          text: "Number of publish courses the provider offers",
+          classes: "govuk-label--s"
+        },
+        suffix: {
+          text: "courses"
+        },
+        classes: "app-!-max-width-one-quarter"
+      } | decorateAttributes(data, "data.settings.courseLimit")) }}
+
+      {{ govukRadios({
+        fieldset: {
+          legend: {
+            text: "Bulk links in nav",
+            classes: "govuk-fieldset__legend--s"
+          }
+        },
+        items: [
+          {
+            value: 'Show bulk recommend',
+            text: "Show bulk recommend"
+          },
+          {
+            value: 'Show bulk updates',
+            text: "Show bulk updates"
+          },
+          {
+            value: 'Show bulk actions',
+            text: "Show bulk actions"
+          },
+          {
+            value: 'None',
+            text: "None"
+          }
+        ]
+      } | decorateAttributes(data, "data.settings.bulkLinksInPrimaryNav")) }}
+
+      {{ govukRadios({
+        fieldset: {
+          legend: {
+            text: "Use combined removal flow",
+            classes: "govuk-fieldset__legend--s"
+          }
+        },
+        items: [
+          {
+            text: 'Yes, new flow',
+            value: "true"
+          },
+          {
+            text: 'No, existing flow',
+            value: "false"
+          }
+        ]
+      } | decorateAttributes(data, "data.settings.useCombinedRemoveFlow")) }}
+
+      {{ govukRadios({
+        fieldset: {
+          legend: {
+            text: "Academic years in UI",
+            classes: "govuk-fieldset__legend--s"
+          }
+        },
+        items: [
+          {
+            text: "Tabs"
+          },
+          {
+            text: "Separate select filter"
+          },
+          {
+            text: "Combined years filter"
+          },
+          {
+            text: "Checkboxes"
+          }
+        ]
+      } | decorateAttributes(data, "data.settings.academicYearsUiStyle")) }}
+
+      {{ govukRadios({
+        fieldset: {
+          legend: {
+            text: "Trainee export question style",
+            classes: "govuk-fieldset__legend--s"
+          }
+        },
+        items: [
+          {
+            text: "Two stage"
+          },
+          {
+            text: "Up front"
+          }
+        ]
+      } | decorateAttributes(data, "data.settings.traineeExportQuestionStyle")) }}
+
+      {{ govukRadios({
+        fieldset: {
+          legend: {
+            text: "Sign off period",
+            classes: "govuk-fieldset__legend--s"
+          }
+        },
+        hint: {
+          text: "This affects which reports and guidance are available."
+        },
+        items: [
+          {
+            text: "None",
+            value: "none"
+          },
+          {
+            text: "Census",
+            value: "census"
+          },
+          {
+            text: "Performance profiles",
+            value: "performanceProfiles"
+          }
+        ]
+      } | decorateAttributes(data, "data.settings.signOffPeriods")) }}
+
+      {{ govukSelect({
+        id: "hesa-guidance-style",
+        name: "settings[hesaGuidanceStyle]",
+        label: {
+          text: "HESA guidance style"
+        },
+        items: [
+          {
+            value: "tabs",
+            text: "Tabs",
+            selected: true if data.settings.hesaGuidanceStyle == 'tabs'
+          },
+          {
+            value: "accordion",
+            text: "Accordion",
+            selected: true if data.settings.hesaGuidanceStyle == 'accordion'
+          },
+          {
+            value: "flat",
+            text: "Flat",
+            selected: true if data.settings.hesaGuidanceStyle == 'flat'
+          }
+        ]
+      }) }}
+
+
+      {% set allTrainingRoutes = [] %}
+      {% for route in data.allTrainingRoutes %}
+        {% set allTrainingRoutes = allTrainingRoutes | push({
+          text: route
+        }) %}
+      {% endfor %}
+
+      {% set trainingLinksHtml %}
+        {{ govukCheckboxes({
+          fieldset: {
+            legend: {
+              text: "Enabled training routes",
+              classes: "govuk-fieldset__legend--s"
+            }
+          },
+          items: allTrainingRoutes
+        } | decorateAttributes(data, "data.settings.enabledTrainingRoutes")) }}
+      {% endset %}
+
+
+      {{ govukDetails({
+        summaryText: "Enabled training routes",
+        html: trainingLinksHtml
+      }) }}
+
+      {{ govukButton({
+        "text": "Update"
+      }) }}
+
+      <input name="successFlash" type="hidden" value="Prototype settings updated">
+
+    </form>
+
+  </div>
+
+</div>
+
+{% endblock %}

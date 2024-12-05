@@ -1,0 +1,16 @@
+{% extends "_templates/_new-record.njk" %}
+
+{% set pageHeading = "Personal details" %}
+
+{% set formAction = "./email" | addReferrer(referrer) %}
+
+{% if data.record.personalDetails.email %}
+  {% set formAction = "./confirm" | addReferrer(referrer) %}
+{% else %}
+  {% set formAction = "./email" | addReferrer(referrer) %}
+{% endif %}
+
+
+{% block formContent %}
+  {% include "_includes/forms/personal-details/main-details.njk" %}
+{% endblock %}

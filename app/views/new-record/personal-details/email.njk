@@ -1,0 +1,15 @@
+{% extends "_templates/_new-record.njk" %}
+
+{% set pageHeading = "Personal email address" %}
+
+{% if data.record | sourceIsApply %}
+  {% set formAction = "./../overview" | orReferrer(referrer) %}
+{% else %}
+  {% set formAction = "./confirm" | addReferrer(referrer) %}
+{% endif %}
+
+{% block formContent %}
+
+  {% include "_includes/forms/personal-details/email.njk" %}
+
+{% endblock %}

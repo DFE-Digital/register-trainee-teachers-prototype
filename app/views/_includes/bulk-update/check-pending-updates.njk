@@ -1,0 +1,172 @@
+{# {% if data.bulk.recommendFixErrors or data.bulk.addDetailsFixErrors %}
+  {% include "_includes/bulk-update/upload-summary-panel.njk" %}
+{% endif %} #}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <h1 class="govuk-heading-l">
+      <span class="govuk-caption-l">{{ data.signedInProviders | andSeparate }}</span>
+      {{ pageHeading }}
+    </h1>
+  </div>
+</div>
+
+{% macro accordionOrTable(params) %}
+
+  {% set chunkSize = 50 %}
+
+  {% set totalCount = params.rows | length %}
+
+  {% if totalCount > chunkSize %}
+    {% set chunkedRows = params.rows | batch(chunkSize) %}
+
+    {% set accordionItems = [] %}
+
+    {% for chunk in chunkedRows %}
+      {% set tableHtml %}
+        {{ govukTable({
+          head: tableHeadRow,
+          rows: chunk,
+          classes: "app-table--no-bottom-border"
+        }) }}
+      {% endset %}
+
+      {% set chunkStart = (loop.index0 * chunkSize) + 1 %}
+      {% set chunkEnd = (loop.index0 * chunkSize) + chunkSize %}
+      {% if chunkEnd > totalCount %}
+        {% set chunkEnd = totalCount %}
+      {% endif %}
+
+      {% set accordionHeadingText %}
+        Trainees {{ chunkStart }} to {{ chunkEnd }} you’ll recommend for {{params.awardType}}
+      {%- endset %}
+      {% set accordionItems = accordionItems | push({
+        heading: {
+          text: accordionHeadingText
+        },
+        content: {
+          html: tableHtml
+        },
+        _expanded: true if loop.first else false,
+        expanded: false
+      }) %}
+
+    {% endfor %}
+
+    {# <h2 class="govuk-heading-m">{{qtsTableCaption}}</h2> #}
+
+    {# NowUTC used to give the id a new unique name, so the same item is *always* open #}
+    {{ govukAccordion({
+      id: (params.awardType | lower) + "-accordion-" + nowUTC(),
+      items: accordionItems,
+      headingLevel: 3,
+      showAllSectionsText: "Show all trainees you’ll recommend",
+      hideAllSectionsText: "Hide all trainees you’ll recommend"
+    }) }}
+
+  {% else %}
+
+    {{ govukTable({
+      caption: params.tableCaption,
+      captionClasses: tableCaptionClasses,
+      head: tableHeadRow,
+      rows: params.rows
+    }) if totalCount > 0 }}
+
+  {% endif %}
+{% endmacro %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+
+{% if allAwardsTableBodyRows | length %}
+  {{ accordionOrTable({
+    caption: "Trainees being recommended for " + qualificationText,
+    rows: allAwardsTableBodyRows,
+    awardType: qualificationText
+  }) }}
+  <hr class="govuk-section-break govuk-section-break--l">
+
+{% endif %}
+
+{# {% if qtsTableBodyRows | length %}
+  <h2 class="govuk-heading-m">{{qtsTableCaption}}</h2>
+
+  {{ accordionOrTable({
+    caption: qtsTableCaption,
+    rows: qtsTableBodyRows,
+    awardType: "QTS"
+  }) }}
+  <hr class="govuk-section-break govuk-section-break--xl">
+
+{% endif %}
+
+
+{% if eytsTableBodyRows | length %}
+  <h2 class="govuk-heading-m">{{eytsTableCaption}}</h2>
+
+  {{ accordionOrTable({
+    caption: eytsTableCaption,
+    rows: eytsTableBodyRows,
+    awardType: "EYTS"
+  }) }}
+{% endif %} #}
+
+
+      {# {{ govukTable({
+        caption: qtsTableCaption,
+        captionClasses: tableCaptionClasses,
+        head: tableHeadRow,
+        rows: qtsTableBodyRows
+      }) if qtsTableBodyRows.length > 0 }}
+
+      {{ govukTable({
+        caption: eytsTableCaption,
+        captionClasses: tableCaptionClasses,
+        head: tableHeadRow,
+        rows: eytsTableBodyRows
+      }) if eytsTableBodyRows.length > 0 }} #}
+
+  </div>
+</div>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <div class="js-stick-at-bottom-when-scrolling">
+
+      <form action="/bulk-update/{{ bulkPath }}/confirmation" method="post" novalidate>
+
+        {{ govukButton({
+          text: buttonText,
+          classes: "govuk-!-margin-bottom-4"
+        }) }}
+
+        {# Tablet and higher breakpoints #}
+        <div class="app-!-display-desktop--only govuk-button-group govuk-!-margin-bottom-0">
+          <p class="govuk-body govuk-!-margin-bottom-0">
+            <a href="/bulk-update/recommend/upload-changes" class="govuk-link govuk-!-margin-right-2">
+              Change who you’ll recommend</a> <span class="govuk-!-margin-right-2">or</span>
+
+            <a href="/bulk-update/recommend/cancel-bulk-updates" class="govuk-link">
+              Cancel bulk {{ "recommending trainees" if data.settings.bulkLinksInPrimaryNav == "Show bulk recommend" else "updates to records" }}</a>
+          </p>
+
+        </div>
+
+        {# Mobile only #}
+        <div class="app-!-display-desktop--hide">
+
+          <p class="govuk-body">
+            <a href="/bulk-update/recommend/upload-changes" class="govuk-link">
+            Change who you’ll recommend</a>
+          </p>
+
+          <p class="govuk-body">
+            <a href="/bulk-update/recommend/cancel-bulk-updates" class="govuk-link">
+            Cancel bulk {{ "recommending trainees" if data.settings.bulkLinksInPrimaryNav == "Show bulk recommend" else "updates to records" }}</a>
+          </p>
+
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>

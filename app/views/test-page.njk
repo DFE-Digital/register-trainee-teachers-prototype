@@ -1,0 +1,30 @@
+{% extends "layout.njk" %}
+
+{% set navActive = "home" %}
+
+{% set foo = 'bdar' %}
+
+{% block content %}
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds-from-desktop">
+        <h1 class="govuk-heading-l">Test page</h1>
+
+        {% set fullName = "ed horsford" %}
+
+        <p class="govuk-body">{{ fullName | sentenceCase }}</p>
+
+        {% set array = ["one","two","three"]
+ %}
+        <p class="govuk-body">{{array | join("")}}</p>
+
+          {{ govukButton({
+            "text": "Continue"
+          }) }}
+
+        </form>
+
+      </div>
+    </div>
+
+{% endblock %}

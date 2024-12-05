@@ -1,0 +1,282 @@
+{% extends "layout.njk" %}
+
+{% set navActive = "home" %}
+
+{% set filteredRecords = data.records %}
+
+{% set draftRecords = filteredRecords | filterByStatus("Draft") %}
+{% set totalDraftCount = draftRecords | length %}
+{% set applyDraftCount = draftRecords | where("source", "Apply") | length %}
+
+{% set registeredTrainees = filteredRecords | filterByStatus("Draft", true) %}
+{% set pageHeading = "Upload trainee summary for lead partners" %}
+{# {% set currentTrainees = registeredTrainees | filterByActive %} #}
+
+{% block content %}
+
+<!-- This is a hack to add a matching secondary nav element from QA into this design -->
+<style>
+  .app-tab-navigation {
+    margin-bottom: 40px
+  }
+
+  .app-tab-navigation__list {
+    font-size: 0;
+    list-style: none;
+    margin: 0;
+    padding: 0
+  }
+
+  @media(min-width: 23.4375em) {
+    .app-tab-navigation__list {
+      box-shadow:inset 0 -1px 0 #b1b4b6;
+      width: 100%
+    }
+  }
+
+  .app-tab-navigation__item {
+    font-family: GDS Transport,arial,sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-weight: 400;
+    font-size: 16px;
+    font-size: 1rem;
+    line-height: 1.25;
+    box-shadow: inset 0 -1px 0 #b1b4b6;
+    display: block;
+    margin-top: -1px
+  }
+
+  /*! Copyright (c) 2011 by Margaret Calvert & Henrik Kubel. All rights reserved. The font has been customised for exclusive use on gov.uk. This cut is not commercially available. */
+  @media print {
+    .app-tab-navigation__item {
+      font-family: sans-serif
+    }
+  }
+
+  @media(min-width: 40.0625em) {
+    .app-tab-navigation__item {
+      font-size:19px;
+      font-size: 1.1875rem;
+      line-height: 1.3157894737
+    }
+  }
+
+  @media print {
+    .app-tab-navigation__item {
+      font-size: 14pt;
+      line-height: 1.15
+    }
+  }
+
+  .app-tab-navigation__item:last-child {
+    box-shadow: none
+  }
+
+  @media(min-width: 23.4375em) {
+    .app-tab-navigation__item {
+      box-shadow:none;
+      display: inline-block;
+      margin-right: 20px;
+      margin-top: 0
+    }
+  }
+
+  .app-tab-navigation__link {
+    font-family: GDS Transport,arial,sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-decoration: underline;
+    display: block;
+    padding-top: 12px;
+    padding-bottom: 17px;
+    padding-left: 15px;
+    position: relative;
+    font-weight: 700;
+    text-decoration: none
+  }
+
+  @media print {
+    .app-tab-navigation__link {
+      font-family: sans-serif
+    }
+  }
+
+  .app-tab-navigation__link:focus {
+    outline: 3px solid transparent;
+    background-color: #fd0;
+    box-shadow: 0 -2px #fd0,0 4px #0b0c0c;
+    text-decoration: none;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone
+  }
+
+  .app-tab-navigation__link:link {
+    color: #1d70b8
+  }
+
+  .app-tab-navigation__link:visited {
+    color: #4c2c92
+  }
+
+  .app-tab-navigation__link:active {
+    color: #0b0c0c
+  }
+
+  @media(min-width: 23.4375em) {
+    .app-tab-navigation__link {
+      padding-left:0
+    }
+  }
+
+  .app-tab-navigation__link:link,.app-tab-navigation__link:visited {
+    color: #1d70b8
+  }
+
+  .app-tab-navigation__link:hover {
+    color: #003078
+  }
+
+  .app-tab-navigation__link:focus {
+    color: #0b0c0c;
+    position: relative;
+    box-shadow: none
+  }
+
+  .app-tab-navigation__link:focus:before {
+    background-color: #0b0c0c;
+    content: "";
+    display: block;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 5px
+  }
+
+  .app-tab-navigation__link[aria-current=page] {
+    color: #0b0c0c;
+    position: relative;
+    text-decoration: none
+  }
+
+  .app-tab-navigation__link[aria-current=page]:focus:before {
+    height: 7px
+  }
+
+  .app-tab-navigation__link[aria-current=page]:before {
+    background-color: #1d70b8;
+    content: "";
+    display: block;
+    height: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 5px
+  }
+
+  @media(min-width: 23.4375em) {
+    .app-tab-navigation__link[aria-current=page]:before {
+      height:5px;
+      width: 100%
+    }
+  }
+
+  .app-tab-navigation__link[aria-current=page]:focus:before {
+    background-color: #0b0c0c
+  }
+
+</style>
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-full-from-desktop">
+        <h1 class="govuk-heading-l">Funding</h1>
+        <nav class="app-tab-navigation govuk-!-margin-bottom-4" aria-label="Sub navigation">
+    <ul class="app-tab-navigation__list">
+        <li class="app-tab-navigation__item">
+            <a class="govuk-link app-tab-navigation__link" href="#">Users</a>
+        </li>
+        <li class="app-tab-navigation__item">
+            <a class="govuk-link app-tab-navigation__link" href="#">Providers</a>
+        </li>
+        <li class="app-tab-navigation__item">
+            <a class="govuk-link app-tab-navigation__link" href="#">Schools</a>
+        </li>
+        <li class="app-tab-navigation__item">
+            <a class="govuk-link app-tab-navigation__link" href="#">Lead partners</a>
+        </li>
+        <li class="app-tab-navigation__item">
+            <a class="govuk-link app-tab-navigation__link" aria-current="page" href="index.njk">Funding</a>
+        </li>
+        <li class="app-tab-navigation__item">
+            <a class="govuk-link app-tab-navigation__link" href="#">Uploads</a>
+        </li>
+        <li class="app-tab-navigation__item">
+            <a class="govuk-link app-tab-navigation__link" href="#">Dead Jobs</a>
+        </li>
+        <li class="app-tab-navigation__item">
+            <a class="govuk-link app-tab-navigation__link" href="#">Pending TRN</a>
+        </li>
+        <li class="app-tab-navigation__item">
+            <a class="govuk-link app-tab-navigation__link" href="#">Pending Awards</a>
+        </li>
+    </ul>
+</nav>
+    </div>
+</div>
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+        <h1 class="govuk-heading-m">{{ pageHeading }}</h1>
+        <p class="govuk-body">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce malesuada lacus ac leo hendrerit, non tincidunt libero faucibus. Donec at nulla ac nunc blandit tempus.</p>
+
+        <table class="govuk-table">
+            <caption class="govuk-table__caption govuk-table__caption--s">Your file needs to look like this example</caption>
+            <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+                <th scope="col" class="govuk-table__header"></th>
+                <th scope="col" class="govuk-table__header">A</th>
+                <th scope="col" class="govuk-table__header">B</th>
+            </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+            <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">1</th>
+                <td class="govuk-table__cell">email address</td>
+                <td class="govuk-table__cell">test@example.com</td>
+            </tr>
+            <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">2</th>
+                <td class="govuk-table__cell">first name</td>
+                <td class="govuk-table__cell">last name</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <form class="form" action="upload-2" method="post">
+            <div class="govuk-form-group">
+                <label class="govuk-label govuk-!-font-weight-bold" for="file-upload-1">
+                    Select a file to upload
+                </label>
+                <div class="govuk-hint">
+                    You can upload your files as a CSV, TSV, ODS, or Microsoft Excel spreadsheet format. Each file must be no larger than 20MB.
+                </div>
+                <a href="#" class="govuk-button govuk-button--secondary"
+                   data-module="govuk-button" name="lopsFile" value="letterofprofessionalstanding.jpg">Choose file</a>
+                <span class="govuk-body" style="position:relative;top:7px">No file uploaded</span>
+            </div>
+
+            <div class="govuk-button-group">
+                <button class="govuk-button" data-module="govuk-button">
+                    Upload and continue
+                </button>
+
+                <button class="govuk-button govuk-button--secondary" data-module="govuk-button"
+                        name="another-identification" value="progress">
+                    Add this later
+                </button>
+            </div>
+        </form>
+
+    </div>
+</div>
+{% endblock %}

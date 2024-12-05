@@ -1,0 +1,44 @@
+{% extends "_templates/_record-form.njk" %}
+
+{% set isCourseMove = data.record.temp.courseMoveTemp.isCourseMove | falsify %}
+
+{% set pageHeading = "Confirm trainee’s " + ("new " if isCourseMove) + "course details" %}
+
+{% set backLink = ("/record/" + data.record.id) | orReferrer(referrer) %}
+{% set backText = "Back to record" %}
+
+{% set gridColumn = 'govuk-grid-column-full' %}
+
+{# Checks if these changes are significant enough we should confirm the rest of the training details #}
+{% set formAction = "./course-change-significant-change-check" | addReferrer(referrer) %}
+
+{# {% set referrer = currentPageUrl %} #}
+
+
+{% block formContent %}
+
+  {% include "_includes/trainee-name-caption.njk" %}
+  <h1 class="govuk-heading-l">
+    {{pageHeading}}
+  </h1>
+
+  {# {% set showCourseMoveRow = true %} #}
+  {% include "_includes/summary-cards/course-details.njk" %}
+
+  {# {{ govukCheckboxes({
+  idPrefix: "waste",
+  name: "record[courseDetails][status]",
+  items: [
+    {
+      value: "Completed",
+      text: "I have completed this section",
+      checked: checked(record.courseDetails.status, "Completed")
+    }
+  ]
+  }) }} #}
+
+  {{ govukButton({
+    text: "Confirm"
+  }) }}
+
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends "_templates/_record-form.njk" %}
+
+{# Get degree (if it exists) from existing data #}
+{% set degree = data.record.degree.items[itemIndex] %}
+{# Merge with temp store (temp store has) #}
+{% set degreeTemp = degree | mergeObjects(data.degreeTemp) %}
+{% set isInternational = degreeTemp.isInternational | falsify %}
+
+{% if isInternational %}
+  {% set pageHeading = "Non-UK degree details" %}
+{% else %}
+  {% set pageHeading = "UK degree details" %}
+{% endif %}
+
+{% set formAction = "./confirm" | addReferrer(referrer) %}
+
+{% block formContent %}
+  {% if isInternational %}
+    {% include "_includes/forms/degree/details-international.njk" %}
+  {% else %}
+    {% include "_includes/forms/degree/details-uk.njk" %}
+  {% endif %}
+{% endblock %}

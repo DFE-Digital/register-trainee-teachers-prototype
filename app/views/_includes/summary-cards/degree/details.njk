@@ -1,0 +1,62 @@
+{% set complete = record.degree | sectionIsComplete %}
+{% set status  = record.degree | getStatusText %}
+
+{% set degrees = record.degree.items %}
+{% set degreeCount = degrees | length %}
+{% set sectionIsRequired = record | requiresSection("degree") %}
+
+{% if not sectionIsRequired %}
+  {# Section not required #}
+{% elseif showIncomplete and not complete %}
+
+  {% set incompleteType = "warning" if errorList %}
+  {% set incompleteId = "degree-details" %}
+  {% if status == "Review" %}
+    {% set incompleteText = "Degree details not reviewed" %}
+    {% set incompleteLink = recordPath + "/degree/confirm" %}
+    {% set incompleteLinkText = "Review section" %}
+  {% elseif status == "In progress" %}
+    {% set incompleteText = "Degree details not marked as complete" %}
+    {% set incompleteLink = recordPath + "/degree/confirm" %}
+    {% set incompleteLinkText = "Complete section" %}
+  {% else %}
+    {% set incompleteText = "Degree details not started" %}
+    {% set incompleteLink = recordPath + "/degree/add" %}
+    {% set incompleteLinkText = "Start section" %}
+  {% endif %}
+
+  {% include "_includes/incomplete.njk" %}
+
+{% else %}
+
+  {# Show a banner on existing records when last degree deleted #}
+  {# TODO: should this reuse the 'incomplete' above?
+  done separately as seed records don't have 'complete' as a concept #}
+  {% if degrees | length == 0 %}
+    {% set incompleteText = "Degree details not provided" %}
+    {% set incompleteLink = recordPath + "/degree/add" | addReferrer(referrer) %}
+    {% set incompleteLinkText = "Add degree details" %}
+    {% include "_includes/incomplete.njk" %}
+  {% endif %}
+
+  {% for degree in degrees %}
+    {% include "_includes/summary-cards/degree/single-degree-details.njk" %}
+  {% endfor %}
+
+{% endif %}
+
+{# Add a degree button #}
+{% if (degreeCount > 0) and canAmend %}
+  <div class="govuk-form-group govuk-!-margin-bottom-0">
+    {{ govukButton({
+      text: "Add another degree" if degreeCount > 0 else "Add a degree",
+      href: recordPath + "/degree/add" | addReferrer(referrer),
+      classes: "govuk-button--secondary"
+    }) }}
+  </div>
+{% endif %}
+
+{# {% if degreeCount > 1 %}
+  {% include "_includes/summary-cards/degree/bursary-details.njk" %}
+{% endif %}
+ #}

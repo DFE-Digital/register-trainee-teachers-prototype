@@ -1,0 +1,145 @@
+{% extends "_templates/_page.njk" %}
+
+{% set pageHeading %}
+  User – {{ user.fullName }}
+{% endset %}
+
+{# {% set navActive = "user" %} #}
+
+{% set backText = "Back" %}
+{# {% set backLink = '/home' %} #}
+
+{% macro providerTable(params) %}
+
+  {% set tableHead = [
+    {
+      text: "Name"
+    },
+    {
+      text: "Type"
+    } if params.organisations[0].type == "accreditingProvider",
+    {
+      text: "Access"
+    }if false,
+    {
+      text: "Remove access"
+    }
+  ] %}
+
+  {% set tableRows = [] %}
+
+  {% for organisation in params.organisations %}
+    {% set organisationLinkHtml %}
+      {% if organisation.type == 'accreditingProvider' %}
+        <a href="/support/organisations/{{ organisation.id }}" class="govuk-link">{{organisation.name}}</a>
+      {% else %}
+        <a href="/support/schools/{{ organisation.id }}" class="govuk-link">{{organisation.name}}</a>
+      {% endif %}
+    {% endset %}
+    {% set changeLinkHtml %}
+      {% if organisation.type == 'accreditingProvider' %}
+        <a href="{{userUrl}}/organisations/{{organisation.id}}/edit" class="govuk-link">Remove<span class="govuk-visually-hidden"> access to {{organisation.name}}</span></a>
+      {% else %}
+        <a href="{{userUrl}}/schools/{{organisation.id}}/edit" class="govuk-link">Remove<span class="govuk-visually-hidden"> access to {{organisation.name}}</span></a>
+      {% endif %}
+
+    {% endset %}
+
+    {% set tableRows = tableRows | push([
+      {
+        html: organisationLinkHtml
+      },
+      {
+        text: organisation | getProviderTypeString(true)
+      } if params.organisations[0].type == "accreditingProvider",
+      {
+        text: "Standard"
+      } if false,
+      {
+        html: changeLinkHtml
+      }
+    ])
+    %}
+
+  {% endfor %}
+
+  {{ govukTable({
+    _caption: params.caption,
+    captionClasses: "govuk-table__caption--m",
+    firstCellIsHeader: false,
+    head: tableHead,
+    rows: tableRows
+  }) }}
+
+{% endmacro %}
+
+{% block content %}
+{{super()}}
+
+{{user | log}}
+{% set showMetadata = true %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+
+      <span class="govuk-caption-l">User</span>
+      <h1 class="govuk-heading-l">{{user.fullName}}</h1>
+
+      {% include "_includes/summary-cards/support/user.njk" %}
+
+      {% set userProviders = user.providers | sort(attribute = "name") %}
+
+      <h2 class="govuk-heading-m">Organisations</h2>
+
+      {% set accreditingProviders = userProviders | where('type', 'accreditingProvider') %}
+
+      {% if accreditingProviders | length %}
+        {{ providerTable({
+          organisations: accreditingProviders
+        })}}
+      {% else %}
+        <p class="govuk-body govuk-hint">User is not a member of any organisations</p>
+      {% endif %}
+
+
+      {{ govukButton({
+        "text": "Add a user to an organisation",
+        href: currentPageUrl + '/organisations/add',
+        classes: "govuk-button--secondary"
+      }) }}
+
+      <h2 class="govuk-heading-m">Lead partners</h2>
+
+      {% set leadPartners = userProviders | where('type', 'leadPartner') %}
+
+      {% if leadPartners | length %}
+        {{ providerTable({
+        organisations: leadPartners
+      })}}
+      {% else %}
+        <p class="govuk-body govuk-hint">User is not a member of any lead partners</p>
+      {% endif %}
+
+
+      {{ govukButton({
+        "text": "Add a user to a lead partner",
+        href: currentPageUrl + '/schools/add',
+        classes: "govuk-button--secondary"
+      }) }}
+
+      {% set hasMultipleProviders = userProviders | length > 1 %}
+
+      {% if hasMultipleProviders %}
+        <ol class="govuk-list">
+      {% endif %}
+
+
+
+
+
+
+      <p class="govuk-body govuk-!-margin-top-8"><a href="{{currentPageUrl}}/confirm-delete" class="govuk-link app-destructive-link">Delete this user</a></p>
+
+    </div>
+  </div>
+
+{% endblock %}

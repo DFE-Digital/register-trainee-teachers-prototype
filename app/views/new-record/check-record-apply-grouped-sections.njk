@@ -1,0 +1,106 @@
+{% extends "_templates/_new-record.njk" %}
+
+{% set pageHeading = "Check trainee record" %}
+{% set formAction = "./save" | addReferrer(referrer) %}
+{% set hideReturnLink = true %}
+{% set showIncomplete = true %}
+{% set backLink = './overview' | orReferrer(referrer) %}
+{% set backText = 'Back to draft record' %}
+{% set gridColumn = 'govuk-grid-column-full' %}
+
+{# This template shares lots of similarities with `check-record` - changes here likely want to be mirrored there #}
+
+{% block formContent %}
+
+{# Add an extra referrer as this is a compound referral path #}
+{% set referrer = referrer | pushReferrer(recordPath + "/check-record") %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    {% if errorList %}
+      {{ govukErrorSummary({
+        titleText: "There is a problem",
+        errorList: [
+          {
+            text: "You must complete all sections before submitting for TRN"
+          }
+        ]
+      }) }}
+    {% endif %}
+
+    {% include "_includes/record-problems/draft-banner.njk" %}
+  </div>
+</div>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+
+
+    {% set draftRecordName %}
+      {% if record.personalDetails.shortName %}
+       for {{record.personalDetails.shortName | safe}}
+      {% endif %}
+    {% endset %}
+
+    <span class="govuk-caption-l">{{'Draft record' + draftRecordName}}</span>
+    <h1 class="govuk-heading-l govuk-!-margin-bottom-8">{{pageHeading}}</h1>
+
+    {# Show a warning if the record isn’t ready to be submitted #}
+    {{ recordIncompleteInsetTextWarning | safe }}
+
+    {# Inset text about the provider and route #}
+    {% include "_includes/providerAndRouteInsetText.njk" %}
+
+  </div>
+</div>
+
+<h2 class="govuk-heading-m">Registration data from Apply</h2>
+
+{% include "_includes/summary-cards/course-details.njk" %}
+
+{# Show a blue banner if the 'trainee application' has not been marked as reviewed #}
+{% if data.settings.groupApplySections and (record.applyData.status != "Completed") %}
+
+  {% set incompleteType = "warning" if errorList %}
+  {% set incompleteId = "trainee-application" %}
+  {% set incompleteText = "Trainee data not reviewed" %}
+  {% set incompleteLink = recordPath + "/apply-trainee-application" %}
+  {% set incompleteLinkText = "Review their data" %}
+  {% include "_includes/incomplete.njk" %}
+
+{% else %}
+  {# By default each of these summary cards will show a blue banner if 'not reviewed'. But with 'grouped sections' there's a single separate checkbox to track these #}
+  {% set showIncomplete = false %}
+
+  {% include "_includes/summary-cards/personal-details.njk" %}
+
+  {% include "_includes/summary-cards/diversity.njk" %}
+
+  {% include "_includes/summary-cards/gcse-details.njk" %}
+
+  {% include "_includes/summary-cards/degree/details.njk" %}
+
+  {% include "_includes/summary-cards/undergraduate-qualification.njk" %}
+
+  {# Restore incomplete status #}
+  {% set showIncomplete = true %}
+
+{% endif %}
+
+
+
+<h2 class="govuk-heading-m">About their teacher training</h2>
+
+{% include "_includes/summary-cards/training-details/training-details.njk" %}
+
+{% include "_includes/summary-cards/schools.njk" %}
+
+{% include "_includes/summary-cards/placements/placement-overview.njk" %}
+
+{% include "_includes/summary-cards/funding.njk" %}
+
+{{ govukButton({
+  text: "Register trainee and request TRN"
+}) }}
+
+<p class="govuk-body"><a href="./save-as-draft" class="govuk-link">Return to this draft later</a></p>
+
+{% endblock %}

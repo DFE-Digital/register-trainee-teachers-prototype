@@ -1,0 +1,9 @@
+{% extends "_templates/_record-form.njk" %}
+
+{% set pageHeading = "GCSE details" %}
+
+{% set formAction = "./gcse/confirm" | addReferrer(referrer) %}
+
+{% block formContent %}
+  {% include "_includes/forms/gcse-details.njk" %}
+{% endblock %}

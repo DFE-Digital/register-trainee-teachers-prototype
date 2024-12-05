@@ -1,0 +1,14 @@
+{% extends "_templates/_record-form.njk" %}
+
+{% set pageHeading = "What type of training are they doing?" %}
+
+{% if data.record.temp.courseMoveTemp.isCourseMove %}
+  {% set pageHeading = "What type of training is the new course?" %}
+{% endif %}
+
+{% set formAction = "./select-route-answer" | addReferrer(referrer) %}
+
+
+{% block formContent %}
+  {% include "_includes/forms/select-route.njk" %}
+{% endblock %}

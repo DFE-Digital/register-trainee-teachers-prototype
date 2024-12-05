@@ -1,0 +1,62 @@
+{% extends "_templates/_page.njk" %}
+
+{% set navActive = 'bulk' %}
+{% set backLink = 'false' %}
+
+{% set filteredRecords = data.records | filterRecords(data) %}
+
+{# Remaining trainees #}
+{% set traineesThatCanBeRecommended = filteredRecords | filterByReadyToRecommend %}
+{# {% set traineesThatCanBeRecommended = 0 %} #}
+
+{# Sets numbers for errors summary #}
+{% set errorCount     = data.bulkUpload.processedRows | where("uploadStatus", "error") | length  %}
+{% set unchangedCount = data.bulkUpload.processedRows | where("uploadStatus", "unchanged") | length  %}
+{% set updatedCount   = data.bulkUpload.processedRows | where("uploadStatus", "updated") | length  %}
+
+{% set processedRows = data.bulkUpload.processedRows | where("uploadStatus", "updated") %}
+
+{# Get an array of the trainees #}
+{% set processedTrainees = processedRows | lodash("map", "trainee") %}
+
+{% set pageHeading = updatedCount + " trainees recommended for " + processedTrainees | getQualifications | orSeparate %}
+
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+      {{ govukPanel({
+        titleText: pageHeading,
+        classes: "govuk-!-margin-bottom-7"
+      }) }}
+
+      <p class="govuk-body">
+        The Department for Education will award {{ processedTrainees | getQualifications | orSeparate }} within 3 working days.
+      </p>
+
+      <h2 class="govuk-heading-m">
+        Next steps
+      </h2>
+
+      {% if traineesThatCanBeRecommended | length %}
+        <p class="govuk-body">
+          You can recommend {{traineesThatCanBeRecommended | length }} more trainees. You can now:
+        </p>
+
+        <ul class="govuk-list govuk-list--bullet">
+          <li><a href="/bulk-update/recommend" class="govuk-link">bulk recommend more trainees</a></li>
+          <li><a href="/records" class="govuk-link">view your list of registered trainees</a></li>
+        </ul>
+
+      {% else %}
+        <p class="govuk-body">You can now <a href="/records" class="govuk-link">view your list of registered trainees</a>.</p>
+      {% endif %}
+
+
+
+      {{data | log}}
+    </div>
+  </div>
+
+{% endblock %}

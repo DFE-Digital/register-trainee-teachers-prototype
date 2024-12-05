@@ -1,0 +1,17 @@
+{% extends "_templates/_record.njk" %}
+
+{% set backLink = '/records' %}
+{% set backText = 'All registered trainees' %}
+{% set pageHeading = data.record.personalDetails.shortName %}
+{% set activeTab = 'timeline' %}
+
+{% block tabContent %}
+
+  <h2 class="govuk-heading-m">Timeline</h2>
+
+  {{ appTimeline({
+    headingLevel: 3,
+    items: timeline
+  })}}
+
+{% endblock %}

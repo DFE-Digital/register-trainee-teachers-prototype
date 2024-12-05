@@ -1,0 +1,121 @@
+{% extends "_templates/_new-record.njk" %}
+
+{% set pageHeading = "Trainee data" %}
+
+{% set formAction = "./apply-trainee-application-answer" | addReferrer(referrer) %}
+
+{% set hideReturnLink = true %}
+{% set showIncomplete = false %}
+{% set backLink = './overview' %}
+{% set backText = 'Back to draft record' %}
+{% set gridColumn = 'govuk-grid-column-full' %}
+{% set bodyClasses = "app-has-errors" if query.errors %}
+
+{% block formContent %}
+
+{# Add an extra referrer as this is a compound referral path #}
+{% set referrer = referrer | pushReferrer(recordPath + "/apply-trainee-application") %}
+
+{# Summary cards need to be set *first* because in rendering the card we count
+the number of invalid answers, and then use this in a banner at the top
+of the page. #}
+{% set allSummaryCards %}
+  <h2 class="govuk-heading-m">Personal details</h2>
+
+  {% include "_includes/summary-cards/personal-details.njk" %}
+
+  {% include "_includes/summary-cards/diversity.njk" %}
+
+  <h2 class="govuk-heading-m">Education</h2>
+
+  {% include "_includes/summary-cards/gcse-details.njk" %}
+
+  {% include "_includes/summary-cards/degree/details.njk" %}
+
+  {% include "_includes/summary-cards/undergraduate-qualification.njk" %}
+{% endset %}
+
+{% set hasInvalidAnswers = record | hasInvalidAnswers and data.settings.highlightInvalidAnswers | falsify %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+
+    {% if query.errors %}
+      {% set invalidAnswerCount = record | countInvalidAnswers %}
+      {% set errorText %}
+        You must amend {{invalidAnswerCount}} {{ 'answer' | pluralise(invalidAnswerCount)}} before marking the trainee data as reviewed
+      {% endset %}
+      {% set errorListArray = [] %}
+
+      {% set descriptionText %}
+        This trainee data contains {{invalidAnswerCount}} {{ 'answer' | pluralise(invalidAnswerCount)}} that you need to review and amend manually.
+      {% endset %}
+      {% for error in data.temp.errorArray %}
+        {% set errorListArray = errorListArray | push(
+          {
+            text: error.name,
+            href: "#" + error.id
+          }) %}
+      {% endfor %}
+
+
+      {{ govukErrorSummary({
+        titleText: "There is a problem",
+        descriptionText: descriptionText,
+        errorList: errorListArray
+      }) }}
+    {% else %}
+      {# This must come after the summary cards are rendered so that it can show
+      which fields have invalid answers and link to them #}
+      {% if hasInvalidAnswers %}
+        {% set invalidAnswerType = "application" %}
+        {% include "_includes/invalidAnswersBanner.njk" %}
+      {% endif %}
+
+    {% endif %}
+
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    {% set draftRecordName %}
+      {% if record.personalDetails.shortName %}
+       for {{record.personalDetails.shortName | safe }}
+      {% endif %}
+    {% endset %}
+
+    <span class="govuk-caption-l">{{'Draft record' + draftRecordName}}</span>
+    <h1 class="govuk-heading-l govuk-!-margin-bottom-8">{{pageHeading}}</h1>
+  </div>
+</div>
+
+{{ allSummaryCards | safe }}
+
+{% if hasInvalidAnswers %}
+  <input name='[temp][pageHasErrors]' type="hidden" id="school-picker-name" value="true">
+{% endif %}
+
+
+
+{{ govukCheckboxes({
+  idPrefix: "apply-trainee-application-checkbox",
+  name: "record[applyData][status]",
+  items: [
+    {
+      value: "Completed",
+      text: "I have reviewed the trainee data",
+      checked: checked(record.applyData.status, "Completed")
+    }
+  ]
+}) }}
+
+{# {% endif %} #}
+
+{{ govukButton({
+  text: "Continue"
+}) }}
+
+<p class="govuk-body"><a href="./save-as-draft" class="govuk-link">Return to this draft later</a></p>
+
+{% endblock %}

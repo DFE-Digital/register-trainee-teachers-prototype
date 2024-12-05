@@ -1,0 +1,31 @@
+{% extends "_templates/_record-form.njk" %}
+
+{% set qualification = data.record | getQualificationText %}
+
+{% set pageHeading %}
+  Confirm you want to undo the withdrawal
+{% endset %}
+
+{% set backLink = ("/record/" + data.record.id) | orReferrer(referrer) %}
+{% set backText = "Back to record" %}
+
+{% set gridColumn = 'govuk-grid-column-full' %}
+{% set formAction = "./update" | addReferrer(referrer) %}
+
+{% block formContent %}
+  {% include "_includes/trainee-name-caption.njk" %}
+  <h1 class="govuk-heading-l">
+    {{pageHeading}}
+  </h1>
+
+  {# Needed as this is an awarded trainee #}
+  {% set canAmend = true %}
+
+  {% include "_includes/summary-cards/record-admin/revert-withdrawal.njk" %}
+
+  {{ govukButton({
+    text: "Confirm undo withdrawal",
+    classes: "govuk-button--warning"
+  }) }}
+
+{% endblock %}

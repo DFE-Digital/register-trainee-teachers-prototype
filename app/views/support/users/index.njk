@@ -1,0 +1,256 @@
+{% extends "_templates/_page.njk" %}
+
+{% set allUsers = data.users.all %}
+{% set filteredUsers = allUsers %}
+
+{% set pageHeadingShort = "Users" %}
+
+{% set pageHeading %}
+  {{ pageHeadingShort }} ({{filteredUsers | length}} {{ "user" | pluralise(filteredUsers | length) }})
+{% endset %}
+
+
+
+{% set backText = "Support home" %}
+{% set backLink = '/support' %}
+{% set navActive = "users" %}
+
+{# Dual skip links to support skipping to results rather than #main-content #}
+{% block skipLink %}
+  <div class="app-skip-link__container">
+    <span class="app-skip-link__item">
+      {{ govukSkipLink({
+        href: '#main-content',
+        text: 'Skip to main content'
+      }) }}
+    </span>
+    <span class="app-skip-link__item">
+      {{ govukSkipLink({
+        href: '#records-list',
+        text: 'Skip to results' if selectedFilters else 'Skip to records'
+      }) }}
+    </span>
+  </div>
+{% endblock %}
+
+{% block content %}
+{# super pulls in flash message banner #}
+{{super()}}
+
+{# Generate data for select / autocomplete #}
+{% set usersForSelect = allUsers | lodash('map', 'fullName') | toSelectItems %}
+
+{% set usersForAutocomplete = [] %}
+
+{% for user in allUsers %}
+  {% set synonyms = [] %}
+  {% set hintArray = [] %}
+
+  {% set hintArray = hintArray | push(user.email) %}
+
+  {% if user.providers %}
+    {% if user.providers | length == 1 %}
+      {% set hintArray = hintArray | push(user.providers[0].name) %}
+    {% else %}
+      {% set hintArray = hintArray | push(user.providers | length + " providers") %}
+    {% endif %}
+    {% set synonyms = synonyms | push(user.providers | lodash('map', 'name')) %}
+    {% set synonyms = synonyms | lodash('flatten') %}
+  {% endif %}
+
+  {% if user.email %}
+    {% set synonyms = synonyms | push(user.email) %}
+
+  {% endif %}
+
+  {% set hint = hintArray | commaSeparate %}
+
+  {% set hint = hintArray | joinArray({delimiter: '<br>'}) %}
+  {% set usersForAutocomplete = usersForAutocomplete | push({
+    name: user.fullName,
+    synonyms: synonyms,
+    hint: hint,
+    value: user.id
+  }) %}
+{% endfor %}
+
+{{usersForAutocomplete | log}}
+
+{% set filterOptionsHtml %}
+
+  {# {% include "_includes/filter-panel/all-accrediting-providers.njk" %} #}
+
+  {# {% include "_includes/filter-panel/all-lead-schools.njk" %} #}
+
+  {% include "_includes/filter-panel/support/user-organisation.njk" %}
+
+
+
+{% endset %}
+
+{% set filterContentHtml %}
+  {% if filteredUsers | length %}
+    <div>
+      {{ appAutocompleteFromSelect({
+        label: {
+          text: "Search for a user",
+          classes: "govuk-label--s"
+        },
+        id: 'organisations',
+        name: "",
+        items: usersForSelect,
+        hint: {
+          text: "Searcy by name, email or organisation"
+        },
+        classes: "govuk-!-width-two-thirds",
+        value: '',
+        autocompleteOptions: {
+          minLength: 2,
+          autoselect: false,
+          showAllValues: false,
+          showSuggestionsBanner: false,
+          values: usersForAutocomplete,
+          onConfirmExtra: true
+        }
+      }) }}
+
+      <script>
+        let onConfirmExtra = selected => {
+          if (selected.value){
+            window.location.href = `./users/${selected.value}`
+          }
+        }
+      </script>
+
+      <button class="govuk-button app-no-js-only" data-module="govuk-button">
+      Submit
+      </button>
+    </div>
+    <div class="app-records-actions">
+      <div class="app-records-actions__col">
+
+        <p class="govuk-body govuk-!-margin-bottom-3"><a href="#" class="govuk-link">Export these users</a></p>
+
+        {# Only sort if there’s at least two items #}
+        {% if filteredUsers | length > 1 %}
+          {% include "_includes/record-sort-order.njk" %}
+        {% endif %}
+      </div>
+      <div class="app-records-actions__col">
+        <div class="moj-action-bar">
+          <div class="moj-action-bar__filter">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="app-application-cards">
+
+      {% if filteredUsers | length %}
+
+        {% for user in filteredUsers %}
+          {% include "_includes/support/user-card.njk" %}
+        {% endfor %}
+
+      {% endif %}
+    </div>
+
+    {# Dummy pagination - not hooked up to data yet #}
+    {% include "_includes/pagination.njk" %}
+
+  {% else %}
+    <h2 class="govuk-heading-m">No users found</h2>
+    <p class="govuk-body">Try <a href="/records">clearing your search and filters</a>.</p>
+  {% endif %}
+
+{% endset %}
+
+
+<div class="govuk-grid-row">
+
+  <div class="govuk-grid-column-full">
+
+    <span class="govuk-caption-l">Support for Register</span>
+    {# This heading set separately than {{pageHeading}} as it uses html #}
+    <h1 class="govuk-heading-xl">
+      {{ pageHeadingShort }}
+      <span class="govuk-!-font-weight-regular">
+        ({{ filteredUsers | length}}{% if (filteredUsers | length) != (allUsers | length) %} of {{ allUsers | length }}{% endif %}<span class="govuk-visually-hidden">{{ "user" | pluralise(filteredUsers | length )}}</span>)
+      </span>
+    </h1>
+
+
+    {# {{ govukButton({
+      text: "Create a user",
+      href: "./new-record/new",
+      isStartButton: true
+    }) }} #}
+
+  </div>
+
+  {% if data.settings.showBulkLinks %}
+    <div class="govuk-grid-column-one-third">
+      <aside class="app-related-items" role="complementary">
+        <h2 class="govuk-heading-m" id="subsection-title">
+          Actions
+        </h2>
+        <nav role="navigation" aria-labelledby="subsection-title">
+          <ul class="govuk-list govuk-!-font-size-16">
+            <li>
+              <a href="#">
+                Submit a group of draft records
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                Recommend a group of trainees for EYTS or QTS
+              </a>
+            </li>
+          </ul>
+        </nav>
+        <div class="js-bulk-menu govuk-!-margin-bottom-3">
+          {{bulkButton | safe}}
+        </div>
+      </aside>
+    </div>
+  {% endif %}
+
+</div>
+
+<div class="govuk-grid-row">
+
+  <div class="govuk-grid-column-full">
+
+    {{ appFilterPage({
+      filterOptions: filterOptionsHtml,
+      selectedFilters: selectedFilters,
+      filterContent: filterContentHtml
+      })
+    }}
+  </div>
+
+</div>
+
+{% endblock %}
+
+{% block pageScripts %}
+  <script>
+    new MOJFrontend.FilterToggleButton({
+    bigModeMediaQuery: '(min-width: 48.063em)',
+    startHidden: false,
+    toggleButton: {
+      container: $('.moj-action-bar__filter'),
+      showText: 'Show filter',
+      hideText: 'Hide filter',
+      classes: 'govuk-button--secondary'
+    },
+    closeButton: {
+      container: $('.moj-filter__header-action'),
+      text: 'Close'
+    },
+    filter: {
+      container: $('.moj-filter')
+    }
+  });
+  </script>
+{% endblock %}

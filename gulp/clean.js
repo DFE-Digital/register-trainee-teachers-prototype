@@ -5,11 +5,12 @@
     - public
 */
 
-const del = require('del')
+const { rimrafSync } = require('rimraf')
 const gulp = require('gulp')
 
 const config = require('./config.json')
 
 gulp.task('clean', (done) => {
-  return del([config.paths.public, '.port.tmp'], done)
+  rimrafSync([config.paths.public, '.port.tmp'])
+  return done()
 })

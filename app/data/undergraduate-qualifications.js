@@ -50,7 +50,7 @@ module.exports = [
   // 'Not known',
   'NVQ/SVQ', // Commonly chosen in DTTP
   'ONC or OND (including BTEC & SQA equivalents)', // Commonly chosen in DTTP
-  // 'Other higher qualification', // Commonly chosen in DTTP 
+  // 'Other higher qualification', // Commonly chosen in DTTP
   // 'Other non-UK qualification, level not known',
   // 'Other qualification at level 1',
   // 'Other qualification at level 2',

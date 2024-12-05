@@ -1,4 +1,4 @@
-var CSV = require('csv-string')
+const CSV = require('csv-string')
 const _ = require('lodash')
 
 // -------------------------------------------------------------------
@@ -7,30 +7,28 @@ const _ = require('lodash')
 
 // Sort two things alphabetically, not case-sensitive
 const sortAlphabetical = (x, y) => {
-  if(x.toLowerCase() !== y.toLowerCase()) {
-    x = x.toLowerCase();
-    y = y.toLowerCase();
+  if (x.toLowerCase() !== y.toLowerCase()) {
+    x = x.toLowerCase()
+    y = y.toLowerCase()
   }
-  return x > y ? 1 : (x < y ? -1 : 0);
+  return x > y ? 1 : (x < y ? -1 : 0)
 }
 
 // Source data comes in lowercased, but for legacy reasons we want it
 // uppercased
 const upcaseFirstChar = input => {
   const upcaseString = string => {
-
-    if (_.isString(string)){
-      return string.charAt(0).toUpperCase() + string.slice(1);
+    if (_.isString(string)) {
+      return string.charAt(0).toUpperCase() + string.slice(1)
     }
     return ''
   }
 
   if (!input) return '' // avoid printing false to client
 
-  if (_.isString(input)){
+  if (_.isString(input)) {
     return upcaseString(input)
-  }
-  else if (_.isArray(input)){
+  } else if (_.isArray(input)) {
     return input.map(item => upcaseString(item))
   }
 }
@@ -38,13 +36,13 @@ const upcaseFirstChar = input => {
 // -------------------------------------------------------------------
 // CSV of subject data - columns are:
 // Subject specialisms, ebac true/false, Allocation subject
-// 
+//
 // These are the lowest level subjects set on a trainee, to describe
 // what they're studying
 // -------------------------------------------------------------------
 
 // Csv from google doc
-let subjectSpecialismsCsv = 
+const subjectSpecialismsCsv =
 `Subect specialism (Register reworded),EBacc Subject,Allocation Subject - (Register reworded)
 product design,No,Art and design
 art and design,No,Art and design
@@ -122,22 +120,21 @@ Ancient Hebrew,no,Ancient languages
 classical Greek studies,no,Ancient languages
 Latin,no,Ancient languages`
 
-
-let subjectSpecialismsCsvArray = CSV.parse(subjectSpecialismsCsv)
+const subjectSpecialismsCsvArray = CSV.parse(subjectSpecialismsCsv)
 subjectSpecialismsCsvArray.shift() // remove header row
 
 // Base data structure
 // Todo: would an object be easier
-let subjectsObjectArray = subjectSpecialismsCsvArray.map(specialism => {
+const subjectsObjectArray = subjectSpecialismsCsvArray.map(specialism => {
   return {
     name: upcaseFirstChar(specialism[0]),
-    isEbac: (specialism[1] == "Yes") ? true : false,
+    isEbac: (specialism[1] == 'Yes'),
     allocationSubject: specialism[2]
   }
 })
 
 // Flat array of specialisms
-let subjectSpecialismsArray = [... new Set(subjectsObjectArray.map(specialism => specialism.name))].sort(sortAlphabetical)
+const subjectSpecialismsArray = [...new Set(subjectsObjectArray.map(specialism => specialism.name))].sort(sortAlphabetical)
 
 // Object keyed by specialism
 // {
@@ -157,13 +154,13 @@ let subjectSpecialismsArray = [... new Set(subjectsObjectArray.map(specialism =>
 //     allocationSubject: 'Chemistry'
 //   }
 // }
-let subjectSpecialisms = {}
+const subjectSpecialisms = {}
 subjectSpecialismsArray.forEach(subject => {
   subjectSpecialisms[subject] = subjectsObjectArray.find(item => item.name == subject)
 })
 
 // Flat array of allocation subjects
-let allocationSubjectsArray = [... new Set(subjectsObjectArray.map(specialism => specialism.allocationSubject))].sort(sortAlphabetical)
+const allocationSubjectsArray = [...new Set(subjectsObjectArray.map(specialism => specialism.allocationSubject))].sort(sortAlphabetical)
 
 // Object keyed by allocation subject
 // {
@@ -188,7 +185,7 @@ let allocationSubjectsArray = [... new Set(subjectsObjectArray.map(specialism =>
 //       'Recreation and leisure studies'
 //     ]
 //   },...
-let allocationSubjects = {}
+const allocationSubjects = {}
 allocationSubjectsArray.forEach(subject => {
   allocationSubjects[subject] = {
     name: subject,
@@ -197,77 +194,77 @@ allocationSubjectsArray.forEach(subject => {
 })
 
 // Specialisms and allocations together
-let allSubjects = [...new Set(subjectSpecialismsArray.concat(allocationSubjectsArray).sort())]
+const allSubjects = [...new Set(subjectSpecialismsArray.concat(allocationSubjectsArray).sort())]
 
 // Groups of subjects
-let peSubjects = allocationSubjects['Physical education'].subjectSpecialisms
-let modernLanguagesSubjects = allocationSubjects['Modern languages'].subjectSpecialisms
-let designAndTechnologySubjects = allocationSubjects['Design and technology'].subjectSpecialisms
-let ebacSubjects = subjectsObjectArray.filter(specialism => specialism.isEbac).map(specialism => specialism.name).sort(sortAlphabetical)
+const peSubjects = allocationSubjects['Physical education'].subjectSpecialisms
+const modernLanguagesSubjects = allocationSubjects['Modern languages'].subjectSpecialisms
+const designAndTechnologySubjects = allocationSubjects['Design and technology'].subjectSpecialisms
+const ebacSubjects = subjectsObjectArray.filter(specialism => specialism.isEbac).map(specialism => specialism.name).sort(sortAlphabetical)
 
 // Subject subsets used for seed generators
 // Non exaustive list
 // Just ones commonly seen - good enough for seeds
 commonPrimarySubjects = upcaseFirstChar([
-  "primary teaching",
-  "English studies",
-  "mathematics",
-  "Modern languages",
+  'primary teaching',
+  'English studies',
+  'mathematics',
+  'Modern languages',
   // "Physical education",
-  "biology",
-  "specialist teaching", // primary with maths
+  'biology',
+  'specialist teaching', // primary with maths
   // "Early years teaching", // only for EYTS?
-  "sport and exercise sciences",
-  "Spanish language",
-  "German language",
-  "French language",
+  'sport and exercise sciences',
+  'Spanish language',
+  'German language',
+  'French language'
 ])
 
 // Todo: are these needed any more? should use publish list
 commonSecondarySubjects = upcaseFirstChar([
-  "art and design",
-  "biology",
-  "business studies",
-  "chemistry",
-  "media and communication studies",
-  "computer science",
-  "dance",
-  "product design",
-  "graphic design",
-  "drama",
-  "economics",
-  "English studies",
-  "geography",
-  "health and social care",
-  "history",
-  "Latin",
-  "mathematics",
-  "modern languages",
-  "music education and teaching",
-  "philosophy",
+  'art and design',
+  'biology',
+  'business studies',
+  'chemistry',
+  'media and communication studies',
+  'computer science',
+  'dance',
+  'product design',
+  'graphic design',
+  'drama',
+  'economics',
+  'English studies',
+  'geography',
+  'health and social care',
+  'history',
+  'Latin',
+  'mathematics',
+  'modern languages',
+  'music education and teaching',
+  'philosophy',
   // "Physical education", // not a specialism
-  "physics",
-  "psychology",
-  "religious studies",
-  "social sciences"
+  'physics',
+  'psychology',
+  'religious studies',
+  'social sciences'
 ])
 
 coreSubjects = upcaseFirstChar([
-  "English studies",
-  "mathematics",
-  "physics",
-  "chemistry",
-  "biology"
+  'English studies',
+  'mathematics',
+  'physics',
+  'chemistry',
+  'biology'
 ])
 
 // -------------------------------------------------------------------
 // CSV of Publish subjects data - columns are:
 // Publish subject, Register allocation subject, Specialism (if mappable)
-// 
-// Publish’s list is a bit different than the dttp list. Most things can map to a specialism, 
+//
+// Publish’s list is a bit different than the dttp list. Most things can map to a specialism,
 // but not all. All should map to an allocation subject at least.
 // -------------------------------------------------------------------
-let publishSubjectsCsv = `Publish subject,Allocation Subject,Subect specialism
+const publishSubjectsCsv = `Publish subject,Allocation Subject,Subect specialism
 art and design,Art and design,
 biology,Biology,
 business studies,Business studies,
@@ -315,48 +312,47 @@ Latin,Ancient languages,Latin
 Ancient Hebrew,Ancient languages,Ancient Hebrew
 classical Greek studies,Ancient languages,classical Greek studies`
 
-let publishSubjectsCsvArray = CSV.parse(publishSubjectsCsv)
+const publishSubjectsCsvArray = CSV.parse(publishSubjectsCsv)
 publishSubjectsCsvArray.shift() // remove header row
 
 // Base data structure
-let publishSubjects = {}
+const publishSubjects = {}
 
 // Convert csv data in to useful form
 publishSubjectsCsvArray.forEach(subject => {
-
-  let name = upcaseFirstChar(subject[0])
-  let allocationSubject = subject[1]
-  let specialism = upcaseFirstChar(subject[2]) || false
-  let subjectSpecialisms = allocationSubjects[allocationSubject].subjectSpecialisms
+  const name = upcaseFirstChar(subject[0])
+  const allocationSubject = subject[1]
+  const specialism = upcaseFirstChar(subject[2]) || false
+  const subjectSpecialisms = allocationSubjects[allocationSubject].subjectSpecialisms
 
   publishSubjects[name] = {
-    name: name,
+    name,
     allocationSubject,
-    ...( specialism ? { specialism } : {} ), // conditionally return specialism
+    ...(specialism ? { specialism } : {}), // conditionally return specialism
     // Specialisms only set if there isn’t a single specialism
-    ...( !specialism ? { subjectSpecialisms } : {} ), // conditionally return specialism
+    ...(!specialism ? { subjectSpecialisms } : {}) // conditionally return specialism
   }
 })
 
 // console.log({publishSubjects})
 
 corePublishSubjects = upcaseFirstChar([
-  "English",
-  "mathematics",
-  "physics",
-  "chemistry",
-  "biology",
-  "design and technology"
+  'English',
+  'mathematics',
+  'physics',
+  'chemistry',
+  'biology',
+  'design and technology'
 ])
 
 primarySubjectOptions = [
-  "Primary",
-  "Primary with English",
-  "Primary with geography and history",
-  "Primary with mathematics",
-  "Primary with modern languages",
-  "Primary with physical education",
-  "Primary with science"
+  'Primary',
+  'Primary with English',
+  'Primary with geography and history',
+  'Primary with mathematics',
+  'Primary with modern languages',
+  'Primary with physical education',
+  'Primary with science'
 ]
 
 module.exports = {

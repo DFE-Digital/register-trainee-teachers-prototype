@@ -1,58 +1,54 @@
 const { fakerEN_GB: faker } = require('@faker-js/faker')
-const weighted          = require('weighted')
+const weighted = require('weighted')
 
 const trainingRouteData = require('./../training-route-data')
-const trainingRoutes    = trainingRouteData.trainingRoutes
-const utils             = require('./../../lib/utils.js')
+const trainingRoutes = trainingRouteData.trainingRoutes
+const utils = require('./../../lib/utils.js')
 
 module.exports = (params) => {
-
-  let routeData = trainingRoutes[params.route]
+  const routeData = trainingRoutes[params.route]
 
   // Only some routes have financial support possible
-  let availableFinancialSupport = utils.getFinancialSupport(params)
+  const availableFinancialSupport = utils.getFinancialSupport(params)
 
-  let initiatives = routeData?.initiatives || []
-  let randomInitiative = faker.helpers.arrayElement(initiatives)
+  const initiatives = routeData?.initiatives || []
+  const randomInitiative = faker.helpers.arrayElement(initiatives)
   let initiative
 
-  let noInitiativeString = 'Not on a training initiative'
+  const noInitiativeString = 'Not on a training initiative'
 
-  if (initiatives.length == 0){
-   initiative = noInitiativeString
-  }
-  else {
+  if (initiatives.length == 0) {
+    initiative = noInitiativeString
+  } else {
     // Majority of trainees not on initiatives
     initiative = weighted.select([noInitiativeString, randomInitiative], [0.95, 0.05])
   }
 
   // Only generate bursary data for routes that have bursaries
   let source = false
-  if (availableFinancialSupport){
+  if (availableFinancialSupport) {
     bursary = {}
 
-    let isUsingFinancialSupport = weighted.select([true, false], [0.9, 0.1])
+    const isUsingFinancialSupport = weighted.select([true, false], [0.9, 0.1])
 
-    if (isUsingFinancialSupport){
+    if (isUsingFinancialSupport) {
       source = availableFinancialSupport.type
 
       // If scholarships are available, pick them 70% of the time
-      if (availableFinancialSupport.scholarshipValue){
-        source = weighted.select([source, "scholarship"], [0.3, 0.7])
+      if (availableFinancialSupport.scholarshipValue) {
+        source = weighted.select([source, 'scholarship'], [0.3, 0.7])
       }
-    }
-    else source = "self-funded"
+    } else source = 'self-funded'
 
     // Special handling for Early years graduate entry
-    if (source == 'bursary' && availableFinancialSupport.tiersApply){
-      let selectedTier = faker.helpers.arrayElement(availableFinancialSupport.tiers)
+    if (source == 'bursary' && availableFinancialSupport.tiersApply) {
+      const selectedTier = faker.helpers.arrayElement(availableFinancialSupport.tiers)
       source = selectedTier.name
     }
-
   }
 
-  return  {
+  return {
     initiative,
-    ...(source ? {source} : {}) // conditional
+    ...(source ? { source } : {}) // conditional
   }
 }

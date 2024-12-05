@@ -1,9 +1,9 @@
 // Generates fake training details
 
-const moment      = require('moment')
-const weighted    = require('weighted')
-const { fakerUK: faker }   = require('@faker-js/faker')
-const schools     = require('../gis-schools.js')
+const moment = require('moment')
+const weighted = require('weighted')
+const { fakerUK: faker } = require('@faker-js/faker')
+const schools = require('../gis-schools.js')
 
 // Not all trainees have start dates - but to get these statuses you must have
 const statusesWhereTraineesMustHaveStarted = [
@@ -13,9 +13,7 @@ const statusesWhereTraineesMustHaveStarted = [
   'QTS awarded'
 ]
 
-
 module.exports = (params) => {
-
   // Todo: make traineeId closer to what Providers user (20/21-1234, etc)
   const traineeIdNumber = faker.string.alphanumeric(8).toUpperCase()
 
@@ -28,28 +26,26 @@ module.exports = (params) => {
   let traineeStarted
 
   // Some statuses implicitly *must* have a commencement date
-  if (statusesWhereTraineesMustHaveStarted.includes(params?.status) || params?.source == "HESA"){
-    traineeStarted = "true"
-  }
-  else if (params?.status == "Draft") {
-    traineeStarted = "false"
+  if (statusesWhereTraineesMustHaveStarted.includes(params?.status) || params?.source == 'HESA') {
+    traineeStarted = 'true'
+  } else if (params?.status == 'Draft') {
+    traineeStarted = 'false'
   }
   // Course that haven’t started, don’t get a start date
   else if (params?.courseDetails?.startDate && moment(params?.courseDetails?.startDate).isAfter()) {
-    traineeStarted = "false"
-  }
-  else {
+    traineeStarted = 'false'
+  } else {
     traineeStarted = params?.traineeStarted || weighted.select({
-      "true": 0.95, // Most students should have commencement dates
-      "false": 0.05
+      true: 0.95, // Most students should have commencement dates
+      false: 0.05
     })
   }
 
-  commencementDate = (traineeStarted == "true") ? commencementDate : undefined
+  commencementDate = (traineeStarted == 'true') ? commencementDate : undefined
 
   // Estimate 30% of records with Trainee IDs
-  let hasTraineeId = weighted.select([true, false],[0.3,0.7])
-  let traineeId = (hasTraineeId) ? traineeIdNumber : undefined
+  const hasTraineeId = weighted.select([true, false], [0.3, 0.7])
+  const traineeId = (hasTraineeId) ? traineeIdNumber : undefined
 
   return {
     traineeId,

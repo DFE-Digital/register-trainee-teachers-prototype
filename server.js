@@ -49,25 +49,23 @@ function shouldCompress (req, res) {
 
 app.use(compression({ filter: shouldCompress }))
 
-
-
 // Set cookies for use in cookie banner.
 app.use(cookieParser())
 app.use(utils.handleCookies(app))
 
 // Set up configuration variables
-var releaseVersion = packageJson.version
-var env = (process.env.NODE_ENV || 'development').toLowerCase()
-var useAutoStoreData = process.env.USE_AUTO_STORE_DATA || config.useAutoStoreData
-var useCookieSessionStore = process.env.USE_COOKIE_SESSION_STORE || config.useCookieSessionStore
-var useHttps = process.env.USE_HTTPS || config.useHttps
+const releaseVersion = packageJson.version
+const env = (process.env.NODE_ENV || 'development').toLowerCase()
+const useAutoStoreData = process.env.USE_AUTO_STORE_DATA || config.useAutoStoreData
+const useCookieSessionStore = process.env.USE_COOKIE_SESSION_STORE || config.useCookieSessionStore
+let useHttps = process.env.USE_HTTPS || config.useHttps
 
 useHttps = useHttps.toLowerCase()
 
-var useDocumentation = (config.useDocumentation === 'true')
+const useDocumentation = (config.useDocumentation === 'true')
 
 // Promo mode redirects the root to /docs - so our landing page is docs when published on heroku
-var promoMode = process.env.PROMO_MODE || 'false'
+let promoMode = process.env.PROMO_MODE || 'false'
 promoMode = promoMode.toLowerCase()
 
 // Disable promo mode if docs aren't enabled
@@ -75,7 +73,7 @@ if (!useDocumentation) promoMode = 'false'
 
 // Force HTTPS on production. Do this before using basicAuth to avoid
 // asking for username/password twice (for `http`, then `https`).
-var isSecure = (env === 'production' && useHttps === 'true')
+const isSecure = (env === 'production' && useHttps === 'true')
 if (isSecure) {
   app.use(utils.forceHttps)
   app.set('trust proxy', 1) // needed for secure cookies on heroku
@@ -84,12 +82,12 @@ if (isSecure) {
 middleware.forEach(func => app.use(func))
 
 // Set up App
-var appViews = extensions.getAppViews([
+const appViews = extensions.getAppViews([
   path.join(__dirname, '/app/views/'),
   path.join(__dirname, '/lib/')
 ])
 
-var nunjucksConfig = {
+const nunjucksConfig = {
   autoescape: true,
   noCache: true,
   watch: false // We are now setting this to `false` (it's by default false anyway) as having it set to `true` for production was making the tests hang
@@ -101,7 +99,7 @@ if (env === 'development') {
 
 nunjucksConfig.express = app
 
-var nunjucksAppEnv = nunjucks.configure(appViews, nunjucksConfig)
+const nunjucksAppEnv = nunjucks.configure(appViews, nunjucksConfig)
 
 // Add Nunjucks filters
 utils.addNunjucksFilters(nunjucksAppEnv)
@@ -109,16 +107,16 @@ utils.addNunjucksFilters(nunjucksAppEnv)
 // Add Nunjucks functions (**Register trainee teachers addition**)
 utils.addNunjucksFunctions(nunjucksAppEnv)
 
-  // Register added
-  marked.setOptions({
-    renderer: new GovukHTMLRenderer(),
-    headerIds: true,
-    headingsStartWith: 'l',
-    smartypants: true
-  })
+// Register added
+marked.setOptions({
+  renderer: new GovukHTMLRenderer(),
+  headerIds: true,
+  headingsStartWith: 'l',
+  smartypants: true
+})
 
-  nunjucksMarkdown.register(nunjucksAppEnv, marked)
-  // End Register added
+nunjucksMarkdown.register(nunjucksAppEnv, marked)
+// End Register added
 
 // Set views engine
 app.set('view engine', 'njk')
@@ -187,7 +185,7 @@ if (useAutoStoreData === 'true') {
 
 // Clear all data in session if you open /prototype-admin/clear-data
 app.post('/admin/clear-data', function (req, res) {
-  console.log("Clearing session data")
+  console.log('Clearing session data')
   req.session.data = {}
   res.redirect('/')
 })
@@ -232,8 +230,8 @@ if (typeof (routes) !== 'function') {
 
 // Strip .html and .htm if provided
 app.get(/\.html?$/i, function (req, res) {
-  var path = req.path
-  var parts = path.split('.')
+  let path = req.path
+  const parts = path.split('.')
   parts.pop()
   path = parts.join('.')
   res.redirect(path)
@@ -253,13 +251,13 @@ app.post(/^\/([^.]+)$/, function (req, res) {
   res.redirect(url.format({
     pathname: '/' + req.params[0],
     query: req.query
-    })
-   )
+  })
+  )
 })
 
 // Catch 404 and forward to error handler
 app.use(function (req, res, next) {
-  var err = new Error(`Page not found: ${req.path}`)
+  const err = new Error(`Page not found: ${req.path}`)
   err.status = 404
   next(err)
 })

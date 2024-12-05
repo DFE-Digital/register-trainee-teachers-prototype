@@ -2,23 +2,22 @@
 // Imports and setup
 // -------------------------------------------------------------------
 const string = require('string')
-const _ = require('lodash');
+const _ = require('lodash')
 const { marked } = require('marked')
 const GovukHTMLRenderer = require('govuk-markdown')
 // Leave this filters line
-var filters = {}
-
+const filters = {}
 
 // Create url / slugs from text
 // This is a heading => this-is-a-heading
 filters.slugify = (input) => {
-  if (!input) throw "Error in slugify: no input", input;
-  else return string(input).slugify().toString();
+  if (!input) throw 'Error in slugify: no input', input
+  else return string(input).slugify().toString()
 }
 
 // Split a string using a separator
 filters.split = (string, separator) => {
-  if (!string || typeof string != "string") return
+  if (!string || typeof string !== 'string') return
   else return string.split(separator)
 }
 
@@ -31,73 +30,67 @@ filters.kebabCase = (string) => {
 // Sentence case - uppercase first latter
 filters.sentenceCase = (input) => {
   if (!input) return '' // avoid printing false to client
-  if (_.isString(input)){
-    return input.charAt(0).toUpperCase() + input.slice(1);
-  }
-  else return input
+  if (_.isString(input)) {
+    return input.charAt(0).toUpperCase() + input.slice(1)
+  } else return input
 }
 
 filters.startLowerCase = (input) => {
   if (!input) return '' // avoid printing false to client
-  if (_.isString(input)){
-    return input.charAt(0).toLowerCase() + input.slice(1);
-  }
-  else return input
+  if (_.isString(input)) {
+    return input.charAt(0).toLowerCase() + input.slice(1)
+  } else return input
 }
 
 // Is it a string or not?
 filters.isString = str => {
-  let isString = _.isString(str)
+  const isString = _.isString(str)
   return _.isString(str)
 }
 
 // Assessment only => an Assesment only
 // Provider-led => a provider led
 filters.prependWithAOrAn = string => {
-  var vowelRegex = '^[aieouAIEOU].*'
-  var matched = string.match(vowelRegex)
-  if(matched){
+  const vowelRegex = '^[aieouAIEOU].*'
+  const matched = string.match(vowelRegex)
+  if (matched) {
     return `an ${string}`
-  }
-  else{
+  } else {
     return `a ${string}`
   }
 }
 
 // Format a number as £x,xxx
 filters.currency = input => {
-  let inputAsInt = parseInt(input, 10)
-  function numberWithCommas(x) {
-    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  const inputAsInt = parseInt(input, 10)
+  function numberWithCommas (x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
   }
-  if ( inputAsInt > 0 ) { return `£${numberWithCommas(inputAsInt)}` }
+  if (inputAsInt > 0) { return `£${numberWithCommas(inputAsInt)}` }
 
   // makes negative number positive and puts minus sign in front of £
-  else if ( inputAsInt < 0 ) { return `–£${numberWithCommas(inputAsInt * -1 )}` }
-  else return '–'
+  else if (inputAsInt < 0) { return `–£${numberWithCommas(inputAsInt * -1)}` } else return '–'
 }
 
 // Format a number as £xxxx
 filters.currencyForCsv = input => {
-  let inputAsInt = parseInt(input, 10)
-  if ( inputAsInt > 0 ) { return `£${inputAsInt}` }
+  const inputAsInt = parseInt(input, 10)
+  if (inputAsInt > 0) { return `£${inputAsInt}` }
 
   // makes negative number positive and puts minus sign in front of £
-  else if ( inputAsInt < 0 ) { return `-£${inputAsInt * -1 }` }
-  else return 0
+  else if (inputAsInt < 0) { return `-£${inputAsInt * -1}` } else return 0
 }
 
 // Emulate support for string literals in Nunjucks
 // Usage:
 // {{ 'The count is ${count}' | stringLiteral }}
-filters.stringLiteral = function(str) {
+filters.stringLiteral = function (str) {
   return (new Function('with (this) { return `' + str + '` }')).call(this.ctx)
 }
 
 // Format text using markdown
 // Documentation at https://marked.js.org/
 filters.markdown = (input, params = {}) => {
-
   marked.setOptions({
     renderer: new GovukHTMLRenderer(),
     headerIds: true,
@@ -108,10 +101,10 @@ filters.markdown = (input, params = {}) => {
   // Offset headings - useful where embedded content
   // needs to start at h2 rather than h1
   // https://marked.js.org/using_pro#walk-tokens
-  let headingOffset = params.headingOffset ?? 0
+  const headingOffset = params.headingOffset ?? 0
   const walkTokens = (token) => {
     if (token.type === 'heading') {
-      token.depth += headingOffset;
+      token.depth += headingOffset
     }
   }
 
@@ -119,13 +112,13 @@ filters.markdown = (input, params = {}) => {
 
   if (input) return marked(input)
   else {
-    console.log("Error with markdown: no input given")
+    console.log('Error with markdown: no input given')
   }
 }
 
 // Checks if a string starts with something
 filters.startsWith = (string, target) => {
-  if (typeof string == "string"){
+  if (typeof string === 'string') {
     return string.startsWith(target)
   } else {
     return false
@@ -143,26 +136,26 @@ filters.startsWith = (string, target) => {
 //     JOYCE JAMES’
 
 filters.possessive = (noun) => {
-  if (typeof noun !== 'string' || noun.length == 0) return ""
+  if (typeof noun !== 'string' || noun.length == 0) return ''
 
   const isAllUpperCase = (input) => {
     return input == input.toUpperCase()
   }
 
   const lastLetterOfNoun = noun.split('').slice(-1)
-  if (lastLetterOfNoun == "s" || lastLetterOfNoun == "S") {
-    return noun + "’"
+  if (lastLetterOfNoun == 's' || lastLetterOfNoun == 'S') {
+    return noun + '’'
   } else if (isAllUpperCase(noun)) {
-    return noun + "’S"
-  } else if (! isAllUpperCase(noun)) {
-    return noun + "’s"
+    return noun + '’S'
+  } else if (!isAllUpperCase(noun)) {
+    return noun + '’s'
   } else {
-    console.log("Error with possessive filter")
+    console.log('Error with possessive filter')
   }
 }
 
 filters.padDigits = (input, targetLength) => {
-  return input.toString().padStart(targetLength, 0);
+  return input.toString().padStart(targetLength, 0)
 }
 
 // Return string wrapped in a nowrap class.

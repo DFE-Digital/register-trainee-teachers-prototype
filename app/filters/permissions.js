@@ -1,18 +1,17 @@
-
-const moment = require("moment");
-const _ = require('lodash');
+const moment = require('moment')
+const _ = require('lodash')
 
 // Leave this filters line
-var filters = {}
+const filters = {}
 
-let utils = require("./../lib/utils.js")
+const utils = require('./../lib/utils.js')
 
 // Pick the highest access level from array of access levels
 filters.getHighestLevel = array => {
   if (!array || !Array.isArray(array)) return false
-  else if (array.includes("admin")) return "admin"
-  else if (array.includes("accreditingProvider")) return "accreditingProvider"
-  else if (array.includes("leadPartner")) return "leadPartner"
+  else if (array.includes('admin')) return 'admin'
+  else if (array.includes('accreditingProvider')) return 'accreditingProvider'
+  else if (array.includes('leadPartner')) return 'leadPartner'
   else return false
 }
 
@@ -20,37 +19,36 @@ filters.getHighestLevel = array => {
 // General permissions
 // -------------------------------------------------------------------
 
-
 // Returns an array of the access levels of each signed-in providers
 // This is mostly an internal utility function
 // eg ['accreditingProvider', 'leadPartner', 'admin']
-filters.getAccessLevels = function(providers, data){
+filters.getAccessLevels = function (providers, data) {
   data = data || this?.ctx?.data || false
 
   // Loop through each signed-in provider and get their type
-  let accessLevels = providers.map(provider => utils.getProviderType.apply(this, [provider, data]))
+  const accessLevels = providers.map(provider => utils.getProviderType.apply(this, [provider, data]))
   // if (data?.isAdmin) accessLevels.push("admin")
   return accessLevels
 }
 
 // Get the highest level of access the signed-in providers have
-filters.getAccessLevel = function(providers, data){
+filters.getAccessLevel = function (providers, data) {
   data = data || this?.ctx?.data || false
   // Get all access levels
-  let accessLevels  = filters.getAccessLevels.apply(this, [providers, data])
+  const accessLevels = filters.getAccessLevels.apply(this, [providers, data])
   // Get highest of the access levels
   return filters.getHighestLevel(accessLevels)
 }
 
 // Check if a provider (or providers) have auth to do an action
 // Usually this will be called via the `isAuthorised(action)` function
-filters.providerIsAuthorised = function(providers, action){
+filters.providerIsAuthorised = function (providers, action) {
   const data = this?.ctx?.data || false
 
   const record = data?.record || false
 
-  if (!providers|| !action) {
-    console.log("Error: no provider or action provided")
+  if (!providers || !action) {
+    console.log('Error: no provider or action provided')
     return false
   }
 
@@ -76,63 +74,54 @@ filters.providerIsAuthorised = function(providers, action){
     'showProblem',
     'viewDiversity',
     'viewDrafts',
-    'viewRecords',
+    'viewRecords'
   ]
 
   const leadPartnerActions = [
     'viewRecords'
   ]
 
-  if (accessLevel == "admin") {
+  if (accessLevel == 'admin') {
     if (action == 'addTrainees') return false
     else return true
-  }
-
-  else if (accessLevel == "accreditingProvider"){
+  } else if (accessLevel == 'accreditingProvider') {
     return accreditingProviderActions.includes(action)
-  }
-
-  else if (accessLevel == "leadPartner"){
+  } else if (accessLevel == 'leadPartner') {
     return leadPartnerActions.includes(action)
-  }
-
-  else {
+  } else {
     console.log(`Error: provider type ${providerType}, access level ${accessLevel} not recognised.`)
   }
-
 }
 
 // -------------------------------------------------------------------
 // Record permissions
 // -------------------------------------------------------------------
 
-
 // Returns an array of the access levels of each signed-in provider
 // eg ['accreditingProvider', 'leadPartner', 'admin']
-filters.getRecordAccessLevels = function(record, data=false){
+filters.getRecordAccessLevels = function (record, data = false) {
   data = data || this?.ctx?.data || false
 
-  let signedInProviders = data.signedInProviders
+  const signedInProviders = data.signedInProviders
 
   // Loop through each signed-in provider and see if they have any rights to the
   // record.
-  let accessLevels = signedInProviders.map(provider => {
+  const accessLevels = signedInProviders.map(provider => {
     if (record?.provider == provider) return 'accreditingProvider'
     else if (record?.schools?.leadPartner?.schoolName == provider) return 'leadPartner'
     else return false
   }).filter(Boolean)
-  if (data?.isAdmin) accessLevels.push("admin")
+  if (data?.isAdmin) accessLevels.push('admin')
 
   return accessLevels
 }
 
 // Get the highest access level the viewing user has to a record
-filters.recordAccessLevel = function(record, data=false){
+filters.recordAccessLevel = function (record, data = false) {
   data = data || this?.ctx?.data || false
-  let accessLevels = filters.getRecordAccessLevels.apply(this, [record, data])
+  const accessLevels = filters.getRecordAccessLevels.apply(this, [record, data])
   return filters.getHighestLevel(accessLevels)
 }
-
 
 // -------------------------------------------------------------------
 // keep the following line to return your filters to the app

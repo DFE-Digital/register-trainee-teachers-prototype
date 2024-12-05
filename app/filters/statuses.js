@@ -1,10 +1,9 @@
-
 // -------------------------------------------------------------------
 // Imports and setup
 // -------------------------------------------------------------------
 
 // Leave this filters line
-var filters = {}
+const filters = {}
 const _ = require('lodash')
 
 /*
@@ -24,10 +23,10 @@ const _ = require('lodash')
 
 */
 
-filters.getStatusText = function(data, defaultNotStarted=false, defaultInProgress=false) {
-  if (!data) return defaultNotStarted || "Incomplete"
+filters.getStatusText = function (data, defaultNotStarted = false, defaultInProgress = false) {
+  if (!data) return defaultNotStarted || 'Incomplete'
   if (data?.status) return data.status
-  else return defaultInProgress || "In progress"
+  else return defaultInProgress || 'In progress'
 }
 
 filters.getStatusClass = (status) => {
@@ -73,7 +72,6 @@ filters.getStatusClass = (status) => {
     case 'Manual':
       return 'govuk-tag--grey'
 
-
     // Provider types
     case 'HEI':
       return 'govuk-tag--green'
@@ -85,29 +83,26 @@ filters.getStatusClass = (status) => {
     case 'accreditingProvider':
       return 'govuk-tag--blue'
 
-
     default:
       return 'govuk-tag--blue'
   }
 }
 
-filters.sectionIsInProgress = data =>{
+filters.sectionIsInProgress = data => {
   return (data)
 }
 
 filters.reviewIfInProgress = (url, data, path) => {
-  if (!filters.sectionIsInProgress(data)){
+  if (!filters.sectionIsInProgress(data)) {
     return url
-  }
-  else {
+  } else {
     if (path) return path + '/confirm'
-    else return url + "/confirm"
+    else return url + '/confirm'
   }
 }
 
-
 filters.canBeAmended = status => {
-  let statusesThatCanAmend = [
+  const statusesThatCanAmend = [
     'Draft',
     'Pending TRN',
     'TRN received',
@@ -117,25 +112,25 @@ filters.canBeAmended = status => {
 }
 
 filters.canRecommendForQts = status => {
-  let statusesThatShowQtsTabs = [
+  const statusesThatShowQtsTabs = [
     'TRN received'
   ]
   return statusesThatShowQtsTabs.includes(status)
 }
 
 filters.canReinstate = status => {
-  let statusesThatAllowReinstating = [
+  const statusesThatAllowReinstating = [
     'Deferred'
   ]
   return statusesThatAllowReinstating.includes(status)
 }
 
 filters.isRecommendedOrAwarded = status => {
-  let statuses = [
+  const statuses = [
     'EYTS recommended',
     'EYTS awarded',
     'QTS recommended',
-    'QTS awarded',
+    'QTS awarded'
   ]
 
   return statuses.includes(status)

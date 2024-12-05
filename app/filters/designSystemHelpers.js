@@ -1,11 +1,10 @@
 // -------------------------------------------------------------------
 // Imports and setup
 // -------------------------------------------------------------------
-var CSV = require('csv-string')
-const _ = require('lodash');
+const CSV = require('csv-string')
+const _ = require('lodash')
 // Leave this filters line
-var filters = {}
-
+const filters = {}
 
 /*
 =====================================================================
@@ -47,18 +46,18 @@ Usage:
 filters.arrayToGovukTable = (array) => {
   // Coerce to nested array
   array = (Array.isArray(array[0])) ? array : [array]
-  let tableData = []
+  const tableData = []
   array.forEach(row => {
-    let rowData = []
+    const rowData = []
     row.forEach(item => {
       rowData.push({
-        html: item  // html for flexibility
+        html: item // html for flexibility
       })
     })
     tableData.push(rowData)
   })
   // tableData = (tableData.length == 1) ? tableData[0] : tableData
-  return tableData;
+  return tableData
 }
 
 /*
@@ -83,12 +82,11 @@ let csvData =
 */
 
 filters.csvToArray = (csvString) => {
-  array = CSV.parse(csvString);
+  array = CSV.parse(csvString)
   // Flatten nested array if it's only a single line
   array = (array.length == 1) ? array[0] : array
-  return array;
+  return array
 }
-
 
 /*
 =====================================================================
@@ -106,7 +104,6 @@ Usage:
   2 April, Friday, Good Friday
   5 April, Monday, Easter Monday"
 %}
-
 
 {{ govukTable({
   caption: "2021 Bank holidays",
@@ -128,8 +125,8 @@ Usage:
 */
 
 filters.csvToGovukTable = (csvString) => {
-  let array = filters.csvToArray(csvString)
-  return filters.arrayToGovukTable(array);
+  const array = filters.csvToArray(csvString)
+  return filters.arrayToGovukTable(array)
 }
 
 /*
@@ -156,14 +153,14 @@ let summaryListData = [
 */
 
 filters.arrayToSummaryList = array => {
-  let arrData = []
-  array.forEach( row => {
-    let key = row[0]  // required
-    let value = row[1] // required
-    let href = (row[2] != null) ? row[2] : false
-    let text = (row[3] != null ) ? row[3] : "Change"
-    let visuallyHiddenText = (row[4] != null ) ? row[4] : row[0].toLowerCase()
-    let rowData = {
+  const arrData = []
+  array.forEach(row => {
+    const key = row[0] // required
+    const value = row[1] // required
+    const href = (row[2] != null) ? row[2] : false
+    const text = (row[3] != null) ? row[3] : 'Change'
+    const visuallyHiddenText = (row[4] != null) ? row[4] : row[0].toLowerCase()
+    const rowData = {
       key: {
         text: key
       },
@@ -172,8 +169,8 @@ filters.arrayToSummaryList = array => {
       }
     }
     // Action (optional)
-    if (href){
-      let item = {
+    if (href) {
+      const item = {
         href,
         text,
         visuallyHiddenText
@@ -184,22 +181,22 @@ filters.arrayToSummaryList = array => {
     }
     arrData.push(rowData)
   })
-  return arrData;
+  return arrData
 }
 
 filters.csvToSummaryList = (csvString) => {
-  arr = CSV.parse(csvString);
-  let arrData = filters.arrayToSummaryList(arr)
-  return arrData;
+  arr = CSV.parse(csvString)
+  const arrData = filters.arrayToSummaryList(arr)
+  return arrData
 }
 
 // Map a flat array, nested array to Object array that GOV.UK Selects use
 
-// input: 
+// input:
 //   ['one', 'two', 'three']
 
 // output:
-//   [ 
+//   [
 //     {
 //       text: 'one',
 //       value: 'one'
@@ -213,44 +210,34 @@ filters.csvToSummaryList = (csvString) => {
 //       value: 'three'
 //     }
 //   ]
-filters.toSelectItems = (array, includeDefaultEmpty=false, defaultSelected=false) => {
-
-  let defaultItem = [{
-    value: "",
-    text: "Please select",
+filters.toSelectItems = (array, includeDefaultEmpty = false, defaultSelected = false) => {
+  const defaultItem = [{
+    value: '',
+    text: 'Please select',
     disabled: true,
     selected: defaultSelected
   }]
 
-  let items = array.map(item => {
-
-    if (Array.isArray(item)){
+  const items = array.map(item => {
+    if (Array.isArray(item)) {
       return {
         text: item[0],
         value: item[1]
       }
-    }
-    else if (_.isString(item)){
+    } else if (_.isString(item)) {
       return {
-          text: item,
-          value: item
-        }
-    }
-    else if (item instanceof Object){
+        text: item,
+        value: item
+      }
+    } else if (item instanceof Object) {
       return item
     }
-
   })
 
-  if (includeDefaultEmpty){
+  if (includeDefaultEmpty) {
     return defaultItem.concat(items)
-  }
-  else return items
-
+  } else return items
 }
-
-
-
 
 // -------------------------------------------------------------------
 // keep the following line to return your filters to the app

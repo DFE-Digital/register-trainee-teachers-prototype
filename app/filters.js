@@ -2,17 +2,14 @@ const fs = require('fs')
 const path = require('path')
 const individualFiltersFolder = path.join(__dirname, './filters')
 
-
 module.exports = function (env) {
-
-
-  var filters = {}
+  const filters = {}
 
   // Import filters from filters folder
   if (fs.existsSync(individualFiltersFolder)) {
-    var files = fs.readdirSync(individualFiltersFolder)
+    const files = fs.readdirSync(individualFiltersFolder)
     files.forEach(file => {
-      let fileData = require(path.join(individualFiltersFolder, file))
+      const fileData = require(path.join(individualFiltersFolder, file))
       // Loop through each exported function in file (likely just one)
       Object.keys(fileData).forEach((filterGroup) => {
         // Get each method from the file
@@ -23,13 +20,12 @@ module.exports = function (env) {
     })
   }
 
-
   filters.selected = function (dataKey, selectWhenMatchesValue) {
     if (this.ctx.data === undefined) {
       return ''
     }
 
-    var dataValue = this.ctx.data[dataKey]
+    const dataValue = this.ctx.data[dataKey]
 
     if (dataValue === undefined && selectWhenMatchesValue === '') {
       return 'selected'
@@ -44,10 +40,10 @@ module.exports = function (env) {
     if (this.ctx.data === undefined) {
       return ''
     }
-    var day = this.ctx.data[dataKey + '-day']
-    var month = this.ctx.data[dataKey + '-month']
-    var year = this.ctx.data[dataKey + '-year']
-    var filtered = [day, month, year].filter(function (element) {
+    const day = this.ctx.data[dataKey + '-day']
+    const month = this.ctx.data[dataKey + '-month']
+    const year = this.ctx.data[dataKey + '-year']
+    const filtered = [day, month, year].filter(function (element) {
       return element && element !== ''
     })
     return filtered.join('/')

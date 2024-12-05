@@ -1,8 +1,8 @@
 // -------------------------------------------------------------------
 // Imports and setup
 // -------------------------------------------------------------------
-var _ = require('lodash');
-var filters = {}
+const _ = require('lodash')
+let filters = {}
 
 // Utils has a bunch of shared functions used by filters and routes
 const utils = require('./../lib/utils')
@@ -13,20 +13,20 @@ filters = utils
 // Log to terminal
 filters.debug = (item) => {
   console.log('Debug', item)
-  return item;
+  return item
 }
 
 // Expose all of lodash
-filters.lodash = function(test, name, ...args) {
+filters.lodash = function (test, name, ...args) {
   return _[name](test, ...args)
 }
 
 // Adds an index for each object in array
 filters.addIndexCount = array => {
-  array.forEach((item, index) =>{
+  array.forEach((item, index) => {
     item.index = index
   })
-  return array;
+  return array
 }
 
 // Search for an id in arrays
@@ -39,14 +39,13 @@ filters.find = (items, key, value) => {
   return items.find(item => item[key] == value)
 }
 
-
 // Decorate attributes
 // Add name, value, id, idPrefix and checked attributes to GOVUK form components
 // Generate the attributes based on the application ID and the section they’re in
 
 // Copied from Apply, but modified to work with data directly
 
-/* Usage: 
+/* Usage:
 {{ govukCheckboxes({
   fieldset: {
     legend: {
@@ -70,16 +69,15 @@ filters.find = (items, key, value) => {
 Will populate name and id, and add value and checked for each item
 */
 filters.decorateAttributes = (originalObject, data, value) => {
-
-  let obj = _.cloneDeep(originalObject)
+  const obj = _.cloneDeep(originalObject)
 
   // Map dot or bracket notation to path parts
   pathParts = _.toPath(value)
   // Path parts includes the string name of data, which we don't need
-  let storedValue = _.get(data, [...pathParts].splice(1) )
+  const storedValue = _.get(data, [...pathParts].splice(1))
 
   // Strip data from path as autodata store auto-adds it.
-  if (pathParts[0] === 'data'){
+  if (pathParts[0] === 'data') {
     pathParts.shift(1)
   }
 
@@ -87,8 +85,8 @@ filters.decorateAttributes = (originalObject, data, value) => {
     obj.items = obj.items.map(item => {
       if (item.divider) return item
 
-      var checked = storedValue ? '' : item.checked
-      var selected = storedValue ? '' : item.selected
+      let checked = storedValue ? '' : item.checked
+      let selected = storedValue ? '' : item.selected
       if (typeof item.value === 'undefined') {
         item.value = item.text
       }
@@ -120,33 +118,32 @@ filters.decorateAttributes = (originalObject, data, value) => {
     }
   }
   obj.id = (obj.id) ? obj.id : pathParts.join('-')
-  obj.name = (obj.name) ? obj.name: pathParts.map(s => `[${s}]`).join('')
+  obj.name = (obj.name) ? obj.name : pathParts.map(s => `[${s}]`).join('')
   return obj
 }
 
 // Return first x items of array / string
-filters.limitTo = (input, limit) =>{
-
-  if(typeof limit !== 'number'){
+filters.limitTo = (input, limit) => {
+  if (typeof limit !== 'number') {
     limit = parseInt(limit) // assume limit is a string of a number
   }
 
-  if(typeof input === 'string'){
-    if(limit >= 0){
-      return input.substring(0, limit);
+  if (typeof input === 'string') {
+    if (limit >= 0) {
+      return input.substring(0, limit)
     } else {
-      return input.substr(limit);
+      return input.substr(limit)
     }
   }
-  if(Array.isArray(input)){
-    limit = Math.min(limit, input.length);
-    if(limit >= 0){
-      return input.slice(0, limit);
+  if (Array.isArray(input)) {
+    limit = Math.min(limit, input.length)
+    if (limit >= 0) {
+      return input.slice(0, limit)
     } else {
-      return input.slice(input.length + limit, input.length);
+      return input.slice(input.length + limit, input.length)
     }
   }
-  return input;
+  return input
 }
 
 // -------------------------------------------------------------------

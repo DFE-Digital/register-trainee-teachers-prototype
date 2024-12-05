@@ -1,0 +1,64 @@
+{% extends "_templates/_page.njk" %}
+
+{% set navActive = "funding" %}
+{% set backLink = 'false' %}
+
+{% set filteredRecords = data.records | filterRecords(data) %}
+
+{# Remaining trainees #}
+{% set traineesThatCanBeRecommended = filteredRecords | filterByReadyToRecommend %}
+{# {% set traineesThatCanBeRecommended = 0 %} #}
+
+{# Sets numbers for errors summary #}
+{% set errorCount     = data.bulkUpload.processedRows | where("uploadStatus", "error") | length  %}
+{% set unchangedCount = data.bulkUpload.processedRows | where("uploadStatus", "unchanged") | length  %}
+{% set updatedCount   = data.bulkUpload.processedRows | where("uploadStatus", "updated") | length  %}
+
+{% set processedRows = data.bulkUpload.processedRows | where("uploadStatus", "updated") %}
+
+{# Get an array of the trainees #}
+{% set processedTrainees = processedRows | lodash("map", "trainee") %}
+
+{% set pageHeading = "File uploaded successfully" %}
+
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full-from-desktop">
+
+    {% set html %}
+    <h3 class="govuk-notification-banner__heading">
+      File uploaded
+    </h3>
+    {% endset %}
+
+    {{ govukNotificationBanner({
+    html: html,
+    type: "success"
+    }) }}
+    </div>
+
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+
+      <form action="confirmation-upload" method="post" novalidate>
+
+        <input name="successFlash" type="hidden" value="File uploaded">
+
+        <p class="govuk-body">
+          Click 'Submit the data' button to publish this funding information.
+        </p>
+
+        {{ govukButton({
+        "text": "Submit the data",
+        href: "confirmation-processed.njk"
+        }) }}
+      </form>
+
+      <p class="govuk-body"><a href="index" class="govuk-link">Cancel and return to task list</a></p>
+
+      {{data | log}}
+    </div>
+  </div>
+
+{% endblock %}

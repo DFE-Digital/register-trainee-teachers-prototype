@@ -1,0 +1,35 @@
+{% extends "_templates/_new-record.njk" %}
+
+{% set pageHeading = "Check application import details" %}
+{# {% set backLink = './../overview' %}
+{% set backText = "Back to draft record" %} #}
+{% set gridColumn = 'govuk-grid-column-full' %}
+{% set formAction = "./update" | orReferrer(referrer) %}
+
+{% set referrer = currentPageUrl %}
+
+{% set returnLink = {
+  href: "/home",
+  text: "Cancel"
+} %}
+
+{% block formContent %}
+  {# {% include "_includes/trainee-name-caption.njk" %} #}
+  <h1 class="govuk-heading-l">
+    {{pageHeading}}
+  </h1>
+  {% include "_includes/summary-cards/apply-importable/details.njk" %}
+
+  {% set buttonText %}
+    {% if applyPendingRecords | length == 1 %}
+      Import application as draft trainee
+    {% else %}
+      Import applications as draft trainees
+    {% endif %}
+  {% endset %}
+
+  {{ govukButton({
+    text: buttonText
+  }) }}
+
+{% endblock %}

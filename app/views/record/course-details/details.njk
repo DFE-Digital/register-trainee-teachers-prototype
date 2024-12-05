@@ -1,0 +1,9 @@
+{% extends "_templates/_record-form.njk" %}
+
+{% set pageHeading = "Course details" %}
+
+{% set formAction = "./details-answer" | addReferrer(referrer) %}
+
+{% block formContent %}
+  {% include "_includes/forms/course-details.njk" %}
+{% endblock %}

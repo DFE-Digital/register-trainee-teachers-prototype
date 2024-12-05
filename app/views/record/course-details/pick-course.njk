@@ -1,0 +1,15 @@
+{% extends "_templates/_record-form.njk" %}
+
+{% set pageHeading %}
+  {% if filteredRoute %}
+    Your {{filteredRoute | lower | replace("(", "") | replace(")", "")}} courses starting in {{courseStartYear | yearToAcademicYearString }}
+  {% else %}
+    Your courses starting in {{courseStartYear | yearToAcademicYearString }}
+  {% endif %}
+{% endset %}
+
+{% set formAction = "./../pick-course-answer" | addReferrer(referrer) %}
+
+{% block formContent %}
+  {% include "_includes/forms/course-details/pick-course.njk" %}
+{% endblock %}

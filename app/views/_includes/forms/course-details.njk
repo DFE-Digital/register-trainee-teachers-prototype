@@ -1,0 +1,5 @@
+{% if record | isEarlyYears %}
+  {% include "_includes/forms/course-details/early-years.njk" %}
+{% else %}
+  {% include "_includes/forms/course-details/index.njk" %}
+{% endif %}

@@ -1,9 +1,0 @@
-{% extends "_templates/_record-form.html" %}
-
-{% set pageHeading = "Trainee ID (optional)" %}
-
-{% set formAction = "./trainee-id/confirm" | addReferrer(referrer) %}
-
-{% block formContent %}
-  {% include "_includes/forms/training-details/trainee-id.html" %}
-{% endblock %}

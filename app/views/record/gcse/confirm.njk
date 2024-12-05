@@ -1,0 +1,35 @@
+{% extends "_templates/_record-form.njk" %}
+
+{% set pageHeading = "Confirm GCSE details" %}
+
+{% set backLink = ("/record/" + data.record.id) | orReferrer(referrer) %}
+{% set backText = "Back to record" %}
+
+{% set gridColumn = 'govuk-grid-column-full' %}
+{% set formAction = "./update" | addReferrer(referrer) %}
+
+{% block formContent %}
+
+  {% include "_includes/trainee-name-caption.njk" %}
+  <h1 class="govuk-heading-l">
+    {{pageHeading}}
+  </h1>
+  {% include "_includes/summary-cards/gcse-details.njk" %}
+
+{# {{ govukCheckboxes({
+  idPrefix: "gcse-status",
+  name: "record[gcse][status]",
+  items: [
+    {
+      value: "Completed",
+      text: "I have completed this section",
+      checked: checked(record.gcse.status, "Completed")
+    }
+  ]
+  }) }} #}
+
+  {{ govukButton({
+    text: "Continue"
+  }) }}
+
+{% endblock %}

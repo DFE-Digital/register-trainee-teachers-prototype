@@ -1,0 +1,36 @@
+
+{% extends "_templates/_new-record.njk" %}
+
+
+{% set pageHeading = "Confirm schools" %}
+
+
+{% set backLink = './../overview' %}
+{% set backText = "Back to draft record" %}
+{% set gridColumn = 'govuk-grid-column-full' %}
+{% set formAction = "./../overview" | orReferrer(referrer) %}
+
+{% block formContent %}
+  {% include "_includes/trainee-name-caption.njk" %}
+  <h1 class="govuk-heading-l">
+    {{pageHeading}}
+  </h1>
+  {% include "_includes/summary-cards/schools.njk" %}
+
+  {{ govukCheckboxes({
+  idPrefix: "schools",
+  name: "record[schools][status]",
+  items: [
+    {
+      value: "Completed",
+      text: "I have completed this section",
+      checked: checked(record.schools.status, "Completed")
+    }
+  ]
+  }) }}
+
+  {{ govukButton({
+    text: "Continue"
+  }) }}
+
+{% endblock %}

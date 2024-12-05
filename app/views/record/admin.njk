@@ -1,0 +1,39 @@
+{% extends "_templates/_record.njk" %}
+
+{% set backLink = '/records' %}
+{% set backText = 'All registered trainees' %}
+{% set pageHeading = data.record.personalDetails.shortName %}
+{% set activeTab = 'admin' %}
+
+{% block tabContent %}
+
+  {% set referrer = recordPath + "/admin" %}
+
+  {% set dqtAllowsReverts = false %}
+
+  {# {% if record | isAwarded or record | isRecommended %}
+    {% include "_includes/summary-cards/qualification-details.njk" %}
+  {% endif %}
+
+  {% if record | isDeferred %}
+    {% include "_includes/summary-cards/defer-details.njk" %}
+  {% endif %}
+
+  {% if record | isWithdrawn %}
+    {% include "_includes/summary-cards/withdraw-details.njk" %}
+  {% endif %} #}
+
+  {% set canAmend = false %}
+
+  {% include "_includes/summary-cards/record-admin/dqt.njk" %}
+
+  {% include "_includes/summary-cards/record-admin/hesa.njk" %}
+
+  {% if record | isActiveStatus or record | isWithdrawn %}
+
+  {% set removeUrl = recordPath + "/admin/delete/details" | addReferrer(referrer) %}
+
+    <p class="govuk-body govuk-!-margin-top-8"><a href="{{removeUrl}}" class="govuk-link app-destructive-link">Delete this trainee</a></p>
+  {% endif %}
+
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "_templates/_page.njk" %}
+
+{% set pageContent = "makeChanges" %}
+{% set pageHeading = "Change your pending updates" %}
+{% set navActive = 'bulk' %}
+{% set filePath = "add-details-with-data" %}
+{% set bulkPath = "add-details" %}
+
+{% set linkText = "trainees with missing details" %}
+{% set fileName = "add-details" %}
+{% set downloadedFileName = "-fix-changes" %}
+
+{% block content %}
+
+  {% include "_includes/bulk-update/fix-file.njk" %}
+
+{% endblock %}

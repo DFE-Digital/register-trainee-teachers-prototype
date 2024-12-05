@@ -1,0 +1,20 @@
+{% extends "_templates/_new-record.njk" %}
+
+{% block pageScripts %}
+  <script>
+  $("#add-another-country").click( event =>{
+    event.preventDefault()
+    $("#iqts-country2__container").toggle()
+   })
+  </script>
+{% endblock %}
+
+{% set pageHeading = "Which country or territory is the trainee studying in?" %}
+
+{% set formAction = "./confirm" | addReferrer(referrer) %}
+
+{% block formContent %}
+
+  {% include "_includes/forms/iqts/country.njk" %}
+
+{% endblock %}

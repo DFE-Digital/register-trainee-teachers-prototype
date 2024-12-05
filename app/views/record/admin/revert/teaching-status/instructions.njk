@@ -1,0 +1,54 @@
+
+{% extends "_templates/_record-form.njk" %}
+
+{% set qualification = data.record | getQualificationText %}
+
+{% set pageHeading %}
+  Remove {{ qualification }} award
+{% endset %}
+
+{% set returnLink = {
+ text: 'Cancel and return to record',
+ href: "/record/" + data.record.id + "/admin"
+} %}
+
+{% set formAction = './details' | addReferrer(referrer) %}
+
+{% block formContent %}
+
+
+
+  {% include "_includes/trainee-name-caption.njk" %}
+  <h1 class="govuk-heading-l">
+    {{ pageHeading }}
+  </h1>
+
+  <p class="govuk-body">
+    If you remove the trainee’s QTS award, they’ll no longer be allowed to work as a teacher in a state school. The DQT team may need to ask them to destroy their certificate.
+  </p>
+
+  <p class="govuk-body">
+    You must follow this process when removing a {{ qualification }} award.
+  </p>
+
+  <ol class="govuk-list govuk-list--number">
+    <li>Ask the training provider to confirm that they want to remove the {{ qualification }} award and why they want to remove it.</li>
+    <li>Check whether the trainee has more than one record in Register. Make sure you’re changing the correct record</li>
+    <li>Ask DQT to remove the trainee’s {{ qualification }} award. You will not be able to continue until they’ve done this.</li>
+    <li>Remove the QTS award in Register.</li>
+    <li>Tell the training provider that the {{ qualification }} award has been removed.</li>
+  </ol>
+
+  {% if dqtAllowsReverts %}
+    {% set revertUrl = recordPath + "/admin/revert/teaching-status/details" | addReferrer(referrer) %}
+  {% else %}
+    {% set revertUrl = recordPath + "/admin/revert/teaching-status/cannot-revert" | addReferrer(referrer) %}
+  {% endif %}
+
+  {{ govukButton({
+    text: "Continue",
+    href: revertUrl
+  }) }}
+
+
+{% endblock %}

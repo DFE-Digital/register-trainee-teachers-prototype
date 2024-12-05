@@ -1,0 +1,10 @@
+{% extends "_templates/_record-form.njk" %}
+
+{% set pageHeading = "Why are they not being recommended for QTS?" %}
+{% set formAction = "./withdrawal" %}
+
+{% block formContent %}
+
+  {% include "_includes/forms/qualification/not-passed-reason.njk" %}
+
+{% endblock %}

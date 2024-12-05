@@ -1,0 +1,11 @@
+{% extends "_templates/_record-form.njk" %}
+
+{% set pageHeading = "Edit personal details" %}
+
+{% set formAction = "./confirm" | addReferrer(referrer) %}
+
+{% block formContent %}
+
+  {% include "_includes/forms/personal-details/main-details.njk" %}
+
+{% endblock %}

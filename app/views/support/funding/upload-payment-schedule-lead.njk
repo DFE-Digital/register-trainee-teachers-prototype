@@ -1,0 +1,120 @@
+{% extends "_templates/_page.njk" %}
+
+{% if data.settings.bulkLinksInPrimaryNav == "Show bulk recommend" %}
+{% set backText = "Upload funding information" %}
+{% set backLink = '/support/funding/index' %}
+{% set bulkRecommendOnly = true %}
+{% endif %}
+
+{% set navActive = "funding" %}
+
+{% set pageHeading = "Upload lead partner funding payments" %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <h1 class="govuk-heading-l">
+      {{ pageHeading }}
+    </h1>
+
+    <p class="govuk-body">You can upload a CSV file to make monthly funding payments available to lead partners.</p>
+
+    <form action="confirmation-upload" method="post" novalidate>
+
+      <ol class="govuk-list govuk-list--number">
+        <li>
+          {{ govukSelect({
+          id: "funding-month-payment-schedule-lead",
+          name: "funding-month-payment-schedule-lead",
+          label: {
+          text: "Select applicable month"
+          },
+          hint: {
+          text: "Please select the month you are uploading funding information for."
+          },
+          items: [
+          {
+          value: "choose",
+          text: "Choose month",
+          selected: true
+          },
+          {
+          value: "january",
+          text: "January"
+          },
+          {
+          value: "february",
+          text: "February"
+          },
+          {
+          value: "march",
+          text: "March"
+          },
+          {
+          value: "april",
+          text: "April"
+          },
+          {
+          value: "may",
+          text: "May"
+          },
+          {
+          value: "june",
+          text: "June"
+          },
+          {
+          value: "july",
+          text: "July"
+          },
+          {
+          value: "august",
+          text: "August"
+          },
+          {
+          value: "september",
+          text: "September"
+          },
+          {
+          value: "october",
+          text: "October"
+          },
+          {
+          value: "november",
+          text: "November"
+          },
+          {
+          value: "december",
+          text: "December"
+          }
+          ]
+          }) }}
+        </li>
+        <li>
+          {{ govukFileUpload({
+          id: "file-upload-1",
+          name: "file-upload-1",
+          label: {
+          text: "Upload the CSV file."
+          },
+          attributes: {
+          "accept": ".csv"
+          }
+          }) }}
+        </li>
+
+      </ol>
+
+      <input name="successFlash" type="hidden" value="File uploaded">
+
+      {{ govukButton({
+      text: "Upload the file"
+      }) }}
+    </form>
+
+  </div>
+</div>
+
+
+
+{% endblock %}

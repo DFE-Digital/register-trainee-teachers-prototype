@@ -1,0 +1,132 @@
+{% extends "_templates/_page.njk" %}
+
+{% set allUsers = data.users.all %}
+{% set filteredUsers = allUsers %}
+
+{% set pageHeadingShort = "Upload funding information" %}
+
+{% set pageHeading %}
+  {{ pageHeadingShort }} ({{filteredUsers | length}} {{ "user" | pluralise(filteredUsers | length) }})
+{% endset %}
+
+
+
+{% set backText = "Support home" %}
+{% set backLink = '/support' %}
+{% set navActive = "funding" %}
+
+
+{% block content %}
+{# super pulls in flash message banner #}
+{{super()}}
+
+<div class="govuk-grid-row">
+
+  <div class="govuk-grid-column-full">
+
+    <span class="govuk-caption-l">Support for Register</span>
+    {# This heading set separately than {{pageHeading}} as it uses html #}
+    <h1 class="govuk-heading-xl">
+      {{ pageHeadingShort }}
+    </h1>
+
+  </div>
+
+
+</div>
+
+<div class="govuk-grid-row">
+
+  <div class="govuk-grid-column-two-thirds">
+
+    <p class="govuk-body">Funding information for all providers and lead partners can be uploaded into Register at the beginning of every month.</p>
+
+    <p class="govuk-body">There are 4 x CSV files to upload separately:</p>
+
+    <ol class="govuk-list govuk-list--number">
+      <li>lead partner funding payments</li>
+      <li>lead partner trainee funding payments</li>
+      <li>provider funding payments</li>
+      <li>provider trainee funding payments</li>
+    </ol>
+
+    <p class="govuk-body">After the funding information has been uploaded, lead partners and providers can download or view:</p>
+
+    <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-9">
+      <li>a CSV file by academic year</li>
+      <li>payments by month</li>
+      <li>running totals</li>
+      <li>predicted payments</li>
+      <li>payment types</li>
+    </ul>
+
+
+
+
+    <table class="govuk-table">
+      <caption class="govuk-table__caption govuk-table__caption--m">Lead partners</caption>
+      <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header">Task</th>
+        <th scope="col" class="govuk-table__header">Last completed</th>
+        <th scope="col" class="govuk-table__header">For month</th>
+      </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header govuk-!-font-weight-regular">
+          <a href="upload-trainee-summary-lead.njk" aria-describedby="lead-trainee-summary-upload-status">
+            Upload trainee summary
+          </a>
+        </th>
+        <td class="govuk-table__cell">15 December 2023</td>
+        <td class="govuk-table__cell">November</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header govuk-!-font-weight-regular">
+          <a href="upload-payment-schedule-lead.njk" aria-describedby="lead-payment-schedule-upload-status">
+            Upload payment schedule
+          </a>
+        </th>
+        <td class="govuk-table__cell">Never completed</td>
+        <td class="govuk-table__cell"></td>
+      </tr>
+      </tbody>
+    </table>
+
+    <!-- TODO: Update the 'Last completed' and 'For month' values dynamically rather than hardcoding -->
+    <table class="govuk-table">
+      <caption class="govuk-table__caption govuk-table__caption--m">Providers</caption>
+      <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header">Task</th>
+        <th scope="col" class="govuk-table__header">Last completed</th>
+        <th scope="col" class="govuk-table__header">For month</th>
+      </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header govuk-!-font-weight-regular">
+          <a href="upload-trainee-summary-provider.njk" aria-describedby="provider-trainee-summary-upload-status">
+            Upload trainee summary
+          </a>
+        </th>
+        <td class="govuk-table__cell">10 December 2023</td>
+        <td class="govuk-table__cell">November</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header govuk-!-font-weight-regular">
+          <a href="upload-payment-schedule-provider.njk" aria-describedby="provider-upload-payment-schedule-status">
+            Upload payment schedule
+          </a>
+        </th>
+        <td class="govuk-table__cell">10 December 2023</td>
+        <td class="govuk-table__cell">November</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+{% endblock %}

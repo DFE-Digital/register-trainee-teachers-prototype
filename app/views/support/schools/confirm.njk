@@ -1,0 +1,35 @@
+{% extends "_templates/_form.njk" %}
+
+{% set pageHeading %}
+  Confirm changes to {{ school.schoolName }}
+{% endset %}
+
+{% set backText = "Back" %}
+{# {% set backLink = '/home' %} #}
+
+{# {% set returnLink = {
+  text: 'Cancel',
+  href: './../' + uuid
+} %} #}
+
+{% set formAction = './../' + uuid %}
+{% block formContent %}
+
+<!--TODO: Fix this lead partner assignment -->
+{# set isLeadPartner = schoolTemp | schoolIsLeadPartner #}
+
+{# Merge with temp store #}
+{% set schoolTemp = provider | mergeObjects(data.schoolTemp) %}
+
+<h1 class="govuk-heading-l">{{pageHeading}}</h1>
+
+{% set school = schoolTemp %}
+
+{% include "_includes/summary-cards/support/school.njk" %}
+
+{{ govukButton({
+  text: "Confirm"
+}) }}
+
+
+{% endblock %}

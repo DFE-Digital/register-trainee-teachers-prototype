@@ -1,0 +1,135 @@
+{% extends "_templates/_page.njk" %}
+
+{% set pageHeading %}
+  Organisation – {{ provider.name }}
+{% endset %}
+
+{# {% set navActive = "provider" %} #}
+
+{% set backText = "Home" %}
+{% set backLink = '/home' %}
+
+{% block content %}
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds-from-desktop">
+        <h1 class="govuk-heading-l">{{provider.name}}</h1>
+
+        {% set shouldShowOrganisationSwitchLink = (data.settings.userProviders | length > 1) and not data.isAdmin and not data.isImpersonating | falsify  %}
+
+        <h2 class="govuk-heading-m">About your organisation</h2>
+
+        {{ govukSummaryList({
+          rows: [
+            {
+              key: {
+                text: "Organisation type"
+              },
+              value: {
+                text: activeProvider | getProviderTypeString | sentenceCase
+              },
+              actions: {
+                items: [
+                  {
+                    href: "#",
+                    text: "Change",
+                    visuallyHiddenText: "name"
+                  }
+                ]
+              } if false
+            },
+            {
+              key: {
+                text: "Accreditation ID"
+              },
+              value: {
+                text: 123456789
+              }
+            } if activeProvider | providerIsAccrediting,
+            {
+              key: {
+                text: "Team inbox"
+              },
+              value: {
+                text: "teacher-training@" + provider.name | makeFakeSchoolDomain
+              },
+              actions: {
+                items: [
+                  {
+                    href: "#",
+                    text: "Change",
+                    visuallyHiddenText: "team inbox"
+                  }
+                ]
+              }
+            } if false
+          ],
+        classes: "govuk-!-margin-bottom-9"
+        }) }}
+
+        <h2 class="govuk-heading-m">API Tokens</h2>
+
+        <p class="govuk-body">If you want to use the Register API to send your trainee data from your Students Record System directly to the Register service, you will need an API token.</p>
+
+        <h3 class="govuk-heading-s"> What is an API token?</h3>
+
+        <p class="govuk-body">The API token is unique to your organisation and is a  code that authenticates the transfer of your trainee data  from your Student Record System directly into the Register service via the Register API (piece of software).</p>
+
+        <p class="govuk-body">Your token is needed by the developers who are managing your Register API integration.</p>
+
+        <p class="govuk-body">You can <a class="govuk-link" href="https://www.register-trainee-teachers.service.gov.uk/api-docs">view and use the Register API technical documentation</a>.</p>
+
+        <h4 class="govuk-heading-s">How to manage your API token</h4>
+
+        <p class="govuk-body">The Register API is used to make trainee data transfer quicker and easier.</p>
+
+        <p class="govuk-body">You must make sure the token is securely sent to the developers managing your Register API integration.</p>
+
+        <p class="govuk-body">In the 'Manage your API token' screen, you can:</p>
+
+        <ul class="govuk-list govuk-list--bullet">
+          <li>view a list of tokens, their description, expiry date, date last used</li>
+          <li>generate a new token and give it a name, a description (optional) and set an expiry date (optional) revoke a token</li>
+        </ul>
+
+        <p class="govuk-body govuk-!-margin-bottom-9"><a href="/token-manage" class="govuk-link govuk-link--no-visited-state">Manage your tokens</a></p>
+
+
+        <h2 class="govuk-heading-m">Team members</h2>
+
+        {# {{ govukButton({
+          "text": "Add a team member"
+        }) }} #}
+
+        {% set providerUsers = data.users.byProvider[provider.name] | sort(attribute = "fullName") %}
+        {% set hasMultipleUsers = providerUsers | length > 1 %}
+
+        {% if hasMultipleUsers %}
+          <ol class="govuk-list">
+        {% endif %}
+
+          {% for user in providerUsers %}
+            {% if hasMultipleUsers %}
+              <li class="">
+            {% endif %}
+
+            {% include "_includes/user-card.njk" %}
+
+            {% if hasMultipleUsers %}
+              </li>
+            {% endif %}
+
+          {% endfor %}
+
+        {% if hasMultipleUsers %}
+          </ol>
+        {% endif %}
+
+        <p class="govuk-body">
+          If you need to add or remove team members, contact us at <a href="mailto:becomingateacher@digital.education.gov.uk?subject=Add or remove team members from Register trainee teachers" class="govuk-link">becomingateacher@digital.education.gov.uk</a>.
+        </p>
+
+      </div>
+    </div>
+
+{% endblock %}

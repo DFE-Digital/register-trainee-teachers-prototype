@@ -1,9 +1,0 @@
-{% extends "_templates/_new-record.html" %}
-
-{% set pageHeading = "Placements"  %}
-
-{% set formAction = "./can-add-placement-answer" | addReferrer(referrer) %}
-
-{% block formContent %}
-  {% include "_includes/forms/placements/can-add-placement.html" %}
-{% endblock %}

@@ -1,0 +1,86 @@
+{% extends "_templates/_record-form.njk" %}
+{% set qualification = data.record | getQualificationText %}
+
+{% set pageHeading %}
+  Delete trainee record
+{% endset %}
+{# {% set pageHeading = "Revert award of teaching status" %} #}
+
+{% set formAction = "./confirm" | addReferrer(referrer) %}
+
+{% block formContent %}
+
+  {% include "_includes/trainee-name-caption.njk" %}
+  <h1 class="govuk-heading-l">{{pageHeading}}</h1>
+
+  {% set reasons = [
+   'Duplicate record',
+   'Record added in error',
+   'Trainee already ' + qualification,
+   'Trainee did not start training'
+  ] %}
+
+  {% set anotherReasonHtml %}
+    {{ govukInput({
+      label: {
+        text: "Reason",
+        classes: "",
+        isPageHeading: false
+      },
+      _hint: {
+        html: 'For example, ‘Provider prematurely registered a draft’<br>This will be visible to the provider on the trainee timeline'
+      }
+    } | decorateAttributes(record, "record.admin.delete.reasonOther"))  }}
+  {% endset %}
+
+  {% set reasonItems = [] %}
+
+  {% for reason in reasons %}
+    {% set reasonItems = reasonItems | push({
+      text: reason
+    }) %}
+  {% endfor %}
+
+  {% set reasonItems = reasonItems | push ({
+    divider: "or"
+  }) %}
+
+  {% set reasonItems = reasonItems | push ({
+    text: "Another reason",
+    conditional: {
+      html: anotherReasonHtml
+    }
+  }) %}
+
+  {{ govukRadios({
+    fieldset: {
+      legend: {
+        text: 'Reason for deletion',
+        isPageHeading: false,
+        classes: "govuk-fieldset__legend--m"
+      }
+    },
+    _hint: {
+      text: 'This will be visible to the provider on the trainee timeline'
+    },
+    items: reasonItems
+  } | decorateAttributes(record, "record.admin.delete.reason")) }}
+
+  {{ govukInput({
+
+    label: {
+      text: "Zendesk ticket URL (optional)",
+      classes: "govuk-label--m",
+      isPageHeading: false
+    },
+    hint: {
+      text: 'For example, https://becomingateacher.zendesk.com/agent/tickets/12345'
+    }
+  } | decorateAttributes(record, "record.admin.delete.zendeskUrl"))  }}
+
+  {{ govukButton({
+    text: "Continue"
+  }) }}
+
+
+{% endblock %}

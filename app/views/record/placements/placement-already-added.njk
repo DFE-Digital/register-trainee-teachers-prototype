@@ -1,0 +1,7 @@
+{% extends "_templates/_record-form.njk" %}
+
+{% set pageHeading = "Placement " + ( data.record | schoolOrSettingText ) + " already added" %}
+
+{% block formContent %}
+  {% include "_includes/placement-already-added.njk" %}
+{% endblock %}

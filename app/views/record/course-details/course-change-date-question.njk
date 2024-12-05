@@ -1,0 +1,9 @@
+{% extends "_templates/_record-form.njk" %}
+
+{% set pageHeading = "Did this course change happen after they started training?" %}
+
+{% set formAction = "./course-change-date-question-answer" | addReferrer(referrer) %}
+
+{% block formContent %}
+  {% include "_includes/forms/course-details/course-change-date-question.njk" %}
+{% endblock %}

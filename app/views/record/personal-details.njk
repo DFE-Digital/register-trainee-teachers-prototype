@@ -1,0 +1,24 @@
+{% extends "_templates/_record.njk" %}
+
+{% set backLink = '/records' %}
+{% set backText = 'All registered trainees' %}
+{% set pageHeading = data.record.personalDetails.shortName %}
+{% set activeTab = 'personal-details' %}
+
+{% block tabContent %}
+
+  {% set referrer = recordPath + "/personal-details" %}
+
+  {% include "_includes/summary-cards/personal-details.njk" %}
+
+  {% if isAuthorised('viewDiversity') %}
+    {% include "_includes/summary-cards/diversity.njk" %}
+  {% endif %}
+
+  {% include "_includes/summary-cards/gcse-details.njk" %}
+
+  {% include "_includes/summary-cards/degree/details.njk" %}
+
+  {% include "_includes/summary-cards/undergraduate-qualification.njk" %}
+
+{% endblock %}

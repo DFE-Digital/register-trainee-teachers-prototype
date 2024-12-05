@@ -1,0 +1,233 @@
+{% extends "_templates/_page.njk" %}
+
+{% set allProviders = data.providers.accreditingProviders.all %}
+{% set filteredProviders = allProviders %}
+
+{% set pageHeadingShort = "Organisations" %}
+
+{% set pageHeading %}
+  {{ pageHeadingShort }} ({{filteredProviders | length}} {{ "organisation" | pluralise(filteredProviders | length) }})
+{% endset %}
+
+
+
+{% set backText = "Support home" %}
+{% set backLink = '/support' %}
+{% set navActive = "organisations" %}
+
+{# Dual skip links to support skipping to results rather than #main-content #}
+{% block skipLink %}
+  <div class="app-skip-link__container">
+    <span class="app-skip-link__item">
+      {{ govukSkipLink({
+        href: '#main-content',
+        text: 'Skip to main content'
+      }) }}
+    </span>
+    <span class="app-skip-link__item">
+      {{ govukSkipLink({
+        href: '#records-list',
+        text: 'Skip to results' if selectedFilters else 'Skip to records'
+      }) }}
+    </span>
+  </div>
+{% endblock %}
+
+{% block content %}
+
+{# Data for select / autocomplete #}
+{% set providersForSelect = allProviders | lodash('map', 'name') | toSelectItems %}
+
+{% set providersForAutocomplete = [] %}
+
+{% for provider in allProviders %}
+  {% set synonyms = [] %}
+  {% set hintArray = [] %}
+
+  {% set hintArray = hintArray | push(provider | getProviderTypeString(true)) %}
+
+  {% if provider.postcode %}
+    {% set hintArray = hintArray | push("postcode: " + provider.postcode) %}
+    {% set synonyms = synonyms | push(provider.postcode) %}
+  {% endif %}
+  {% if provider.urn %}
+    {% set hintArray = hintArray | push("URN: " + provider.urn) %}
+    {% set synonyms = synonyms | push(provider.urn | string) %}
+  {% endif %}
+  {% if provider.ukprn %}
+    {% set hintArray = hintArray | push("UKPRN: " + provider.ukprn) %}
+    {% set synonyms = synonyms | push(provider.ukprn | string) %}
+  {% endif %}
+
+  {% set hint = hintArray | commaSeparate %}
+  {% set providersForAutocomplete = providersForAutocomplete | push({
+    name: provider.name,
+    synonyms: synonyms,
+    hint: hint,
+    value: provider.id
+  }) %}
+
+{% endfor %}
+
+{# super pulls in flash message banner #}
+{{super()}}
+
+{{data | log}}
+
+{% set filterOptionsHtml %}
+
+  {# {% include "_includes/filter-panel/all-providers.njk" %} #}
+
+  {# {% include "_includes/filter-panel/training-status.njk" %} #}
+
+  {% include "_includes/filter-panel/support/organisation-type.njk" %}
+
+  {# {% include "_includes/filter-panel/training-routes.njk" %} #}
+
+  {# {% include "_includes/filter-panel/statuses.njk" %} #}
+
+
+
+{% endset %}
+
+{% set filterContentHtml %}
+  {% if filteredProviders | length %}
+    <div>
+      {{ appAutocompleteFromSelect({
+        label: {
+          text: "Search for an organisation",
+          classes: "govuk-label--s"
+        },
+        id: 'organisations',
+        name: "",
+        items: providersForSelect,
+        hint: {
+          text: "Searcy by name, urn, ukprn or postcode"
+        },
+        classes: "govuk-!-width-two-thirds",
+        value: '',
+        autocompleteOptions: {
+          minLength: 2,
+          autoselect: false,
+          showAllValues: false,
+          showSuggestionsBanner: false,
+          values: providersForAutocomplete,
+          onConfirmExtra: true
+        }
+      }) }}
+
+      <script>
+        let onConfirmExtra = selected => {
+          if (selected.value){
+            window.location.href = `./organisations/${selected.value}`
+          }
+        }
+      </script>
+
+      <button class="govuk-button app-no-js-only" data-module="govuk-button">
+        Submit
+      </button>
+    </div>
+    <div class="app-records-actions">
+      <div class="app-records-actions__col">
+
+        {# <p class="govuk-body govuk-!-margin-bottom-3"><a href="#" class="govuk-link">Export these users</a></p> #}
+
+        {# Only sort if there’s at least two items #}
+        {% if filteredProviders | length > 1 %}
+          {% include "_includes/record-sort-order.njk" %}
+        {% endif %}
+      </div>
+      <div class="app-records-actions__col">
+        <div class="moj-action-bar">
+          <div class="moj-action-bar__filter">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="app-application-cards">
+
+      {% if filteredProviders | length %}
+
+      {# {{data.users | log}} #}
+
+        {% for provider in filteredProviders %}
+          {# {{provider | log}} #}
+          {% include "_includes/support/organisation-card.njk" %}
+        {% endfor %}
+
+      {% endif %}
+    </div>
+
+    {# Dummy pagination - not hooked up to data yet #}
+    {% include "_includes/pagination.njk" %}
+
+  {% else %}
+    <h2 class="govuk-heading-m">No organisations found</h2>
+    <p class="govuk-body">Try <a href="/records">clearing your search and filters</a>.</p>
+  {% endif %}
+
+{% endset %}
+
+
+<div class="govuk-grid-row">
+
+  <div class="govuk-grid-column-full">
+
+    <span class="govuk-caption-l">Support for Register</span>
+    {# This heading set separately than {{pageHeading}} as it uses html #}
+    <h1 class="govuk-heading-xl">
+      {{ pageHeadingShort }}
+      <span class="govuk-!-font-weight-regular">
+        ({{ filteredProviders | length}}{% if (filteredProviders | length) != (allProviders | length) %} of {{ allProviders | length }}{% endif %}<span class="govuk-visually-hidden">{{ "user" | pluralise(filteredProviders | length )}}</span>)
+      </span>
+    </h1>
+
+    {{ govukButton({
+      text: "Add an organisation",
+      href: "/support/organisations/new",
+      isStartButton: true
+    }) }}
+
+  </div>
+
+</div>
+
+<div class="govuk-grid-row">
+
+  <div class="govuk-grid-column-full">
+
+    {{ appFilterPage({
+      filterOptions: filterOptionsHtml,
+      selectedFilters: selectedFilters,
+      filterContent: filterContentHtml
+      })
+    }}
+  </div>
+
+</div>
+
+{% endblock %}
+
+{% block pageScripts %}
+  <script>
+    new MOJFrontend.FilterToggleButton({
+    bigModeMediaQuery: '(min-width: 48.063em)',
+    startHidden: false,
+    toggleButton: {
+      container: $('.moj-action-bar__filter'),
+      showText: 'Show filter',
+      hideText: 'Hide filter',
+      classes: 'govuk-button--secondary'
+    },
+    closeButton: {
+      container: $('.moj-filter__header-action'),
+      text: 'Close'
+    },
+    filter: {
+      container: $('.moj-filter')
+    }
+  });
+  </script>
+{% endblock %}

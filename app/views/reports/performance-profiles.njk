@@ -1,0 +1,189 @@
+{% extends "_templates/_page.njk" %}
+
+{% set backLink = '/reports' %}
+{% set backText = "Reports" %}
+{% set navActive = 'reports' %}
+
+{# {% set formAction = "./reinstate/confirm" %} #}
+
+{% set academicYear = data.years.currentAcademicYear %}
+{% set academicYearShort = data.years.currentAcademicYear | academicYearToYear %}
+
+{% set previousAcademicYear = data.years.previousAcademicYear %}
+
+{% set pageHeading = 'Trainees who studied in the ' + previousAcademicYear + ' academic year' %}
+
+{% set endYear = data.years.currentAcademicYear | academicYearToYear + 1 %}
+{% set performanceProfilesDate = endYear + "-1-31" %}
+
+{% set viewingUserIsScitt = data.settings.userActiveProvider | providerIsScitt %}
+
+{% if viewingUserIsScitt %}
+  {% set traineeCount = 37 %}
+{% else %}
+  {% set traineeCount = 127 %}
+{% endif %}
+
+
+{% set hasZeroTraineesToExport = true if traineeCount == 0 %}
+
+{% set filteredRecords      = data.records | filterRecords(data) %}
+
+{# Exclude drafts #}
+{% set registeredTrainees   = filteredRecords | filterByStatus("Draft", true) %}
+
+{# Just trainees from the academic year #}
+{% set academicYearTrainees          = registeredTrainees | whereIncludes('academicYears', previousAcademicYear) %}
+
+{# Those that started that year #}
+{% set newStarterTrainees            = academicYearTrainees | whereIncludes('academicYear', previousAcademicYear) %}
+
+{# Those that were awarded in the year #}
+{% set awardedTrainees               = academicYearTrainees | filterByFunction('isAwarded') | whereIncludes('endAcademicYear', previousAcademicYear) %}
+
+{# Those that withdrew in the year #}
+{% set withdrawnTrainees             = academicYearTrainees | filterByFunction('isWithdrawn') | whereIncludes('endAcademicYear', previousAcademicYear) %}
+
+{# Those that withdrew within the first 90 days of starting #}
+{% set withdrawnWithin90DaysTrainees = withdrawnTrainees | filterByFunction('withdrawnWithin90days')%}
+
+{# Counts as links - not currently used #}
+{# {% set totalTraineesCountLink %}
+  <a href="/records?&filterAcademicYears={{data.years.previousAcademicYear}}" class="govuk-link">
+    {{academicYearTrainees | length}}<span class="_govuk-visually-hidden"> trainees</span>
+  </a>
+{% endset %}
+{% set newStartersCountLink %}
+  <a href="/records?&filterAcademicYears={{data.years.previousAcademicYear}}&filterStartYears={{data.years.previousAcademicYear}}" class="govuk-link">
+    {{newStarterTrainees | length}}<span class="_govuk-visually-hidden"> trainees</span>
+  </a>
+{% endset %}
+{% set awardedCountLink %}
+  <a href="/records?&filterAcademicYears={{data.years.previousAcademicYear}}&filterEndYears={{data.years.previousAcademicYear}}&filterTrainingStatus=Awarded" class="govuk-link">
+    {{awardedTrainees | length}}<span class="_govuk-visually-hidden"> trainees</span>
+  </a>
+{% endset %}
+{% set withdrawnCountLink %}
+  <a href="/records?&filterAcademicYears={{data.years.previousAcademicYear}}&filterEndAcademicYear={{data.years.previousAcademicYear}}&filterTrainingStatus=Withdrawn" class="govuk-link">
+    {{withdrawnTrainees | length}}<span class="_govuk-visually-hidden"> trainees</span>
+  </a>
+{% endset %}
+ #}
+
+{# Counts as links - not currently used #}
+{# {% set yearCounts = [
+  ["Total trainees", totalTraineesCountLink],
+  ["New starters", newStartersCountLink],
+  ["Awarded", awardedCountLink],
+  ["Withdrawn", withdrawnCountLink]
+]
+%} #}
+
+{# Labels as links #}
+
+{% set totalTraineesLink %}
+  <a href="/records?&filterAcademicYears={{data.years.previousAcademicYear}}" class="govuk-link">
+    Total trainees
+  </a>
+{% endset %}
+
+{% set newStartersLink %}
+  <a href="/records?&filterAcademicYears={{data.years.previousAcademicYear}}&filterStartYears={{data.years.previousAcademicYear}}" class="govuk-link">
+    New starters
+  </a>
+{% endset %}
+
+{% set awardedLink %}
+  <a href="/records?&filterAcademicYears={{data.years.previousAcademicYear}}&filterEndYears={{data.years.previousAcademicYear}}&filterTrainingStatus=Awarded" class="govuk-link">
+    Awarded
+  </a>
+{% endset %}
+
+{% set withdrawnLink %}
+  <a href="/records?&filterAcademicYears={{data.years.previousAcademicYear}}&filterEndAcademicYear={{data.years.previousAcademicYear}}&filterTrainingStatus=Withdrawn" class="govuk-link">
+    Withdrawn
+  </a>
+{% endset %}
+
+{% set yearCounts = [
+  [totalTraineesLink, academicYearTrainees | length ],
+  [newStartersLink, newStarterTrainees | length ],
+  [awardedLink, awardedTrainees | length],
+  [withdrawnLink, withdrawnTrainees | length]
+]
+%}
+
+{% set yearSummaryTable %}
+  {% from "govuk/components/table/macro.njk" import govukTable %}
+
+  {# Convert array to array of objects that table macro needs #}
+  {% set tableRows = yearCounts | arrayToGovukTable %}
+
+  {{ govukTable({
+    firstCellIsHeader: false,
+    head: [
+      {
+        text: "Type"
+      },
+      {
+        text: "Number of trainees in " + data.years.previousAcademicYear
+      }
+    ],
+    rows: tableRows
+  }) }}
+{% endset %}
+
+{% block content %}
+{{super()}}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <form action="" method="post">
+
+      <h1 class="govuk-heading-l">{{pageHeading}}</h1>
+
+      <p class="govuk-body">Use this report to help you sign off your data for the initial teacher training performance profiles publication.</p>
+
+      <h2 class="govuk-heading-m">Which trainees are included in this report</h2>
+
+      <p class="govuk-body">This report includes all trainees who:</p>
+
+      <ul class="govuk-list govuk-list--bullet">
+        <li>
+          have been registered with the Department for Education
+        </li>
+        <li>
+          studied in the {{ previousAcademicYear }} academic year
+        </li>
+      </ul>
+
+      {# {{ yearSummaryTable | safe }} #}
+
+      <h2 class="govuk-heading-m">How to use this report</h2>
+
+      <p class="govuk-body">You can read about <a href="/guidance/performance-profiles">how to check, fix and sign off your data</a>.</p>
+
+      <p class="govuk-body">You must sign off the data by {{ performanceProfilesDate | govukDate('YYYY-M-D') }} at 11:59pm.</p>
+
+      <input name="successFlash" type="hidden" value="Export successfully downloaded">
+
+      {% if hasZeroTraineesToExport %}
+        {{ govukInsetText({
+          text: "You have no trainees available to export. Check you have registered new trainees for the " + data.years.previousAcademicYear + " academic year."
+        }) }}
+      {% endif %}
+
+      {% set buttonText -%}
+        Export trainee data ({{traineeCount}} {{"trainee" | pluralise(traineeCount)}})
+      {%- endset %}
+
+      {{ govukButton({
+        "text": "Export new trainee data (CSV)",
+        "text": buttonText
+      }) }}
+
+    </form>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "_templates/_new-record.njk" %}
+
+{# set bursary = data.record | getFinancialSupport #}
+{# set scholarshipsApply = data.record | scholarshipsApply #}
+{% set pageHeading = "Funding" %}
+
+{ {% set formAction = "./confirm" | addReferrer(referrer) %} }
+
+{% block formContent %}
+
+{# Test this logic #}
+{# if record | isEarlyYears && isFullTime #}
+{# Refactor the logic with logic like "if record | isEarlyYears && isFullTime" once design approved to pull form from an include rather than hard code it #}
+
+{% include "_includes/forms/funding/early-years-post-grad.njk" %}
+
+
+{% endblock %}

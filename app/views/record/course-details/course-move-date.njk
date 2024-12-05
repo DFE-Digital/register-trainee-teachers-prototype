@@ -1,0 +1,13 @@
+{% extends "_templates/_record-form.njk" %}
+
+{% set pageHeading = "When did the trainee move course?" %}
+
+{% if referrer | includes("final-check") %}
+  {% set formAction = "./final-check-course-change" | addReferrer(referrer) %}
+{% else %}
+  {% set formAction = "./select-route" | addReferrer(referrer) %}
+{% endif %}
+
+{% block formContent %}
+  {% include "_includes/forms/course-details/course-move-date.njk" %}
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "_templates/_new-record.njk" %}
+
+{% set pageHeading = "Course ITT dates" %}
+
+{% set formAction = "./dates-answer" | addReferrer(referrer)%}
+
+{% block formContent %}
+
+  {% if data.directSetCourseDates %}
+    {% include "_includes/forms/course-details/course-dates.njk" %}
+  {% else %}
+    {% include "_includes/forms/course-details/trainee-course-dates.njk" %}
+  {% endif %}
+
+{% endblock %}

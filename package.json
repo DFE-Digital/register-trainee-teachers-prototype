@@ -36,7 +36,7 @@
     "govuk-markdown": "^0.8.0",
     "gulp": "^5.0.0",
     "gulp-nodemon": "^2.5.0",
-    "gulp-sass": "^5.0.0",
+    "gulp-sass": "^6.0.0",
     "gulp-sourcemaps": "^3.0.0",
     "inquirer": "^8.2.6",
     "js-yaml": "^4.1.0",

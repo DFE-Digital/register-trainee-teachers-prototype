@@ -351,7 +351,6 @@ module.exports = function () {
     'D'
   ]
 
-
   return {
     subjects,
     singleGrades

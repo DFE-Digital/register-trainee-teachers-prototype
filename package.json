@@ -68,11 +68,6 @@
       "app/assets/javascripts/lunr-2.3.9.js"
     ]
   },
-  "greenkeeper": {
-    "ignore": [
-      "nunjucks"
-    ]
-  },
   "devDependencies": {
     "markdownlint-cli": "^0.43.0",
     "standard": "^17.1.2",

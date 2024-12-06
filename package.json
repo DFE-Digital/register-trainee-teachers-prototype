@@ -59,6 +59,13 @@
     "uuid": "^11.0.3",
     "weighted": "^1.0.0"
   },
+  "standard": {
+    "ignore": [
+      "app/assets/javascripts/jquery-1.11.3.js",
+      "app/assets/javascripts/jquery-3.6.1.min.js",
+      "app/assets/javascripts/lunr-2.3.9.js"
+    ]
+  },
   "greenkeeper": {
     "ignore": [
       "nunjucks"

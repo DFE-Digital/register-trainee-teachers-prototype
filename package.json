@@ -61,13 +61,6 @@
     "uuid": "^11.0.3",
     "weighted": "^1.0.0"
   },
-  "standard": {
-    "ignore": [
-      "app/assets/javascripts/jquery-1.11.3.js",
-      "app/assets/javascripts/jquery-3.6.1.min.js",
-      "app/assets/javascripts/lunr-2.3.9.js"
-    ]
-  },
   "devDependencies": {
     "markdownlint-cli": "^0.43.0",
     "standard": "^17.1.2",
@@ -75,5 +68,12 @@
     "stylelint-config-recommended-scss": "^14.1.0",
     "stylelint-config-standard": "^36.0.1",
     "stylelint-order": "^6.0.4"
+  },
+  "standard": {
+    "ignore": [
+      "app/assets/javascripts/jquery-1.11.3.js",
+      "app/assets/javascripts/jquery-3.6.1.min.js",
+      "app/assets/javascripts/lunr-2.3.9.js"
+    ]
   }
 }

@@ -8,6 +8,8 @@
   },
   "scripts": {
     "start": "node start.js",
+    "lint:markdown": "markdownlint 'app/**/*.md' --disable MD013",
+    "lint:markdown:fix": "markdownlint 'app/**/*.md' --disable MD013 --fix",
     "lint:scripts": "standard",
     "lint:scripts:fix": "standard --fix",
     "test": "npm run lint:scripts && gulp generate-assets && jest"
@@ -74,6 +76,7 @@
   "devDependencies": {
     "glob": "^11.0.0",
     "jest": "^29.7.0",
+    "markdownlint-cli": "^0.43.0",
     "standard": "^17.1.2",
     "supertest": "^7.0.0"
   }

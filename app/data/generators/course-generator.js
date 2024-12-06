@@ -84,7 +84,7 @@ const getPrimarySubjects = subjectCount => {
 
   // Other primary specialisms
   const primarySpecialisms = ittSubjects.commonPrimarySubjects
-    .filter(subject => subject != 'Primary teaching')
+    .filter(subject => subject !== 'Primary teaching')
 
   if (subjectCount == 2) {
     const specialism = faker.helpers.arrayElement([
@@ -160,8 +160,8 @@ const getSecondaryPublishSubjects = (subjectCount) => {
 
   // All subjects that don't include 'Primary' and are not a language
   const nonPrimaryPublishSubjects = Object.keys(publishSubjects).filter(subject => {
-    return !subject.includes('Primary') && publishSubjects[subject].allocationSubject != 'Modern languages' &&
-    publishSubjects[subject].allocationSubject != 'Ancient languages'
+    return !subject.includes('Primary') && publishSubjects[subject].allocationSubject !== 'Modern languages' &&
+    publishSubjects[subject].allocationSubject !== 'Ancient languages'
   })
 
   // Shuffle our data so we can get n values from them by slicing
@@ -270,7 +270,7 @@ module.exports = (params) => {
       6: 0.05 // Undergrad part time
     }))
 
-    studyMode = (duration != 6) ? 'Full time' : 'Part time'
+    studyMode = (duration !== 6) ? 'Full time' : 'Part time'
   } else {
     duration = parseInt(weighted.select({
       1: 0.8, // 1 year full time or mix - majority of courses are full time

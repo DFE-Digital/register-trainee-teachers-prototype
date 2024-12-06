@@ -70,7 +70,7 @@ filters.removeEmpty = items => {
 
   // Handle strings
   if (_.isString(items)) {
-    if (items != null && items !== '') return items
+    if (items !== null && items !== '') return items
     else return
   }
 
@@ -209,7 +209,7 @@ filters.removeFirstItem = (array) => {
 
 filters.removeArrayItem = (array, itemToRemove) => {
   if (_.isArray(array)) {
-    return filteredItems = array.filter(item => item != itemToRemove)
+    return filteredItems = array.filter(item => item !== itemToRemove)
   } else return array
 }
 

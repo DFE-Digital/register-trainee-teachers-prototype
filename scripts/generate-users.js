@@ -76,7 +76,7 @@ const generateFakeUsers = () => {
     Array(numberOfUsersToCreate).fill().map((item, index) => {
       // First user always a team admin. After that, 20% chance.
       let role = 'team admin'
-      if (index != 0) {
+      if (index !== 0) {
         role = weighted.select(['team admin', 'team member'], [0.2, 0.8])
       }
       const user = generateUser(provider, role)

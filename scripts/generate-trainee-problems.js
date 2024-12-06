@@ -138,7 +138,7 @@ const generateTraineeProblem = (provider, providerTrainees) => {
   problem.date = randomDateInPast(12, 0)
 
   // Make sure we have populated some trainees.
-  if (problem.trainees.length != problem.traineeCount) {
+  if (problem.trainees.length !== problem.traineeCount) {
     console.log('Error: insufficient trainees for given problem type. Exiting')
     console.log(problem.id)
     return null

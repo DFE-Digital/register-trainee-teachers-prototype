@@ -12,7 +12,7 @@ const cleanInputData = data => {
   } else {
     data = [].concat(data) // coerce to arrays so we can filter them
     // _unchecked sometimes appears - can't track down what's causing it
-    data = data.filter(item => item != '_unchecked')
+    data = data.filter(item => item !== '_unchecked')
     return (data.length == 0) ? undefined : data // return undefined if array now empty
   }
 }
@@ -90,16 +90,16 @@ const getHasFilters = (filters, searchQuery) => {
   !!(filters.phase) ||
   !!(filters.studyMode) ||
   !!(searchQuery) ||
-  !!(filters.subject && filters.subject != 'All subjects') ||
+  !!(filters.subject && filters.subject !== 'All subjects') ||
 
-  !!(filters.years && filters.years != 'All years') ||
-  !!(filters.startYears && filters.startYears != 'All years') ||
-  !!(filters.endYears && filters.endYears != 'All years') ||
+  !!(filters.years && filters.years !== 'All years') ||
+  !!(filters.startYears && filters.startYears !== 'All years') ||
+  !!(filters.endYears && filters.endYears !== 'All years') ||
   !!(filters.trainingRoutes) ||
   !!(filters.trainingStatus) ||
-  !!(filters.academicYears && filters.academicYears != 'All years') ||
+  !!(filters.academicYears && filters.academicYears !== 'All years') ||
   !!(filters.providers) ||
-  !!(filters.allProviders && filters.allProviders != 'All providers')
+  !!(filters.allProviders && filters.allProviders !== 'All providers')
 }
 
 // Make object to hold details of selected filters with appropriate links to clear each one
@@ -137,7 +137,7 @@ const getSelectedFilters = req => {
       heading: { text: 'Cohorts' },
       items: filters.cohortFilter.map((cohortFilter) => {
         const newQuery = Object.assign({}, query)
-        newQuery.filterCohortFilter = filters.cohortFilter.filter(a => a != cohortFilter)
+        newQuery.filterCohortFilter = filters.cohortFilter.filter(a => a !== cohortFilter)
         return {
           text: cohortFilter,
           href: url.format({
@@ -154,7 +154,7 @@ const getSelectedFilters = req => {
       heading: { text: 'Training status' },
       items: filters.trainingStatus.map((status) => {
         const newQuery = Object.assign({}, query)
-        newQuery.filterTrainingStatus = filters.trainingStatus.filter(a => a != status)
+        newQuery.filterTrainingStatus = filters.trainingStatus.filter(a => a !== status)
 
         return {
           text: status,
@@ -168,7 +168,7 @@ const getSelectedFilters = req => {
   }
 
   // Combined start and end years select - not currently used
-  if (filters.years && filters.years != 'All years') {
+  if (filters.years && filters.years !== 'All years') {
     const newQuery = Object.assign({}, query)
     delete newQuery.filterYears
     let headingText = 'Year'
@@ -195,7 +195,7 @@ const getSelectedFilters = req => {
   }
 
   // Start years
-  if (filters.startYears && filters.startYears != 'All years') {
+  if (filters.startYears && filters.startYears !== 'All years') {
     const newQuery = Object.assign({}, query)
     delete newQuery.filterStartYears
     selectedFilters.categories.push({
@@ -211,7 +211,7 @@ const getSelectedFilters = req => {
   }
 
   // End years
-  if (filters.endYears && filters.endYears != 'All years') {
+  if (filters.endYears && filters.endYears !== 'All years') {
     const newQuery = Object.assign({}, query)
     delete newQuery.filterEndYears
     selectedFilters.categories.push({
@@ -227,7 +227,7 @@ const getSelectedFilters = req => {
   }
 
   // Academic years
-  if (filters.academicYears && filters.academicYears != 'All years') {
+  if (filters.academicYears && filters.academicYears !== 'All years') {
     const newQuery = Object.assign({}, query)
     delete newQuery.filterAcademicYears
     selectedFilters.categories.push({
@@ -242,7 +242,7 @@ const getSelectedFilters = req => {
     })
   }
 
-  if (filters.allProviders && filters.allProviders != 'All providers') {
+  if (filters.allProviders && filters.allProviders !== 'All providers') {
     const newQuery = Object.assign({}, query)
     delete newQuery.filterAllProviders
     selectedFilters.categories.push({
@@ -264,7 +264,7 @@ const getSelectedFilters = req => {
       heading: { text: completeFilterLabel },
       items: filters.completeStatus.map((completeStatus) => {
         const newQuery = Object.assign({}, query)
-        newQuery.filterCompleteStatus = filters.completeStatus.filter(a => a != completeStatus)
+        newQuery.filterCompleteStatus = filters.completeStatus.filter(a => a !== completeStatus)
         return {
           text: completeStatus,
           href: url.format({
@@ -281,7 +281,7 @@ const getSelectedFilters = req => {
       heading: { text: 'Record source' },
       items: filters.source.map((source) => {
         const newQuery = Object.assign({}, query)
-        newQuery.filterSource = filters.source.filter(a => a != source)
+        newQuery.filterSource = filters.source.filter(a => a !== source)
         return {
           text: source,
           href: url.format({
@@ -298,7 +298,7 @@ const getSelectedFilters = req => {
       heading: { text: 'Course level' },
       items: filters.courseLevel.map((courseLevel) => {
         const newQuery = Object.assign({}, query)
-        newQuery.filtercourseLevel = filters.courseLevel.filter(a => a != courseLevel)
+        newQuery.filtercourseLevel = filters.courseLevel.filter(a => a !== courseLevel)
         return {
           text: courseLevel,
           href: url.format({
@@ -315,7 +315,7 @@ const getSelectedFilters = req => {
       heading: { text: 'Education phase' },
       items: filters.phase.map((phase) => {
         const newQuery = Object.assign({}, query)
-        newQuery.filterPhase = filters.phase.filter(a => a != phase)
+        newQuery.filterPhase = filters.phase.filter(a => a !== phase)
         return {
           text: phase,
           href: url.format({
@@ -332,7 +332,7 @@ const getSelectedFilters = req => {
       heading: { text: 'Full time or part time' },
       items: filters.studyMode.map((studyMode) => {
         const newQuery = Object.assign({}, query)
-        newQuery.filterPhase = filters.studyMode.filter(a => a != studyMode)
+        newQuery.filterPhase = filters.studyMode.filter(a => a !== studyMode)
         return {
           text: studyMode,
           href: url.format({
@@ -349,7 +349,7 @@ const getSelectedFilters = req => {
       heading: { text: 'Provider' },
       items: filters.providers.map((provider) => {
         const newQuery = Object.assign({}, query)
-        newQuery.filterUserProviders = filters.providers.filter(a => a != provider)
+        newQuery.filterUserProviders = filters.providers.filter(a => a !== provider)
 
         return {
           text: provider,
@@ -367,7 +367,7 @@ const getSelectedFilters = req => {
       heading: { text: 'Training route' },
       items: filters.trainingRoutes.map((route) => {
         const newQuery = Object.assign({}, query)
-        newQuery.filterTrainingRoutes = filters.trainingRoutes.filter(a => a != route)
+        newQuery.filterTrainingRoutes = filters.trainingRoutes.filter(a => a !== route)
 
         return {
           text: route,
@@ -385,7 +385,7 @@ const getSelectedFilters = req => {
       heading: { text: 'Status' },
       items: filters.status.map((status) => {
         const newQuery = Object.assign({}, query)
-        newQuery.filterStatus = filters.status.filter(a => a != status)
+        newQuery.filterStatus = filters.status.filter(a => a !== status)
 
         return {
           text: status,
@@ -398,7 +398,7 @@ const getSelectedFilters = req => {
     })
   }
 
-  if (filters.subject && filters.subject != 'All subjects') {
+  if (filters.subject && filters.subject !== 'All subjects') {
     const newQuery = Object.assign({}, query)
     delete newQuery.filterSubject
     selectedFilters.categories.push({
@@ -497,7 +497,7 @@ module.exports = router => {
     console.log({ filteredRecordsRealCount })
     filteredRecords = registeredRecords.slice(0, 100)
 
-    if (req?.params?.tabName && data.settings.academicYearsUiStyle != 'Tabs') {
+    if (req?.params?.tabName && data.settings.academicYearsUiStyle !== 'Tabs') {
       res.redirect('/records')
     } else {
       res.render('records', {

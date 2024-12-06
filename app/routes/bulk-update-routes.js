@@ -67,7 +67,7 @@ module.exports = router => {
           rowNumber: index + 3,
           trainee,
           uploadStatus: selectedStatus,
-          assessmentDate: (selectedStatus != 'unchanged') ? assessmentDate : null
+          assessmentDate: (selectedStatus !== 'unchanged') ? assessmentDate : null
         }
 
         if (selectedStatus == 'error') {
@@ -349,7 +349,7 @@ module.exports = router => {
           rowNumber: index + 3,
           trainee,
           uploadStatus: selectedStatus,
-          assessmentDate: (selectedStatus != 'unchanged') ? assessmentDate : null
+          assessmentDate: (selectedStatus !== 'unchanged') ? assessmentDate : null
         }
 
         if (selectedStatus == 'error') {

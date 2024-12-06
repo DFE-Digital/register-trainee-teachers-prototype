@@ -99,7 +99,7 @@ module.exports = router => {
     // It’s possible for a user to pick a Publish course, then go back to change the
     // route to one that doesn’t have publish courses. If they do this, we delete the
     // course details section
-    if (existingCourseDetails?.isPublishCourse && route != existingCourseDetails?.route) {
+    if (existingCourseDetails?.isPublishCourse && route !== existingCourseDetails?.route) {
       delete record.courseDetails
       console.log('Changing to a route that doesn’t match the selected Publish course')
       // In the future, this could send to a confirm page checking if this is the right course

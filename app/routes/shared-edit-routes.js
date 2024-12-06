@@ -126,7 +126,7 @@ module.exports = router => {
     // run a string search for the given name.
     if (autocompleteUuid && autocompleteRawValue) {
       const selectedSchool = schools.find(school => school.uuid == autocompleteUuid)
-      if (selectedSchool?.schoolName != autocompleteRawValue) {
+      if (selectedSchool?.schoolName !== autocompleteRawValue) {
         autocompleteUuid = undefined
       }
     }
@@ -136,7 +136,7 @@ module.exports = router => {
     const schoolSearchTerm = (!autocompleteUuid && autocompleteRawValue) || req.body?._schoolSearch || false
 
     const searchResultRadios = req.body?._searchResultRadios
-    const schoolResultUuid = (searchResultRadios && searchResultRadios != 'searchAgain') ? searchResultRadios : false
+    const schoolResultUuid = (searchResultRadios && searchResultRadios !== 'searchAgain') ? searchResultRadios : false
 
     // Uuid could come via two form inputs
     const schoolUuid = autocompleteUuid || schoolResultUuid || false
@@ -241,7 +241,7 @@ module.exports = router => {
     // run a string search for the given name.
     if (autocompleteUuid && autocompleteRawValue) {
       const selectedSchool = schools.find(school => school.uuid == autocompleteUuid)
-      if (selectedSchool?.schoolName != autocompleteRawValue) {
+      if (selectedSchool?.schoolName !== autocompleteRawValue) {
         autocompleteUuid = undefined
       }
     }
@@ -251,7 +251,7 @@ module.exports = router => {
     const schoolSearchTerm = (!autocompleteUuid && autocompleteRawValue) || req.body?._schoolSearch || false
 
     const searchResultRadios = req.body?._searchResultRadios
-    const schoolResultUuid = (searchResultRadios && searchResultRadios != 'searchAgain') ? searchResultRadios : false
+    const schoolResultUuid = (searchResultRadios && searchResultRadios !== 'searchAgain') ? searchResultRadios : false
 
     // Uuid could come via two form inputs
     const schoolUuid = autocompleteUuid || schoolResultUuid || false
@@ -321,7 +321,7 @@ module.exports = router => {
 
       // Todo: should this be a function? probably we should check the record stored in data not
       // the route on the course
-      const routeHasChanged = (record.route != record?.courseDetails?.route)
+      const routeHasChanged = (record.route !== record?.courseDetails?.route)
 
       // As the route has changed, clear bits of course details that might be incompatible
       // Keeps a few bits (subject, dates) where possible, as we may be able to populate them
@@ -413,7 +413,7 @@ module.exports = router => {
       if (record.courseDetails.isPublishCourse) {
         const existingCourse = utils.getCourseByCode(record?.courseDetails?.code, data)
         // Check if the academic years match. If not, clear out the course details.
-        if (existingCourse?.academicYear != academicYearString) {
+        if (existingCourse?.academicYear !== academicYearString) {
           delete record.courseDetails
           record.courseDetails = {
             academicYear: academicYearString
@@ -576,7 +576,7 @@ module.exports = router => {
         // If we already have a course attached to the record, and it's the *same* course as
         // the one now selected, then do nothing. Otherwise, we'll overwrite with the newly
         // selected course.
-        if (record?.courseDetails?.id != selectedCourse) {
+        if (record?.courseDetails?.id !== selectedCourse) {
           // Copy over that provider’s course data
           const courseDetails = providerCourses[courseIndex]
 
@@ -601,7 +601,7 @@ module.exports = router => {
 
         // For apply records we let them pick a Publish course which
         // might have a different route.
-        if (record.route != record.courseDetails.route) {
+        if (record.route !== record.courseDetails.route) {
           console.log(`The selected Publish course’s route does not match the draft’s route. Draft route changed to ${record.courseDetails.route}`)
           record.route = record.courseDetails.route
         }
@@ -800,7 +800,7 @@ module.exports = router => {
       const allocationSubject = utils.getAllocationSubject(courseDetails)
       const courseAllocationSubject = utils.getCourseAllocationSubject(courseDetails)
 
-      if (allocationSubject != courseAllocationSubject) {
+      if (allocationSubject !== courseAllocationSubject) {
         console.log(`The allocation subject (${allocationSubject}) of subject 1 (${courseDetails?.subjects?.first}) does not match the Publish course allocatoin subject (${courseAllocationSubject}). Deleting references to old Publish course.`)
         courseDetails = utils.deletePublishCourseReferences(courseDetails)
       }
@@ -1046,7 +1046,7 @@ module.exports = router => {
       }
     }
     // Draft specific routes
-    else if (req.params.recordtype != 'record') {
+    else if (req.params.recordtype !== 'record') {
       if (record.placement.hasPlacements == 'Not yet') {
         // mark the Placements section as complete
         _.set(record, 'placement.status', 'Completed')

@@ -481,11 +481,11 @@ exports.deleteIncompatibleCourseReferences = record => {
   }
 
   if (isEarlyYears) {
-    if (record?.courseDetails?.subjects?.first != 'Early years teaching') {
+    if (record?.courseDetails?.subjects?.first !== 'Early years teaching') {
       delete record?.courseDetails?.subjects
     }
 
-    if (record?.courseDetails?.phase != 'Early years') {
+    if (record?.courseDetails?.phase !== 'Early years') {
       delete record?.courseDetails?.phase
     }
 
@@ -516,7 +516,7 @@ exports.hasInitiatives = (record) => {
 }
 
 exports.isOnInitiative = record => {
-  return record?.funding?.initiative != 'Not on a training initiative'
+  return record?.funding?.initiative !== 'Not on a training initiative'
 }
 
 exports.subjectToAllocationSubject = subject => {
@@ -1042,7 +1042,7 @@ exports.isDraft = record => {
 }
 
 exports.isNonDraft = record => {
-  return record?.status != 'Draft'
+  return record?.status !== 'Draft'
 }
 
 exports.isPendingTrn = record => {
@@ -1121,7 +1121,7 @@ exports.sourceIsApply = record => {
 }
 
 exports.sourceIsManual = record => {
-  return record?.source != 'Apply'
+  return record?.source !== 'Apply'
 }
 
 exports.sourceIsHESA = record => {
@@ -1229,7 +1229,7 @@ exports.isHesaAndLocked = record => {
 
   if (exports.sourceIsHESA(record)) {
     // Hardcoded to locked until we decide on rules for unlocking
-    if (record?.hesa?.editingEnabled != true) {
+    if (record?.hesa?.editingEnabled !== true) {
       shouldBeLocked = true
     }
     // if (exports.finishedEarlierThanThisAcademicYear(record)) {
@@ -1438,7 +1438,7 @@ exports.needsPlacementDetails = function (record, data = false) {
   const minPlacementsRequired = data?.settings?.minPlacementsRequired || 2
 
   if (exports.requiresSection(record, 'placement')) {
-    // if ((record?.placement?.status != 'Completed') || (placementCount < minPlacementsRequired)) {
+    // if ((record?.placement?.status !== 'Completed') || (placementCount < minPlacementsRequired)) {
     //   needsPlacementDetails = true
     //
     if (placementCount < minPlacementsRequired) needsPlacementDetails = true
@@ -1453,7 +1453,7 @@ exports.needsStartDate = function (record) {
   const traineeStarted = record?.trainingDetails?.commencementDate
   const ittStartDate = moment(record?.courseDetails?.startDate)
 
-  if (!traineeStarted && dates.isInPast(record?.courseDetails?.startDate) && record.status != 'Deferred') {
+  if (!traineeStarted && dates.isInPast(record?.courseDetails?.startDate) && record.status !== 'Deferred') {
     needsStartDate = true
   }
 
@@ -1613,7 +1613,7 @@ exports.filterRecords = (records, data, filters = {}) => {
   }
 
   // All types of years combined in to one select.
-  if (filters.years && filters.years != 'All years') {
+  if (filters.years && filters.years !== 'All years') {
     filteredRecords = filteredRecords.filter(record => {
       // Support for years being an array.
       return filters.years.some(year => {
@@ -1659,7 +1659,7 @@ exports.filterRecords = (records, data, filters = {}) => {
     })
   }
 
-  if (filters.startYears && filters.startYears != 'All years') {
+  if (filters.startYears && filters.startYears !== 'All years') {
     filteredRecords = filteredRecords.filter(record => {
       return filters.startYears.some(year => {
         const yearCleaned = year.replace(' and prior', '')
@@ -1673,7 +1673,7 @@ exports.filterRecords = (records, data, filters = {}) => {
     })
   }
 
-  if (filters.endYears && filters.endYears != 'All years') {
+  if (filters.endYears && filters.endYears !== 'All years') {
     filteredRecords = filteredRecords.filter(record => {
       return filters.endYears.some(year => {
         const yearCleaned = year.replace(' and prior', '')
@@ -1687,7 +1687,7 @@ exports.filterRecords = (records, data, filters = {}) => {
     })
   }
 
-  if (filters.academicYears && filters.academicYears != 'All years') {
+  if (filters.academicYears && filters.academicYears !== 'All years') {
     filteredRecords = filteredRecords.filter(record => {
       // Make sure academic years is always an array
       const academicYears = [].concat(record.academicYears || [])
@@ -1754,7 +1754,7 @@ exports.filterRecords = (records, data, filters = {}) => {
   }
 
   // Admin only filter for picking from all providers
-  if (filters.allProviders && filters.allProviders != 'All providers') {
+  if (filters.allProviders && filters.allProviders !== 'All providers') {
     filteredRecords = filteredRecords.filter(record => filters.allProviders.includes(record.provider))
   }
 
@@ -1768,7 +1768,7 @@ exports.filterRecords = (records, data, filters = {}) => {
 
   // Filter by the specialism or allocation subject
   // Also searches publish subjects where the course’s subjects haven’t been completed
-  if (filters.subject && filters.subject != 'All subjects') {
+  if (filters.subject && filters.subject !== 'All subjects') {
     // To array
     let searchSubjects = [filters.subject]
 
@@ -2347,7 +2347,7 @@ exports.recommendForAward = (record, params) => {
   if (!record) return false
   if (record.status.includes('recommended')) {
     // Nothing to do
-  } else if (record.status != 'TRN received') {
+  } else if (record.status !== 'TRN received') {
     console.log(`Recommend a group of trainees for EYTS or QTS failed: ${record.id} (${record?.personalDetails?.shortName}) has the wrong status (${record.status})`)
     return false
   } else {
@@ -2505,7 +2505,7 @@ const styleSummaryRowAsInset = (row, params) => {
   // Keys are stored two possible places
   const key = row?.key?.html || row?.key?.text
 
-  const styleAsInvalid = params.insetStyle != 'grey'
+  const styleAsInvalid = params.insetStyle !== 'grey'
   let hasActionLink = row?.actions?.items && row?.actions?.items.length == 1
 
   if (row?.actions?.items?.[0]?.suppressActionLink) {
@@ -2817,7 +2817,7 @@ exports.pushReferrer = (existingReferrer, newReferrer) => {
 
 // Append referrer to string if it exists
 exports.getReferrer = referrer => {
-  if (referrer && referrer != 'undefined') {
+  if (referrer && referrer !== 'undefined') {
     return `?referrer=${referrer}`
   } else return ''
 }
@@ -2889,7 +2889,7 @@ exports.getReferrerDestination = function (referrer, currentPageUrl = false) {
   let referrerArray = [...getReferrerArray(referrer).filter(Boolean)]
 
   // Strip the current page’s url if present (we don’t want to redirect to the page we came from)
-  referrerArray = referrerArray.filter(item => item != currentPageUrl)
+  referrerArray = referrerArray.filter(item => item !== currentPageUrl)
 
   // No url found
   if (referrerArray.length == 0) {

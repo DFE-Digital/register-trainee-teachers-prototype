@@ -87,7 +87,7 @@ module.exports = ({ updatedDate, submittedDate, deferredDate, withdrawalDate, qu
   }
 
   // Submitted dates apply to everything except drafts
-  if (!submittedDate && application.status != 'Draft') {
+  if (!submittedDate && application.status !== 'Draft') {
     if (application.status == 'Pending TRN') {
       submittedDate = updatedDate
     } else {

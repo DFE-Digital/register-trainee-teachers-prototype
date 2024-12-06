@@ -65,7 +65,7 @@ module.exports = router => {
 
     if (bulk.filteredTrainees) {
       bulk.selectedTrainees = bulk.filteredTrainees
-      if (bulk.action != 'Recommend a group of trainees for EYTS or QTS') res.redirect('/bulk-action/confirm')
+      if (bulk.action !== 'Recommend a group of trainees for EYTS or QTS') res.redirect('/bulk-action/confirm')
 
       // Date answer needed
       else res.redirect('/bulk-action/date')
@@ -186,7 +186,7 @@ module.exports = router => {
     }
 
     // Date not needed, go to confirm
-    else if (bulk.date || bulk.action != 'Recommend a group of trainees for EYTS or QTS') res.redirect('/bulk-action/confirm')
+    else if (bulk.date || bulk.action !== 'Recommend a group of trainees for EYTS or QTS') res.redirect('/bulk-action/confirm')
 
     // Date answer needed
     else res.redirect('/bulk-action/date')

@@ -137,7 +137,7 @@ filters.getCourseNamesForAutocomplete = (courses) => {
 // Bachelor of Science (BSc)
 filters.getDegreeTypesForAutocomplete = (degreeTypes) => {
   return degreeTypes.map(type => {
-    let append = ((type.short && type.short != type.full) ? type.short : null)
+    let append = ((type.short && type.short !== type.full) ? type.short : null)
 
     if (append) append = ` <span class="autocomplete__option--bold">(${type.short})</span>`
 

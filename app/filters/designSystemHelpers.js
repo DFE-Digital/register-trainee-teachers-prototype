@@ -157,9 +157,9 @@ filters.arrayToSummaryList = array => {
   array.forEach(row => {
     const key = row[0] // required
     const value = row[1] // required
-    const href = (row[2] != null) ? row[2] : false
-    const text = (row[3] != null) ? row[3] : 'Change'
-    const visuallyHiddenText = (row[4] != null) ? row[4] : row[0].toLowerCase()
+    const href = (row[2] !== null) ? row[2] : false
+    const text = (row[3] !== null) ? row[3] : 'Change'
+    const visuallyHiddenText = (row[4] !== null) ? row[4] : row[0].toLowerCase()
     const rowData = {
       key: {
         text: key

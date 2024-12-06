@@ -53,7 +53,7 @@ module.exports = () => {
     'Not provided'
   ])
 
-  if (ethnicGroup != 'Not provided') {
+  if (ethnicGroup !== 'Not provided') {
     ethnicBackground = faker.helpers.arrayElement(
       ethnicGroups[ethnicGroup]
     )

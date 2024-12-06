@@ -278,7 +278,7 @@ module.exports = router => {
       const radioChoice = record.reinstate.expectedEndDateIsSame
 
       // Radio choice is a design option currently disabled - we just show a date input instead
-      if (radioChoice != 'same-date') {
+      if (radioChoice !== 'same-date') {
         if (record?.reinstate?.newEndDate) {
           record.courseDetails.endDate = record.reinstate.newEndDate
         }
@@ -698,14 +698,14 @@ module.exports = router => {
       console.log(`Course change: changed on ${courseMove.courseMoveDate}`)
     }
 
-    const courseCodeChanged = record?.courseDetails?.code != previousRecord?.courseDetails?.code
+    const courseCodeChanged = record?.courseDetails?.code !== previousRecord?.courseDetails?.code
 
-    const routeChanged = (record?.route != previousRecord?.route)
+    const routeChanged = (record?.route !== previousRecord?.route)
     if (routeChanged) {
       console.log(`Course change: route changed from ${previousRecord?.route} to ${record?.route}`)
     }
 
-    const studyModeChanged = (record?.courseDetails?.studyMode != previousRecord?.courseDetails?.studyMode)
+    const studyModeChanged = (record?.courseDetails?.studyMode !== previousRecord?.courseDetails?.studyMode)
     if (studyModeChanged) {
       console.log(`Course change: study mode changed from ${previousRecord?.courseDetails?.studyMode} to ${record?.courseDetails?.studyMode}`)
     }

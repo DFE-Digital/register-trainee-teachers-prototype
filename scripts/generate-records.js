@@ -112,7 +112,7 @@ const generateFakeApplication = (params = {}) => {
   application.trn = (params.trn === null) ? undefined : (params.trn || generateTrn(application))
 
   // There's a slight edge case that programme details might return with a different route - if so save it back up
-  if (application?.courseDetails?.route && application.courseDetails.route != application.route) {
+  if (application?.courseDetails?.route && application.courseDetails.route !== application.route) {
     console.log('Overwriting route') // hacky, and hopefully doesn’t happen often
     application.route = application.courseDetails.route
   }
@@ -250,7 +250,7 @@ const generateFakeApplicationsForProvider = (provider, year, count) => {
     count = Math.min(count, 30)
 
     // Only SCITTs should have Apply drafts
-    const isScitt = (provider?.accreditingProviderType != 'HEI')
+    const isScitt = (provider?.accreditingProviderType !== 'HEI')
     targetCounts = {
       draft: (isScitt) ? 0.10 : 0.9,
       applyPending: (isScitt) ? 0.20 : 0,

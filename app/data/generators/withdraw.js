@@ -5,7 +5,7 @@ const utils = require('../../lib/utils.js')
 
 const withdrawalReasons = require('../withdrawal-reasons.js')
 
-const reasonsWithoutUnknown = withdrawalReasons.filter(reason => reason != 'Unknown')
+const reasonsWithoutUnknown = withdrawalReasons.filter(reason => reason !== 'Unknown')
 
 module.exports = params => {
   const isWithdrawn = utils.isWithdrawn(params)

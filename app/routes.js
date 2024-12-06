@@ -181,7 +181,7 @@ router.get('/guidance/hesa-register-data-mapping/:tabName', function (req, res) 
   const data = req.session.data
 
   // User has switched to non tab style so we should redirect away from tab urls.
-  if (data.settings.hesaGuidanceStyle != 'tabs') {
+  if (data.settings.hesaGuidanceStyle !== 'tabs') {
     res.redirect('/guidance/hesa-register-data-mapping')
   } else {
     res.render('guidance/hesa-register-data-mapping', {

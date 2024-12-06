@@ -14,7 +14,7 @@
     "lint:scripts:fix": "standard --fix",
     "lint:styles": "stylelint 'app/assets/sass/**/*.scss' 'app/views/_components/**/*.scss'",
     "lint:styles:fix": "stylelint 'app/assets/sass/**/*.scss' 'app/views/_components/**/*.scss' --fix",
-    "test": "npm run lint:scripts && gulp generate-assets && jest"
+    "test": "npm run lint:scripts && gulp generate-assets"
   },
   "dependencies": {
     "@faker-js/faker": "^9.0.0",
@@ -74,7 +74,6 @@
     ]
   },
   "devDependencies": {
-    "jest": "^29.7.0",
     "markdownlint-cli": "^0.43.0",
     "standard": "^17.1.2",
     "stylelint": "^16.11.0",

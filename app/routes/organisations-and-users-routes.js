@@ -9,15 +9,14 @@ const weighted = require('weighted')
 const { fakerEN_GB: faker } = require('@faker-js/faker')
 
 module.exports = router => {
-
   // Render a page for each organisation UUID
-  router.get('/organisations/:uuid', function(req, res, next) {
+  router.get('/organisations/:uuid', function (req, res, next) {
     const data = req.session.data
-    let uuid = req.params.uuid
-    let provider = data.providers.all.find(provider => provider.id == uuid)
+    const uuid = req.params.uuid
+    const provider = data.providers.all.find(provider => provider.id === uuid)
 
     res.render('organisations/organisation', {
-      provider: provider
+      provider
     })
   })
 
@@ -31,5 +30,4 @@ module.exports = router => {
       }
     )
   })
-
 }

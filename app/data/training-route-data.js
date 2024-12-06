@@ -1,32 +1,31 @@
 // -------------------------------------------------------------------
 // Imports and setup
 // -------------------------------------------------------------------
-const _             = require('lodash')
-const ittSubjects   = require('./itt-subjects.js')
-let modernLanguages = ittSubjects.modernLanguagesSubjects
-
+const _ = require('lodash')
+const ittSubjects = require('./itt-subjects.js')
+const modernLanguages = ittSubjects.modernLanguagesSubjects
 
 // A non-exhaustive list of routes
 // Publish and non publish can overlap
 
-let applyRoutes = [
+const applyRoutes = [
   'Teaching apprenticeship (postgrad)',
   'Primary and secondary (postgrad)',
   'School direct (salaried)',
-  'School direct (fee funded)',
+  'School direct (fee funded)'
 ]
 
 // Not all these routes will be enabled
-let publishRoutes = [
+const publishRoutes = [
   'Teaching apprenticeship (postgrad)',
   'Teaching apprenticeship (salaried)', // This is the Teaching Degree Apprenticeship (TDA) route, name matches Publish's implementation
   'Primary and secondary (postgrad)',
   'Primary and secondary (postgrad salaried)', // New route as part of the ITT reforms
   'School direct (salaried)',
-  'School direct (fee funded)',
+  'School direct (fee funded)'
 ]
 
-let nonPublishRoutes = [
+const nonPublishRoutes = [
   'Primary and secondary (postgrad)',
   'Primary and secondary (undergrad)',
   'Assessment only',
@@ -42,15 +41,15 @@ let nonPublishRoutes = [
 
 // These sections are all collected in to one super section for Apply.
 // If any of these are encountered, we defer to a different bit of data
-let applyReviewSections = [
+const applyReviewSections = [
   'personalDetails',
   'diversity',
-  'degree',
+  'degree'
 ]
 
 // Create array of unique values
-let allRoutesArray = [...new Set([...publishRoutes, ...nonPublishRoutes])].sort()
-let allRoutes = {}
+const allRoutesArray = [...new Set([...publishRoutes, ...nonPublishRoutes])].sort()
+const allRoutes = {}
 
 // Add detail about publish or non publish
 allRoutesArray.forEach(route => {
@@ -60,14 +59,13 @@ allRoutesArray.forEach(route => {
   }
 })
 
-
 // Sensible defaults for route data
-let defaultRouteData = {
+const defaultRouteData = {
   defaultEnabled: false,
   qualifications: [
-    "QTS"
+    'QTS'
   ],
-  qualificationsSummary: "QTS",
+  qualificationsSummary: 'QTS',
   academicQualificationsApply: true,
   duration: 1,
   sections: [
@@ -80,22 +78,22 @@ let defaultRouteData = {
     'funding'
   ],
   initiatives: [
-    "Get an International Relocation Payment",
-    "Now Teach"
+    'Get an International Relocation Payment',
+    'Now Teach'
   ],
   financialSupportAvailable: false
 }
 
 // Data for each route
-let baseRouteData = {
-  "Assessment only": {
+const baseRouteData = {
+  'Assessment only': {
     defaultEnabled: true,
-    courseLevel: "Postgraduate",
+    courseLevel: 'Postgraduate',
     academicQualificationsApply: false,
     qualifications: [
-      "QTS"
+      'QTS'
     ],
-    qualificationsSummary: "QTS",
+    qualificationsSummary: 'QTS',
     sections: [
       // 'trainingDetails',
       'courseDetails',
@@ -106,13 +104,13 @@ let baseRouteData = {
     ],
     financialSupportAvailable: false
   },
-  "Primary and secondary (undergrad)": {
+  'Primary and secondary (undergrad)': {
     defaultEnabled: true,
-    courseLevel: "Undergraduate",
+    courseLevel: 'Undergraduate',
     qualifications: [
-      "QTS"
+      'QTS'
     ],
-    qualificationsSummary: "QTS",
+    qualificationsSummary: 'QTS',
     sections: [
       // 'trainingDetails',
       'courseDetails',
@@ -124,288 +122,288 @@ let baseRouteData = {
       'funding'
     ],
     fields: [
-      "leadPartner",
-      "employingSchool",
-      "studyMode"
-    ],
-    financialSupportAvailable: true,
-    financialSupport: [
-      {
-        type: "bursary",
-        subjects: [
-          "Mathematics",
-          "Physics"
-          ],
-        value: "9000"
-      }
-    ]
-  },
-  "Primary and secondary (postgrad)": {
-    defaultEnabled: true,
-    courseLevel: "Postgraduate",
-    qualifications: [
-      "QTS"
-    ],
-    sections: [
-      // 'trainingDetails',
-      'courseDetails',
-      'personalDetails',
-      'diversity',
-      'degree',
-      'schools',
-      'placement',
-      'funding'
-    ],
-    qualificationsSummary: "QTS",
-    hasAllocatedPlaces: true,
-    fields: [
-      "leadPartner",
-      "employingSchool",
-      "studyMode"
-    ],
-    financialSupportAvailable: true,
-    financialSupport: [
-      {
-        type: "bursary",
-        subjects: [
-          "Chemistry",
-          "Computing",
-          "Mathematics",
-          "Physics"
-          ],
-        value: "27000",
-        scholarship: "29000"
-      },
-      {
-        type: "bursary",
-        subjects: [
-          "Languages",
-          ],
-        value: "25000",
-        scholarship: "27000"
-      },
-      {
-        type: "bursary",
-        subjects: [
-          "Geography",
-          "Ancient languages"
-          ],
-        value: "25000"
-      },
-      {
-        type: "bursary",
-        subjects: [
-          "Design and technology",
-          "Biology"
-          ],
-        value: "20000"
-      },
-      {
-        type: "bursary",
-        subjects: [
-          "English"
-          ],
-        value: "15000"
-      }
-    ]
-  },
-  "School direct (salaried)": {
-    defaultEnabled: true,
-    courseLevel: "Postgraduate",
-    qualifications: [
-      "QTS"
-    ],
-    qualificationsSummary: "QTS",
-    sections: [
-      // 'trainingDetails',
-      'courseDetails',
-      'personalDetails',
-      'diversity',
-      'degree',
-      'schools',
-      'placement',
-      'funding'
-    ],
-    fields: [
-      "leadPartner",
-      "employingSchool",
-      "studyMode"
-    ],
-    financialSupportAvailable: true,
-    financialSupport: [
-      {
-        type: "bursary",
-        subjects: [
-          "Chemistry",
-          "Computing",
-          "Mathematics",
-          "Physics"
-          ],
-        value: "27000"
-      },
-      {
-        type: "bursary",
-        subjects: [
-          "Geography",
-          "Languages",
-          "Ancient languages"
-          ],
-        value: "25000"
-      },
-      {
-        type: "bursary",
-        subjects: [
-          "Design and technology",
-          "Biology"
-          ],
-        value: "20000"
-      },
-      {
-        type: "bursary",
-        subjects: [
-          "English"
-          ],
-        value: "15000"
-      }
-    ]
-  },
-  "School direct (fee funded)": {
-    defaultEnabled: true,
-    courseLevel: "Postgraduate",
-    qualifications: [
-      "QTS"
-    ],
-    qualificationsSummary: "QTS",
-    hasAllocatedPlaces: true,
-    sections: [
-      // 'trainingDetails',
-      'courseDetails',
-      'personalDetails',
-      'diversity',
-      'degree',
-      'schools',
-      'placement',
-      'funding'
-    ],
-    fields: [
-      "leadPartner",
-      "studyMode"
-    ],
-    financialSupportAvailable: true,
-    financialSupport: [
-      {
-        type: "bursary",
-        subjects: [
-          "Chemistry",
-          "Computing",
-          "Mathematics",
-          "Physics"
-          ],
-        value: "27000",
-        scholarship: "29000"
-      },
-      {
-        type: "bursary",
-        subjects: [
-          "Languages",
-          ],
-        value: "25000",
-        scholarship: "27000"
-      },
-      {
-        type: "bursary",
-        subjects: [
-          "Geography",
-          "Ancient languages"
-          ],
-        value: "25000"
-      },
-      {
-        type: "bursary",
-        subjects: [
-          "Design and technology",
-          "Biology"
-          ],
-        value: "20000"
-      },
-      {
-        type: "bursary",
-        subjects: [
-          "English"
-          ],
-        value: "15000"
-      }
-    ]
-  },
-  "Teach first (postgrad)": {},
-  "Teaching apprenticeship (postgrad)": {
-    defaultEnabled: true,
-    courseLevel: "Postgraduate",
-    qualifications: [
-      "QTS"
-    ],
-    qualificationsSummary: "QTS",
-    sections: [
-      // 'trainingDetails',
-      'courseDetails',
-      'personalDetails',
-      'diversity',
-      'degree',
-      'schools',
-      'placement',
-      'funding'
-    ],
-    fields: [
-      "leadPartner",
+      'leadPartner',
       'employingSchool',
-      "studyMode"
+      'studyMode'
+    ],
+    financialSupportAvailable: true,
+    financialSupport: [
+      {
+        type: 'bursary',
+        subjects: [
+          'Mathematics',
+          'Physics'
+        ],
+        value: '9000'
+      }
+    ]
+  },
+  'Primary and secondary (postgrad)': {
+    defaultEnabled: true,
+    courseLevel: 'Postgraduate',
+    qualifications: [
+      'QTS'
+    ],
+    sections: [
+      // 'trainingDetails',
+      'courseDetails',
+      'personalDetails',
+      'diversity',
+      'degree',
+      'schools',
+      'placement',
+      'funding'
+    ],
+    qualificationsSummary: 'QTS',
+    hasAllocatedPlaces: true,
+    fields: [
+      'leadPartner',
+      'employingSchool',
+      'studyMode'
+    ],
+    financialSupportAvailable: true,
+    financialSupport: [
+      {
+        type: 'bursary',
+        subjects: [
+          'Chemistry',
+          'Computing',
+          'Mathematics',
+          'Physics'
+        ],
+        value: '27000',
+        scholarship: '29000'
+      },
+      {
+        type: 'bursary',
+        subjects: [
+          'Languages'
+        ],
+        value: '25000',
+        scholarship: '27000'
+      },
+      {
+        type: 'bursary',
+        subjects: [
+          'Geography',
+          'Ancient languages'
+        ],
+        value: '25000'
+      },
+      {
+        type: 'bursary',
+        subjects: [
+          'Design and technology',
+          'Biology'
+        ],
+        value: '20000'
+      },
+      {
+        type: 'bursary',
+        subjects: [
+          'English'
+        ],
+        value: '15000'
+      }
+    ]
+  },
+  'School direct (salaried)': {
+    defaultEnabled: true,
+    courseLevel: 'Postgraduate',
+    qualifications: [
+      'QTS'
+    ],
+    qualificationsSummary: 'QTS',
+    sections: [
+      // 'trainingDetails',
+      'courseDetails',
+      'personalDetails',
+      'diversity',
+      'degree',
+      'schools',
+      'placement',
+      'funding'
+    ],
+    fields: [
+      'leadPartner',
+      'employingSchool',
+      'studyMode'
+    ],
+    financialSupportAvailable: true,
+    financialSupport: [
+      {
+        type: 'bursary',
+        subjects: [
+          'Chemistry',
+          'Computing',
+          'Mathematics',
+          'Physics'
+        ],
+        value: '27000'
+      },
+      {
+        type: 'bursary',
+        subjects: [
+          'Geography',
+          'Languages',
+          'Ancient languages'
+        ],
+        value: '25000'
+      },
+      {
+        type: 'bursary',
+        subjects: [
+          'Design and technology',
+          'Biology'
+        ],
+        value: '20000'
+      },
+      {
+        type: 'bursary',
+        subjects: [
+          'English'
+        ],
+        value: '15000'
+      }
+    ]
+  },
+  'School direct (fee funded)': {
+    defaultEnabled: true,
+    courseLevel: 'Postgraduate',
+    qualifications: [
+      'QTS'
+    ],
+    qualificationsSummary: 'QTS',
+    hasAllocatedPlaces: true,
+    sections: [
+      // 'trainingDetails',
+      'courseDetails',
+      'personalDetails',
+      'diversity',
+      'degree',
+      'schools',
+      'placement',
+      'funding'
+    ],
+    fields: [
+      'leadPartner',
+      'studyMode'
+    ],
+    financialSupportAvailable: true,
+    financialSupport: [
+      {
+        type: 'bursary',
+        subjects: [
+          'Chemistry',
+          'Computing',
+          'Mathematics',
+          'Physics'
+        ],
+        value: '27000',
+        scholarship: '29000'
+      },
+      {
+        type: 'bursary',
+        subjects: [
+          'Languages'
+        ],
+        value: '25000',
+        scholarship: '27000'
+      },
+      {
+        type: 'bursary',
+        subjects: [
+          'Geography',
+          'Ancient languages'
+        ],
+        value: '25000'
+      },
+      {
+        type: 'bursary',
+        subjects: [
+          'Design and technology',
+          'Biology'
+        ],
+        value: '20000'
+      },
+      {
+        type: 'bursary',
+        subjects: [
+          'English'
+        ],
+        value: '15000'
+      }
+    ]
+  },
+  'Teach first (postgrad)': {},
+  'Teaching apprenticeship (postgrad)': {
+    defaultEnabled: true,
+    courseLevel: 'Postgraduate',
+    qualifications: [
+      'QTS'
+    ],
+    qualificationsSummary: 'QTS',
+    sections: [
+      // 'trainingDetails',
+      'courseDetails',
+      'personalDetails',
+      'diversity',
+      'degree',
+      'schools',
+      'placement',
+      'funding'
+    ],
+    fields: [
+      'leadPartner',
+      'employingSchool',
+      'studyMode'
       // "apprenticeshipStartDate"
     ],
     financialSupportAvailable: true,
     financialSupport: [
       {
-        type: "grant",
+        type: 'grant',
         subjects: [
-          "Chemistry",
-          "Computing",
-          "Mathematics",
-          "Physics"
-          ],
-        value: "18000"
+          'Chemistry',
+          'Computing',
+          'Mathematics',
+          'Physics'
+        ],
+        value: '18000'
       },
       {
-        type: "grant",
+        type: 'grant',
         subjects: [
-          "Geography",
-          "Languages",
-          "Ancient languages"
-          ],
-        value: "16000"
+          'Geography',
+          'Languages',
+          'Ancient languages'
+        ],
+        value: '16000'
       },
       {
-        type: "grant",
+        type: 'grant',
         subjects: [
-          "Design and technology",
-          "Biology"
-          ],
-        value: "11000"
+          'Design and technology',
+          'Biology'
+        ],
+        value: '11000'
       },
       {
-        type: "grant",
+        type: 'grant',
         subjects: [
-          "English"
-          ],
-        value: "1000"
+          'English'
+        ],
+        value: '1000'
       }
     ]
   },
-  "Opt-in (undergrad)": {
+  'Opt-in (undergrad)': {
     defaultEnabled: true,
-    courseLevel: "Undergraduate",
+    courseLevel: 'Undergraduate',
     qualifications: [
-      "QTS"
+      'QTS'
     ],
-    qualificationsSummary: "QTS",
+    qualificationsSummary: 'QTS',
     sections: [
       // 'trainingDetails',
       'courseDetails',
@@ -416,26 +414,26 @@ let baseRouteData = {
       'funding'
     ],
     fields: [
-      "studyMode"
+      'studyMode'
     ],
     financialSupportAvailable: true,
     financialSupport: [
       {
-        type: "bursary",
+        type: 'bursary',
         subjects: [
-          "Languages",
-          "Ancient languages",
-          "Computing",
-          "Mathematics",
-          "Physics"
-          ],
-        value: "9000"
+          'Languages',
+          'Ancient languages',
+          'Computing',
+          'Mathematics',
+          'Physics'
+        ],
+        value: '9000'
       }
     ]
   },
-  "Early years graduate employment based": {
+  'Early years graduate employment based': {
     defaultEnabled: true,
-    courseLevel: "Postgraduate",
+    courseLevel: 'Postgraduate',
     sections: [
       // 'trainingDetails',
       'courseDetails',
@@ -447,26 +445,26 @@ let baseRouteData = {
     ],
     fields: [
       // "employingSchool", // probably not a thing
-      "studyMode"
+      'studyMode'
     ],
     qualifications: [
-      "EYTS"
+      'EYTS'
     ],
-    qualificationsSummary: "EYTS full time",
+    qualificationsSummary: 'EYTS full time',
     financialSupportAvailable: true,
     financialSupport: [
       {
-        type: "grant",
+        type: 'grant',
         subjects: [
-          "Early years"
-          ],
-        value: "14000"
+          'Early years'
+        ],
+        value: '14000'
       }
     ]
   },
-  "Early years graduate entry": {
+  'Early years graduate entry': {
     defaultEnabled: true,
-    courseLevel: "Postgraduate",
+    courseLevel: 'Postgraduate',
     sections: [
       // 'trainingDetails',
       'courseDetails',
@@ -477,44 +475,44 @@ let baseRouteData = {
       'funding'
     ],
     fields: [
-      "studyMode",
+      'studyMode'
     ],
     qualifications: [
-      "EYTS"
+      'EYTS'
     ],
-    qualificationsSummary: "EYTS full time",
+    qualificationsSummary: 'EYTS full time',
     financialSupportAvailable: true,
     financialSupport: [
       {
-        type: "bursary",
+        type: 'bursary',
         subjects: [
-          "Early years"
-          ],
-        value: "",
+          'Early years'
+        ],
+        value: '',
         tiersApply: true,
         tiers: [
           {
-            name: "Tier 1",
-            hint: "First-class honours degree, doctoral degree, medical masters (distinction)",
-            value: "5000"
+            name: 'Tier 1',
+            hint: 'First-class honours degree, doctoral degree, medical masters (distinction)',
+            value: '5000'
           },
           {
-            name: "Tier 2",
-            hint: "2:1 honours degree, master’s degree",
-            value: "4000"
+            name: 'Tier 2',
+            hint: '2:1 honours degree, master’s degree',
+            value: '4000'
           },
           {
-            name: "Tier 3",
-            hint: "2:2 honours degree",
-            value: "2000"
+            name: 'Tier 3',
+            hint: '2:2 honours degree',
+            value: '2000'
           }
         ]
       }
     ]
   },
-  "Early years assessment only": {
+  'Early years assessment only': {
     defaultEnabled: true,
-    courseLevel: "Postgraduate",
+    courseLevel: 'Postgraduate',
     academicQualificationsApply: false,
     sections: [
       // 'trainingDetails',
@@ -525,14 +523,14 @@ let baseRouteData = {
       'funding'
     ],
     qualifications: [
-      "EYTS"
+      'EYTS'
     ],
-    qualificationsSummary: "EYTS full time",
+    qualificationsSummary: 'EYTS full time',
     financialSupportAvailable: false
   },
-  "Early years undergraduate": {
+  'Early years undergraduate': {
     defaultEnabled: true,
-    courseLevel: "Undergraduate",
+    courseLevel: 'Undergraduate',
     sections: [
       // 'trainingDetails',
       'courseDetails',
@@ -543,21 +541,21 @@ let baseRouteData = {
       'funding'
     ],
     fields: [
-      "studyMode",
+      'studyMode'
     ],
     qualifications: [
-      "EYTS"
+      'EYTS'
     ],
-    qualificationsSummary: "EYTS full time",
+    qualificationsSummary: 'EYTS full time',
     financialSupportAvailable: false
   },
-  "High potential initial teacher training (HPITT)": {
+  'High potential initial teacher training (HPITT)': {
     disableForNewDrafts: true, // we want to show trainees on this route, but not allow new ones
-    courseLevel: "Postgraduate",
+    courseLevel: 'Postgraduate',
     qualifications: [
-      "QTS"
+      'QTS'
     ],
-    qualificationsSummary: "QTS",
+    qualificationsSummary: 'QTS',
     defaultEnabled: false,
     sections: [
       // 'trainingDetails',
@@ -569,16 +567,16 @@ let baseRouteData = {
     ],
     financialSupportAvailable: false,
     fields: [
-      "region"
+      'region'
     ]
   },
-  "International qualified teacher status (iQTS)": {
+  'International qualified teacher status (iQTS)': {
     defaultEnabled: true,
-    courseLevel: "Postgraduate",
+    courseLevel: 'Postgraduate',
     qualifications: [
-      "QTS"
+      'QTS'
     ],
-    qualificationsSummary: "QTS",
+    qualificationsSummary: 'QTS',
     hasAllocatedPlaces: false,
     sections: [
       // 'trainingDetails',
@@ -602,18 +600,17 @@ let baseRouteData = {
   }
 }
 
-let trainingRoutes = {}
-
+const trainingRoutes = {}
 
 // Combine route data
 Object.keys(allRoutes).forEach(routeName => {
-  let routeData = Object.assign({}, defaultRouteData, allRoutes[routeName], baseRouteData[routeName])
+  const routeData = Object.assign({}, defaultRouteData, allRoutes[routeName], baseRouteData[routeName])
   routeData.name = routeName
 
   // Expand 'Languages' in to each individual language
-  if (routeData.financialSupport){
+  if (routeData.financialSupport) {
     routeData.financialSupport.forEach(financialSupportLevel => {
-      if (financialSupportLevel.subjects.includes('Languages')){
+      if (financialSupportLevel.subjects.includes('Languages')) {
         _.pull(financialSupportLevel.subjects, 'Languages')
         financialSupportLevel.subjects = financialSupportLevel.subjects.concat(modernLanguages)
       }
@@ -622,60 +619,60 @@ Object.keys(allRoutes).forEach(routeName => {
   trainingRoutes[routeName] = routeData
 })
 
-let enabledTrainingRoutes = Object.values(trainingRoutes).filter(route => route.defaultEnabled == true).map(route => route.name)
+const enabledTrainingRoutes = Object.values(trainingRoutes).filter(route => route.defaultEnabled === true).map(route => route.name)
 
 // Count initiatives
 let allInitiatives = []
 Object.keys(trainingRoutes).forEach(routeName => {
-  let initiatives = trainingRoutes[routeName]?.initiatives || []
+  const initiatives = trainingRoutes[routeName]?.initiatives || []
   allInitiatives = allInitiatives.concat(initiatives)
 })
 
 allInitiatives = [...new Set(allInitiatives)].sort()
 
-let allocatedSubjects = [
-  "Physical education"
+const allocatedSubjects = [
+  'Physical education'
 ]
 
-let phases = {
-  "Early years": {
-    "hint": "ages 0 to 5",
-    "ageRanges": null
+const phases = {
+  'Early years': {
+    hint: 'ages 0 to 5',
+    ageRanges: null
   },
-  "Primary": {
-    "hint": "ages 3 to 11",
-    "ageRanges": [
-      "3 to 7", // 6.51%
-      "3 to 11", // 9.76%
-      "5 to 11", // 40.97%
+  Primary: {
+    hint: 'ages 3 to 11',
+    ageRanges: [
+      '3 to 7', // 6.51%
+      '3 to 11', // 9.76%
+      '5 to 11' // 40.97%
     ],
-    "otherAgeRanges": [
-      "3 to 8",
-      "3 to 9",
-      "5 to 9",
-      "7 to 11",
+    otherAgeRanges: [
+      '3 to 8',
+      '3 to 9',
+      '5 to 9',
+      '7 to 11'
     ]
   },
-  "Middle": {
-    "hint": "ages 7 to 14",
-    "ageRanges": null
+  Middle: {
+    hint: 'ages 7 to 14',
+    ageRanges: null
   },
-  "Secondary": {
-    "hint": "ages 11 to 19",
-    "ageRanges": [
-      "11 to 16", // 26.42%
-      "11 to 18", // from Publish
+  Secondary: {
+    hint: 'ages 11 to 19',
+    ageRanges: [
+      '11 to 16', // 26.42%
+      '11 to 18' // from Publish
 
     ],
-    "otherAgeRanges": [
-      "5 to 14",
-      "7 to 11",
-      "7 to 14",
-      "7 to 16",
-      "9 to 14",
-      "9 to 16",
-      "11 to 19", // 13.8% in dttp
-      "14 to 19"
+    otherAgeRanges: [
+      '5 to 14',
+      '7 to 11',
+      '7 to 14',
+      '7 to 16',
+      '9 to 14',
+      '9 to 16',
+      '11 to 19', // 13.8% in dttp
+      '14 to 19'
     ]
   }
 }
@@ -698,7 +695,6 @@ let phases = {
 //   "14 to 19 programme", // 0.36%
 //   "14 to 19 diploma" // 0.03%
 // ]
-
 
 module.exports = {
   allRoutes: allRoutesArray,
@@ -729,7 +725,6 @@ Primary
 "2_to_7"=>4,
 "2_to_11"=>1,
 
-
 Secondary
   *"11_to_16"=>6520,*
 "11_to_18"=>3749,
@@ -744,7 +739,6 @@ Secondary
 "5_to_18"=>1,
 "7_to_18"=>1,
 
-
 Age ranges DTTP has but no courses use
 3-8
 5-9
@@ -752,8 +746,6 @@ Age ranges DTTP has but no courses use
 7-16
 9-14
 9-16
-
-
 
 Values to add in DTTP
 

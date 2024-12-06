@@ -11,7 +11,7 @@ const { faker } = require('@faker-js/faker')
 module.exports = router => {
   router.get('/token-manage', function (req, res, next) {
     const data = req.session.data
-    let providerUuid = req.params.providerUuid
+    const providerUuid = req.params.providerUuid
 
     utils.render(
       path.join('organisations', req.params.page, req.params[0]), res, next, {

@@ -1,22 +1,22 @@
 // -------------------------------------------------------------------
 // Imports and setup
 // -------------------------------------------------------------------
-const _                      = require('lodash')
-const { fakerEN_GB: faker }  = require('@faker-js/faker')
-const moment                 = require('moment')
-const path                   = require('path')
-const url                    = require('url')
-const trainingRouteData      = require('./../data/training-route-data')
-const trainingRoutes         = trainingRouteData.trainingRoutes
-const arrayFilters           = require('./../filters/arrays.js').filters
-const dates                  = require('./../filters/dates.js').filters
-const statuses               = require('./../filters/statuses.js').filters
-const ittSubjects            = require('./../data/itt-subjects')
-const generateReference      = require('./../data/generators/reference-number')
+const _ = require('lodash')
+const { fakerEN_GB: faker } = require('@faker-js/faker')
+const moment = require('moment')
+const path = require('path')
+const url = require('url')
+const trainingRouteData = require('./../data/training-route-data')
+const trainingRoutes = trainingRouteData.trainingRoutes
+const arrayFilters = require('./../filters/arrays.js').filters
+const dates = require('./../filters/dates.js').filters
+const statuses = require('./../filters/statuses.js').filters
+const ittSubjects = require('./../data/itt-subjects')
+const generateReference = require('./../data/generators/reference-number')
 const academicQualifications = require('./../data/academic-qualifications.js')
-const years                  = require('./../data/years.js')
+const years = require('./../data/years.js')
 
-let skipCourseDatesPage = false
+const skipCourseDatesPage = false
 
 // -------------------------------------------------------------------
 // General
@@ -26,25 +26,25 @@ let skipCourseDatesPage = false
 // Needed as Nunjucks doesn't treat all falsy values as false
 exports.falsify = (input) => {
   if (!input) return false
-  if (input == null) return false
-  if (input == undefined) return false
+  if (input === null) return false
+  if (input === undefined) return false
   if (_.isNumber(input)) return input
-  else if (input == false) return false
-  if (_.isString(input)){
-    let truthyValues = ['yes', 'true']
-    let falsyValues = ['no', 'false']
+  else if (input === false) return false
+  if (_.isString(input)) {
+    const truthyValues = ['yes', 'true']
+    const falsyValues = ['no', 'false']
     if (truthyValues.includes(input.toLowerCase())) return true
     else if (falsyValues.includes(input.toLowerCase())) return false
   }
-  return input;
+  return input
 }
 
 // Pick a random item from array. Supports passing in your own
 // random function. Providing a function lets us use a seeded random
 // generator so the results are predictable.
 exports.pickRandom = (array, randomFunction = Math.random) => {
-  if (!Array.isArray(array) || array.length == 0) {
-    console.log("Error with pickRandom: no array provided")
+  if (!Array.isArray(array) || array.length === 0) {
+    console.log('Error with pickRandom: no array provided')
     return false
   }
   return array[Math.floor(randomFunction() * array.length)]
@@ -57,16 +57,16 @@ exports.getRandomArbitrary = (min, max) => {
 
 // Sort two things alphabetically, not case-sensitive
 exports.sortAlphabetical = (x, y) => {
-  if(x.toLowerCase() !== y.toLowerCase()) {
-    x = x.toLowerCase();
-    y = y.toLowerCase();
+  if (x.toLowerCase() !== y.toLowerCase()) {
+    x = x.toLowerCase()
+    y = y.toLowerCase()
   }
-  return x > y ? 1 : (x < y ? -1 : 0);
+  return x > y ? 1 : (x < y ? -1 : 0)
 }
 
 // first, second, third, etc
 exports.getOrdinalName = integer => {
-  let ordinals = [
+  const ordinals = [
     'zeroth', // shouldn't be possible
     'first',
     'second',
@@ -80,11 +80,10 @@ exports.getOrdinalName = integer => {
     'tenth'
   ]
 
-  if (!_.isNumber(integer) || integer < 1 || integer > 10){
-    console.log("Error in getOrdinalName: input out of bounds")
-    return ""
-  }
-  else {
+  if (!_.isNumber(integer) || integer < 1 || integer > 10) {
+    console.log('Error in getOrdinalName: input out of bounds')
+    return ''
+  } else {
     return ordinals[integer]
   }
 }
@@ -92,11 +91,10 @@ exports.getOrdinalName = integer => {
 // As above, but offset by 1. So a zeroth element in an erray is 'first'
 exports.getOrdinalNameIndex0 = integer => exports.getOrdinalName(integer + 1)
 
-
 // ['Foo', 'Bar', null] => { first: 'Foo', second: 'Bar', third: null }
 exports.arrayToOrdinalObject = array => {
-  let output = {}
-  array.forEach( (item, index) =>{
+  const output = {}
+  array.forEach((item, index) => {
     output[exports.getOrdinalName(index + 1)] = item
   })
   return output
@@ -104,18 +102,16 @@ exports.arrayToOrdinalObject = array => {
 
 // Test a string to see if it’s a UUID
 exports.isUuid = testString => {
-  testString = "" + testString
-  let result = testString.match('^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$')
+  testString = '' + testString
+  const result = testString.match('^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$')
   return Boolean(result)
 }
-
 
 // Loosely copied from /lib/utils
 // Allows a template to live at 'foo/index' and be served from 'foo'
 // The kit normally does this by defualt, but not if you want to do your
 // own GET / POST routes
 exports.render = (path, res, next, ...args) => {
-
   // Try to render the path
   res.render(path, ...args, function (error, html) {
     if (!error) {
@@ -145,7 +141,7 @@ exports.render = (path, res, next, ...args) => {
 
 // "2022" -> "2022 to 2023"
 exports.yearToAcademicYearString = year => {
-  let yearInt = parseInt(year)
+  const yearInt = parseInt(year)
   return `${year} to ${yearInt + 1}`
 }
 
@@ -158,40 +154,38 @@ exports.academicYearToYear = string => {
 // Add or remove from an academic year string
 // "2022 to 2023", 2 -> "2024 to 2025"
 exports.incrimentOrDecrimentAcademicYearString = (string, count) => {
-  let yearStart = exports.academicYearToYear(string) + count
+  const yearStart = exports.academicYearToYear(string) + count
   return exports.yearToAcademicYearString(yearStart)
 }
 
 // Return the academic year that a date falls in
 exports.dateToAcademicYear = date => {
-  if (Array.isArray(date)){
+  if (Array.isArray(date)) {
     date = dates.arrayToDateObject(date)
   }
-  let theDate = moment(date)
-  if (!theDate.isValid()){
+  const theDate = moment(date)
+  if (!theDate.isValid()) {
     console.log(`Error in dateToAcademicYear: provided date (${theDate, date}) is invalid`)
     return false
   }
-  let theYear = theDate.year()
-  let testDate = moment(`${theYear}-08-01`)
+  const theYear = theDate.year()
+  const testDate = moment(`${theYear}-08-01`)
 
-  if (theDate.isBefore(testDate)){
-    return exports.yearToAcademicYearString(theYear -1)
-  }
-  else return exports.yearToAcademicYearString(theYear)
+  if (theDate.isBefore(testDate)) {
+    return exports.yearToAcademicYearString(theYear - 1)
+  } else return exports.yearToAcademicYearString(theYear)
 }
 
 exports.setStartAcademicYear = record => {
-  let courseStartDate = record?.courseDetails?.courseStartDate
-  let traineeStartDate = record?.trainingDetails?.commencementDate
-  if (!courseStartDate){
+  const courseStartDate = record?.courseDetails?.courseStartDate
+  const traineeStartDate = record?.trainingDetails?.commencementDate
+  if (!courseStartDate) {
     return record
-  }
-  else {
+  } else {
     let compareDate = traineeStartDate || courseStartDate
     if (Array.isArray(compareDate)) compareDate = dates.arrayToDateObject(compareDate)
 
-    let academicYear = exports.dateToAcademicYear(compareDate)
+    const academicYear = exports.dateToAcademicYear(compareDate)
     if (academicYear) {
       record.academicYear = academicYear
       record.courseDetails.academicYear = academicYear
@@ -201,10 +195,9 @@ exports.setStartAcademicYear = record => {
 }
 
 exports.setEndAcademicYear = record => {
+  const endAcademicYear = exports.calculateEndAcademicYear(record)
 
-  let endAcademicYear = exports.calculateEndAcademicYear(record)
-
-  if (endAcademicYear){
+  if (endAcademicYear) {
     record.endAcademicYear = endAcademicYear
   }
   return record
@@ -212,10 +205,9 @@ exports.setEndAcademicYear = record => {
 
 // Saves academic years on to a trainee
 exports.setAcademicYears = record => {
+  const academicYears = exports.calculateAcademicYears(record)
 
-  let academicYears = exports.calculateAcademicYears(record)
-
-  if (academicYears){
+  if (academicYears) {
     record.academicYears = academicYears
   }
 
@@ -230,69 +222,65 @@ exports.setAcademicYears = record => {
 // For finished trainees, it'll be all the years between start year and end year. For trainees
 // still in training, it'll be the years from start year to the current yera
 exports.calculateAcademicYears = record => {
-
-  let currentYear = exports.academicYearToYear(years.currentAcademicYear)
+  const currentYear = exports.academicYearToYear(years.currentAcademicYear)
 
   // Lower bound year
-  let lowerBoundYear = exports.academicYearToYear(record.academicYear)
+  const lowerBoundYear = exports.academicYearToYear(record.academicYear)
 
   // Max upper bound year
   let upperBoundYear = currentYear
 
-
   // If the trainee has finished, then their upper bound is their end year
-  if (!exports.isActiveStatus(record)){
-    let endYear = exports.academicYearToYear(record.endAcademicYear)
+  if (!exports.isActiveStatus(record)) {
+    const endYear = exports.academicYearToYear(record.endAcademicYear)
 
     // It shouldn't be possible to have a finished trainee with an end year in the future. But
     // just in case, use the lower of curren tyera or end year.
     upperBoundYear = Math.min(currentYear, endYear)
   }
 
-  let allYears = []
+  const allYears = []
 
   // Interpolate all years between upper and lower bound
-  for (let year = lowerBoundYear; year <= upperBoundYear; year++){
+  for (let year = lowerBoundYear; year <= upperBoundYear; year++) {
     allYears.push(exports.yearToAcademicYearString(year)) // 2022 to 2023
   }
 
   return allYears
 }
 
-
 // Check if the course has allocated places
 exports.hasAllocatedPlaces = (record) => {
-  let routeHasAllocatedPlaces = trainingRoutes[record.route]?.hasAllocatedPlaces || false
-  let allocatedSubjects = trainingRouteData.allocatedSubjects // Just PE right now
+  const routeHasAllocatedPlaces = trainingRoutes[record.route]?.hasAllocatedPlaces || false
+  const allocatedSubjects = trainingRouteData.allocatedSubjects // Just PE right now
 
   // Allocations are based off of the 'allocation subject' rather than the specialisms
-  let recordAllocationSubject = exports.getAllocationSubject(record)
-  let subjectIsAllocated = allocatedSubjects.includes(recordAllocationSubject)
+  const recordAllocationSubject = exports.getAllocationSubject(record)
+  const subjectIsAllocated = allocatedSubjects.includes(recordAllocationSubject)
   return (routeHasAllocatedPlaces && subjectIsAllocated)
 }
 
 // Check if the course route requires this field or any of these fields
 exports.requiresField = (record, fieldNames) => {
   fieldNames = [].concat(fieldNames) // Force to array
-  let route = record.route
+  const route = record.route
   if (!route) {
-    console.log("Missing route in requiresField")
+    console.log('Missing route in requiresField')
     return false
   }
-  let requiredFields = trainingRoutes[route]?.fields
+  const requiredFields = trainingRoutes[route]?.fields
   return (requiredFields) ? requiredFields.some(field => fieldNames.includes(field)) : false
 }
 
 // Check if the course route requires this section or any of these sections
 exports.requiresSection = (record, sectionNames) => {
   sectionNames = [].concat(sectionNames) // Force to array
-  let route = record?.route
+  const route = record?.route
   let requiredSections
   if (route) {
     requiredSections = trainingRoutes[route]?.sections
-  }
-  else {
-    console.log("No route provided, using default sections")
+  } else {
+    console.log('No route provided, using default sections')
     // This is a fallback so drafts still work _mostly_ during development
     requiredSections = trainingRouteData.defaultSections
   }
@@ -302,21 +290,19 @@ exports.requiresSection = (record, sectionNames) => {
 // Returns: false / Early years / Primary / Secondary
 // Todo: should this be explicitly set on the record?
 exports.getCoursePhase = record => {
-
-  let phases = trainingRouteData.phases
+  const phases = trainingRouteData.phases
 
   let matchedPhase
 
   // Early years routes don’t have an age range - but they’re all implicitly 'Early years'
-  if (exports.routeIsEarlyYears(record?.route)) return "Early years"
+  if (exports.routeIsEarlyYears(record?.route)) return 'Early years'
   // Defer to an explicit level if it exists - not all records have this
   else if (record?.courseDetails?.phase) return record?.courseDetails?.phase
 
   // Age range can be used to derive the phase
   else if (record?.courseDetails?.ageRange) {
     matchedPhase = Object.keys(phases).filter(phase => Array.isArray(phases[phase]?.ageRanges) && phases[phase].ageRanges.includes(record.courseDetails.ageRange)).pop()
-  }
-  else return false
+  } else return false
 
   return matchedPhase
 }
@@ -328,12 +314,12 @@ exports.getCourseLevel = record => {
 
 // Used to set the right qualification on a record
 exports.setCourseDefaults = record => {
-  let route = record?.route
+  const route = record?.route
 
   if (!route || !record?.courseDetails) return record
 
-  let routeData = trainingRoutes[route]
-  let routeDefaults = {
+  const routeData = trainingRoutes[route]
+  const routeDefaults = {
     qualifications: routeData.qualifications,
     qualificationsSummary: routeData.qualificationsSummary,
     duration: routeData.duration
@@ -347,20 +333,16 @@ exports.setCourseDefaults = record => {
   return record
 }
 
-
 // Copy relevant Publish course dates to trainee if they’re set
 // Dates depend on what study mode the trainee is on
 exports.setCourseDatesIfPresent = courseDetails => {
-
   // If there's already start and end dates, do nothing
   if (courseDetails.startDate && courseDetails.endDate) return courseDetails
 
-  if (exports.isFullTime(courseDetails)){
+  if (exports.isFullTime(courseDetails)) {
     courseDetails.startDate = courseDetails.startDate || courseDetails.startDateFullTime
     courseDetails.endDate = courseDetails.endDate || courseDetails.endDateFullTime
-  }
-
-  else if (exports.isPartTime(courseDetails)){
+  } else if (exports.isPartTime(courseDetails)) {
     courseDetails.startDate = courseDetails.startDate || courseDetails.startDatePartTime
     courseDetails.endDate = courseDetails.endDate || courseDetails.endDatePartTime
   }
@@ -370,25 +352,24 @@ exports.setCourseDatesIfPresent = courseDetails => {
 
 // Decision tree of conditional pages for Publish courses
 exports.getNextPublishCourseDetailsUrl = (record, recordPath, referrer) => {
-
   // Unsure why there's two filters in use here. But it seems to work so not touching for now
-  let hasUnmappedPublishSubjects = exports.hasUnmappedPublishSubjects(record.courseDetails) || exports.subjectsAreIncomplete(record.courseDetails)
+  const hasUnmappedPublishSubjects = exports.hasUnmappedPublishSubjects(record.courseDetails) || exports.subjectsAreIncomplete(record.courseDetails)
 
-  let isMissingStudyMode = exports.needsStudyMode(record)
-  let isMissingDates = exports.needsCourseDates(record)
-  let isAllocated = exports.hasAllocatedPlaces(record)
+  const isMissingStudyMode = exports.needsStudyMode(record)
+  const isMissingDates = exports.needsCourseDates(record)
+  const isAllocated = exports.hasAllocatedPlaces(record)
 
-  let isMissingCourseMoveQuestion = !Boolean(record?.temp?.courseMoveTemp)
+  const isMissingCourseMoveQuestion = !record?.temp?.courseMoveTemp
 
-  if (hasUnmappedPublishSubjects){
+  if (hasUnmappedPublishSubjects) {
     return `${recordPath}/course-details/choose-specialisms${referrer}`
   }
   // Courses can be dual study mode. If so, ask which this trainee is
-  else if (isMissingStudyMode){
+  else if (isMissingStudyMode) {
     return `${recordPath}/course-details/study-mode${referrer}`
   }
   // Backfill course dates
-  else if (isMissingDates && !skipCourseDatesPage){
+  else if (isMissingDates && !skipCourseDatesPage) {
     return `${recordPath}/course-details/dates${referrer}`
   }
   // else if (isAllocated) {
@@ -408,54 +389,46 @@ exports.getNextPublishCourseDetailsUrl = (record, recordPath, referrer) => {
 // the record to see what's there vs what the route says should be there. Returns an
 // array of items.
 exports.getCourseChangeMissingItems = (record) => {
+  const isMissingDegree = exports.needsDegree(record)
+  const isMissingSchools = exports.needsSchools(record)
+  const isMissingLeadPartner = exports.needsLeadPartner(record)
+  const isMissingEmployingSchool = exports.needsEmployingSchool(record)
+  const isMissingFundingSource = exports.needsFundingSource(record)
 
-  let isMissingDegree = exports.needsDegree(record)
-  let isMissingSchools = exports.needsSchools(record)
-  let isMissingLeadPartner = exports.needsLeadPartner(record)
-  let isMissingEmployingSchool = exports.needsEmployingSchool(record)
-  let isMissingFundingSource = exports.needsFundingSource(record)
+  const missing = []
 
-  let missing = []
-
-  if (isMissingDegree) missing.push("degree")
-  if (isMissingSchools) missing.push("schools")
+  if (isMissingDegree) missing.push('degree')
+  if (isMissingSchools) missing.push('schools')
   else {
-    if (isMissingLeadPartner) missing.push("lead partner")
-    if (isMissingEmployingSchool) missing.push("employing school")
+    if (isMissingLeadPartner) missing.push('lead partner')
+    if (isMissingEmployingSchool) missing.push('employing school')
   }
 
-  if (isMissingFundingSource) missing.push("funding method")
+  if (isMissingFundingSource) missing.push('funding method')
   return missing
 }
 
 // Decision tree of conditional pages for Publish courses
 exports.getNextCourseChangeUrl = (record, recordPath, referrer) => {
+  const missingItems = exports.getCourseChangeMissingItems(record)
 
-  let missingItems = exports.getCourseChangeMissingItems(record)
+  const startWithReviewPage = false
 
-  let startWithReviewPage = false
+  const isMissingCourseMoveQuestion = !record?.temp?.courseMoveTemp
 
-  let isMissingCourseMoveQuestion = !Boolean(record?.temp?.courseMoveTemp)
-
-  if (startWithReviewPage){
+  if (startWithReviewPage) {
     return `${recordPath}/course-details/final-check-course-change${referrer}`
-  }
-  else if (missingItems.includes("degree")){
+  } else if (missingItems.includes('degree')) {
     return `${recordPath}/degree/add${referrer}`
-  }
-  else if (missingItems.includes("schools") || missingItems.includes("lead partner")){
+  } else if (missingItems.includes('schools') || missingItems.includes('lead partner')) {
     return `${recordPath}/schools/lead-school${referrer}`
-  }
-  else if (missingItems.includes("employing-school")){
+  } else if (missingItems.includes('employing-school')) {
     return `${recordPath}/schools/employing-school${referrer}`
-  }
-  else if (missingItems.includes("funding method")){
+  } else if (missingItems.includes('funding method')) {
     return `${recordPath}/funding/financial-support${referrer}`
-  }
-  else if (isMissingCourseMoveQuestion){
+  } else if (isMissingCourseMoveQuestion) {
     return `${recordPath}/course-details/course-change-date-question${referrer}`
-  }
-  else {
+  } else {
     return `${recordPath}/course-details/final-check-course-change${referrer}`
   }
 }
@@ -463,9 +436,8 @@ exports.getNextCourseChangeUrl = (record, recordPath, referrer) => {
 // Delete those bits of course details that would have come from Publish. Output should
 // resemble what you get if you manually add course details.
 exports.deletePublishCourseReferences = courseDetails => {
-
   if (!courseDetails) {
-    console.log("Error with deletePublishCourseReferences: courseDetails empty")
+    console.log('Error with deletePublishCourseReferences: courseDetails empty')
     return
   }
 
@@ -477,16 +449,14 @@ exports.deletePublishCourseReferences = courseDetails => {
   delete courseDetails?.startDateVague
 
   return courseDetails
-
 }
 
 // Have a stab at clearing incompatible data from course details - eg it’s a secondary course but the subject
 // is early years
 // TODO: would it be better to wipe course details but retain specific allowed items?
 exports.deleteIncompatibleCourseReferences = record => {
-
   if (!record) {
-    console.log("Error with deleteIncompatibleCourseReferences: record empty")
+    console.log('Error with deleteIncompatibleCourseReferences: record empty')
     return
   }
 
@@ -497,35 +467,32 @@ exports.deleteIncompatibleCourseReferences = record => {
 
   // Using this lower level function to identify Early years because we don't trust
   // any of the course details at this point.
-  let isEarlyYears = exports.routeIsEarlyYears(record?.route)
+  const isEarlyYears = exports.routeIsEarlyYears(record?.route)
 
   // If moving from Early years to non early years, clear out the subject
-  if (!isEarlyYears){
-    if (record?.courseDetails?.subjects?.first == "Early years teaching"){
+  if (!isEarlyYears) {
+    if (record?.courseDetails?.subjects?.first === 'Early years teaching') {
       delete record.courseDetails.subjects
     }
 
-    if (record?.courseDetails?.phase == "Early years"){
+    if (record?.courseDetails?.phase === 'Early years') {
       delete record.courseDetails.phase
     }
   }
 
-  if (isEarlyYears){
-
-    if (record?.courseDetails?.subjects?.first != "Early years teaching"){
+  if (isEarlyYears) {
+    if (record?.courseDetails?.subjects?.first !== 'Early years teaching') {
       delete record?.courseDetails?.subjects
     }
 
-    if (record?.courseDetails?.phase != "Early years"){
+    if (record?.courseDetails?.phase !== 'Early years') {
       delete record?.courseDetails?.phase
     }
 
     delete record?.courseDetails?.ageRange
-
   }
 
-  if (record?.route && record.route.toLowerCase().includes("assessment only")){
-
+  if (record?.route && record.route.toLowerCase().includes('assessment only')) {
     delete record?.courseDetails.studyMode
 
     // If a trainee is moving to / from an assessment only course, it’s
@@ -535,7 +502,6 @@ exports.deleteIncompatibleCourseReferences = record => {
   }
 
   return record
-
 }
 
 // -------------------------------------------------------------------
@@ -543,59 +509,55 @@ exports.deleteIncompatibleCourseReferences = record => {
 // -------------------------------------------------------------------
 
 exports.hasInitiatives = (record) => {
-  let route = record?.route
-  if (route && trainingRoutes[route].initiatives){
+  const route = record?.route
+  if (route && trainingRoutes[route].initiatives) {
     return trainingRoutes[route].initiatives.length > 0
-  }
-  else return false
+  } else return false
 }
 
 exports.isOnInitiative = record => {
-  return record?.funding?.initiative != 'Not on a training initiative'
+  return record?.funding?.initiative !== 'Not on a training initiative'
 }
 
 exports.subjectToAllocationSubject = subject => {
-  if(!subject){
-    console.log("Err: subject missing")
+  if (!subject) {
+    console.log('Err: subject missing')
     return false
   }
-  let allocationSubject = ittSubjects.subjectSpecialisms?.[subject]?.allocationSubject || false
+  const allocationSubject = ittSubjects.subjectSpecialisms?.[subject]?.allocationSubject || false
   return allocationSubject
 }
 
 exports.getAllocationSubject = (input) => {
   // Support passing in a course or a record
-  let courseSubject = input?.subjects?.first || input?.courseDetails?.subjects?.first || false
-  if (!courseSubject){
+  const courseSubject = input?.subjects?.first || input?.courseDetails?.subjects?.first || false
+  if (!courseSubject) {
     console.log('No course subject available')
     return false
-  }
-  else {
-    let allocationSubject = exports.subjectToAllocationSubject(courseSubject)
+  } else {
+    const allocationSubject = exports.subjectToAllocationSubject(courseSubject)
     return allocationSubject
   }
 }
 
 exports.getCourseAllocationSubject = (input) => {
   // Support passing in a course or a record
-  let courseSubject = input?.publishSubjects?.first || input?.courseDetails?.publishSubjects?.first || false
-  if (!courseSubject){
+  const courseSubject = input?.publishSubjects?.first || input?.courseDetails?.publishSubjects?.first || false
+  if (!courseSubject) {
     console.log('No course subject available')
     return false
-  }
-  else {
-    let allocationSubject = exports.subjectToAllocationSubject(courseSubject)
+  } else {
+    const allocationSubject = exports.subjectToAllocationSubject(courseSubject)
     return allocationSubject
   }
 }
-
 
 // Internal helper to look up bursary available
 exports.getFinancialSupportByRouteAndSubject = (route, subject) => {
   let financialSupport = {}
 
   if (!route) return false
-  let routeData = trainingRoutes[route]
+  const routeData = trainingRoutes[route]
 
   if (!routeData?.financialSupportAvailable) return false
 
@@ -604,7 +566,6 @@ exports.getFinancialSupportByRouteAndSubject = (route, subject) => {
   financialSupport.allSubjects = []
 
   routeData.financialSupport.forEach(financialSupportLevel => {
-
     // Build up an array of subjects that attract a financialSupport
     financialSupport.allSubjects = financialSupport.allSubjects.concat(financialSupportLevel.subjects)
 
@@ -612,20 +573,18 @@ exports.getFinancialSupportByRouteAndSubject = (route, subject) => {
       financialSupport = Object.assign(financialSupportLevel, financialSupport)
       financialSupport.subject = subject
       financialSupportMatch = true
-      return
     }
     // Early years don’t really have subjects - but we can check the route instead
     // Todo: should we just copy over the entire object?
-    else if (exports.routeIsEarlyYears(route) && financialSupportLevel.subjects.includes("Early years")){
+    else if (exports.routeIsEarlyYears(route) && financialSupportLevel.subjects.includes('Early years')) {
       financialSupport = Object.assign(financialSupportLevel, financialSupport)
-      financialSupport.subject = "Early years"
+      financialSupport.subject = 'Early years'
       financialSupport.tiersApply = financialSupportLevel?.tiersApply || false
       financialSupportMatch = true
-      return
     }
   })
 
-  let output = financialSupportMatch ? financialSupport : false
+  const output = financialSupportMatch ? financialSupport : false
 
   return output
 }
@@ -636,7 +595,7 @@ exports.getFinancialSupport = record => {
 
   // Allocation subject may be falsy. For some routes this will mean we can’t calulate the financialSupport
   // for Early years, it doesn't matter
-  let allocationSubject = exports.getAllocationSubject(record)
+  const allocationSubject = exports.getAllocationSubject(record)
   return exports.getFinancialSupportByRouteAndSubject(record.route, allocationSubject)
 }
 
@@ -658,14 +617,14 @@ exports.routeHasFinancialSupport = route => {
 
 // Check whether bursaries are available for a given route chosen course
 exports.financialSupportApplies = (record) => {
-  let financialSupport = exports.getFinancialSupport(record)
+  const financialSupport = exports.getFinancialSupport(record)
   if (financialSupport) return true
   else return false
 }
 
 // Check whether scholarships are available for a given route chosen course
 exports.scholarshipsApply = (record) => {
-  let financialSupport = exports.getFinancialSupport(record)
+  const financialSupport = exports.getFinancialSupport(record)
   if (financialSupport?.scholarshipValue) return true
   else return false
 }
@@ -678,47 +637,46 @@ exports.canStartFundingSection = record => {
   else if (exports.isEarlyYears(record)) return true
   // Other routes need course details to start bursaries
   else {
-    let courseDetailsComplete = exports.sectionIsComplete(record.courseDetails)
+    const courseDetailsComplete = exports.sectionIsComplete(record.courseDetails)
     return courseDetailsComplete
   }
 }
 
 // Check if qualifications array contains an item
 exports.qualificationIs = (record, qualification) => {
-
-  let qualifications = record?.courseDetails?.qualifications || trainingRoutes?.[record?.route]?.qualifications || []
+  const qualifications = record?.courseDetails?.qualifications || trainingRoutes?.[record?.route]?.qualifications || []
 
   return qualifications.includes(qualification)
 }
 
-exports.qualificationIsQTS = record => exports.qualificationIs(record, "QTS")
+exports.qualificationIsQTS = record => exports.qualificationIs(record, 'QTS')
 
-exports.qualificationIsEYTS = record => exports.qualificationIs(record, "EYTS")
+exports.qualificationIsEYTS = record => exports.qualificationIs(record, 'EYTS')
 
-exports.qualificationIsPGCE = record => exports.qualificationIs(record, "PGCE")
+exports.qualificationIsPGCE = record => exports.qualificationIs(record, 'PGCE')
 
-exports.qualificationIsPGDE = record => exports.qualificationIs(record, "PGDE")
+exports.qualificationIsPGDE = record => exports.qualificationIs(record, 'PGDE')
 
 exports.getQualificationText = record => {
-  if (exports.qualificationIsEYTS(record)) return "EYTS"
-  else if (exports.qualificationIsQTS(record)) return "QTS"
-  else return "unknown"
+  if (exports.qualificationIsEYTS(record)) return 'EYTS'
+  else if (exports.qualificationIsQTS(record)) return 'QTS'
+  else return 'unknown'
 }
 
 // Look up an academic qualification using string - so we can get the abbreviation or long name
 exports.lookUpAcademicQualification = searchText => {
-  let allQualifications = academicQualifications.all
+  const allQualifications = academicQualifications.all
 
   // todo: this might fail where two qualifications have the same abbreviation
   return allQualifications.find(item => {
-    return  (searchText == item.long) || (searchText == item.short)
+    return (searchText === item.long) || (searchText === item.short)
   }) || false
 }
 
 // Sort by subject, including course code
 // TODO: is this filter needed? could we just sort alphabetically?
 exports.sortPublishCourses = courses => {
-  let sorted = courses.sort((a, b) => {
+  const sorted = courses.sort((a, b) => {
     return exports.sortAlphabetical(a.courseNameLong, b.courseNameLong)
   })
   return sorted
@@ -727,34 +685,33 @@ exports.sortPublishCourses = courses => {
 // Return courses run by the current provider
 // If run as a filter, data comes via Nunjucks context. If run from elsewhere,
 // we need to explicitly pass in data.
-exports.getProviderCourses = function({ courses, provider, route = false, year = false }){
+exports.getProviderCourses = function ({ courses, provider, route = false, year = false }) {
   if (!provider) {
     console.log('Error: no provider given')
     return []
   }
-  if (!courses?.[provider]?.courses){
+  if (!courses?.[provider]?.courses) {
     console.log('Error: no courses. The kit has likely been reset.')
     return []
   }
   let filteredCourses = courses[provider].courses
   if (route) {
-    filteredCourses = filteredCourses.filter(course => route == course.route)
+    filteredCourses = filteredCourses.filter(course => route === course.route)
   }
   if (year) {
     filteredCourses = filteredCourses.filter(course => course.academicYear.startsWith(year))
   }
-  let sortedCourses = exports.sortPublishCourses(filteredCourses)
+  const sortedCourses = exports.sortPublishCourses(filteredCourses)
   return sortedCourses
 }
 
 // Group courses by academic year
-exports.groupCoursesByYear = function(courses){
-
-  let output = {}
+exports.groupCoursesByYear = function (courses) {
+  const output = {}
 
   courses.forEach(course => {
-    let startYear = course.academicYear.substring(0, 4)
-    if (!output[startYear]){
+    const startYear = course.academicYear.substring(0, 4)
+    if (!output[startYear]) {
       output[startYear] = []
     }
     output[startYear].push(course)
@@ -764,15 +721,15 @@ exports.groupCoursesByYear = function(courses){
 }
 
 // Look up a course by the Publish Code
-exports.getCourseByCode = function(code, data=false){
+exports.getCourseByCode = function (code, data = false) {
   data = data || this?.ctx?.data || false
   let foundCourse
 
   // Iterate through each provider and then through each of their courses
   // This code is a bit awkward. It relies on the first find() breaking as soon as a provider
   // is found
-  Object.keys(data.courses).find( provider => {
-    foundCourse = data.courses[provider].courses.find(course => course.code == code)
+  Object.keys(data.courses).find(provider => {
+    foundCourse = data.courses[provider].courses.find(course => course.code === code)
     return foundCourse
   })
 
@@ -781,20 +738,22 @@ exports.getCourseByCode = function(code, data=false){
   return foundCourse
 }
 
-exports.updatePublishCourse = function(course, data=false){
+exports.updatePublishCourse = function (course, data = false) {
   data = data || this?.ctx?.data || false
 
   // Iterate through each provider and then through each of their courses
   // Avoiding using getCourseByCode() as we want a reference to the course not a copy.
   let foundCourse
 
-  Object.keys(data.courses).find( provider => {
-    foundCourse = data.courses[provider].courses.find(_course => _course.code == course.code)
+  Object.keys(data.courses).find(provider => {
+    foundCourse = data.courses[provider].courses.find(_course => _course.code === course.code)
     return foundCourse
   })
 
-  if (!foundCourse) console.log(`Error: course ${course?.courseNameLong} not found, so couldn’t be
+  if (!foundCourse) {
+    console.log(`Error: course ${course?.courseNameLong} not found, so couldn’t be
     updated`)
+  }
 
   // This overwrites the one we found by reference. There's probably a cleaner way of
   // doing this
@@ -802,35 +761,31 @@ exports.updatePublishCourse = function(course, data=false){
 }
 
 // Look up a Publish course from the trainee record
-exports.getTraineePublishCourse = function(record, data=false){
+exports.getTraineePublishCourse = function (record, data = false) {
   data = data || this?.ctx?.data || false
   if (!record.courseDetails || !record.courseDetails.code) return false
   else return exports.getCourseByCode(record.courseDetails.code, data)
 }
 
-
 exports.updatePublishCourseDates = (courseDetails, data) => {
+  const theCourse = exports.getCourseByCode(courseDetails?.code, data)
 
-  let theCourse = exports.getCourseByCode(courseDetails?.code, data)
-
-  if (exports.isFullTime(courseDetails)){
+  if (exports.isFullTime(courseDetails)) {
     theCourse.startDateFullTime = theCourse.startDateFullTime || courseDetails?.startDate || undefined
     theCourse.endDateFullTime = theCourse.endDateFullTime || courseDetails?.endDate || undefined
-  }
-  else if (exports.isPartTime(courseDetails)){
+  } else if (exports.isPartTime(courseDetails)) {
     theCourse.startDatePartTime = theCourse.startDatePartTime || courseDetails?.startDate || undefined
     theCourse.endDatePartTime = theCourse.endDatePartTime || courseDetails?.endDate || undefined
   }
 
   exports.updatePublishCourse(theCourse, data)
-
 }
 
 // Check if the selected provider offers publish courses for the selected route
-exports.routeHasPublishCourses = function(record){
+exports.routeHasPublishCourses = function (record) {
   if (!record) return false
   const data = Object.assign({}, this.ctx.data)
-  let providerCourses = exports.getProviderCourses(data?.courses, record?.provider, record.route, data)
+  const providerCourses = exports.getProviderCourses(data?.courses, record?.provider, record.route, data)
   return (providerCourses.length > 0)
 }
 
@@ -839,30 +794,30 @@ exports.dynamicLowercase = input => {
   if (!input) return input
 
   // These things shouldn’t get lowercased
-  let ignoreSubjects = [
-  "Arabic",
-  "Chinese",
-  "Early years",
-  "English",
-  "French",
-  "German",
-  "Greek",
-  "Ancient Hebrew",
-  "Italian",
-  "Japanese",
-  "Latin",
-  "Mandarin",
-  "Portuguese",
-  "Russian",
-  "Spanish",
-  "Welsh",
+  const ignoreSubjects = [
+    'Arabic',
+    'Chinese',
+    'Early years',
+    'English',
+    'French',
+    'German',
+    'Greek',
+    'Ancient Hebrew',
+    'Italian',
+    'Japanese',
+    'Latin',
+    'Mandarin',
+    'Portuguese',
+    'Russian',
+    'Spanish',
+    'Welsh'
   ]
 
   const makeLowercase = item => {
     let output = item.toLowerCase()
 
     ignoreSubjects.forEach(subject => {
-      let regex = new RegExp(`${subject.toLowerCase()}`, "g") // match multiple times
+      const regex = new RegExp(`${subject.toLowerCase()}`, 'g') // match multiple times
       // Note: if we upgrade to node 16, we could use output.replaceAll instead
       output = output.replace(regex, subject)
     })
@@ -871,44 +826,42 @@ exports.dynamicLowercase = input => {
 
   if (typeof input === 'string') {
     return makeLowercase(input)
-  }
-  else {
-    let array = [].concat(input)
+  } else {
+    const array = [].concat(input)
     return array.map(subject => {
       return makeLowercase(subject)
     })
   }
-
 }
 
 // Combine multiple subject names together
 // Eg Biology with English, Chemistry with physical education and physics
 // A bit similar to:
 // https://github.com/DFE-Digital/teacher-training-api/blob/045a4b3e97df0ccdb72c38b3611dcb8d094c29cc/app/services/courses/generate_course_name_service.rb#L51
-exports.prettifySubjects = (subjects, lowercaseFirst=false) => {
+exports.prettifySubjects = (subjects, lowercaseFirst = false) => {
   // No data?
-  if (!subjects || Object.values(subjects).length == 0) {
+  if (!subjects || Object.values(subjects).length === 0) {
     return ''
   }
 
   // Grab the subjects and filter out falsy values
   subjects = Object.values(subjects).filter(Boolean)
 
-  let isModernLanguagesCourse = (exports.subjectToAllocationSubject(subjects[0]) == "Modern languages")
+  const isModernLanguagesCourse = (exports.subjectToAllocationSubject(subjects[0]) === 'Modern languages')
 
   // If the first subject is a language, push 'Modern languages' in to the start - this way we'll
   // get names like 'Modern languages with French' which looks a bit neater.
-  if ( (subjects.length > 1) && isModernLanguagesCourse){
-    subjects = [...new Set(["Modern languages"].concat(subjects))]
+  if ((subjects.length > 1) && isModernLanguagesCourse) {
+    subjects = [...new Set(['Modern languages'].concat(subjects))]
   }
 
-  if (subjects[0] == 'Specialist teaching (primary with mathematics)'){
-    return "Primary with mathematics"
+  if (subjects[0] === 'Specialist teaching (primary with mathematics)') {
+    return 'Primary with mathematics'
   }
 
   // A string or just one subject
   // Return straight away so we don’t shorten the string
-  if (typeof subjects === 'string' || subjects.length == 1){
+  if (typeof subjects === 'string' || subjects.length === 1) {
     if (lowercaseFirst) return exports.dynamicLowercase(subjects)
     else return subjects
   }
@@ -930,7 +883,7 @@ exports.prettifySubjects = (subjects, lowercaseFirst=false) => {
   })
 
   // Lowercase everything
-  if (lowercaseFirst){
+  if (lowercaseFirst) {
     subjectsCopy = exports.dynamicLowercase(subjectsCopy)
   }
   // Lowercase all the subjects except those starting with words in ignoreSubjects
@@ -940,7 +893,7 @@ exports.prettifySubjects = (subjects, lowercaseFirst=false) => {
 
   // Join with ‘with’ and ‘and’
   // ‘a with b’ or ‘a with b and c’
-  let returnString = arrayFilters.withSeparate(subjectsCopy)
+  const returnString = arrayFilters.withSeparate(subjectsCopy)
   return returnString
 }
 
@@ -952,13 +905,12 @@ exports.prettifySubjects = (subjects, lowercaseFirst=false) => {
 
 // Get a specialism for a given Publish subject
 exports.publishSubjectToSpecialism = subject => {
-  let publishSubjects = ittSubjects.publishSubjects
+  const publishSubjects = ittSubjects.publishSubjects
 
-  if (!publishSubjects[subject]){
+  if (!publishSubjects[subject]) {
     console.log(`Error in publishSubjectMapsToSpecialism: subject (${subject}) not found.`)
     return false
-  }
-  else return publishSubjects[subject].specialism || false
+  } else return publishSubjects[subject].specialism || false
 }
 
 // If a given Publish subject is mappable to a single specialism
@@ -968,46 +920,45 @@ exports.publishSubjectMapsToSpecialism = subject => {
 
 // Look up possible specialisms for a given Publish subject
 exports.publishSubjectToPossibleSpecialisms = subject => {
-  let publishSubjects = ittSubjects.publishSubjects
+  const publishSubjects = ittSubjects.publishSubjects
 
-  if (!publishSubjects[subject]){
+  if (!publishSubjects[subject]) {
     console.log(`Error in publishSubjectMapsToSpecialism: subject (${subject}) not found.`)
     return false
-  }
-  else return publishSubjects[subject].subjectSpecialisms || false
+  } else return publishSubjects[subject].subjectSpecialisms || false
 }
 
- // Split a single string in to multiple subjects
+// Split a single string in to multiple subjects
 // Used as Publish and our UI try to simplify common options using radio options
-exports.mapPrimarySubjectsToSubjectSpecialisms = (primaryString, existingSubjects=false) => {
-  let subjects = {}
+exports.mapPrimarySubjectsToSubjectSpecialisms = (primaryString, existingSubjects = false) => {
+  const subjects = {}
 
   // First specialism is always primary teaching
-  subjects.first = "Primary teaching"
+  subjects.first = 'Primary teaching'
 
-  switch(primaryString){
-    case "Primary with English":
-      subjects.second = "English studies"
+  switch (primaryString) {
+    case 'Primary with English':
+      subjects.second = 'English studies'
       break
-    case "Primary with physical education":
-      subjects.second = "Physical education"
+    case 'Primary with physical education':
+      subjects.second = 'Physical education'
       break
-    case "Primary with science":
-      subjects.second = "General sciences"
+    case 'Primary with science':
+      subjects.second = 'General sciences'
       break
-    case "Primary with geography and history":
-      subjects.second = "Geography"
-      subjects.third = "History"
+    case 'Primary with geography and history':
+      subjects.second = 'Geography'
+      subjects.third = 'History'
       break
-    case "Primary with mathematics":
+    case 'Primary with mathematics':
       // Primary with maths is treated specially - override the first subject to set this
       // specific specialism
-      subjects.first = "Specialist teaching (primary with mathematics)"
+      subjects.first = 'Specialist teaching (primary with mathematics)'
       break
-    case "Primary with modern languages":
-      subjects.second = "Modern languages"
+    case 'Primary with modern languages':
+      subjects.second = 'Modern languages'
       break
-    case "Primary with another subject":
+    case 'Primary with another subject':
       if (existingSubjects?.second) subjects.second = existingSubjects.second
       if (existingSubjects?.third) subjects.third = existingSubjects.third
       break
@@ -1016,17 +967,15 @@ exports.mapPrimarySubjectsToSubjectSpecialisms = (primaryString, existingSubject
   return subjects
 }
 
-
 // Map those Publish subjects that can be mapped unambiguously.
 // TODO: this code is nearly identical to setSubjectSpecialisms() in course-details.js - they
 // should probably be combined together
 exports.mapMappablePublishSubjects = course => {
-
-  let publishSubjects = course?.publishSubjects
-  let firstSubject = publishSubjects.first
+  const publishSubjects = course?.publishSubjects
+  const firstSubject = publishSubjects.first
 
   if (!publishSubjects) {
-    console.log("Err: mapMappablePublishSubjects missing subjects")
+    console.log('Err: mapMappablePublishSubjects missing subjects')
     return course
   }
 
@@ -1034,7 +983,7 @@ exports.mapMappablePublishSubjects = course => {
 
   // Hacky handling for Primary courses. Publish only treats them as having a single 'subject' but
   // we want to map it to up to three specialisms.
-  if (firstSubject.includes("Primary")){
+  if (firstSubject.includes('Primary')) {
     subjects = exports.mapPrimarySubjectsToSubjectSpecialisms(firstSubject)
   }
 
@@ -1043,12 +992,10 @@ exports.mapMappablePublishSubjects = course => {
     // Loop through each Publish subject and look up the mappable specialism, or else set the
     // subject to 'null'
     Object.keys(publishSubjects).forEach(ordinal => {
-
       // Get the specialism (or null)
-      let mappedPublishSubject = exports.publishSubjectToSpecialism(publishSubjects[ordinal])
+      const mappedPublishSubject = exports.publishSubjectToSpecialism(publishSubjects[ordinal])
       subjects[ordinal] = subjects?.[ordinal] || mappedPublishSubject || null
     })
-
   }
 
   // Apply the subjects back to the course
@@ -1058,10 +1005,9 @@ exports.mapMappablePublishSubjects = course => {
 }
 
 exports.hasUnmappedPublishSubjects = course => {
-
-  let publishSubjects = course?.publishSubjects
+  const publishSubjects = course?.publishSubjects
   if (!publishSubjects) {
-    console.log("Err: hasUnmappedPublishSubjects missing subjects")
+    console.log('Err: hasUnmappedPublishSubjects missing subjects')
     return course
   }
 
@@ -1075,7 +1021,7 @@ exports.hasUnmappedPublishSubjects = course => {
 // Similar to hasUnmappedPublishSubjects, but instead check we have no null values in subjects.
 exports.subjectsAreIncomplete = courseDetails => {
   if (!courseDetails?.subjects) return true
-  return Object.values(courseDetails.subjects).some(subject => subject == null)
+  return Object.values(courseDetails.subjects).some(subject => subject === null)
 }
 
 // For Apply drafts, ask users to confirm the course is correct before proceeding.
@@ -1092,70 +1038,68 @@ exports.courseNeedsToBeConfirmed = courseDetails => {
 
 // Statuses
 exports.isDraft = record => {
-  return record?.status == "Draft"
+  return record?.status === 'Draft'
 }
 
 exports.isNonDraft = record => {
-  return record?.status != "Draft"
+  return record?.status !== 'Draft'
 }
 
 exports.isPendingTrn = record => {
-  return record?.status == "Pending TRN"
+  return record?.status === 'Pending TRN'
 }
 
 exports.isTrnReceived = record => {
-  return record?.status == "TRN received"
+  return record?.status === 'TRN received'
 }
 
 exports.isRecommended = record => {
-  return record?.status?.includes("recommended") //EYTS recommended and QTS recommended
+  return record?.status?.includes('recommended') // EYTS recommended and QTS recommended
 }
 
 exports.isAwarded = record => {
-  return record?.status?.includes("awarded") // EYTS awarded and QTS awarded
+  return record?.status?.includes('awarded') // EYTS awarded and QTS awarded
 }
 
 exports.isDeferred = record => {
-  return record?.status == "Deferred"
+  return record?.status === 'Deferred'
 }
 
 exports.isNotDeferred = record => {
-  return record?.status !== "Deferred"
+  return record?.status !== 'Deferred'
 }
 
 exports.isWithdrawn = record => {
-  return record?.status == "Withdrawn"
+  return record?.status === 'Withdrawn'
 }
 
 exports.withdrawnWithin90days = record => {
   if (!exports.isWithdrawn(record)) return false
 
-  let startDate = record?.trainingDetails?.commencementDate || record?.courseDetails?.startDate
-  let withdrawDate = record?.withdraw?.date
+  const startDate = record?.trainingDetails?.commencementDate || record?.courseDetails?.startDate
+  const withdrawDate = record?.withdraw?.date
 
-  if (record.id == "710729a1-3a2e-42ef-924d-16d44f3d28e6/"){
-    console.log({startDate, withdrawDate})
+  if (record.id === '710729a1-3a2e-42ef-924d-16d44f3d28e6/') {
+    console.log({ startDate, withdrawDate })
   }
 
   if (!startDate || !withdrawDate) return false
 
-  let dateToCheck = moment(startDate).add(90, 'days')
+  const dateToCheck = moment(startDate).add(90, 'days')
 
   return moment(withdrawDate).isBefore(dateToCheck)
-
 }
 
 // Todo: this should probably combine with the active stuff
 exports.isInTraining = record => {
-
-  let isActiveStatus = [
-    "Pending TRN",
-    "TRN received",
-    "QTS recommended",
-    "EYTS recommended"
+  const isActiveStatus = [
+    'Pending TRN',
+    'TRN received',
+    'QTS recommended',
+    'EYTS recommended'
   ].includes(record?.status)
 
-  let ittInTheFuture = exports.ittInTheFuture(record)
+  const ittInTheFuture = exports.ittInTheFuture(record)
   return isActiveStatus && !ittInTheFuture
 }
 
@@ -1163,33 +1107,33 @@ exports.isInTraining = record => {
 // (not ‘qualified’ or ‘withdrawn’)
 exports.isActiveStatus = record => {
   return [
-    "Pending TRN",
-    "TRN received",
-    "QTS recommended",
-    "EYTS recommended",
-    "Deferred"
+    'Pending TRN',
+    'TRN received',
+    'QTS recommended',
+    'EYTS recommended',
+    'Deferred'
   ].includes(record.status)
 }
 
 // Source types
 exports.sourceIsApply = record => {
-  return record?.source == "Apply"
+  return record?.source === 'Apply'
 }
 
 exports.sourceIsManual = record => {
-  return record?.source != "Apply"
+  return record?.source !== 'Apply'
 }
 
 exports.sourceIsHESA = record => {
-  return record?.source == "HESA"
+  return record?.source === 'HESA'
 }
 
 exports.isApprenticeship = record => {
-  return record?.route == "Teaching apprenticeship (postgrad)"
+  return record?.route === 'Teaching apprenticeship (postgrad)'
 }
 
 exports.isSchoolDirect = record => {
-  return record.route && record?.route.includes("School")
+  return record.route && record?.route.includes('School')
 }
 
 exports.hasLeadPartner = record => {
@@ -1217,52 +1161,48 @@ exports.getEndAcademicYear = record => record.endAcademicYear
 // This is used where we don’t have course end dates - such as for
 // HESA records
 exports.calculateCourseEndAcademicYear = record => {
-  if (record?.courseDetails?.duration){
-
+  if (record?.courseDetails?.duration) {
     // A duration of 1 would mean you finish same year - so decriment by one
-    let duration = record.courseDetails.duration - 1
-    if (duration == 0) return record?.academicYear
+    const duration = record.courseDetails.duration - 1
+    if (duration === 0) return record?.academicYear
     else {
       return exports.incrimentOrDecrimentAcademicYearString(record?.academicYear, duration)
     }
-  }
-  else return false
+  } else return false
 }
 
 // End academic year depends on the trainee status and what data
 // we have available
 exports.calculateEndAcademicYear = record => {
   // console.log("Calculating end academic year")
-  if (exports.isAwarded(record)){
+  if (exports.isAwarded(record)) {
     return exports.dateToAcademicYear(record?.qualificationAwardedDate)
-  }
-  else if (exports.isWithdrawn(record)){
+  } else if (exports.isWithdrawn(record)) {
     return exports.dateToAcademicYear(record?.withdraw?.date)
   }
   // Prefer course ITT end date if we have it
-  else if (record?.courseDetails?.endDate){
+  else if (record?.courseDetails?.endDate) {
     return exports.dateToAcademicYear(record?.courseDetails?.endDate)
     // return moment(record?.courseDetails?.endDate).format("YYYY")
   }
   // Fall back on course duration
-  else if (record?.courseDetails?.duration){
+  else if (record?.courseDetails?.duration) {
     return exports.calculateCourseEndAcademicYear(record)
-  }
-  else return false
+  } else return false
 }
 
 // Check if record is finishing this year
 // Todo: rename this to not be future tense
 exports.isFinishingThisAcademicYear = record => {
-  return exports.getEndAcademicYear(record) == years.currentAcademicYear
+  return exports.getEndAcademicYear(record) === years.currentAcademicYear
 }
 
 // Check if record finished earlier than this year
 exports.finishedEarlierThanThisAcademicYear = record => {
   // 2022 to 2023
-  let endAcademicYear = exports.getEndAcademicYear(record)
+  const endAcademicYear = exports.getEndAcademicYear(record)
   // 2022
-  let endAcademicYearSimple = exports.academicYearToYear(endAcademicYear)
+  const endAcademicYearSimple = exports.academicYearToYear(endAcademicYear)
   return endAcademicYearSimple < years.currentAcademicYearSimple
 }
 
@@ -1270,13 +1210,12 @@ exports.finishedEarlierThanThisAcademicYear = record => {
 // (this is based on last HESA update, but also arbitrary)
 exports.dateHesaRecordUnlocked = record => {
   let endCalendarYear
-  if (record?.courseDetails?.endDate){
-    let endCalendarYear = moment(record?.courseDetails?.endDate).format("YYYY")
-  }
-  else {
+  if (record?.courseDetails?.endDate) {
+    const endCalendarYear = moment(record?.courseDetails?.endDate).format('YYYY')
+  } else {
     endCalendarYear = exports.academicYearToYear(exports.getEndAcademicYear(record)) + 1
   }
-  return moment(`${endCalendarYear}-04-14`).format("YYYY-MM-DD")
+  return moment(`${endCalendarYear}-04-14`).format('YYYY-MM-DD')
 }
 
 /*
@@ -1286,24 +1225,22 @@ exports.dateHesaRecordUnlocked = record => {
 */
 
 exports.isHesaAndLocked = record => {
-
   let shouldBeLocked = false
 
   if (exports.sourceIsHESA(record)) {
-
-     // Hardcoded to locked until we decide on rules for unlocking
-     if (record?.hesa?.editingEnabled != true){
-       shouldBeLocked = true
-     }
-     // if (exports.finishedEarlierThanThisAcademicYear(record)) {
-     //    shouldBeLocked = false
-     // } else if (exports.isFutureYear(record)) {
-     //    shouldBeLocked = true
-     // }
-     // else if (exports.isFinishingThisAcademicYear(record) && (moment().isBefore(exports.dateHesaRecordUnlocked(record)))) {
-     //    shouldBeLocked = true
-     // }
-   }
+    // Hardcoded to locked until we decide on rules for unlocking
+    if (record?.hesa?.editingEnabled !== true) {
+      shouldBeLocked = true
+    }
+    // if (exports.finishedEarlierThanThisAcademicYear(record)) {
+    //    shouldBeLocked = false
+    // } else if (exports.isFutureYear(record)) {
+    //    shouldBeLocked = true
+    // }
+    // else if (exports.isFinishingThisAcademicYear(record) && (moment().isBefore(exports.dateHesaRecordUnlocked(record)))) {
+    //    shouldBeLocked = true
+    // }
+  }
   return shouldBeLocked
 }
 
@@ -1311,35 +1248,31 @@ exports.isHesaAndLocked = record => {
 // - started this year
 // - are on a course that finishes this year, or in the future
 exports.isCurrentYear = record => {
-  let isStartingThisYear = record?.academicYear == years.currentAcademicYear
+  const isStartingThisYear = record?.academicYear === years.currentAcademicYear
 
   // HESA records are sometimes missing course end dates. If
   let endAcademicYear
-  if (record?.courseDetails?.endDate){
+  if (record?.courseDetails?.endDate) {
     endAcademicYear = exports.dateToAcademicYear(record?.courseDetails?.endDate)
-  }
-  else {
-    if (exports.isUndergraduate(record)){
+  } else {
+    if (exports.isUndergraduate(record)) {
       endAcademicYear = record?.academicYear + 2
-    }
-    else if (exports.isPartTime(record)){
+    } else if (exports.isPartTime(record)) {
       endAcademicYear = record?.academicYear + 1
-    }
-    else if (exports.isFullTime(record)){
+    } else if (exports.isFullTime(record)) {
       endAcademicYear = record?.academicYear
-    }
-    else {
-      console.log("No course ITT end date. Assuming it finishes in same year.")
+    } else {
+      console.log('No course ITT end date. Assuming it finishes in same year.')
       endAcademicYear = record?.academicYear
     }
   }
 
-  let isFinishingThisYearOrGreater = (endAcademicYear == years.currentAcademicYear) || (endAcademicYear == years.nextAcademicYear)
+  const isFinishingThisYearOrGreater = (endAcademicYear === years.currentAcademicYear) || (endAcademicYear === years.nextAcademicYear)
   return isStartingThisYear || (isFinishingThisYearOrGreater && !exports.isFutureYear(record)) || !record?.academicYear
 }
 
 exports.isFutureYear = record => {
-  return record?.academicYear == years.nextAcademicYear
+  return record?.academicYear === years.nextAcademicYear
 }
 
 exports.isHistoric = record => {
@@ -1348,56 +1281,55 @@ exports.isHistoric = record => {
 
 exports.getCohortFilter = record => {
   if (exports.isActive(record)) {
-    return "Current"
+    return 'Current'
   } else if (exports.isFutureYear(record)) {
-    return "Next year’s"
+    return 'Next year’s'
   } else if (exports.isHistoric(record)) {
-    return "Past"
+    return 'Past'
   } else {
-    console.log("error in getCohortFilter")
-    return "Unknown"
+    console.log('error in getCohortFilter')
+    return 'Unknown'
   }
 }
 
 // Course levels
 
 exports.isUndergraduate = data => {
-  return exports.getCourseLevel(data) == "Undergraduate"
+  return exports.getCourseLevel(data) === 'Undergraduate'
 }
 
 exports.isPostgraduate = data => {
-  return exports.getCourseLevel(data) == "Postgraduate"
+  return exports.getCourseLevel(data) === 'Postgraduate'
 }
 // Phases
 
 // Unlike the other phases, this is probably reliable - as it checcks the route rather than the age
 // ranges of the course
 exports.isEarlyYears = record => {
-  return exports.getCoursePhase(record) == "Early years"
+  return exports.getCoursePhase(record) === 'Early years'
 }
 
 // Explicitly test the route only - as
 exports.routeIsEarlyYears = route => {
-  return route && route.includes("Early years")
+  return route && route.includes('Early years')
 }
 
 // Used by placements - for Early years the locations you go to are settings and not
 // necessarily schools
 exports.schoolOrSettingText = record => {
   if (exports.isEarlyYears(record)) {
-    return "setting"
-  }
-  else return "school"
+    return 'setting'
+  } else return 'school'
 }
 
 exports.isPrimary = record => {
-  return exports.getCoursePhase(record) == "Primary"
+  return exports.getCoursePhase(record) === 'Primary'
 }
 
 // TODO: this might not be reliable - need to check all age ranges
 // map to one of the phases
 exports.isSecondary = record => {
-  return exports.getCoursePhase(record) == "Secondary"
+  return exports.getCoursePhase(record) === 'Secondary'
 }
 
 // Get study mode from record or courseDetails
@@ -1406,19 +1338,19 @@ exports.getStudyMode = data => {
 }
 
 exports.isFullTime = data => {
-  return exports.getStudyMode(data) == "Full time"
+  return exports.getStudyMode(data) === 'Full time'
 }
 
 exports.isPartTime = data => {
-  return exports.getStudyMode(data) == "Part time"
+  return exports.getStudyMode(data) === 'Part time'
 }
 
 exports.isFullTimeOrPartTime = data => {
-  return exports.getStudyMode(data) == "Full time or part time"
+  return exports.getStudyMode(data) === 'Full time or part time'
 }
 
 exports.sectionIsComplete = section => {
-  return section?.status == "Completed" || (section?.status && section.status.includes("Completed"))
+  return section?.status === 'Completed' || (section?.status && section.status.includes('Completed'))
 }
 
 exports.academicQualificationsApply = record => {
@@ -1427,15 +1359,14 @@ exports.academicQualificationsApply = record => {
 }
 
 // Check if all sections are complete
-exports.recordIsComplete = function(record, data=false ) {
-
+exports.recordIsComplete = function (record, data = false) {
   data = Object.assign({}, (data || this?.ctx?.data || false))
 
   if (!record || !record?.route) return false
 
   // Pretend 20% of submitted records are incomplete
-  if (exports.isNonDraft(record)){
-    let statusesThatMustBeComplete = [
+  if (exports.isNonDraft(record)) {
+    const statusesThatMustBeComplete = [
       'EYTS recommended',
       'EYTS awarded',
       'QTS recommended',
@@ -1444,37 +1375,32 @@ exports.recordIsComplete = function(record, data=false ) {
       'Withdrawn'
     ]
     if (statusesThatMustBeComplete.includes(record?.status)) return true
-      else
-    return !exports.hasOutstandingActions(record, data)
+    else { return !exports.hasOutstandingActions(record, data) }
   }
 
-  let requiredSections = _.get(trainingRoutes, `${record.route}.sections`)
-  let applyReviewSections = trainingRouteData.applyReviewSections
+  const requiredSections = _.get(trainingRoutes, `${record.route}.sections`)
+  const applyReviewSections = trainingRouteData.applyReviewSections
 
   if (!requiredSections) return false // something went wrong
 
   // All required sections must be marked completed
-  let recordIsComplete = requiredSections.every(section => {
-
-    let sectionStatus = record[section]?.status == "Completed"
+  const recordIsComplete = requiredSections.every(section => {
+    const sectionStatus = record[section]?.status === 'Completed'
 
     // Default
-    if (exports.sourceIsManual(record)){
+    if (exports.sourceIsManual(record)) {
       return sectionStatus
     }
 
     // Special handling for Apply drafts which *may* work differently
-    else if (exports.sourceIsApply(record)){
-
+    else if (exports.sourceIsApply(record)) {
       // Some sections are collected together with one checkbox for all
       // If so, defer to that checkbox
-      if (applyReviewSections.includes(section)){
-        return (record.applyData.status == "Completed")
-      }
-      else return sectionStatus
-    }
-    else {
-      console.log("Error, record type not recognised")
+      if (applyReviewSections.includes(section)) {
+        return (record.applyData.status === 'Completed')
+      } else return sectionStatus
+    } else {
+      console.log('Error, record type not recognised')
     }
   })
 
@@ -1483,40 +1409,36 @@ exports.recordIsComplete = function(record, data=false ) {
 
 // Check if a record is mentioned in our problems file
 exports.recordHasProblem = (record) => {
-  const traineeProblems        = require('./../data/trainee-problems.json')
+  const traineeProblems = require('./../data/trainee-problems.json')
   if (!record) {
-    console.log("Error with recordHasProblem: record not provided")
+    console.log('Error with recordHasProblem: record not provided')
     return false
-  }
-  else {
+  } else {
     return traineeProblems.find(problem => problem.trainees.includes(record.id)) || false
   }
 }
 
 // Return array of problems for a given record
 exports.getProblems = (record) => {
-  const traineeProblems        = require('./../data/trainee-problems.json')
+  const traineeProblems = require('./../data/trainee-problems.json')
   if (!record) {
-    console.log("Error with getProblems: record not provided")
+    console.log('Error with getProblems: record not provided')
     return false
-  }
-  else {
+  } else {
     return traineeProblems.filter(problem => problem.trainees.includes(record.id)) || false
   }
 }
 
-
 // Checks if the placement criteria has been met
-exports.needsPlacementDetails = function(record, data = false) {
-
+exports.needsPlacementDetails = function (record, data = false) {
   data = Object.assign({}, (data || this?.ctx?.data || false))
 
   let needsPlacementDetails = false
-  let placementCount = (record?.placement?.items) ? record.placement.items.length : 0
-  let minPlacementsRequired = data?.settings?.minPlacementsRequired || 2
+  const placementCount = (record?.placement?.items) ? record.placement.items.length : 0
+  const minPlacementsRequired = data?.settings?.minPlacementsRequired || 2
 
   if (exports.requiresSection(record, 'placement')) {
-    // if ((record?.placement?.status != 'Completed') || (placementCount < minPlacementsRequired)) {
+    // if ((record?.placement?.status !== 'Completed') || (placementCount < minPlacementsRequired)) {
     //   needsPlacementDetails = true
     //
     if (placementCount < minPlacementsRequired) needsPlacementDetails = true
@@ -1525,13 +1447,13 @@ exports.needsPlacementDetails = function(record, data = false) {
 }
 
 // Check if record has started and if it is, is missing a start date
-exports.needsStartDate = function(record) {
+exports.needsStartDate = function (record) {
   let needsStartDate = false
 
-  let traineeStarted = record?.trainingDetails?.commencementDate
-  let ittStartDate = moment(record?.courseDetails?.startDate)
+  const traineeStarted = record?.trainingDetails?.commencementDate
+  const ittStartDate = moment(record?.courseDetails?.startDate)
 
-  if (!traineeStarted && dates.isInPast(record?.courseDetails?.startDate) && record.status != "Deferred") {
+  if (!traineeStarted && dates.isInPast(record?.courseDetails?.startDate) && record.status !== 'Deferred') {
     needsStartDate = true
   }
 
@@ -1539,16 +1461,14 @@ exports.needsStartDate = function(record) {
 }
 
 // Check if there are outstanding actions (Either adding start date or placements details)
-exports.hasOutstandingActions = function(record, data = false) {
-
+exports.hasOutstandingActions = function (record, data = false) {
   data = Object.assign({}, (data || this?.ctx?.data || false))
 
   let hasOutstandingActions = false
 
   if (exports.needsStartDate(record)) {
     hasOutstandingActions = true
-  }
-  else if (exports.needsPlacementDetails(record, data)) {
+  } else if (exports.needsPlacementDetails(record, data)) {
     hasOutstandingActions = true
   }
   return hasOutstandingActions
@@ -1558,25 +1478,24 @@ exports.hasOutstandingActions = function(record, data = false) {
 // TODO: Study mode is not relevant to all routes, this should also check if the route needs
 // study mode
 exports.needsStudyMode = record => {
-
-  let routeRequiresStudyMode = exports.requiresField(record, "studyMode")
+  const routeRequiresStudyMode = exports.requiresField(record, 'studyMode')
 
   if (!routeRequiresStudyMode) return false
 
-  let allowedStudyModes = [
-    "Full time",
-    "Part time"
+  const allowedStudyModes = [
+    'Full time',
+    'Part time'
   ]
   return (!allowedStudyModes.includes(record?.courseDetails?.studyMode))
 }
 
 exports.needsCourseDates = record => {
-  return !Boolean(record?.courseDetails?.startDate) || !Boolean(record?.courseDetails?.endDate)
+  return !record?.courseDetails?.startDate || !record?.courseDetails?.endDate
 }
 
 exports.needsDegree = record => {
-  let routeRequiresDegree = exports.requiresSection(record, "degree")
-  return routeRequiresDegree && !Boolean(record?.degree) && !Boolean(record?.degree?.items)
+  const routeRequiresDegree = exports.requiresSection(record, 'degree')
+  return routeRequiresDegree && !record?.degree && !record?.degree?.items
 }
 
 exports.needsSchools = record => {
@@ -1584,17 +1503,17 @@ exports.needsSchools = record => {
 }
 
 exports.needsLeadPartner = record => {
-  let routeRequiresLeadPartner = exports.requiresField(record, "leadPartner")
-  return routeRequiresLeadPartner && !Boolean(record?.schools?.leadPartner)
+  const routeRequiresLeadPartner = exports.requiresField(record, 'leadPartner')
+  return routeRequiresLeadPartner && !record?.schools?.leadPartner
 }
 
 exports.needsEmployingSchool = record => {
-  let routeRequiresEmployingSchool = exports.requiresField(record, "employingSchool")
-  return routeRequiresEmployingSchool && !Boolean(record?.schools?.employingSchool)
+  const routeRequiresEmployingSchool = exports.requiresField(record, 'employingSchool')
+  return routeRequiresEmployingSchool && !record?.schools?.employingSchool
 }
 
 exports.needsFundingSource = record => {
-  let financialSupportApplies = exports.financialSupportApplies(record)
+  const financialSupportApplies = exports.financialSupportApplies(record)
   return financialSupportApplies && !record?.funding?.source
 }
 
@@ -1614,7 +1533,6 @@ exports.ittInTheFuture = (record) => {
   return dates.isInFuture(record?.courseDetails?.startDate)
 }
 
-
 /*
   ====================================================================
   ittStartedButNoCommencementDate
@@ -1625,8 +1543,8 @@ exports.ittInTheFuture = (record) => {
 */
 
 exports.ittStartedButNoCommencementDate = (record) => {
-  let ittStartDate = record?.courseDetails?.startDate
-  let traineeStartDate = record?.trainingDetails?.commencementDate
+  const ittStartDate = record?.courseDetails?.startDate
+  const traineeStartDate = record?.trainingDetails?.commencementDate
 
   return (dates.isInPast(ittStartDate) && !traineeStartDate)
 }
@@ -1641,8 +1559,8 @@ exports.ittStartedButNoCommencementDate = (record) => {
 */
 
 exports.traineeStarted = (record) => {
-  let ittStartDate = record?.courseDetails?.startDate
-  let traineeStartDate = record?.trainingDetails?.commencementDate
+  const ittStartDate = record?.courseDetails?.startDate
+  const traineeStartDate = record?.trainingDetails?.commencementDate
 
   return (dates.isInPast(ittStartDate) && traineeStartDate)
 }
@@ -1653,7 +1571,7 @@ exports.traineeStarted = (record) => {
 
 // Look up a record using it’s UUID
 exports.getRecordById = (records, id) => {
-  return (records) ? records.find(record => record.id == id) : false
+  return (records) ? records.find(record => record.id === id) : false
 }
 
 // Look up several records using UUID
@@ -1667,225 +1585,199 @@ exports.getRecordsById = (records, array) => {
 
 // Filter down a set of records for those that match provided filter object
 exports.filterRecords = (records, data, filters = {}) => {
-
   let filteredRecords = records
 
-  if (!data?.isAdmin){
+  if (!data?.isAdmin) {
     // Only allow records for the signed-in providers
     filteredRecords = exports.filterBySignedIn(filteredRecords, data)
   }
 
-
   // Only show records for training routes that are enabled
-  let enabledTrainingRoutes = data.settings.enabledTrainingRoutes
+  const enabledTrainingRoutes = data.settings.enabledTrainingRoutes
 
   // Only show records for currently enabled routes or draft records
   filteredRecords = filteredRecords.filter(record => enabledTrainingRoutes.includes(record.route) || (exports.isDraft(record)))
 
-  if (filters.trainingStatus){
+  if (filters.trainingStatus) {
     filteredRecords = filteredRecords.filter(record => {
       if (filters.trainingStatus.includes(record.status)) {
         return true
-      }
-      else if (filters.trainingStatus.includes("Course not started yet") && exports.ittInTheFuture(record)){
+      } else if (filters.trainingStatus.includes('Course not started yet') && exports.ittInTheFuture(record)) {
         return true
-      }
-      else if (filters.trainingStatus.includes("Awarded") && record.status && record.status.includes("awarded")){
+      } else if (filters.trainingStatus.includes('Awarded') && record.status && record.status.includes('awarded')) {
         return true
-      }
-      else if (filters.trainingStatus.includes("Actively training") && exports.isInTraining(record)){
+      } else if (filters.trainingStatus.includes('Actively training') && exports.isInTraining(record)) {
         return true
-      }
-      else return false
+      } else return false
     })
   }
 
   // All types of years combined in to one select.
-  if (filters.years && filters.years != "All years"){
+  if (filters.years && filters.years !== 'All years') {
     filteredRecords = filteredRecords.filter(record => {
-
       // Support for years being an array.
       return filters.years.some(year => {
-
         // Value might be something like `End year: 2022 to 2023` or `Start year: 2019 to 2020 and prior`
-        let yearCleaned = year.replace("End year: ", "").replace("Start year: ", "").replace("Academic year: ", "").replace(" and prior", "")
-        let yearShort = exports.academicYearToYear(yearCleaned)
+        const yearCleaned = year.replace('End year: ', '').replace('Start year: ', '').replace('Academic year: ', '').replace(' and prior', '')
+        const yearShort = exports.academicYearToYear(yearCleaned)
 
         // Start year
-        if (year.toLowerCase().includes("start")) {
-          if (year.includes("prior")){
+        if (year.toLowerCase().includes('start')) {
+          if (year.includes('prior')) {
             startYearShort = exports.academicYearToYear(record.academicYear)
             return (startYearShort <= yearShort)
-          }
-          else return year.includes(record.academicYear)
+          } else return year.includes(record.academicYear)
         }
 
         // End year
-        else if (year.toLowerCase().includes("end")) {
-          if (year.includes("prior")){
+        else if (year.toLowerCase().includes('end')) {
+          if (year.includes('prior')) {
             endYearShort = exports.academicYearToYear(record.endAcademicYear)
             return (endYearShort <= yearShort)
-          }
-          else return year.includes(record.endAcademicYear)
+          } else return year.includes(record.endAcademicYear)
         }
 
         // Academic year
-        else if (year.toLowerCase().includes("training")) {
+        else if (year.toLowerCase().includes('training')) {
           // Make sure academic years is always an array
-          let academicYears = [].concat(record.academicYears || [])
+          const academicYears = [].concat(record.academicYears || [])
 
           // Trainees can have multiple academic years. Match on any.
           return academicYears.some(academicYear => {
-
             // eg 'Academic year: 2020 to 2021 and prior'
             // Should match all academic years 2020 to 2021 and prior
-            if (year.includes("prior")){
-              let academicYearShort = exports.academicYearToYear(academicYear)
+            if (year.includes('prior')) {
+              const academicYearShort = exports.academicYearToYear(academicYear)
               return (academicYearShort <= yearShort)
-            }
-            else return year.includes(academicYear)
+            } else return year.includes(academicYear)
           })
         }
 
         // Something has gone wrong
         return false
       })
-
     })
   }
 
-  if (filters.startYears && filters.startYears != "All years"){
+  if (filters.startYears && filters.startYears !== 'All years') {
     filteredRecords = filteredRecords.filter(record => {
-
       return filters.startYears.some(year => {
+        const yearCleaned = year.replace(' and prior', '')
+        const yearShort = exports.academicYearToYear(yearCleaned)
 
-        let yearCleaned = year.replace(" and prior", "")
-        let yearShort = exports.academicYearToYear(yearCleaned)
-
-        if (year.includes("prior")){
+        if (year.includes('prior')) {
           startYearShort = exports.academicYearToYear(record.academicYear)
           return (startYearShort <= yearShort)
-        }
-        else return year.includes(record.academicYear)
+        } else return year.includes(record.academicYear)
       })
     })
   }
 
-  if (filters.endYears && filters.endYears != "All years"){
+  if (filters.endYears && filters.endYears !== 'All years') {
     filteredRecords = filteredRecords.filter(record => {
       return filters.endYears.some(year => {
+        const yearCleaned = year.replace(' and prior', '')
+        const yearShort = exports.academicYearToYear(yearCleaned)
 
-        let yearCleaned = year.replace(" and prior", "")
-        let yearShort = exports.academicYearToYear(yearCleaned)
-
-        if (year.includes("prior")){
+        if (year.includes('prior')) {
           endYearShort = exports.academicYearToYear(record.endAcademicYear)
           return (endYearShort <= yearShort)
-        }
-        else return year.includes(record.endAcademicYear)
+        } else return year.includes(record.endAcademicYear)
       })
     })
   }
 
-  if (filters.academicYears && filters.academicYears != "All years"){
+  if (filters.academicYears && filters.academicYears !== 'All years') {
     filteredRecords = filteredRecords.filter(record => {
-
       // Make sure academic years is always an array
-      let academicYears = [].concat(record.academicYears || [])
+      const academicYears = [].concat(record.academicYears || [])
 
       return filters.academicYears.some(year => {
-
-        let yearCleaned = year.replace(" and prior", "")
-        let yearShort = exports.academicYearToYear(yearCleaned)
+        const yearCleaned = year.replace(' and prior', '')
+        const yearShort = exports.academicYearToYear(yearCleaned)
 
         return academicYears.some(academicYear => {
-
           // eg 'Academic year: 2020 to 2021 and prior'
           // Should match all academic years 2020 to 2021 and prior
-          if (year.includes("prior")){
-            let academicYearShort = exports.academicYearToYear(academicYear)
+          if (year.includes('prior')) {
+            const academicYearShort = exports.academicYearToYear(academicYear)
             return (academicYearShort <= yearShort)
-          }
-          else return year.includes(academicYear)
+          } else return year.includes(academicYear)
         })
       })
-
     })
   }
 
-
-  if (filters.cohortFilter){
+  if (filters.cohortFilter) {
     filteredRecords = filteredRecords.filter(record => filters.cohortFilter.includes(exports.getCohortFilter(record)))
   }
 
-  if (filters.completeStatus){
+  if (filters.completeStatus) {
     filteredRecords = filteredRecords.filter(record => {
-      let status = (exports.recordIsComplete(record, data)) ? ['Complete'] : ['Incomplete']
-      let hasProblem = exports.recordHasProblem(record)
+      const status = (exports.recordIsComplete(record, data)) ? ['Complete'] : ['Incomplete']
+      const hasProblem = exports.recordHasProblem(record)
       if (hasProblem) {
         status.push('Has problems')
       }
 
-      return filters.completeStatus.some( item => status.includes(item))
+      return filters.completeStatus.some(item => status.includes(item))
     })
   }
 
-  if (filters.courseLevel){
+  if (filters.courseLevel) {
     filteredRecords = filteredRecords.filter(record => filters.courseLevel.includes(exports.getCourseLevel(record)))
   }
 
   // Apply or manual
-  if (filters.source){
+  if (filters.source) {
     filteredRecords = filteredRecords.filter(record => filters.source.includes(record.source))
   }
 
   // Primary / Secondary etc
-  if (filters.phase){
+  if (filters.phase) {
     filteredRecords = filteredRecords.filter(record => filters.phase.includes(exports.getCoursePhase(record)))
   }
 
   // Full time or Part time
   // Note - some Publish courses are "Full time or part time" until reviewed by a user - this filter
   // lets those trainees appear in both filters.
-  if (filters.studyMode){
+  if (filters.studyMode) {
     filteredRecords = filteredRecords.filter(record => {
-      let courseStudyMode = (record?.courseDetails?.studyMode && record.courseDetails.studyMode.toLowerCase()) || ""
+      const courseStudyMode = (record?.courseDetails?.studyMode && record.courseDetails.studyMode.toLowerCase()) || ''
       return filters.studyMode.some(filter => courseStudyMode.includes(filter.toLowerCase()))
     })
   }
 
   // List of providers if signed in as multiple
-  if (filters.providers){
+  if (filters.providers) {
     filteredRecords = filteredRecords.filter(record => filters.providers.includes(record.provider))
   }
 
   // Admin only filter for picking from all providers
-  if (filters.allProviders && filters.allProviders != "All providers"){
+  if (filters.allProviders && filters.allProviders !== 'All providers') {
     filteredRecords = filteredRecords.filter(record => filters.allProviders.includes(record.provider))
   }
 
-  if (filters.trainingRoutes){
+  if (filters.trainingRoutes) {
     filteredRecords = filteredRecords.filter(record => filters.trainingRoutes.includes(record.route))
   }
 
-  if (filters.status){
-    filteredRecords = filteredRecords.filter(record =>  filters.status.includes(record.status))
+  if (filters.status) {
+    filteredRecords = filteredRecords.filter(record => filters.status.includes(record.status))
   }
 
   // Filter by the specialism or allocation subject
   // Also searches publish subjects where the course’s subjects haven’t been completed
-  if (filters.subject && filters.subject != "All subjects"){
-
+  if (filters.subject && filters.subject !== 'All subjects') {
     // To array
     let searchSubjects = [filters.subject]
 
     // Expand out sciences to three allocation subjects
-    if (filters.subject == "Sciences - biology, chemistry, physics"){
+    if (filters.subject === 'Sciences - biology, chemistry, physics') {
       searchSubjects = ['Biology', 'Chemistry', 'Physics', 'General sciences']
     }
 
     filteredRecords = filteredRecords.filter(record => {
-
       let traineeSubjects = record?.courseDetails?.subjects
       let publishSubjects = record?.courseDetails?.publishSubjects
 
@@ -1894,26 +1786,24 @@ exports.filterRecords = (records, data, filters = {}) => {
 
       // Read values from subject objects
       traineeSubjects = traineeSubjects && Object.values(traineeSubjects) || []
-      let traineeAllocationSubjects = traineeSubjects.map(subject => subject && exports.subjectToAllocationSubject(subject))
+      const traineeAllocationSubjects = traineeSubjects.map(subject => subject && exports.subjectToAllocationSubject(subject))
       publishSubjects = publishSubjects && Object.values(publishSubjects) || []
-      let publishAllocationSubjects = publishSubjects.map(subject => exports.subjectToAllocationSubject(subject))
+      const publishAllocationSubjects = publishSubjects.map(subject => exports.subjectToAllocationSubject(subject))
 
       // Loop through each search subject to find at least one match
       return searchSubjects.some(searchSubject => {
-        let specialismsMatch = traineeSubjects.includes(searchSubject)
-        let allocationSubjectsMatch = traineeAllocationSubjects.includes(searchSubject)
+        const specialismsMatch = traineeSubjects.includes(searchSubject)
+        const allocationSubjectsMatch = traineeAllocationSubjects.includes(searchSubject)
 
         // Search across Publish subjects only where specialisms aren’t set
         // This should mean that Apply drafts where specialisms aren’t set can still be filtered,
         // whilst registered trainees then prefer the actual specialisms set
-        let shouldSearchPublish = publishSubjects && exports.subjectsAreIncomplete(record)
-        let publishSubjectsMatch = shouldSearchPublish && publishSubjects.includes(searchSubject)
-        let publishAllocationSubjectsMatch = shouldSearchPublish && publishAllocationSubjects.includes(searchSubject)
+        const shouldSearchPublish = publishSubjects && exports.subjectsAreIncomplete(record)
+        const publishSubjectsMatch = shouldSearchPublish && publishSubjects.includes(searchSubject)
+        const publishAllocationSubjectsMatch = shouldSearchPublish && publishAllocationSubjects.includes(searchSubject)
 
         return specialismsMatch || allocationSubjectsMatch || publishSubjectsMatch || publishAllocationSubjectsMatch
-
       })
-
     })
   }
 
@@ -1921,22 +1811,22 @@ exports.filterRecords = (records, data, filters = {}) => {
 }
 
 // Text search across a few selected fields
-exports.filterRecordsBySearchTerm = (records, searchQuery=false) => {
+exports.filterRecordsBySearchTerm = (records, searchQuery = false) => {
   if (!searchQuery) return records
 
-  let searchQueryLowercase = searchQuery.toLowerCase()
+  const searchQueryLowercase = searchQuery.toLowerCase()
 
-  let filteredRecords = records.filter(record => {
-    let fullName = record?.personalDetails?.fullName.toLowerCase() || "" // Draft records might not have a full name
+  const filteredRecords = records.filter(record => {
+    const fullName = record?.personalDetails?.fullName.toLowerCase() || '' // Draft records might not have a full name
 
     // Check that every part exists in the trainee’s name
-    let searchParts = searchQueryLowercase.split(' ')
-    let nameMatch = searchParts.every(part => fullName.includes(part))
+    const searchParts = searchQueryLowercase.split(' ')
+    const nameMatch = searchParts.every(part => fullName.includes(part))
 
-    let referenceMatch = searchParts.some(part => (record?.reference || "").toLowerCase().includes(part))
-    let traineeIdMatch = searchParts.some(part => (record?.trainingDetails?.traineeId || "").toLowerCase().includes(part))
+    const referenceMatch = searchParts.some(part => (record?.reference || '').toLowerCase().includes(part))
+    const traineeIdMatch = searchParts.some(part => (record?.trainingDetails?.traineeId || '').toLowerCase().includes(part))
 
-    let trnMatch = searchParts.some(part => (record?.trn || "").toString().includes(part))
+    const trnMatch = searchParts.some(part => (record?.trn || '').toString().includes(part))
 
     return referenceMatch || traineeIdMatch || trnMatch || nameMatch
   })
@@ -1946,41 +1836,36 @@ exports.filterRecordsBySearchTerm = (records, searchQuery=false) => {
 
 // Utility function to filter by a key
 // Basically identical to the ‘where’ filter
-exports.filterRecordsBy = (records, key, array, invert=false) => {
+exports.filterRecordsBy = (records, key, array, invert = false) => {
   array = [].concat(array) // force to array
-  let filtered = records.filter(record => {
-    let isIncluded = array.includes(_.get(record, key))
+  const filtered = records.filter(record => {
+    const isIncluded = array.includes(_.get(record, key))
     if (invert) {
       return !isIncluded
-    }
-    else {
+    } else {
       return isIncluded
     }
   })
   return filtered
 }
 
-exports.filterByProvider = function(records, array, data=false){
+exports.filterByProvider = function (records, array, data = false) {
   data = Object.assign({}, (data || this.ctx.data || false))
 
   array = [].concat(array) // force to array
 
   return records.filter(record => {
-
     // Enrich provider data
-    let providerData = exports.getProviderData.apply(this, [array, data])
+    const providerData = exports.getProviderData.apply(this, [array, data])
 
     // Check if any of the providers match
     return providerData.some(provider => {
-      if (provider.type == "accreditingProvider"){
-        return record.provider == provider.name
-      }
-      else if (provider.type == "leadPartner"){
-        return provider.name == record?.schools?.leadPartner?.schoolName
-      }
-      else return false
+      if (provider.type === 'accreditingProvider') {
+        return record.provider === provider.name
+      } else if (provider.type === 'leadPartner') {
+        return provider.name === record?.schools?.leadPartner?.schoolName
+      } else return false
     })
-
   })
 }
 
@@ -1996,14 +1881,14 @@ exports.filterByLeadPartner = (records, array) => {
 
 // Filter records for currently signed in providers
 // Can’t be an arrow function because we need access to the Nunjucks context
-exports.filterBySignedIn = function(records, data=false){
+exports.filterBySignedIn = function (records, data = false) {
   data = Object.assign({}, (data || this.ctx.data || false))
 
   if (!data) {
     console.log('Error with filterBySignedIn: session data not provided')
     return []
   }
-  if (!Array.isArray(data.signedInProviders) || data.signedInProviders.length < 1){
+  if (!Array.isArray(data.signedInProviders) || data.signedInProviders.length < 1) {
     console.log('Error with filterBySignedIn: user doesn’t appear to be signed in to any providers')
     return []
   }
@@ -2017,17 +1902,16 @@ exports.filterByYear = (records, array) => {
 
 // Filter records by status
 exports.filterByInTraining = (records) => {
-  return records.filter(record => exports.isInTraining(record) )
+  return records.filter(record => exports.isInTraining(record))
   // return records.filter(record => true )
 }
 
 // Filter records by status
 exports.filterByFunction = (records, functionName) => {
-  let theFunction = exports[functionName]
-  if (theFunction && typeof theFunction == 'function'){
-    return records.filter(record => theFunction(record) )
-  }
-  else {
+  const theFunction = exports[functionName]
+  if (theFunction && typeof theFunction === 'function') {
+    return records.filter(record => theFunction(record))
+  } else {
     console.log(`Error with filterByFunction: ${functionName} is not a function`)
     return records
   }
@@ -2035,12 +1919,12 @@ exports.filterByFunction = (records, functionName) => {
 
 // Filter records by status
 exports.filterByActive = (records) => {
-  return records.filter(record => exports.isActive(record) )
+  return records.filter(record => exports.isActive(record))
   // return records.filter(record => true )
 }
 
 exports.filterByFuture = (records) => {
-  return records.filter(record => exports.isFutureYear(record) )
+  return records.filter(record => exports.isFutureYear(record))
 }
 
 // Filter records by status
@@ -2053,29 +1937,29 @@ exports.filterOutDeferred = (records) => {
   return records.filter(record => exports.isNotDeferred(record))
 }
 
-exports.filterByComplete = function(records, data=false) {
+exports.filterByComplete = function (records, data = false) {
   data = Object.assign({}, (data || this?.ctx?.data || false))
   return records.filter(record => exports.recordIsComplete(record, data))
 }
 
-exports.filterByIncomplete = function(records, data=false) {
+exports.filterByIncomplete = function (records, data = false) {
   data = Object.assign({}, (data || this?.ctx?.data || false))
   return records.filter(record => !exports.recordIsComplete(record, data))
 }
 
 exports.filterByQualification = (records, qualification) => {
   return records.filter(record => {
-    let courseQualifications = record?.courseDetails?.qualifications
-    let courseQualificationMatches = courseQualifications && courseQualifications.includes(qualification)
+    const courseQualifications = record?.courseDetails?.qualifications
+    const courseQualificationMatches = courseQualifications && courseQualifications.includes(qualification)
     return courseQualificationMatches
- })
+  })
 }
 
 exports.filterByNeedsStartDate = (records) => {
   return records.filter(record => exports.needsStartDate(record))
 }
 
-exports.filterByNeedsPlacements = (records, data=false) => {
+exports.filterByNeedsPlacements = (records, data = false) => {
   data = Object.assign({}, (data || this?.ctx?.data || false))
   return records.filter(record => exports.needsPlacementDetails(record, data))
 }
@@ -2103,8 +1987,8 @@ exports.filterByUndergraduate = (records) => {
 // Trainees that can be bulk updated
 exports.filterByCanBulkUpdate = (records) => {
   let filteredRecords = exports.filterByActive(records)
-  filteredRecords = exports.filterByStatus(filteredRecords, "Draft", true)
-  filteredRecords = exports.filterByStatus(filteredRecords, "Pending TRN", true)
+  filteredRecords = exports.filterByStatus(filteredRecords, 'Draft', true)
+  filteredRecords = exports.filterByStatus(filteredRecords, 'Pending TRN', true)
   filteredRecords = exports.filterOutEarlyYears(filteredRecords)
   filteredRecords = exports.filterByIncomplete(filteredRecords)
   return filteredRecords
@@ -2121,7 +2005,7 @@ exports.filterByCannotBulkUpdate = (records) => {
 // Trainees that can be bulk recommended
 exports.filterByReadyToRecommend = (records) => {
   let filteredRecords = exports.filterByComplete(records)
-  filteredRecords = exports.filterByStatus(filteredRecords, "TRN received")
+  filteredRecords = exports.filterByStatus(filteredRecords, 'TRN received')
   return filteredRecords
 }
 
@@ -2131,41 +2015,38 @@ exports.filterByReadyToRecommend = (records) => {
 
 // Sort by a date
 // Uses lodash.get so we can read nested properties
-exports.sortRecordsByDate = (records, sortKey, reverse=false) => {
+exports.sortRecordsByDate = (records, sortKey, reverse = false) => {
   records = records.sort((a, b) => new Date(_.get(b, sortKey)).getTime() - new Date(_.get(a, sortKey)).getTime())
   return (reverse) ? records.reverse() : records
 }
 
 // Sort records by thing. Tests for specific cases and otherwise falls back to string comparison of field
 exports.sortRecordsBy = (records, sortType) => {
-
   const compareStrings = (a, b) => {
-    if (a && b){
+    if (a && b) {
       return a.localeCompare(b)
-    }
-    else return (a) ? 1 : -1
+    } else return (a) ? 1 : -1
   }
 
   if (!sortType) return records
 
-  switch (sortType){
-    case "lastName":
-      records.sort( (a, b) => compareStrings(a?.personalDetails?.familyName, b?.personalDetails?.familyName))
+  switch (sortType) {
+    case 'lastName':
+      records.sort((a, b) => compareStrings(a?.personalDetails?.familyName, b?.personalDetails?.familyName))
       break
-    case "firstName":
-      records.sort( (a, b) => compareStrings(a?.personalDetails?.givenName, b?.personalDetails?.givenName))
+    case 'firstName':
+      records.sort((a, b) => compareStrings(a?.personalDetails?.givenName, b?.personalDetails?.givenName))
       break
-    case "updatedDate":
+    case 'updatedDate':
       records = exports.sortRecordsByDate(records, 'updatedDate')
       break
     default:
       console.log(`Sorting records by unknown type: ${sortType}`)
-      records.sort( (a, b) => compareStrings(_.get(a, sortType), _.get(b, sortType)))
+      records.sort((a, b) => compareStrings(_.get(a, sortType), _.get(b, sortType)))
       break
   }
 
   return records
-
 }
 
 // Sort by last name
@@ -2190,73 +2071,69 @@ exports.sortRecordsByDateUpdated = records => {
 //   name: 'Coventry University',
 //   type: 'accreditingProvider'
 // }
-exports.getProviderData = function(input, data=false){
+exports.getProviderData = function (input, data = false) {
   data = data || this?.ctx?.data || false
 
-  if (!data){
-    console.log("Error with getProviderData: no data!")
+  if (!data) {
+    console.log('Error with getProviderData: no data!')
     return false
   }
 
   const lookUpProvider = provider => {
     let item
-    if (provider == "System admin"){
+    if (provider === 'System admin') {
       return {
         name: 'System admin',
         type: 'admin'
       }
     }
 
-    if (data?.providers?.all){
-      item = data.providers.all.find(item => item.name == provider) || false
+    if (data?.providers?.all) {
+      item = data.providers.all.find(item => item.name === provider) || false
     }
     if (!item) console.log(`Error with getProvider data: ${provider} not found.`)
     return item
   }
 
-  if (Array.isArray(input)){
-    return input.map(provider => lookUpProvider(provider) ).filter(Boolean)
-  }
-  else return lookUpProvider(input)
+  if (Array.isArray(input)) {
+    return input.map(provider => lookUpProvider(provider)).filter(Boolean)
+  } else return lookUpProvider(input)
 }
 
 // Gets the type of a provider - currently `accreditingProvider` or `leadPartner`
-exports.getProviderType = function(provider, data=false){
+exports.getProviderType = function (provider, data = false) {
   data = data || this?.ctx?.data || false
 
-  let allProviders = data?.providers?.all
+  const allProviders = data?.providers?.all
 
   // Handle the admin provider
-  if (provider == "System admin" || provider.type == "System admin") return 'admin'
+  if (provider === 'System admin' || provider.type === 'System admin') return 'admin'
 
   let output = false
 
   if (!allProviders) {
-    console.log("Error with getProviderType: data not provided")
+    console.log('Error with getProviderType: data not provided')
     return false
   }
 
   // Provider object
-  if (_.isObject(provider)){
-    output = allProviders.find(item => provider.id == item.id)
+  if (_.isObject(provider)) {
+    output = allProviders.find(item => provider.id === item.id)
   }
   // String name of provider
   else {
-    output = allProviders.find(item => provider == item.name)
+    output = allProviders.find(item => provider === item.name)
   }
 
   return output?.type
-
 }
 
 // Get a human readable provider type eg `lead partner`,
-exports.getProviderTypeString = (input, includeAccreditingProviderDetail=false) => {
-
+exports.getProviderTypeString = (input, includeAccreditingProviderDetail = false) => {
   let type
-  if (_.isObject(input)){
+  if (_.isObject(input)) {
     type = input.type
-  }
-  else type = input
+  } else type = input
 
   switch (type) {
     case 'accreditingProvider':
@@ -2264,80 +2141,74 @@ exports.getProviderTypeString = (input, includeAccreditingProviderDetail=false) 
       //   return input.accreditingProviderType
       // }
       // else
-        if (includeAccreditingProviderDetail){
-          return input.accreditingProviderType
-        }
-        else return 'Accrediting provider'
-      break;
+      if (includeAccreditingProviderDetail) {
+        return input.accreditingProviderType
+      } else return 'Accrediting provider'
+      break
     case 'leadPartner':
       return 'Lead partner'
-      break;
+      break
     default:
       return type
   }
-
 }
 
-exports.lookUpProviderById= (providers, uuid) => {
-  return providers.find(provider => provider.id == uuid)
+exports.lookUpProviderById = (providers, uuid) => {
+  return providers.find(provider => provider.id === uuid)
 }
 
-exports.providerIsAccrediting = function(provider, data=false){
+exports.providerIsAccrediting = function (provider, data = false) {
   data = data || this?.ctx?.data || false
-  return exports.getProviderType.apply(this, [provider, data]) == 'accreditingProvider'
+  return exports.getProviderType.apply(this, [provider, data]) === 'accreditingProvider'
 }
 
-exports.providerIsHei = function(provider, data=false){
-  data = data || this?.ctx?.data || false
-  let type
-
-  if (_.isObject(provider)){
-    type = provider?.accreditingProviderType
-  }
-  else type = exports.getProviderData(provider, data)?.accreditingProviderType
-
-  return type == "HEI"
-}
-
-exports.providerIsScitt = function(provider, data=false){
+exports.providerIsHei = function (provider, data = false) {
   data = data || this?.ctx?.data || false
   let type
 
-  if (_.isObject(provider)){
+  if (_.isObject(provider)) {
     type = provider?.accreditingProviderType
-  }
-  else type = exports.getProviderData(provider, data)?.accreditingProviderType
+  } else type = exports.getProviderData(provider, data)?.accreditingProviderType
 
-  return type == "SCITT"
+  return type === 'HEI'
 }
 
-exports.providerIsLeadPartner = function(provider, data=false){
+exports.providerIsScitt = function (provider, data = false) {
   data = data || this?.ctx?.data || false
-  return exports.getProviderType.apply(this, [provider, data]) == 'leadPartner'
+  let type
+
+  if (_.isObject(provider)) {
+    type = provider?.accreditingProviderType
+  } else type = exports.getProviderData(provider, data)?.accreditingProviderType
+
+  return type === 'SCITT'
+}
+
+exports.providerIsLeadPartner = function (provider, data = false) {
+  data = data || this?.ctx?.data || false
+  return exports.getProviderType.apply(this, [provider, data]) === 'leadPartner'
 }
 
 // Used to take a school from GIAS and see if it’s in our lead partner list
-exports.schoolIsLeadPartner = function(school, data=false){
+exports.schoolIsLeadPartner = function (school, data = false) {
   data = data || this?.ctx?.data || false
 
-  let leadPartners = data.providers.leadPartners.all
+  const leadPartners = data.providers.leadPartners.all
 
-  return leadPartners.some(leadPartner => leadPartner.urn == school.urn )
+  return leadPartners.some(leadPartner => leadPartner.urn === school.urn)
 }
-
 
 // -------------------------------------------------------------------
 // Misc
 // -------------------------------------------------------------------
 
-
 // Add an event to a record’s timeline
 exports.addEvent = (record, title, description) => {
   record.events.items.push({
-    title: title,
+    title,
     user: 'Provider',
     date: new Date(),
-    ...(description ? {description} : {}) // conditionally pass description
+    ...(description ? { description } : {}) // conditionally pass description
   })
 }
 
@@ -2365,7 +2236,7 @@ exports.getTimeline = (record) => {
       byline: {
         text: item.user
       },
-      ...(item.description ? {description: item.description} : {})
+      ...(item.description ? { description: item.description } : {})
       // link: getLink(item, record)
     }
   }).reverse()
@@ -2374,22 +2245,21 @@ exports.getTimeline = (record) => {
 // Update or create a record
 // Todo: this function is overcomplicated. Make simpler!
 exports.updateRecord = (data, newRecord, timelineMessage) => {
-
   if (!newRecord) return false
 
-  let records = data.records
+  const records = data.records
   newRecord.updatedDate = new Date()
 
-  if (timelineMessage !== false){
-    let message = (timelineMessage) ? timelineMessage : "Record updated"
+  if (timelineMessage !== false) {
+    const message = (timelineMessage) || 'Record updated'
     exports.addEvent(newRecord, message)
   }
   data.record = newRecord
 
-  if (newRecord.personalDetails){
+  if (newRecord.personalDetails) {
     Object.defineProperty(newRecord.personalDetails, 'fullName', {
-      get() {
-        let names = []
+      get () {
+        const names = []
         names.push(this.givenName)
         names.push(this.middleNames)
         names.push(this.familyName)
@@ -2398,10 +2268,10 @@ exports.updateRecord = (data, newRecord, timelineMessage) => {
       enumerable: true
     })
   }
-  if (newRecord.personalDetails){
+  if (newRecord.personalDetails) {
     Object.defineProperty(newRecord.personalDetails, 'shortName', {
-      get() {
-        let names = []
+      get () {
+        const names = []
         names.push(this.givenName)
         names.push(this.familyName)
         return names.filter(Boolean).join(' ')
@@ -2411,21 +2281,21 @@ exports.updateRecord = (data, newRecord, timelineMessage) => {
   }
 
   // All records should have a provider by this point
-  if (!newRecord.provider){
-    console.log(`Error in updateRecord - record has no provider`)
-    if (data.signedInProviders.length == 1) { // One provider only
+  if (!newRecord.provider) {
+    console.log('Error in updateRecord - record has no provider')
+    if (data.signedInProviders.length === 1) { // One provider only
       newRecord.provider = data.signedInProviders[0] // Implicitly a 1 item array
     }
   }
 
   // Must be a new record
-  if (!newRecord.id){
+  if (!newRecord.id) {
     newRecord.id = faker.string.uuid()
     records.push(newRecord)
   }
   // Is an existing record
   else {
-    let recordIndex = records.findIndex(record => record.id == newRecord.id)
+    const recordIndex = records.findIndex(record => record.id === newRecord.id)
     records[recordIndex] = newRecord
   }
   return true
@@ -2433,34 +2303,32 @@ exports.updateRecord = (data, newRecord, timelineMessage) => {
 
 // Used by the bulk flows
 exports.doBulkAction = (action, record, params) => {
-  if (action == 'Submit a group of records and request TRNs'){
+  if (action === 'Submit a group of records and request TRNs') {
     return exports.registerForTRN(record)
   }
-  if (action == 'Recommend a group of trainees for EYTS or QTS'){
+  if (action === 'Recommend a group of trainees for EYTS or QTS') {
     return exports.recommendForAward(record, params)
   }
 }
 
 // Advance a record to 'QTS recommended' status
 exports.registerForTRN = (record) => {
-
   if (!record) return false
 
   // Only draft records can be submitted for TRN
-  if (!exports.isDraft(record)){
+  if (!exports.isDraft(record)) {
     console.log(`registerForTRN failed: ${record.id} (${record?.personalDetails?.shortName}) has the wrong status (${record.status})`)
     return false
   }
 
   // Hopefully we won't be supplied any records in the wrong status
   // Just in case though...
-  else if (!exports.recordIsComplete(record)){
+  else if (!exports.recordIsComplete(record)) {
     console.log(`Submit a group of records and request TRNs failed: ${record.id} (${record?.personalDetails?.shortName}) is not complete`)
     return false
-  }
-  else {
+  } else {
     record.status = 'Pending TRN'
-    record.source = record.source || "Manual" // just in case
+    record.source = record.source || 'Manual' // just in case
     record.reference = record.reference || generateReference()
     delete record?.placement?.status
     record.submittedDate = new Date()
@@ -2469,26 +2337,23 @@ exports.registerForTRN = (record) => {
     // Set default qualifcation, duration, etc
     // Just in case - this shoudl already be set
     record = exports.setCourseDefaults(record)
-    exports.addEvent(record, "Trainee submitted for TRN")
+    exports.addEvent(record, 'Trainee submitted for TRN')
   }
   return true
 }
 
 // Advance a record to 'QTS recommended' status
 exports.recommendForAward = (record, params) => {
-
   if (!record) return false
-  if (record.status.includes('recommended')){
+  if (record.status.includes('recommended')) {
     // Nothing to do
-  }
-  else if (record.status != 'TRN received'){
+  } else if (record.status !== 'TRN received') {
     console.log(`Recommend a group of trainees for EYTS or QTS failed: ${record.id} (${record?.personalDetails?.shortName}) has the wrong status (${record.status})`)
     return false
-  }
-  else {
+  } else {
     console.log(`Recommending trainee ${record.trn}`)
     record.status = `${exports.getQualificationText(record)} recommended`
-    _.set(record, 'qualificationDetails.standardsAssessedOutcome', "Passed")
+    _.set(record, 'qualificationDetails.standardsAssessedOutcome', 'Passed')
     // record.qualificationRecommendedDate = record?.qualificationDetails?.outcomeDate || params?.date || new Date()
     record.updatedDate = new Date()
     exports.addEvent(record, `Trainee recommended for ${exports.getQualificationText(record)}`)
@@ -2498,15 +2363,13 @@ exports.recommendForAward = (record, params) => {
 
 // Revert a record back to TRN received
 exports.revertAward = (record, params) => {
-
-  if (!record || !record.status.includes('awarded')){
+  if (!record || !record.status.includes('awarded')) {
     return false // nothing to do
-  }
-  else {
+  } else {
     console.log(`Un-awarding trainee ${record.trn}`)
 
     // Revert to in training status
-    record.status = `TRN received`
+    record.status = 'TRN received'
     delete record.qualifcationDetails
     record.updatedDate = new Date()
     // exports.addEvent(record, `${exports.getQualificationText(record)} award reverted`)
@@ -2521,40 +2384,40 @@ exports.revertAward = (record, params) => {
 // Push an item to the errorArray
 // Needs the context so if calling from another filter needs to be called with `.apply(this, [args])`
 // Usage: exports.addToErrorArray.apply(this, [{name: message, id}])
-exports.addToErrorArray = function(item){
-  if (!this?.ctx?.data){
-    console.log("Error with addToErrorArray: ctx not passed in")
+exports.addToErrorArray = function (item) {
+  if (!this?.ctx?.data) {
+    console.log('Error with addToErrorArray: ctx not passed in')
     return false
   }
-  let errorArray = this.ctx?.data?.temp?.errorArray || []
+  const errorArray = this.ctx?.data?.temp?.errorArray || []
   errorArray.push(item)
   _.set(this.ctx, 'data.temp.errorArray', errorArray)
 }
 
 // Remove placeholder tags that are used to trigger things
-exports.stripPlaceholders = (value, items=false) => {
+exports.stripPlaceholders = (value, items = false) => {
   if (!value) return value
 
-  let itemsToStrip = items || [
+  const itemsToStrip = items || [
     '**invalid**',
     '**missing**'
   ]
 
   const stripStrings = string => {
     if (!_.isString(string)) return string
-    else itemsToStrip.forEach(item => {
-      string = string.replace(item, "")
-    })
+    else {
+      itemsToStrip.forEach(item => {
+        string = string.replace(item, '')
+      })
+    }
     return string
   }
 
-  if (Array.isArray(value)){
+  if (Array.isArray(value)) {
     return value.map(arrayItem => stripStrings(arrayItem))
-  }
-  else if (_.isString(value)){
+  } else if (_.isString(value)) {
     return stripStrings(value)
-  }
-  else return value
+  } else return value
 }
 
 /*
@@ -2580,22 +2443,21 @@ This is very hacky - but works. It avoids us needing to know much about the data
 or program errors per field. We just reivew the summary list to decide if something
 is wrong.
 */
-exports.highlightInvalidRows = function(rows, params=false) {
-  let ctx = Object.assign({}, this.ctx)
+exports.highlightInvalidRows = function (rows, params = false) {
+  const ctx = Object.assign({}, this.ctx)
 
-  let returnRows = [...rows] //duplicate array - not sure this is needed
+  let returnRows = [...rows] // duplicate array - not sure this is needed
 
   // We need to add to any existing answers from previous times
   // this filter has run on this page
   // let invalidAnswers = ctx.data?.temp?.invalidAnswers || []
-  let featureEnabled = ctx?.data?.settings?.highlightInvalidAnswers == "true"
+  const featureEnabled = ctx?.data?.settings?.highlightInvalidAnswers === 'true'
 
   if (returnRows) {
-
-    let canBeAmended = statuses.canBeAmended(ctx?.record?.status)
+    const canBeAmended = statuses.canBeAmended(ctx?.record?.status)
 
     // Style as grey without action links when the record can't be amended
-    if (!canBeAmended){
+    if (!canBeAmended) {
       params.insetStyle = params?.insetStyle ?? 'grey'
     }
 
@@ -2606,17 +2468,14 @@ exports.highlightInvalidRows = function(rows, params=false) {
       let theRow = Object.assign({}, row)
 
       // Values are stored two possible places
-      let value = theRow?.value?.html || theRow?.value?.text || ""
+      let value = theRow?.value?.html || theRow?.value?.text || ''
       if (_.isString(value)) value = value.trim()
 
-      if (featureEnabled){
-
-        if (params?.treatEmptyAsMissing && (!value || value == "")) {
+      if (featureEnabled) {
+        if (params?.treatEmptyAsMissing && (!value || value === '')) {
           // Using .apply() to pass on value of 'this'
           theRow = Object.assign({}, exports.markSummaryRowMissing.apply(this, [theRow, params]))
-        }
-
-        else if (value && value.includes('**missing**')) {
+        } else if (value && value.includes('**missing**')) {
           // Using .apply() to pass on value of 'this'
           theRow = Object.assign({}, exports.markSummaryRowMissing.apply(this, [theRow, params]))
         }
@@ -2643,14 +2502,13 @@ exports.highlightInvalidRows = function(rows, params=false) {
 
 // Internal utility function to add markup to summary row to show visually inset styles
 const styleSummaryRowAsInset = (row, params) => {
-
   // Keys are stored two possible places
-  let key = row?.key?.html || row?.key?.text
+  const key = row?.key?.html || row?.key?.text
 
-  let styleAsInvalid = params.insetStyle != 'grey'
-  let hasActionLink =  row?.actions?.items && row?.actions?.items.length == 1
+  const styleAsInvalid = params.insetStyle !== 'grey'
+  let hasActionLink = row?.actions?.items && row?.actions?.items.length === 1
 
-  if (row?.actions?.items?.[0]?.suppressActionLink){
+  if (row?.actions?.items?.[0]?.suppressActionLink) {
     hasActionLink = false
   }
 
@@ -2660,22 +2518,22 @@ const styleSummaryRowAsInset = (row, params) => {
   delete row.key?.text
 
   // Message that gets shown in bold
-  let messageClasses = [
+  const messageClasses = [
     'govuk-body',
     'app-summary-list__message',
     (hasActionLink) ? 'govuk-!-margin-bottom-2' : 'govuk-!-margin-bottom-0',
     (styleAsInvalid) ? 'app-summary-list__message--invalid' : null
   ].filter(Boolean)
 
-  let messageHtml = (params.message) ? `<p class="${messageClasses.join(' ')}">${params.message}</p>` : ''
+  const messageHtml = (params.message) ? `<p class="${messageClasses.join(' ')}">${params.message}</p>` : ''
 
   // Grab the existing action link and craft a new link
   let linkHtml = '' // default to no link
 
   // If there’s more than one link (unlikely), do nothing
-  if (hasActionLink){
-    let href = row?.actions?.items[0].href
-    let hidden = (params.linkTextAppendHidden) ? `<span class="govuk-visually-hidden"> ${params.linkTextAppendHidden}</span>` : ""
+  if (hasActionLink) {
+    const href = row?.actions?.items[0].href
+    const hidden = (params.linkTextAppendHidden) ? `<span class="govuk-visually-hidden"> ${params.linkTextAppendHidden}</span>` : ''
     linkHtml = `<div>
     <a class="govuk-link govuk-link--no-visited-state app-summary-list__link--invalid" href="${href}">
     ${params.linkText}${hidden}
@@ -2683,19 +2541,19 @@ const styleSummaryRowAsInset = (row, params) => {
   }
   delete row.actions.items
 
-  if (styleAsInvalid){
+  if (styleAsInvalid) {
     row.classes = `${row.classes || ''} app-summary-list__row--invalid`
   }
 
   // Wrap in a div for styling
   // Values are stored two possible places
-  let value = row?.value?.html || row?.value?.text
-  let userValueHtml = (value) ? `<div class="app-summary-list__user-value">${value}</div>` : ""
+  const value = row?.value?.html || row?.value?.text
+  const userValueHtml = (value) ? `<div class="app-summary-list__user-value">${value}</div>` : ''
 
   // Entire thing is wrapped in a div so we can style a left border within the padding of the
   // summary list value box
 
-  let rowClasses = [
+  const rowClasses = [
     'app-summary-list__value--inset',
     (styleAsInvalid) ? 'app-summary-list__value--invalid' : null
   ].filter(Boolean)
@@ -2708,45 +2566,43 @@ const styleSummaryRowAsInset = (row, params) => {
 
 // Generate messages to be used in inset styling
 // Type can be `invalid` or `missing`
-exports.markSummaryRow = function(row, params) {
-
+exports.markSummaryRow = function (row, params) {
   row = Object.assign({}, row)
 
   // Keys are stored two possible places
-  let key = row?.key?.html || row?.key?.text
+  const key = row?.key?.html || row?.key?.text
 
   // Values are stored two possible places
-  let value = row?.value?.html || row?.value?.text || ""
+  const value = row?.value?.html || row?.value?.text || ''
   delete row?.value?.text // we’ll use row.value.html instead
-  _.set(row, "value.html", exports.stripPlaceholders(value))// strip any placeholder tags
+  _.set(row, 'value.html', exports.stripPlaceholders(value))// strip any placeholder tags
 
   // Generate an id so we can anchor to this row
-  let id = `summary-list--row-invalid--${faker.string.uuid()}`
+  const id = `summary-list--row-invalid--${faker.string.uuid()}`
 
   let message, linkText, linkTextAppendHidden
 
-  if (params.type == 'invalid'){
+  if (params.type === 'invalid') {
     message = `${key} is not recognised`
-    linkText = "Review the trainee’s answer"
+    linkText = 'Review the trainee’s answer'
     linkTextAppendHidden = `for ${key.toLowerCase()}`
 
     // Using .apply() to pass on value of 'this'
-    exports.addToErrorArray.apply(this, [{name: message, id}])
-  }
-  else if (params.type == 'missing'){
+    exports.addToErrorArray.apply(this, [{ name: message, id }])
+  } else if (params.type === 'missing') {
     message = `${key} is missing`
 
     delete row.value?.html // if it’s missing, there can't be a value
     linkText = `Enter ${key.toLowerCase()}`
 
-    if (params.recordSource == 'HESA'){
+    if (params.recordSource === 'HESA') {
       // This message is meant to show, but not as a link. However the prototype suppresses it and it's not worth fixing that functionality.
-      linkText = `You need to provide this data through HESA`
+      linkText = 'You need to provide this data through HESA'
     }
 
-    if (this?.ctx?.query?.errors){
+    if (this?.ctx?.query?.errors) {
       // Using .apply() to pass on value of 'this'
-      exports.addToErrorArray.apply(this, [{name: message, id}])
+      exports.addToErrorArray.apply(this, [{ name: message, id }])
     }
   }
 
@@ -2761,19 +2617,19 @@ exports.markSummaryRow = function(row, params) {
   //   }
   // }
   // else {
-    row = styleSummaryRowAsInset(row, {
-      ...params,
-      id,
-      message,
-      linkText,
-      linkTextAppendHidden
-    })
+  row = styleSummaryRowAsInset(row, {
+    ...params,
+    id,
+    message,
+    linkText,
+    linkTextAppendHidden
+  })
   // }
 
   return row
 }
 
-exports.markSummaryRowInvalid = function(row, params) {
+exports.markSummaryRowInvalid = function (row, params) {
   // Using .apply() to pass on value of 'this'
   return exports.markSummaryRow.apply(this, [row, {
     type: 'invalid',
@@ -2781,7 +2637,7 @@ exports.markSummaryRowInvalid = function(row, params) {
   }])
 }
 
-exports.markSummaryRowMissing = function(row, params) {
+exports.markSummaryRowMissing = function (row, params) {
   // Using .apply() to pass on value of 'this'
   return exports.markSummaryRow.apply(this, [row, {
     type: 'missing',
@@ -2789,30 +2645,28 @@ exports.markSummaryRowMissing = function(row, params) {
   }])
 }
 
-
-exports.markInput = function(data, params){
-  let type = params.type
+exports.markInput = function (data, params) {
+  const type = params.type
   // Keys are stored two possible places
-  let key = data?.label?.html || data?.label?.text || data?.fieldset?.legend?.html || data?.fieldset?.legend?.text
+  const key = data?.label?.html || data?.label?.text || data?.fieldset?.legend?.html || data?.fieldset?.legend?.text
 
   // Values are stored two possible places
-  let valueCleaned = exports.stripPlaceholders(data.value) // strip any placeholder tags
+  const valueCleaned = exports.stripPlaceholders(data.value) // strip any placeholder tags
 
   // Generate an id so we can anchor to this row
-  let id = data?.id || `app-input-invalid--${faker.string.uuid()}`
+  const id = data?.id || `app-input-invalid--${faker.string.uuid()}`
 
   let message
 
-  if (type == 'error'){
+  if (type === 'error') {
     message = `Enter ${key.toLowerCase()}`
     data.errorMessage = {
       text: message
     }
     data.value = valueCleaned
     // Using .apply() to pass on value of 'this'
-    exports.addToErrorArray.apply(this, [{name: message, id}])
-  }
-  else if (type == 'invalid'){
+    exports.addToErrorArray.apply(this, [{ name: message, id }])
+  } else if (type === 'invalid') {
     message = `${key} is not recognised`
     data.errorMessage = {
       html: `The trainee entered ‘${valueCleaned}’${params.invalidMessage || ', which was not recognised. You need to search for the closest match.'}`
@@ -2820,9 +2674,8 @@ exports.markInput = function(data, params){
     data.classes = (data.classes) ? `${data.classes} app-invalid-answer` : 'app-invalid-answer'
     delete data.value
     // Using .apply() to pass on value of 'this'
-    exports.addToErrorArray.apply(this, [{name: message, id}])
-  }
-  else if (type == 'missing'){
+    exports.addToErrorArray.apply(this, [{ name: message, id }])
+  } else if (type === 'missing') {
     message = `${key} is missing`
 
     data.errorMessage = {
@@ -2837,22 +2690,21 @@ exports.markInput = function(data, params){
   return data
 }
 
-exports.markInputError = function(data) {
+exports.markInputError = function (data) {
   return exports.markInput.apply(this, [data, 'error'])
 }
 
-exports.markInputInvalid = function(data) {
+exports.markInputInvalid = function (data) {
   return exports.markInput.apply(this, [data, 'invalid'])
 }
 
-exports.markInputMissing = function(data) {
+exports.markInputMissing = function (data) {
   return exports.markInput.apply(this, [data, 'missing'])
 }
 // Take in a form object to
 
-exports.highlightInvalidInputs = function(data, params={}){
-
-  let value = data.value
+exports.highlightInvalidInputs = function (data, params = {}) {
+  const value = data.value
 
   if (value && value.includes('**invalid**')) {
     params.type = 'invalid'
@@ -2870,13 +2722,13 @@ exports.highlightInvalidInputs = function(data, params={}){
 }
 
 // Count invalid or missing answers on a record
-exports.countInvalidAnswers = function(record, data=false) {
+exports.countInvalidAnswers = function (record, data = false) {
   // Prefer context if available
   // This will pick up dynamically generated errors, but only
   // works within a view
-  if (this.ctx){
+  if (this.ctx) {
     // console.log('Counting invalid answers with CTX')
-    let errorArray = this.ctx?.data.temp?.errorArray || []
+    const errorArray = this.ctx?.data.temp?.errorArray || []
     return errorArray.length
   }
   // The context is not available from routes - so use record data as fallback
@@ -2884,19 +2736,19 @@ exports.countInvalidAnswers = function(record, data=false) {
   // pick up records that include the placeholder strings
   else {
     // console.log('Counting invalid answers with json')
-    let jsonRecord = JSON.stringify(record)
-    let invalidCount = (jsonRecord.match(/\*\*invalid\*\*/g) || []).length
-    let missingCount = (jsonRecord.match(/\*\*missing\*\*/g) || []).length
+    const jsonRecord = JSON.stringify(record)
+    const invalidCount = (jsonRecord.match(/\*\*invalid\*\*/g) || []).length
+    const missingCount = (jsonRecord.match(/\*\*missing\*\*/g) || []).length
     return (invalidCount + missingCount)
   }
 }
 
 // Whether any data in the record is considered invalid
-exports.hasInvalidAnswers = function(record, data=false) {
+exports.hasInvalidAnswers = function (record, data = false) {
   // A page can set this temp variable to 'tell' this filter that errors
   // apply - otherwise fall back to counting errors
   let hasErrors
-  if (data?.temp?.pageHasErrors == "true") hasErrors = true
+  if (data?.temp?.pageHasErrors === 'true') hasErrors = true
   return hasErrors || exports.countInvalidAnswers.apply(this, [record]) > 0
 }
 
@@ -2905,20 +2757,19 @@ exports.hasInvalidAnswers = function(record, data=false) {
 // -------------------------------------------------------------------
 
 // This approximates a similar search as we do client side with Lunr
-exports.searchSchools = (schools = [], query = "") => {
+exports.searchSchools = (schools = [], query = '') => {
   if (!query) return []
 
   // Strip most punctuation for fuzzier matching
-  const removePunctuation = input => input.replace(/['’‘.,\/#!$%\^&\*;:{}=\-_`~()]/g,"")
+  const removePunctuation = input => input.replace(/['’‘.,\/#!$%\^&\*;:{}=\-_`~()]/g, '')
 
-  let queryParts = removePunctuation(query.toLowerCase()).split(" ")
+  const queryParts = removePunctuation(query.toLowerCase()).split(' ')
 
-  let results = schools.filter(school => {
-
+  const results = schools.filter(school => {
     // All parts must match
     return queryParts.every(part => {
       let match = false
-      let simpleSchoolName = removePunctuation(school.schoolName).toLowerCase()
+      const simpleSchoolName = removePunctuation(school.schoolName).toLowerCase()
 
       // 849382
       if (school.urn.includes(part)) match = true
@@ -2927,9 +2778,8 @@ exports.searchSchools = (schools = [], query = "") => {
       // Postcode with spaces
       if (school.postcode && school.postcode.toLowerCase().includes(part)) match = true
       // Postcode without spaces
-      if (school.postcode && school.postcode.toLowerCase().replace(" ", "").includes(part)) match = true
+      if (school.postcode && school.postcode.toLowerCase().replace(' ', '').includes(part)) match = true
       return match
-
     })
   })
   return results
@@ -2941,16 +2791,16 @@ exports.searchSchools = (schools = [], query = "") => {
 
 // Adds referrer as query string if it exists
 exports.addReferrer = (url, referrer) => {
-  if (!referrer || referrer == undefined) return url
+  if (!referrer || referrer === undefined) return url
   else {
     return `${url}?referrer=${referrer}`
   }
 }
 
-exports.orReferrer = function(url, referrer) {
-  let currentPageUrl = this?.ctx?.currentPageUrl || false
+exports.orReferrer = function (url, referrer) {
+  const currentPageUrl = this?.ctx?.currentPageUrl || false
 
-  let referrerDestination = exports.getReferrerDestination(referrer, currentPageUrl)
+  const referrerDestination = exports.getReferrerDestination(referrer, currentPageUrl)
 
   if (!referrer || !referrerDestination) return url
   else {
@@ -2967,10 +2817,9 @@ exports.pushReferrer = (existingReferrer, newReferrer) => {
 
 // Append referrer to string if it exists
 exports.getReferrer = referrer => {
-  if (referrer && referrer != 'undefined'){
+  if (referrer && referrer !== 'undefined') {
     return `?referrer=${referrer}`
-  }
-  else return ''
+  } else return ''
 }
 
 // Appends a query param to an optional existing one
@@ -2980,7 +2829,7 @@ exports.addQueryParam = (existing, param) => {
 }
 
 exports.setQueryParam = (query, key, value) => {
-  let newQuery = Object.assign({}, query)
+  const newQuery = Object.assign({}, query)
   _.set(newQuery, key, value)
   return newQuery
 }
@@ -2989,17 +2838,16 @@ exports.setQueryParam = (query, key, value) => {
 exports.makeUrlWithQuery = (pathname, query) => {
   return url.format({
     pathname,
-    query: query,
+    query
   })
 }
 
 // New URL parsing functions
 exports.parseUrl = (inputUrl) => {
-  if (!_.isString(inputUrl)){
-    console.log(`Error with parseUrl: input not a string`)
+  if (!_.isString(inputUrl)) {
+    console.log('Error with parseUrl: input not a string')
     return inputUrl
-  }
-  else return url.parse(inputUrl, true)
+  } else return url.parse(inputUrl, true)
 }
 
 // Get structured query
@@ -3014,11 +2862,9 @@ exports.getPathnameFromUrl = (inputUrl) => {
 
 // end new url passing functions
 
-
-
 // Update the current query with sort order set
-exports.createSortLink = function(pathname, sortOrder){
-  let ctx = Object.assign({}, this.ctx)
+exports.createSortLink = function (pathname, sortOrder) {
+  const ctx = Object.assign({}, this.ctx)
   let query = ctx.query
   query = exports.setQueryParam(query, 'sortOrder', sortOrder)
   return exports.makeUrlWithQuery(pathname, query)
@@ -3027,45 +2873,42 @@ exports.createSortLink = function(pathname, sortOrder){
 // Referrer could be an array of urls. If so, return the last one
 // and put the remaining as the next referrer.
 // This lets us support multiple return destinations
-exports.getReferrerDestination = function(referrer, currentPageUrl=false) {
-
+exports.getReferrerDestination = function (referrer, currentPageUrl = false) {
   // Split referrer string in to array parts
   const getReferrerArray = referrer => {
     let referrerArray = []
-    if (typeof referrer == 'string'){
-      referrerArray = referrer.split(",")
+    if (typeof referrer === 'string') {
+      referrerArray = referrer.split(',')
     }
-    if (Array.isArray(referrerArray)){
+    if (Array.isArray(referrerArray)) {
       return referrerArray
-    }
-    else return []
+    } else return []
   }
 
   // Strip duplicates and falsy values
   let referrerArray = [...getReferrerArray(referrer).filter(Boolean)]
 
   // Strip the current page’s url if present (we don’t want to redirect to the page we came from)
-  referrerArray = referrerArray.filter(item => item != currentPageUrl)
+  referrerArray = referrerArray.filter(item => item !== currentPageUrl)
 
   // No url found
-  if (referrerArray.length == 0) {
+  if (referrerArray.length === 0) {
     return ''
   }
   // A single return url
-  else if (referrerArray.length == 1){
+  else if (referrerArray.length === 1) {
     return referrerArray[0]
   }
   // Multiple return urls
   else {
-    let referrerCopy = [...referrerArray]
-    let last = referrerCopy.pop()
+    const referrerCopy = [...referrerArray]
+    const last = referrerCopy.pop()
     return `${last}?referrer=${referrerCopy}`
   }
-
 }
 
 // Return first part of url to use in redirects
 exports.getRecordPath = req => {
-  let recordType = req.params.recordtype
-  return (recordType == 'record') ? (`/record/${req.params.uuid}`) : '/new-record'
+  const recordType = req.params.recordtype
+  return (recordType === 'record') ? (`/record/${req.params.uuid}`) : '/new-record'
 }

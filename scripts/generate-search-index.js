@@ -2,19 +2,18 @@ const fs = require('fs')
 const path = require('path')
 const lunr = require('lunr')
 
-const removePunctuation = input => input.replace(/['’‘.,\/#!$%\^&\*;:{}=\-_`~()]/g,"")
-
+const removePunctuation = input => input.replace(/['’‘.,\/#!$%\^&\*;:{}=\-_`~()]/g, '')
 
 module.exports = function buildIndex () {
-  console.log('Building lunr index...');
+  console.log('Building lunr index...')
 
   const filePath = require('path').resolve(__dirname, '../app/data/gis-schools.js')
 
-  let documents = require(filePath)
+  const documents = require(filePath)
 
   // Store postcode with and without space so we can easily search on both.
-  documents.forEach((doc, index) =>  {
-    if (doc.postcode) doc.postcodeCombined = doc.postcode.replace(/\s/g, "")
+  documents.forEach((doc, index) => {
+    if (doc.postcode) doc.postcodeCombined = doc.postcode.replace(/\s/g, '')
     doc.schoolNameWithoutPunctuation = removePunctuation(doc.schoolName)
   })
 
@@ -24,7 +23,7 @@ module.exports = function buildIndex () {
   //
   // This store then allows us to lookup the information about the document
   // that we can use to present the result.
-  let store = {}
+  const store = {}
 
   const index = lunr(function () {
     this.ref('uuid')
@@ -53,18 +52,18 @@ module.exports = function buildIndex () {
     })
   })
 
-  let destionationPath = __dirname + '/../app/assets/data/search-index.json'
+  const destionationPath = __dirname + '/../app/assets/data/search-index.json'
 
-  function ensureDirectoryExistence(destionationPath) {
-    var dirname = path.dirname(destionationPath);
+  function ensureDirectoryExistence (destionationPath) {
+    const dirname = path.dirname(destionationPath)
     if (fs.existsSync(dirname)) {
-      return true;
+      return true
     }
-    fs.mkdirSync(dirname);
+    fs.mkdirSync(dirname)
   }
 
-  ensureDirectoryExistence(destionationPath);
+  ensureDirectoryExistence(destionationPath)
   fs.writeFileSync(destionationPath, JSON.stringify({ index, store }))
 
-  console.log('...done!');
+  console.log('...done!')
 }

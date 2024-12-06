@@ -1,3 +1,3 @@
 module.exports = {
-  invalidAnswerTag: "Action required"
+  invalidAnswerTag: 'Action required'
 }

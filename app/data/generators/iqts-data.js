@@ -1,11 +1,10 @@
 const { fakerEN_GB: faker } = require('@faker-js/faker')
 
 const countries = require('../countries')
-const countriesExcludingUK = countries.filter(country => country != "United Kingdom")
+const countriesExcludingUK = countries.filter(country => country !== 'United Kingdom')
 
 module.exports = params => {
-
-  let randomCountry = faker.helpers.arrayElement(countriesExcludingUK)
+  const randomCountry = faker.helpers.arrayElement(countriesExcludingUK)
 
   return {
     country: randomCountry

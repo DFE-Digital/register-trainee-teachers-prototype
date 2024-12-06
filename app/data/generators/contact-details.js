@@ -1,19 +1,16 @@
-const { fakerFR: fakerFR } = require('@faker-js/faker')
+const { fakerFR } = require('@faker-js/faker')
 const { fakerEN_GB: faker } = require('@faker-js/faker')
 
-
 module.exports = (personalDetails) => {
-  let address, internationalAddress = undefined
-  let county = undefined // faker.location.county()
+  let address; let internationalAddress
+  const county = undefined // faker.location.county()
 
   if (personalDetails.isInternationalTrainee) {
     internationalAddress = `${fakerFR.location.streetAddress()}
 ${fakerFR.location.city()}
 ${fakerFR.location.state()}
 ${fakerFR.location.zipCode()}`
-  }
-  else {
-
+  } else {
     address = {
       line1: faker.location.streetAddress(),
       line2: '',

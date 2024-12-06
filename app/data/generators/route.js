@@ -1,6 +1,6 @@
 const { fakerEN_GB: faker } = require('@faker-js/faker')
-const moment    = require('moment')
-const weighted  = require('weighted')
+const moment = require('moment')
+const weighted = require('weighted')
 
 const trainingRouteData = require('../training-route-data.js')
 
@@ -15,7 +15,7 @@ const enabledApplyRoutes = enabledTrainingRoutes.filter(route => trainingRouteDa
 // SCITTs are a mix of provider led postgrad, School Direct, and niche routes
 // HEIs are mostly provider led postgrad with some School Direct and apprenticeships
 const routeRatios = {
-  "SCITT": {
+  SCITT: {
     'Assessment only': 0.01,
     'Early years assessment only': 0.01,
     'Early years graduate entry': 0.02,
@@ -31,7 +31,7 @@ const routeRatios = {
     'Teaching apprenticeship (postgrad)': 0.05,
     'International qualified teacher status (iQTS)': 0.05
   },
-  "HEI": {
+  HEI: {
     'Assessment only': 0,
     'Early years assessment only': 0,
     'Early years graduate entry': 0,
@@ -51,25 +51,21 @@ const routeRatios = {
 
 // Take the route ratios but filter for routes that aren't enabled
 const pickLikelyRoute = (enabledRoutes, providerType) => {
-  let reducedRatios = {}
+  const reducedRatios = {}
   enabledRoutes.forEach(route => {
-    if (routeRatios?.[providerType]?.[route]){
+    if (routeRatios?.[providerType]?.[route]) {
       reducedRatios[route] = routeRatios[providerType][route]
     }
   })
   return weighted.select(reducedRatios)
 }
 
-
-
 module.exports = application => {
+  const providerType = application.accreditingProviderType
 
-  let providerType = application.accreditingProviderType
-
-  if (application?.source == 'Apply') {
+  if (application?.source === 'Apply') {
     return pickLikelyRoute(enabledApplyRoutes, providerType)
-  }
-  else {
+  } else {
     return pickLikelyRoute(enabledTrainingRoutes, providerType)
   }
 }

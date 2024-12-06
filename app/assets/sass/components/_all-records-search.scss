@@ -27,22 +27,22 @@ $input-size: 40px;
 $large-input-size: 50px;
 
 .gem-c-search__submit {
-  border: 0;
-  cursor: pointer;
-  border-radius: 0;
   position: relative;
-  padding: 0;
   width: $input-size;
   height: $input-size;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: 0;
   background-image: url("#{$app-assets-path}images/search-button.png");
   background-repeat: no-repeat;
   background-position: 2px 50%;
   text-indent: -5000px;
-  overflow: hidden;
+  cursor: pointer;
 
   @include govuk-device-pixel-ratio {
-    background-size: 52.5px auto;
     background-position: 115% 50%;
+    background-size: 52.5px auto;
   }
 
   &:focus {
@@ -69,8 +69,8 @@ $large-input-size: 50px;
 
 //general class applied to search input and button wrapper
 .gem-c-search__item {
-  position: relative;
   display: table-cell;
+  position: relative;
   vertical-align: top;
 }
 
@@ -80,8 +80,8 @@ $large-input-size: 50px;
 
 .gem-c-search--on-white {
   .gem-c-search__submit {
-    background-color: govuk-colour("blue");
     color: govuk-colour("white");
+    background-color: govuk-colour("blue");
 
     &:hover {
       background-color: lighten(govuk-colour("blue"), 5%);

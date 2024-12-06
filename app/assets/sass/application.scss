@@ -2,8 +2,8 @@
 $govuk-global-styles: true;
 
 // We can't mount GOV.UK Frontend's assets at root as it's done automatically by the extensions framework.
-$app-assets-path: '/public/';
-$govuk-assets-path: '/dist/govuk/assets/';
+$app-assets-path: "/public/";
+$govuk-assets-path: "/dist/govuk/assets/";
 
 // Import GOV.UK Frontend and any extension styles if extensions have been configured
 @import "lib/extensions/extensions";
@@ -77,10 +77,12 @@ $govuk-assets-path: '/dist/govuk/assets/';
 
 h1.register-main-heading {
   font-size: 3rem;
+
   .govuk-tag {
-    vertical-align: middle;
     margin-left: 5px;
+    vertical-align: middle;
   }
+
   .govuk-tag--dark-grey {
     background-color: govuk-colour("dark-grey");
   }
@@ -91,9 +93,9 @@ div.govuk-tabs__panel {
 }
 
 div.summary-panel {
-  border: 1px solid $govuk-border-colour;
-  padding: 15px;
   margin-bottom: 15px;
+  padding: 15px;
+  border: 1px solid $govuk-border-colour;
 
   div.summary-header {
     margin: -15px;
@@ -102,13 +104,14 @@ div.summary-panel {
     background-color: govuk-colour("light-grey");
 
     h2 {
-      margin: 0px;
+      margin: 0;
       padding-left: 9px;
     }
 
     div.link-and-tag {
       padding-top: 5px;
       text-align: right;
+
       span {
         margin-left: 15px;
       }
@@ -122,6 +125,7 @@ fieldset.address {
     @include govuk-font($size: 19);
     font-weight: bold;
   }
+
   label.govuk-label {
     font-weight: normal;
   }
@@ -133,71 +137,83 @@ a.summary-link {
 
 span.summary-validation-symbol {
   float: right;
+
   &--valid {
     color: govuk-colour("green");
   }
+
   &--invalid {
     color: govuk-colour("red");
   }
 }
 
 .filter-panel {
-  background-color: govuk-colour("light-grey");
-  padding-top: 10px;
   margin-bottom: 20px;
+  padding-top: 10px;
+  background-color: govuk-colour("light-grey");
+
   button.search-button {
-    margin-bottom: 0px;
+    margin-bottom: 0;
   }
+
   input.search-input {
     width: 365px;
   }
+
   &__download-data {
     text-align: right;
+
     .govuk-button {
+      color: govuk-colour("black");
       background-color: govuk-colour("mid-grey");
-      color: #000;
     }
   }
 }
 
 .trainees-table {
   border-top: 1px solid $govuk-border-colour;
+
   &__name-cell {
-    font-weight: bold;
     padding-left: 5px;
+    font-weight: bold;
   }
+
   &__dob {
     color: govuk-colour("mid-grey");
   }
+
   &__course-type {
     color: govuk-colour("mid-grey");
   }
 }
 
 .trainee-count {
-  font-weight: bold;
   font-size: 1.4em;
+  font-weight: bold;
 }
 
 .trainee-confirmation-panel {
-  text-align: left;
   margin-bottom: 40px;
+  text-align: left;
+
   &__check {
-    border-radius: 50%;
     width: 50px;
     height: 40px;
-    background-color: #FFF;
-    color: govuk-colour("green");
-    font-size: 25px;
-    text-align: center;
+    margin: 0 20px;
     padding-top: 10px;
     float: left;
-    margin: 0px 20px;
+    border-radius: 50%;
+    color: govuk-colour("green");
+    background-color: govuk-colour("white");
+    font-size: 25px;
+    text-align: center;
   }
+
   &__content {
-    float: left;
     width: 80%;
+    float: left;
   }
+
   &__emphasis {
     font-weight: bold;
   }
@@ -208,20 +224,21 @@ span.summary-validation-symbol {
 }
 
 .align-right {
-  text-align: right;
   float: right;
+  text-align: right;
 }
 
 .app-link-button {
   @extend %govuk-body-s;
+  display: inline;
   margin: 0;
   padding: 0;
-  display: inline;
-  background: none;
   border: none;
+  background: none;
   text-decoration: underline;
   cursor: pointer;
 }
+
 .app-link-button:focus {
   outline: none;
 }

@@ -34,11 +34,11 @@
   width: 40px;
   height: 40px;
   margin-right: govuk-spacing(2);
-  align-items: center; 
-  justify-content: center;
   border-radius: 50%;
-  background-color: govuk-colour('blue');
   color: govuk-colour('white');
+  background-color: govuk-colour("blue");
   font-weight: bold;
   text-align: center;
+  align-items: center;
+  justify-content: center;
 }

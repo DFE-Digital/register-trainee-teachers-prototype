@@ -5,11 +5,11 @@ $sticky-padding: govuk-spacing(4);
 
 .js-stick-at-top-when-scrolling,
 .js-stick-at-bottom-when-scrolling {
-
-  overflow: hidden;
+  position: relative;
   margin-left: -1 * govuk-spacing(3);
   padding: 10px 0 0 govuk-spacing(3);
-  position: relative;
+
+  overflow: hidden;
 
   .form-group {
     margin-bottom: 20px;
@@ -23,26 +23,26 @@ $sticky-padding: govuk-spacing(4);
     position: absolute;
     top: govuk-spacing(6);
     right: govuk-spacing(3);
-    opacity: 0;
     transition: opacity 0.1s ease-in-out;
+    opacity: 0;
   }
 
 }
 
 .js-stick-at-top-when-scrolling {
+  top: 5px;
 
   margin-top: -10px;
   margin-bottom: 5px;
-  top: 5px;
   transition: top 0.1s ease-out, box-shadow 1s ease-in-out;
 
 }
 
 .js-stick-at-bottom-when-scrolling {
+  margin-top: -$sticky-padding;
+  padding: govuk-spacing(3) 0 $sticky-padding govuk-spacing(3);
 
   transition: bottom 0.1s ease-out, box-shadow 1s ease-in-out;
-  padding: govuk-spacing(3) 0 $sticky-padding govuk-spacing(3);
-  margin-top: -$sticky-padding;
 
   & + .js-stick-at-bottom-when-scrolling {
     margin-top: ($sticky-padding * 2) * -1;
@@ -66,14 +66,14 @@ $sticky-padding: govuk-spacing(4);
 .content-fixed-onload {
 
   position: fixed;
-  background: white;
   z-index: 100;
-  padding-right: govuk-spacing(3);
   margin-top: 0;
+  padding-right: govuk-spacing(3);
+  background: white;
 
   .back-to-top-link {
-    opacity: 1;
     transition: opacity 0.3s ease-in-out;
+    opacity: 1;
   }
 
 }
@@ -134,11 +134,11 @@ $sticky-padding: govuk-spacing(4);
 .js-cancel {
 
   display: inline-block;
-  padding: 10px 10px 5px 10px;
   margin-top: -10px;
   margin-right: -10px;
-  text-decoration: underline;
+  padding: 10px 10px 5px;
   color: $govuk-brand-colour;
+  text-decoration: underline;
   cursor: pointer;
 
   &:hover {

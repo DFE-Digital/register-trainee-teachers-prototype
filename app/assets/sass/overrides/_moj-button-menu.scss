@@ -14,6 +14,7 @@
     .moj-button-menu__wrapper {
       display: flex;
       flex-direction: column;
+
       .moj-button-menu__item {
         margin-right: 0 !important;
       }
@@ -32,9 +33,9 @@
 .js-enabled {
   .moj-button-menu__item {
     border-collapse: collapse;
-    border-left: 1px solid $govuk-border-colour;
     border-right: 1px solid $govuk-border-colour;
     border-bottom: 1px solid $govuk-border-colour;
+    border-left: 1px solid $govuk-border-colour;
 
     &:focus {
       border: none;

@@ -3,8 +3,8 @@
 
 .app-step-nav-related {
   @include govuk-text-colour;
-  border-top: 2px solid govuk-colour("blue");
   margin-bottom: govuk-spacing(6);
+  border-top: 2px solid govuk-colour("blue");
 }
 
 .app-step-nav-related__heading {

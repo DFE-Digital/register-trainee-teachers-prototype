@@ -12,6 +12,7 @@
     "lint:markdown:fix": "markdownlint 'app/**/*.md' --disable MD013 --fix",
     "lint:scripts": "standard",
     "lint:scripts:fix": "standard --fix",
+    "lint:styles": "stylelint 'app/assets/sass/**/*.scss' 'app/views/_components/**/*.scss'",
     "test": "npm run lint:scripts && gulp generate-assets && jest"
   },
   "dependencies": {

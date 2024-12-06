@@ -1,48 +1,48 @@
 const { fakerEN_GB: faker } = require('@faker-js/faker')
 
 // Seed allows the UUIDs to be consistent each time we run this. The seed should be different than that used by lead-schools.js so we get different UUIDs for each.
-faker.seed(123);
+faker.seed(123)
 
-let selectedLeadPartners = [
+const selectedLeadPartners = [
   {
-    name: "Whitmore High School",
-    postcode: "HA2 0AD",
-    urn: "102239"
+    name: 'Whitmore High School',
+    postcode: 'HA2 0AD',
+    urn: '102239'
   },
   {
-    name: "Crispin School Academy",
-    postcode: "BA16 0AD",
-    urn: "136913"
+    name: 'Crispin School Academy',
+    postcode: 'BA16 0AD',
+    urn: '136913'
   },
   {
-    name: "Watford Grammar School for Girls",
-    postcode: "WD18 0AE",
-    urn: "136289"
+    name: 'Watford Grammar School for Girls',
+    postcode: 'WD18 0AE',
+    urn: '136289'
   },
   {
-    name: "The Joseph Whitaker School",
-    postcode: "NG21 0AG",
-    urn: "137628"
+    name: 'The Joseph Whitaker School',
+    postcode: 'NG21 0AG',
+    urn: '137628'
   },
   {
-    name: "Heckmondwike Grammar School",
-    postcode: "WF16 0AH",
-    urn: "136283"
+    name: 'Heckmondwike Grammar School',
+    postcode: 'WF16 0AH',
+    urn: '136283'
   },
   {
-    name: "Emmanuel College",
-    postcode: "NE11 0AN",
-    urn: "108420"
+    name: 'Emmanuel College',
+    postcode: 'NE11 0AN',
+    urn: '108420'
   },
   {
-    name: "Moorside High School",
-    postcode: "M27 0AP",
-    urn: "144199"
+    name: 'Moorside High School',
+    postcode: 'M27 0AP',
+    urn: '144199'
   },
   {
-    name: "Hope Academy",
-    postcode: "WA12 0AQ",
-    urn: "136421"
+    name: 'Hope Academy',
+    postcode: 'WA12 0AQ',
+    urn: '136421'
   },
   // {
   //   name: "Lord Scudamore Primary Academy",
@@ -80,22 +80,21 @@ let selectedLeadPartners = [
   //   urn: "124967"
   // },
   {
-    name: "West Park Primary School",
-    postcode: "TS26 0BU",
-    urn: "141717"
+    name: 'West Park Primary School',
+    postcode: 'TS26 0BU',
+    urn: '141717'
   },
   {
-    name: "Beam Primary School",
-    postcode: "RM10 9ED",
-    urn: "101202"
-  },
+    name: 'Beam Primary School',
+    postcode: 'RM10 9ED',
+    urn: '101202'
+  }
 ]
-
 
 module.exports = {
   selected: selectedLeadPartners.map(school => {
     return {
-      type: "leadPartner",
+      type: 'leadPartner',
       ...school,
       id: faker.string.uuid()
     }

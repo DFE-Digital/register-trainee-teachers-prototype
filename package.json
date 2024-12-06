@@ -8,10 +8,11 @@
   },
   "scripts": {
     "start": "node start.js",
-    "lint": "standard",
     "lint:markdown": "markdownlint 'app/**/*.md' --disable MD013",
     "lint:markdown:fix": "markdownlint 'app/**/*.md' --disable MD013 --fix",
-    "test": "npm run lint && gulp generate-assets && jest"
+    "lint:scripts": "standard",
+    "lint:scripts:fix": "standard --fix",
+    "test": "npm run lint:scripts && gulp generate-assets && jest"
   },
   "dependencies": {
     "@faker-js/faker": "^9.0.0",
@@ -60,6 +61,13 @@
     "uuid": "^11.0.3",
     "weighted": "^1.0.0"
   },
+  "standard": {
+    "ignore": [
+      "app/assets/javascripts/jquery-1.11.3.js",
+      "app/assets/javascripts/jquery-3.6.1.min.js",
+      "app/assets/javascripts/lunr-2.3.9.js"
+    ]
+  },
   "greenkeeper": {
     "ignore": [
       "nunjucks"
@@ -69,7 +77,7 @@
     "glob": "^11.0.0",
     "jest": "^29.7.0",
     "markdownlint-cli": "^0.43.0",
-    "standard": "^17.1.0",
+    "standard": "^17.1.2",
     "supertest": "^7.0.0"
   }
 }

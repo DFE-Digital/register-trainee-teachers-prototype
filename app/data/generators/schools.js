@@ -1,9 +1,9 @@
 // Generates fake training details
 
-const moment      = require('moment')
-const weighted    = require('weighted')
-const { fakerUK: faker }   = require('@faker-js/faker')
-const allSchools  = require('../gis-schools.js')
+const moment = require('moment')
+const weighted = require('weighted')
+const { fakerUK: faker } = require('@faker-js/faker')
+const allSchools = require('../gis-schools.js')
 
 // Using the urn to match against
 const leadPartnerUrns = require('./../lead-schools.js').selected.map(school => school.urn)
@@ -15,24 +15,23 @@ const filteredSchools = allSchools.filter(school => leadPartnerUrns.includes(sch
 const trainingRouteData = require('../training-route-data')
 
 const requiresLeadPartner = params => {
-  let routeData = trainingRouteData.trainingRoutes[params.route]
-  return routeData.fields && routeData.fields.includes("leadPartner")
+  const routeData = trainingRouteData.trainingRoutes[params.route]
+  return routeData.fields && routeData.fields.includes('leadPartner')
 }
 
 const requiresEmployingSchool = params => {
-  let routeData = trainingRouteData.trainingRoutes[params.route]
-  return routeData.fields && routeData.fields.includes("employingSchool")
+  const routeData = trainingRouteData.trainingRoutes[params.route]
+  return routeData.fields && routeData.fields.includes('employingSchool')
 }
 
 module.exports = (params) => {
-
-  let leadPartner = requiresLeadPartner(params) ? faker.helpers.arrayElement(filteredSchools) : null
+  const leadPartner = requiresLeadPartner(params) ? faker.helpers.arrayElement(filteredSchools) : null
 
   let employingSchool = null
 
   if (requiresEmployingSchool(params)) {
     // Attempt to pick an employing school with a similar postcode
-    let tempEmploying = faker.helpers.arrayElement(allSchools.filter(school => {
+    const tempEmploying = faker.helpers.arrayElement(allSchools.filter(school => {
       if (!school.postcode || !leadPartner?.postcode) return false
       else return school.postcode.startsWith(leadPartner.postcode.charAt(0))
     }))
@@ -41,7 +40,7 @@ module.exports = (params) => {
   }
 
   return {
-    ...(leadPartner ? {leadPartner} : {}), // conditional
-    ...(employingSchool ? {employingSchool} : {}), // conditional
+    ...(leadPartner ? { leadPartner } : {}), // conditional
+    ...(employingSchool ? { employingSchool } : {}) // conditional
   }
 }

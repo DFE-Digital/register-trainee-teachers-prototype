@@ -1,25 +1,24 @@
 const { fakerEN_GB: faker } = require('@faker-js/faker')
-const weighted           = require('weighted')
-const degreeData         = require('../degree')
+const weighted = require('weighted')
+const degreeData = require('../degree')
 const degreeInstitutions = require('../degree-instituions')
 
 module.exports = (params, application) => {
-
-  const isApplyDraft = (application.source == 'Apply' && application.status == "Draft")
+  const isApplyDraft = (application.source === 'Apply' && application.status === 'Draft')
 
   const item = (faker) => {
     let subject = faker.helpers.arrayElement(degreeData().subjects)
     const predicted = faker.datatype.boolean()
-    const endDate = faker.helpers.arrayElement(['2020','2019','2018','2017','2016','2015'])
+    const endDate = faker.helpers.arrayElement(['2020', '2019', '2018', '2017', '2016', '2015'])
     const startDate = (parseInt(endDate) - 4).toString()
     const id = faker.string.uuid()
-    const sectionIsComplete = (params?.degree?.status == "Completed")
-    const invalidAllowed = (params?.invalidAllowed === false) ? false : true
+    const sectionIsComplete = (params?.degree?.status === 'Completed')
+    const invalidAllowed = params?.invalidAllowed !== false
 
     // Make 1/3rd of subjects be invalid responses for Apply applications
     // But don’t spit out invalid data if the section is marked as completed
-    if (isApplyDraft && !sectionIsComplete && invalidAllowed){
-      let invalidSubject = `**invalid**${faker.helpers.arrayElement(degreeData().invalidSubjects)}`
+    if (isApplyDraft && !sectionIsComplete && invalidAllowed) {
+      const invalidSubject = `**invalid**${faker.helpers.arrayElement(degreeData().invalidSubjects)}`
       subject = weighted.select([subject, invalidSubject], [0.7, 0.3])
     }
 
@@ -28,7 +27,7 @@ module.exports = (params, application) => {
         // type: 'Diplôme',
         type: 'Bachelor degree', // ENIC equivalent
         subject,
-        isInternational: "true",
+        isInternational: 'true',
         institution: 'University of Paris',
         country: 'France',
         // grade: 'Pass',
@@ -47,18 +46,18 @@ module.exports = (params, application) => {
 
       // Make 1/3rd of types and institutions be invalid responses
       // But don’t spit out invalid data if the section is marked as completed
-      if (isApplyDraft && !sectionIsComplete  && invalidAllowed){
-        let randomInvalidType = `**invalid**${faker.helpers.arrayElement(degreeData().invalidTypes)}`
+      if (isApplyDraft && !sectionIsComplete && invalidAllowed) {
+        const randomInvalidType = `**invalid**${faker.helpers.arrayElement(degreeData().invalidTypes)}`
         type = weighted.select([type, randomInvalidType], [0.7, 0.3])
 
-        let randomInvalidInstitution = `**invalid**${faker.helpers.arrayElement(degreeData().invalidInstitutions)}`
+        const randomInvalidInstitution = `**invalid**${faker.helpers.arrayElement(degreeData().invalidInstitutions)}`
         institution = weighted.select([institution, randomInvalidInstitution], [0.7, 0.3])
       }
 
       const level = type.level
       let grade
 
-      if (level <= 6){
+      if (level <= 6) {
         grade = faker.helpers.arrayElement([
           'First-class honours',
           'Upper second-class honours (2:1)',
@@ -66,8 +65,7 @@ module.exports = (params, application) => {
           'Third-class honours',
           'Pass'
         ])
-      }
-      else {
+      } else {
         grade = faker.helpers.arrayElement([
           'First-class honours',
           'Upper second-class honours (2:1)',
@@ -84,7 +82,7 @@ module.exports = (params, application) => {
       return {
         type,
         subject,
-        isInternational: "false",
+        isInternational: 'false',
         institution,
         // country: 'United Kingdom',
         grade,
@@ -102,18 +100,18 @@ module.exports = (params, application) => {
     2: 0.1
   })
   const items = []
-  for (var i = 0; i < count; i++) {
+  for (let i = 0; i < count; i++) {
     items.push(item(faker))
   }
 
   // Trainees with multiple degrees must have a single degree selected for the
   // purposes of bursaries
   let degreeToBeUsedForBursaries
-  if (items.length > 1 && !isApplyDraft){
+  if (items.length > 1 && !isApplyDraft) {
     degreeToBeUsedForBursaries = faker.helpers.arrayElement(items).id
   }
 
   return {
-    items: items
+    items
   }
 }

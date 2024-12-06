@@ -3,11 +3,11 @@
 // node scripts/generate-courses.js
 // Re-run generate-records.js after generating new courses
 
-const fs            = require('fs')
-const path          = require('path')
-const weighted      = require('weighted')
-const providerData  = require('../app/data/accrediting-providers')
-const providers     = providerData.selected
+const fs = require('fs')
+const path = require('path')
+const weighted = require('weighted')
+const providerData = require('../app/data/accrediting-providers')
+const providers = providerData.selected
 
 const generateCourseDetails = require('../app/data/generators/course-generator')
 
@@ -19,7 +19,7 @@ const yearsToGenerate = [2018, 2019, 2020, 2021, 2022, 2023, 2024]
 // Volumes loosely based on number of courses per provider as seen on Publish
 // Most have 1-3, but then about 1/3 have up to 80
 const generateCourseCount = () => {
-  let count = weighted.select({
+  const count = weighted.select({
     // "1": 0.2,
     // "2": 0.2,
     // "3": 0.05,
@@ -27,29 +27,29 @@ const generateCourseCount = () => {
     // "5": 0.05,
     // "7": 0.05,
     // "15": 0.05,
-    "20": 0.05,
-    "25": 0.05,
-    "30": 0.05,
-    "50": 0.05,
-    "60": 0.05,
-    "70": 0.05,
-    "80": 0.05
+    20: 0.05,
+    25: 0.05,
+    30: 0.05,
+    50: 0.05,
+    60: 0.05,
+    70: 0.05,
+    80: 0.05
   })
   return parseInt(count)
 }
 
 const generateFakeCourses = () => {
-  let courses = {}
+  const courses = {}
 
   providers.forEach(provider => {
-    let providerCourses = []
+    const providerCourses = []
     let courseCount = generateCourseCount() // semi-random number of courses per provider
 
     // Hardcode lots courses our default providers
     // A separate setting limits this later so that we can quickly change the number of courses offered in the ui
-    if (provider.name == "King’s Oak University" || provider.name == "University of Buckingham") courseCount = 100
+    if (provider.name === 'King’s Oak University' || provider.name === 'University of Buckingham') courseCount = 100
 
-    for (var i = 0; i < courseCount; i++){
+    for (let i = 0; i < courseCount; i++) {
       yearsToGenerate.forEach(year => {
         providerCourses.push(generateCourseDetails({
           startYear: year,
@@ -76,12 +76,12 @@ const generateFakeCourses = () => {
 const generateCoursesFile = (filePath) => {
   const courses = generateFakeCourses()
 
-  let courseCount = Object.values(courses).reduce( (acc, cur) => {
+  const courseCount = Object.values(courses).reduce((acc, cur) => {
     return acc += cur.courses.length
   }, 0)
 
   console.log(`Generated ${courseCount} fake courses`)
-  console.log(`Now run "node scripts/generate-records.js"`)
+  console.log('Now run "node scripts/generate-records.js"')
 
   const filedata = JSON.stringify(courses, null, 2)
   fs.writeFile(

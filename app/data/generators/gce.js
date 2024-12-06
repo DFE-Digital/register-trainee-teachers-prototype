@@ -12,8 +12,8 @@ module.exports = (faker, isInternationalTrainee) => {
 
   let country = null
 
-  if (isInternationalTrainee){
-    country = faker.helpers.arrayElement(['France','Italy','Germany','Ireland'])
+  if (isInternationalTrainee) {
+    country = faker.helpers.arrayElement(['France', 'Italy', 'Germany', 'Ireland'])
   }
 
   // GCSE grade values changed to numbers after 2017
@@ -66,10 +66,9 @@ module.exports = (faker, isInternationalTrainee) => {
   })
   const items = []
 
-  for (var i = 0; i < count; i++) {
+  for (let i = 0; i < count; i++) {
     items.push(item(faker))
   }
 
   return items
-
 }

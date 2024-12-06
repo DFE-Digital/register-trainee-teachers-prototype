@@ -1,4 +1,3 @@
-
 // NPM dependencies
 const browserSync = require('browser-sync')
 
@@ -8,8 +7,8 @@ const config = require('./app/config.js')
 const utils = require('./lib/utils.js')
 
 // Set up configuration variables
-var useBrowserSync = config.useBrowserSync.toLowerCase()
-var env = (process.env.NODE_ENV || 'development').toLowerCase()
+const useBrowserSync = config.useBrowserSync.toLowerCase()
+const env = (process.env.NODE_ENV || 'development').toLowerCase()
 
 utils.findAvailablePort(server, function (port) {
   console.log('Listening on port ' + port + '   url: http://localhost:' + port)
@@ -19,7 +18,7 @@ utils.findAvailablePort(server, function (port) {
     server.listen(port - 50, function () {
       browserSync({
         proxy: 'localhost:' + (port - 50),
-        port: port,
+        port,
         ui: false,
         files: ['public/**/*.*', 'app/views/**/*.*'],
         ghostMode: false,

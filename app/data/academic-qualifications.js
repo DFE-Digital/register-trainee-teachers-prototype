@@ -1,23 +1,23 @@
-let degree = require('./degree.js')
+const degree = require('./degree.js')
 
-let postgraduateQualifications = [
+const postgraduateQualifications = [
   {
-    short: "PGCE",
-    long: "Postgraduate certificate in education",
-    type: "Postgraduate"
+    short: 'PGCE',
+    long: 'Postgraduate certificate in education',
+    type: 'Postgraduate'
   },
   {
-    short: "PGDE",
-    long: "Postgraduate diploma in education",
-    type: "Postgraduate"
+    short: 'PGDE',
+    long: 'Postgraduate diploma in education',
+    type: 'Postgraduate'
   }
 ]
 
 // let undergraduateQualifications = degree().types.undergraduate
 
-let undergraduateQualifications = degree().types.undergraduate.map(item => {
+const undergraduateQualifications = degree().types.undergraduate.map(item => {
   return {
-    type: "Undergraduate",
+    type: 'Undergraduate',
     ...item
   }
 })

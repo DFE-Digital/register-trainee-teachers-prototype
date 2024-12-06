@@ -4,8 +4,7 @@
 const pluralize = require('pluralize')
 
 // Leave this filters line
-var filters = {}
-
+const filters = {}
 
 /*
   ====================================================================
@@ -31,7 +30,6 @@ filters.pluralise = (content, ...args) => {
   pluralize.addPluralRule(/correspondence$/i, 'correspondence')
   return pluralize(content, ...args)
 }
-
 
 // -------------------------------------------------------------------
 // keep the following line to return your filters to the app

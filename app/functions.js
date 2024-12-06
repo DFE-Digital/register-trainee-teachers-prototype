@@ -1,23 +1,20 @@
-
 const fs = require('fs')
 const path = require('path')
 const individualFunctionsFolder = path.join(__dirname, './functions')
-const moment = require("moment");
+const moment = require('moment')
 const _ = require('lodash')
 const permissions = require('./filters/permissions.js').filters
 const { fakerEN_GB: faker } = require('@faker-js/faker')
 faker.seed(123)
 
 module.exports = function (env) {
-
-
-  var functions = {}
+  const functions = {}
 
   // Import functions from functions folder
   if (fs.existsSync(individualFunctionsFolder)) {
-    var files = fs.readdirSync(individualFunctionsFolder)
+    const files = fs.readdirSync(individualFunctionsFolder)
     files.forEach(file => {
-      let fileData = require(path.join(individualFunctionsFolder, file))
+      const fileData = require(path.join(individualFunctionsFolder, file))
       // Loop through each exported function in file (likely just one)
       Object.keys(fileData).forEach((functionGroup) => {
         // Get each method from the file
@@ -29,11 +26,11 @@ module.exports = function (env) {
   }
 
   // Return today’s date
-  functions.today = function() {
+  functions.today = function () {
     return moment().format('YYYY-MM-DD')
   }
 
-  functions.nowUTC = function() {
+  functions.nowUTC = function () {
     return Date.now()
   }
 
@@ -46,13 +43,12 @@ module.exports = function (env) {
    - currentMonth(nameOfMonth) = ‘January’
   */
   functions.currentMonth = (type) => {
-    if (type == "nameOfMonth") {
+    if (type === 'nameOfMonth') {
       return moment().format('MMMM')
     } else {
       return parseInt(moment().format('MM'), 10)
     }
   }
-
 
   // Get current year
   functions.currentYear = (type) => {
@@ -60,7 +56,7 @@ module.exports = function (env) {
   }
 
   // Get the context - useful for logging
-  functions.getContext = function() {
+  functions.getContext = function () {
     return this.ctx
   }
 
@@ -74,7 +70,7 @@ module.exports = function (env) {
   functions.faker = faker
 
   // Pass through to utility function. Done like this so we don't need to use filter syntax - as nothing really needs to get sent anyway
-  functions.isAuthorised = function(action){
+  functions.isAuthorised = function (action) {
     const data = this.ctx?.data
     return permissions.providerIsAuthorised.apply(this, [data.signedInProviders, action])
   }

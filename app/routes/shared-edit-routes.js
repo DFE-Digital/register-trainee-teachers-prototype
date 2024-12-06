@@ -1,9 +1,9 @@
 const { fakerEN_GB: faker } = require('@faker-js/faker')
-const path      = require('path')
-const moment    = require('moment')
-const utils     = require('./../lib/utils')
-const _         = require('lodash')
-const years     = require('../data/years')
+const path = require('path')
+const moment = require('moment')
+const utils = require('./../lib/utils')
+const _ = require('lodash')
+const years = require('../data/years')
 
 // In function because this is too big to pass around in session
 const getSchools = () => {
@@ -11,14 +11,13 @@ const getSchools = () => {
 }
 
 module.exports = router => {
-
   // Hacky solution to manually import a record to draft state
   // Useful for testing bugs so we can quickly restore a state
   router.get('/record-direct-add', (req, res) => {
     const data = req.session.data
 
     utils.deleteTempData(data)
-    let record = require('./../data/direct-add-record.json')
+    const record = require('./../data/direct-add-record.json')
     data.records.push(record)
     // utils.updateRecord(data, record)
     res.redirect(`/record/${record.id}`)
@@ -36,17 +35,16 @@ module.exports = router => {
 
     utils.deleteTempData(data)
     const records = req.session.data.records
-    const record = records.find(record => record.id == req.params.uuid)
-    if (!record){
+    const record = records.find(record => record.id === req.params.uuid)
+    if (!record) {
       console.log(`Trainee (${req.params.uuid}) not found, redirecting to records`)
       res.redirect('/records')
-    }
-    else {
+    } else {
       // Save record to session to be used by views
       req.session.data.record = record
 
       // Redirect to task draft journey if still a draft
-      if (utils.isDraft(record)){
+      if (utils.isDraft(record)) {
         res.redirect('/new-record/overview')
       }
       // Only submitted records
@@ -55,7 +53,6 @@ module.exports = router => {
         res.render('record')
       }
     }
-
   })
 
   // =============================================================================
@@ -63,33 +60,31 @@ module.exports = router => {
   // =============================================================================
 
   // Forward on to the appropriate schools page depending on what the route needs
-  router.get(['/:recordtype/:uuid/schools','/:recordtype/schools'], function (req, res) {
-    let data = req.session.data
-    let record = data.record
-    let recordPath = utils.getRecordPath(req)
-    let referrer = utils.getReferrer(req.query.referrer)
+  router.get(['/:recordtype/:uuid/schools', '/:recordtype/schools'], function (req, res) {
+    const data = req.session.data
+    const record = data.record
+    const recordPath = utils.getRecordPath(req)
+    const referrer = utils.getReferrer(req.query.referrer)
 
-    if (utils.requiresField(record, 'leadPartner')){
+    if (utils.requiresField(record, 'leadPartner')) {
       res.redirect(`${recordPath}/schools/lead-school${referrer}`)
-    }
-    else if (utils.requiresField(record, 'employingSchool')){
+    } else if (utils.requiresField(record, 'employingSchool')) {
       res.redirect(`${recordPath}/schools/employing-school${referrer}`)
-    }
-    else {
+    } else {
       // This path shouldn't be possible
       res.redirect(`${recordPath}/schools/confirm${referrer}`)
     }
   })
 
   // Toggle between an autocomplete page and a search results page on the basis of there being a search query
-  router.get(['/:recordtype/:uuid/schools/lead-school','/:recordtype/schools/lead-school'], function (req, res) {
-    let data = req.session.data
-    let record = data.record
-    let recordPath = utils.getRecordPath(req)
-    let referrer = utils.getReferrer(req.query.referrer)
-    let schoolSearchTerm = req.query?._schoolSearch
+  router.get(['/:recordtype/:uuid/schools/lead-school', '/:recordtype/schools/lead-school'], function (req, res) {
+    const data = req.session.data
+    const record = data.record
+    const recordPath = utils.getRecordPath(req)
+    const referrer = utils.getReferrer(req.query.referrer)
+    const schoolSearchTerm = req.query?._schoolSearch
 
-    if (schoolSearchTerm){
+    if (schoolSearchTerm) {
       const schools = getSchools()
       let results = false
       let resultsCount = 0
@@ -97,30 +92,28 @@ module.exports = router => {
       resultsCount = results.length
       results = results.slice(0, 15) // truncate results
       res.render(`${req.params.recordtype}/schools/lead-school-results`, { searchResults: results, resultsCount })
-    }
-    else {
+    } else {
       res.render(`${req.params.recordtype}/schools/lead-school`)
     }
-
   })
 
   // This route deals with users searching for schools by string or having selected a
   // school from a set of results.
-  router.post(['/:recordtype/:uuid/schools/lead-school','/:recordtype/schools/lead-school'], function (req, res) {
-    let data = req.session.data
-    let record = data.record
-    let recordPath = utils.getRecordPath(req)
-    let referrer = utils.getReferrer(req.query.referrer)
+  router.post(['/:recordtype/:uuid/schools/lead-school', '/:recordtype/schools/lead-school'], function (req, res) {
+    const data = req.session.data
+    const record = data.record
+    const recordPath = utils.getRecordPath(req)
+    const referrer = utils.getReferrer(req.query.referrer)
     const schools = getSchools()
 
     // default to applicable unless checkbox set
     let leadPartnerApplicable = true
-    if (record?.schools?.leadPartner?.notApplicable && record?.schools?.leadPartner?.notApplicable.includes('true') ){
+    if (record?.schools?.leadPartner?.notApplicable && record?.schools?.leadPartner?.notApplicable.includes('true')) {
       leadPartnerApplicable = false
     }
 
     // Input added with js by the autocomplete
-    let autocompleteRawValue = req.body?._autocomplete_raw_value_school_picker
+    const autocompleteRawValue = req.body?._autocomplete_raw_value_school_picker
 
     // School selected via autocomplete
     let autocompleteUuid = req.body?._autocomplete_result_uuid
@@ -131,45 +124,43 @@ module.exports = router => {
     // then the old Uuid will get submitted. Here we check that the school name for the provided Uuid matches the
     // raw autocomplete string submitted. If they don’t match, wipe the UUID as it’s invalid - and instead we should
     // run a string search for the given name.
-    if (autocompleteUuid && autocompleteRawValue){
-      let selectedSchool = schools.find(school => school.uuid == autocompleteUuid)
-      if (selectedSchool?.schoolName != autocompleteRawValue){
+    if (autocompleteUuid && autocompleteRawValue) {
+      const selectedSchool = schools.find(school => school.uuid === autocompleteUuid)
+      if (selectedSchool?.schoolName !== autocompleteRawValue) {
         autocompleteUuid = undefined
       }
     }
 
     // Used for no-js searching
     // Or where a user types in to the autocomplete too quickly
-    let schoolSearchTerm = (!autocompleteUuid && autocompleteRawValue) || req.body?._schoolSearch || false
+    const schoolSearchTerm = (!autocompleteUuid && autocompleteRawValue) || req.body?._schoolSearch || false
 
-    let searchResultRadios = req.body?._searchResultRadios
-    let schoolResultUuid = (searchResultRadios && searchResultRadios != 'searchAgain') ? searchResultRadios : false
+    const searchResultRadios = req.body?._searchResultRadios
+    const schoolResultUuid = (searchResultRadios && searchResultRadios !== 'searchAgain') ? searchResultRadios : false
 
     // Uuid could come via two form inputs
-    let schoolUuid = autocompleteUuid || schoolResultUuid || false
+    const schoolUuid = autocompleteUuid || schoolResultUuid || false
 
-    let leadPartnerIsEmployingSchool = (record?.schools?.leadPartnerIsEmployingSchool == "true") ? true : false
+    const leadPartnerIsEmployingSchool = (record?.schools?.leadPartnerIsEmployingSchool === 'true')
     delete record?.schools?.leadPartnerIsEmployingSchool // Checkbox no longer needed
 
     // Search again
-    if (schoolSearchTerm && !schoolUuid && leadPartnerApplicable){
-      let queryParams = utils.addQueryParam(referrer, `_schoolSearch=${schoolSearchTerm}`)
+    if (schoolSearchTerm && !schoolUuid && leadPartnerApplicable) {
+      const queryParams = utils.addQueryParam(referrer, `_schoolSearch=${schoolSearchTerm}`)
       res.redirect(`${recordPath}/schools/lead-school${queryParams}`)
     }
     // No answer given and no search term
-    else if (!schoolUuid && leadPartnerApplicable){
+    else if (!schoolUuid && leadPartnerApplicable) {
       res.redirect(`${recordPath}/schools/lead-school${referrer}`)
-    }
-    else {
-      if (leadPartnerApplicable){
-        let selectedSchool = schools.find(school => school.uuid == schoolUuid)
+    } else {
+      if (leadPartnerApplicable) {
+        const selectedSchool = schools.find(school => school.uuid === schoolUuid)
 
         // Seed records might have schools that aren't in our schools list
         // This may happen if a user tries to edit an existing seed record
         if (!selectedSchool) {
-          console.log(`School not found - you probably need to update the seed records`)
-        }
-        else {
+          console.log('School not found - you probably need to update the seed records')
+        } else {
           // Using _.set as lead partner might not exist yet
           _.set(record, 'schools.leadPartner', selectedSchool)
         }
@@ -177,8 +168,7 @@ module.exports = router => {
 
       // Some routes have a conditional next question
       // We bypass this if we've already got an answer for employing school
-      if (utils.requiresField(record, 'employingSchool') && !record?.schools?.employingSchool){
-
+      if (utils.requiresField(record, 'employingSchool') && !record?.schools?.employingSchool) {
         // If an employing school isn’t already set, users can tell us the employing school
         // is the same as the employing school
         if (leadPartnerIsEmployingSchool && !record?.schools?.employingSchool) {
@@ -186,36 +176,30 @@ module.exports = router => {
           _.set(record, 'schools.employingSchool', selectedSchool)
           // Skip to next page
           res.redirect(`${recordPath}/schools/confirm${referrer}`)
-        }
-        else {
+        } else {
           res.redirect(`${recordPath}/schools/employing-school${referrer}`)
         }
-
-      }
-      else {
-
-        let referrerDestination = utils.getReferrerDestination(req.query.referrer)
-        if (referrerDestination.includes("course-details/final-check-course-change")){
+      } else {
+        const referrerDestination = utils.getReferrerDestination(req.query.referrer)
+        if (referrerDestination.includes('course-details/final-check-course-change')) {
           res.redirect(utils.getNextCourseChangeUrl(record, recordPath, referrer))
-        }
-        else {
+        } else {
           res.redirect(`${recordPath}/schools/confirm${referrer}`)
         }
       }
     }
-
   })
 
   // Toggle between an autocomplete page and a search results page on the basis of there being a search query
-  router.get(['/:recordtype/:uuid/schools/employing-school','/:recordtype/schools/employing-school'], function (req, res) {
-    let data = req.session.data
-    let record = data.record
-    let recordPath = utils.getRecordPath(req)
-    let referrer = utils.getReferrer(req.query.referrer)
-    let schoolSearchTerm = req.query?._schoolSearch
+  router.get(['/:recordtype/:uuid/schools/employing-school', '/:recordtype/schools/employing-school'], function (req, res) {
+    const data = req.session.data
+    const record = data.record
+    const recordPath = utils.getRecordPath(req)
+    const referrer = utils.getReferrer(req.query.referrer)
+    const schoolSearchTerm = req.query?._schoolSearch
     const schools = getSchools()
 
-    if (schoolSearchTerm){
+    if (schoolSearchTerm) {
       let results = false
       let resultsCount = 0
 
@@ -223,30 +207,28 @@ module.exports = router => {
       resultsCount = results.length
       results = results.slice(0, 15) // truncate results
       res.render(`${req.params.recordtype}/schools/employing-school-results`, { searchResults: results, resultsCount })
-    }
-    else {
+    } else {
       res.render(`${req.params.recordtype}/schools/employing-school`)
     }
-
   })
 
   // This route deals with users searching for schools by string or having selected a
   // school from a set of results.
-  router.post(['/:recordtype/:uuid/schools/employing-school','/:recordtype/schools/employing-school'], function (req, res) {
-    let data = req.session.data
-    let record = data.record
-    let recordPath = utils.getRecordPath(req)
-    let referrer = utils.getReferrer(req.query.referrer)
+  router.post(['/:recordtype/:uuid/schools/employing-school', '/:recordtype/schools/employing-school'], function (req, res) {
+    const data = req.session.data
+    const record = data.record
+    const recordPath = utils.getRecordPath(req)
+    const referrer = utils.getReferrer(req.query.referrer)
     const schools = getSchools()
 
     // default to applicable unless checkbox set
     let employingSchoolApplicable = true
-    if (record?.schools?.employingSchool?.notApplicable && record?.schools?.employingSchool?.notApplicable.includes('true') ){
+    if (record?.schools?.employingSchool?.notApplicable && record?.schools?.employingSchool?.notApplicable.includes('true')) {
       employingSchoolApplicable = false
     }
 
     // Input added with js by the autocomplete
-    let autocompleteRawValue = req.body?._autocomplete_raw_value_school_picker
+    const autocompleteRawValue = req.body?._autocomplete_raw_value_school_picker
 
     // School selected via autocomplete
     let autocompleteUuid = req.body?._autocomplete_result_uuid
@@ -257,58 +239,52 @@ module.exports = router => {
     // then the old Uuid will get submitted. Here we check that the school name for the provided Uuid matches the
     // raw autocomplete string submitted. If they don’t match, wipe the UUID as it’s invalid - and instead we should
     // run a string search for the given name.
-    if (autocompleteUuid && autocompleteRawValue){
-
-      let selectedSchool = schools.find(school => school.uuid == autocompleteUuid)
-      if (selectedSchool?.schoolName != autocompleteRawValue){
+    if (autocompleteUuid && autocompleteRawValue) {
+      const selectedSchool = schools.find(school => school.uuid === autocompleteUuid)
+      if (selectedSchool?.schoolName !== autocompleteRawValue) {
         autocompleteUuid = undefined
       }
     }
 
     // Used for no-js searching
     // Or where a user types in to the autocomplete too quickly
-    let schoolSearchTerm = (!autocompleteUuid && autocompleteRawValue) || req.body?._schoolSearch || false
+    const schoolSearchTerm = (!autocompleteUuid && autocompleteRawValue) || req.body?._schoolSearch || false
 
-    let searchResultRadios = req.body?._searchResultRadios
-    let schoolResultUuid = (searchResultRadios && searchResultRadios != 'searchAgain') ? searchResultRadios : false
+    const searchResultRadios = req.body?._searchResultRadios
+    const schoolResultUuid = (searchResultRadios && searchResultRadios !== 'searchAgain') ? searchResultRadios : false
 
     // Uuid could come via two form inputs
-    let schoolUuid = autocompleteUuid || schoolResultUuid || false
+    const schoolUuid = autocompleteUuid || schoolResultUuid || false
 
     // Search again
-    if (schoolSearchTerm && !schoolUuid && employingSchoolApplicable){
-      let queryParams = utils.addQueryParam(referrer, `_schoolSearch=${schoolSearchTerm}`)
+    if (schoolSearchTerm && !schoolUuid && employingSchoolApplicable) {
+      const queryParams = utils.addQueryParam(referrer, `_schoolSearch=${schoolSearchTerm}`)
       res.redirect(`${recordPath}/schools/employing-school${queryParams}`)
     }
     // No answer given and no search term
-    else if (!schoolUuid && employingSchoolApplicable){
+    else if (!schoolUuid && employingSchoolApplicable) {
       res.redirect(`${recordPath}/schools/employing-school${referrer}`)
-    }
-    else {
-      if (employingSchoolApplicable){
-        let selectedSchool = schools.find(school => school.uuid == schoolUuid)
+    } else {
+      if (employingSchoolApplicable) {
+        const selectedSchool = schools.find(school => school.uuid === schoolUuid)
 
         // Seed records might have schools that aren't in our schools list
         // This may happen if a user tries to edit an existing seed record
         if (!selectedSchool) {
-          console.log(`School not found - you probably need to update the seed records`)
-        }
-        else {
+          console.log('School not found - you probably need to update the seed records')
+        } else {
           // Using _.set as lead partner might not exist yet
           _.set(record, 'schools.employingSchool', selectedSchool)
         }
       }
 
-      let referrerDestination = utils.getReferrerDestination(req.query.referrer)
-      if (referrerDestination.includes("course-details/final-check-course-change")){
+      const referrerDestination = utils.getReferrerDestination(req.query.referrer)
+      if (referrerDestination.includes('course-details/final-check-course-change')) {
         res.redirect(utils.getNextCourseChangeUrl(record, recordPath, referrer))
-      }
-      else {
+      } else {
         res.redirect(`${recordPath}/schools/confirm${referrer}`)
       }
-
     }
-
   })
 
   // =============================================================================
@@ -316,84 +292,79 @@ module.exports = router => {
   // =============================================================================
 
   // Show error if route is not assessment only
-  router.post(['/:recordtype/:uuid/course-details/select-route-answer','/:recordtype/course-details/select-route-answer'], function (req, res) {
+  router.post(['/:recordtype/:uuid/course-details/select-route-answer', '/:recordtype/course-details/select-route-answer'], function (req, res) {
     const data = req.session.data
     let record = data.record
-    let route = record?.route
-    let recordPath = utils.getRecordPath(req)
-    let referrer = utils.getReferrer(req.query.referrer)
-    let existingCourseDetails = record?.courseDetails
-    let recordIsDraft = utils.isDraft(record)
+    const route = record?.route
+    const recordPath = utils.getRecordPath(req)
+    const referrer = utils.getReferrer(req.query.referrer)
+    const existingCourseDetails = record?.courseDetails
+    const recordIsDraft = utils.isDraft(record)
 
     // No data, return to page
-    if (!route){
+    if (!route) {
       res.redirect(`${recordPath}/course-details/select-route${referrer}`)
     }
     // As we’ve changed the route, we now chain on the course details section
     else {
-
       // Look up courses offered by this provider for this route
-      let providerCourses = utils.getProviderCourses({
+      const providerCourses = utils.getProviderCourses({
         courses: data.courses,
         provider: record.provider,
         route
       })
 
       // No Publish courses to pick from so delete Publish stuff
-      if (!providerCourses.length){
+      if (!providerCourses.length) {
         record.courseDetails = utils.deletePublishCourseReferences(record.courseDetails)
       }
 
       // Todo: should this be a function? probably we should check the record stored in data not
       // the route on the course
-      let routeHasChanged = (record.route != record?.courseDetails?.route)
+      const routeHasChanged = (record.route !== record?.courseDetails?.route)
 
       // As the route has changed, clear bits of course details that might be incompatible
       // Keeps a few bits (subject, dates) where possible, as we may be able to populate them
-      if (routeHasChanged){
+      if (routeHasChanged) {
         record = utils.deleteIncompatibleCourseReferences(record)
       }
 
       res.redirect(`${recordPath}/course-details${referrer}`)
     }
-
   })
 
-
   // Filter all course choices first via a provider selection page
-  router.get(['/:recordtype/:uuid/course-details/','/:recordtype/course-details/'], function (req, res) {
-    let recordPath = utils.getRecordPath(req)
-    let referrer = utils.getReferrer(req.query.referrer)
-    let provider = data.record?.provider
+  router.get(['/:recordtype/:uuid/course-details/', '/:recordtype/course-details/'], function (req, res) {
+    const recordPath = utils.getRecordPath(req)
+    const referrer = utils.getReferrer(req.query.referrer)
+    const provider = data.record?.provider
 
     // TODO: Maybe add some further logic once the Accredited Provider and Lead Partners are clarified and implemented. For the time being the full list will be displayed regardless of which hardcoded provider is selected.
     res.redirect(`${recordPath}/course-details/select-course-provider${referrer}`)
   })
 
   // Decide whether to go down Publish pick-course journey or directly to manual course details
-  router.get(['/:recordtype/:uuid/course-details/select-course-provider-answer','/:recordtype/course-details/select-course-provider-answer',], function (req, res) {
+  router.get(['/:recordtype/:uuid/course-details/select-course-provider-answer', '/:recordtype/course-details/select-course-provider-answer'], function (req, res) {
     const data = req.session.data
     const record = data.record
-    let recordPath = utils.getRecordPath(req)
-    let referrer = utils.getReferrer(req.query.referrer)
+    const recordPath = utils.getRecordPath(req)
+    const referrer = utils.getReferrer(req.query.referrer)
 
-    let route = data.record?.route
+    const route = data.record?.route
 
     if (!route || !record.provider) {
-      if (!route) console.log("Error: route not set")
-      if (!record?.provider) console.log("Error: provider not set")
-      res.redirect("/records")
-    }
-    else {
-
+      if (!route) console.log('Error: route not set')
+      if (!record?.provider) console.log('Error: provider not set')
+      res.redirect('/records')
+    } else {
       // Look up courses offered by this provider
-      let providerCourses = utils.getProviderCourses({
+      const providerCourses = utils.getProviderCourses({
         courses: data.courses,
         provider: record.provider,
         route
       })
 
-      if (!providerCourses.length){
+      if (!providerCourses.length) {
         // Early years can skip phase question
         if (utils.isEarlyYears(record)) {
           res.redirect(`${recordPath}/course-details/details${referrer}`)
@@ -402,53 +373,47 @@ module.exports = router => {
         else {
           res.redirect(`${recordPath}/course-details/phase${referrer}`)
         }
-      }
-      else {
-        let coursesByYear = utils.groupCoursesByYear(providerCourses)
-        let defaultYear = (utils.academicYearToYear(record.academicYear)) || years.defaultCourseYear
+      } else {
+        const coursesByYear = utils.groupCoursesByYear(providerCourses)
+        const defaultYear = (utils.academicYearToYear(record.academicYear)) || years.defaultCourseYear
 
         // If we have a default year and there's courses
-        if (defaultYear && coursesByYear[defaultYear] && coursesByYear[defaultYear].length > 0){
+        if (defaultYear && coursesByYear[defaultYear] && coursesByYear[defaultYear].length > 0) {
           res.redirect(`${recordPath}/course-details/pick-course/${defaultYear}${referrer}`)
-        }
-        else {
+        } else {
           res.redirect(`${recordPath}/course-details/course-year${referrer}`)
         }
       }
-
     }
-
   })
 
   // Interpret which year we're looking for
-  router.post(['/:recordtype/:uuid/course-details/course-year-answer','/:recordtype/course-details/course-year-answer'], function (req, res) {
+  router.post(['/:recordtype/:uuid/course-details/course-year-answer', '/:recordtype/course-details/course-year-answer'], function (req, res) {
     const data = req.session.data
     const record = data.record
-    let recordPath = utils.getRecordPath(req)
-    let referrer = utils.getReferrer(req.query.referrer)
-    let route = record?.route
-    let academicYearString = record?.courseDetails?.academicYear
-    let academicYearSimple = utils.academicYearToYear(academicYearString)
+    const recordPath = utils.getRecordPath(req)
+    const referrer = utils.getReferrer(req.query.referrer)
+    const route = record?.route
+    const academicYearString = record?.courseDetails?.academicYear
+    const academicYearSimple = utils.academicYearToYear(academicYearString)
 
     // No data, return to page
-    if (!academicYearSimple){
+    if (!academicYearSimple) {
       res.redirect(`${recordPath}/course-details/course-year${referrer}`)
-    }
-    else {
-
-      let providerCourses = utils.getProviderCourses({
+    } else {
+      const providerCourses = utils.getProviderCourses({
         courses: data.courses,
         provider: record.provider,
         route
       })
-      let coursesByYear = utils.groupCoursesByYear(providerCourses)
+      const coursesByYear = utils.groupCoursesByYear(providerCourses)
 
       // Check if we already have a stored course - if so, we may need to wipe it if it's for
       // a different year than was just chosen.
-      if (record.courseDetails.isPublishCourse){
-        let existingCourse = utils.getCourseByCode(record?.courseDetails?.code, data)
+      if (record.courseDetails.isPublishCourse) {
+        const existingCourse = utils.getCourseByCode(record?.courseDetails?.code, data)
         // Check if the academic years match. If not, clear out the course details.
-        if (existingCourse?.academicYear != academicYearString){
+        if (existingCourse?.academicYear !== academicYearString) {
           delete record.courseDetails
           record.courseDetails = {
             academicYear: academicYearString
@@ -457,7 +422,7 @@ module.exports = router => {
       }
 
       // If there are courses for that academic year, show course picker page
-      if (coursesByYear[String(academicYearSimple)] && coursesByYear[String(academicYearSimple)].length > 0){
+      if (coursesByYear[String(academicYearSimple)] && coursesByYear[String(academicYearSimple)].length > 0) {
         res.redirect(`${recordPath}/course-details/pick-course/${academicYearSimple}${referrer}`)
       }
       // If there are no courses, assume manual entry for course details
@@ -465,37 +430,34 @@ module.exports = router => {
         res.redirect(`${recordPath}/course-details/phase${referrer}`)
       }
     }
-
   })
 
   // Render publish courses for a specific year
-  router.get(['/:recordtype/:uuid/course-details/pick-course/:courseStartYear','/:recordtype/course-details/pick-course/:courseStartYear'], function (req, res) {
+  router.get(['/:recordtype/:uuid/course-details/pick-course/:courseStartYear', '/:recordtype/course-details/pick-course/:courseStartYear'], function (req, res) {
     const data = req.session.data
     const record = data.record
-    let recordPath = utils.getRecordPath(req)
-    let referrer = utils.getReferrer(req.query.referrer)
-    let courseStartYear = req.params.courseStartYear
-    let route = data.record?.route
+    const recordPath = utils.getRecordPath(req)
+    const referrer = utils.getReferrer(req.query.referrer)
+    const courseStartYear = req.params.courseStartYear
+    const route = data.record?.route
 
-    let isInvalidCourseYear = !years.academicYearsShort.includes(parseInt(courseStartYear))
+    const isInvalidCourseYear = !years.academicYearsShort.includes(parseInt(courseStartYear))
 
     // Year is invalid
-    if (isInvalidCourseYear){
+    if (isInvalidCourseYear) {
       console.log(`Error: provided year (${courseStartYear}) is not a valid course year`)
       res.redirect(`${recordPath}/course-details/course-year`)
-    }
-    else {
+    } else {
       // Look up courses offered by this provider
-      let providerCourses = utils.getProviderCourses({
+      const providerCourses = utils.getProviderCourses({
         courses: data.courses,
         provider: record?.provider,
         route,
         year: courseStartYear
       })
-      if (providerCourses.length == 0){
+      if (providerCourses.length === 0) {
         res.redirect(`${recordPath}/course-details/phase${referrer}`)
-      }
-      else {
+      } else {
         res.render(`${req.params.recordtype}/course-details/pick-course`, {
           providerCourses,
           courseStartYear,
@@ -503,7 +465,6 @@ module.exports = router => {
         })
       }
     }
-
   })
 
   // =============================================================================
@@ -514,28 +475,25 @@ module.exports = router => {
   // This question exists because we have conditional questions to ask (specialisms, course dates),
   // but the provider may want to change the course - so we double check the course is correct
   // before asking those conditional questions
-  router.post(['/:recordtype/:uuid/course-details/confirm-course','/:recordtype/course-details/confirm-course'], function (req, res) {
+  router.post(['/:recordtype/:uuid/course-details/confirm-course', '/:recordtype/course-details/confirm-course'], function (req, res) {
     const data = req.session.data
-    let record = data.record
-    let recordPath = utils.getRecordPath(req)
-    let referrer = utils.getReferrer(req.query.referrer)
+    const record = data.record
+    const recordPath = utils.getRecordPath(req)
+    const referrer = utils.getReferrer(req.query.referrer)
 
-    let confirmed = record.courseDetails.confirmedCourse
+    const confirmed = record.courseDetails.confirmedCourse
     delete record.courseDetails.confirmedCourse
 
-    if (!confirmed){
+    if (!confirmed) {
       res.redirect(`${recordPath}/course-details/confirm-course${referrer}`)
-    }
-    else if (confirmed == 'course-confirmed'){
+    } else if (confirmed === 'course-confirmed') {
       delete record?.courseDetails?.needsConfirming
-      res.redirect(utils.getNextPublishCourseDetailsUrl(record, recordPath,referrer))
+      res.redirect(utils.getNextPublishCourseDetailsUrl(record, recordPath, referrer))
       // res.redirect(`${recordPath}/course-details/choose-specialisms${referrer}`)
-    }
-    else if (confirmed == 'change-course'){
+    } else if (confirmed === 'change-course') {
       delete record?.courseDetails?.needsConfirming
       res.redirect(`${recordPath}/course-details/select-route${referrer}`)
     }
-
   })
 
   // =============================================================================
@@ -543,17 +501,17 @@ module.exports = router => {
   // =============================================================================
 
   // Picking a Publish course
-  router.post(['/:recordtype/:uuid/course-details/pick-course-answer','/:recordtype/course-details/pick-course-answer'], function (req, res) {
+  router.post(['/:recordtype/:uuid/course-details/pick-course-answer', '/:recordtype/course-details/pick-course-answer'], function (req, res) {
     const data = req.session.data
     let record = data.record
-    let recordPath = utils.getRecordPath(req)
-    let referrer = utils.getReferrer(req.query.referrer)
+    const recordPath = utils.getRecordPath(req)
+    const referrer = utils.getReferrer(req.query.referrer)
 
-    let enabledRoutes = data.settings.enabledTrainingRoutes
-    let route = record?.route
-    let academicYear = utils.academicYearToYear(record.academicYear)
+    const enabledRoutes = data.settings.enabledTrainingRoutes
+    const route = record?.route
+    const academicYear = utils.academicYearToYear(record.academicYear)
 
-    let providerCourses = utils.getProviderCourses({
+    const providerCourses = utils.getProviderCourses({
       courses: data.courses,
       provider: record.provider,
       route
@@ -561,19 +519,18 @@ module.exports = router => {
     let selectedCourse = _.get(data, 'record.selectedCourseTemp')
 
     // User shouldn’t have been on this page, send them to manual course details journey
-    if (providerCourses.length == 0){
+    if (providerCourses.length === 0) {
       res.redirect(`${recordPath}/course-details/phase${referrer}`)
     }
     // No data, return to page
-    else if (!selectedCourse){
+    else if (!selectedCourse) {
       res.redirect(`${recordPath}/course-details/pick-course/${academicYear}${referrer}`)
     }
     // They’ve chosen to enter details manually
-    else if (selectedCourse == "Other"){
-
+    else if (selectedCourse === 'Other') {
       // User has swapped from a publish to a non-publish course. Delete existing publish data
       // but preserve everything else
-      if (record?.courseDetails?.isPublishCourse){
+      if (record?.courseDetails?.isPublishCourse) {
         record.courseDetails = utils.deletePublishCourseReferences(record.courseDetails)
       }
 
@@ -586,13 +543,11 @@ module.exports = router => {
 
     // A publish course was selected
     else {
-
       // UI supports picking courses via radios or via an autocomplete
       // So we have to check different sorts of values to work out which we might have gotten
 
       // Course selected via Autocomplete
-      if (selectedCourse == "publish-course") {
-
+      if (selectedCourse === 'publish-course') {
         // Default value from select (used by defualt for no-js)
         selectedCourse = _.get(data, 'record.selectedCourseAutocompleteTemp')
 
@@ -601,31 +556,29 @@ module.exports = router => {
         // values include hints, so the correct option in the select doesn’t get chosen by the js.
         // Instead we read the raw value of the autocomplete input itself and map that string back
         // to the id of the course.
-        let selectedCourseRawAutocomplete = req.body._autocompleteRawValue_publishCourse
+        const selectedCourseRawAutocomplete = req.body._autocompleteRawValue_publishCourse
         // Will only exist if js
-        if (selectedCourseRawAutocomplete){
+        if (selectedCourseRawAutocomplete) {
           selectedCourse = providerCourses.find(course => {
-            return course.courseNameLong == req.body._autocompleteRawValue_publishCourse
+            return course.courseNameLong === req.body._autocompleteRawValue_publishCourse
           })?.id
         }
       }
 
       // From here, course selected is either via radio, or we've looked it up above
       // Assume everything else is a course id
-      let courseIndex = (selectedCourse) ? providerCourses.findIndex(course => course.id == selectedCourse) : false
-      if (courseIndex < 0){
+      const courseIndex = (selectedCourse) ? providerCourses.findIndex(course => course.id === selectedCourse) : false
+      if (courseIndex < 0) {
         // Nothing found for current provider (something has gone wrong)
         console.log(`Provider course ${selectedCourse} not recognised`)
         res.redirect(`${recordPath}/course-details/pick-course/${academicYear}${referrer}`)
-      }
-      else {
-
+      } else {
         // If we already have a course attached to the record, and it's the *same* course as
         // the one now selected, then do nothing. Otherwise, we'll overwrite with the newly
         // selected course.
-        if (record?.courseDetails?.id != selectedCourse){
+        if (record?.courseDetails?.id !== selectedCourse) {
           // Copy over that provider’s course data
-          let courseDetails = providerCourses[courseIndex]
+          const courseDetails = providerCourses[courseIndex]
 
           // Fill in specialisms that are mappable
           record.courseDetails = utils.mapMappablePublishSubjects(courseDetails)
@@ -637,25 +590,24 @@ module.exports = router => {
           // course and study mode.
           record.courseDetails = utils.setCourseDatesIfPresent(record.courseDetails)
 
-          if (utils.isDraft(record)){
+          if (utils.isDraft(record)) {
             record = utils.setStartAcademicYear(record)
             record = utils.setEndAcademicYear(record)
             record = utils.setAcademicYears(record)
           }
 
           record.academicYear = courseDetails.academicYear
-
         }
 
         // For apply records we let them pick a Publish course which
         // might have a different route.
-        if (record.route != record.courseDetails.route){
+        if (record.route !== record.courseDetails.route) {
           console.log(`The selected Publish course’s route does not match the draft’s route. Draft route changed to ${record.courseDetails.route}`)
           record.route = record.courseDetails.route
         }
 
         // Send to next conditional page or confirm page
-        res.redirect(utils.getNextPublishCourseDetailsUrl(record, recordPath,referrer))
+        res.redirect(utils.getNextPublishCourseDetailsUrl(record, recordPath, referrer))
       }
     }
   })
@@ -663,44 +615,43 @@ module.exports = router => {
   // This route is here only to redirect the user *away* if there are no unmapped subjects
   // We do this because they could have chosen specialisms and then clicked back - this catches that
   // behavour and at least sends them someplace somewhat sensible.
-  router.get(['/:recordtype/:uuid/course-details/choose-specialisms','/:recordtype/course-details/choose-specialisms'], function (req, res) {
+  router.get(['/:recordtype/:uuid/course-details/choose-specialisms', '/:recordtype/course-details/choose-specialisms'], function (req, res) {
     const data = req.session.data
-    let record = data.record
-    let recordPath = utils.getRecordPath(req)
-    let referrer = utils.getReferrer(req.query.referrer)
+    const record = data.record
+    const recordPath = utils.getRecordPath(req)
+    const referrer = utils.getReferrer(req.query.referrer)
 
     // Unsure why we have two filters for this. Too scared to remove now
-    let hasUnmappedPublishSubjects = utils.hasUnmappedPublishSubjects(record.courseDetails) || utils.subjectsAreIncomplete(record.courseDetails)
+    const hasUnmappedPublishSubjects = utils.hasUnmappedPublishSubjects(record.courseDetails) || utils.subjectsAreIncomplete(record.courseDetails)
 
     // We loop through this page up to 3 times. When done, we'll redirect away
-    if (hasUnmappedPublishSubjects){
+    if (hasUnmappedPublishSubjects) {
       res.render(`${req.params.recordtype}/course-details/choose-specialisms`)
     }
     // Send to next conditional page or confirm page
-    else res.redirect(utils.getNextPublishCourseDetailsUrl(record, recordPath,referrer))
+    else res.redirect(utils.getNextPublishCourseDetailsUrl(record, recordPath, referrer))
   })
 
   // Deal with specialisms data as it comes in
   // Users can loop through this page, so if there are remaining unmapped subjects
   // we send them back to the same page to do the next one.
-  router.post(['/:recordtype/:uuid/course-details/choose-specialisms','/:recordtype/course-details/choose-specialisms'], function (req, res) {
+  router.post(['/:recordtype/:uuid/course-details/choose-specialisms', '/:recordtype/course-details/choose-specialisms'], function (req, res) {
     const data = req.session.data
-    let record = data.record
-    let recordPath = utils.getRecordPath(req)
-    let referrer = utils.getReferrer(req.query.referrer)
+    const record = data.record
+    const recordPath = utils.getRecordPath(req)
+    const referrer = utils.getReferrer(req.query.referrer)
 
-    let courseDetails = record?.courseDetails
+    const courseDetails = record?.courseDetails
 
     // Special handling for languages
-    if (courseDetails.subjectsArrayTemp){
-
+    if (courseDetails.subjectsArrayTemp) {
       // Grab first 3 subjects as that’s all we support
       // In production we’ll throw a validation error if more are picked
       let subjectsArray = courseDetails.subjectsArrayTemp.slice(0, 3)
 
       // If there are two Publish subjects, that means we can only have
       // two languages
-      let publishSubjectsCount = Object.keys(courseDetails.publishSubjects).length
+      const publishSubjectsCount = Object.keys(courseDetails.publishSubjects).length
       if (publishSubjectsCount > 1) subjectsArray = subjectsArray.slice(0, 2)
 
       // If a subject has already been set, add to it
@@ -725,54 +676,51 @@ module.exports = router => {
 
       // Convert back to our object data structure
       courseDetails.subjects = utils.arrayToOrdinalObject(subjectsArray)
-
     }
 
     // Send to next conditional page or confirm page
-    res.redirect(utils.getNextPublishCourseDetailsUrl(record, recordPath,referrer))
-
+    res.redirect(utils.getNextPublishCourseDetailsUrl(record, recordPath, referrer))
   })
 
   // Shown for Publish courses that are dual study mode.
-  router.post(['/:recordtype/:uuid/course-details/study-mode','/:recordtype/course-details/study-mode'], function (req, res) {
+  router.post(['/:recordtype/:uuid/course-details/study-mode', '/:recordtype/course-details/study-mode'], function (req, res) {
     const data = req.session.data
-    let record = data.record
-    let recordPath = utils.getRecordPath(req)
-    let referrer = utils.getReferrer(req.query.referrer)
+    const record = data.record
+    const recordPath = utils.getRecordPath(req)
+    const referrer = utils.getReferrer(req.query.referrer)
 
     // Now that we have study mode, we might be able to set course dates
     record.courseDetails = utils.setCourseDatesIfPresent(record?.courseDetails)
 
     // Send to next conditional page or confirm page
-    res.redirect(utils.getNextPublishCourseDetailsUrl(record, recordPath,referrer))
-
+    res.redirect(utils.getNextPublishCourseDetailsUrl(record, recordPath, referrer))
   })
 
   // Optionally save the trainee's course dates back to the course for that study mode
-  router.post(['/:recordtype/:uuid/course-details/dates-answer','/:recordtype/course-details/dates-answer'], function (req, res) {
+  router.post(['/:recordtype/:uuid/course-details/dates-answer', '/:recordtype/course-details/dates-answer'], function (req, res) {
     const data = req.session.data
     let record = data.record
-    let recordPath = utils.getRecordPath(req)
-    let referrer = utils.getReferrer(req.query.referrer)
+    const recordPath = utils.getRecordPath(req)
+    const referrer = utils.getReferrer(req.query.referrer)
 
-    let hasDates = !utils.needsCourseDates(record)
-    let copyDatesToCourse = Boolean(record?.courseDetails?.saveDatesBackToCourse == "true")
+    const hasDates = !utils.needsCourseDates(record)
+    const copyDatesToCourse = Boolean(record?.courseDetails?.saveDatesBackToCourse === 'true')
     delete record?.courseDetails?.saveDatesBackToCourse
 
     // No dates provided
-    if (!hasDates){
+    if (!hasDates) {
       res.redirect(`${recordPath}/course-details/dates${referrer}`)
     }
 
     // Save these dates back on the course for reuse by other trainees
-    if (hasDates && copyDatesToCourse){
+    if (hasDates && copyDatesToCourse) {
       // If we have dates, we can save those back to the Publish course for use in the future
       // NB: this copies the trainee's course dates - perhaps we should directly use the form values
       utils.updatePublishCourseDates(record.courseDetails, data)
     }
 
     // Use the course start date to set the academic year for the trainee
-    if (utils.isDraft(record)){
+    if (utils.isDraft(record)) {
       record = utils.setStartAcademicYear(record)
       record = utils.setEndAcademicYear(record)
       record = utils.setAcademicYears(record)
@@ -780,7 +728,6 @@ module.exports = router => {
 
     // Send to next conditional page or confirm page
     res.redirect(utils.getNextPublishCourseDetailsUrl(record, recordPath, referrer))
-
   })
 
   // =============================================================================
@@ -789,50 +736,49 @@ module.exports = router => {
 
   // Picking a phase (Primary or Secondary education)
   // Mostly doing cleanup of data
-  router.post(['/:recordtype/:uuid/course-details/phase-answer','/:recordtype/course-details/phase-answer'], function (req, res) {
+  router.post(['/:recordtype/:uuid/course-details/phase-answer', '/:recordtype/course-details/phase-answer'], function (req, res) {
     const data = req.session.data
-    let record = data.record
-    let recordPath = utils.getRecordPath(req)
-    let referrer = utils.getReferrer(req.query.referrer)
-    let phase = record?.courseDetails?.phase
+    const record = data.record
+    const recordPath = utils.getRecordPath(req)
+    const referrer = utils.getReferrer(req.query.referrer)
+    const phase = record?.courseDetails?.phase
 
     // Handle users going back to change phase. If so, clear out existing subjects which are now
     // invalid
-    let isPrimary = (phase == "Primary")
-    if (isPrimary &&  record?.courseDetails?.subjects?.first &&
-        !record?.courseDetails?.subjects?.first.toLowerCase().includes("primary")){
+    const isPrimary = (phase === 'Primary')
+    if (isPrimary && record?.courseDetails?.subjects?.first &&
+        !record?.courseDetails?.subjects?.first.toLowerCase().includes('primary')) {
       delete record.courseDetails.subjects
       delete record.courseDetails.ageRange
     }
-    let isSecondary = (phase == "Secondary")
-    if (isSecondary &&  record?.courseDetails?.subjects?.first &&
-        record?.courseDetails?.subjects?.first.toLowerCase().includes("primary")){
+    const isSecondary = (phase === 'Secondary')
+    if (isSecondary && record?.courseDetails?.subjects?.first &&
+        record?.courseDetails?.subjects?.first.toLowerCase().includes('primary')) {
       delete record.courseDetails.subjects
       delete record.courseDetails.ageRange
     }
 
     // No data, return to page
-    if (!phase){
+    if (!phase) {
       res.redirect(`${recordPath}/course-details/phase${referrer}`)
-    }
-    else {
+    } else {
       res.redirect(`${recordPath}/course-details/details${referrer}`)
     }
   })
 
-  router.post(['/:recordtype/:uuid/course-details/details-answer','/:recordtype/course-details/details-answer'], function (req, res) {
+  router.post(['/:recordtype/:uuid/course-details/details-answer', '/:recordtype/course-details/details-answer'], function (req, res) {
     const data = req.session.data
     let record = data.record
-    let referrer = utils.getReferrer(req.query.referrer)
-    let recordPath = utils.getRecordPath(req)
+    const referrer = utils.getReferrer(req.query.referrer)
+    const recordPath = utils.getRecordPath(req)
     let courseDetails = _.get(data, 'record.courseDetails')
 
     // No data, return to page
-    if (!courseDetails){
+    if (!courseDetails) {
       res.redirect(`${recordPath}/course-details`)
     }
 
-    let isPrimary = (record.courseDetails?.phase == "Primary")
+    const isPrimary = (record.courseDetails?.phase === 'Primary')
 
     if (isPrimary) {
       // Primary captures subjects using combined radio options - we need to split this in to
@@ -842,7 +788,7 @@ module.exports = router => {
     }
 
     // Make an array of subjects data - easier to work with
-    let subjectsArray = record?.courseDetails?.subjects && Object.values(record.courseDetails.subjects).filter(Boolean) || []
+    const subjectsArray = record?.courseDetails?.subjects && Object.values(record.courseDetails.subjects).filter(Boolean) || []
 
     // Map back to cardinal object
     courseDetails.subjects = utils.arrayToOrdinalObject(subjectsArray)
@@ -850,18 +796,18 @@ module.exports = router => {
     // It’s possible for a user to change the specialism to something completely
     // different than the selected Publish course. If this happens, delete the
     // Publish course references and pretend it’s a manual course.
-    if (courseDetails.isPublishCourse){
-      let allocationSubject = utils.getAllocationSubject(courseDetails)
-      let courseAllocationSubject = utils.getCourseAllocationSubject(courseDetails)
+    if (courseDetails.isPublishCourse) {
+      const allocationSubject = utils.getAllocationSubject(courseDetails)
+      const courseAllocationSubject = utils.getCourseAllocationSubject(courseDetails)
 
-      if (allocationSubject != courseAllocationSubject){
+      if (allocationSubject !== courseAllocationSubject) {
         console.log(`The allocation subject (${allocationSubject}) of subject 1 (${courseDetails?.subjects?.first}) does not match the Publish course allocatoin subject (${courseAllocationSubject}). Deleting references to old Publish course.`)
         courseDetails = utils.deletePublishCourseReferences(courseDetails)
       }
     }
 
     // Merge autocomplete and radio answers
-    if (courseDetails.ageRange == 'Other age range'){
+    if (courseDetails.ageRange === 'Other age range') {
       courseDetails.ageRange = courseDetails.ageRangeOther
       delete courseDetails.ageRangeOther
     }
@@ -870,7 +816,7 @@ module.exports = router => {
     record.courseDetails = courseDetails
 
     // Todo: unsure why this is only on drafts
-    if (utils.isDraft(record)){
+    if (utils.isDraft(record)) {
       record = utils.setStartAcademicYear(record)
       record = utils.setEndAcademicYear(record)
       record = utils.setAcademicYears(record)
@@ -880,16 +826,13 @@ module.exports = router => {
     record = utils.setCourseDefaults(record)
 
     // let isAllocated = utils.hasAllocatedPlaces(record)
-    let isAllocated = false //disabled feature for now
+    const isAllocated = false // disabled feature for now
 
     if (isAllocated) {
       res.redirect(`${recordPath}/course-details/allocated-place${referrer}`)
-    }
-    else {
+    } else {
       res.redirect(`${recordPath}/course-details/confirm${referrer}`)
-
     }
-
   })
 
   // =============================================================================
@@ -897,45 +840,40 @@ module.exports = router => {
   // =============================================================================
 
   // Ethnic group branching
-  router.post(['/:recordtype/:uuid/diversity/ethnic-group','/:recordtype/diversity/ethnic-group'], function (req, res) {
-    let data = req.session.data
-    let record = data.record // copy record
-    let ethnicGroup = _.get(data, 'record.diversity.ethnicGroup')
-    let recordPath = utils.getRecordPath(req)
-    let referrer = utils.getReferrer(req.query.referrer)
+  router.post(['/:recordtype/:uuid/diversity/ethnic-group', '/:recordtype/diversity/ethnic-group'], function (req, res) {
+    const data = req.session.data
+    const record = data.record // copy record
+    const ethnicGroup = _.get(data, 'record.diversity.ethnicGroup')
+    const recordPath = utils.getRecordPath(req)
+    const referrer = utils.getReferrer(req.query.referrer)
     // No data, return to page
-    if (!ethnicGroup){
+    if (!ethnicGroup) {
       res.redirect(`${recordPath}/diversity/ethnic-group${referrer}`)
-    }
-    else if (ethnicGroup.includes("Trainee did not provide any information")){
+    } else if (ethnicGroup.includes('Trainee did not provide any information')) {
       res.redirect(`${recordPath}/diversity/disabilities${referrer}`)
-    }
-    else {
+    } else {
       res.redirect(`${recordPath}/diversity/ethnic-background${referrer}`)
     }
   })
 
   // Disabilities branching
-  router.post(['/:recordtype/:uuid/diversity/disabilities','/:recordtype/diversity/disabilities'], function (req, res) {
-    let data = req.session.data
-    let record = data.record // copy record
-    let disabledAnswer = _.get(data, 'record.diversity.disabledAnswer')
-    let hasDisabilities = (disabledAnswer == "They shared that they’re disabled") ? true : false
-    let recordPath = utils.getRecordPath(req)
-    let referrer = utils.getReferrer(req.query.referrer)
+  router.post(['/:recordtype/:uuid/diversity/disabilities', '/:recordtype/diversity/disabilities'], function (req, res) {
+    const data = req.session.data
+    const record = data.record // copy record
+    const disabledAnswer = _.get(data, 'record.diversity.disabledAnswer')
+    const hasDisabilities = (disabledAnswer === 'They shared that they’re disabled')
+    const recordPath = utils.getRecordPath(req)
+    const referrer = utils.getReferrer(req.query.referrer)
 
     // No data, return to page
-    if (!disabledAnswer){
+    if (!disabledAnswer) {
       res.redirect(`${recordPath}/diversity/disabilities${referrer}`)
-    }
-    else if (hasDisabilities){
+    } else if (hasDisabilities) {
       res.redirect(`${recordPath}/diversity/trainee-disabilities${referrer}`)
-    }
-    else {
-      if (utils.isDraft(record) && utils.sourceIsApply(record)){
+    } else {
+      if (utils.isDraft(record) && utils.sourceIsApply(record)) {
         res.redirect(utils.orReferrer(`${recordPath}/overview`, req.query.referrer))
-      }
-      else res.redirect(`${recordPath}/diversity/confirm${referrer}`)
+      } else res.redirect(`${recordPath}/diversity/confirm${referrer}`)
     }
   })
 
@@ -944,77 +882,72 @@ module.exports = router => {
   // =============================================================================
 
   // Add a degree - sends you to index one greater than current number of degrees
-  router.get(['/:recordtype/:uuid/degree/add','/:recordtype/degree/add'], function (req, res) {
+  router.get(['/:recordtype/:uuid/degree/add', '/:recordtype/degree/add'], function (req, res) {
     const data = req.session.data
-    let degrees = _.get(data, "record.degree.items")
-    let degreeCount = (degrees) ? degrees.length : 0
-    let recordPath = utils.getRecordPath(req)
-    let referrer = utils.getReferrer(req.query.referrer)
+    const degrees = _.get(data, 'record.degree.items')
+    const degreeCount = (degrees) ? degrees.length : 0
+    const recordPath = utils.getRecordPath(req)
+    const referrer = utils.getReferrer(req.query.referrer)
     res.redirect(`${recordPath}/degree/${degreeCount}/type${referrer}`)
   })
 
   // Delete degree at index
-  router.get(['/:recordtype/:uuid/degree/:index/delete','/:recordtype/degree/:index/delete'], function (req, res) {
+  router.get(['/:recordtype/:uuid/degree/:index/delete', '/:recordtype/degree/:index/delete'], function (req, res) {
     const data = req.session.data
-    let record = data.record // copy record
-    let recordPath = utils.getRecordPath(req)
+    const record = data.record // copy record
+    const recordPath = utils.getRecordPath(req)
     degreeIndex = req.params.index
-    let referrer = utils.getReferrer(req.query.referrer)
+    const referrer = utils.getReferrer(req.query.referrer)
 
-    if (_.get(data, "record.degree.items[" + degreeIndex + "]")){
-      _.pullAt(data.record.degree.items, [degreeIndex]) //delete item at index
+    if (_.get(data, 'record.degree.items[' + degreeIndex + ']')) {
+      _.pullAt(data.record.degree.items, [degreeIndex]) // delete item at index
       // Clear data if there are no more degrees - so the task list thinks the section is not started
       req.flash('success', 'Trainee degree deleted')
       // Delete degree section if it’s empty
-      if (data.record.degree.items.length == 0){
+      if (data.record.degree.items.length === 0) {
         delete data?.record?.degree
       }
     }
-    if (referrer){
-      let referrerDestination = utils.getReferrerDestination(req.query.referrer)
+    if (referrer) {
+      const referrerDestination = utils.getReferrerDestination(req.query.referrer)
 
-      if (utils.isNonDraft(record)){
-
-        if (referrerDestination.includes("course-details/final-check-course-change")){
+      if (utils.isNonDraft(record)) {
+        if (referrerDestination.includes('course-details/final-check-course-change')) {
           res.redirect(utils.getNextCourseChangeUrl(record, recordPath, referrer))
-        }
-        else {
+        } else {
           // This updates the record immediately without a confirmation.
           // Probably needs a bespoke confirmation page as the empty degree
           // confirmation page looks weird - and we probably don't want
           // records without a dregree anyway.
           utils.updateRecord(data, data.record)
         }
-
-      }
-      else res.redirect(utils.getReferrerDestination(req.query.referrer))
-    }
-    else {
+      } else res.redirect(utils.getReferrerDestination(req.query.referrer))
+    } else {
       res.redirect(`${recordPath}/degree/confirm${referrer}`)
     }
   })
 
   // Forward degree requests to the right template, including the index
-  router.get(['/:recordtype/:uuid/degree/:index/:page','/:recordtype/degree/:index/:page'], function (req, res) {
-    let recordPath = utils.getRecordPath(req)
-    let referrer = utils.getReferrer(req.query.referrer)
+  router.get(['/:recordtype/:uuid/degree/:index/:page', '/:recordtype/degree/:index/:page'], function (req, res) {
+    const recordPath = utils.getRecordPath(req)
+    const referrer = utils.getReferrer(req.query.referrer)
 
-    res.render(`${req.params.recordtype}/degree/${req.params.page}`, {itemIndex: req.params.index})
+    res.render(`${req.params.recordtype}/degree/${req.params.page}`, { itemIndex: req.params.index })
   })
 
   // Save degree data from temporary store
-  router.post(['/:recordtype/:uuid/degree/:index/confirm','/:recordtype/degree/:index/confirm'], function (req, res) {
+  router.post(['/:recordtype/:uuid/degree/:index/confirm', '/:recordtype/degree/:index/confirm'], function (req, res) {
     const data = req.session.data
-    let record = data.record
+    const record = data.record
     let newDegree = data.degreeTemp
     delete data.degreeTemp
-    let referrer = utils.getReferrer(req.query.referrer)
+    const referrer = utils.getReferrer(req.query.referrer)
 
     newDegree.id = faker.string.uuid()
 
-    let existingDegrees = _.get(data, "record.degree.items") || []
-    let degreeIndex = req.params.index
-    let recordPath = utils.getRecordPath(req)
+    const existingDegrees = _.get(data, 'record.degree.items') || []
+    const degreeIndex = req.params.index
+    const recordPath = utils.getRecordPath(req)
 
     // This is so we can look up isInternational if already answered
     if (existingDegrees[degreeIndex]) {
@@ -1023,18 +956,18 @@ module.exports = router => {
 
     // This is a hack because the autocomplete doesn’t pick the righ type
     // in the select - so we defer to the autocomplete value instead
-    let selectedTypeRawAutocomplete = req.body?._autocompleteRawValue_degreeTypeUK
-    if (selectedTypeRawAutocomplete){
+    const selectedTypeRawAutocomplete = req.body?._autocompleteRawValue_degreeTypeUK
+    if (selectedTypeRawAutocomplete) {
       newDegree.typeUK = selectedTypeRawAutocomplete
     }
 
     // Save the correct type
-    if (newDegree.isInternational == "true" && newDegree.typeInt){
+    if (newDegree.isInternational === 'true' && newDegree.typeInt) {
       newDegree.type = newDegree.typeInt
       delete newDegree.typeUK
       delete newDegree.typeInt
     }
-    if (newDegree.isInternational == "false" && newDegree.typeUK){
+    if (newDegree.isInternational === 'false' && newDegree.typeUK) {
       newDegree.type = newDegree.typeUK
       delete newDegree.typeUK
       delete newDegree.typeInt
@@ -1043,13 +976,12 @@ module.exports = router => {
     // Degree grade is collected using a choice of radios or 'other'
     // if 'other', users can type a degree grade. These are submitted to two different
     // data items, which we now combine in to a single grade.
-    if (newDegree.baseGrade){
-      if (newDegree.baseGrade == "Other"){
+    if (newDegree.baseGrade) {
+      if (newDegree.baseGrade === 'Other') {
         newDegree.grade = newDegree.otherGrade
         delete newDegree.baseGrade
         delete newDegree.otherGrade
-      }
-      else {
+      } else {
         newDegree.grade = newDegree.baseGrade
         delete newDegree.baseGrade
         delete newDegree.otherGrade
@@ -1059,8 +991,7 @@ module.exports = router => {
     if (existingDegrees[degreeIndex]) {
       // Might be a partial update, so merge the new with the old
       existingDegrees[degreeIndex] = Object.assign({}, existingDegrees[degreeIndex], newDegree)
-    }
-    else {
+    } else {
       existingDegrees.push(newDegree)
     }
     _.set(data, 'record.degree.items', existingDegrees)
@@ -1070,17 +1001,14 @@ module.exports = router => {
     // }
     // else {
 
-    let referrerDestination = utils.getReferrerDestination(req.query.referrer)
+    const referrerDestination = utils.getReferrerDestination(req.query.referrer)
 
-    if (utils.isDraft(record) && utils.sourceIsApply(record)){
+    if (utils.isDraft(record) && utils.sourceIsApply(record)) {
       res.redirect(utils.orReferrer(`${recordPath}/overview`, req.query.referrer))
-    }
-    else if (referrerDestination.includes("course-details/final-check-course-change")){
+    } else if (referrerDestination.includes('course-details/final-check-course-change')) {
       res.redirect(utils.getNextCourseChangeUrl(record, recordPath, referrer))
-    }
-    else res.redirect(`${recordPath}/degree/confirm${referrer}`)
+    } else res.redirect(`${recordPath}/degree/confirm${referrer}`)
     // }
-
   })
 
   // =============================================================================
@@ -1088,96 +1016,89 @@ module.exports = router => {
   // =============================================================================
 
   // Record: Can they add placements? Sends them onwards or marks placements complete
-  router.post(['/:recordtype/:uuid/placements/can-add-placement-answer','/:recordtype/placements/can-add-placement-answer'], function (req, res) {
+  router.post(['/:recordtype/:uuid/placements/can-add-placement-answer', '/:recordtype/placements/can-add-placement-answer'], function (req, res) {
     const data = req.session.data
 
-    let recordPath = utils.getRecordPath(req)
-    let referrer = utils.getReferrer(req.query.referrer)
-    let record = data.record // copy record
+    const recordPath = utils.getRecordPath(req)
+    const referrer = utils.getReferrer(req.query.referrer)
+    const record = data.record // copy record
 
     if (!record?.placement?.hasPlacements) {
       res.redirect(`${recordPath}/placements/can-add-placement${referrer}`)
     }
     // Are they able to add placement details? (Shared on both draft and record)
-    if (record.placement.hasPlacements == 'Yes'){
+    if (record.placement.hasPlacements === 'Yes') {
       // carry on and add one
       delete record?.placement.status
       res.redirect(`${recordPath}/placements/add${referrer}`)
     }
     // Record specific routes
-    if (req.params.recordtype == 'record') {
+    if (req.params.recordtype === 'record') {
       utils.updateRecord(data, record)
 
-      if (record.placement.hasPlacements == 'Not yet'){
-
+      if (record.placement.hasPlacements === 'Not yet') {
         // send them back to the record
-        if (referrer){
+        if (referrer) {
           res.redirect(utils.getReferrerDestination(req.query.referrer))
-        }
-        else {
+        } else {
           res.redirect(`${recordPath}`)
         }
       }
     }
     // Draft specific routes
-    else if (req.params.recordtype != 'record') {
-      if (record.placement.hasPlacements == 'Not yet') {
-
+    else if (req.params.recordtype !== 'record') {
+      if (record.placement.hasPlacements === 'Not yet') {
         // mark the Placements section as complete
-        _.set(record,'placement.status',"Completed")
+        _.set(record, 'placement.status', 'Completed')
 
         // send them to the confirmation
-        if (referrer){
+        if (referrer) {
           res.redirect(utils.getReferrerDestination(req.query.referrer))
-        }
-        else {
+        } else {
           res.redirect(`${recordPath}/overview`)
           // res.redirect(`${recordPath}/placements/confirm${referrer}`)
         }
       }
-    }
-    else {
+    } else {
       res.redirect(`${recordPath}/placements/can-add-placement${referrer}`)
     }
-
   })
 
   // Add a placement - generate a UUID and send the user to it
-  router.get(['/:recordtype/:uuid/placements/add','/:recordtype/placements/add'], function (req, res) {
+  router.get(['/:recordtype/:uuid/placements/add', '/:recordtype/placements/add'], function (req, res) {
     const data = req.session.data
-    let recordPath = utils.getRecordPath(req)
-    let referrer = utils.getReferrer(req.query.referrer)
-    let placementUuid = faker.string.uuid()
-    let record = data.record
+    const recordPath = utils.getRecordPath(req)
+    const referrer = utils.getReferrer(req.query.referrer)
+    const placementUuid = faker.string.uuid()
+    const record = data.record
 
     res.redirect(`${recordPath}/placements/${placementUuid}/details${referrer}`)
   })
 
-   // Add a placement - generate a UUID and send the user to it
-  router.get(['/:recordtype/:uuid/placements/:placementUuid/details','/:recordtype/placements/:placementUuid/details'], function (req, res) {
+  // Add a placement - generate a UUID and send the user to it
+  router.get(['/:recordtype/:uuid/placements/:placementUuid/details', '/:recordtype/placements/:placementUuid/details'], function (req, res) {
     const data = req.session.data
-    let recordPath = utils.getRecordPath(req)
-    let referrer = utils.getReferrer(req.query.referrer)
-    let placementUuid = req.params.placementUuid
-    let record = data.record
-    let schoolSearchTerm = req.query?._schoolSearch
+    const recordPath = utils.getRecordPath(req)
+    const referrer = utils.getReferrer(req.query.referrer)
+    const placementUuid = req.params.placementUuid
+    const record = data.record
+    const schoolSearchTerm = req.query?._schoolSearch
 
     // Use manual entry form for Early Years
-    let isEarlyYears = utils.isEarlyYears(record)
+    const isEarlyYears = utils.isEarlyYears(record)
 
     let existingPlacement
-    if (record.placement.items){
-      existingPlacement = record.placement.items.find(placement => placement.id == placementUuid)
+    if (record.placement.items) {
+      existingPlacement = record.placement.items.find(placement => placement.id === placementUuid)
     }
 
-    let existingIsManual = existingPlacement?.school?.isManualEntry
+    const existingIsManual = existingPlacement?.school?.isManualEntry
 
     if (isEarlyYears || existingIsManual) {
       res.render(`${req.params.recordtype}/placements/details-manual`, {
         placementUuid
       })
-    }
-    else if (schoolSearchTerm){
+    } else if (schoolSearchTerm) {
       const schools = getSchools()
       let results = false
       let resultsCount = 0
@@ -1187,34 +1108,32 @@ module.exports = router => {
       res.render(`${req.params.recordtype}/placements/placement-results`, {
         searchResults: results,
         resultsCount,
-        placementUuid })
-    }
-    else {
+        placementUuid
+      })
+    } else {
       res.render(`${req.params.recordtype}/placements/details`, {
         placementUuid
       })
     }
-
   })
 
-
   // Remove placement at a given UUID
-  router.get(['/:recordtype/:uuid/placements/:placementUuid/delete','/:recordtype/placements/:placementUuid/delete'], function (req, res) {
+  router.get(['/:recordtype/:uuid/placements/:placementUuid/delete', '/:recordtype/placements/:placementUuid/delete'], function (req, res) {
     const data = req.session.data
-    let recordPath = utils.getRecordPath(req)
-    let placementUuid = req.params.placementUuid
-    let referrer = utils.getReferrer(req.query.referrer)
-    let placements = data.record?.placement?.items || []
-    let placementIndex = placements.findIndex(placement => placement.id == placementUuid)
-    let minPlacementsRequired = data.settings.minPlacementsRequired
+    const recordPath = utils.getRecordPath(req)
+    const placementUuid = req.params.placementUuid
+    const referrer = utils.getReferrer(req.query.referrer)
+    const placements = data.record?.placement?.items || []
+    const placementIndex = placements.findIndex(placement => placement.id === placementUuid)
+    const minPlacementsRequired = data.settings.minPlacementsRequired
 
-    if (_.get(data, "record.placement.items[" + placementIndex + "]")){
-      _.pullAt(data.record.placement.items, [placementIndex]) //delete item at index
+    if (_.get(data, 'record.placement.items[' + placementIndex + ']')) {
+      _.pullAt(data.record.placement.items, [placementIndex]) // delete item at index
       // Clear data if there are no more degrees - so the task list thinks the section is not started
       req.flash('success', 'Placement removed')
 
       // Delete degree section if it’s empty
-      if (data.record.placement.items.length == 0){
+      if (data.record.placement.items.length === 0) {
         delete data.record.placement
       }
       // Ensure section can't be complete if less than required placements
@@ -1222,14 +1141,14 @@ module.exports = router => {
         delete data.record.placement.status
       }
     }
-    if (req.params.recordtype == 'record'){
+    if (req.params.recordtype === 'record') {
       // This updates the record immediately without a confirmation.
       // Probably needs a bespoke confirmation page as the empty placement
       // confirmation page looks weird - and we probably don't want
       // records without a placement anyway.
       utils.updateRecord(data, data.record)
     }
-    if (!data.record?.placement){
+    if (!data.record?.placement) {
       res.redirect(`${recordPath}/placements/can-add-placement${referrer}`)
     }
     // else if (referrer){
@@ -1241,10 +1160,10 @@ module.exports = router => {
   })
 
   // Forward placement requests to the right template, including the index
-  router.get(['/:recordtype/:uuid/placements/:placementUuid/:page','/:recordtype/placements/:placementUuid/:page'], function (req, res) {
-    let recordPath = utils.getRecordPath(req)
-    let referrer = utils.getReferrer(req.query.referrer)
-    let placementUuid = req.params.placementUuid
+  router.get(['/:recordtype/:uuid/placements/:placementUuid/:page', '/:recordtype/placements/:placementUuid/:page'], function (req, res) {
+    const recordPath = utils.getRecordPath(req)
+    const referrer = utils.getReferrer(req.query.referrer)
+    const placementUuid = req.params.placementUuid
 
     res.render(`${req.params.recordtype}/placements/${req.params.page}`, {
       placementUuid
@@ -1252,36 +1171,36 @@ module.exports = router => {
   })
 
   // Save placement data from temporary store
-  router.post(['/:recordtype/:uuid/placements/:placementUuid/details-answer','/:recordtype/placements/:placementUuid/details-answer'], function (req, res) {
+  router.post(['/:recordtype/:uuid/placements/:placementUuid/details-answer', '/:recordtype/placements/:placementUuid/details-answer'], function (req, res) {
     const data = req.session.data
     let placement = data.placementTemp || {}
-    let referrer = utils.getReferrer(req.query.referrer)
-    let recordPath = utils.getRecordPath(req)
-    let record = data.record
+    const referrer = utils.getReferrer(req.query.referrer)
+    const recordPath = utils.getRecordPath(req)
+    const record = data.record
 
     // Identify the placement we’re editing
-    let placementUuid = req.params.placementUuid
-    if (!utils.isUuid(placementUuid)){
-      console.log("Error: no valid placement UUID")
+    const placementUuid = req.params.placementUuid
+    if (!utils.isUuid(placementUuid)) {
+      console.log('Error: no valid placement UUID')
     }
-    if (!placement.id){
+    if (!placement.id) {
       placement.id = placementUuid
     }
 
     const savePlacement = thePlacement => {
-      let existingPlacements = record?.placement?.items || []
-      let placementIndex = existingPlacements.findIndex(item => item.id == thePlacement.id)
+      const existingPlacements = record?.placement?.items || []
+      const placementIndex = existingPlacements.findIndex(item => item.id === thePlacement.id)
 
       // Update existing placement
       if (existingPlacements.length && existingPlacements[placementIndex]) {
-        console.log("Updating existing placement")
+        console.log('Updating existing placement')
         // Might be a partial update, so merge the new with the old
         // Using Lodash merge as Object.assign will overwrite school object, and we want to merge it
         existingPlacements[placementIndex] = _.merge({}, existingPlacements[placementIndex], thePlacement)
       }
       // Create a new placement
       else {
-        console.log("Saving new placement")
+        console.log('Saving new placement')
         existingPlacements.push(thePlacement)
       }
 
@@ -1296,30 +1215,28 @@ module.exports = router => {
     const lookUpSchool = (item, schoolUuid) => {
       const schools = getSchools() // deferred to here so we don't load schools if it's a manual entry
 
-      let foundSchool = schools.find(school => school.uuid == schoolUuid)
-      if (foundSchool){
+      const foundSchool = schools.find(school => school.uuid === schoolUuid)
+      if (foundSchool) {
         item.school = Object.assign({}, foundSchool)
-      }
-      else {
-        console.log("Error: no placement school match - something went wrong")
+      } else {
+        console.log('Error: no placement school match - something went wrong')
       }
       return item
     }
 
     // Check if the most recent placement already exists in the placement array
     const placementIsDuplicate = (placement) => {
-      let placements = record?.placement?.items || []
-      let isExistingPlacement = placements.find(item => placement.id == item.id)
-      if (placements.length && !isExistingPlacement){
+      const placements = record?.placement?.items || []
+      const isExistingPlacement = placements.find(item => placement.id === item.id)
+      if (placements.length && !isExistingPlacement) {
         return placements.some(singlePlacement => {
-          return placement?.school?.schoolName == singlePlacement?.school?.schoolName
+          return placement?.school?.schoolName === singlePlacement?.school?.schoolName
         })
-      }
-      else return false
+      } else return false
     }
 
     // Used for no-js results page
-    let searchResultRadios = req.body?._searchResultRadios
+    const searchResultRadios = req.body?._searchResultRadios
 
     let searchQuery = req.body?._schoolSearch
 
@@ -1327,71 +1244,65 @@ module.exports = router => {
 
     // Autocomplete page has two inputs that get submitted - we need to filter out
     // the one we don't need.
-    if (Array.isArray(searchQuery)){
+    if (Array.isArray(searchQuery)) {
       searchQuery = searchQuery.filter(Boolean)
-      if (searchQuery.length == 1) searchQuery = searchQuery[0]
-      else if (searchQuery.length == 0 && req.body?._autocomplete_raw_value_school_picker){
+      if (searchQuery.length === 1) searchQuery = searchQuery[0]
+      else if (searchQuery.length === 0 && req.body?._autocomplete_raw_value_school_picker) {
         searchQuery = req.body?._autocomplete_raw_value_school_picker
-      }
-      else if (searchQuery.length > 0) {
-        console.log("Too many search queries!", searchQuery)
-      }
-      else searchQuery = false
+      } else if (searchQuery.length > 0) {
+        console.log('Too many search queries!', searchQuery)
+      } else searchQuery = false
     }
 
-    let queryIsAUuid = utils.isUuid(searchQuery)
-    let radiosAreAUuid = utils.isUuid(searchResultRadios)
+    const queryIsAUuid = utils.isUuid(searchQuery)
+    const radiosAreAUuid = utils.isUuid(searchResultRadios)
 
     let isManualEntry = placement?.school?.isManualEntry || (placement?.school?.schoolName && !searchQuery)
-    if (isManualEntry == "true") isManualEntry = true
+    if (isManualEntry === 'true') isManualEntry = true
 
     // Search failed, go to manual
-    if (searchResultRadios == 'manualEntry') {
+    if (searchResultRadios === 'manualEntry') {
       res.redirect(`${recordPath}/placements/${placementUuid}/details-manual${referrer}`)
     }
     // Search failed, search again
     // Autocomplete failed, search no-js
-    else if ((searchResultRadios == 'searchAgain') || (searchQuery && !queryIsAUuid &&!radiosAreAUuid)) {
-      let queryParams = utils.addQueryParam(referrer, `_schoolSearch=${searchQuery}`)
+    else if ((searchResultRadios === 'searchAgain') || (searchQuery && !queryIsAUuid && !radiosAreAUuid)) {
+      const queryParams = utils.addQueryParam(referrer, `_schoolSearch=${searchQuery}`)
       res.redirect(`${recordPath}/placements/${placementUuid}/details${queryParams}`)
     }
     // else if (placementsContainDuplicates()){
     //   res.redirect(`${recordPath}/placements/${placementUuid}/placement-already-added${queryParams}`)
     // }
-    else if (isManualEntry){
-      if (placement?.school?.postcode){
+    else if (isManualEntry) {
+      if (placement?.school?.postcode) {
         placement.school.postcode = placement.school.postcode.toUpperCase()
       }
       // Manual uses a textarea, so split this in to lines to match GIAS
-      if (placement?.school?.address){
-        let addressLines = placement.school.address.split('\n').map(item => item.trim())
+      if (placement?.school?.address) {
+        const addressLines = placement.school.address.split('\n').map(item => item.trim())
         placement.school.addressLine1 = addressLines[0]
         placement.school.addressLine2 = addressLines[1]
       }
       placement.school.isManualEntry = true
 
-      if (placementIsDuplicate(placement)){
+      if (placementIsDuplicate(placement)) {
         res.redirect(`${recordPath}/placements/${placementUuid}/placement-already-added${referrer}`)
-      }
-      else {
+      } else {
         savePlacement(placement)
         res.redirect(`${recordPath}/placements/confirm${referrer}`)
       }
-    }
-    else if (queryIsAUuid || utils.isUuid(searchResultRadios)){
-      let schoolUuid = queryIsAUuid ? searchQuery : searchResultRadios
+    } else if (queryIsAUuid || utils.isUuid(searchResultRadios)) {
+      const schoolUuid = queryIsAUuid ? searchQuery : searchResultRadios
 
       placement = lookUpSchool(placement, schoolUuid)
 
-      if (placementIsDuplicate(placement)){
+      if (placementIsDuplicate(placement)) {
         res.redirect(`${recordPath}/placements/${placementUuid}/placement-already-added${referrer}`)
-      }
-      else {
+      } else {
         savePlacement(placement)
         res.redirect(`${recordPath}/placements/confirm${referrer}`)
       }
     }
-
   })
 
   // =============================================================================
@@ -1399,38 +1310,32 @@ module.exports = router => {
   // =============================================================================
 
   // Forward on to the appropriate finacne pages depending on what the route needs
-  router.get(['/:recordtype/:uuid/funding','/:recordtype/funding'], function (req, res) {
-    let data = req.session.data
-    let record = data.record
-    let recordPath = utils.getRecordPath(req)
-    let referrer = utils.getReferrer(req.query.referrer)
+  router.get(['/:recordtype/:uuid/funding', '/:recordtype/funding'], function (req, res) {
+    const data = req.session.data
+    const record = data.record
+    const recordPath = utils.getRecordPath(req)
+    const referrer = utils.getReferrer(req.query.referrer)
 
-    if (utils.canStartFundingSection(record)){
+    if (utils.canStartFundingSection(record)) {
       res.redirect(`${recordPath}/funding/initiatives${referrer}`)
-    }
-    else {
+    } else {
       res.redirect(`${recordPath}/funding/not-available${referrer}`)
     }
-
   })
 
-
   // Forward on to bursaries or confirm
-  router.post(['/:recordtype/:uuid/funding/initiatives','/:recordtype/funding/initiatives'], function (req, res) {
-    let data = req.session.data
-    let record = data.record
-    let recordPath = utils.getRecordPath(req)
-    let referrer = utils.getReferrer(req.query.referrer)
-    if (utils.financialSupportApplies(record)){
+  router.post(['/:recordtype/:uuid/funding/initiatives', '/:recordtype/funding/initiatives'], function (req, res) {
+    const data = req.session.data
+    const record = data.record
+    const recordPath = utils.getRecordPath(req)
+    const referrer = utils.getReferrer(req.query.referrer)
+    if (utils.financialSupportApplies(record)) {
       res.redirect(`${recordPath}/funding/financial-support${referrer}`)
-    }
-    else {
-
-      let referrerDestination = utils.getReferrerDestination(req.query.referrer)
-      if (referrerDestination.includes("course-details/final-check-course-change")){
+    } else {
+      const referrerDestination = utils.getReferrerDestination(req.query.referrer)
+      if (referrerDestination.includes('course-details/final-check-course-change')) {
         res.redirect(utils.getNextCourseChangeUrl(record, recordPath, referrer))
-      }
-      else {
+      } else {
         res.redirect(`${recordPath}/funding/confirm${referrer}`)
       }
     }
@@ -1438,41 +1343,34 @@ module.exports = router => {
 
   // Forward on to confirm
   // This route not really needed as we don't always catch errors like this
-  router.post(['/:recordtype/:uuid/funding/financial-support','/:recordtype/funding/financial-support'], function (req, res) {
-    let data = req.session.data
-    let record = data.record
-    let recordPath = utils.getRecordPath(req)
-    let referrer = utils.getReferrer(req.query.referrer)
+  router.post(['/:recordtype/:uuid/funding/financial-support', '/:recordtype/funding/financial-support'], function (req, res) {
+    const data = req.session.data
+    const record = data.record
+    const recordPath = utils.getRecordPath(req)
+    const referrer = utils.getReferrer(req.query.referrer)
 
     // No data
-    if (!record?.funding?.source){
+    if (!record?.funding?.source) {
       res.redirect(`${recordPath}/funding/financial-support${referrer}`)
-    }
-    else {
-
-      let referrerDestination = utils.getReferrerDestination(req.query.referrer)
-      if (referrerDestination.includes("course-details/final-check-course-change")){
+    } else {
+      const referrerDestination = utils.getReferrerDestination(req.query.referrer)
+      if (referrerDestination.includes('course-details/final-check-course-change')) {
         res.redirect(utils.getNextCourseChangeUrl(record, recordPath, referrer))
-      }
-      else {
+      } else {
         res.redirect(`${recordPath}/funding/confirm${referrer}`)
       }
     }
   })
 
-
   // =============================================================================
   // iQTS
   // =============================================================================
 
-
   // Redirect to first page of iQTS
-  router.get(['/:recordtype/:uuid/iqts','/:recordtype/iqts'], function (req, res) {
+  router.get(['/:recordtype/:uuid/iqts', '/:recordtype/iqts'], function (req, res) {
     const data = req.session.data
-    let recordPath = utils.getRecordPath(req)
-    let referrer = utils.getReferrer(req.query.referrer)
+    const recordPath = utils.getRecordPath(req)
+    const referrer = utils.getReferrer(req.query.referrer)
     res.redirect(`${recordPath}/iqts/country${referrer}`)
   })
-
-
 }

@@ -176,5 +176,5 @@ module.exports = [
   'Turkish',
   'Urdu',
   'Use of Mathematics',
-  'World Development',
+  'World Development'
 ]

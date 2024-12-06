@@ -2,8 +2,8 @@
 // Removed margin to stop pagination overflowing container
 // Todo: investigate why this happens
 .moj-pagination {
-  margin-left: 0;
   margin-right: 0;
+  margin-left: 0;
 }
 
 .moj-pagination__list {
@@ -17,8 +17,8 @@
 .moj-pagination__results {
   padding-left: 0;
   @include govuk-media-query($from: desktop) {
-    padding-left: inherit;
     padding-right: 0;
+    padding-left: inherit;
   }
   
 }

@@ -9,18 +9,18 @@
 // $govuk-canvas-background-colour: $govuk-body-background-colour;
 
 div[class^="govuk-grid-column-"] {
-    outline: 1px solid rgba(0,0,0,0.5);
-    background: linear-gradient(to top left, rgba(0,0,0,0) 0%,
-      rgba(0,0,0,0) calc(50% - 0.8px),
-      rgba(0,0,0,0.5) 50%,
-      rgba(0,0,0,0) calc(50% + 0.8px),
-      rgba(0,0,0,0) 100%),
+    outline: 1px solid rgb(0 0 0 / 50%);
+    background: linear-gradient(to top left, rgb(0 0 0 / 0%) 0%,
+      rgb(0 0 0 / 0%) calc(50% - 0.8px),
+      rgb(0 0 0 / 50%) 50%,
+      rgb(0 0 0 / 0%) calc(50% + 0.8px),
+      rgb(0 0 0 / 0%) 100%),
     linear-gradient(to top right,
-      rgba(0,0,0,0) 0%,
-      rgba(0,0,0,0) calc(50% - 0.8px),
-      rgba(0,0,0,0.5) 50%,
-      rgba(0,0,0,0) calc(50% + 0.8px),
-      rgba(0,0,0,0) 100%);
+      rgb(0 0 0 / 0%) 0%,
+      rgb(0 0 0 / 0%) calc(50% - 0.8px),
+      rgb(0 0 0 / 50%) 50%,
+      rgb(0 0 0 / 0%) calc(50% + 0.8px),
+      rgb(0 0 0 / 0%) 100%);
 }
 
 

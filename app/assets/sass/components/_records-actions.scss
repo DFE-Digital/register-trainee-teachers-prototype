@@ -1,7 +1,7 @@
 // Records actionss bar
 
 .app-records-actions {
-  margin: 0 0 govuk-spacing(3) 0;
+  margin: 0 0 govuk-spacing(3);
   border-bottom: 1px solid govuk-colour("mid-grey");
   
   // At this viewport range we want the action (sort and export) and the Show Filter button to diplay in the opposite order than they are in the DOM
@@ -30,12 +30,12 @@
   align-self: flex-end;
   
   .govuk-button {
-    margin: 0 0 govuk-spacing(3) 0;
+    margin: 0 0 govuk-spacing(3);
   }
  
   @include govuk-media-query($until: 500px) {
     .govuk-button {
-      margin: 0 0 govuk-spacing(4) 0;
+      margin: 0 0 govuk-spacing(4);
     }
   }
 

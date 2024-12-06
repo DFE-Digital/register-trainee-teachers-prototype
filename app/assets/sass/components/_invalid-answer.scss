@@ -8,6 +8,7 @@ $invalid-colour: $govuk-brand-colour;
   .app-inset-text--invalid-answer, .app-summary-list__value-inset {
     border-color: $govuk-error-colour;  
   }
+
   .app-summary-list__message--invalid {
     color: $govuk-error-colour;
   }
@@ -28,8 +29,8 @@ $invalid-colour: $govuk-brand-colour;
 }
 
 .app-tag--pink-inverted {
-  background: govuk-shade(govuk-colour("pink"), 10);
   color: govuk-tint(govuk-colour("pink"), 90);
+  background: govuk-shade(govuk-colour("pink"), 10);
 }
 
 .app-invalid-answer__list a:link {
@@ -37,9 +38,9 @@ $invalid-colour: $govuk-brand-colour;
 }
 
 .app-summary-list__value--inset {
-  color: $govuk-secondary-text-colour;
+  padding-left: 15px;
   border-left: 5px solid $govuk-border-colour;
-  padding-left: 15px
+  color: $govuk-secondary-text-colour
 }
 
 .app-summary-list__value--invalid {

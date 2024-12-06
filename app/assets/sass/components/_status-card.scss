@@ -1,7 +1,7 @@
 
 .status-card {
-  background-color: $govuk-brand-colour;
   padding: govuk-spacing(2);
+  background-color: $govuk-brand-colour;
   text-decoration: none;
 
   @include govuk-font($size: 19);
@@ -49,7 +49,7 @@ $statuses: (
     "hover":             govuk-tint(govuk-colour("purple"), 70)
   ),
   "eyts-awarded": (
-    "colour":            #fff,
+    "colour":            govuk-colour("white"),
     "background-colour": $govuk-brand-colour,
     "hover":             govuk-shade($govuk-brand-colour, 15%)
   ),
@@ -59,7 +59,7 @@ $statuses: (
     "hover":             govuk-tint(govuk-colour("purple"), 70)
   ),
   "qts-awarded": (
-    "colour":            #fff,
+    "colour":            govuk-colour("white"),
     "background-colour": $govuk-brand-colour,
     "hover":             govuk-shade($govuk-brand-colour, 15%)
   ),
@@ -69,7 +69,7 @@ $statuses: (
     "hover":             govuk-tint(govuk-colour("purple"), 70)
   ),
   "awarded": (
-    "colour":            #fff,
+    "colour":            govuk-colour("white"),
     "background-colour": $govuk-brand-colour,
     "hover":             govuk-shade($govuk-brand-colour, 15%)
   ),
@@ -89,7 +89,7 @@ $statuses: (
     "hover":             govuk-tint(govuk-colour("red"), 70)
   ),
   "in-training": (
-    "colour":            #fff,
+    "colour":            govuk-colour("white"),
     "background-colour": $govuk-brand-colour,
     "hover":             govuk-shade($govuk-brand-colour, 15%)
   ),
@@ -107,6 +107,7 @@ $statuses: (
       color: map-get($data, "colour");
       background: map-get($data, "background-colour");
     }
+
     &:hover {
       background: map-get($data, "hover");
     }

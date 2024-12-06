@@ -13,6 +13,7 @@
     "lint:scripts": "standard",
     "lint:scripts:fix": "standard --fix",
     "lint:styles": "stylelint 'app/assets/sass/**/*.scss' 'app/views/_components/**/*.scss'",
+    "lint:styles:fix": "stylelint 'app/assets/sass/**/*.scss' 'app/views/_components/**/*.scss' --fix",
     "test": "npm run lint:scripts && gulp generate-assets && jest"
   },
   "dependencies": {

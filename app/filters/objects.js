@@ -157,7 +157,7 @@ filters.deleteBlankAttributes = (dictionary) => {
   // Don't modify the original
   const newDictionary = Object.assign({}, dictionary)
   Object.keys(newDictionary).forEach(key => {
-    if (newDictionary[key] == '' || newDictionary[key] == undefined) {
+    if (newDictionary[key] === '' || newDictionary[key] === undefined) {
       delete newDictionary[key]
     }
   })

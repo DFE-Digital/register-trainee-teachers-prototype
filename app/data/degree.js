@@ -1771,8 +1771,8 @@ module.exports = () => {
     },
     grades: {
       all: grades,
-      undergrad: grades.filter(grade => grade.group == 'main_undergrad'),
-      postgrad: grades.filter(grade => grade.group == 'main_postgrad')
+      undergrad: grades.filter(grade => grade.group === 'main_undergrad'),
+      postgrad: grades.filter(grade => grade.group === 'main_postgrad')
     },
     invalidInstitutions,
     invalidSubjects,

@@ -4,7 +4,7 @@ const degreeData = require('../degree')
 const degreeInstitutions = require('../degree-instituions')
 
 module.exports = (params, application) => {
-  const isApplyDraft = (application.source == 'Apply' && application.status == 'Draft')
+  const isApplyDraft = (application.source === 'Apply' && application.status === 'Draft')
 
   const item = (faker) => {
     let subject = faker.helpers.arrayElement(degreeData().subjects)
@@ -12,7 +12,7 @@ module.exports = (params, application) => {
     const endDate = faker.helpers.arrayElement(['2020', '2019', '2018', '2017', '2016', '2015'])
     const startDate = (parseInt(endDate) - 4).toString()
     const id = faker.string.uuid()
-    const sectionIsComplete = (params?.degree?.status == 'Completed')
+    const sectionIsComplete = (params?.degree?.status === 'Completed')
     const invalidAllowed = params?.invalidAllowed !== false
 
     // Make 1/3rd of subjects be invalid responses for Apply applications

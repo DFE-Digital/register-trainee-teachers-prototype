@@ -12,7 +12,7 @@ const randomSeeded = new seedRandom('recommend')
 
 const rowsHaveErrors = rows => {
   if (Array.isArray(rows)) {
-    return rows.some(row => row.uploadStatus == 'error')
+    return rows.some(row => row.uploadStatus === 'error')
   } else {
     return false
   }
@@ -20,7 +20,7 @@ const rowsHaveErrors = rows => {
 
 const rowsHaveUpdates = rows => {
   if (Array.isArray(rows)) {
-    return rows.some(row => row.uploadStatus == 'updated')
+    return rows.some(row => row.uploadStatus === 'updated')
   } else {
     return false
   }
@@ -70,7 +70,7 @@ module.exports = router => {
           assessmentDate: (selectedStatus !== 'unchanged') ? assessmentDate : null
         }
 
-        if (selectedStatus == 'error') {
+        if (selectedStatus === 'error') {
           // row.errorMessage = utils.pickRandom(templateErrors, seed)
           row.errorMessage = weighted.select([
             'Date standards met provided without a TRN or Provider trainee ID - add a TRN or Provider trainee ID or remove the date standards met',
@@ -88,7 +88,7 @@ module.exports = router => {
     else {
       console.log('Bulk adding new trainees: reducing existing errors')
       processedRows.forEach(row => {
-        if (row.uploadStatus == 'error') {
+        if (row.uploadStatus === 'error') {
           const errorFixed = weighted.select([true, false], [1, 0.0])
           if (errorFixed) {
             row.uploadStatus = 'updated'
@@ -143,14 +143,14 @@ module.exports = router => {
       res.redirect('/bulk-update/add-new/upload')
     } else {
       processedRows.forEach(row => {
-        if (row.uploadStatus == 'unchanged') {
+        if (row.uploadStatus === 'unchanged') {
           const startRecommending = weighted.select([true, false], [0.01, 0.99])
           if (startRecommending) {
             console.log('Bulk recommend: swapping to recommended')
             row.uploadStatus = 'updated'
             row.assessmentDate = `28/6/${data.years.endOfCurrentCycle}`
           }
-        } else if (row.uploadStatus == 'updated') {
+        } else if (row.uploadStatus === 'updated') {
           const stopRecommending = weighted.select([true, false], [0.05, 0.95])
           if (stopRecommending) {
             console.log('Bulk recommend: swapping to not recommended')
@@ -166,7 +166,7 @@ module.exports = router => {
       processedRows
     }
 
-    if (!processedRows || !processedRows.filter(row => row.uploadStatus == 'updated')) {
+    if (!processedRows || !processedRows.filter(row => row.uploadStatus === 'updated')) {
       res.redirect('/bulk-update/add-new/upload')
     } else {
       res.redirect('/bulk-update/add-new/upload-summary')
@@ -179,7 +179,7 @@ module.exports = router => {
 
     const processedRows = data?.bulkUpload?.processedRows
 
-    if (!processedRows || !processedRows.filter(row => row.uploadStatus == 'updated')) {
+    if (!processedRows || !processedRows.filter(row => row.uploadStatus === 'updated')) {
       res.redirect('/bulk-update/add-new/upload')
     } else {
       res.render('bulk-update/add-new/check-pending-updates')
@@ -194,7 +194,7 @@ module.exports = router => {
     let failCount = 0
 
     const processedRows = data?.bulkUpload?.processedRows || []
-    const rowsWithUpdates = processedRows.filter(row => row.uploadStatus == 'updated')
+    const rowsWithUpdates = processedRows.filter(row => row.uploadStatus === 'updated')
 
     console.log({ processedRows })
     console.log(`processedRows: ${processedRows.length}`)
@@ -225,9 +225,9 @@ module.exports = router => {
   /* Review errors or skip */
   router.get('/bulk-update/add-details/errors-found-answer', function (req, res) {
     const data = req.session.data
-    if (data?.bulk?.addDetailsFixErrors == 'Fix errors now') {
+    if (data?.bulk?.addDetailsFixErrors === 'Fix errors now') {
       res.redirect('/bulk-update/add-details/fix-errors')
-    } else if (data?.bulk?.addDetailsFixErrors == 'Skip fixing errors') {
+    } else if (data?.bulk?.addDetailsFixErrors === 'Skip fixing errors') {
       delete data?.bulk?.addDetailsFixErrors
       res.redirect('/bulk-update/add-details/check-pending-updates')
     } else {
@@ -276,7 +276,7 @@ module.exports = router => {
         uploadStatus: weighted.select(['error', 'unchanged', 'updated'], [0.25, 0.05, 0.7], randomSeeded)
       }
 
-      if (row.uploadStatus == 'error') {
+      if (row.uploadStatus === 'error') {
         row.errorMessage = utils.pickRandom(templateErrors, randomSeeded)
       }
 
@@ -284,7 +284,7 @@ module.exports = router => {
         row.trainee.trainingDetails.commencementDate = utils.getRandomArbitrary(6, 8) + '/' + utils.getRandomArbitrary(1, 28) + '/' + data.years.defaultCourseYear
       }
 
-      if (row.errorMessage == 'URN not recognised' || row.errorMessage == 'school is closed') {
+      if (row.errorMessage === 'URN not recognised' || row.errorMessage === 'school is closed') {
         if (row.trainee?.placement?.items && row.trainee?.placement?.items.length) {
           row.errorMessage = "URN: '" + row.trainee.placement?.items[0]?.school?.urn + "' — " + row.errorMessage
         } else {
@@ -352,7 +352,7 @@ module.exports = router => {
           assessmentDate: (selectedStatus !== 'unchanged') ? assessmentDate : null
         }
 
-        if (selectedStatus == 'error') {
+        if (selectedStatus === 'error') {
           // row.errorMessage = utils.pickRandom(templateErrors, seed)
           row.errorMessage = weighted.select([
             'Date standards met provided without a TRN or Provider trainee ID - add a TRN or Provider trainee ID or remove the date standards met',
@@ -370,7 +370,7 @@ module.exports = router => {
     else {
       console.log('Bulk recommend: reducing existing errors')
       processedRows.forEach(row => {
-        if (row.uploadStatus == 'error') {
+        if (row.uploadStatus === 'error') {
           const errorFixed = weighted.select([true, false], [1, 0.0])
           if (errorFixed) {
             row.uploadStatus = 'updated'
@@ -425,14 +425,14 @@ module.exports = router => {
       res.redirect('/bulk-update/recommend/upload')
     } else {
       processedRows.forEach(row => {
-        if (row.uploadStatus == 'unchanged') {
+        if (row.uploadStatus === 'unchanged') {
           const startRecommending = weighted.select([true, false], [0.01, 0.99])
           if (startRecommending) {
             console.log('Bulk recommend: swapping to recommended')
             row.uploadStatus = 'updated'
             row.assessmentDate = `28/6/${data.years.endOfCurrentCycle}`
           }
-        } else if (row.uploadStatus == 'updated') {
+        } else if (row.uploadStatus === 'updated') {
           const stopRecommending = weighted.select([true, false], [0.05, 0.95])
           if (stopRecommending) {
             console.log('Bulk recommend: swapping to not recommended')
@@ -448,7 +448,7 @@ module.exports = router => {
       processedRows
     }
 
-    if (!processedRows || !processedRows.filter(row => row.uploadStatus == 'updated')) {
+    if (!processedRows || !processedRows.filter(row => row.uploadStatus === 'updated')) {
       res.redirect('/bulk-update/recommend/upload')
     } else {
       res.redirect('/bulk-update/recommend/upload-summary')
@@ -461,7 +461,7 @@ module.exports = router => {
 
     const processedRows = data?.bulkUpload?.processedRows
 
-    if (!processedRows || !processedRows.filter(row => row.uploadStatus == 'updated')) {
+    if (!processedRows || !processedRows.filter(row => row.uploadStatus === 'updated')) {
       res.redirect('/bulk-update/recommend/upload')
     } else {
       res.render('bulk-update/recommend/check-pending-updates')
@@ -476,7 +476,7 @@ module.exports = router => {
     let failCount = 0
 
     const processedRows = data?.bulkUpload?.processedRows || []
-    const rowsWithUpdates = processedRows.filter(row => row.uploadStatus == 'updated')
+    const rowsWithUpdates = processedRows.filter(row => row.uploadStatus === 'updated')
 
     console.log({ processedRows })
     console.log(`processedRows: ${processedRows.length}`)

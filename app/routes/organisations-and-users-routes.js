@@ -13,7 +13,7 @@ module.exports = router => {
   router.get('/organisations/:uuid', function (req, res, next) {
     const data = req.session.data
     const uuid = req.params.uuid
-    const provider = data.providers.all.find(provider => provider.id == uuid)
+    const provider = data.providers.all.find(provider => provider.id === uuid)
 
     res.render('organisations/organisation', {
       provider

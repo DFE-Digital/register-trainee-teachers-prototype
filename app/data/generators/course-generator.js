@@ -86,7 +86,7 @@ const getPrimarySubjects = subjectCount => {
   const primarySpecialisms = ittSubjects.commonPrimarySubjects
     .filter(subject => subject !== 'Primary teaching')
 
-  if (subjectCount == 2) {
+  if (subjectCount === 2) {
     const specialism = faker.helpers.arrayElement([
       faker.helpers.arrayElement(['Mathematics', 'English studies']), // Lots of primary teachers have these
       faker.helpers.arrayElement(primarySpecialisms)
@@ -113,7 +113,7 @@ const getSecondarySubjects = (subjectCount) => {
 
   // Bias slightly towards specific subjects but have some random
   // ones too for good measure
-  if (subjectCount == 1) {
+  if (subjectCount === 1) {
     subjects = faker.helpers.arrayElement([
       faker.helpers.arrayElement(ittSubjects.coreSubjects),
       faker.helpers.arrayElement(ittSubjects.commonSecondarySubjects)
@@ -121,7 +121,7 @@ const getSecondarySubjects = (subjectCount) => {
   }
 
   // Dual subjects typically have one of a few common sets of subjects
-  if (subjectCount == 2) {
+  if (subjectCount === 2) {
     subjects = faker.helpers.arrayElement([
       randomisedLanguages.slice(0, 2), // Two languages
       [randomisedSecondarySubjects[0], randomisedLanguages[0]], // One subject and one language
@@ -132,7 +132,7 @@ const getSecondarySubjects = (subjectCount) => {
   }
 
   // Nearly always languages and sciences
-  if (subjectCount == 3) {
+  if (subjectCount === 3) {
     subjects = faker.helpers.arrayElement([
       randomisedLanguages.slice(0, 3), // Three languages
       randomisedScienceSubjects, // Science subjects
@@ -150,12 +150,12 @@ const getSecondaryPublishSubjects = (subjectCount) => {
 
   // Pull out languages (derived from where the allocation subject is Modern languages)
   const modernLanguagesSubjects = Object.keys(publishSubjects).filter(subject => {
-    return publishSubjects[subject].allocationSubject == 'Modern languages'
+    return publishSubjects[subject].allocationSubject === 'Modern languages'
   })
 
   // // Pull out languages (derived from where the allocation subject is Ancient languages)
   // let ancientLanguageSubjects = Object.keys(publishSubjects).filter(subject => {
-  //   return publishSubjects[subject].allocationSubject == "Ancient languages"
+  //   return publishSubjects[subject].allocationSubject === "Ancient languages"
   // })
 
   // All subjects that don't include 'Primary' and are not a language
@@ -171,7 +171,7 @@ const getSecondaryPublishSubjects = (subjectCount) => {
 
   // Bias slightly towards specific subjects but have some random
   // ones too for good measure
-  if (subjectCount == 1) {
+  if (subjectCount === 1) {
     subjects = faker.helpers.arrayElement([
       faker.helpers.arrayElement(ittSubjects.corePublishSubjects),
       faker.helpers.arrayElement(nonPrimaryPublishSubjects),
@@ -186,7 +186,7 @@ const getSecondaryPublishSubjects = (subjectCount) => {
   }
 
   // Dual subjects typically have one of a few common sets of subjects
-  if (subjectCount == 2) {
+  if (subjectCount === 2) {
     subjects = faker.helpers.arrayElement([
       // Multiple languages commented out as we will probably ask our users to specify languages
       // through the ui
@@ -203,7 +203,7 @@ const getSecondaryPublishSubjects = (subjectCount) => {
     // Check for duplicate subjects
     // Shouldn’t really be possible as we either slice from a unique set or pick from mutually
     // exclusive sets - just in case though ;)
-    while (subjects[0] == subjects[1]) {
+    while (subjects[0] === subjects[1]) {
       console.log('Err! both subjects are the same. Choosing a different second subject was:', subjects[0], subjects[1])
       subjects[1] = faker.helpers.arrayElement(nonPrimaryPublishSubjects)
     }
@@ -238,7 +238,7 @@ module.exports = (params) => {
   if (isEarlyYears) {
     // This subject isn’t really used or shown - but matches how DTTP handles it
     subjects = 'Early years teaching'
-  } else if (phase == 'Primary') {
+  } else if (phase === 'Primary') {
     if (isPublishCourse) {
       publishCourseSubjects = faker.helpers.arrayElement(primaryPublishSubjects)
     } else {
@@ -261,7 +261,7 @@ module.exports = (params) => {
   // Duaration in years. Note AO always has a duration of 1 even though it’s only 12 weeks
   let duration
 
-  if (route == 'Assessment only') {
+  if (route === 'Assessment only') {
     duration = 1
   } else if (isUndergrad) {
     duration = parseInt(weighted.select({
@@ -280,7 +280,7 @@ module.exports = (params) => {
   }
 
   // Full time (or mix)
-  if (duration == 1) {
+  if (duration === 1) {
     studyMode = 'Full time'
 
     // If early years or AO, just use route defaults
@@ -292,7 +292,7 @@ module.exports = (params) => {
       // Hack in some part time AO trainees - which would still have duration 1
       studyMode = weighted.select(['Full time', 'Part time'], [0.8, 0.2])
 
-      if (studyMode == 'Part time') {
+      if (studyMode === 'Part time') {
         qualificationsSummary = qualificationsSummary.concat(' part time') // totally hacky
       }
     } else {
@@ -309,7 +309,7 @@ module.exports = (params) => {
       // but let's have some ambiguity here so the ui can clear it up
       if (isPublishCourse) {
         studyMode = weighted.select(['Full time', 'Full time or part time'], [0.9, 0.1])
-        if (studyMode == 'Full time or part time') {
+        if (studyMode === 'Full time or part time') {
           qualificationsSummary = qualificationsSummary.concat(' or part time') // totally hacky
         }
       }

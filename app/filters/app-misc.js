@@ -69,7 +69,7 @@ filters.getAcademicQualificationText = function (input, record = false) {
 
   if (qualificationsApply && foundQualification) {
     return `${foundQualification.short} (${foundQualification.long})`
-  } else if (qualificationsApply && foundQualification == 'None') {
+  } else if (qualificationsApply && foundQualification === 'None') {
     return `None – ${qualificationText} only`
   } else if (!qualificationsApply) {
     return 'Not applicable'
@@ -170,7 +170,7 @@ filters.getDegreeName = (degree) => {
   let typeText
 
   if (utils.falsify(degree.isInternational)) {
-    if (degree.type == 'UK ENIC not provided') {
+    if (degree.type === 'UK ENIC not provided') {
       typeText = 'Non-UK degree'
     } else typeText = `Non-UK ${degree.type}`
   } else {

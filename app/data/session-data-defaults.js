@@ -71,7 +71,7 @@ const traineeProblems = require('./trainee-problems.json')
 
 // Super hacky method of picking 5 schools randomly from the list to
 // pretend to be the provider's recently used schools
-// let schoolsTop5             = schools.slice(1200).filter((school, index ) => (index % 330 == 0)).slice(0, 5)
+// let schoolsTop5             = schools.slice(1200).filter((school, index ) => (index % 330 === 0)).slice(0, 5)
 
 const providers = {}
 
@@ -96,7 +96,7 @@ const funding = require('./funding')
 const settings = {}
 
 // Currently enabled routes
-settings.enabledTrainingRoutes = Object.values(trainingRoutes).filter(route => route.defaultEnabled == true).map(route => route.name).sort()
+settings.enabledTrainingRoutes = Object.values(trainingRoutes).filter(route => route.defaultEnabled === true).map(route => route.name).sort()
 
 // One of `blended-model` or `hat-model`
 settings.providerModel = 'hat-model'
@@ -170,7 +170,7 @@ const calculateUsers = (firstProvider, userProviders) => {
   const lookUpProvider = provider => {
     let item
     if (providers?.all) {
-      item = providers.all.find(item => item.name == provider) || false
+      item = providers.all.find(item => item.name === provider) || false
     }
     if (!item) console.log(`Error with getProvider data: ${provider} not found.`)
     return item

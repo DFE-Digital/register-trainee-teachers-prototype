@@ -31,12 +31,12 @@ filters.addIndexCount = array => {
 
 // Search for an id in arrays
 filters.getById = (items, id) => {
-  return items.find(item => item.id == id)
+  return items.find(item => item.id === id)
 }
 
 // General purpose search in arrays
 filters.find = (items, key, value) => {
-  return items.find(item => item[key] == value)
+  return items.find(item => item[key] === value)
 }
 
 // Decorate attributes

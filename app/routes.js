@@ -36,8 +36,8 @@ router.all('*', function (req, res, next) {
 
   // Todo - move this stuff to middleware?
   // Need to also save to locals as saving to data at this point won’t be available to the view unless refreshed
-  data.isHatModel = (data.settings.providerModel == 'hat-model')
-  data.isBlendedModel = (data.settings.providerModel == 'blended-model')
+  data.isHatModel = (data.settings.providerModel === 'hat-model')
+  data.isBlendedModel = (data.settings.providerModel === 'blended-model')
   data.signedInProviders = (data.isBlendedModel) ? data.settings.userProviders : [data.settings.userActiveProvider]
 
   res.locals.data.isHatModel = data.isHatModel
@@ -59,7 +59,7 @@ router.all('*', function (req, res, next) {
   }
 
   // Mark as admin if the provider has an admin name
-  if (data?.settings?.userActiveProvider == data.settings.defaultAdminName) {
+  if (data?.settings?.userActiveProvider === data.settings.defaultAdminName) {
     data.isAdmin = true
     res.locals.data.isAdmin = true
   } else {
@@ -72,7 +72,7 @@ router.all('*', function (req, res, next) {
     res.locals.activeProvider = provider
   }
 
-  // data.isAdmin = (data.settings.viewAsAdmin == "true") ? true : false
+  // data.isAdmin = (data.settings.viewAsAdmin === "true") ? true : false
 
   // Also save to locals so that the data is available immediately
   res.locals.accessLevel = permissions.getAccessLevel(data?.signedInProviders, data)
@@ -115,8 +115,8 @@ router.post('/direct-set-data', function (req, res, next) {
   const theKey = data.directSet?.key
   let theValue = data.directSet?.value
   const theValueJson = data.directSet?.valueJson
-  const shouldMerge = data.directSet?.mergeJson == 'true'
-  const updateRecord = data.directSet?.updateRecord == 'true'
+  const shouldMerge = data.directSet?.mergeJson === 'true'
+  const updateRecord = data.directSet?.updateRecord === 'true'
 
   let parsedJson
 
@@ -151,7 +151,7 @@ router.post('/direct-set-data', function (req, res, next) {
   // If we were given record data, save it back to data.records so it persists
   if (updateRecord) {
     if (data?.record?.id) {
-      const recordIndex = data.records.findIndex(record => record.id == data.record.id)
+      const recordIndex = data.records.findIndex(record => record.id === data.record.id)
       if (recordIndex) {
         console.log(`Updating record at index ${recordIndex}`)
         data.records[recordIndex] = data.record
@@ -170,7 +170,7 @@ router.post('/direct-set-data', function (req, res, next) {
 router.get('/guidance/hesa-register-data-mapping', function (req, res, next) {
   const data = req.session.data
 
-  if (data.settings.hesaGuidanceStyle == 'tabs') {
+  if (data.settings.hesaGuidanceStyle === 'tabs') {
     res.redirect('/guidance/hesa-register-data-mapping/trainee-progress')
   } else {
     next()

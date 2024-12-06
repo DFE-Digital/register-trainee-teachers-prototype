@@ -108,7 +108,7 @@ const generateTraineeProblem = (provider, providerTrainees) => {
   const pickRandomTrainee = () => {
     const traineesNotUsed = filteredTrainees.filter(trainee => !traineesCache[randomProblemType]?.includes(trainee.id))
 
-    if (traineesNotUsed.length == 0) {
+    if (traineesNotUsed.length === 0) {
       // console.log(`Error with pickRandomTrainee: ran out of trainees for ${randomProblemType}!`)
       return false
     } else {
@@ -132,7 +132,7 @@ const generateTraineeProblem = (provider, providerTrainees) => {
 
   problem.type = randomProblemType
   // Remap duplicate drafts as regular duplicate type
-  if (problem.type == 'duplicateDraft') problem.type = 'duplicate'
+  if (problem.type === 'duplicateDraft') problem.type = 'duplicate'
   problem.id = faker.string.uuid()
   problem.provider = provider.name
   problem.date = randomDateInPast(12, 0)
@@ -152,7 +152,7 @@ const generateFakeTraineeProblems = () => {
   const traineeProblems = seedTraineeProblems
 
   providers.selected.forEach(provider => {
-    const providerTrainees = trainees.filter(trainee => trainee.provider == provider.name)
+    const providerTrainees = trainees.filter(trainee => trainee.provider === provider.name)
 
     // let activeTrainees = providerTrainees.filter( trainee => utils.isActiveStatus(trainee) )
 

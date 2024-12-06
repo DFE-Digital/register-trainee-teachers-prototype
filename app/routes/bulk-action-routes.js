@@ -39,7 +39,7 @@ module.exports = router => {
 
     // Hack to bypass filter page
     // Todo: provide a simpler method of filtering all
-    if (req.query?._select == 'all') {
+    if (req.query?._select === 'all') {
       data.bulk.filters = { subject: 'All subjects' }
       res.redirect('/bulk-action/select-trainees')
     } else {
@@ -140,7 +140,7 @@ module.exports = router => {
         filteredRecords = utils.filterRecords(allRecords, data, bulk.filters)
 
         // Filter for only draft records that are complete
-        if (bulk.action == 'Submit a group of records and request TRNs') {
+        if (bulk.action === 'Submit a group of records and request TRNs') {
           filteredRecords = filteredRecords
             .filter(record => utils.isDraft(record))
             .filter(record => {
@@ -153,9 +153,9 @@ module.exports = router => {
         }
 
         // Filter for only records ready to be recommended for QTS
-        else if (bulk.action == 'Recommend a group of trainees for EYTS or QTS') {
+        else if (bulk.action === 'Recommend a group of trainees for EYTS or QTS') {
           filteredRecords = filteredRecords
-            .filter(record => record.status == 'TRN received')
+            .filter(record => record.status === 'TRN received')
             .filter(record => {
               if (utils.hasOutstandingActions(record, data)) {
                 incompleteCount++
@@ -202,10 +202,10 @@ module.exports = router => {
       res.redirect('/bulk-action/date')
     } else {
       const radioChoice = bulk.dateRadio
-      if (radioChoice == 'Today') {
+      if (radioChoice === 'Today') {
         bulk.date = filters.toDateArray(filters.today())
       }
-      if (radioChoice == 'Yesterday') {
+      if (radioChoice === 'Yesterday') {
         bulk.date = filters.toDateArray(moment().subtract(1, 'days'))
       }
     }
@@ -239,7 +239,7 @@ module.exports = router => {
 
     req.flash('success', `${successCount} ${filters.pluralise('record', successCount)} submitted`)
 
-    if (bulk.action == 'Recommend a group of trainees for EYTS or QTS') {
+    if (bulk.action === 'Recommend a group of trainees for EYTS or QTS') {
       res.redirect('/records')
     } else {
       res.redirect('/drafts')

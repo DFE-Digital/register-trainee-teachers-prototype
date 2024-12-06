@@ -81,12 +81,12 @@ filters.providerIsAuthorised = function (providers, action) {
     'viewRecords'
   ]
 
-  if (accessLevel == 'admin') {
-    if (action == 'addTrainees') return false
+  if (accessLevel === 'admin') {
+    if (action === 'addTrainees') return false
     else return true
-  } else if (accessLevel == 'accreditingProvider') {
+  } else if (accessLevel === 'accreditingProvider') {
     return accreditingProviderActions.includes(action)
-  } else if (accessLevel == 'leadPartner') {
+  } else if (accessLevel === 'leadPartner') {
     return leadPartnerActions.includes(action)
   } else {
     console.log(`Error: provider type ${providerType}, access level ${accessLevel} not recognised.`)
@@ -107,8 +107,8 @@ filters.getRecordAccessLevels = function (record, data = false) {
   // Loop through each signed-in provider and see if they have any rights to the
   // record.
   const accessLevels = signedInProviders.map(provider => {
-    if (record?.provider == provider) return 'accreditingProvider'
-    else if (record?.schools?.leadPartner?.schoolName == provider) return 'leadPartner'
+    if (record?.provider === provider) return 'accreditingProvider'
+    else if (record?.schools?.leadPartner?.schoolName === provider) return 'leadPartner'
     else return false
   }).filter(Boolean)
   if (data?.isAdmin) accessLevels.push('admin')

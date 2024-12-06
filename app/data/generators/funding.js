@@ -17,7 +17,7 @@ module.exports = (params) => {
 
   const noInitiativeString = 'Not on a training initiative'
 
-  if (initiatives.length == 0) {
+  if (initiatives.length === 0) {
     initiative = noInitiativeString
   } else {
     // Majority of trainees not on initiatives
@@ -41,7 +41,7 @@ module.exports = (params) => {
     } else source = 'self-funded'
 
     // Special handling for Early years graduate entry
-    if (source == 'bursary' && availableFinancialSupport.tiersApply) {
+    if (source === 'bursary' && availableFinancialSupport.tiersApply) {
       const selectedTier = faker.helpers.arrayElement(availableFinancialSupport.tiers)
       source = selectedTier.name
     }

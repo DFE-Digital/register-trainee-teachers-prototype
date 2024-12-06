@@ -619,7 +619,7 @@ Object.keys(allRoutes).forEach(routeName => {
   trainingRoutes[routeName] = routeData
 })
 
-const enabledTrainingRoutes = Object.values(trainingRoutes).filter(route => route.defaultEnabled == true).map(route => route.name)
+const enabledTrainingRoutes = Object.values(trainingRoutes).filter(route => route.defaultEnabled === true).map(route => route.name)
 
 // Count initiatives
 let allInitiatives = []

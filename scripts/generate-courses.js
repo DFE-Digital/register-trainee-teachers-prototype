@@ -47,7 +47,7 @@ const generateFakeCourses = () => {
 
     // Hardcode lots courses our default providers
     // A separate setting limits this later so that we can quickly change the number of courses offered in the ui
-    if (provider.name == 'King’s Oak University' || provider.name == 'University of Buckingham') courseCount = 100
+    if (provider.name === 'King’s Oak University' || provider.name === 'University of Buckingham') courseCount = 100
 
     for (let i = 0; i < courseCount; i++) {
       yearsToGenerate.forEach(year => {

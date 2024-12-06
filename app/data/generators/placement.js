@@ -22,7 +22,7 @@ module.exports = (params) => {
   let status
 
   // Assume all pending TRN applications have 0 or 1 placements provided
-  if (params?.status == 'Pending TRN') {
+  if (params?.status === 'Pending TRN') {
     count = weighted.select([0, 1], [0.3, 0.7])
   }
 
@@ -46,11 +46,11 @@ module.exports = (params) => {
   }
 
   // Mark section as complete once we have two placements
-  if (count == 2) {
+  if (count === 2) {
     status = 'Completed'
   }
 
-  if (params?.placement?.hasPlacements == 'Not yet') {
+  if (params?.placement?.hasPlacements === 'Not yet') {
     return {}
   } else {
     return {

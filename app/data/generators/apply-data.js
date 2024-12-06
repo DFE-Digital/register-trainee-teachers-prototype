@@ -43,7 +43,7 @@ const pickRandomConditions = () => {
 }
 
 module.exports = (application, params) => {
-  const isApplyPending = params?.applyData?.applyStatus == 'Pending conditions'
+  const isApplyPending = params?.applyData?.applyStatus === 'Pending conditions'
 
   // console.log(application.submittedDate, moment(application.submittedDate))
   // console.log(application)

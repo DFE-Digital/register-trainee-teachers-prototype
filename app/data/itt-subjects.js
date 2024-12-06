@@ -128,7 +128,7 @@ subjectSpecialismsCsvArray.shift() // remove header row
 const subjectsObjectArray = subjectSpecialismsCsvArray.map(specialism => {
   return {
     name: upcaseFirstChar(specialism[0]),
-    isEbac: (specialism[1] == 'Yes'),
+    isEbac: (specialism[1] === 'Yes'),
     allocationSubject: specialism[2]
   }
 })
@@ -156,7 +156,7 @@ const subjectSpecialismsArray = [...new Set(subjectsObjectArray.map(specialism =
 // }
 const subjectSpecialisms = {}
 subjectSpecialismsArray.forEach(subject => {
-  subjectSpecialisms[subject] = subjectsObjectArray.find(item => item.name == subject)
+  subjectSpecialisms[subject] = subjectsObjectArray.find(item => item.name === subject)
 })
 
 // Flat array of allocation subjects
@@ -189,7 +189,7 @@ const allocationSubjects = {}
 allocationSubjectsArray.forEach(subject => {
   allocationSubjects[subject] = {
     name: subject,
-    subjectSpecialisms: subjectsObjectArray.filter(specialism => specialism.allocationSubject == subject).map(specialism => specialism.name)
+    subjectSpecialisms: subjectsObjectArray.filter(specialism => specialism.allocationSubject === subject).map(specialism => specialism.name)
   }
 })
 

@@ -121,7 +121,7 @@ const generateSchool = (params = {}) => {
     addressLine1 = params.addressLine1 || faker.location.streetAddress()
     town = params.town || weighted.select(placesData.weightedCities)
     let fakePostcode = faker.location.zipCode()
-    if (town == 'London') {
+    if (town === 'London') {
       fakePostcode = fakePostcode.split(' ').pop()
       fakePostcode = `${faker.helpers.arrayElement(cardinalDirections)}${faker.number.int({ min: 1, max: 20 })} ${fakePostcode}`
     }

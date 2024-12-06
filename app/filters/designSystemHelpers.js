@@ -56,7 +56,7 @@ filters.arrayToGovukTable = (array) => {
     })
     tableData.push(rowData)
   })
-  // tableData = (tableData.length == 1) ? tableData[0] : tableData
+  // tableData = (tableData.length === 1) ? tableData[0] : tableData
   return tableData
 }
 
@@ -84,7 +84,7 @@ let csvData =
 filters.csvToArray = (csvString) => {
   array = CSV.parse(csvString)
   // Flatten nested array if it's only a single line
-  array = (array.length == 1) ? array[0] : array
+  array = (array.length === 1) ? array[0] : array
   return array
 }
 

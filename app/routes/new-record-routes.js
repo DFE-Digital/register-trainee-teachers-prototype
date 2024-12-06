@@ -131,7 +131,7 @@ module.exports = router => {
     const referrer = utils.getReferrer(req.query.referrer)
 
     // Only validate if they’ve checked the 'reviewed' checkbox
-    if (record?.applyData?.status == 'Completed' && utils.hasInvalidAnswers(record, data)) {
+    if (record?.applyData?.status === 'Completed' && utils.hasInvalidAnswers(record, data)) {
       console.log('Record has invalid answers, returning to trainee data page')
       let returnQuery
       if (referrer) {
@@ -169,7 +169,7 @@ module.exports = router => {
     const records = data.records
     const theRecord = data.record
     if (theRecord.id) {
-      const recordIndex = records.findIndex(record => record.id == theRecord.id)
+      const recordIndex = records.findIndex(record => record.id === theRecord.id)
       _.pullAt(records, [recordIndex]) // delete item at index
     }
     utils.deleteTempData(data)
@@ -233,12 +233,12 @@ module.exports = router => {
     const traineeStarted = record?.trainingDetails?.traineeStarted
     const commencementDate = record?.trainingDetails?.commencementDate
 
-    if ((!traineeStarted) || (traineeStarted == 'started-itt-later' && !commencementDate)) {
+    if ((!traineeStarted) || (traineeStarted === 'started-itt-later' && !commencementDate)) {
       res.redirect('/new-record/trainee-start-date')
     } else {
-      if (traineeStarted == 'started-itt-on-time') {
+      if (traineeStarted === 'started-itt-on-time') {
         record.trainingDetails.commencementDate = courseStartDate
-      } else if (traineeStarted == 'trainee-not-started') {
+      } else if (traineeStarted === 'trainee-not-started') {
         delete record?.trainingDetails?.commencementDate
       }
       delete record?.trainingDetails?.traineeStarted
@@ -274,7 +274,7 @@ module.exports = router => {
       })
 
       let flashMessage
-      if (selectedCount == 1) {
+      if (selectedCount === 1) {
         flashMessage = 'One application from Apply imported as a draft trainee'
       } else {
         flashMessage = `${selectedCount} applications from Apply imported as draft trainees`

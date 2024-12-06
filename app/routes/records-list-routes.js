@@ -7,13 +7,13 @@ const years = require('./../data/years.js')
 // Work around a bug where occasionally _unchecked would appear
 // Also coerce to array to be easier to work with
 const cleanInputData = data => {
-  if (!data || data == '_unchecked') {
+  if (!data || data === '_unchecked') {
     return undefined
   } else {
     data = [].concat(data) // coerce to arrays so we can filter them
     // _unchecked sometimes appears - can't track down what's causing it
     data = data.filter(item => item !== '_unchecked')
-    return (data.length == 0) ? undefined : data // return undefined if array now empty
+    return (data.length === 0) ? undefined : data // return undefined if array now empty
   }
 }
 
@@ -257,7 +257,7 @@ const getSelectedFilters = req => {
     })
   }
 
-  const completeFilterLabel = (pathname == '/drafts') ? 'Draft completion' : 'Available to do'
+  const completeFilterLabel = (pathname === '/drafts') ? 'Draft completion' : 'Available to do'
 
   if (filters.completeStatus) {
     selectedFilters.categories.push({
@@ -420,7 +420,7 @@ module.exports = router => {
   router.get('/records', function (req, res, next) {
     const data = req.session.data
 
-    if (data.settings.academicYearsUiStyle == 'Tabs') {
+    if (data.settings.academicYearsUiStyle === 'Tabs') {
       res.redirect('/records/current-year')
     } else {
       next()
@@ -458,28 +458,28 @@ module.exports = router => {
     if (tabName) {
       const currentYear = data.years.currentAcademicYear
       const tabFilters = {}
-      if (tabName == 'current-year') {
+      if (tabName === 'current-year') {
         console.log('Showing current year')
         tabFilters.academicYears = [currentYear]
         filteredRecords = utils.filterRecords(filteredRecords, data, tabFilters)
-      } else if (tabName == 'previous-year') {
+      } else if (tabName === 'previous-year') {
         console.log('Showing current year')
         const previousYear = utils.yearToAcademicYearString(utils.academicYearToYear(currentYear) - 1)
         tabFilters.academicYears = [previousYear]
         filteredRecords = utils.filterRecords(filteredRecords, data, tabFilters)
-      } else if (tabName == 'next-year') {
+      } else if (tabName === 'next-year') {
         console.log('Showing next year')
         const nextYear = utils.yearToAcademicYearString(utils.academicYearToYear(currentYear) + 1)
         tabFilters.academicYears = [nextYear]
         filteredRecords = utils.filterRecords(filteredRecords, data, tabFilters)
-      } else if (tabName == 'all-years') {
+      } else if (tabName === 'all-years') {
         console.log('Showing all years')
       } else {
         console.log(`Error: tab name ${tabName} not recognised`)
       }
     }
     // console.log(req.query)
-    // if (!hasFilters) filteredRecords = filteredRecords.filter(record => record.academicYear == "2021 to 2022")
+    // if (!hasFilters) filteredRecords = filteredRecords.filter(record => record.academicYear === "2021 to 2022")
 
     // Sort records by sortOrder, defaulting to updatedDate
     filteredRecords = utils.sortRecordsBy(filteredRecords, (req?.query?.sortOrder || 'updatedDate'))
@@ -580,7 +580,7 @@ module.exports = router => {
     // Filter records using the filters provided
     let filteredRecords = utils.filterRecords(data.records, data, filters)
     // console.log(req.query)
-    // if (!hasFilters) filteredRecords = filteredRecords.filter(record => record.academicYear == "2021 to 2022")
+    // if (!hasFilters) filteredRecords = filteredRecords.filter(record => record.academicYear === "2021 to 2022")
 
     // Sort records by sortOrder, defaulting to updatedDate
     filteredRecords = utils.sortRecordsBy(filteredRecords, (req?.query?.sortOrder || 'updatedDate'))

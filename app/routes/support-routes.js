@@ -42,7 +42,7 @@ module.exports = router => {
   router.get('/support/users/:uuid', function (req, res, next) {
     const data = req.session.data
     const uuid = req.params.uuid
-    const user = data.users.all.find(user => user.id == uuid)
+    const user = data.users.all.find(user => user.id === uuid)
 
     const breadcrumbs = {
       items: breadcrumbsInitial.items.concat([{
@@ -74,10 +74,10 @@ module.exports = router => {
     const providerUuid = req.params.providerUuid
     const schoolUuid = req.params.schoolUuid
 
-    // let user = data.users.all.find(user => user.id == userUuid)
+    // let user = data.users.all.find(user => user.id === userUuid)
     const userUrl = `/support/users/${userUuid}`
 
-    // let provider = data.providers.all.find(provider => provider.id == providerUuid)
+    // let provider = data.providers.all.find(provider => provider.id === providerUuid)
     const providerUrl = `/support/organisations/${providerUuid}`
 
     const context = getPageContext(req)
@@ -86,17 +86,17 @@ module.exports = router => {
 
     let targetUrl
 
-    if (context == 'users') {
+    if (context === 'users') {
       targetUrl = `/support/users/${userUuid}/organisations/${providerUuid}`
-    } else if (context == 'organisations') {
+    } else if (context === 'organisations') {
       targetUrl = `/support/organisations/${providerUuid}/users/${userUuid}`
     } else {
       targetUrl = `/support/schools/${schoolUuid}/users/${userUuid}`
     }
 
-    if (access == 'Remove') {
+    if (access === 'Remove') {
       targetUrl = `${targetUrl}/confirm-remove`
-    } else if (access == 'Delete') {
+    } else if (access === 'Delete') {
       targetUrl = `${targetUrl}/confirm-delete`
     } else {
       targetUrl = `${targetUrl}/confirm`
@@ -111,9 +111,9 @@ module.exports = router => {
     const uuid = req.params.uuid
     const page = req.params.page
     const providerUuid = req.params.providerUuid
-    const provider = data.providers.all.find(provider => provider.id == providerUuid)
+    const provider = data.providers.all.find(provider => provider.id === providerUuid)
 
-    const user = data.users.all.find(user => user.id == uuid)
+    const user = data.users.all.find(user => user.id === uuid)
     const userUrl = `/support/users/${uuid}`
 
     const breadcrumbs = {
@@ -154,7 +154,7 @@ module.exports = router => {
   router.get('/support/users/:uuid/:page*', function (req, res, next) {
     const data = req.session.data
     const uuid = req.params.uuid
-    const user = data.users.all.find(user => user.id == uuid)
+    const user = data.users.all.find(user => user.id === uuid)
 
     // Use our own render as some templates live at /index.html
 
@@ -195,7 +195,7 @@ module.exports = router => {
   router.get('/support/organisations/:uuid', function (req, res, next) {
     const data = req.session.data
     const uuid = req.params.uuid
-    const provider = data.providers.all.find(provider => provider.id == uuid)
+    const provider = data.providers.all.find(provider => provider.id === uuid)
 
     const providerUrl = `/support/organisations/${uuid}`
 
@@ -225,9 +225,9 @@ module.exports = router => {
     const uuid = req.params.uuid
     const page = req.params.page
     const userUuid = req.params.userUuid
-    const provider = data.providers.all.find(provider => provider.id == uuid)
+    const provider = data.providers.all.find(provider => provider.id === uuid)
 
-    const user = data.users.all.find(user => user.id == userUuid)
+    const user = data.users.all.find(user => user.id === userUuid)
     const providerUrl = `/support/organisations/${uuid}`
 
     const breadcrumbs = {
@@ -266,7 +266,7 @@ module.exports = router => {
   router.get('/support/organisations/:uuid/:page*', function (req, res, next) {
     const data = req.session.data
     const uuid = req.params.uuid
-    const provider = data.providers.all.find(provider => provider.id == uuid)
+    const provider = data.providers.all.find(provider => provider.id === uuid)
 
     // Use our own render as some templates live at /index.html
     const providerUrl = `/support/organisations/${uuid}`
@@ -323,7 +323,7 @@ module.exports = router => {
 
     const schools = getSchools()
 
-    const school = schools.find(school => school.uuid == uuid)
+    const school = schools.find(school => school.uuid === uuid)
 
     const schoolUrl = `/support/schools/${uuid}`
 
@@ -352,7 +352,7 @@ module.exports = router => {
     const uuid = req.params.uuid
 
     const schools = getSchools()
-    const school = schools.find(school => school.uuid == uuid)
+    const school = schools.find(school => school.uuid === uuid)
 
     const schoolUrl = `/support/schools/${uuid}`
 

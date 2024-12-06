@@ -136,14 +136,14 @@ filters.startsWith = (string, target) => {
 //     JOYCE JAMES’
 
 filters.possessive = (noun) => {
-  if (typeof noun !== 'string' || noun.length == 0) return ''
+  if (typeof noun !== 'string' || noun.length === 0) return ''
 
   const isAllUpperCase = (input) => {
-    return input == input.toUpperCase()
+    return input === input.toUpperCase()
   }
 
   const lastLetterOfNoun = noun.split('').slice(-1)
-  if (lastLetterOfNoun == 's' || lastLetterOfNoun == 'S') {
+  if (lastLetterOfNoun === 's' || lastLetterOfNoun === 'S') {
     return noun + '’'
   } else if (isAllUpperCase(noun)) {
     return noun + '’S'

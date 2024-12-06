@@ -15,7 +15,7 @@ module.exports = router => {
     if (!newRecord) {
       res.redirect(`/record/${req.params.uuid}`)
     } else {
-      if (newRecord.status == 'Pending TRN') {
+      if (newRecord.status === 'Pending TRN') {
         newRecord.status = 'TRN received'
         newRecord.trn = String(faker.number.int({
           min: 1000000,
@@ -78,7 +78,7 @@ module.exports = router => {
     if (!newRecord) {
       res.redirect(`/record/${req.params.uuid}`)
     } else {
-      if (newRecord.status.includes('recommended') || newRecord.status == 'TRN received') {
+      if (newRecord.status.includes('recommended') || newRecord.status === 'TRN received') {
         utils.recommendForAward(newRecord) // Recommend a group of trainees for EYTS/QTS first so data is correct
         utils.deleteTempData(data)
 
@@ -108,17 +108,17 @@ module.exports = router => {
       res.redirect(`/record/${req.params.uuid}`)
     } else {
       const radioChoice = record.qualificationDetails.outcomeDateRadio
-      if (radioChoice == 'Today') {
+      if (radioChoice === 'Today') {
         record.qualificationDetails.outcomeDate = filters.toDateArray(filters.today())
       }
-      if (radioChoice == 'Yesterday') {
+      if (radioChoice === 'Yesterday') {
         record.qualificationDetails.outcomeDate = filters.toDateArray(moment().subtract(1, 'days'))
       }
     }
 
     // Was the EYTS/QTS outcome a pass?
     // Not curretly being used
-    if (_.get(data, 'record.qualificationDetails.standardsAssessedOutcome') == 'No') {
+    if (_.get(data, 'record.qualificationDetails.standardsAssessedOutcome') === 'No') {
       res.redirect(`/record/${req.params.uuid}/qualification/not-passed/reason`)
     } else {
       // Check if we should ask about academic qualifications - some routes don’t have them.
@@ -155,7 +155,7 @@ module.exports = router => {
       res.redirect(`/record/${req.params.uuid}`)
     } else {
       // Trainees may withdraw at this stage
-      const isWithdrawing = (_.get(newRecord, 'qualificationDetails.withdrawalStatus') == 'Withdrawing from programme')
+      const isWithdrawing = (_.get(newRecord, 'qualificationDetails.withdrawalStatus') === 'Withdrawing from programme')
       // console.log('is withdrawing:', isWithdrawing)
       newRecord.qtsNotPassedOutcomeDate = new Date()
       utils.deleteTempData(data)
@@ -203,10 +203,10 @@ module.exports = router => {
       res.redirect(`/record/${req.params.uuid}`)
     } else {
       const radioChoice = newRecord.deferredDateRadio
-      if (radioChoice == 'Today') {
+      if (radioChoice === 'Today') {
         newRecord.deferredDate = filters.toDateArray(filters.today())
       }
-      if (radioChoice == 'Yesterday') {
+      if (radioChoice === 'Yesterday') {
         newRecord.deferredDate = filters.toDateArray(moment().subtract(1, 'days'))
       }
       res.redirect(`/record/${req.params.uuid}/defer/confirm${referrer}`)
@@ -248,10 +248,10 @@ module.exports = router => {
       res.redirect(`/record/${req.params.uuid}`)
     } else {
       const radioChoice = record.reinstate.dateRadio
-      if (radioChoice == 'Today') {
+      if (radioChoice === 'Today') {
         record.reinstate.date = filters.toDateArray(filters.today())
       }
-      if (radioChoice == 'Yesterday') {
+      if (radioChoice === 'Yesterday') {
         record.reinstate.date = filters.toDateArray(moment().subtract(1, 'days'))
       }
 
@@ -271,7 +271,7 @@ module.exports = router => {
       res.redirect(`/record/${req.params.uuid}`)
     } else {
       // Set trainee deferred date as start date if trainee deferred before starting
-      if (traineeStarted == 'false') {
+      if (traineeStarted === 'false') {
         record.trainingDetails.commencementDate = record.reinstateDate
         record.trainingDetails.traineeStarted = 'true'
       }
@@ -384,7 +384,7 @@ module.exports = router => {
     const records = data.records
     const theRecord = data.record
     if (theRecord.id) {
-      const recordIndex = records.findIndex(record => record.id == theRecord.id)
+      const recordIndex = records.findIndex(record => record.id === theRecord.id)
       _.pullAt(records, [recordIndex]) // delete item at index
     }
     utils.deleteTempData(data)
@@ -405,9 +405,9 @@ module.exports = router => {
     } else {
       if (['did-not-start', 'added-in-error', 'already-has-teaching-status'].includes(removeReason)) {
         res.redirect(`/record/${req.params.uuid}/remove/confirm${referrer}`)
-      } else if (removeReason == 'withdraw') {
+      } else if (removeReason === 'withdraw') {
         res.redirect(`/record/${req.params.uuid}/withdraw${referrer}`)
-      } else if (removeReason == 'transferred-provider') {
+      } else if (removeReason === 'transferred-provider') {
         res.redirect(`/record/${req.params.uuid}/remove/date-of-transfer${referrer}`)
       } else {
         res.redirect(`/record/${req.params.uuid}/remove/reason${referrer}`)
@@ -441,7 +441,7 @@ module.exports = router => {
     const records = data.records
     const theRecord = data.record
     if (theRecord.id) {
-      const recordIndex = records.findIndex(record => record.id == theRecord.id)
+      const recordIndex = records.findIndex(record => record.id === theRecord.id)
       _.pullAt(records, [recordIndex]) // delete item at index
     }
     utils.deleteTempData(data)
@@ -457,10 +457,10 @@ module.exports = router => {
     const traineeStarted = record?.trainingDetails?.traineeStarted
     const referrer = utils.getReferrer(req.query.referrer)
 
-    if (traineeStarted == 'true') {
+    if (traineeStarted === 'true') {
       _.set(record, 'defer.showStartDate', true)
       res.redirect(`/record/${req.params.uuid}/defer/when-did-trainee-start${referrer}`)
-    } else if (traineeStarted == 'false') {
+    } else if (traineeStarted === 'false') {
       delete record?.trainingDetails?.commencementDate
       res.redirect(`/record/${req.params.uuid}/defer/confirm${referrer}`)
     } else {
@@ -480,7 +480,7 @@ module.exports = router => {
     const commencementDate = record?.trainingDetails?.commencementDate
     const referrer = utils.getReferrer(req.query.referrer)
 
-    if (traineeStarted == 'started-itt-on-time') {
+    if (traineeStarted === 'started-itt-on-time') {
       record.trainingDetails.commencementDate = courseStartDate
     }
 
@@ -522,10 +522,10 @@ module.exports = router => {
 
     const referrer = utils.getReferrer(req.query.referrer)
 
-    if (traineeStarted == 'true') {
+    if (traineeStarted === 'true') {
       _.set(record, 'withdraw.showStartDate', true)
       res.redirect(`/record/${req.params.uuid}/withdraw/when-did-trainee-start${referrer}`)
-    } else if (traineeStarted == 'false') {
+    } else if (traineeStarted === 'false') {
       res.redirect(`/record/${req.params.uuid}/withdraw/cannot-withdraw${referrer}`)
     } else {
       res.redirect(`/record/${req.params.uuid}/withdraw/did-trainee-start${referrer}`)
@@ -544,7 +544,7 @@ module.exports = router => {
     const commencementDate = record?.trainingDetails?.commencementDate
     const referrer = utils.getReferrer(req.query.referrer)
 
-    if (traineeStarted == 'started-itt-on-time') {
+    if (traineeStarted === 'started-itt-on-time') {
       record.trainingDetails.commencementDate = courseStartDate
     }
     if (moment(dates.toDateObject(record?.withdraw?.date)).isAfter(dates.toDateObject(commencementDate))) {
@@ -568,13 +568,13 @@ module.exports = router => {
       res.redirect(`/record/${req.params.uuid}/withdraw/details${referrer}`)
     } else {
       // Catch no answer given
-      if (!radioChoice || (radioChoice == 'On another day' && !record?.withdraw?.date)) {
+      if (!radioChoice || (radioChoice === 'On another day' && !record?.withdraw?.date)) {
         res.redirect(`/record/${req.params.uuid}/withdraw/date`)
       } else {
-        if (radioChoice == 'Today') {
+        if (radioChoice === 'Today') {
           record.withdraw.date = filters.toDateArray(filters.today())
         }
-        if (radioChoice == 'Yesterday') {
+        if (radioChoice === 'Yesterday') {
           record.withdraw.date = filters.toDateArray(moment().subtract(1, 'days'))
         }
 
@@ -656,9 +656,9 @@ module.exports = router => {
     const traineeStarted = record?.trainingDetails?.traineeStarted
     const commencementDate = record?.trainingDetails?.commencementDate
 
-    if (traineeStarted == 'started-itt-on-time') {
+    if (traineeStarted === 'started-itt-on-time') {
       record.trainingDetails.commencementDate = courseStartDate
-    } else if (traineeStarted == 'trainee-not-started') { // If the answer was explicitly false.
+    } else if (traineeStarted === 'trainee-not-started') { // If the answer was explicitly false.
       delete record?.trainingDetails?.commencementDate
     }
     res.redirect(`/record/${req.params.uuid}/trainee-start-date/confirm${referrer}`)
@@ -693,7 +693,7 @@ module.exports = router => {
     const previousRecord = utils.getRecordById(data.records, record.id)
 
     const courseMove = record?.temp?.courseMoveTemp
-    const isCourseMove = (courseMove?.isCourseMove == 'true')
+    const isCourseMove = (courseMove?.isCourseMove === 'true')
     if (isCourseMove) {
       console.log(`Course change: changed on ${courseMove.courseMoveDate}`)
     }
@@ -770,7 +770,7 @@ module.exports = router => {
     if (!isCourseMove) {
       res.redirect(`/record/${req.params.uuid}/course-details/course-change-date-question${referrer}`)
     } else {
-      if (isCourseMove == 'false') {
+      if (isCourseMove === 'false') {
         // Clear previous data if we've now been told it’s not a course change
         delete record?.temp?.courseMoveTemp?.courseMoveDate
       }
@@ -803,7 +803,7 @@ module.exports = router => {
     const referrer = utils.getReferrer(req.query.referrer)
     const recordPath = utils.getRecordPath(req)
 
-    const isCourseMove = (record?.temp?.courseMoveTemp?.isCourseMove == 'true')
+    const isCourseMove = (record?.temp?.courseMoveTemp?.isCourseMove === 'true')
 
     const timelineMessage = (isCourseMove) ? 'Traineed moved to new course' : false
 
@@ -869,7 +869,7 @@ module.exports = router => {
     const records = req.session.data.records
     const referrer = req.query.referrer
     res.locals.referrer = referrer
-    const record = records.find(record => record.id == req.params.uuid)
+    const record = records.find(record => record.id === req.params.uuid)
     if (!record) {
       res.redirect('/records')
     } else {

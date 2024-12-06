@@ -89,18 +89,18 @@ const generateFakeApplication = (params = {}) => {
   application.courseDetails = (params.courseDetails === null) ? undefined : { ...generateCourseDetails(params, application), ...params.courseDetails }
 
   // TODO: fix this hack. We ignore the status except where it's draft.
-  application.status = (params.status == 'Draft' || params.isSeed) ? params.status : generateStatus(application)
+  application.status = (params.status === 'Draft' || params.isSeed) ? params.status : generateStatus(application)
 
-  if (application.status == 'Deferred') {
+  if (application.status === 'Deferred') {
     application.previousStatus = 'TRN received' // set a state to go back to
   }
 
   // Dates
   application = { ...application, ...generateDates(params, application) }
   // Training
-  if (application.source == 'Apply') {
+  if (application.source === 'Apply') {
     application.applyData = { ...generateApplyData(application, params), ...params.applyData }
-    if (params?.applyData?.applyStatus == 'Pending conditions') {
+    if (params?.applyData?.applyStatus === 'Pending conditions') {
       application.status = 'Apply pending conditions'
     }
     // if (params.applyData) application.applyData = params.applyData
@@ -117,7 +117,7 @@ const generateFakeApplication = (params = {}) => {
     application.route = application.courseDetails.route
   }
 
-  if (application.status == 'Withdrawn') {
+  if (application.status === 'Withdrawn') {
     application.withdraw = (params.withdraw === null) ? undefined : { ...generateWithdrawalDetails(application), ...params.withdraw }
   }
 
@@ -169,7 +169,7 @@ const generateFakeApplication = (params = {}) => {
     application.status = application.status.replace('QTS', 'EYTS')
   }
 
-  if (application.source == 'HESA') {
+  if (application.source === 'HESA') {
     application = generateHesaData(application)
   }
 
@@ -212,8 +212,8 @@ const generateFakeApplications = () => {
     // by the course generator
     let providerSize = utils.getRandomArbitrary(50, 100)
     let yearsToGenerate = defaultYearsToGenerate
-    if (provider?.name == 'Webury Hill SCITT') providerSize = 130
-    if (provider?.name == 'King’s Oak University') {
+    if (provider?.name === 'Webury Hill SCITT') providerSize = 130
+    if (provider?.name === 'King’s Oak University') {
       providerSize = 200
       yearsToGenerate = reducedYearsToGenerate // generate fewer years as there's so many records
     }
@@ -262,7 +262,7 @@ const generateFakeApplicationsForProvider = (provider, year, count) => {
       deferred: 0.00,
       withdrawn: 0.00
     }
-  } else if (year == currentYear) {
+  } else if (year === currentYear) {
     targetCounts = {
       draft: 0.15,
       applyEnrolled: 0.0,
@@ -282,7 +282,7 @@ const generateFakeApplicationsForProvider = (provider, year, count) => {
       trnReceived: 0,
       qualificationRecommended: 0,
       qualificationAwarded: 0.95,
-      deferred: (year == (currentYear - 1)) ? 0.05 : 0, // allow for a couple deferred students from previous year
+      deferred: (year === (currentYear - 1)) ? 0.05 : 0, // allow for a couple deferred students from previous year
       withdrawn: 0.05
     }
   }
@@ -389,12 +389,12 @@ const generateFakeApplicationsForProvider = (provider, year, count) => {
 
   stubApplication.qualificationRecommended = {
     status: 'QTS recommended',
-    route: (year == currentYear) ? 'Assessment only' : undefined // AO is the only route likely to be recommended
+    route: (year === currentYear) ? 'Assessment only' : undefined // AO is the only route likely to be recommended
   }
 
   stubApplication.qualificationAwarded = {
     status: 'QTS awarded',
-    route: (year == currentYear) ? 'Assessment only' : undefined // AO is the only route likely to be recommended
+    route: (year === currentYear) ? 'Assessment only' : undefined // AO is the only route likely to be recommended
   }
 
   stubApplication.deferred = {
@@ -441,7 +441,7 @@ const generateApplicationsFile = (filePath) => {
   // Logging
   const applicationCounts = {}
   statuses.forEach(status => {
-    applicationCounts[status] = applications.filter(application => application.status == status).length
+    applicationCounts[status] = applications.filter(application => application.status === status).length
   })
   console.log({ applicationCounts })
 

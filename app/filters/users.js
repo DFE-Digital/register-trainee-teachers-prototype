@@ -51,7 +51,7 @@ filters.makeFakeSchoolDomain = (input, array = [], tld = 'ac.uk') => {
   // Split and remove falsy
     .split(' ').filter(Boolean)
   // If it’s got a single part name, add 'school'
-  if (output.length == 1) output.push('school')
+  if (output.length === 1) output.push('school')
   const joined = output.join('-')
   return `${joined}.${tld}`
 }

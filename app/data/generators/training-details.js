@@ -26,9 +26,9 @@ module.exports = (params) => {
   let traineeStarted
 
   // Some statuses implicitly *must* have a commencement date
-  if (statusesWhereTraineesMustHaveStarted.includes(params?.status) || params?.source == 'HESA') {
+  if (statusesWhereTraineesMustHaveStarted.includes(params?.status) || params?.source === 'HESA') {
     traineeStarted = 'true'
-  } else if (params?.status == 'Draft') {
+  } else if (params?.status === 'Draft') {
     traineeStarted = 'false'
   }
   // Course that haven’t started, don’t get a start date
@@ -41,7 +41,7 @@ module.exports = (params) => {
     })
   }
 
-  commencementDate = (traineeStarted == 'true') ? commencementDate : undefined
+  commencementDate = (traineeStarted === 'true') ? commencementDate : undefined
 
   // Estimate 30% of records with Trainee IDs
   const hasTraineeId = weighted.select([true, false], [0.3, 0.7])

@@ -83,7 +83,7 @@ module.exports = (params, application) => {
   const isApplyDraft = utils.sourceIsApply(application) && isDraft
   const isManualDraft = utils.sourceIsManual(application) && isDraft
 
-  const sectionIsComplete = (params?.courseDetails?.status == 'Completed')
+  const sectionIsComplete = (params?.courseDetails?.status === 'Completed')
 
   // Whether to pretend that missing or ambiguous data hase already been set
   // If something is non draft or complete then implicitly the ambiguous data must have been fixed.
@@ -101,10 +101,10 @@ module.exports = (params, application) => {
   // If a publish course, pick from seed courses
   if (isPublishCourse) {
     // Narrow down to just a single year’s courses
-    const providerCoursesByYear = courses[application.provider].courses.filter(course => course.academicYear == application.academicYear)
+    const providerCoursesByYear = courses[application.provider].courses.filter(course => course.academicYear === application.academicYear)
 
     // Grab course details from seed courses
-    let routeCourses = providerCoursesByYear.filter(course => course.route == application.route)
+    let routeCourses = providerCoursesByYear.filter(course => course.route === application.route)
 
     // Todo: seed courses for a provider might not align with selected or enabled routes.
     // Think of a better way of handling this
@@ -149,7 +149,7 @@ module.exports = (params, application) => {
 
     // Some Pubish courses are set to `Full time or part time` - when a user adds one of these
     // courses we’ll assume `Full time` but let the user override it.
-    if (pretendDataIsComplete && courseDetails.studyMode == 'Full time or part time') {
+    if (pretendDataIsComplete && courseDetails.studyMode === 'Full time or part time') {
       courseDetails.studyMode = 'Full time'
     }
   } else {

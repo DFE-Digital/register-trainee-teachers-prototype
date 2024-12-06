@@ -40,14 +40,14 @@ const generateUser = (provider, role = 'team member') => {
   let userPermissions = []
 
   // Team members have a varied number of permissions
-  if (role == 'team member') {
+  if (role === 'team member') {
     // How many permissions should we have
     const targetCountOfPermissions = utils.getRandomArbitrary(1, shuffledPermissions.length + 1)
     // Assign those permissions
     userPermissions = shuffledPermissions.slice(0, Math.min(shuffledPermissions.length, targetCountOfPermissions))
   }
   // Admins have all permissions
-  else if (role == 'team admin') {
+  else if (role === 'team admin') {
     // Team admins have all permissions plus the ability to manage team members
     userPermissions = ['manage team members', ...shuffledPermissions]
   }
@@ -69,7 +69,7 @@ const generateFakeUsers = () => {
   const users = []
 
   providers.selected.forEach(provider => {
-    const isAccrediting = provider.type == 'accreditingProvider'
+    const isAccrediting = provider.type === 'accreditingProvider'
     // Create between 2 and 10 users per provider
     const numberOfUsersToCreate = utils.getRandomArbitrary(2, (isAccrediting) ? 10 : 3)
 

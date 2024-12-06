@@ -40,7 +40,7 @@ filters.uniq = arr => {
 
   {% set array = ['a','b','c'] | push('d') %}
 
-  array == ['a','b','c','d']
+  array === ['a','b','c','d']
 
 */
 
@@ -138,10 +138,10 @@ const joinArray = (array, options = {}) => {
   if (!_.isArray(array)) return
 
   // Don't output anything if no array or items
-  if (!array || array.length == 0) return // return nothing if no items
+  if (!array || array.length === 0) return // return nothing if no items
 
   // No delimiters if only one item
-  if (array.length == 1) {
+  if (array.length === 1) {
     // console.log(array[0])
     return options.prepend + array[0] + options.append // just return item
   }
@@ -187,7 +187,7 @@ filters.hyphenSeparate = (items) => filters.joinArray(items, { delimiter: '-' })
 // Todo: extend joinArray to support first delimiter
 filters.withSeparate = (items) => {
   if (items.length < 2) return items
-  else if (items.length == 2) return filters.joinArray(items, { delimiter: ' with ' })
+  else if (items.length === 2) return filters.joinArray(items, { delimiter: ' with ' })
   else {
     // Grab first two items and join them
     const firstTwoItems = items.splice(0, 2).join(' with ')

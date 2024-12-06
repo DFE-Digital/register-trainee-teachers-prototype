@@ -294,7 +294,7 @@ window.GOVUK.Modules = window.GOVUK.Modules || {};
 
       function setShowHideAllText () {
         const shownSteps = $element.find('.step-is-shown').length
-        // Find out if the number of is-opens == total number of steps
+        // Find out if the number of is-opens === total number of steps
         if (shownSteps === totalSteps) {
           $showOrHideAllButton.text(actions.hideAllText)
         } else {

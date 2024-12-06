@@ -70,7 +70,7 @@ const onConfirm = function (selected) {
   // Probably running on blur
   else {
     // If the source input is blank, our value should be too
-    if (autocompleteInput.value == '') {
+    if (autocompleteInput.value === '') {
       autocompleteValueInput.value = ''
       autocompleteValueInput.setAttribute('data-text', '')
     }
@@ -143,11 +143,11 @@ const setupAutocomplete = (component) => {
   }
 
   // If enhancing a select and values not provided, fall back to options from select
-  if (!values.length && elementType == 'select') {
+  if (!values.length && elementType === 'select') {
     const selectOptions = Array.from(selectElement?.options)
       // Remove empty or disabled select options
       .filter(option => {
-        if (option.disabled || option.label == '') return false
+        if (option.disabled || option.label === '') return false
         return true
       })
 
@@ -155,7 +155,7 @@ const setupAutocomplete = (component) => {
     values = selectOptions.map(option => enhanceSelectOption(option))
   }
 
-  if (!values || values.length == 0) {
+  if (!values || values.length === 0) {
     console.log(`Autocomplete error: no values found for ${element?.id}`)
   }
 
@@ -168,7 +168,7 @@ const setupAutocomplete = (component) => {
 
     // If in suggestions mode we don’t want to show a 'suggestions' banner when there are no results
     if (showSuggestions) {
-      if (results.length == 0) component.classList.add('app-autocomplete--with-suggestions-no-results')
+      if (results.length === 0) component.classList.add('app-autocomplete--with-suggestions-no-results')
       else {
         component.classList.remove('app-autocomplete--with-suggestions-no-results')
       }

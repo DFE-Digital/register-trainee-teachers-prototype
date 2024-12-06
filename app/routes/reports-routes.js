@@ -18,7 +18,7 @@ module.exports = router => {
 
     const formOption = data?.settings?.traineeExportQuestionStyle
 
-    if (formOption == 'Two stage') {
+    if (formOption === 'Two stage') {
       res.redirect('/reports/choose-trainee-records/year')
     } else {
       res.redirect('/reports/choose-trainee-records/year-group')
@@ -32,7 +32,7 @@ module.exports = router => {
     const dateAnswer = data?.reports?.year
 
     // Skip following question about type of year
-    if (dateAnswer == 'All years') {
+    if (dateAnswer === 'All years') {
       res.redirect('./statuses')
     }
     // Answer expected to be current year or previous year

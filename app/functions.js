@@ -43,7 +43,7 @@ module.exports = function (env) {
    - currentMonth(nameOfMonth) = ‘January’
   */
   functions.currentMonth = (type) => {
-    if (type == 'nameOfMonth') {
+    if (type === 'nameOfMonth') {
       return moment().format('MMMM')
     } else {
       return parseInt(moment().format('MM'), 10)

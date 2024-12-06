@@ -63,7 +63,7 @@ const pickLikelyRoute = (enabledRoutes, providerType) => {
 module.exports = application => {
   const providerType = application.accreditingProviderType
 
-  if (application?.source == 'Apply') {
+  if (application?.source === 'Apply') {
     return pickLikelyRoute(enabledApplyRoutes, providerType)
   } else {
     return pickLikelyRoute(enabledTrainingRoutes, providerType)

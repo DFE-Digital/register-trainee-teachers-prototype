@@ -258,8 +258,8 @@ filters.sortDateArrays = (arr, reversed, attr) => {
     let y = (attr) ? b[attr] : b
 
     // Convert arrays of 3 to date objects
-    x = (_.isArray(x) && (x.length == 3)) ? filters.arrayToDateObject(x) : x
-    y = (_.isArray(y) && (y.length == 3)) ? filters.arrayToDateObject(y) : y
+    x = (_.isArray(x) && (x.length === 3)) ? filters.arrayToDateObject(x) : x
+    y = (_.isArray(y) && (y.length === 3)) ? filters.arrayToDateObject(y) : y
 
     // console.log({x}, {attr})
     // if (!caseSens && _.isString(x) && _.isString(y)) {
@@ -301,40 +301,40 @@ filters.formatDate = (date, format, dateFormat) => {
 
   switch (true) {
     // 2018-03-21
-    case (format == 'dashDate'):
+    case (format === 'dashDate'):
       return returnDate.format('YYYY-MM-DD')
 
       // 2018-03-21
-    case (format == 'dashDateForward'):
+    case (format === 'dashDateForward'):
       return returnDate.format('DD-MM-YYYY')
 
       // 2018/03/21
-    case (format == 'slashDate'):
+    case (format === 'slashDate'):
       return returnDate.format('YYYY/MM/DD')
 
       // 2018/03/21
-    case (format == 'slashDateForward'):
+    case (format === 'slashDateForward'):
       return returnDate.format('DD/MM/YYYY')
 
       // 2018/03
-    case (format == 'yearMonth'):
+    case (format === 'yearMonth'):
       return returnDate.format('YYYY/MM')
 
       // 2018-03-21T00:00:00.000Z
-    case (format == 'iso8601'):
+    case (format === 'iso8601'):
       return returnDate.toISOString()
 
       // a year ago
-    case (format == 'relative'):
+    case (format === 'relative'):
       return moment(returnDate).fromNow()
       // return timeAgoInDays(returnDate)
 
       // 21st March 2018
-    case (format == 'pretty'):
+    case (format === 'pretty'):
       return returnDate.format('Do MMMM YYYY')
 
       // March 21st 2018, 12:00:00 am
-    case (format == 'full'):
+    case (format === 'full'):
       return returnDate.format('MMMM Do YYYY, h:mm:ss a')
 
       // pass format through to moment

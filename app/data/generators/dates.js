@@ -30,7 +30,7 @@ module.exports = ({ updatedDate, submittedDate, deferredDate, withdrawalDate, qu
   const isCurrentYear = !(moment(yearEndDate).isBefore())
 
   // Randomise end dates for AO
-  if (application.route == 'Assessment only') {
+  if (application.route === 'Assessment only') {
     yearEndDate = faker.date.between(
       moment(yearStartDate).add(90, 'days'),
       moment(yearEndDate)
@@ -49,7 +49,7 @@ module.exports = ({ updatedDate, submittedDate, deferredDate, withdrawalDate, qu
     }
 
     // Assume all drafts are recent
-    if (application.status == 'Draft') {
+    if (application.status === 'Draft') {
       updatedDate = faker.date.between(
         moment().subtract(50, 'days'),
         moment().toISOString()
@@ -57,7 +57,7 @@ module.exports = ({ updatedDate, submittedDate, deferredDate, withdrawalDate, qu
     }
 
     // Assume all pending are very recent
-    else if (application.status == 'Pending TRN') {
+    else if (application.status === 'Pending TRN') {
       updatedDate = faker.date.between(
         moment().subtract(6, 'days'),
         moment()
@@ -88,7 +88,7 @@ module.exports = ({ updatedDate, submittedDate, deferredDate, withdrawalDate, qu
 
   // Submitted dates apply to everything except drafts
   if (!submittedDate && application.status !== 'Draft') {
-    if (application.status == 'Pending TRN') {
+    if (application.status === 'Pending TRN') {
       submittedDate = updatedDate
     } else {
       const sortedDates = sortDates(moment(yearStartDate).subtract(60, 'days'), moment(updatedDate).subtract(50, 'days'))

@@ -7,11 +7,11 @@ const years = require('../years.js')
 module.exports = application => {
   // All drafts are implicitly manual
   // TODO: how does this work with apply drafts?
-  if (application.status == 'Draft') {
+  if (application.status === 'Draft') {
     return 'Manual'
   } else {
     // HEI records are nearly all HESA
-    if (application.accreditingProviderType == 'HEI') {
+    if (application.accreditingProviderType === 'HEI') {
       const routesThatMustBeManual = [
         'Opt-in',
         'iQTS',

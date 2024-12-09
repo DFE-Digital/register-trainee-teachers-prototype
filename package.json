@@ -42,7 +42,6 @@
     "gulp-sourcemaps": "^3.0.0",
     "inquirer": "^8.2.6",
     "js-yaml": "^4.1.0",
-    "keypather": "^3.0.0",
     "lunr": "^2.3.9",
     "marked": "^15.0.3",
     "marked-gfm-heading-id": "^4.1.1",

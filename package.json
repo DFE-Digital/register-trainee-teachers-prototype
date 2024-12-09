@@ -33,7 +33,6 @@
     "dotenv": "^16.4.5",
     "express": "^4.17.1",
     "express-session": "^1.17.2",
-    "express-writer": "0.0.4",
     "fancy-log": "^2.0.0",
     "govuk-frontend": "^5.5.0",
     "gulp": "^5.0.0",

@@ -1,7 +1,5 @@
 
 {% set code %}
-
-{% markdown %}
 ```
 {
   "data": [
@@ -121,20 +119,19 @@
   ]
 }
 ```
-{% endmarkdown %}
 {% endset %}
 
 {% set collectionData1 %}
   {{ govukDetails({
   summaryText: "17 May 2021 at 5:43pm",
-  html: code
+  html: code | markdown
 }) }}
 {% endset %}
 
 {% set collectionData2 %}
   {{ govukDetails({
   summaryText: "4 December 2022 at 1:07pm",
-  html: code
+  html: code | markdown
 }) }}
 {% endset %}
 

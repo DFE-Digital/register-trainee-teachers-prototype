@@ -1,26 +1,17 @@
 {% extends "_templates/_guidance-page.njk" %}
 
-
 {% set endYear = data.years.currentAcademicYear | academicYearToYear + 1 %}
 
 {% set performanceProfilesDate = endYear + "-1-31" %}
 
 {% if data.settings.signOffPeriods == "performanceProfiles" %}
-
-{% set pageHeading = 'Sign off your list of trainees from {{ data.years.previousAcademicYear }} for the performance profiles publication' %}
-
+  {% set pageHeading = "Sign off your list of trainees from " + data.years.previousAcademicYear + "for the performance profiles publication" %}
 {% else %}
-
-{% set pageHeading = 'Signing off your list of trainees for the performance profiles publication' %}
-
+  {% set pageHeading = "Signing off your list of trainees for the performance profiles publication" %}
 {% endif %}
 
-{% block guidanceContent %}
-
+{% set guidanceContent %}
 {% if data.settings.signOffPeriods == "performanceProfiles" %}
-
-# Sign off your list of trainees from {{ data.years.previousAcademicYear }} for the performance profiles publication
-
 You need to sign off your list of trainee teachers from the {{ data.years.previousAcademicYear }} academic year by {{ performanceProfilesDate | govukDate('YYYY-M-D') }} at 11:59pm.
 
 This is so that the data can be included in the annual initial teacher training performance profiles publication. This will be published on GOV.UK.
@@ -46,18 +37,18 @@ You need to fix any mistakes before you sign off the data. How you do this depen
 
 ### Providers of school centred initial teacher training (SCITTs)
 
-If the trainee is shown in this service as awarded or withdrawn, you should email [becomingateacher@digital.education.gov.uk](becomingateacher@digital.education.gov.uk?subject=Fix%20mistake%20in%202021%20to%202022%20data%20for%20performance%20profiles%20publication).
+If the trainee is shown in this service as awarded or withdrawn, you should email [becomingateacher@digital.education.gov.uk](mailto:becomingateacher@digital.education.gov.uk?subject=Fix%20mistake%20in%202021%20to%202022%20data%20for%20performance%20profiles%20publication).
 
 If the trainee is shown in this service as actively training or deferred, you should make the change in this service.
 
 ### Higher education institutions (HEIs)
 
-If the trainee is shown in this service as awarded or withdrawn, you should email [becomingateacher@digital.education.gov.uk](becomingateacher@digital.education.gov.uk?subject=Fix%20mistake%20in%202021%20to%202022%20data%20for%20performance%20profiles%20publication).
+If the trainee is shown in this service as awarded or withdrawn, you should email [becomingateacher@digital.education.gov.uk](mailto:becomingateacher@digital.education.gov.uk?subject=Fix%20mistake%20in%202021%20to%202022%20data%20for%20performance%20profiles%20publication).
 
 If the trainee is shown in this service as actively training or deferred, you should:
 
 - make the change through the Higher Education Statistics Agency (HESA) if the trainee was registered through HESA and is in the {{ data.years.currentAcademicYear }} initial teacher training (ITT) collection
-- email [becomingateacher@digital.education.gov.uk](becomingateacher@digital.education.gov.uk?subject=Fix%20mistake%20in%202021%20to%202022%20data%20for%20performance%20profiles%20publication) if the trainee was registered through HESA but is not in the {{ data.years.currentAcademicYear }} ITT collection
+- email [becomingateacher@digital.education.gov.uk](mailto:becomingateacher@digital.education.gov.uk?subject=Fix%20mistake%20in%202021%20to%202022%20data%20for%20performance%20profiles%20publication) if the trainee was registered through HESA but is not in the {{ data.years.currentAcademicYear }} ITT collection
 - make the change in this service if the trainee was not registered through HESA
 
 ## Sign off your trainee data
@@ -71,8 +62,6 @@ Read the [ITT performance profiles methodology (opens in a new tab)](https://exp
 Some trainees will not be included in the ITT performance profiles publication. For example, trainees who withdrew within 90 days of the course start will not be included.
 
 {% else %}
-
-# Signing off your list of trainees for the performance profiles publication
 
 Each year you need to sign off your list of trainee teachers from the previous academic year. You’ll be told by email when you need to do this.
 
@@ -103,7 +92,5 @@ A senior person from your organisation will need to complete a form to sign off 
 Read the ITT performance profiles methodology (opens in a new tab) to find out how your trainee data will be used.
 
 Some trainees will not be included in the ITT performance profiles publication. For example, trainees who withdrew within 90 days of the course start will not be included.
-
 {% endif %}
-
-{% endblock %}
+{% endset %}

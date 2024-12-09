@@ -2,8 +2,9 @@
 
 {% from "govuk/components/table/macro.njk" import govukTable %}
 
+{% from "_components/sub-navigation/macro.njk" import appSubNavigation %}
 
-{% set pageHeading = 'Check the data mapping between HESA and Register trainee teachers' %}
+{% set pageHeading = "Check the data mapping between HESA and Register trainee teachers" %}
 {% set gridColumn = "govuk-grid-column-full" %}
 
 {# Page notes:
@@ -157,13 +158,10 @@ For school placements (HESA field PLMNTSCH), although we collect and use this da
 } %}
 
 {# Page begins #}
-{% block guidanceContent %}
+{% set guidanceContent %}
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
-
-    # {{ pageHeading }}
-
     Use the table to check how data maps between HESA and Register trainee teachers (Register) for the {{ data.years.academicYears[0] }} academic year.
 
     Where possible, these tables follow the same order as the CSV export and a trainee’s record in Register.
@@ -191,7 +189,7 @@ For school placements (HESA field PLMNTSCH), although we collect and use this da
   }) }}
 
   {# Route will tell us what tab’s content to render #}
-  {{ allTableContent[activeTab].content  | safe}}
+  {{ allTableContent[activeTab].content | markdown | safe }}
 
 {% elseif data.settings.hesaGuidanceStyle == 'accordion' %}
 
@@ -203,7 +201,7 @@ For school placements (HESA field PLMNTSCH), although we collect and use this da
         text: item.name
       },
       content: {
-        html: item.content
+        html: item.content | markdown
       }
     }) %}
   {% endfor %}
@@ -218,9 +216,9 @@ For school placements (HESA field PLMNTSCH), although we collect and use this da
 
   {% for key, tabData in allTableContent %}
     <h2 class="govuk-heading-m">{{tabData.name}}</h2>
-    {{ tabData.content | safe }}
+    {{ tabData.content | markdown | safe }}
   {% endfor %}
 
 {% endif %}
 
-{% endblock %}
+{% endset %}

@@ -1,34 +1,24 @@
 {% extends "layout.njk" %}
 
 {% if not backLink %}
-    {% set backLink      = 'javascript:history.back();' %}
+  {% set backLink = 'javascript:history.back();' %}
 {% endif %}
 {% if not backText %}
-    {% set backText      = 'Back'  %}
+  {% set backText = 'Back'  %}
 {% endif %}
 
 {% if backLink == 'false' %}
-    {% set backLink = false %}
+  {% set backLink = false %}
 {% endif %}
 
 {% if backText == 'false' %}
-    {% set backText = '' %}
+  {% set backText = '' %}
 {% endif %}
-
 
 {% block pageTitle %}
   {{ pageHeading }} - {{serviceName}} - GOV.UK
 {% endblock %}
 
-{# {% set breadcrumbs  = {
-  items: [
-    {
-      text: "How to use this service",
-      href: "/guidance"
-    }
-  ]
-} %}
- #}
 {% set backLink = '/guidance' %}
 {% set backText = "How to use this service" %}
 
@@ -47,13 +37,9 @@
   {% include "_includes/app-flash-message.njk" %}
 
   <div class="govuk-grid-row">
-    <div class="{{ gridColumn or 'govuk-grid-column-two-thirds-from-desktop' }}">
-      {% markdown %}
-        {% block guidanceContent %}
-
-        {% endblock %}
-      {% endmarkdown %}
+    <div class="app-markdown {{ gridColumn or 'govuk-grid-column-two-thirds-from-desktop' }}">
+      <h1 class="govuk-heading-xl">{{ pageHeading }}</h1>
+      {{ guidanceContent | markdown | safe }}
     </div>
    </div>
-
 {% endblock %}

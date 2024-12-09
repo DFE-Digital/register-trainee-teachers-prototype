@@ -4,7 +4,8 @@
 const string = require('string')
 const _ = require('lodash')
 const { marked } = require('marked')
-const GovukHTMLRenderer = require('govuk-markdown')
+const { gfmHeadingId } = require('marked-gfm-heading-id')
+
 // Leave this filters line
 const filters = {}
 
@@ -90,30 +91,26 @@ filters.stringLiteral = function (str) {
 
 // Format text using markdown
 // Documentation at https://marked.js.org/
-filters.markdown = (input, params = {}) => {
-  marked.setOptions({
-    renderer: new GovukHTMLRenderer(),
-    headerIds: true,
-    headingsStartWith: params.headingsStartWith ?? 'xl',
-    smartypants: true
-  })
-
-  // Offset headings - useful where embedded content
-  // needs to start at h2 rather than h1
-  // https://marked.js.org/using_pro#walk-tokens
-  const headingOffset = params.headingOffset ?? 0
-  const walkTokens = (token) => {
-    if (token.type === 'heading') {
-      token.depth += headingOffset
-    }
-  }
-
-  marked.use({ walkTokens })
-
-  if (input) return marked(input)
-  else {
+filters.markdown = (markdown) => {
+  if (!markdown) {
     console.log('Error with markdown: no input given')
+    return null
   }
+
+  marked.use(gfmHeadingId())
+
+  const text = markdown.replace(/\\r/g, '\n').replace(/\\t/g, ' ')
+  const html = marked.parse(text)
+
+  // Add govuk-* classes
+  let govukHtml = html.replace(/<p>/g, '<p class="govuk-body">')
+  govukHtml = govukHtml.replace(/<ol>/g, '<ol class="govuk-list govuk-list--number">')
+  govukHtml = govukHtml.replace(/<ul>/g, '<ul class="govuk-list govuk-list--bullet">')
+  govukHtml = govukHtml.replace(/<h2/g, '<h2 class="govuk-heading-l"')
+  govukHtml = govukHtml.replace(/<h3/g, '<h3 class="govuk-heading-m"')
+  govukHtml = govukHtml.replace(/<h4/g, '<h4 class="govuk-heading-s"')
+
+  return govukHtml
 }
 
 // Checks if a string starts with something

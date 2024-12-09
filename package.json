@@ -36,7 +36,6 @@
     "express-writer": "0.0.4",
     "fancy-log": "^2.0.0",
     "govuk-frontend": "^5.5.0",
-    "govuk-markdown": "^0.8.0",
     "gulp": "^5.0.0",
     "gulp-nodemon": "^2.5.0",
     "gulp-sass": "^5.0.0",

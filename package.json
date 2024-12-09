@@ -46,6 +46,7 @@
     "keypather": "^3.0.0",
     "lunr": "^2.3.9",
     "marked": "^15.0.3",
+    "marked-gfm-heading-id": "^4.1.1",
     "moment": "^2.27.0",
     "nunjucks": "^3.2.3",
     "nunjucks-markdown": "^2.0.1",

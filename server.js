@@ -168,7 +168,7 @@ if (useAutoStoreData === 'true') {
 }
 
 // Clear all data in session if you open /prototype-admin/clear-data
-app.post('/admin/clear-data', function (req, res) {
+app.post('/admin/clear-data', (req, res) => {
   console.log('Clearing session data')
   req.session.data = {}
   res.redirect('/')
@@ -180,24 +180,24 @@ if (promoMode === 'true') {
 
   app.locals.cookieText = 'GOV.UK uses cookies to make the site simpler. <a href="/docs/cookies">Find out more about cookies</a>'
 
-  app.get('/', function (req, res) {
+  app.get('/', (req, res) => {
     res.redirect('/docs')
   })
 
   // Allow search engines to index the Prototype Kit promo site
-  app.get('/robots.txt', function (req, res) {
+  app.get('/robots.txt', (req, res) => {
     res.type('text/plain')
     res.send('User-agent: *\nAllow: /')
   })
 } else {
   // Prevent search indexing
-  app.use(function (req, res, next) {
+  app.use((req, res, next) => {
     // Setting headers stops pages being indexed even if indexed pages link to them.
     res.setHeader('X-Robots-Tag', 'noindex')
     next()
   })
 
-  app.get('/robots.txt', function (req, res) {
+  app.get('/robots.txt', (req, res) => {
     res.type('text/plain')
     res.send('User-agent: *\nDisallow: /')
   })
@@ -213,7 +213,7 @@ if (typeof (routes) !== 'function') {
 }
 
 // Strip .html and .htm if provided
-app.get(/\.html?$/i, function (req, res) {
+app.get(/\.html?$/i, (req, res) => {
   let path = req.path
   const parts = path.split('.')
   parts.pop()
@@ -224,13 +224,13 @@ app.get(/\.html?$/i, function (req, res) {
 // Auto render any view that exists
 
 // App folder routes get priority
-app.get(/^([^.]+)$/, function (req, res, next) {
+app.get(/^([^.]+)$/, (req, res, next) => {
   utils.matchRoutes(req, res, next)
 })
 
 // Redirect all POSTs to GETs - this allows users to use POST for autoStoreData
 // EXTRA added by Ed Horsford: preserve query params
-app.post(/^\/([^.]+)$/, function (req, res) {
+app.post(/^\/([^.]+)$/, (req, res) => {
   // res.redirect('/' + req.params[0])
   res.redirect(url.format({
     pathname: '/' + req.params[0],
@@ -240,7 +240,7 @@ app.post(/^\/([^.]+)$/, function (req, res) {
 })
 
 // Catch 404 and forward to error handler
-app.use(function (req, res, next) {
+app.use((req, res, next) => {
   const err = new Error(`Page not found: ${req.path}`)
   err.status = 404
   next(err)

@@ -106,7 +106,8 @@ const getSelectedFilters = (req) => {
   const query = Object.assign({}, req.query)
   const filters = getFilters(req)
   const searchQuery = getSearchQuery(req)
-  const pathname = url.parse(req.url).pathname
+  const myUrl = new URL(req.url, `http://${req.headers.host}`) // Include the host to construct a full URL
+  const pathname = myUrl.pathname
 
   const hasFilters = getHasFilters(filters, searchQuery)
 

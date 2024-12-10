@@ -4,7 +4,6 @@
 const _ = require('lodash')
 const { fakerEN_GB: faker } = require('@faker-js/faker')
 const moment = require('moment')
-const path = require('path')
 const url = require('url')
 const trainingRouteData = require('./../data/training-route-data')
 const trainingRoutes = trainingRouteData.trainingRoutes
@@ -25,18 +24,29 @@ const skipCourseDatesPage = false
 // Cooerce falsy inputs to real true and false
 // Needed as Nunjucks doesn't treat all falsy values as false
 exports.falsify = (input) => {
-  if (!input) return false
-  if (input === null) return false
-  if (input === undefined) return false
-  if (_.isNumber(input)) return input
-  else if (input === false) return false
+  // Handles null, undefined, and false
+  if (_.isNil(input) || input === false) {
+    return false
+  }
+
+  // Returns numbers as is
+  if (_.isNumber(input)) {
+    return input
+  }
+
   if (_.isString(input)) {
     const truthyValues = ['yes', 'true']
     const falsyValues = ['no', 'false']
-    if (truthyValues.includes(input.toLowerCase())) return true
-    else if (falsyValues.includes(input.toLowerCase())) return false
+    const lowerInput = input.toLowerCase()
+    if (truthyValues.includes(lowerInput)) {
+      return true
+    }
+    if (falsyValues.includes(lowerInput)) {
+      return false
+    }
   }
-  return input
+
+  return input // Return input as is for other types
 }
 
 // Pick a random item from array. Supports passing in your own
@@ -2730,11 +2740,10 @@ exports.countInvalidAnswers = function (record, data = false) {
     // console.log('Counting invalid answers with CTX')
     const errorArray = this.ctx?.data.temp?.errorArray || []
     return errorArray.length
-  }
-  // The context is not available from routes - so use record data as fallback
-  // This count could be wrong if errors have been added dynamically - it can only
-  // pick up records that include the placeholder strings
-  else {
+  } else {
+    // The context is not available from routes - so use record data as fallback
+    // This count could be wrong if errors have been added dynamically - it can only
+    // pick up records that include the placeholder strings
     // console.log('Counting invalid answers with json')
     const jsonRecord = JSON.stringify(record)
     const invalidCount = (jsonRecord.match(/\*\*invalid\*\*/g) || []).length
@@ -2748,7 +2757,9 @@ exports.hasInvalidAnswers = function (record, data = false) {
   // A page can set this temp variable to 'tell' this filter that errors
   // apply - otherwise fall back to counting errors
   let hasErrors
-  if (data?.temp?.pageHasErrors === 'true') hasErrors = true
+  if (data?.temp?.pageHasErrors === 'true') {
+    hasErrors = true
+  }
   return hasErrors || exports.countInvalidAnswers.apply(this, [record]) > 0
 }
 
@@ -2772,13 +2783,21 @@ exports.searchSchools = (schools = [], query = '') => {
       const simpleSchoolName = removePunctuation(school.schoolName).toLowerCase()
 
       // 849382
-      if (school.urn.includes(part)) match = true
+      if (school.urn.includes(part)){
+       match = true
+      }
       // Abbeywood School
-      if (simpleSchoolName.includes(part)) match = true
+      if (simpleSchoolName.includes(part)) {
+        match = true
+      }
       // Postcode with spaces
-      if (school.postcode && school.postcode.toLowerCase().includes(part)) match = true
+      if (school.postcode && school.postcode.toLowerCase().includes(part)) {
+        match = true
+      }
       // Postcode without spaces
-      if (school.postcode && school.postcode.toLowerCase().replace(' ', '').includes(part)) match = true
+      if (school.postcode && school.postcode.toLowerCase().replace(' ', '').includes(part)) {
+        match = true
+      }
       return match
     })
   })
@@ -2791,8 +2810,9 @@ exports.searchSchools = (schools = [], query = '') => {
 
 // Adds referrer as query string if it exists
 exports.addReferrer = (url, referrer) => {
-  if (!referrer || referrer === undefined) return url
-  else {
+  if (!referrer || referrer === undefined) {
+    return url
+  } else {
     return `${url}?referrer=${referrer}`
   }
 }
@@ -2802,15 +2822,17 @@ exports.orReferrer = function (url, referrer) {
 
   const referrerDestination = exports.getReferrerDestination(referrer, currentPageUrl)
 
-  if (!referrer || !referrerDestination) return url
-  else {
+  if (!referrer || !referrerDestination) {
+    return url
+  } else {
     return referrerDestination
   }
 }
 
 exports.pushReferrer = (existingReferrer, newReferrer) => {
-  if (!existingReferrer) return newReferrer
-  else {
+  if (!existingReferrer) {
+    return newReferrer
+  } else {
     return [].concat(existingReferrer).concat(newReferrer)
   }
 }
@@ -2819,7 +2841,9 @@ exports.pushReferrer = (existingReferrer, newReferrer) => {
 exports.getReferrer = referrer => {
   if (referrer && referrer !== 'undefined') {
     return `?referrer=${referrer}`
-  } else return ''
+  } else {
+    return ''
+  }
 }
 
 // Appends a query param to an optional existing one
@@ -2847,7 +2871,9 @@ exports.parseUrl = (inputUrl) => {
   if (!_.isString(inputUrl)) {
     console.log('Error with parseUrl: input not a string')
     return inputUrl
-  } else return url.parse(inputUrl, true)
+  } else {
+    return url.parse(inputUrl, true)
+  }
 }
 
 // Get structured query
@@ -2882,7 +2908,9 @@ exports.getReferrerDestination = function (referrer, currentPageUrl = false) {
     }
     if (Array.isArray(referrerArray)) {
       return referrerArray
-    } else return []
+    } else {
+      return []
+    }
   }
 
   // Strip duplicates and falsy values
@@ -2894,13 +2922,11 @@ exports.getReferrerDestination = function (referrer, currentPageUrl = false) {
   // No url found
   if (referrerArray.length === 0) {
     return ''
-  }
-  // A single return url
-  else if (referrerArray.length === 1) {
+  } else if (referrerArray.length === 1) {
+    // A single return url
     return referrerArray[0]
-  }
-  // Multiple return urls
-  else {
+  } else {
+    // Multiple return urls
     const referrerCopy = [...referrerArray]
     const last = referrerCopy.pop()
     return `${last}?referrer=${referrerCopy}`

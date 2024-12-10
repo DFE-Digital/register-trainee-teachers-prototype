@@ -1,5 +1,4 @@
 const path = require('path')
-const url = require('url')
 const utils = require('./../lib/utils')
 
 // In function because this is too big to pass around in session
@@ -9,7 +8,8 @@ const getSchools = () => {
 
 // Work out which part of the site we came from
 const getPageContext = req => {
-  const requestUrl = url.parse(req.url).pathname
+  const myUrl = new URL(req.url, `http://${req.headers.host}`) // Include the host to construct a full URL
+  const requestUrl = myUrl.pathname
 
   if (requestUrl.startsWith('/support/users')) {
     return 'users'
@@ -297,11 +297,7 @@ module.exports = router => {
 
   // Render a page for each organisation UUID
   router.get('/support/schools', (req, res, next) => {
-    const data = req.session.data
-
     const allSchools = getSchools()
-
-    // const first100Schools = allSchools.slice(0, 100)
 
     res.render('support/schools/index', {
       schools: allSchools,
@@ -312,11 +308,8 @@ module.exports = router => {
   // Render a page for each organisation UUID
   router.get('/support/schools/:uuid', (req, res, next) => {
     const uuid = req.params.uuid
-
     const schools = getSchools()
-
     const school = schools.find(school => school.uuid === uuid)
-
     const schoolUrl = `/support/schools/${uuid}`
 
     const breadcrumbs = {
@@ -342,12 +335,9 @@ module.exports = router => {
   // Render organisation pages, passing along the organisation UUID
   router.get('/support/schools/:uuid/:page*', (req, res, next) => {
     const uuid = req.params.uuid
-
     const schools = getSchools()
     const school = schools.find(school => school.uuid === uuid)
-
     const schoolUrl = `/support/schools/${uuid}`
-
     const targetUrl = path.join('support/schools', req.params.page, req.params[0])
 
     if (!school) {

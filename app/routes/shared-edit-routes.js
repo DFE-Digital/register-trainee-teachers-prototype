@@ -248,9 +248,8 @@ module.exports = router => {
     if (schoolSearchTerm && !schoolUuid && employingSchoolApplicable) {
       const queryParams = utils.addQueryParam(referrer, `_schoolSearch=${schoolSearchTerm}`)
       res.redirect(`${recordPath}/schools/employing-school${queryParams}`)
-    }
-    // No answer given and no search term
-    else if (!schoolUuid && employingSchoolApplicable) {
+    } else if (!schoolUuid && employingSchoolApplicable) {
+      // No answer given and no search term
       res.redirect(`${recordPath}/schools/employing-school${referrer}`)
     } else {
       if (employingSchoolApplicable) {
@@ -286,15 +285,12 @@ module.exports = router => {
     const route = record?.route
     const recordPath = utils.getRecordPath(req)
     const referrer = utils.getReferrer(req.query.referrer)
-    const existingCourseDetails = record?.courseDetails
-    const recordIsDraft = utils.isDraft(record)
 
     // No data, return to page
     if (!route) {
       res.redirect(`${recordPath}/course-details/select-route${referrer}`)
-    }
-    // As we’ve changed the route, we now chain on the course details section
-    else {
+    } else {
+      // As we’ve changed the route, we now chain on the course details section
       // Look up courses offered by this provider for this route
       const providerCourses = utils.getProviderCourses({
         courses: data.courses,
@@ -325,7 +321,6 @@ module.exports = router => {
   router.get(['/:recordtype/:uuid/course-details/', '/:recordtype/course-details/'], (req, res) => {
     const recordPath = utils.getRecordPath(req)
     const referrer = utils.getReferrer(req.query.referrer)
-    const provider = data.record?.provider
 
     // TODO: Maybe add some further logic once the Accredited Provider and Lead Partners are clarified and implemented. For the time being the full list will be displayed regardless of which hardcoded provider is selected.
     res.redirect(`${recordPath}/course-details/select-course-provider${referrer}`)
@@ -356,9 +351,8 @@ module.exports = router => {
         // Early years can skip phase question
         if (utils.isEarlyYears(record)) {
           res.redirect(`${recordPath}/course-details/details${referrer}`)
-        }
-        // All other routes need phase
-        else {
+        } else {
+          // All other routes need phase
           res.redirect(`${recordPath}/course-details/phase${referrer}`)
         }
       } else {
@@ -412,9 +406,8 @@ module.exports = router => {
       // If there are courses for that academic year, show course picker page
       if (coursesByYear[String(academicYearSimple)] && coursesByYear[String(academicYearSimple)].length > 0) {
         res.redirect(`${recordPath}/course-details/pick-course/${academicYearSimple}${referrer}`)
-      }
-      // If there are no courses, assume manual entry for course details
-      else {
+      } else {
+        // If there are no courses, assume manual entry for course details
         res.redirect(`${recordPath}/course-details/phase${referrer}`)
       }
     }
@@ -495,7 +488,6 @@ module.exports = router => {
     const recordPath = utils.getRecordPath(req)
     const referrer = utils.getReferrer(req.query.referrer)
 
-    const enabledRoutes = data.settings.enabledTrainingRoutes
     const route = record?.route
     const academicYear = utils.academicYearToYear(record.academicYear)
 
@@ -509,13 +501,11 @@ module.exports = router => {
     // User shouldn’t have been on this page, send them to manual course details journey
     if (providerCourses.length === 0) {
       res.redirect(`${recordPath}/course-details/phase${referrer}`)
-    }
-    // No data, return to page
-    else if (!selectedCourse) {
+    } else if (!selectedCourse) {
+      // No data, return to page
       res.redirect(`${recordPath}/course-details/pick-course/${academicYear}${referrer}`)
-    }
-    // They’ve chosen to enter details manually
-    else if (selectedCourse === 'Other') {
+    } else if (selectedCourse === 'Other') {
+      // They’ve chosen to enter details manually
       // User has swapped from a publish to a non-publish course. Delete existing publish data
       // but preserve everything else
       if (record?.courseDetails?.isPublishCourse) {
@@ -527,10 +517,8 @@ module.exports = router => {
 
       // Send them down the manual course details journey
       res.redirect(`${recordPath}/course-details/phase${referrer}`)
-    }
-
-    // A publish course was selected
-    else {
+    } else {
+      // A publish course was selected
       // UI supports picking courses via radios or via an autocomplete
       // So we have to check different sorts of values to work out which we might have gotten
 
@@ -615,9 +603,10 @@ module.exports = router => {
     // We loop through this page up to 3 times. When done, we'll redirect away
     if (hasUnmappedPublishSubjects) {
       res.render(`${req.params.recordtype}/course-details/choose-specialisms`)
+    } else {
+      // Send to next conditional page or confirm page
+      res.redirect(utils.getNextPublishCourseDetailsUrl(record, recordPath, referrer))
     }
-    // Send to next conditional page or confirm page
-    else res.redirect(utils.getNextPublishCourseDetailsUrl(record, recordPath, referrer))
   })
 
   // Deal with specialisms data as it comes in
@@ -640,23 +629,23 @@ module.exports = router => {
       // If there are two Publish subjects, that means we can only have
       // two languages
       const publishSubjectsCount = Object.keys(courseDetails.publishSubjects).length
-      if (publishSubjectsCount > 1) subjectsArray = subjectsArray.slice(0, 2)
+      if (publishSubjectsCount > 1) {
+        subjectsArray = subjectsArray.slice(0, 2)
+      }
 
       // If a subject has already been set, add to it
       // For instance, it could be Biology with two languages - we don't want to overwrite Biology
       // as the first subject
       if (courseDetails?.subjects?.first) {
         subjectsArray = [courseDetails?.subjects?.first].concat(subjectsArray)
-      }
-      // It’s possible a second subject has already been set. If so, just add it to the end.
-      // This means if the provider picked two languages, the existing second subject would get pushed
-      // to the third slot
-      else if (courseDetails?.subjects?.second) {
+      } else if (courseDetails?.subjects?.second) {
+        // It’s possible a second subject has already been set. If so, just add it to the end.
+        // This means if the provider picked two languages, the existing second subject would get pushed
+        // to the third slot
         subjectsArray.push(courseDetails.subjects.second)
-      }
-      // If there's a null entry that means we've got an unmapped Publish subject - add that to the
-      // end so we don’t forget about it
-      else if (courseDetails?.subjects?.second === null) {
+      } else if (courseDetails?.subjects?.second === null) {
+        // If there's a null entry that means we've got an unmapped Publish subject - add that to the
+        // end so we don’t forget about it
         subjectsArray.push(null)
       }
 
@@ -776,7 +765,7 @@ module.exports = router => {
     }
 
     // Make an array of subjects data - easier to work with
-    const subjectsArray = record?.courseDetails?.subjects && Object.values(record.courseDetails.subjects).filter(Boolean) || []
+    const subjectsArray = (record?.courseDetails?.subjects && Object.values(record.courseDetails.subjects).filter(Boolean)) || []
 
     // Map back to cardinal object
     courseDetails.subjects = utils.arrayToOrdinalObject(subjectsArray)
@@ -830,7 +819,6 @@ module.exports = router => {
   // Ethnic group branching
   router.post(['/:recordtype/:uuid/diversity/ethnic-group', '/:recordtype/diversity/ethnic-group'], (req, res) => {
     const data = req.session.data
-    const record = data.record // copy record
     const ethnicGroup = _.get(data, 'record.diversity.ethnicGroup')
     const recordPath = utils.getRecordPath(req)
     const referrer = utils.getReferrer(req.query.referrer)
@@ -861,7 +849,9 @@ module.exports = router => {
     } else {
       if (utils.isDraft(record) && utils.sourceIsApply(record)) {
         res.redirect(utils.orReferrer(`${recordPath}/overview`, req.query.referrer))
-      } else res.redirect(`${recordPath}/diversity/confirm${referrer}`)
+      } else {
+        res.redirect(`${recordPath}/diversity/confirm${referrer}`)
+      }
     }
   })
 
@@ -884,7 +874,7 @@ module.exports = router => {
     const data = req.session.data
     const record = data.record // copy record
     const recordPath = utils.getRecordPath(req)
-    degreeIndex = req.params.index
+    const degreeIndex = req.params.index
     const referrer = utils.getReferrer(req.query.referrer)
 
     if (_.get(data, 'record.degree.items[' + degreeIndex + ']')) {
@@ -909,7 +899,9 @@ module.exports = router => {
           // records without a dregree anyway.
           utils.updateRecord(data, data.record)
         }
-      } else res.redirect(utils.getReferrerDestination(req.query.referrer))
+      } else {
+        res.redirect(utils.getReferrerDestination(req.query.referrer))
+      }
     } else {
       res.redirect(`${recordPath}/degree/confirm${referrer}`)
     }
@@ -917,9 +909,6 @@ module.exports = router => {
 
   // Forward degree requests to the right template, including the index
   router.get(['/:recordtype/:uuid/degree/:index/:page', '/:recordtype/degree/:index/:page'], (req, res) => {
-    const recordPath = utils.getRecordPath(req)
-    const referrer = utils.getReferrer(req.query.referrer)
-
     res.render(`${req.params.recordtype}/degree/${req.params.page}`, { itemIndex: req.params.index })
   })
 
@@ -1027,9 +1016,8 @@ module.exports = router => {
           res.redirect(`${recordPath}`)
         }
       }
-    }
-    // Draft specific routes
-    else if (req.params.recordtype !== 'record') {
+    } else if (req.params.recordtype !== 'record') {
+      // Draft specific routes
       if (record.placement.hasPlacements === 'Not yet') {
         // mark the Placements section as complete
         _.set(record, 'placement.status', 'Completed')
@@ -1049,7 +1037,6 @@ module.exports = router => {
 
   // Add a placement - generate a UUID and send the user to it
   router.get(['/:recordtype/:uuid/placements/add', '/:recordtype/placements/add'], (req, res) => {
-    const data = req.session.data
     const recordPath = utils.getRecordPath(req)
     const referrer = utils.getReferrer(req.query.referrer)
     const placementUuid = faker.string.uuid()
@@ -1234,7 +1221,9 @@ module.exports = router => {
     const radiosAreAUuid = utils.isUuid(searchResultRadios)
 
     let isManualEntry = placement?.school?.isManualEntry || (placement?.school?.schoolName && !searchQuery)
-    if (isManualEntry === 'true') isManualEntry = true
+    if (isManualEntry === 'true') {
+      isManualEntry = true
+    }
 
     // Search failed, go to manual
     if (searchResultRadios === 'manualEntry') {
@@ -1339,7 +1328,6 @@ module.exports = router => {
 
   // Redirect to first page of iQTS
   router.get(['/:recordtype/:uuid/iqts', '/:recordtype/iqts'], (req, res) => {
-    const data = req.session.data
     const recordPath = utils.getRecordPath(req)
     const referrer = utils.getReferrer(req.query.referrer)
     res.redirect(`${recordPath}/iqts/country${referrer}`)

@@ -1,13 +1,9 @@
 const _ = require('lodash')
 const express = require('express')
-const { fakerEN_GB: faker } = require('@faker-js/faker')
-const moment = require('moment')
-const path = require('path')
 const router = express.Router()
 const url = require('url')
 const utils = require('./lib/utils')
 const permissions = require('./filters/permissions.js').filters
-const fs = require('fs')
 
 // =============================================================================
 // Catch all
@@ -32,7 +28,9 @@ router.all('*', (req, res, next) => {
     })
   }
   res.locals.flash = req.flash('success') // pass through 'success' messages only
-  res.locals.currentPageUrl = url.parse(req.url).pathname
+
+  const myUrl = new URL(req.url, `http://${req.headers.host}`) // Include the host to construct a full URL
+  res.locals.currentPageUrl = myUrl.pathname
 
   // Todo - move this stuff to middleware?
   // Need to also save to locals as saving to data at this point won’t be available to the view unless refreshed
@@ -89,7 +87,9 @@ router.all('*', (req, res, next) => {
 router.get('*', (req, res, next) => {
   const data = req.session.data
 
-  const requestedUrl = url.parse(req.url).pathname
+  const myUrl = new URL(req.url, `http://${req.headers.host}`) // Include the host to construct a full URL
+  const requestedUrl = myUrl.pathname
+
   // Delete cashes of invalid answers that should be flushed on each request
   delete data?.temp
   if (req?.query?.clearQuery) {
@@ -156,7 +156,9 @@ router.post('/direct-set-data', (req, res, next) => {
         console.log(`Updating record at index ${recordIndex}`)
         data.records[recordIndex] = data.record
       }
-    } else console.log('Error: no record id to update to')
+    } else {
+      console.log('Error: no record id to update to')
+    }
   }
 
   res.redirect('/direct-set-data')

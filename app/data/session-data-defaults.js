@@ -1,7 +1,6 @@
 const yaml = require('js-yaml')
 const fs = require('fs')
 const path = require('path')
-const utils = require('../lib/utils.js')
 
 const countries = require('./countries')
 const disabilities = require('./disabilities')

@@ -200,12 +200,12 @@ const allSubjects = [...new Set(subjectSpecialismsArray.concat(allocationSubject
 const peSubjects = allocationSubjects['Physical education'].subjectSpecialisms
 const modernLanguagesSubjects = allocationSubjects['Modern languages'].subjectSpecialisms
 const designAndTechnologySubjects = allocationSubjects['Design and technology'].subjectSpecialisms
-const ebacSubjects = subjectsObjectArray.filter(specialism => specialism.isEbac).map(specialism => specialism.name).sort(sortAlphabetical)
+// const ebacSubjects = subjectsObjectArray.filter(specialism => specialism.isEbac).map(specialism => specialism.name).sort(sortAlphabetical)
 
 // Subject subsets used for seed generators
 // Non exaustive list
 // Just ones commonly seen - good enough for seeds
-commonPrimarySubjects = upcaseFirstChar([
+const commonPrimarySubjects = upcaseFirstChar([
   'primary teaching',
   'English studies',
   'mathematics',
@@ -221,7 +221,7 @@ commonPrimarySubjects = upcaseFirstChar([
 ])
 
 // Todo: are these needed any more? should use publish list
-commonSecondarySubjects = upcaseFirstChar([
+const commonSecondarySubjects = upcaseFirstChar([
   'art and design',
   'biology',
   'business studies',
@@ -249,7 +249,7 @@ commonSecondarySubjects = upcaseFirstChar([
   'social sciences'
 ])
 
-coreSubjects = upcaseFirstChar([
+const coreSubjects = upcaseFirstChar([
   'English studies',
   'mathematics',
   'physics',
@@ -336,7 +336,7 @@ publishSubjectsCsvArray.forEach(subject => {
 
 // console.log({publishSubjects})
 
-corePublishSubjects = upcaseFirstChar([
+const corePublishSubjects = upcaseFirstChar([
   'English',
   'mathematics',
   'physics',
@@ -345,7 +345,7 @@ corePublishSubjects = upcaseFirstChar([
   'design and technology'
 ])
 
-primarySubjectOptions = [
+const primarySubjectOptions = [
   'Primary',
   'Primary with English',
   'Primary with geography and history',

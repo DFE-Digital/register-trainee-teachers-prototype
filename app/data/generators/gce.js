@@ -2,8 +2,8 @@ const weighted = require('weighted')
 const gceData = require('../gce')
 
 module.exports = (faker, isInternationalTrainee) => {
-  let year = faker.date.between('1970', '2016')
-  year = year.getFullYear()
+  // let year = faker.date.between('1970', '2016')
+  // year = year.getFullYear()
 
   const type = weighted.select({
     'A level': 0.9,

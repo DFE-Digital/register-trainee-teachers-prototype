@@ -1,7 +1,4 @@
 // Generates fake training details
-
-const moment = require('moment')
-const weighted = require('weighted')
 const { fakerUK: faker } = require('@faker-js/faker')
 const allSchools = require('../gis-schools.js')
 
@@ -32,8 +29,11 @@ module.exports = (params) => {
   if (requiresEmployingSchool(params)) {
     // Attempt to pick an employing school with a similar postcode
     const tempEmploying = faker.helpers.arrayElement(allSchools.filter(school => {
-      if (!school.postcode || !leadPartner?.postcode) return false
-      else return school.postcode.startsWith(leadPartner.postcode.charAt(0))
+      if (!school.postcode || !leadPartner?.postcode) {
+        return false
+      } else {
+        return school.postcode.startsWith(leadPartner.postcode.charAt(0))
+      }
     }))
     // Fall back to random school if we didn’t find a tempEmploying
     employingSchool = (!tempEmploying) ? faker.helpers.arrayElement(allSchools) : tempEmploying

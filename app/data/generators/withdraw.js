@@ -1,15 +1,9 @@
 const { fakerEN_GB: faker } = require('@faker-js/faker')
 const weighted = require('weighted')
-
-const utils = require('../../lib/utils.js')
-
 const withdrawalReasons = require('../withdrawal-reasons.js')
-
 const reasonsWithoutUnknown = withdrawalReasons.filter(reason => reason !== 'Unknown')
 
 module.exports = params => {
-  const isWithdrawn = utils.isWithdrawn(params)
-
   let reasons = []
 
   const hasReason = weighted.select([true, false], [0.95, 0.05])
@@ -20,7 +14,9 @@ module.exports = params => {
 
   if (hasReason) {
     reasons = randomisedReasons.slice(0, countOfReasons)
-  } else reasons.push('Unknown')
+  } else {
+    reasons.push('Unknown')
+  }
 
   return {
     ...params.withdraw,

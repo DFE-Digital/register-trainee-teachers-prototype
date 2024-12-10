@@ -225,9 +225,10 @@ module.exports = (params) => {
 
   if (isEarlyYears) {
     phase = 'Early years'
+  } else {
+    // else phase = faker.helpers.arrayElement(['Primary', 'Secondary'])
+    phase = weighted.select(['Primary', 'Secondary'], [0.3, 0.7])
   }
-  // else phase = faker.helpers.arrayElement(['Primary', 'Secondary'])
-  else phase = weighted.select(['Primary', 'Secondary'], [0.3, 0.7])
 
   const ageRanges = trainingRouteData.phases[phase].ageRanges
 
@@ -314,9 +315,8 @@ module.exports = (params) => {
         }
       }
     }
-  }
-  // Part time
-  else {
+  } else {
+    // Part time
     if (!isUndergrad) {
       studyMode = 'Part time'
     }

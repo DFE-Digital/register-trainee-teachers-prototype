@@ -1,9 +1,7 @@
 // Generates fake training details
-
 const moment = require('moment')
 const weighted = require('weighted')
 const { fakerUK: faker } = require('@faker-js/faker')
-const schools = require('../gis-schools.js')
 
 // Not all trainees have start dates - but to get these statuses you must have
 const statusesWhereTraineesMustHaveStarted = [
@@ -30,9 +28,8 @@ module.exports = (params) => {
     traineeStarted = 'true'
   } else if (params?.status === 'Draft') {
     traineeStarted = 'false'
-  }
-  // Course that haven’t started, don’t get a start date
-  else if (params?.courseDetails?.startDate && moment(params?.courseDetails?.startDate).isAfter()) {
+  } else if (params?.courseDetails?.startDate && moment(params?.courseDetails?.startDate).isAfter()) {
+    // Course that haven’t started, don’t get a start date
     traineeStarted = 'false'
   } else {
     traineeStarted = params?.traineeStarted || weighted.select({

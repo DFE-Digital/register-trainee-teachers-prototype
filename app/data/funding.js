@@ -1,5 +1,4 @@
 const CSV = require('csv-string')
-const _ = require('lodash')
 
 // csv of monthly funding for SCITTS
 const monthlyFundingScittsCsv =

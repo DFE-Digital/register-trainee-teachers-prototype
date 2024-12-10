@@ -24,15 +24,11 @@ module.exports = (params) => {
   // Assume all pending TRN applications have 0 or 1 placements provided
   if (params?.status === 'Pending TRN') {
     count = weighted.select([0, 1], [0.3, 0.7])
-  }
-
-  // Implicitly recommended or awarded should have had two placements
-  else if (params?.status.includes('recommended') || params?.status.includes('awarded')) {
+  } else if (params?.status.includes('recommended') || params?.status.includes('awarded')) {
+    // Implicitly recommended or awarded should have had two placements
     count = 2
-  }
-
-  // Remaining: TRN received, Withdrawn, Deferred
-  else {
+  } else {
+    // Remaining: TRN received, Withdrawn, Deferred
     count = weighted.select({
       0: 0.05,
       1: 0.05,

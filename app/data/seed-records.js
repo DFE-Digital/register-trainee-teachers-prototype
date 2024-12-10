@@ -326,7 +326,8 @@ seedRecords.push({
   status: 'TRN received',
   reference: 'MM4938',
   trainingDetails: {
-    traineeId: '2020/21-023'
+    traineeId: '2020/21-023',
+    commencementDate: null
   },
   // submittedDate: "2021-05-28T12:37:21.384Z",
   // updatedDate: "2021-08-04T04:26:19.269Z",
@@ -335,9 +336,6 @@ seedRecords.push({
   courseDetails: {
     isPublishCourse: false,
     startDate: '2022-09-01T00:00:00.000Z'
-  },
-  trainingDetails: {
-    commencementDate: null
   },
   personalDetails: {
     givenName: 'Bea',
@@ -396,16 +394,14 @@ seedRecords.push({
   status: 'TRN received',
   reference: 'KG4872',
   trainingDetails: {
-    traineeId: '2020/21-092'
+    traineeId: '2020/21-092',
+    commencementDate: null
   },
   route: 'Primary and secondary (postgrad)',
   courseDetails: {
     isPublishCourse: false,
     startDate: '2020-09-01T00:00:00.000Z',
     endDate: '2021-07-12T00:00:00.000Z' // 12 July specifically to match with problem feature to show this record is forgotten
-  },
-  trainingDetails: {
-    commencementDate: null
   },
   // submittedDate: "2020-05-28T12:37:21.384Z",
   // updatedDate: "2020-07-15T04:26:19.269Z",
@@ -462,15 +458,13 @@ seedRecords.push({
   status: 'TRN received',
   reference: 'RN3219',
   trainingDetails: {
-    traineeId: '2020/21-092'
+    traineeId: '2020/21-092',
+    commencementDate: null
   },
   route: 'Early years graduate entry',
   courseDetails: {
     isPublishCourse: false,
     startDate: '2022-09-01T00:00:00.000Z'
-  },
-  trainingDetails: {
-    commencementDate: null
   },
   // submittedDate: "2020-05-28T12:37:21.384Z",
   // updatedDate: "2020-07-15T04:26:19.269Z",
@@ -683,7 +677,9 @@ seedRecords.push({
   status: 'Draft',
   reference: 'RM3522',
   trainingDetails: {
-    traineeId: '2021/22-075'
+    traineeId: '2021/22-075',
+    region: 'South East and South coast',
+    status: 'Completed'
   },
   route: 'High potential initial teacher training (HPITT)',
   courseDetails: {
@@ -699,13 +695,6 @@ seedRecords.push({
     status: 'Completed'
   },
   degree: {
-    status: 'Completed'
-  },
-  diversity: {
-    status: 'Completed'
-  },
-  trainingDetails: {
-    region: 'South East and South coast',
     status: 'Completed'
   },
   funding: {

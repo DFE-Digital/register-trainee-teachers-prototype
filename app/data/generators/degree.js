@@ -106,10 +106,10 @@ module.exports = (params, application) => {
 
   // Trainees with multiple degrees must have a single degree selected for the
   // purposes of bursaries
-  let degreeToBeUsedForBursaries
-  if (items.length > 1 && !isApplyDraft) {
-    degreeToBeUsedForBursaries = faker.helpers.arrayElement(items).id
-  }
+  // let degreeToBeUsedForBursaries
+  // if (items.length > 1 && !isApplyDraft) {
+  //   degreeToBeUsedForBursaries = faker.helpers.arrayElement(items).id
+  // }
 
   return {
     items

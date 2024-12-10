@@ -335,7 +335,7 @@ module.exports = router => {
     } else {
       console.log(`Changing accredited provider to ${record.provider}`)
 
-      record?.revert?.withdraw?.auditLogComment
+      // record?.revert?.withdraw?.auditLogComment
       const reasonText = `${record.temp.auditLogComment}`
 
       utils.addEvent(record, `Accredited provider changed from ${record.temp.oldProvider}`, reasonText)

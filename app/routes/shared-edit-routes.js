@@ -98,6 +98,7 @@ module.exports = router => {
     const recordPath = utils.getRecordPath(req)
     const referrer = utils.getReferrer(req.query.referrer)
     const schools = getSchools()
+    let selectedSchool
 
     // default to applicable unless checkbox set
     let leadPartnerApplicable = true
@@ -118,7 +119,7 @@ module.exports = router => {
     // raw autocomplete string submitted. If they don’t match, wipe the UUID as it’s invalid - and instead we should
     // run a string search for the given name.
     if (autocompleteUuid && autocompleteRawValue) {
-      const selectedSchool = schools.find(school => school.uuid === autocompleteUuid)
+      selectedSchool = schools.find(school => school.uuid === autocompleteUuid)
       if (selectedSchool?.schoolName !== autocompleteRawValue) {
         autocompleteUuid = undefined
       }
@@ -146,7 +147,7 @@ module.exports = router => {
       res.redirect(`${recordPath}/schools/lead-school${referrer}`)
     } else {
       if (leadPartnerApplicable) {
-        const selectedSchool = schools.find(school => school.uuid === schoolUuid)
+        selectedSchool = schools.find(school => school.uuid === schoolUuid)
 
         // Seed records might have schools that aren't in our schools list
         // This may happen if a user tries to edit an existing seed record

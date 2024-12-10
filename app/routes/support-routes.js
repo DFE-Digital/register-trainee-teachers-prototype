@@ -203,7 +203,6 @@ module.exports = router => {
         provider,
         uuid,
         breadcrumbs,
-        navActive: 'organisations',
         providerUrl,
         navActive: 'organisations'
       })

@@ -2,9 +2,6 @@
 // Imports and setup
 // -------------------------------------------------------------------
 const _ = require('lodash')
-const trainingRouteData = require('./../data/training-route-data')
-const trainingRoutes = trainingRouteData.trainingRoutes
-const utils = require('./../lib/utils')
 
 // Leave this filters line
 const filters = {}
@@ -13,7 +10,10 @@ const filters = {}
 // Needs to be old style function declaration for *this* to work
 filters.filterDisabledTrainingRoutes = function (records) {
   const enabledTrainingRoutes = _.get(this, 'ctx.data.settings.enabledTrainingRoutes')
-  if (!enabledTrainingRoutes) return [] // Something went wrong
+  // Something went wrong
+  if (!enabledTrainingRoutes) {
+    return []
+  }
   const filteredRecords = records.filter(record => {
     return enabledTrainingRoutes.includes(record.route)
   })

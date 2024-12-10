@@ -2783,8 +2783,8 @@ exports.searchSchools = (schools = [], query = '') => {
       const simpleSchoolName = removePunctuation(school.schoolName).toLowerCase()
 
       // 849382
-      if (school.urn.includes(part)){
-       match = true
+      if (school.urn.includes(part)) {
+        match = true
       }
       // Abbeywood School
       if (simpleSchoolName.includes(part)) {

@@ -103,7 +103,7 @@ defer to an id if one exists. #}
   {% set isPublishCourse = true if (selectedCourse == 'publish-course') or record.courseDetails.isPublishCourse | falsify %}
 
   {% set courseItems = [] %}
-  
+
   {% set courseItems = courseItems | push({
     value: 'publish-course',
     text: "Yes, it’s a course on Publish",
@@ -163,7 +163,9 @@ defer to an id if one exists. #}
 {% else %}
 
   {# Something has gone wrong if this section is rendering #}
-  <h1 class="govuk-heading-l">No courses found{{ (" for ${courseStartYear}" | stringLiteral) if courseStartYear }}</h1>
+  <h1 class="govuk-heading-l">
+    No courses found {{- (" for " + courseStartYear) if courseStartYear }}
+  </h1>
   <p class="govuk-body">You shouldn’t be seeing this page</p>
 
 {% endif %}

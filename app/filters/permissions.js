@@ -1,6 +1,3 @@
-const moment = require('moment')
-const _ = require('lodash')
-
 // Leave this filters line
 const filters = {}
 

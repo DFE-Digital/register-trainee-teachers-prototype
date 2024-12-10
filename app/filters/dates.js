@@ -210,9 +210,12 @@ filters.toDateArray = (date) => {
 */
 
 filters.toDateObject = (date) => {
-  if (!date) return false
-  if (_.isArray(date)) return filters.arrayToDateObject(date)
-  else {
+  if (!date) {
+    return false
+  }
+  if (_.isArray(date)) {
+    return filters.arrayToDateObject(date)
+  } else {
     return moment(date).toDate()
   }
 }
@@ -235,7 +238,9 @@ filters.toDateObject = (date) => {
 filters.prettyMonth = (monthNumber) => {
   if (monthNumber) {
     return moment().month(monthNumber - 1).format('MMMM')
-  } else return ''
+  } else {
+    return ''
+  }
 }
 
 /*
@@ -287,17 +292,15 @@ filters.formatDate = (date, format, dateFormat) => {
     // console.log('error for', date, 'format', format);
     return ''
     // throw "Error in formatDate: no date provided";
-  }
-  // Check for valid date
-  else if (dateFormat && moment(date, dateFormat).isValid()) {
+  } else if (dateFormat && moment(date, dateFormat).isValid()) {
+    // Check for valid date
     returnDate = moment(date, dateFormat)
   } else if (moment(date).isValid()) {
     returnDate = moment(date)
+  } else {
+    // Invalid date
+    throw new Error('Error in formatDate: invalid date')
   }
-  // Invalid date
-  else {
-    throw 'Error in formatDate: invalid date'
-  };
 
   switch (true) {
     // 2018-03-21

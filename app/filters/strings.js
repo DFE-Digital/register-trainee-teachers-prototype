@@ -12,14 +12,20 @@ const filters = {}
 // Create url / slugs from text
 // This is a heading => this-is-a-heading
 filters.slugify = (input) => {
-  if (!input) throw 'Error in slugify: no input', input
-  else return string(input).slugify().toString()
+  if (!input) {
+    throw new Error('Error in slugify: no input', input)
+  } else {
+    return string(input).slugify().toString()
+  }
 }
 
 // Split a string using a separator
-filters.split = (string, separator) => {
-  if (!string || typeof string !== 'string') return
-  else return string.split(separator)
+filters.split = (input, separator) => {
+  if (_.isString(input)) {
+    return input.split(separator)
+  } else {
+    return input
+  }
 }
 
 // Hyphen separate a string
@@ -30,22 +36,29 @@ filters.kebabCase = (string) => {
 
 // Sentence case - uppercase first latter
 filters.sentenceCase = (input) => {
-  if (!input) return '' // avoid printing false to client
+  if (!input) {
+    return '' // avoid printing false to client
+  }
   if (_.isString(input)) {
     return input.charAt(0).toUpperCase() + input.slice(1)
-  } else return input
+  } else {
+    return input
+  }
 }
 
 filters.startLowerCase = (input) => {
-  if (!input) return '' // avoid printing false to client
+  if (!input) {
+    return '' // avoid printing false to client
+  }
   if (_.isString(input)) {
     return input.charAt(0).toLowerCase() + input.slice(1)
-  } else return input
+  } else {
+    return input
+  }
 }
 
 // Is it a string or not?
 filters.isString = str => {
-  const isString = _.isString(str)
   return _.isString(str)
 }
 
@@ -64,30 +77,50 @@ filters.prependWithAOrAn = string => {
 // Format a number as £x,xxx
 filters.currency = input => {
   const inputAsInt = parseInt(input, 10)
-  function numberWithCommas (x) {
+  const numberWithCommas = (x) => {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
   }
-  if (inputAsInt > 0) { return `£${numberWithCommas(inputAsInt)}` }
 
-  // makes negative number positive and puts minus sign in front of £
-  else if (inputAsInt < 0) { return `–£${numberWithCommas(inputAsInt * -1)}` } else return '–'
+  if (inputAsInt > 0) {
+    return `£${numberWithCommas(inputAsInt)}`
+  } else if (inputAsInt < 0) {
+    // makes negative number positive and puts minus sign in front of £
+    return `–£${numberWithCommas(inputAsInt * -1)}`
+  } else {
+    return '–'
+  }
 }
 
 // Format a number as £xxxx
 filters.currencyForCsv = input => {
   const inputAsInt = parseInt(input, 10)
-  if (inputAsInt > 0) { return `£${inputAsInt}` }
-
-  // makes negative number positive and puts minus sign in front of £
-  else if (inputAsInt < 0) { return `-£${inputAsInt * -1}` } else return 0
+  if (inputAsInt > 0) {
+    return `£${inputAsInt}`
+  } else if (inputAsInt < 0) {
+    // makes negative number positive and puts minus sign in front of £
+    return `-£${inputAsInt * -1}`
+  } else {
+    return 0
+  }
 }
 
 // Emulate support for string literals in Nunjucks
 // Usage:
-// {{ 'The count is ${count}' | stringLiteral }}
-filters.stringLiteral = function (str) {
-  return (new Function('with (this) { return `' + str + '` }')).call(this.ctx)
+// context = { firstname: "John" }
+// {{ 'My name is ${firstname}' | stringLiteral(context) }}
+
+/* eslint-disable no-new-func */
+filters.stringLiteral = (str, context) => {
+  return str.replace(/\${(.*?)}/g, (_, expression) => {
+    try {
+      return new Function(`return (${expression})`).call(context)
+    } catch (error) {
+      console.error('Error evaluating expression:', expression, error)
+      return ''
+    }
+  })
 }
+/* eslint-enable no-new-func */
 
 // Format text using markdown
 // Documentation at https://marked.js.org/
@@ -133,13 +166,16 @@ filters.startsWith = (string, target) => {
 //     JOYCE JAMES’
 
 filters.possessive = (noun) => {
-  if (typeof noun !== 'string' || noun.length === 0) return ''
+  if (typeof noun !== 'string' || noun.length === 0) {
+    return ''
+  }
 
   const isAllUpperCase = (input) => {
     return input === input.toUpperCase()
   }
 
   const lastLetterOfNoun = noun.split('').slice(-1)
+
   if (lastLetterOfNoun === 's' || lastLetterOfNoun === 'S') {
     return noun + '’'
   } else if (isAllUpperCase(noun)) {

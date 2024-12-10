@@ -397,6 +397,67 @@ const baseRouteData = {
       }
     ]
   },
+  'Teacher degree apprenticeship (salaried)': {
+    defaultEnabled: true,
+    courseLevel: 'Postgraduate',
+    qualifications: [
+      'QTS'
+    ],
+    qualificationsSummary: 'QTS',
+    sections: [
+      // 'trainingDetails',
+      'courseDetails',
+      'personalDetails',
+      'diversity',
+      'degree',
+      'schools',
+      'placement',
+      'funding'
+    ],
+    fields: [
+      'leadPartner',
+      'employingSchool',
+      'studyMode'
+      // "apprenticeshipStartDate"
+    ],
+    financialSupportAvailable: true,
+    financialSupport: [
+      {
+        type: 'grant',
+        subjects: [
+          'Chemistry',
+          'Computing',
+          'Mathematics',
+          'Physics'
+        ],
+        value: '18000'
+      },
+      {
+        type: 'grant',
+        subjects: [
+          'Geography',
+          'Languages',
+          'Ancient languages'
+        ],
+        value: '16000'
+      },
+      {
+        type: 'grant',
+        subjects: [
+          'Design and technology',
+          'Biology'
+        ],
+        value: '11000'
+      },
+      {
+        type: 'grant',
+        subjects: [
+          'English'
+        ],
+        value: '1000'
+      }
+    ]
+  },
   'Opt-in (undergrad)': {
     defaultEnabled: true,
     courseLevel: 'Undergraduate',

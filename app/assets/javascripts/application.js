@@ -1,3 +1,5 @@
+/* eslint-disable no-new */
+/* eslint-disable no-undef */
 /* global $ */
 
 // Warn about using the kit in production
@@ -38,3 +40,6 @@ new MOJFrontend.ButtonMenu({
 $(document).ready(function () {
   initAutocompletes()
 })
+
+/* eslint-enable no-new */
+/* eslint-enable no-undef */

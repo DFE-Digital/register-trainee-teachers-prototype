@@ -1,8 +1,7 @@
-const { fakerEN_GB: faker } = require('@faker-js/faker')
 const filters = require('./../filters.js')()
-const seedRandom = require('seedrandom')
 const utils = require('./../lib/utils')
 const weighted = require('weighted')
+const { fakerEN_GB: faker } = require('@faker-js/faker')
 
 const rowsHaveErrors = rows => {
   if (Array.isArray(rows)) {
@@ -31,7 +30,7 @@ module.exports = router => {
   const populateNewTraineeErrors = (data, errorWeights, seed) => {
     console.log('Bulk adding new trainees: populating errors')
 
-    seed = seed || new seedRandom()
+    seed = seed || faker.seed(5710407981811395)
 
     const errorPercentage = 0.10 // 5%
     const unchangedPercentage = 0.05 // 5%
@@ -251,7 +250,7 @@ module.exports = router => {
     const data = req.session.data
     const filteredRecords = utils.filterRecords(data.records, data)
     const uploadedTrainees = utils.filterByCanBulkUpdate(filteredRecords)
-    const randomSeeded = seedRandom('update')
+    const randomSeeded = faker.seed(159753654852)
 
     const templateErrors = [
       'TRN not recognised',
@@ -313,7 +312,7 @@ module.exports = router => {
   const populateErrors = (data, errorWeights, seed) => {
     console.log('Bulk recommend: populating errors')
 
-    seed = seed || new seedRandom()
+    seed = seed || faker.seed(79555440044434)
 
     const errorPercentage = 0.10 // 5%
     const unchangedPercentage = 0.05 // 5%

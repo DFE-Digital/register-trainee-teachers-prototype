@@ -1,18 +1,14 @@
-const { fakerEN_GB: faker } = require('@faker-js/faker')
-const path = require('path')
-const moment = require('moment')
-const filters = require('./../filters.js')()
-const dates = require('./../filters/dates.js').filters
 const _ = require('lodash')
-const utils = require('./../lib/utils')
+const dates = require('./../filters/dates.js').filters
+const generateReference = require('./../data/generators/reference-number.js')
 const trainingRouteData = require('./../data/training-route-data')
 const trainingRoutes = trainingRouteData.trainingRoutes
-const generateReference = require('./../data/generators/reference-number.js')
+const utils = require('./../lib/utils')
 
 module.exports = router => {
   // Hacky solution to manually import a record to draft state
   // Useful for testing bugs so we can quickly restore a state
-  router.get('/new-record/direct-add', function (req, res) {
+  router.get('/new-record/direct-add', (req, res) => {
     const data = req.session.data
     utils.deleteTempData(data)
     data.record = require('./../data/direct-add-draft-record.json')
@@ -20,7 +16,7 @@ module.exports = router => {
   })
 
   // Delete data when starting new
-  router.get(['/new-record/new', '/new-record'], function (req, res) {
+  router.get(['/new-record/new', '/new-record'], (req, res) => {
     const data = req.session.data
     utils.deleteTempData(data)
 
@@ -43,7 +39,7 @@ module.exports = router => {
   // UTILITY: Force all sections to complete (for testing)
   // This mostly exists to help testing submitted journeys
   // Doesn’t populate any data so *will* result in partial records!
-  router.get(['/new-record/complete', '/new-record/*/complete'], function (req, res) {
+  router.get(['/new-record/complete', '/new-record/*/complete'], (req, res) => {
     const data = req.session.data
     const record = data.record
     const route = record.route || false // some bugs result in route being lost
@@ -63,7 +59,7 @@ module.exports = router => {
   // We *really* need the provider to get set, so don't let users past
   // the page without picking one
   // Only relevant where users belong to multiple providers
-  router.post('/new-record/pick-provider-answer', function (req, res) {
+  router.post('/new-record/pick-provider-answer', (req, res) => {
     const data = req.session.data
     const record = data.record
     const provider = record?.provider
@@ -84,7 +80,7 @@ module.exports = router => {
   })
 
   // Route for when changing route separate from the course - used as the first page of manual drafts
-  router.post(['/:recordtype/:uuid/select-route-answer', '/:recordtype/select-route-answer'], function (req, res) {
+  router.post(['/:recordtype/:uuid/select-route-answer', '/:recordtype/select-route-answer'], (req, res) => {
     const data = req.session.data
     const record = data.record
     const route = record?.route
@@ -114,7 +110,7 @@ module.exports = router => {
   })
 
   // Swap between two different templates for this page
-  router.get('/new-record/overview', function (req, res) {
+  router.get('/new-record/overview', (req, res) => {
     const data = req.session.data
     const record = data.record
 
@@ -151,7 +147,7 @@ module.exports = router => {
 
   // Task list confirmation page - pass errors to page
   // Todo: use flash messages or something to pass real errors in
-  router.get('/new-record/check-record', function (req, res) {
+  router.get('/new-record/check-record', (req, res) => {
     const data = req.session.data
     const errors = req.query.errors
     const record = _.get(data, 'record') // copy record
@@ -160,7 +156,9 @@ module.exports = router => {
 
     if (utils.sourceIsApply(record) && data.settings.groupApplySections) {
       res.render('new-record/check-record-apply-grouped-sections', { errorList, recordIsComplete: isComplete })
-    } else res.render('new-record/check-record', { errorList, recordIsComplete: isComplete })
+    } else {
+      res.render('new-record/check-record', { errorList, recordIsComplete: isComplete })
+    }
   })
 
   // Delete draft
@@ -207,11 +205,12 @@ module.exports = router => {
       let returnQuery
       if (referrer) {
         returnQuery = `${referrer}&errors=true`
-      } else returnQuery = '?errors=true'
+      } else {
+        returnQuery = '?errors=true'
+      }
       res.redirect(`/new-record/check-record${returnQuery}`)
-    }
-    // if the ITT start date is in the past ask for the trainee’s start date
-    else if (dates.isInPast(record?.courseDetails?.startDate)) {
+    } else if (dates.isInPast(record?.courseDetails?.startDate)) {
+      // if the ITT start date is in the past ask for the trainee’s start date
       res.redirect('/new-record/trainee-start-date')
     } else {
       utils.registerForTRN(record)
@@ -227,8 +226,6 @@ module.exports = router => {
   router.post('/new-record/save-with-date', (req, res) => {
     const data = req.session.data
     const record = data.record
-    const recordPath = utils.getRecordPath(req)
-    const referrer = utils.getReferrer(req.query.referrer)
     const courseStartDate = record?.courseDetails?.startDate
     const traineeStarted = record?.trainingDetails?.traineeStarted
     const commencementDate = record?.trainingDetails?.commencementDate

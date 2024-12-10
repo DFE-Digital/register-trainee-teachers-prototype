@@ -1,16 +1,6 @@
-const _ = require('lodash')
-const filters = require('./../filters.js')()
-const moment = require('moment')
-const path = require('path')
-
-const url = require('url')
-const utils = require('./../lib/utils')
-const weighted = require('weighted')
-const { fakerEN_GB: faker } = require('@faker-js/faker')
-
 module.exports = router => {
   // Render a page for each organisation UUID
-  router.get('/reports/choose-trainee-records', function (req, res, next) {
+  router.get('/reports/choose-trainee-records', (req, res) => {
     const data = req.session.data
 
     // Delete any previous data
@@ -26,7 +16,7 @@ module.exports = router => {
   })
 
   // Render a page for each organisation UUID
-  router.post('/reports/choose-trainee-records/year-answer', function (req, res, next) {
+  router.post('/reports/choose-trainee-records/year-answer', (req, res) => {
     const data = req.session.data
 
     const dateAnswer = data?.reports?.year
@@ -34,13 +24,11 @@ module.exports = router => {
     // Skip following question about type of year
     if (dateAnswer === 'All years') {
       res.redirect('./statuses')
-    }
-    // Answer expected to be current year or previous year
-    else if (dateAnswer) {
+    } else if (dateAnswer) {
+      // Answer expected to be current year or previous year
       res.redirect('./year-type')
-    }
-    // No answer given, return to page
-    else {
+    } else {
+      // No answer given, return to page
       res.redirect('/reports/date')
     }
   })

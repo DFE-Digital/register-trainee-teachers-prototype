@@ -1,9 +1,9 @@
-const { fakerEN_GB: faker } = require('@faker-js/faker')
-const path = require('path')
-const moment = require('moment')
-const filters = require('./../filters.js')()
-const dates = require('./../filters/dates.js').filters
 const _ = require('lodash')
+const { fakerEN_GB: faker } = require('@faker-js/faker')
+const dates = require('./../filters/dates.js').filters
+const filters = require('./../filters.js')()
+const moment = require('moment')
+const path = require('path')
 const utils = require('./../lib/utils')
 
 module.exports = router => {
@@ -39,26 +39,26 @@ module.exports = router => {
       res.redirect(`/record/${req.params.uuid}`)
     } else {
       const editingEnabled = record?.hesa?.editingEnabled || false
-      let timelineMessage, flashHtml
+      let timelineMessage //, flashHtml
 
       _.set(record, 'hesa.editingEnabled', !(editingEnabled))
 
       if (editingEnabled) {
         timelineMessage = 'Editing disabled'
 
-        flashHtml = `
-        <p class="govuk-notification-banner__heading">
-          Editing disabled
-        </p>`
+        // flashHtml = `
+        // <p class="govuk-notification-banner__heading">
+        //   Editing disabled
+        // </p>`
       } else {
         timelineMessage = 'Editing enabled'
 
-        flashHtml = `
-        <p class="govuk-notification-banner__heading">
-          Editing enabled
-        </p>
-        <p class="govuk-body">Changes made to this record will be overwritten by any future HESA updates to this trainee.
-        </p>`
+        // flashHtml = `
+        // <p class="govuk-notification-banner__heading">
+        //   Editing enabled
+        // </p>
+        // <p class="govuk-body">Changes made to this record will be overwritten by any future HESA updates to this trainee.
+        // </p>`
       }
 
       utils.updateRecord(data, record, timelineMessage)
@@ -92,9 +92,6 @@ module.exports = router => {
 
   // Confirm edited QTS date
   router.post('/record/:uuid/qualification/outcome-date-edit-confirm', (req, res) => {
-    const data = req.session.data
-    const record = data.record
-
     res.redirect(`/record/${req.params.uuid}/qualification/outcome-date-edit-confirm`)
   })
 
@@ -503,6 +500,7 @@ module.exports = router => {
   router.get('/record/:uuid/withdraw', (req, res) => {
     const data = req.session.data
     const record = data.record
+    const referrer = utils.getReferrer(req.query.referrer)
 
     if (utils.traineeStarted(record)) {
       res.redirect(`/record/${req.params.uuid}/withdraw/date`)
@@ -648,13 +646,12 @@ module.exports = router => {
   // =========================================================================
 
   // trainee-details
-  router.post('/record/:uuid/trainee-start-date', function (req, res) {
+  router.post('/record/:uuid/trainee-start-date', (req, res) => {
     const data = req.session.data
     const record = data.record
     const referrer = utils.getReferrer(req.query.referrer)
     const courseStartDate = record?.courseDetails?.startDate
     const traineeStarted = record?.trainingDetails?.traineeStarted
-    const commencementDate = record?.trainingDetails?.commencementDate
 
     if (traineeStarted === 'started-itt-on-time') {
       record.trainingDetails.commencementDate = courseStartDate
@@ -671,7 +668,7 @@ module.exports = router => {
   */
 
   // Route to set some date up front before redirecting on
-  router.get('/record/:uuid/course-details/is-course-change', function (req, res) {
+  router.get('/record/:uuid/course-details/is-course-change', (req, res) => {
     const data = req.session.data
     const record = data.record
     const referrer = utils.getReferrer(req.query.referrer)
@@ -684,7 +681,7 @@ module.exports = router => {
 
   // Work out if course details have changed significantly and so we need to have the user
   // check the school and funding sections
-  router.post('/:recordtype/:uuid/course-details/course-change-significant-change-check', function (req, res) {
+  router.post('/:recordtype/:uuid/course-details/course-change-significant-change-check', (req, res) => {
     const data = req.session.data
     const record = data.record
     const referrer = utils.getReferrer(req.query.referrer)
@@ -758,7 +755,7 @@ module.exports = router => {
       res.redirect(307, `${recordPath}/course-details/update${referrer}`)
     }
   })
-  router.post('/:recordtype/:uuid/course-details/course-change-date-question-answer', function (req, res) {
+  router.post('/:recordtype/:uuid/course-details/course-change-date-question-answer', (req, res) => {
     const data = req.session.data
     const record = data.record
     const referrer = utils.getReferrer(req.query.referrer)
@@ -782,7 +779,7 @@ module.exports = router => {
   // Work out the next url to send the user after a significant course change
   // This will look up what data is missing on the record and send the user to the form
   // page for that data
-  router.get(['/:recordtype/:uuid/course-details/get-next-course-change-url', '/:recordtype/course-details/get-next-course-change-url'], function (req, res) {
+  router.get(['/:recordtype/:uuid/course-details/get-next-course-change-url', '/:recordtype/course-details/get-next-course-change-url'], (req, res) => {
     const data = req.session.data
     const record = data.record
     const recordPath = utils.getRecordPath(req)
@@ -797,11 +794,10 @@ module.exports = router => {
 
   // Work out if course details have changed significantly and so we need to have the user
   // check the school and funding sections
-  router.post('/:recordtype/:uuid/course-details/final-check-course-change-answer', function (req, res) {
+  router.post('/:recordtype/:uuid/course-details/final-check-course-change-answer', (req, res) => {
     const data = req.session.data
     const record = data.record
     const referrer = utils.getReferrer(req.query.referrer)
-    const recordPath = utils.getRecordPath(req)
 
     const isCourseMove = (record?.temp?.courseMoveTemp?.isCourseMove === 'true')
 
@@ -865,7 +861,7 @@ module.exports = router => {
 
   // Existing record pages
   // NOTE!: needs to come after more specific routes
-  router.get('/record/:uuid/:page*', function (req, res, next) {
+  router.get('/record/:uuid/:page*', (req, res, next) => {
     const records = req.session.data.records
     const referrer = req.query.referrer
     res.locals.referrer = referrer

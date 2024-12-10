@@ -1,12 +1,10 @@
 const url = require('url')
-const _ = require('lodash')
 const utils = require('./../lib/utils')
 const objectFilters = require('./../filters/objects.js').filters
-const years = require('./../data/years.js')
 
 // Work around a bug where occasionally _unchecked would appear
 // Also coerce to array to be easier to work with
-const cleanInputData = data => {
+const cleanInputData = (data) => {
   if (!data || data === '_unchecked') {
     return undefined
   } else {
@@ -20,7 +18,7 @@ const cleanInputData = data => {
 const getSearchQuery = req => req.query?.searchQuery || ''
 
 // Clean up query to create a filters object with selected filters
-const getFilters = req => {
+const getFilters = (req) => {
   // Copy the query
   const query = Object.assign({}, req.query)
 
@@ -46,6 +44,7 @@ const getFilters = req => {
     'filterTrainingStatus',
     'filterAcademicYears',
     'filterUserProviders']
+
   filtersToClean.forEach(filter => query[filter] = cleanInputData(query[filter]))
 
   // Remap to an object so we can pass it to the filterRecords function
@@ -103,7 +102,7 @@ const getHasFilters = (filters, searchQuery) => {
 }
 
 // Make object to hold details of selected filters with appropriate links to clear each one
-const getSelectedFilters = req => {
+const getSelectedFilters = (req) => {
   const query = Object.assign({}, req.query)
   const filters = getFilters(req)
   const searchQuery = getSearchQuery(req)
@@ -417,7 +416,7 @@ const getSelectedFilters = req => {
 }
 
 module.exports = router => {
-  router.get('/records', function (req, res, next) {
+  router.get('/records', (req, res, next) => {
     const data = req.session.data
 
     if (data.settings.academicYearsUiStyle === 'Tabs') {
@@ -427,7 +426,7 @@ module.exports = router => {
     }
   })
 
-  router.get(['/records', '/records/:tabName'], function (req, res) {
+  router.get(['/records', '/records/:tabName'], (req, res) => {
     const data = req.session.data
 
     // We’re not in a record, so make sure to flush record data
@@ -438,7 +437,7 @@ module.exports = router => {
     const filters = getFilters(req)
 
     // If there’s no query string at all, we want to apply some defaults
-    const hasQueryString = Boolean(Object.keys(req.query).length)
+    // const hasQueryString = Boolean(Object.keys(req.query).length)
 
     // by default set search results to show "Current" trainees
     // if (!hasQueryString) filters.cohortFilter = ["Current"]
@@ -511,7 +510,7 @@ module.exports = router => {
     }
   })
 
-  router.get(['/drafts'], function (req, res) {
+  router.get('/drafts', (req, res) => {
     const data = req.session.data
 
     // We’re not in a record, so make sure to flush record data
@@ -553,7 +552,7 @@ module.exports = router => {
     })
   })
 
-  router.get(['/support/trainees'], function (req, res) {
+  router.get('/support/trainees', (req, res) => {
     const data = req.session.data
 
     // We’re not in a record, so make sure to flush record data
@@ -575,7 +574,7 @@ module.exports = router => {
     const hasFilters = getHasFilters(filters, searchQuery)
 
     // Show selected filters as labels that can be individually removed
-    const selectedFilters = getSelectedFilters(req)
+    // const selectedFilters = getSelectedFilters(req)
 
     // Filter records using the filters provided
     let filteredRecords = utils.filterRecords(data.records, data, filters)

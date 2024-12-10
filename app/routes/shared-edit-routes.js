@@ -1,8 +1,6 @@
-const { fakerEN_GB: faker } = require('@faker-js/faker')
-const path = require('path')
-const moment = require('moment')
-const utils = require('./../lib/utils')
 const _ = require('lodash')
+const { fakerEN_GB: faker } = require('@faker-js/faker')
+const utils = require('./../lib/utils')
 const years = require('../data/years')
 
 // In function because this is too big to pass around in session
@@ -30,7 +28,7 @@ module.exports = router => {
   // cancelling changes - as we just need to load the original record again.
   // One downside is it means the prototype doesn’t support multiple records being opened
   // at once.
-  router.get('/record/:uuid', function (req, res) {
+  router.get('/record/:uuid', (req, res) => {
     const data = req.session.data
 
     utils.deleteTempData(data)
@@ -46,9 +44,8 @@ module.exports = router => {
       // Redirect to task draft journey if still a draft
       if (utils.isDraft(record)) {
         res.redirect('/new-record/overview')
-      }
-      // Only submitted records
-      else {
+      } else {
+        // Only submitted records
         res.locals.record = record
         res.render('record')
       }
@@ -60,7 +57,7 @@ module.exports = router => {
   // =============================================================================
 
   // Forward on to the appropriate schools page depending on what the route needs
-  router.get(['/:recordtype/:uuid/schools', '/:recordtype/schools'], function (req, res) {
+  router.get(['/:recordtype/:uuid/schools', '/:recordtype/schools'], (req, res) => {
     const data = req.session.data
     const record = data.record
     const recordPath = utils.getRecordPath(req)
@@ -77,11 +74,7 @@ module.exports = router => {
   })
 
   // Toggle between an autocomplete page and a search results page on the basis of there being a search query
-  router.get(['/:recordtype/:uuid/schools/lead-school', '/:recordtype/schools/lead-school'], function (req, res) {
-    const data = req.session.data
-    const record = data.record
-    const recordPath = utils.getRecordPath(req)
-    const referrer = utils.getReferrer(req.query.referrer)
+  router.get(['/:recordtype/:uuid/schools/lead-school', '/:recordtype/schools/lead-school'], (req, res) => {
     const schoolSearchTerm = req.query?._schoolSearch
 
     if (schoolSearchTerm) {
@@ -99,7 +92,7 @@ module.exports = router => {
 
   // This route deals with users searching for schools by string or having selected a
   // school from a set of results.
-  router.post(['/:recordtype/:uuid/schools/lead-school', '/:recordtype/schools/lead-school'], function (req, res) {
+  router.post(['/:recordtype/:uuid/schools/lead-school', '/:recordtype/schools/lead-school'], (req, res) => {
     const data = req.session.data
     const record = data.record
     const recordPath = utils.getRecordPath(req)
@@ -148,9 +141,8 @@ module.exports = router => {
     if (schoolSearchTerm && !schoolUuid && leadPartnerApplicable) {
       const queryParams = utils.addQueryParam(referrer, `_schoolSearch=${schoolSearchTerm}`)
       res.redirect(`${recordPath}/schools/lead-school${queryParams}`)
-    }
-    // No answer given and no search term
-    else if (!schoolUuid && leadPartnerApplicable) {
+    } else if (!schoolUuid && leadPartnerApplicable) {
+      // No answer given and no search term
       res.redirect(`${recordPath}/schools/lead-school${referrer}`)
     } else {
       if (leadPartnerApplicable) {
@@ -191,11 +183,7 @@ module.exports = router => {
   })
 
   // Toggle between an autocomplete page and a search results page on the basis of there being a search query
-  router.get(['/:recordtype/:uuid/schools/employing-school', '/:recordtype/schools/employing-school'], function (req, res) {
-    const data = req.session.data
-    const record = data.record
-    const recordPath = utils.getRecordPath(req)
-    const referrer = utils.getReferrer(req.query.referrer)
+  router.get(['/:recordtype/:uuid/schools/employing-school', '/:recordtype/schools/employing-school'], (req, res) => {
     const schoolSearchTerm = req.query?._schoolSearch
     const schools = getSchools()
 
@@ -214,7 +202,7 @@ module.exports = router => {
 
   // This route deals with users searching for schools by string or having selected a
   // school from a set of results.
-  router.post(['/:recordtype/:uuid/schools/employing-school', '/:recordtype/schools/employing-school'], function (req, res) {
+  router.post(['/:recordtype/:uuid/schools/employing-school', '/:recordtype/schools/employing-school'], (req, res) => {
     const data = req.session.data
     const record = data.record
     const recordPath = utils.getRecordPath(req)
@@ -292,7 +280,7 @@ module.exports = router => {
   // =============================================================================
 
   // Show error if route is not assessment only
-  router.post(['/:recordtype/:uuid/course-details/select-route-answer', '/:recordtype/course-details/select-route-answer'], function (req, res) {
+  router.post(['/:recordtype/:uuid/course-details/select-route-answer', '/:recordtype/course-details/select-route-answer'], (req, res) => {
     const data = req.session.data
     let record = data.record
     const route = record?.route
@@ -334,7 +322,7 @@ module.exports = router => {
   })
 
   // Filter all course choices first via a provider selection page
-  router.get(['/:recordtype/:uuid/course-details/', '/:recordtype/course-details/'], function (req, res) {
+  router.get(['/:recordtype/:uuid/course-details/', '/:recordtype/course-details/'], (req, res) => {
     const recordPath = utils.getRecordPath(req)
     const referrer = utils.getReferrer(req.query.referrer)
     const provider = data.record?.provider
@@ -344,7 +332,7 @@ module.exports = router => {
   })
 
   // Decide whether to go down Publish pick-course journey or directly to manual course details
-  router.get(['/:recordtype/:uuid/course-details/select-course-provider-answer', '/:recordtype/course-details/select-course-provider-answer'], function (req, res) {
+  router.get(['/:recordtype/:uuid/course-details/select-course-provider-answer', '/:recordtype/course-details/select-course-provider-answer'], (req, res) => {
     const data = req.session.data
     const record = data.record
     const recordPath = utils.getRecordPath(req)
@@ -388,7 +376,7 @@ module.exports = router => {
   })
 
   // Interpret which year we're looking for
-  router.post(['/:recordtype/:uuid/course-details/course-year-answer', '/:recordtype/course-details/course-year-answer'], function (req, res) {
+  router.post(['/:recordtype/:uuid/course-details/course-year-answer', '/:recordtype/course-details/course-year-answer'], (req, res) => {
     const data = req.session.data
     const record = data.record
     const recordPath = utils.getRecordPath(req)
@@ -433,7 +421,7 @@ module.exports = router => {
   })
 
   // Render publish courses for a specific year
-  router.get(['/:recordtype/:uuid/course-details/pick-course/:courseStartYear', '/:recordtype/course-details/pick-course/:courseStartYear'], function (req, res) {
+  router.get(['/:recordtype/:uuid/course-details/pick-course/:courseStartYear', '/:recordtype/course-details/pick-course/:courseStartYear'], (req, res) => {
     const data = req.session.data
     const record = data.record
     const recordPath = utils.getRecordPath(req)
@@ -475,7 +463,7 @@ module.exports = router => {
   // This question exists because we have conditional questions to ask (specialisms, course dates),
   // but the provider may want to change the course - so we double check the course is correct
   // before asking those conditional questions
-  router.post(['/:recordtype/:uuid/course-details/confirm-course', '/:recordtype/course-details/confirm-course'], function (req, res) {
+  router.post(['/:recordtype/:uuid/course-details/confirm-course', '/:recordtype/course-details/confirm-course'], (req, res) => {
     const data = req.session.data
     const record = data.record
     const recordPath = utils.getRecordPath(req)
@@ -501,7 +489,7 @@ module.exports = router => {
   // =============================================================================
 
   // Picking a Publish course
-  router.post(['/:recordtype/:uuid/course-details/pick-course-answer', '/:recordtype/course-details/pick-course-answer'], function (req, res) {
+  router.post(['/:recordtype/:uuid/course-details/pick-course-answer', '/:recordtype/course-details/pick-course-answer'], (req, res) => {
     const data = req.session.data
     let record = data.record
     const recordPath = utils.getRecordPath(req)
@@ -615,7 +603,7 @@ module.exports = router => {
   // This route is here only to redirect the user *away* if there are no unmapped subjects
   // We do this because they could have chosen specialisms and then clicked back - this catches that
   // behavour and at least sends them someplace somewhat sensible.
-  router.get(['/:recordtype/:uuid/course-details/choose-specialisms', '/:recordtype/course-details/choose-specialisms'], function (req, res) {
+  router.get(['/:recordtype/:uuid/course-details/choose-specialisms', '/:recordtype/course-details/choose-specialisms'], (req, res) => {
     const data = req.session.data
     const record = data.record
     const recordPath = utils.getRecordPath(req)
@@ -635,7 +623,7 @@ module.exports = router => {
   // Deal with specialisms data as it comes in
   // Users can loop through this page, so if there are remaining unmapped subjects
   // we send them back to the same page to do the next one.
-  router.post(['/:recordtype/:uuid/course-details/choose-specialisms', '/:recordtype/course-details/choose-specialisms'], function (req, res) {
+  router.post(['/:recordtype/:uuid/course-details/choose-specialisms', '/:recordtype/course-details/choose-specialisms'], (req, res) => {
     const data = req.session.data
     const record = data.record
     const recordPath = utils.getRecordPath(req)
@@ -683,7 +671,7 @@ module.exports = router => {
   })
 
   // Shown for Publish courses that are dual study mode.
-  router.post(['/:recordtype/:uuid/course-details/study-mode', '/:recordtype/course-details/study-mode'], function (req, res) {
+  router.post(['/:recordtype/:uuid/course-details/study-mode', '/:recordtype/course-details/study-mode'], (req, res) => {
     const data = req.session.data
     const record = data.record
     const recordPath = utils.getRecordPath(req)
@@ -697,7 +685,7 @@ module.exports = router => {
   })
 
   // Optionally save the trainee's course dates back to the course for that study mode
-  router.post(['/:recordtype/:uuid/course-details/dates-answer', '/:recordtype/course-details/dates-answer'], function (req, res) {
+  router.post(['/:recordtype/:uuid/course-details/dates-answer', '/:recordtype/course-details/dates-answer'], (req, res) => {
     const data = req.session.data
     let record = data.record
     const recordPath = utils.getRecordPath(req)
@@ -736,7 +724,7 @@ module.exports = router => {
 
   // Picking a phase (Primary or Secondary education)
   // Mostly doing cleanup of data
-  router.post(['/:recordtype/:uuid/course-details/phase-answer', '/:recordtype/course-details/phase-answer'], function (req, res) {
+  router.post(['/:recordtype/:uuid/course-details/phase-answer', '/:recordtype/course-details/phase-answer'], (req, res) => {
     const data = req.session.data
     const record = data.record
     const recordPath = utils.getRecordPath(req)
@@ -766,7 +754,7 @@ module.exports = router => {
     }
   })
 
-  router.post(['/:recordtype/:uuid/course-details/details-answer', '/:recordtype/course-details/details-answer'], function (req, res) {
+  router.post(['/:recordtype/:uuid/course-details/details-answer', '/:recordtype/course-details/details-answer'], (req, res) => {
     const data = req.session.data
     let record = data.record
     const referrer = utils.getReferrer(req.query.referrer)
@@ -840,7 +828,7 @@ module.exports = router => {
   // =============================================================================
 
   // Ethnic group branching
-  router.post(['/:recordtype/:uuid/diversity/ethnic-group', '/:recordtype/diversity/ethnic-group'], function (req, res) {
+  router.post(['/:recordtype/:uuid/diversity/ethnic-group', '/:recordtype/diversity/ethnic-group'], (req, res) => {
     const data = req.session.data
     const record = data.record // copy record
     const ethnicGroup = _.get(data, 'record.diversity.ethnicGroup')
@@ -857,7 +845,7 @@ module.exports = router => {
   })
 
   // Disabilities branching
-  router.post(['/:recordtype/:uuid/diversity/disabilities', '/:recordtype/diversity/disabilities'], function (req, res) {
+  router.post(['/:recordtype/:uuid/diversity/disabilities', '/:recordtype/diversity/disabilities'], (req, res) => {
     const data = req.session.data
     const record = data.record // copy record
     const disabledAnswer = _.get(data, 'record.diversity.disabledAnswer')
@@ -882,7 +870,7 @@ module.exports = router => {
   // =============================================================================
 
   // Add a degree - sends you to index one greater than current number of degrees
-  router.get(['/:recordtype/:uuid/degree/add', '/:recordtype/degree/add'], function (req, res) {
+  router.get(['/:recordtype/:uuid/degree/add', '/:recordtype/degree/add'], (req, res) => {
     const data = req.session.data
     const degrees = _.get(data, 'record.degree.items')
     const degreeCount = (degrees) ? degrees.length : 0
@@ -892,7 +880,7 @@ module.exports = router => {
   })
 
   // Delete degree at index
-  router.get(['/:recordtype/:uuid/degree/:index/delete', '/:recordtype/degree/:index/delete'], function (req, res) {
+  router.get(['/:recordtype/:uuid/degree/:index/delete', '/:recordtype/degree/:index/delete'], (req, res) => {
     const data = req.session.data
     const record = data.record // copy record
     const recordPath = utils.getRecordPath(req)
@@ -928,7 +916,7 @@ module.exports = router => {
   })
 
   // Forward degree requests to the right template, including the index
-  router.get(['/:recordtype/:uuid/degree/:index/:page', '/:recordtype/degree/:index/:page'], function (req, res) {
+  router.get(['/:recordtype/:uuid/degree/:index/:page', '/:recordtype/degree/:index/:page'], (req, res) => {
     const recordPath = utils.getRecordPath(req)
     const referrer = utils.getReferrer(req.query.referrer)
 
@@ -936,7 +924,7 @@ module.exports = router => {
   })
 
   // Save degree data from temporary store
-  router.post(['/:recordtype/:uuid/degree/:index/confirm', '/:recordtype/degree/:index/confirm'], function (req, res) {
+  router.post(['/:recordtype/:uuid/degree/:index/confirm', '/:recordtype/degree/:index/confirm'], (req, res) => {
     const data = req.session.data
     const record = data.record
     let newDegree = data.degreeTemp
@@ -996,11 +984,6 @@ module.exports = router => {
     }
     _.set(data, 'record.degree.items', existingDegrees)
 
-    // if (existingDegrees?.length > 1){
-    //   res.redirect(`${recordPath}/degree/bursary-selection${referrer}`)
-    // }
-    // else {
-
     const referrerDestination = utils.getReferrerDestination(req.query.referrer)
 
     if (utils.isDraft(record) && utils.sourceIsApply(record)) {
@@ -1016,7 +999,7 @@ module.exports = router => {
   // =============================================================================
 
   // Record: Can they add placements? Sends them onwards or marks placements complete
-  router.post(['/:recordtype/:uuid/placements/can-add-placement-answer', '/:recordtype/placements/can-add-placement-answer'], function (req, res) {
+  router.post(['/:recordtype/:uuid/placements/can-add-placement-answer', '/:recordtype/placements/can-add-placement-answer'], (req, res) => {
     const data = req.session.data
 
     const recordPath = utils.getRecordPath(req)
@@ -1065,21 +1048,18 @@ module.exports = router => {
   })
 
   // Add a placement - generate a UUID and send the user to it
-  router.get(['/:recordtype/:uuid/placements/add', '/:recordtype/placements/add'], function (req, res) {
+  router.get(['/:recordtype/:uuid/placements/add', '/:recordtype/placements/add'], (req, res) => {
     const data = req.session.data
     const recordPath = utils.getRecordPath(req)
     const referrer = utils.getReferrer(req.query.referrer)
     const placementUuid = faker.string.uuid()
-    const record = data.record
 
     res.redirect(`${recordPath}/placements/${placementUuid}/details${referrer}`)
   })
 
   // Add a placement - generate a UUID and send the user to it
-  router.get(['/:recordtype/:uuid/placements/:placementUuid/details', '/:recordtype/placements/:placementUuid/details'], function (req, res) {
+  router.get(['/:recordtype/:uuid/placements/:placementUuid/details', '/:recordtype/placements/:placementUuid/details'], (req, res) => {
     const data = req.session.data
-    const recordPath = utils.getRecordPath(req)
-    const referrer = utils.getReferrer(req.query.referrer)
     const placementUuid = req.params.placementUuid
     const record = data.record
     const schoolSearchTerm = req.query?._schoolSearch
@@ -1118,7 +1098,7 @@ module.exports = router => {
   })
 
   // Remove placement at a given UUID
-  router.get(['/:recordtype/:uuid/placements/:placementUuid/delete', '/:recordtype/placements/:placementUuid/delete'], function (req, res) {
+  router.get(['/:recordtype/:uuid/placements/:placementUuid/delete', '/:recordtype/placements/:placementUuid/delete'], (req, res) => {
     const data = req.session.data
     const recordPath = utils.getRecordPath(req)
     const placementUuid = req.params.placementUuid
@@ -1135,9 +1115,8 @@ module.exports = router => {
       // Delete degree section if it’s empty
       if (data.record.placement.items.length === 0) {
         delete data.record.placement
-      }
-      // Ensure section can't be complete if less than required placements
-      else if (data.record.placement.items.length < minPlacementsRequired) {
+      } else if (data.record.placement.items.length < minPlacementsRequired) {
+        // Ensure section can't be complete if less than required placements
         delete data.record.placement.status
       }
     }
@@ -1150,19 +1129,13 @@ module.exports = router => {
     }
     if (!data.record?.placement) {
       res.redirect(`${recordPath}/placements/can-add-placement${referrer}`)
-    }
-    // else if (referrer){
-    //   res.redirect(utils.getReferrerDestination(req.query.referrer))
-    // }
-    else {
+    } else {
       res.redirect(`${recordPath}/placements/confirm${referrer}`)
     }
   })
 
   // Forward placement requests to the right template, including the index
-  router.get(['/:recordtype/:uuid/placements/:placementUuid/:page', '/:recordtype/placements/:placementUuid/:page'], function (req, res) {
-    const recordPath = utils.getRecordPath(req)
-    const referrer = utils.getReferrer(req.query.referrer)
+  router.get(['/:recordtype/:uuid/placements/:placementUuid/:page', '/:recordtype/placements/:placementUuid/:page'], (req, res) => {
     const placementUuid = req.params.placementUuid
 
     res.render(`${req.params.recordtype}/placements/${req.params.page}`, {
@@ -1171,7 +1144,7 @@ module.exports = router => {
   })
 
   // Save placement data from temporary store
-  router.post(['/:recordtype/:uuid/placements/:placementUuid/details-answer', '/:recordtype/placements/:placementUuid/details-answer'], function (req, res) {
+  router.post(['/:recordtype/:uuid/placements/:placementUuid/details-answer', '/:recordtype/placements/:placementUuid/details-answer'], (req, res) => {
     const data = req.session.data
     let placement = data.placementTemp || {}
     const referrer = utils.getReferrer(req.query.referrer)
@@ -1197,9 +1170,8 @@ module.exports = router => {
         // Might be a partial update, so merge the new with the old
         // Using Lodash merge as Object.assign will overwrite school object, and we want to merge it
         existingPlacements[placementIndex] = _.merge({}, existingPlacements[placementIndex], thePlacement)
-      }
-      // Create a new placement
-      else {
+      } else {
+        // Create a new placement
         console.log('Saving new placement')
         existingPlacements.push(thePlacement)
       }
@@ -1232,7 +1204,9 @@ module.exports = router => {
         return placements.some(singlePlacement => {
           return placement?.school?.schoolName === singlePlacement?.school?.schoolName
         })
-      } else return false
+      } else {
+        return false
+      }
     }
 
     // Used for no-js results page
@@ -1251,7 +1225,9 @@ module.exports = router => {
         searchQuery = req.body?._autocomplete_raw_value_school_picker
       } else if (searchQuery.length > 0) {
         console.log('Too many search queries!', searchQuery)
-      } else searchQuery = false
+      } else {
+        searchQuery = false
+      }
     }
 
     const queryIsAUuid = utils.isUuid(searchQuery)
@@ -1263,17 +1239,12 @@ module.exports = router => {
     // Search failed, go to manual
     if (searchResultRadios === 'manualEntry') {
       res.redirect(`${recordPath}/placements/${placementUuid}/details-manual${referrer}`)
-    }
-    // Search failed, search again
-    // Autocomplete failed, search no-js
-    else if ((searchResultRadios === 'searchAgain') || (searchQuery && !queryIsAUuid && !radiosAreAUuid)) {
+    } else if ((searchResultRadios === 'searchAgain') || (searchQuery && !queryIsAUuid && !radiosAreAUuid)) {
+      // Search failed, search again
+      // Autocomplete failed, search no-js
       const queryParams = utils.addQueryParam(referrer, `_schoolSearch=${searchQuery}`)
       res.redirect(`${recordPath}/placements/${placementUuid}/details${queryParams}`)
-    }
-    // else if (placementsContainDuplicates()){
-    //   res.redirect(`${recordPath}/placements/${placementUuid}/placement-already-added${queryParams}`)
-    // }
-    else if (isManualEntry) {
+    } else if (isManualEntry) {
       if (placement?.school?.postcode) {
         placement.school.postcode = placement.school.postcode.toUpperCase()
       }
@@ -1310,7 +1281,7 @@ module.exports = router => {
   // =============================================================================
 
   // Forward on to the appropriate finacne pages depending on what the route needs
-  router.get(['/:recordtype/:uuid/funding', '/:recordtype/funding'], function (req, res) {
+  router.get(['/:recordtype/:uuid/funding', '/:recordtype/funding'], (req, res) => {
     const data = req.session.data
     const record = data.record
     const recordPath = utils.getRecordPath(req)
@@ -1324,7 +1295,7 @@ module.exports = router => {
   })
 
   // Forward on to bursaries or confirm
-  router.post(['/:recordtype/:uuid/funding/initiatives', '/:recordtype/funding/initiatives'], function (req, res) {
+  router.post(['/:recordtype/:uuid/funding/initiatives', '/:recordtype/funding/initiatives'], (req, res) => {
     const data = req.session.data
     const record = data.record
     const recordPath = utils.getRecordPath(req)
@@ -1343,7 +1314,7 @@ module.exports = router => {
 
   // Forward on to confirm
   // This route not really needed as we don't always catch errors like this
-  router.post(['/:recordtype/:uuid/funding/financial-support', '/:recordtype/funding/financial-support'], function (req, res) {
+  router.post(['/:recordtype/:uuid/funding/financial-support', '/:recordtype/funding/financial-support'], (req, res) => {
     const data = req.session.data
     const record = data.record
     const recordPath = utils.getRecordPath(req)
@@ -1367,7 +1338,7 @@ module.exports = router => {
   // =============================================================================
 
   // Redirect to first page of iQTS
-  router.get(['/:recordtype/:uuid/iqts', '/:recordtype/iqts'], function (req, res) {
+  router.get(['/:recordtype/:uuid/iqts', '/:recordtype/iqts'], (req, res) => {
     const data = req.session.data
     const recordPath = utils.getRecordPath(req)
     const referrer = utils.getReferrer(req.query.referrer)

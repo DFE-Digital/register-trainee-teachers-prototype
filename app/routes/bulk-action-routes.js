@@ -1,9 +1,6 @@
-const _ = require('lodash')
-const moment = require('moment')
-const path = require('path')
-const utils = require('./../lib/utils')
-const url = require('url')
 const filters = require('./../filters.js')()
+const moment = require('moment')
+const utils = require('./../lib/utils')
 
 const getExampleBulkTrainees = data => {
   const bulkOptions = {
@@ -115,27 +112,23 @@ module.exports = router => {
     // Something has gone wrong - can’t continue without an action
     if (!bulk?.action) {
       res.redirect('/bulk-action')
-    }
-
-    // Missing any filtered trainees or means to filter them - can’t continue
-    else if (!bulk?.filters && !bulk?.filteredTrainees) {
+    } else if (!bulk?.filters && !bulk?.filteredTrainees) {
+      // Missing any filtered trainees or means to filter them - can’t continue
       console.log('Bulk action: no filtered trainees, returning to records')
       res.redirect('/records')
-    }
-
-    // Have a group of trainees to show
-    else {
+    } else {
+      // Have a group of trainees to show
       // Have a predefined list of trainees to show
       if (bulk?.filteredTrainees) {
         // Look up records from list
         filteredRecords = utils.getRecordsById(allRecords, bulk.filteredTrainees)
 
         // If no pre-selected trainees, default to selecting them all
-        if (autoSelectTrainees && !bulk?.selectedTrainees) selectedTrainees = bulk.filteredTrainees
-      }
-
-      // Coming from the filters page
-      else if (bulk?.filters) {
+        if (autoSelectTrainees && !bulk?.selectedTrainees) {
+          selectedTrainees = bulk.filteredTrainees
+        }
+      } else if (bulk?.filters) {
+        // Coming from the filters page
         // Create group of records using provided filters
         filteredRecords = utils.filterRecords(allRecords, data, bulk.filters)
 
@@ -144,23 +137,24 @@ module.exports = router => {
           filteredRecords = filteredRecords
             .filter(record => utils.isDraft(record))
             .filter(record => {
-              if (utils.recordIsComplete(record)) return true
-              else {
+              if (utils.recordIsComplete(record)) {
+                return true
+              } else {
                 incompleteCount++
                 return false
               }
             })
-        }
-
-        // Filter for only records ready to be recommended for QTS
-        else if (bulk.action === 'Recommend a group of trainees for EYTS or QTS') {
+        } else if (bulk.action === 'Recommend a group of trainees for EYTS or QTS') {
+          // Filter for only records ready to be recommended for QTS
           filteredRecords = filteredRecords
             .filter(record => record.status === 'TRN received')
             .filter(record => {
               if (utils.hasOutstandingActions(record, data)) {
                 incompleteCount++
                 return false
-              } else return true
+              } else {
+                return true
+              }
             })
         }
 
@@ -183,13 +177,13 @@ module.exports = router => {
     // No trainees selected, return to page
     if (!bulk?.selectedTrainees) {
       res.redirect('/bulk-action/select-trainees')
+    } else if (bulk.date || bulk.action !== 'Recommend a group of trainees for EYTS or QTS') {
+      // Date not needed, go to confirm
+      res.redirect('/bulk-action/confirm')
+    } else {
+      // Date answer needed
+      res.redirect('/bulk-action/date')
     }
-
-    // Date not needed, go to confirm
-    else if (bulk.date || bulk.action !== 'Recommend a group of trainees for EYTS or QTS') res.redirect('/bulk-action/confirm')
-
-    // Date answer needed
-    else res.redirect('/bulk-action/date')
   })
 
   // Convert date radios to actual dates
@@ -228,8 +222,11 @@ module.exports = router => {
     // Loop through each record
     selectedRecords.forEach(record => {
       const success = utils.doBulkAction(bulk.action, record, { date: bulk?.date })
-      if (success) successCount++
-      else failCount++
+      if (success) {
+        successCount++
+      } else {
+        failCount++
+      }
     })
 
     console.log(`Bulk action: ${successCount} ${filters.pluralise('success', successCount)}, ${failCount} ${filters.pluralise('failure', failCount)}.`)

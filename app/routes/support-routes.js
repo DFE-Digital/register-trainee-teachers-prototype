@@ -1,12 +1,6 @@
-const _ = require('lodash')
-const filters = require('./../filters.js')()
-const moment = require('moment')
 const path = require('path')
-const seedRandom = require('seedrandom')
 const url = require('url')
 const utils = require('./../lib/utils')
-const weighted = require('weighted')
-const { fakerEN_GB: faker } = require('@faker-js/faker')
 
 // In function because this is too big to pass around in session
 const getSchools = () => {
@@ -39,7 +33,7 @@ const breadcrumbsInitial = {
 
 module.exports = router => {
   // Render a page for each organisation UUID
-  router.get('/support/users/:uuid', function (req, res, next) {
+  router.get('/support/users/:uuid', (req, res, next) => {
     const data = req.session.data
     const uuid = req.params.uuid
     const user = data.users.all.find(user => user.id === uuid)
@@ -68,17 +62,11 @@ module.exports = router => {
     '/support/users/:userUuid/organisations/:providerUuid/edit-answer',
     '/support/organisations/:providerUuid/users/:userUuid/edit-answer',
     '/support/schools/:schoolUuid/users/:userUuid/edit-answer'
-  ], function (req, res, next) {
+  ], (req, res, next) => {
     const data = req.session.data
     const userUuid = req.params.userUuid
     const providerUuid = req.params.providerUuid
     const schoolUuid = req.params.schoolUuid
-
-    // let user = data.users.all.find(user => user.id === userUuid)
-    const userUrl = `/support/users/${userUuid}`
-
-    // let provider = data.providers.all.find(provider => provider.id === providerUuid)
-    const providerUrl = `/support/organisations/${providerUuid}`
 
     const context = getPageContext(req)
 
@@ -106,7 +94,7 @@ module.exports = router => {
   })
 
   // Render organisation pages, passing along the organisation UUID
-  router.get('/support/users/:uuid/organisations/:providerUuid/:page*', function (req, res, next) {
+  router.get('/support/users/:uuid/organisations/:providerUuid/:page*', (req, res, next) => {
     const data = req.session.data
     const uuid = req.params.uuid
     const page = req.params.page
@@ -131,8 +119,9 @@ module.exports = router => {
 
     const targetUrl = path.join('support/users/organisations', page, req.params[0])
 
-    if (!user) res.redirect('/support/users')
-    else {
+    if (!user) {
+      res.redirect('/support/users')
+    } else {
       utils.render(
         targetUrl, res, next, {
           uuid,
@@ -151,7 +140,7 @@ module.exports = router => {
   })
 
   // Render organisation pages, passing along the organisation UUID
-  router.get('/support/users/:uuid/:page*', function (req, res, next) {
+  router.get('/support/users/:uuid/:page*', (req, res, next) => {
     const data = req.session.data
     const uuid = req.params.uuid
     const user = data.users.all.find(user => user.id === uuid)
@@ -173,8 +162,9 @@ module.exports = router => {
 
     const targetUrl = path.join('support/users', req.params.page, req.params[0])
 
-    if (!user) res.redirect('/support/users')
-    else {
+    if (!user) {
+      res.redirect('/support/users')
+    } else {
       utils.render(
         targetUrl, res, next, {
           uuid,
@@ -192,7 +182,7 @@ module.exports = router => {
   })
 
   // Render a page for each organisation UUID
-  router.get('/support/organisations/:uuid', function (req, res, next) {
+  router.get('/support/organisations/:uuid', (req, res, next) => {
     const data = req.session.data
     const uuid = req.params.uuid
     const provider = data.providers.all.find(provider => provider.id === uuid)
@@ -206,8 +196,9 @@ module.exports = router => {
       }])
     }
 
-    if (!provider) res.redirect('/support/organisations')
-    else {
+    if (!provider) {
+      res.redirect('/support/organisations')
+    } else {
       res.render('support/organisations/view', {
         provider,
         uuid,
@@ -220,7 +211,7 @@ module.exports = router => {
   })
 
   // Render organisation pages, passing along the organisation UUID
-  router.get('/support/organisations/:uuid/users/:userUuid/:page*', function (req, res, next) {
+  router.get('/support/organisations/:uuid/users/:userUuid/:page*', (req, res, next) => {
     const data = req.session.data
     const uuid = req.params.uuid
     const page = req.params.page
@@ -243,8 +234,9 @@ module.exports = router => {
 
     const targetUrl = path.join('support/organisations/users', page, req.params[0])
 
-    if (!user) res.redirect('/support/organisations')
-    else {
+    if (!user) {
+      res.redirect('/support/organisations')
+    } else {
       utils.render(
         targetUrl, res, next, {
           uuid,
@@ -263,7 +255,7 @@ module.exports = router => {
   })
 
   // Render organisation pages, passing along the organisation UUID
-  router.get('/support/organisations/:uuid/:page*', function (req, res, next) {
+  router.get('/support/organisations/:uuid/:page*', (req, res, next) => {
     const data = req.session.data
     const uuid = req.params.uuid
     const provider = data.providers.all.find(provider => provider.id === uuid)
@@ -284,8 +276,9 @@ module.exports = router => {
 
     const targetUrl = path.join('support/organisations', req.params.page, req.params[0])
 
-    if (!provider) res.redirect('/support/organisations')
-    else {
+    if (!provider) {
+      res.redirect('/support/organisations')
+    } else {
       utils.render(
         targetUrl, res, next, {
           uuid,
@@ -303,7 +296,7 @@ module.exports = router => {
   })
 
   // Render a page for each organisation UUID
-  router.get('/support/schools', function (req, res, next) {
+  router.get('/support/schools', (req, res, next) => {
     const data = req.session.data
 
     const allSchools = getSchools()
@@ -317,8 +310,7 @@ module.exports = router => {
   })
 
   // Render a page for each organisation UUID
-  router.get('/support/schools/:uuid', function (req, res, next) {
-    const data = req.session.data
+  router.get('/support/schools/:uuid', (req, res, next) => {
     const uuid = req.params.uuid
 
     const schools = getSchools()
@@ -334,8 +326,9 @@ module.exports = router => {
       }])
     }
 
-    if (!school) res.redirect('/support/schools')
-    else {
+    if (!school) {
+      res.redirect('/support/schools')
+    } else {
       res.render('support/schools/view', {
         school,
         schoolUrl,
@@ -347,8 +340,7 @@ module.exports = router => {
   })
 
   // Render organisation pages, passing along the organisation UUID
-  router.get('/support/schools/:uuid/:page*', function (req, res, next) {
-    const data = req.session.data
+  router.get('/support/schools/:uuid/:page*', (req, res, next) => {
     const uuid = req.params.uuid
 
     const schools = getSchools()
@@ -356,21 +348,11 @@ module.exports = router => {
 
     const schoolUrl = `/support/schools/${uuid}`
 
-    const breadcrumbs = {
-      items: breadcrumbsInitial.items.concat([{
-        text: 'Schools',
-        href: '/support/schools'
-      },
-      {
-        text: school.name,
-        href: schoolUrl
-      }])
-    }
-
     const targetUrl = path.join('support/schools', req.params.page, req.params[0])
 
-    if (!school) res.redirect('/support/schools')
-    else {
+    if (!school) {
+      res.redirect('/support/schools')
+    } else {
       utils.render(
         targetUrl, res, next, {
           uuid,
@@ -387,7 +369,7 @@ module.exports = router => {
   })
 
   // Catch funding route within support
-  router.get('/support/funding/', function (req, res) {
+  router.get('/support/funding/', (req, res) => {
     res.redirect(
       '/support/funding/index'
     )

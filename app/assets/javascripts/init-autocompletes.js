@@ -141,6 +141,7 @@ const setupAutocomplete = (component) => {
       if (!innerText.endsWith('.')) {
         innerText = `${innerText}.`
       }
+      return innerText // Explicitly return the transformed value
     }).join(' ')
   }
 

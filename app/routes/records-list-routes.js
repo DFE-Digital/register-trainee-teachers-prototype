@@ -45,7 +45,9 @@ const getFilters = (req) => {
     'filterAcademicYears',
     'filterUserProviders']
 
-  filtersToClean.forEach(filter => query[filter] = cleanInputData(query[filter]))
+  filtersToClean.forEach(filter => {
+    query[filter] = cleanInputData(query[filter])
+  })
 
   // Remap to an object so we can pass it to the filterRecords function
   // that is shared by the

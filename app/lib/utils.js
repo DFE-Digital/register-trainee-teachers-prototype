@@ -1472,12 +1472,13 @@ exports.recordIsComplete = function (record, data = false) {
       // Some sections are collected together with one checkbox for all
       // If so, defer to that checkbox
       if (applyReviewSections.includes(section)) {
-        return (record.applyData.status === 'Completed')
+        return record.applyData.status === 'Completed'
       } else {
         return sectionStatus
       }
     } else {
       console.log('Error, record type not recognised')
+      return false // Ensure a boolean value is returned
     }
   })
 
@@ -2966,7 +2967,7 @@ exports.parseUrl = (inputUrl) => {
     console.log('Error with parseUrl: input not a string')
     return inputUrl
   } else {
-    return url.parse(inputUrl, true)
+    return new URL(inputUrl)
   }
 }
 

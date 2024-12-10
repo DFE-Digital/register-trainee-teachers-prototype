@@ -18,7 +18,7 @@ const applyRoutes = [
 // Not all these routes will be enabled
 const publishRoutes = [
   'Teaching apprenticeship (postgrad)',
-  'Teaching degree apprenticeship (salaried)', // Publish refers to the TDA route as "Teaching apprenticeship (salaried)"
+  'Teacher degree apprenticeship (salaried)', // Publish refers to the TDA route as "Teaching apprenticeship (salaried)"
   'Primary and secondary (postgrad)',
   'Primary and secondary (postgrad salaried)', // New route as part of the ITT reforms
   'School direct (salaried)',
@@ -337,6 +337,67 @@ const baseRouteData = {
   },
   'Teach first (postgrad)': {},
   'Teaching apprenticeship (postgrad)': {
+    defaultEnabled: true,
+    courseLevel: 'Postgraduate',
+    qualifications: [
+      'QTS'
+    ],
+    qualificationsSummary: 'QTS',
+    sections: [
+      // 'trainingDetails',
+      'courseDetails',
+      'personalDetails',
+      'diversity',
+      'degree',
+      'schools',
+      'placement',
+      'funding'
+    ],
+    fields: [
+      'leadPartner',
+      'employingSchool',
+      'studyMode'
+      // "apprenticeshipStartDate"
+    ],
+    financialSupportAvailable: true,
+    financialSupport: [
+      {
+        type: 'grant',
+        subjects: [
+          'Chemistry',
+          'Computing',
+          'Mathematics',
+          'Physics'
+        ],
+        value: '18000'
+      },
+      {
+        type: 'grant',
+        subjects: [
+          'Geography',
+          'Languages',
+          'Ancient languages'
+        ],
+        value: '16000'
+      },
+      {
+        type: 'grant',
+        subjects: [
+          'Design and technology',
+          'Biology'
+        ],
+        value: '11000'
+      },
+      {
+        type: 'grant',
+        subjects: [
+          'English'
+        ],
+        value: '1000'
+      }
+    ]
+  },
+  'Teacher degree apprenticeship (salaried)': {
     defaultEnabled: true,
     courseLevel: 'Postgraduate',
     qualifications: [

@@ -6,7 +6,6 @@ const path = require('path')
 const { fakerUK: faker } = require('@faker-js/faker')
 const weighted = require('weighted')
 const moment = require('moment')
-const _ = require('lodash')
 const utils = require('../app/lib/utils.js')
 // const userFilters   = require('../app/filters/traineeProblem.js').filters
 // const permissions   = require('../app/data/permissions.js')
@@ -149,19 +148,20 @@ const generateTraineeProblem = (provider, providerTrainees) => {
 
 // Generates a bunch of problems per provider
 const generateFakeTraineeProblems = () => {
-  const traineeProblems = seedTraineeProblems
+  const traineeProblems = [...seedTraineeProblems]
 
   providers.selected.forEach(provider => {
     const providerTrainees = trainees.filter(trainee => trainee.provider === provider.name)
 
-    // let activeTrainees = providerTrainees.filter( trainee => utils.isActiveStatus(trainee) )
-
     // Create random number of problems per provider with some limits
-    const numberOfTraineeProblemsToCreate = utils.getRandomArbitrary(5, Math.min(providerTrainees.length / 5, 10))
+    const numberOfTraineeProblemsToCreate = utils.getRandomArbitrary(
+      5,
+      Math.min(providerTrainees.length / 5, 10)
+    )
 
     console.log(`Generating ${numberOfTraineeProblemsToCreate} problems`)
 
-    Array(numberOfTraineeProblemsToCreate).fill().map((item, index) => {
+    Array(numberOfTraineeProblemsToCreate).fill().forEach(() => {
       const problem = generateTraineeProblem(provider, providerTrainees)
       if (problem) {
         traineeProblems.push(problem)

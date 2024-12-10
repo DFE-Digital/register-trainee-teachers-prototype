@@ -2,7 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const lunr = require('lunr')
 
-const removePunctuation = input => input.replace(/['’‘.,\/#!$%\^&\*;:{}=\-_`~()]/g, '')
+const removePunctuation = input => input.replace(/['’‘.,/#!$%^&*;:{}=\-_`~()]/g, '')
 
 module.exports = function buildIndex () {
   console.log('Building lunr index...')
@@ -52,7 +52,7 @@ module.exports = function buildIndex () {
     })
   })
 
-  const destionationPath = __dirname + '/../app/assets/data/search-index.json'
+  const destionationPath = path.join(__dirname, '/../app/assets/data/search-index.json')
 
   function ensureDirectoryExistence (destionationPath) {
     const dirname = path.dirname(destionationPath)

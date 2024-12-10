@@ -32,9 +32,9 @@ const sortBySubmittedDate = (x, y) => {
 
 // From https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
 // Random whole number
-const getRandomInt = (max) => {
-  return Math.floor(Math.random() * Math.floor(max))
-}
+// const getRandomInt = (max) => {
+//   return Math.floor(Math.random() * Math.floor(max))
+// }
 
 // Training routes
 // const trainingRoutes = Object.keys(trainingRouteData.trainingRoutes)
@@ -273,9 +273,8 @@ const generateFakeApplicationsForProvider = (provider, year, count) => {
       deferred: 0.02,
       withdrawn: 0.03
     }
-  }
-  // Previous years will be mostly awarded with some withdrawn and a handful of deferred
-  else {
+  } else {
+    // Previous years will be mostly awarded with some withdrawn and a handful of deferred
     targetCounts = {
       draft: 0,
       pendingTrn: 0,

@@ -77,7 +77,8 @@ const generateCoursesFile = (filePath) => {
   const courses = generateFakeCourses()
 
   const courseCount = Object.values(courses).reduce((acc, cur) => {
-    return acc += cur.courses.length
+    acc += cur.courses.length
+    return acc
   }, 0)
 
   console.log(`Generated ${courseCount} fake courses`)

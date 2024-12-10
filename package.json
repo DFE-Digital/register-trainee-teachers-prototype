@@ -68,9 +68,12 @@
   },
   "standard": {
     "ignore": [
+      "app/assets/javascripts/auto-store-data.js",
       "app/assets/javascripts/jquery-1.11.3.js",
       "app/assets/javascripts/jquery-3.6.1.min.js",
-      "app/assets/javascripts/lunr-2.3.9.js"
+      "app/assets/javascripts/lunr-2.3.9.js",
+      "app/assets/javascripts/step-by-step-nav.js",
+      "app/assets/javascripts/stick-to-window-when-scrolling.js"
     ]
   }
 }

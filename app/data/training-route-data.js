@@ -18,7 +18,7 @@ const applyRoutes = [
 // Not all these routes will be enabled
 const publishRoutes = [
   'Teaching apprenticeship (postgrad)',
-  'Teaching degree apprenticeship (salaried)', // Publish refers to the TDA route as "Teaching apprenticeship (salaried)"
+  'Teacher degree apprenticeship (salaried)', // Publish refers to the TDA route as "Teaching apprenticeship (salaried)"
   'Primary and secondary (postgrad)',
   'Primary and secondary (postgrad salaried)', // New route as part of the ITT reforms
   'School direct (salaried)',

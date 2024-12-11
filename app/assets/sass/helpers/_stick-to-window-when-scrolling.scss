@@ -68,7 +68,7 @@ $sticky-padding: govuk-spacing(4);
   z-index: 100;
   margin-top: 0;
   padding-right: govuk-spacing(3);
-  background: white;
+  background: govuk-colour("white");
 
   .back-to-top-link {
     transition: opacity 0.3s ease-in-out;
@@ -129,7 +129,7 @@ $sticky-padding: govuk-spacing(4);
   }
 
   &:focus {
-    /* override default box shadow to stop it looking so large vertically */
+    // override default box shadow to stop it looking so large vertically
     box-shadow: inset 0 -4px $govuk-focus-text-colour;
   }
 }

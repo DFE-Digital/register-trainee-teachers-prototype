@@ -32,10 +32,10 @@ body {
   // text-transform: uppercase;
 }
 
-$govuk-secondary-text-colour: black;
-$govuk-border-colour: black;
-$govuk-brand-colour: grey;
-$govuk-link-colour: black;
-$govuk-link-hover-colour: black;
-$govuk-link-visited-colour: black;
-$govuk-link-active-colour: black;
+$govuk-secondary-text-colour: govuk-colour("black");
+$govuk-border-colour: govuk-colour("black");
+$govuk-brand-colour: govuk-colour("mid-grey");
+$govuk-link-colour: govuk-colour("black");
+$govuk-link-hover-colour: govuk-colour("black");
+$govuk-link-visited-colour: govuk-colour("black");
+$govuk-link-active-colour: govuk-colour("black");

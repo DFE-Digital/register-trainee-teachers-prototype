@@ -2,6 +2,8 @@
 /// @group components/status-card
 ////
 
+@use "sass:map";
+
 .status-card {
   padding: govuk-spacing(2);
   background-color: $govuk-brand-colour;
@@ -25,7 +27,7 @@
 }
 
 .status-card, .status-card:visited {
-  color: white;
+  color: govuk-colour("white");
 }
 
 // Colours sourced from here: https://github.com/alphagov/govuk-frontend/blob/61aabca3d440edee6bdecdd20ea54a241c7bbdd5/src/govuk/components/tag/_index.scss#L42
@@ -107,12 +109,12 @@ $statuses: (
 {
   .status-card--#{$status} {
     &, &:link, &:visited {
-      color: map-get($data, "colour");
-      background: map-get($data, "background-colour");
+      color: map.get($data, "colour");
+      background: map.get($data, "background-colour");
     }
 
     &:hover {
-      background: map-get($data, "hover");
+      background: map.get($data, "hover");
     }
   }
 }

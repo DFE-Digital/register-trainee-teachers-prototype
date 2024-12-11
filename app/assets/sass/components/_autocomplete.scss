@@ -46,6 +46,7 @@
   right: govuk-spacing(2);
   width: 24px;
   height: 24px;
+  pointer-events: none; // https://github.com/alphagov/accessible-autocomplete/issues/202
 }
 
 .autocomplete__menu {
@@ -143,32 +144,17 @@
   padding: govuk-spacing(1);
 }
 
-// https://github.com/alphagov/accessible-autocomplete/issues/202
-.autocomplete__dropdown-arrow-down {
-  pointer-events: none;
-}
-
-
 .autocomplete__option-hint {
   display: block;
   @include govuk-font(16);
   color: $govuk-secondary-text-colour;
 }
 
-.autocomplete__option--focused,
-.autocomplete__option:hover {
-  color: govuk-colour("white");
-
-  .autocomplete__option-hint {
-    color: govuk-colour("white");
-  }
-}
-
 // Overrides
 .app-autocomplete--with-suggestions .autocomplete__menu {
   top: govuk-spacing(4);
   margin-bottom: govuk-spacing(7);
-  border-top: 2px solid black;
+  border-top: 2px solid govuk-colour("black");
 }
 
 .app-autocomplete--with-suggestions:not(.app-autocomplete--with-suggestions-no-results) .autocomplete__wrapper ul:before {

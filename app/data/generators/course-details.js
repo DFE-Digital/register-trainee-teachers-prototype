@@ -1,5 +1,4 @@
 const moment = require('moment')
-const weighted = require('weighted')
 const { fakerUK: faker } = require('@faker-js/faker')
 const trainingRouteData = require('./../training-route-data')
 const ittSubjects = require('./../itt-subjects')
@@ -62,10 +61,9 @@ const setSubjectSpecialisms = (courseDetails, pickRandom) => {
       // if so, set it directly
       if (publishSubjects[theSubject].specialism) {
         courseDetails.subjects[ordinal] = publishSubjects[theSubject].specialism
-      }
-      // Where the publish subject doesn’t unambiguously map to a specialism,
-      // then pick a random specialism to simulate the user having picked one.
-      else if (pickRandom) {
+      } else if (pickRandom) {
+        // Where the publish subject doesn’t unambiguously map to a specialism,
+        // then pick a random specialism to simulate the user having picked one.
         const randomisedSubjects = faker.helpers.shuffle(publishSubjects[theSubject].subjectSpecialisms)
         courseDetails.subjects[ordinal] = randomisedSubjects[0]
       } else {

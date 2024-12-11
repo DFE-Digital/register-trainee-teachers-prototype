@@ -5,8 +5,6 @@ const fs = require('fs')
 const path = require('path')
 const { fakerUK: faker } = require('@faker-js/faker')
 const weighted = require('weighted')
-const moment = require('moment')
-const _ = require('lodash')
 const utils = require('../app/lib/utils.js')
 const userFilters = require('../app/filters/users.js').filters
 const permissions = require('../app/data/permissions.js')
@@ -45,9 +43,8 @@ const generateUser = (provider, role = 'team member') => {
     const targetCountOfPermissions = utils.getRandomArbitrary(1, shuffledPermissions.length + 1)
     // Assign those permissions
     userPermissions = shuffledPermissions.slice(0, Math.min(shuffledPermissions.length, targetCountOfPermissions))
-  }
-  // Admins have all permissions
-  else if (role === 'team admin') {
+  } else if (role === 'team admin') {
+    // Admins have all permissions
     // Team admins have all permissions plus the ability to manage team members
     userPermissions = ['manage team members', ...shuffledPermissions]
   }
@@ -73,7 +70,7 @@ const generateFakeUsers = () => {
     // Create between 2 and 10 users per provider
     const numberOfUsersToCreate = utils.getRandomArbitrary(2, (isAccrediting) ? 10 : 3)
 
-    Array(numberOfUsersToCreate).fill().map((item, index) => {
+    Array(numberOfUsersToCreate).fill().forEach((_, index) => {
       // First user always a team admin. After that, 20% chance.
       let role = 'team admin'
       if (index !== 0) {

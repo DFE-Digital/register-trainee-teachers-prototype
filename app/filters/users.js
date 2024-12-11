@@ -1,13 +1,10 @@
-const moment = require('moment')
-const _ = require('lodash')
-const utils = require('../lib/utils.js')
 const permissions = require('../data/permissions.js')
 
 // Leave this filters line
 const filters = {}
 
 // Return an array of users that belong to the current signed in provider
-filters.getProviderUsers = function (data) {
+filters.getProviderUsers = (data) => {
   data = data || this?.ctx?.data || false
 
   const currentProvider = data.settings.userActiveProvider
@@ -19,19 +16,17 @@ filters.getProviderUsers = function (data) {
 
 // Generate a user’s email address
 // Input: { data, user: {fullName}, provider}
-filters.getUserEmail = function (params) {
-  data = params.data || this?.ctx?.data || false
-  user = params.user || data.settings.defaultUser
-  activeProvider = params.provider || data?.settings?.userActiveProvider
+filters.getUserEmail = (params) => {
+  const data = params.data || this?.ctx?.data || false
+  const user = params.user || data.settings.defaultUser
+  const activeProvider = params.provider || data?.settings?.userActiveProvider
   return `${user.fullName.split(' ').join('.')}@${filters.makeFakeSchoolDomain(activeProvider)}`.toLowerCase()
 }
 
 // User a provider’s name to generate a somewhat realistic domain name
-filters.makeFakeSchoolDomain = (input, array = [], tld = 'ac.uk') => {
-  let output = input.toLowerCase()
-
-  // Strip out a bunch of common words and phrases
-  array = array.concat([
+filters.makeFakeSchoolDomain = (input, additionalWords = [], tld = 'ac.uk') => {
+  // Default words to strip out
+  const defaultWords = [
     'academy',
     'college',
     'for boys',
@@ -44,16 +39,37 @@ filters.makeFakeSchoolDomain = (input, array = [], tld = 'ac.uk') => {
     'school',
     'the ',
     'university'
-  ])
-  array.forEach(item => output = output.replace(item, ''))
-  // Remove punctuation
-  output = output.replace(/[.,'’\/#!$%\^&\*;:{}=\-_`~()]/g, '').trim()
-  // Split and remove falsy
-    .split(' ').filter(Boolean)
-  // If it’s got a single part name, add 'school'
-  if (output.length === 1) output.push('school')
-  const joined = output.join('-')
-  return `${joined}.${tld}`
+  ]
+
+  // Combine default words and additional words
+  const wordsToRemove = defaultWords.concat(additionalWords)
+
+  // Normalize input
+  let output = input.toLowerCase()
+
+  // Remove specified words and phrases
+  wordsToRemove.forEach(word => {
+    const wordPattern = new RegExp(`\\b${word}\\b`, 'gi') // Match whole words
+    output = output.replace(wordPattern, '')
+  })
+
+  // Remove punctuation and split into words
+  const cleanedWords = output
+    .replace(/[.,'’/#!$%^&*;:{}=\-_`~()]/g, '') // Remove punctuation
+    .trim()
+    .split(/\s+/) // Split by whitespace
+    .filter(Boolean) // Remove empty parts
+
+  // If only one word remains, append 'school'
+  if (cleanedWords.length === 1) {
+    cleanedWords.push('school')
+  }
+
+  // Join words with hyphens
+  const domainName = cleanedWords.join('-')
+
+  // Return the final domain
+  return `${domainName}.${tld}`
 }
 
 // Accrediting provider admins have the most permissions

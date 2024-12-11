@@ -72,7 +72,7 @@ filters.decorateAttributes = (originalObject, data, value) => {
   const obj = _.cloneDeep(originalObject)
 
   // Map dot or bracket notation to path parts
-  pathParts = _.toPath(value)
+  const pathParts = _.toPath(value)
   // Path parts includes the string name of data, which we don't need
   const storedValue = _.get(data, [...pathParts].splice(1))
 

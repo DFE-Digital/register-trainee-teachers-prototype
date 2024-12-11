@@ -1,7 +1,4 @@
-const moment = require('moment')
-const weighted = require('weighted')
 const { fakerEN_GB: faker } = require('@faker-js/faker')
-const allSchools = require('../gis-schools.js')
 const statusFilters = require('./../../filters/statuses.js').filters
 const trainingRouteData = require('../training-route-data')
 

@@ -13,7 +13,6 @@ filters.combineArrays = (arr1 = [], arr2 = []) => {
 }
 
 filters.isArray = arr => {
-  const isArray = _.isArray(arr)
   return _.isArray(arr)
 }
 
@@ -66,12 +65,17 @@ filters.trimEach = input => {
 // Returns false if no items remaining
 filters.removeEmpty = items => {
   // Handle empty
-  if (!items) return
+  if (!items) {
+    return
+  }
 
   // Handle strings
   if (_.isString(items)) {
-    if (items !== null && items !== '') return items
-    else return
+    if (items !== null && items !== '') {
+      return items
+    } else {
+      return
+    }
   }
 
   // Handle arrys
@@ -80,8 +84,9 @@ filters.removeEmpty = items => {
       return (item && (item !== ''))
     })
     // Don't return emtpy arrays
-    if (output.length) return output
-    else return
+    if (output.length) {
+      return output
+    }
   }
 }
 
@@ -203,20 +208,21 @@ filters.joinAsSentences = (items) => filters.joinArray(items, { delimiter: '. ',
 
 filters.removeFirstItem = (array) => {
   const newArray = [...array]
-  newArray.shift()
-  return newArray
+  return newArray.shift()
 }
 
-filters.removeArrayItem = (array, itemToRemove) => {
-  if (_.isArray(array)) {
-    return filteredItems = array.filter(item => item !== itemToRemove)
-  } else return array
+filters.removeArrayItem = (array, itemToRemove = null) => {
+  if (_.isArray(array) && itemToRemove !== null) {
+    return array.filter(item => item !== itemToRemove)
+  }
+  return array
 }
 
-filters.removeArrayItems = (array, itemsToRemove) => {
-  if (_.isArray(array)) {
-    return filteredItems = array.filter(item => !itemsToRemove.includes(item))
-  } else return array
+filters.removeArrayItems = (array, itemsToRemove = []) => {
+  if (_.isArray(array) && itemsToRemove.length) {
+    return array.filter(item => !itemsToRemove.includes(item))
+  }
+  return array
 }
 
 // -------------------------------------------------------------------

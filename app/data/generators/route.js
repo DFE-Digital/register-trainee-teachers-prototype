@@ -1,11 +1,8 @@
-const { fakerEN_GB: faker } = require('@faker-js/faker')
-const moment = require('moment')
 const weighted = require('weighted')
 
 const trainingRouteData = require('../training-route-data.js')
 
 // Training routes
-const trainingRoutes = Object.keys(trainingRouteData.trainingRoutes)
 const enabledTrainingRoutes = trainingRouteData.enabledTrainingRoutes
 
 const enabledApplyRoutes = enabledTrainingRoutes.filter(route => trainingRouteData.applyRoutes.includes(route))

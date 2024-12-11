@@ -1,9 +1,12 @@
+/* eslint-disable no-undef */
+/* eslint-disable no-unused-vars */
 const debugAutocomplete = false
 
 // What should get set in the input once a value is selected
 const valueForInput = (result) => {
-  if (!result) return ''
-  else if (typeof result === 'string') {
+  if (!result) {
+    return ''
+  } else if (typeof result === 'string') {
     return result
   } else if (typeof result === 'object') {
     return result.name
@@ -16,17 +19,18 @@ const menuResultItem = (result) => {
     // If using DefaultValue, result can be a string - bug with autcomplete  https://github.com/alphagov/accessible-autocomplete/issues/424
     if (typeof result === 'string') {
       return result
-    }
-    // What our sort function returns
-    else if (typeof result === 'object') {
+    } else if (typeof result === 'object') {
+      // What our sort function returns
       const name = (debugAutocomplete) ? `${result.name} (${result.weight})` : result.name
       const output = result.append ? `<span>${name}</span> ${result.append}` : `<span>${name}</span>`
       return result.hint ? `${output}<span class="autocomplete__option--hint">${result.hint}</span>` : output
     }
-  } else return ''
+  } else {
+    return ''
+  }
 }
 
-const onConfirm = function (selected) {
+const onConfirm = (selected) => {
   // Create a hidden input and use this to submit the value or the name
 
   // Visible input that user interacts with
@@ -66,26 +70,24 @@ const onConfirm = function (selected) {
   if (selected) {
     autocompleteValueInput.value = selected.value || selected.name
     autocompleteValueInput.setAttribute('data-text', selected.name)
-  }
-  // Probably running on blur
-  else {
+  } else {
+    // Probably running on blur
     // If the source input is blank, our value should be too
     if (autocompleteInput.value === '') {
       autocompleteValueInput.value = ''
       autocompleteValueInput.setAttribute('data-text', '')
-    }
-    // If the value is not blank and doesn’t match the stored data-text, then the user
-    // must have typed something in the autocomplete without picking an option. Therefore we
-    // need to store the current typed text.
-    else if (autocompleteInput.value != autocompleteValueInput.getAttribute('data-text')) {
+    } else if (autocompleteInput.value !== autocompleteValueInput.getAttribute('data-text')) {
+      // If the value is not blank and doesn’t match the stored data-text, then the user
+      // must have typed something in the autocomplete without picking an option. Therefore we
+      // need to store the current typed text.
       autocompleteValueInput.value = autocompleteInput.value
       autocompleteValueInput.setAttribute('data-text', autocompleteInput.value)
     }
   }
 
-  if (this.hasOnConfirmExtra) {
-    onConfirmExtra(selected)
-  }
+  // if (this.hasOnConfirmExtra) {
+  //   onConfirmExtra(selected)
+  // }
 }
 
 // Extract data attributes from select options
@@ -139,6 +141,7 @@ const setupAutocomplete = (component) => {
       if (!innerText.endsWith('.')) {
         innerText = `${innerText}.`
       }
+      return innerText // Explicitly return the transformed value
     }).join(' ')
   }
 
@@ -147,8 +150,11 @@ const setupAutocomplete = (component) => {
     const selectOptions = Array.from(selectElement?.options)
       // Remove empty or disabled select options
       .filter(option => {
-        if (option.disabled || option.label === '') return false
-        return true
+        if (option.disabled || option.label === '') {
+          return false
+        } else {
+          return true
+        }
       })
 
     // Extract values from data attributes in each option
@@ -168,8 +174,9 @@ const setupAutocomplete = (component) => {
 
     // If in suggestions mode we don’t want to show a 'suggestions' banner when there are no results
     if (showSuggestions) {
-      if (results.length === 0) component.classList.add('app-autocomplete--with-suggestions-no-results')
-      else {
+      if (results.length === 0) {
+        component.classList.add('app-autocomplete--with-suggestions-no-results')
+      } else {
         component.classList.remove('app-autocomplete--with-suggestions-no-results')
       }
     }
@@ -243,3 +250,5 @@ const initAutocompletes = () => {
   const allAutocompleteElements = document.querySelectorAll('[data-module="app-autocomplete"]')
   allAutocompleteElements.forEach(element => setupAutocomplete(element))
 }
+/* eslint-enable no-undef */
+/* eslint-enable no-unused-vars */

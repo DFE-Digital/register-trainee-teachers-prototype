@@ -1,15 +1,9 @@
 // -------------------------------------------------------------------
 // Imports and setup
 // -------------------------------------------------------------------
-const _ = require('lodash')
-const trainingRouteData = require('./../data/training-route-data')
-const trainingRoutes = trainingRouteData.trainingRoutes
 const utils = require('./../lib/utils')
-const arrayFilters = require('./arrays.js').filters
 const funding = require('../data/funding')
 const moment = require('moment')
-const strings = require('./../filters/strings.js').filters
-
 // Leave this filters line
 const filters = {}
 
@@ -235,7 +229,7 @@ filters.fixNamesFromFunding = (string) => {
   - eg "2019/20" --> "2019 to 20"
 */
 filters.formatYearRange = (string, fundingYear = '2021 to 2022') => {
-  fundingYearNbsp = fundingYear.replaceAll(' ', '&nbsp;')
+  const fundingYearNbsp = fundingYear.replaceAll(' ', '&nbsp;')
 
   return string
     .replace(/(\d{4})\/(\d{2})/, '$1&nbsp;to&nbsp;20$2')

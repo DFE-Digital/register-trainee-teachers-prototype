@@ -4,7 +4,6 @@
 
 // Leave this filters line
 const filters = {}
-const _ = require('lodash')
 
 /*
   ====================================================================
@@ -24,9 +23,14 @@ const _ = require('lodash')
 */
 
 filters.getStatusText = function (data, defaultNotStarted = false, defaultInProgress = false) {
-  if (!data) return defaultNotStarted || 'Incomplete'
-  if (data?.status) return data.status
-  else return defaultInProgress || 'In progress'
+  if (!data) {
+    return defaultNotStarted || 'Incomplete'
+  }
+  if (data?.status) {
+    return data.status
+  } else {
+    return defaultInProgress || 'In progress'
+  }
 }
 
 filters.getStatusClass = (status) => {
@@ -96,8 +100,11 @@ filters.reviewIfInProgress = (url, data, path) => {
   if (!filters.sectionIsInProgress(data)) {
     return url
   } else {
-    if (path) return path + '/confirm'
-    else return url + '/confirm'
+    if (path) {
+      return path + '/confirm'
+    } else {
+      return url + '/confirm'
+    }
   }
 }
 

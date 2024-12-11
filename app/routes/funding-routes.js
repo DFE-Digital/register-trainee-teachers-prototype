@@ -3,7 +3,7 @@ const utils = require('./../lib/utils')
 
 module.exports = router => {
   // Render organisation pages, passing along the organisation UUID
-  router.get('/funding/:year/:page*', function (req, res, next) {
+  router.get('/funding/:year/:page*', (req, res, next) => {
     // Use our own render as some templates live at /index.html
     utils.render(
       path.join('funding', req.params.page, req.params[0]), res, next, {

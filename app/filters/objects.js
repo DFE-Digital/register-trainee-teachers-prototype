@@ -84,9 +84,10 @@ filters.keepAttributes = (array, keysToKeep) => {
   // Array of objects
   if (_.isArray(array)) {
     return array.map(keepKeys)
+  } else {
+    // Single object
+    return keepKeys(array)
   }
-  // Single object
-  else return keepKeys(array)
 }
 
 // set attribute on object
@@ -99,7 +100,7 @@ filters.setAttribute = (dictionary, key, value) => {
 // set attribute on object (or array of objects)
 filters.addAttribute = (dictionary, key, value) => {
   if (Array.isArray(dictionary)) {
-    newArr = []
+    const newArr = []
     dictionary.forEach(item => {
       const newItem = Object.assign({}, item)
       newItem[key] = value
@@ -147,9 +148,10 @@ filters.deleteAttribute = (input, attribute) => {
   // Array of objects
   if (_.isArray(input)) {
     return input.map(deleteAttributeFromObject)
+  } else {
+    // Single object
+    return deleteAttributeFromObject(input)
   }
-  // Single object
-  else return deleteAttributeFromObject(input)
 }
 
 // Delete a keys with blank values
@@ -229,7 +231,7 @@ filters.whereDoesNotInclude = (arr, key, compare) => {
     return !compare.some(string => {
       return _.get(item, key) && _.get(item, key).includes(string)
     })
-    return compare.includes(_.get(item, key))
+    // return compare.includes(_.get(item, key))
   })
   return filtered
 }

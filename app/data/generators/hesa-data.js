@@ -1,5 +1,4 @@
 const { fakerEN_GB: faker } = require('@faker-js/faker')
-const moment = require('moment')
 const weighted = require('weighted')
 
 const percentageMissing = [0, 1] // disabled

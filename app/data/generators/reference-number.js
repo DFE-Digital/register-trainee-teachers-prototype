@@ -1,5 +1,4 @@
 const { fakerEN_GB: faker } = require('@faker-js/faker')
-const moment = require('moment')
 
 // Two letters followed by four numbers
 // This approximates the reference number used by Apply / Manage

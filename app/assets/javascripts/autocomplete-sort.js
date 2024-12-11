@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 // Returns an array of integers representing the position of each regex match.
 const matchPositions = (string, regexes) => regexes.map(regex => string.search(regex)).filter(i => i >= 0)
 
@@ -61,6 +62,7 @@ function autocompleteSort (query, options) {
   // them above an exact name match.
   options.forEach(o => { o.weight = calculateWeight(o.name, query, o.synonyms) * (o.boost || 1) })
 
+  const debugAutocomplete = false
   const results = options.filter(o => o.weight > 0)
     .sort(byWeightThenAlphabetically)
 
@@ -69,3 +71,4 @@ function autocompleteSort (query, options) {
   }
   return results
 }
+/* eslint-enable no-unused-vars */

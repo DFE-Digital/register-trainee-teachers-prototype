@@ -54,10 +54,8 @@ module.exports = ({ updatedDate, submittedDate, deferredDate, withdrawalDate, qu
         moment().subtract(50, 'days'),
         moment().toISOString()
       )
-    }
-
-    // Assume all pending are very recent
-    else if (application.status === 'Pending TRN') {
+    } else if (application.status === 'Pending TRN') {
+      // Assume all pending are very recent
       updatedDate = faker.date.between(
         moment().subtract(6, 'days'),
         moment()
@@ -67,7 +65,7 @@ module.exports = ({ updatedDate, submittedDate, deferredDate, withdrawalDate, qu
       // Todo: should we bias towards August?
 
       // Updated date can't be in future
-      const lastPossibleUpdatedDate = (moment(yearEndDate).isAfter() ? moment() : yearEndDate)
+      // const lastPossibleUpdatedDate = (moment(yearEndDate).isAfter() ? moment() : yearEndDate)
 
       if (isCurrentYear) {
         const sortedDates = sortDates(yearStartDate, yearEndDate)

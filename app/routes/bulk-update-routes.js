@@ -74,10 +74,8 @@ module.exports = router => {
 
         return row
       })
-    }
-
-    // Reduce errors by 100%
-    else {
+    } else {
+      // Reduce errors by 100%
       console.log('Bulk adding new trainees: reducing existing errors')
       processedRows.forEach(row => {
         if (row.uploadStatus === 'error') {
@@ -94,7 +92,7 @@ module.exports = router => {
   }
 
   /* Clear out existing data when startin a new journey */
-  router.get('/bulk-update/add-new/start', function (req, res) {
+  router.get('/bulk-update/add-new/start', (req, res) => {
     console.log('Bulk add new: starting new journey')
     const data = req.session.data
     delete data.bulkUpload
@@ -103,7 +101,7 @@ module.exports = router => {
   })
 
   /* Clear review errors answer */
-  router.post('/bulk-update/add-new/upload-answer', function (req, res) {
+  router.post('/bulk-update/add-new/upload-answer', (req, res) => {
     const data = req.session.data
 
     data.bulkUpload = {
@@ -114,7 +112,7 @@ module.exports = router => {
   })
 
   /* Set-up check updates page up as coming from upload */
-  router.post('/bulk-update/add-new/fix-errors-answer', function (req, res) {
+  router.post('/bulk-update/add-new/fix-errors-answer', (req, res) => {
     const data = req.session.data
 
     data.bulkUpload = {
@@ -126,7 +124,7 @@ module.exports = router => {
   })
 
   // Assume a small number of changes. Swaps some trainees from recommended and some to recommended
-  router.post('/bulk-update/add-new/upload-changes-answer', function (req, res) {
+  router.post('/bulk-update/add-new/upload-changes-answer', (req, res) => {
     const data = req.session.data
 
     const processedRows = data?.bulkUpload?.processedRows
@@ -166,7 +164,7 @@ module.exports = router => {
   })
 
   // Redirect back to upload if there are no trainees with updates
-  router.get('/bulk-update/add-new/check-pending-updates', function (req, res) {
+  router.get('/bulk-update/add-new/check-pending-updates', (req, res) => {
     const data = req.session.data
 
     const processedRows = data?.bulkUpload?.processedRows
@@ -179,7 +177,7 @@ module.exports = router => {
   })
 
   // Redirect back to upload if there are no trainees with updates
-  router.post('/bulk-update/add-new/update', function (req, res) {
+  router.post('/bulk-update/add-new/update', (req, res) => {
     const data = req.session.data
 
     let successCount = 0
@@ -196,8 +194,11 @@ module.exports = router => {
       // We need to look up the record again as the one we have is a copy
       const record = utils.getRecordById(data.records, row.trainee.id)
       const success = utils.recommendForAward(record, { date: row.assessmentDate })
-      if (success) successCount++
-      else failCount++
+      if (success) {
+        successCount++
+      } else {
+        failCount++
+      }
     })
 
     console.log(`Bulk recommend: ${successCount} ${filters.pluralise('success', successCount)}, ${failCount} ${filters.pluralise('failure', failCount)}.`)
@@ -215,7 +216,7 @@ module.exports = router => {
   */
 
   /* Review errors or skip */
-  router.get('/bulk-update/add-details/errors-found-answer', function (req, res) {
+  router.get('/bulk-update/add-details/errors-found-answer', (req, res) => {
     const data = req.session.data
     if (data?.bulk?.addDetailsFixErrors === 'Fix errors now') {
       res.redirect('/bulk-update/add-details/fix-errors')
@@ -228,7 +229,7 @@ module.exports = router => {
   })
 
   /* Set-up check updates page up as coming from upload */
-  router.get('/bulk-update/add-details/fix-file', function (req, res) {
+  router.get('/bulk-update/add-details/fix-file', (req, res) => {
     const data = req.session.data
     data.bulk = {
       addDetailsFixErrors: true
@@ -237,7 +238,7 @@ module.exports = router => {
   })
 
   /* Clear review errors answer */
-  router.get('/bulk-update/add-details/no-update', function (req, res) {
+  router.get('/bulk-update/add-details/no-update', (req, res) => {
     const data = req.session.data
     delete data?.bulk?.addDetailsFixErrors
     delete data?.bulk?.recommendFixErrors
@@ -245,7 +246,7 @@ module.exports = router => {
   })
 
   /* Get trainees to add missing details */
-  router.post('/bulk-update/add-details/bulk-add-answer', function (req, res) {
+  router.post('/bulk-update/add-details/bulk-add-answer', (req, res) => {
     const data = req.session.data
     const filteredRecords = utils.filterRecords(data.records, data)
     const uploadedTrainees = utils.filterByCanBulkUpdate(filteredRecords)
@@ -355,10 +356,8 @@ module.exports = router => {
 
         return row
       })
-    }
-
-    // Reduce errors by 100%
-    else {
+    } else {
+      // Reduce errors by 100%
       console.log('Bulk recommend: reducing existing errors')
       processedRows.forEach(row => {
         if (row.uploadStatus === 'error') {
@@ -375,7 +374,7 @@ module.exports = router => {
   }
 
   /* Clear out existing data when startin a new journey */
-  router.get('/bulk-update/recommend/start', function (req, res) {
+  router.get('/bulk-update/recommend/start', (req, res) => {
     console.log('Bulk recommend: starting new journey')
     const data = req.session.data
     delete data.bulkUpload
@@ -384,7 +383,7 @@ module.exports = router => {
   })
 
   /* Clear review errors answer */
-  router.post('/bulk-update/recommend/upload-answer', function (req, res) {
+  router.post('/bulk-update/recommend/upload-answer', (req, res) => {
     const data = req.session.data
 
     data.bulkUpload = {
@@ -395,7 +394,7 @@ module.exports = router => {
   })
 
   /* Set-up check updates page up as coming from upload */
-  router.post('/bulk-update/recommend/fix-errors-answer', function (req, res) {
+  router.post('/bulk-update/recommend/fix-errors-answer', (req, res) => {
     const data = req.session.data
 
     data.bulkUpload = {
@@ -407,7 +406,7 @@ module.exports = router => {
   })
 
   // Assume a small number of changes. Swaps some trainees from recommended and some to recommended
-  router.post('/bulk-update/recommend/upload-changes-answer', function (req, res) {
+  router.post('/bulk-update/recommend/upload-changes-answer', (req, res) => {
     const data = req.session.data
 
     const processedRows = data?.bulkUpload?.processedRows
@@ -447,7 +446,7 @@ module.exports = router => {
   })
 
   // Redirect back to upload if there are no trainees with updates
-  router.get('/bulk-update/recommend/check-pending-updates', function (req, res) {
+  router.get('/bulk-update/recommend/check-pending-updates', (req, res) => {
     const data = req.session.data
 
     const processedRows = data?.bulkUpload?.processedRows
@@ -460,7 +459,7 @@ module.exports = router => {
   })
 
   // Redirect back to upload if there are no trainees with updates
-  router.post('/bulk-update/recommend/update', function (req, res) {
+  router.post('/bulk-update/recommend/update', (req, res) => {
     const data = req.session.data
 
     let successCount = 0

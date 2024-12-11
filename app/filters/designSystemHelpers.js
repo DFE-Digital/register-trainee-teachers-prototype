@@ -82,7 +82,7 @@ let csvData =
 */
 
 filters.csvToArray = (csvString) => {
-  array = CSV.parse(csvString)
+  let array = CSV.parse(csvString)
   // Flatten nested array if it's only a single line
   array = (array.length === 1) ? array[0] : array
   return array
@@ -152,7 +152,7 @@ let summaryListData = [
 
 */
 
-filters.arrayToSummaryList = array => {
+filters.arrayToSummaryList = (array) => {
   const arrData = []
   array.forEach(row => {
     const key = row[0] // required
@@ -185,8 +185,8 @@ filters.arrayToSummaryList = array => {
 }
 
 filters.csvToSummaryList = (csvString) => {
-  arr = CSV.parse(csvString)
-  const arrData = filters.arrayToSummaryList(arr)
+  const array = CSV.parse(csvString)
+  const arrData = filters.arrayToSummaryList(array)
   return arrData
 }
 
@@ -219,7 +219,7 @@ filters.toSelectItems = (array, includeDefaultEmpty = false, defaultSelected = f
   }]
 
   const items = array.map(item => {
-    if (Array.isArray(item)) {
+    if (_.isArray(item)) {
       return {
         text: item[0],
         value: item[1]
@@ -229,14 +229,16 @@ filters.toSelectItems = (array, includeDefaultEmpty = false, defaultSelected = f
         text: item,
         value: item
       }
-    } else if (item instanceof Object) {
+    } else {
       return item
     }
   })
 
   if (includeDefaultEmpty) {
     return defaultItem.concat(items)
-  } else return items
+  } else {
+    return items
+  }
 }
 
 // -------------------------------------------------------------------

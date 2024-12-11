@@ -1,20 +1,16 @@
 const _ = require('lodash')
 const express = require('express')
-const { fakerEN_GB: faker } = require('@faker-js/faker')
-const moment = require('moment')
-const path = require('path')
 const router = express.Router()
 const url = require('url')
 const utils = require('./lib/utils')
 const permissions = require('./filters/permissions.js').filters
-const fs = require('fs')
 
 // =============================================================================
 // Catch all
 // Used to pass common data to views
 // Needs to be before other routes
 // =============================================================================
-router.all('*', function (req, res, next) {
+router.all('*', (req, res, next) => {
   const data = req.session.data
   if (req.query?.referrer) {
     // Referrer might be an array of urls. Split it up now so we’ve got more
@@ -32,7 +28,9 @@ router.all('*', function (req, res, next) {
     })
   }
   res.locals.flash = req.flash('success') // pass through 'success' messages only
-  res.locals.currentPageUrl = url.parse(req.url).pathname
+
+  const myUrl = new URL(req.url, `http://${req.headers.host}`) // Include the host to construct a full URL
+  res.locals.currentPageUrl = myUrl.pathname
 
   // Todo - move this stuff to middleware?
   // Need to also save to locals as saving to data at this point won’t be available to the view unless refreshed
@@ -86,10 +84,12 @@ router.all('*', function (req, res, next) {
 // Delete query string if clearQuery set
 // This lets us give urls to reserach participants that set up data correctly
 // and have the query string self-delete once done
-router.get('*', function (req, res, next) {
+router.get('*', (req, res, next) => {
   const data = req.session.data
 
-  const requestedUrl = url.parse(req.url).pathname
+  const myUrl = new URL(req.url, `http://${req.headers.host}`) // Include the host to construct a full URL
+  const requestedUrl = myUrl.pathname
+
   // Delete cashes of invalid answers that should be flushed on each request
   delete data?.temp
   if (req?.query?.clearQuery) {
@@ -100,7 +100,7 @@ router.get('*', function (req, res, next) {
   }
 })
 
-router.post('*', function (req, res, next) {
+router.post('*', (req, res, next) => {
   if (req.session.data.successFlash) {
     req.flash('success', req.session.data.successFlash)
     delete req.session.data.successFlash
@@ -109,7 +109,7 @@ router.post('*', function (req, res, next) {
 })
 
 // For directly setting prototype data in testing
-router.post('/direct-set-data', function (req, res, next) {
+router.post('/direct-set-data', (req, res, next) => {
   const data = req.session.data
 
   const theKey = data.directSet?.key
@@ -156,7 +156,9 @@ router.post('/direct-set-data', function (req, res, next) {
         console.log(`Updating record at index ${recordIndex}`)
         data.records[recordIndex] = data.record
       }
-    } else console.log('Error: no record id to update to')
+    } else {
+      console.log('Error: no record id to update to')
+    }
   }
 
   res.redirect('/direct-set-data')
@@ -167,7 +169,7 @@ router.post('/direct-set-data', function (req, res, next) {
 // =============================================================================
 
 // Redirect to tab if tabs are enabled.
-router.get('/guidance/hesa-register-data-mapping', function (req, res, next) {
+router.get('/guidance/hesa-register-data-mapping', (req, res, next) => {
   const data = req.session.data
 
   if (data.settings.hesaGuidanceStyle === 'tabs') {
@@ -177,7 +179,7 @@ router.get('/guidance/hesa-register-data-mapping', function (req, res, next) {
   }
 })
 
-router.get('/guidance/hesa-register-data-mapping/:tabName', function (req, res) {
+router.get('/guidance/hesa-register-data-mapping/:tabName', (req, res) => {
   const data = req.session.data
 
   // User has switched to non tab style so we should redirect away from tab urls.
@@ -191,7 +193,7 @@ router.get('/guidance/hesa-register-data-mapping/:tabName', function (req, res) 
 })
 
 // Used for UR setup where we are setting things on the query string, but don't want users to see a prototype page at the end
-router.get('/set-up', function (req, res, next) {
+router.get('/set-up', (req, res, next) => {
   // return text string of 'done' in res
   res.send('Set up complete')
 })

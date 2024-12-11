@@ -27,8 +27,6 @@ module.exports = (params) => {
   // Only generate bursary data for routes that have bursaries
   let source = false
   if (availableFinancialSupport) {
-    bursary = {}
-
     const isUsingFinancialSupport = weighted.select([true, false], [0.9, 0.1])
 
     if (isUsingFinancialSupport) {
@@ -38,7 +36,9 @@ module.exports = (params) => {
       if (availableFinancialSupport.scholarshipValue) {
         source = weighted.select([source, 'scholarship'], [0.3, 0.7])
       }
-    } else source = 'self-funded'
+    } else {
+      source = 'self-funded'
+    }
 
     // Special handling for Early years graduate entry
     if (source === 'bursary' && availableFinancialSupport.tiersApply) {

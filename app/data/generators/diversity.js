@@ -4,7 +4,6 @@ const weighted = require('weighted')
 const disabilities = require('../disabilities.js')
 
 module.exports = () => {
-  let ethnicGroup
   let ethnicBackground
 
   const ethnicGroups = {
@@ -44,7 +43,7 @@ module.exports = () => {
     ]
   }
 
-  ethnicGroup = faker.helpers.arrayElement([
+  const ethnicGroup = faker.helpers.arrayElement([
     'Asian or Asian British',
     'Black, African, Black British or Caribbean',
     'Mixed or multiple ethnic groups',

@@ -1,3 +1,5 @@
+@use "sass:string";
+
 // global styles for <a> and <p> tags
 $govuk-global-styles: true;
 
@@ -10,56 +12,50 @@ $govuk-assets-path: "/dist/govuk/assets/";
 
 @import "node_modules/@ministryofjustice/frontend/moj/all";
 
-
 // Patterns that aren't in Frontend
-@import "patterns/step-by-step-header";
-@import "patterns/step-by-step-nav";
-@import "patterns/step-by-step-related";
-@import "patterns/task-list";
-@import "patterns/related-items";
-@import "patterns/start-page";
-@import "components/summary-card";
-@import "components/task-list";
 @import "components/autocomplete";
 @import "components/footer";
+@import "components/summary-card";
+@import "components/task-list";
+@import "patterns/related-items";
+@import "patterns/start-page";
+@import "patterns/task-list";
 
 // Misc
 @import "helpers";
 @import "helpers/field-widths";
-@import "helpers/width-container";
 // @import "helpers/stick-to-window-when-scrolling";
-@import "utils";
+@import "helpers/width-container";
 @import "media-queries";
+@import "utils";
 
 // Components that aren't in Frontend
-@import "components/admin-feature";
-@import "components/application-card";
-@import "components/all-records-header";
-@import "components/all-records-search";
 @import "components/action-required-item";
 @import "components/admin-banner";
+@import "components/admin-feature";
+@import "components/all-records-header";
+@import "components/all-records-search";
+@import "components/application-card";
 @import "components/banner";
 @import "components/button-as-link";
 @import "components/cookie-banner";
 @import "components/invalid-answer";
 @import "components/markdown";
 @import "components/organisation-switcher";
-@import "components/record-header";
 @import "components/record-actions";
+@import "components/record-header";
 @import "components/records-actions";
-@import "components/user-card";
-@import "components/sub-navigation";
 @import "components/spreadsheet";
-@import "components/timeline";
 @import "components/status-card";
-
+@import "components/sub-navigation";
+@import "components/timeline";
+@import "components/user-card";
 
 // Overrides
 @import "overrides/dash-list";
 @import "overrides/govuk-error-summary";
 @import "overrides/govuk-header";
 @import "overrides/govuk-panel";
-@import "overrides/govuk-error-summary";
 @import "overrides/govuk-skip-link";
 @import "overrides/govuk-table";
 @import "overrides/govuk-tag";
@@ -67,14 +63,14 @@ $govuk-assets-path: "/dist/govuk/assets/";
 @import "overrides/moj-filter";
 @import "overrides/moj-pagination";
 @import "overrides/moj-primary-navigation";
-@import "overrides/summary-card";
 @import "overrides/status-grid";
+@import "overrides/summary-card";
 @import "overrides/tabs";
 
-
-
-
 // Add extra styles here, or re-organise the Sass files in whichever way makes most sense to you
+
+// stylelint-disable selector-no-qualifying-type
+// stylelint-disable max-nesting-depth
 
 h1.register-main-heading {
   font-size: 3rem;
@@ -117,7 +113,6 @@ div.summary-panel {
         margin-left: 15px;
       }
     }
-
   }
 }
 
@@ -248,14 +243,13 @@ span.summary-validation-symbol {
   display: inline;
 }
 
-
 // column widths for tables
 // app-table__column-xx
 $sizes: 70, 64, 55, 53, 50, 48, 35, 32, 30, 25, 20, 16, 15, 12, 10, 5;
 
 @each $size in $sizes {
   .app-table__column-#{$size} {
-    width: $size + unquote('%');
+    width: $size + string.unquote('%');
   }
 }
 
@@ -284,3 +278,6 @@ $sizes: 70, 64, 55, 53, 50, 48, 35, 32, 30, 25, 20, 16, 15, 12, 10, 5;
 .govuk-radios__input:disabled ~ .govuk-hint {
   opacity: .5;
 }
+
+// stylelint-enable max-nesting-depth
+// stylelint-enable selector-no-qualifying-type

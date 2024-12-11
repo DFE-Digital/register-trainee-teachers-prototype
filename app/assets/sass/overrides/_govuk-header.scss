@@ -1,5 +1,6 @@
-
-// Remove the blue bottom border
+////
+/// @group helpers/govuk-header
+////
 
 .app-light-header {
   border-bottom-color: $govuk-brand-colour;
@@ -30,6 +31,6 @@
 }
 
 .govuk-header nav {
-    display: inline-block;
-    float: right;
+  // display: inline-block;
+  float: right;
 }

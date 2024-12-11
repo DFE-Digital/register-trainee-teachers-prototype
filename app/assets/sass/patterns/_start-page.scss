@@ -1,3 +1,6 @@
+////
+/// @group patterns/start-page
+////
 
 .start-page .govuk-phase-banner {
   margin-bottom: govuk-spacing(6);
@@ -19,7 +22,10 @@
   color: govuk-colour("blue");
   background-color: govuk-colour("white");
 
-  > :last-child { margin-right: 0 !important; margin-bottom: 0 !important; }
+  > :last-child {
+    margin-right: 0 !important;
+    margin-bottom: 0 !important;
+  }
 }
 
 .start-page-banner__heading,
@@ -56,7 +62,7 @@
   margin-bottom: govuk-spacing(3);
   color: govuk-colour("blue");
   background-color: govuk-colour("white");
-  box-shadow: 0 2px 0 #00508c;
+  box-shadow: 0 2px 0 govuk-colour("blue");
 
   @include govuk-media-query($from: tablet) {
     margin-right: govuk-spacing(3);
@@ -65,5 +71,5 @@
 }
 
 .start-page-banner__button.govuk-button:hover {
-  background-color: #e8f1f8;
+  background-color: govuk-colour("light-grey");
 }

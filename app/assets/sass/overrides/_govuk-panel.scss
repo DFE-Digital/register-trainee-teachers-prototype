@@ -1,3 +1,7 @@
+////
+/// @group helpers/govuk-panel
+////
+
 .govuk-panel__title {
   @include govuk-font(36, bold);
 }

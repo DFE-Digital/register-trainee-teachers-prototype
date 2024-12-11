@@ -1,4 +1,7 @@
-// Overides for MoJ button menu
+////
+/// @group helpers/moj-button-menu
+////
+/// Overides for MoJ button menu
 
 .moj-button-menu {
   @include govuk-media-query($from: desktop) {

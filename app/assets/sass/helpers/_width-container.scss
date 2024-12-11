@@ -1,4 +1,6 @@
-// Likely stolen from HMCTS design system
+////
+/// @group helpers/width-container
+////
 
 @mixin app-width-container($width: $govuk-page-width) {
   // Limit the width of the container to the page width

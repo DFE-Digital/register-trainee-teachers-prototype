@@ -1,6 +1,6 @@
-/* ==========================================================================
-   #TIMELINE
-   ========================================================================== */
+////
+/// @group components/timeline
+////
 
 .app-timeline {
   // overflow: hidden;
@@ -16,7 +16,6 @@
     height: 100%;
     background-color: govuk-colour("blue");
   }
-
 }
 
 .app-timeline--full {
@@ -41,7 +40,6 @@
     height: 5px;
     background-color: govuk-colour("blue");
   }
-
 }
 
 .app-timeline__item:last-child {
@@ -83,9 +81,9 @@
   margin-top: govuk-spacing(4);
 }
 
-/* ==========================================================================
-   #TIMELINE DOCUMENT STYLES – FOR BACKWARDS COMPATIBILITY
-   ========================================================================== */
+/// ==========================================================================
+///   #TIMELINE DOCUMENT STYLES – FOR BACKWARDS COMPATIBILITY
+///   ==========================================================================
 
 .app-timeline__documents {
   margin-bottom: 0;
@@ -99,7 +97,6 @@
   &:last-child {
     margin-bottom: 0;
   }
-
 }
 
 .app-timeline__document-link {

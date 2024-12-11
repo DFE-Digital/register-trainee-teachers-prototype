@@ -1,12 +1,16 @@
+////
+/// @group components/invalid-answer
+////
+
 $invalid-colour: $govuk-brand-colour;
 
 .app-inset-text--invalid-answer {
-  border-color: $invalid-colour;  
+  border-color: $invalid-colour;
 }
 
 .app-has-errors {
   .app-inset-text--invalid-answer, .app-summary-list__value-inset {
-    border-color: $govuk-error-colour;  
+    border-color: $govuk-error-colour;
   }
 
   .app-summary-list__message--invalid {
@@ -65,10 +69,6 @@ $invalid-colour: $govuk-brand-colour;
   color: $invalid-colour;
 }
 
-.app-invalid-answer .govuk-error-message {
-  color: $invalid-colour;
-}
-
 .app-invalid-answer .autocomplete__input {
   border-color: $invalid-colour;
 }
@@ -80,7 +80,6 @@ $invalid-colour: $govuk-brand-colour;
 .app-invalid-answer .govuk-select--error {
   border-color: $invalid-colour;
 }
-
 
 .app-summary-list__user-value {
   margin-bottom: 5px;

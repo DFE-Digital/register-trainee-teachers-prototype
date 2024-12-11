@@ -1,6 +1,9 @@
+////
+/// @group helpers/moj-pagination
+////
+/// Removed margin to stop pagination overflowing container
+/// Todo: investigate why this happens
 
-// Removed margin to stop pagination overflowing container
-// Todo: investigate why this happens
 .moj-pagination {
   margin-right: 0;
   margin-left: 0;
@@ -20,5 +23,4 @@
     padding-right: 0;
     padding-left: inherit;
   }
-  
 }

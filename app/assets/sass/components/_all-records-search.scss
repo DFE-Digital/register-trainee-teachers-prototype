@@ -1,4 +1,8 @@
-// Records search
+////
+/// @group components/records-search
+////
+
+@use "sass:color";
 
 .records-search {
   @include govuk-media-query($from: tablet) {
@@ -84,7 +88,7 @@ $large-input-size: 50px;
     background-color: govuk-colour("blue");
 
     &:hover {
-      background-color: lighten(govuk-colour("blue"), 5%);
+      background-color: color.adjust(govuk-colour("blue"), $lightness: 5%);
     }
   }
 

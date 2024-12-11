@@ -1,7 +1,10 @@
+////
+/// @group components/sub-navigation
+////
+
 .app-sub-navigation {
   margin-bottom: govuk-spacing(7);
 }
-
 
 .app-sub-navigation__list {
   margin: 0;
@@ -14,7 +17,6 @@
     box-shadow: inset 0 -1px 0 $govuk-border-colour;
   }
 }
-
 
 .app-sub-navigation__item {
   @include govuk-font(19);
@@ -32,9 +34,7 @@
     margin-right: govuk-spacing(4);
     box-shadow: none;
   }
-
 }
-
 
 .app-sub-navigation__link {
   @include govuk-link-common;
@@ -74,9 +74,7 @@
     height: 5px;
     background-color: govuk-colour("black");
   }
-
 }
-
 
 .app-sub-navigation__link[aria-current="page"] {
   position: relative;
@@ -95,11 +93,9 @@
       width: 100%;
       height: 5px;
     }
-
   }
 
   &:focus:before {
     background-color: govuk-colour("black");
   }
-
 }

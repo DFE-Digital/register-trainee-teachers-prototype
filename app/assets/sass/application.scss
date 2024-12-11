@@ -1,3 +1,5 @@
+@use "sass:string";
+
 // global styles for <a> and <p> tags
 $govuk-global-styles: true;
 
@@ -66,8 +68,6 @@ $govuk-assets-path: "/dist/govuk/assets/";
 @import "overrides/tabs";
 
 // Add extra styles here, or re-organise the Sass files in whichever way makes most sense to you
-
-@use "sass:string";
 
 // stylelint-disable selector-no-qualifying-type
 // stylelint-disable max-nesting-depth

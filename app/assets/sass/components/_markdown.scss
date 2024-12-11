@@ -82,10 +82,12 @@
   	text-align: left;
   }
 
+  // stylelint-disable scss/at-extend-no-missing-placeholder
 	blockquote {
-		@extend .govuk-inset-text;
-		margin-left: 0px;
+    @extend .govuk-inset-text;
+		margin-left: 0;
 	}
+  // stylelint-enable scss/at-extend-no-missing-placeholder
 
 	img {
 		max-width: 100%;

@@ -2,7 +2,7 @@
 /// @group helpers/tabs
 ////
 
-li.govuk-tabs__list-item {
+.govuk-tabs__list-item {
   font-weight: bold;
 
   a {
@@ -10,7 +10,7 @@ li.govuk-tabs__list-item {
   }
 }
 
-li.govuk-tabs__list-item--selected {
+.govuk-tabs__list-item--selected {
   padding-top: 10px !important;
   border-top: 5px solid $govuk-brand-colour !important;
 }

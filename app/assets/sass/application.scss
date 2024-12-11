@@ -67,6 +67,11 @@ $govuk-assets-path: "/dist/govuk/assets/";
 
 // Add extra styles here, or re-organise the Sass files in whichever way makes most sense to you
 
+@use "sass:string";
+
+// stylelint-disable selector-no-qualifying-type
+// stylelint-disable max-nesting-depth
+
 h1.register-main-heading {
   font-size: 3rem;
 
@@ -244,7 +249,7 @@ $sizes: 70, 64, 55, 53, 50, 48, 35, 32, 30, 25, 20, 16, 15, 12, 10, 5;
 
 @each $size in $sizes {
   .app-table__column-#{$size} {
-    width: $size + unquote('%');
+    width: $size + string.unquote('%');
   }
 }
 
@@ -273,3 +278,6 @@ $sizes: 70, 64, 55, 53, 50, 48, 35, 32, 30, 25, 20, 16, 15, 12, 10, 5;
 .govuk-radios__input:disabled ~ .govuk-hint {
   opacity: .5;
 }
+
+// stylelint-enable max-nesting-depth
+// stylelint-enable selector-no-qualifying-type

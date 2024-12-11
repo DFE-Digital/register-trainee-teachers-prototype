@@ -9,7 +9,8 @@
   margin-bottom: -1 * govuk-spacing(6);
 
   .table {
-    margin-bottom: 0;
+    width: 100%;
+    margin-bottom: govuk-spacing(6);
   }
 
   table {
@@ -50,17 +51,12 @@
     }
   }
 
-  .table {
-    width: 100%;
-    margin-bottom: govuk-spacing(6);
-  }
-
   .table-heading {
     margin: govuk-spacing(3) 0;
     text-align: left;
   }
 
-  .table-font-xsmall td.table-field-index {  // overrides GOV.UK Elements
+  .table-font-xsmall .table-field-index {  // overrides GOV.UK Elements
     @include govuk-font(16, $weight: bold);
   }
 
@@ -102,9 +98,5 @@
       display: block;
       text-align: right;
     }
-  }
-
-  .table-field-headings-visible th {
-    padding: 0.75em 1.25em 0.5625em 0;
   }
 }

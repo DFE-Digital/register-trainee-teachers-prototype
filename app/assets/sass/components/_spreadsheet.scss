@@ -1,15 +1,15 @@
-// From GOV.UK Notify - https://github.com/alphagov/notifications-admin/blob/main/app/assets/stylesheets/_app.scss#L80-L125
+////
+/// @group components/spreadsheet
+////
+/// From GOV.UK Notify - https://github.com/alphagov/notifications-admin/blob/main/app/assets/stylesheets/_app.scss#L80-L125
 
 
 // This SCSS could do wiht being cleaned up / rewritten. But good enough for prototyping.
 .spreadsheet {
-
   margin-bottom: -1 * govuk-spacing(6);
 
   .table {
     margin-bottom: 0;
-
-
   }
 
   table {
@@ -35,23 +35,19 @@
     // at 3.5 columns wide.
     // 11 accounts for the padding of the table cell
     min-width: 194px - 11px;
-
     border-top: 0;
 
     &:first-child {
       min-width: auto;
     }
-
   }
 
   .fullscreen-fixed-table {
-
     z-index: 1000;
 
     .table-field-heading-first {
       background: govuk-colour("light-grey");
     }
-
   }
 
   .table {
@@ -76,17 +72,14 @@
     th {
       padding: 1px; /* needs some height for the grey border to show */
     }
-
   }
 
   .table-field-headings-visible {
-
     height: auto;
 
     th {
       padding: .75em 1.25em .5625em 0;
     }
-
   }
 
   .table-field-headings,
@@ -98,7 +91,6 @@
     .dashboard-table &-first {
       width: 52.5%;
     }
-
   }
 
   .table-field-heading {
@@ -110,12 +102,9 @@
       display: block;
       text-align: right;
     }
-
   }
-
 
   .table-field-headings-visible th {
     padding: 0.75em 1.25em 0.5625em 0;
   }
-
 }

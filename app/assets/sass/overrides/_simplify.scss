@@ -1,3 +1,7 @@
+////
+/// @group helpers/simplify
+////
+
 // Import settings first so we can override them before importing all of GOV.UK Frontend
 // If you need to enable compatibility mode or the legacy palette, do that *before* this import.
 // @import "node_modules/govuk-frontend/govuk/settings/index";
@@ -9,26 +13,24 @@
 // $govuk-canvas-background-colour: $govuk-body-background-colour;
 
 div[class^="govuk-grid-column-"] {
-    outline: 1px solid rgb(0 0 0 / 50%);
-    background: linear-gradient(to top left, rgb(0 0 0 / 0%) 0%,
-      rgb(0 0 0 / 0%) calc(50% - 0.8px),
-      rgb(0 0 0 / 50%) 50%,
-      rgb(0 0 0 / 0%) calc(50% + 0.8px),
-      rgb(0 0 0 / 0%) 100%),
-    linear-gradient(to top right,
-      rgb(0 0 0 / 0%) 0%,
-      rgb(0 0 0 / 0%) calc(50% - 0.8px),
-      rgb(0 0 0 / 50%) 50%,
-      rgb(0 0 0 / 0%) calc(50% + 0.8px),
-      rgb(0 0 0 / 0%) 100%);
+  outline: 1px solid rgb(0 0 0 / 50%);
+  background: linear-gradient(to top left, rgb(0 0 0 / 0%) 0%,
+    rgb(0 0 0 / 0%) calc(50% - 0.8px),
+    rgb(0 0 0 / 50%) 50%,
+    rgb(0 0 0 / 0%) calc(50% + 0.8px),
+    rgb(0 0 0 / 0%) 100%),
+  linear-gradient(to top right,
+    rgb(0 0 0 / 0%) 0%,
+    rgb(0 0 0 / 0%) calc(50% - 0.8px),
+    rgb(0 0 0 / 50%) 50%,
+    rgb(0 0 0 / 0%) calc(50% + 0.8px),
+    rgb(0 0 0 / 0%) 100%);
 }
-
 
 body {
   filter: grayscale(1);
   // text-transform: uppercase;
 }
-
 
 $govuk-secondary-text-colour: black;
 $govuk-border-colour: black;

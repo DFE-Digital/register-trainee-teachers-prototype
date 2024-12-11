@@ -1,5 +1,8 @@
-// CSS adapted from
-// https://github.com/alphagov/govuk_frontend_toolkit/blob/d9489a987086471fe30b4b925a81c12cd198c91d/docs/javascript.md#stick-at-top-when-scrolling
+////
+/// @group helpers/stick-to-window-when-scrolling
+////
+/// CSS adapted from
+/// https://github.com/alphagov/govuk_frontend_toolkit/blob/d9489a987086471fe30b4b925a81c12cd198c91d/docs/javascript.md#stick-at-top-when-scrolling
 
 $sticky-padding: govuk-spacing(4);
 
@@ -26,7 +29,6 @@ $sticky-padding: govuk-spacing(4);
     transition: opacity 0.1s ease-in-out;
     opacity: 0;
   }
-
 }
 
 .js-stick-at-top-when-scrolling {
@@ -35,7 +37,6 @@ $sticky-padding: govuk-spacing(4);
   margin-top: -10px;
   margin-bottom: 5px;
   transition: top 0.1s ease-out, box-shadow 1s ease-in-out;
-
 }
 
 .js-stick-at-bottom-when-scrolling {
@@ -59,12 +60,10 @@ $sticky-padding: govuk-spacing(4);
   .notification-status {
     margin: 0;
   }
-
 }
 
 .content-fixed,
 .content-fixed-onload {
-
   position: fixed;
   z-index: 100;
   margin-top: 0;
@@ -75,55 +74,40 @@ $sticky-padding: govuk-spacing(4);
     transition: opacity 0.3s ease-in-out;
     opacity: 1;
   }
-
 }
 
 .js-stick-at-top-when-scrolling.content-fixed,
 .js-stick-at-top-when-scrolling.content-fixed-onload {
-
   top: 0;
   margin-top: 0;
-
 }
 
 .js-stick-at-top-when-scrolling.content-fixed__top {
-
   border-bottom: 1px solid $govuk-border-colour;
   box-shadow: 0 2px 0 0 rgba($govuk-border-colour, 0.2);
-
 }
 
 .js-stick-at-top-when-scrolling.content-fixed {
-
   transition: background 0.2s ease-in-out, margin-top 0.2s ease-out;
-
 }
 
 .js-stick-at-bottom-when-scrolling.content-fixed,
 .js-stick-at-bottom-when-scrolling.content-fixed-onload {
-
   top: auto; // cancel `top: 0;` inherited from govuk-template
   bottom: 0;
-
 }
 
 .js-stick-at-bottom-when-scrolling.content-fixed__bottom {
-
   border-top: 1px solid $govuk-border-colour;
   box-shadow: 0 -2px 0 0 rgba($govuk-border-colour, 0.2);
-
 }
 
 .js-stick-at-bottom-when-scrolling.content-fixed {
-
   transition: background 0.2s ease-in-out;
-
 }
 
 .js-stick-at-bottom-when-scrolling-loaded.content-fixed-onload {
-
   transition: none;
-
 }
 
 .shim {
@@ -132,7 +116,6 @@ $sticky-padding: govuk-spacing(4);
 }
 
 .js-cancel {
-
   display: inline-block;
   margin-top: -10px;
   margin-right: -10px;
@@ -149,5 +132,4 @@ $sticky-padding: govuk-spacing(4);
     /* override default box shadow to stop it looking so large vertically */
     box-shadow: inset 0 -4px $govuk-focus-text-colour;
   }
-
 }

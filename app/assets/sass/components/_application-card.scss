@@ -1,7 +1,11 @@
+////
+/// @group components/application-card
+////
+
 .app-application-card {
   margin-bottom: govuk-spacing(3);
   padding-bottom: govuk-spacing(3);
-  border-bottom: 1px solid govuk-colour('mid-grey');
+  border-bottom: 1px solid govuk-colour("mid-grey");
 }
 
 // .app-application-card:first-of-type {
@@ -26,15 +30,15 @@
     }
 
     .govuk-tag {
-      display: inline-block;
+      //display: inline-block;
       margin-left: govuk-spacing(3);
       float: right;
 
-      &:first-child { 
+      &:first-child {
         margin-bottom: govuk-spacing(1);
       }
       @include govuk-media-query($from: tablet) {
-        &:first-child { 
+        &:first-child {
           margin-bottom: govuk-spacing(0);
         }
       }
@@ -52,7 +56,7 @@
 }
 
 // Checkbox column
-// This column isnt always shown - is dependeant on a feature flag 
+// This column isnt always shown - is dependeant on a feature flag
 .app-application-card_col:nth-last-child(3) {
   @include govuk-media-query($from: tablet) {
     width: 5%;
@@ -93,12 +97,12 @@
       margin-bottom: 0;
       padding-right: govuk-spacing(3);
     }
-    
+
     div:nth-child(2) {
       width: 40%;
     }
   }
-  
+
   @include govuk-media-query($from: $govuk-page-width) {
     display: flex;
     // Ensure columns evenly distributed, with no gap at the start or end
@@ -109,7 +113,7 @@
       margin-bottom: 0;
       padding-right: govuk-spacing(3);
     }
-    
+
     div:nth-child(2) {
       width: 40%;
     }
@@ -120,13 +124,13 @@
 // Status column
 .app-application-card_col:nth-last-child(1) {
   margin-top: govuk-spacing(2);
-  
+
   @include govuk-media-query($from: 401px) {
     width: 40%;
     margin-top: 0;
     text-align: right;
   }
-  
+
   @include govuk-media-query($from: 501px) {
     width: 35%;
   }

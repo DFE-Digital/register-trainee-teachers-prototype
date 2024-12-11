@@ -1,4 +1,6 @@
-// Records actions header
+////
+/// @group components/records-header
+////
 
 .records-header {
   @include govuk-media-query($from: tablet) {

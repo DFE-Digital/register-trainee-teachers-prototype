@@ -1,4 +1,3 @@
-
 .app-\!-uppercase {
   text-transform: uppercase !important;
 }
@@ -12,7 +11,6 @@ body:not(.js-enabled) .app-js-only {
 .js-enabled .app-no-js-only {
   display: none;
 }
-
 
 .app-destructive-link {
   &.govuk-link, &.govuk-link:visited {

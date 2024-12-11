@@ -10,7 +10,6 @@ $govuk-assets-path: "/dist/govuk/assets/";
 
 @import "node_modules/@ministryofjustice/frontend/moj/all";
 
-
 // Patterns that aren't in Frontend
 @import "patterns/step-by-step-header";
 @import "patterns/step-by-step-nav";
@@ -71,9 +70,6 @@ $govuk-assets-path: "/dist/govuk/assets/";
 @import "overrides/status-grid";
 @import "overrides/tabs";
 
-
-
-
 // Add extra styles here, or re-organise the Sass files in whichever way makes most sense to you
 
 h1.register-main-heading {
@@ -117,7 +113,6 @@ div.summary-panel {
         margin-left: 15px;
       }
     }
-
   }
 }
 
@@ -247,7 +242,6 @@ span.summary-validation-symbol {
 .app-hidden-form {
   display: inline;
 }
-
 
 // column widths for tables
 // app-table__column-xx

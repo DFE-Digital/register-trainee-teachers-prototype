@@ -1,3 +1,7 @@
+////
+/// @group helpers/govuk-skip-link
+////
+
 $important: true;
 
 // This is basically a copy of the Design System govuk-visually-hidden-focusable mixin
@@ -52,7 +56,7 @@ $important: true;
 }
 
 // Selecting :focus-within and :not(:focus-within) together should mean this rule only
-// applies to browsers that support the :focus-within pseudo property. 
+// applies to browsers that support the :focus-within pseudo property.
 // Using this instead of @supports as it doens’t support pseudo properties well yet.
 // Many of the styles within are from the .govuk-skip-link class
 .app-skip-link__container:focus-within, .app-skip-link__container:not(:focus-within) {
@@ -96,4 +100,3 @@ $important: true;
   outline-offset: 0;
   background-color: $govuk-focus-colour;
 }
-

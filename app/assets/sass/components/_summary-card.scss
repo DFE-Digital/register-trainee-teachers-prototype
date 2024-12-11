@@ -1,8 +1,6 @@
-
-// .app-summary-card--error {
-//   border: 5px solid govuk-colour('red') !important;
-// }
-
+////
+/// @group components/summary-card
+////
 
 .app-summary-card {
   border: 1px solid $govuk-border-colour;
@@ -27,7 +25,6 @@
       color: govuk-colour('red');
       font-weight: bold !important;
     }
-
   }
 
   .app-summary-card__header {

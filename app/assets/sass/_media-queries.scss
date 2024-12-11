@@ -1,6 +1,4 @@
-
 // Hide or show based on breakpoint
-
 // Mixins - use these for custom components
 
 // Hide on mobile
@@ -12,7 +10,6 @@
 
 // Only on mobile
 @mixin app-display-mobile--only {
-  background-color: red;
   @include govuk-media-query($from: tablet) {
     display: none;
   }

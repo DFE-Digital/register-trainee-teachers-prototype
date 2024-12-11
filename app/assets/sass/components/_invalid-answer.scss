@@ -1,12 +1,16 @@
+////
+/// @group components/invalid-answer
+////
+
 $invalid-colour: $govuk-brand-colour;
 
 .app-inset-text--invalid-answer {
-  border-color: $invalid-colour;  
+  border-color: $invalid-colour;
 }
 
 .app-has-errors {
   .app-inset-text--invalid-answer, .app-summary-list__value-inset {
-    border-color: $govuk-error-colour;  
+    border-color: $govuk-error-colour;
   }
 
   .app-summary-list__message--invalid {

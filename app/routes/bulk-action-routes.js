@@ -1,4 +1,4 @@
-const filters = require('./../filters.js')()
+const filters = require('./../filters.js')
 const moment = require('moment')
 const utils = require('./../lib/utils')
 

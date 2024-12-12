@@ -1,7 +1,7 @@
 const _ = require('lodash')
 const { fakerEN_GB: faker } = require('@faker-js/faker')
 const dates = require('./../filters/dates.js').filters
-const filters = require('./../filters.js')()
+const filters = require('./../filters.js')
 const moment = require('moment')
 const path = require('path')
 const utils = require('./../lib/utils')

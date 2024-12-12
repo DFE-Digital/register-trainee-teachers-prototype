@@ -20,10 +20,8 @@
   "dependencies": {
     "@faker-js/faker": "^9.0.0",
     "@ministryofjustice/frontend": "^3.2.0",
-    "compression": "^1.7.4",
     "connect-flash": "^0.1.1",
     "csv-string": "^4.0.1",
-    "fancy-log": "^2.0.0",
     "govuk-frontend": "^5.5.0",
     "govuk-prototype-kit": "^13.16.2",
     "gulp": "^5.0.0",

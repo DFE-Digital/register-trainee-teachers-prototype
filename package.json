@@ -7,7 +7,9 @@
     "node": ">=20.0.0"
   },
   "scripts": {
-    "start": "node start.js",
+    "dev": "govuk-prototype-kit dev",
+    "serve": "govuk-prototype-kit serve",
+    "start": "govuk-prototype-kit start",
     "lint:markdown": "markdownlint 'app/**/*.md' --disable MD013",
     "lint:markdown:fix": "markdownlint 'app/**/*.md' --disable MD013 --fix",
     "lint:javascripts": "standard",

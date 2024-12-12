@@ -10,11 +10,12 @@
     "start": "node start.js",
     "lint:markdown": "markdownlint 'app/**/*.md' --disable MD013",
     "lint:markdown:fix": "markdownlint 'app/**/*.md' --disable MD013 --fix",
-    "lint:scripts": "standard",
-    "lint:scripts:fix": "standard --fix",
+    "lint:javascripts": "standard",
+    "lint:javascripts:fix": "standard --fix",
     "lint:styles": "stylelint 'app/assets/sass/**/*.scss' 'app/views/_components/**/*.scss'",
     "lint:styles:fix": "stylelint 'app/assets/sass/**/*.scss' 'app/views/_components/**/*.scss' --fix",
-    "test": "npm run lint:scripts && gulp generate-assets"
+    "lint": "npm-run-all lint:javascripts lint:markdown lint:styles",
+    "lint:fix": "npm-run-all lint:javascripts:fix lint:markdown:fix lint:styles:fix"
   },
   "dependencies": {
     "@faker-js/faker": "^9.0.0",
@@ -46,6 +47,7 @@
     "marked": "^15.0.3",
     "marked-gfm-heading-id": "^4.1.1",
     "moment": "^2.27.0",
+    "npm-run-all": "^4.1.5",
     "nunjucks": "^3.2.3",
     "pluralize": "^8.0.0",
     "portscanner": "^2.1.1",

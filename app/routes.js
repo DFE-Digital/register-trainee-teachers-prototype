@@ -1,6 +1,7 @@
+const govukPrototypeKit = require('govuk-prototype-kit')
+const router = govukPrototypeKit.requests.setupRouter()
+
 const _ = require('lodash')
-const express = require('express')
-const router = express.Router()
 const url = require('url')
 const utils = require('./lib/utils')
 const permissions = require('./filters/permissions.js').filters

@@ -1,6 +1,4 @@
 {# Summary card for showing rich GCSE information (full grade, country, etc) #}
-
-
 {% set expectedDuration = 'Not provided' %}
 {% if record.courseDetails.duration | falsify %}
   {% set expectedDuration = record.courseDetails.duration + " years" %}
@@ -30,14 +28,14 @@
       {% elseif item.exam %}
         {% set grade = item.grade + " — " + item.exam + "" %}
       {% else %}
-        {% set grade = item.grade %}  
+        {% set grade = item.grade %}
       {% endif %}
 
       {% set grades = grades | push(grade) %}
     {% endfor %}
 
     {% set grades = grades | commaSeparateLines | safe %}
-    
+
   {% endif %}
 
   {% set gcseRow = {
@@ -58,17 +56,10 @@
         ]
       } if canAmend
     } %}
-    
+
   {% set gcseRows = gcseRows | push(gcseRow) %}
 
 {% endfor %}
-
-
-{% set gcseDetailsHtml %}
-  {{ govukSummaryList({
-    rows: gcseRows
-  }) }}
-{% endset %}
 
 {% set complete = record.gcse | sectionIsComplete %}
 {% set status  = record.gcse | getStatusText %}
@@ -94,16 +85,19 @@
 
 {% else %}
 
-  {{ appSummaryCard({
-    classes: "govuk-!-margin-bottom-6",
-    titleText: "GCSE or equivalent",
+  {{ govukSummaryList({
+    card: {
+      title: {
+        text: "GCSE or equivalent"
+      }
+    },
     actions: {
       items: [{
         href: recordPath + "/degree/" + loop.index0 + "/delete" | addReferrer(referrer),
         text: "Delete degree"
       }]
     } if false,
-    html: gcseDetailsHtml
+    rows: gcseRows
   }) }}
-  
+
 {% endif %}

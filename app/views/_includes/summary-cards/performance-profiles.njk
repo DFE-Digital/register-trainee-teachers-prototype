@@ -46,16 +46,13 @@
       }]
     } if canAmend
   }
-  ] %}
+] %}
 
-  {% set performanceProfileHtml %}
-    {{ govukSummaryList({
-      rows: performanceProfileRows
-    }) }}
-  {% endset %}
-
-  {{ appSummaryCard({
-    classes: "govuk-!-margin-bottom-6",
-    titleText: "Performance profile information",
-    html: performanceProfileHtml
-  }) }}
+{{ govukSummaryList({
+  card: {
+    title: {
+      text: "Performance profile information"
+    }
+  },
+  rows: performanceProfileRows
+}) }}

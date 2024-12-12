@@ -64,38 +64,27 @@
 {% endset %}
 
 {% set disabilitiesAnswerRow = {
-    key: {
-      text: "Disabilities and health conditions"
-    },
-    value: {
-      text: disabledAnswer | safe or "Not provided"
-    },
-    actions: {
-      items: [
-        {
-          href: recordPath + "/diversity/disabilities" | addReferrer(referrer),
-          text: "Change",
-          visuallyHiddenText: "disabilities answer"
-        }
-      ]
-    } if canAmend
-  } %}
-
+  key: {
+    text: "Disabilities and health conditions"
+  },
+  value: {
+    text: disabledAnswer | safe or "Not provided"
+  },
+  actions: {
+    items: [
+      {
+        href: recordPath + "/diversity/disabilities" | addReferrer(referrer),
+        text: "Change",
+        visuallyHiddenText: "disabilities answer"
+      }
+    ]
+  } if canAmend
+} %}
 
 {% set diversityRows = [
     ethnicGroupRow,
     disabilitiesAnswerRow
   ] %}
-
-{% set diversityHtml %}
-  {{ govukSummaryList({
-    rows: diversityRows | highlightInvalidRows
-  }) }}
-{% endset %}
-
-
-
-
 
 {% set complete = record.diversity | sectionIsComplete %}
 {% set status  = record.diversity | getStatusText %}
@@ -125,10 +114,13 @@
 
 {% else %}
 
-  {{ appSummaryCard({
-    classes: "govuk-!-margin-bottom-6",
-    titleText: "Diversity information",
-    html: diversityHtml
+  {{ govukSummaryList({
+    card: {
+      title: {
+        text: "Diversity information"
+      }
+    },
+    rows: diversityRows | highlightInvalidRows
   }) }}
-  
+
 {% endif %}

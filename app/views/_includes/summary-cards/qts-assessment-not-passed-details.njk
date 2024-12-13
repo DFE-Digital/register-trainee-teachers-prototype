@@ -9,7 +9,7 @@
 {% set qualificationDetailsRowOutcomeText%}
   {% if record.qualificationDetails.standardsAssessedOutcome == "No" %}
     Standards not met
-  {% else %} 
+  {% else %}
     Not provided
   {% endif %}
 {% endset %}
@@ -101,14 +101,7 @@
     } if canAmend
   }
 
-  ] %}
-
-{% set qualificationDetailsHtml %}
-  {{ govukSummaryList({
-    rows: qualificationDetailsRows
-  }) }}
-  
-{% endset %}
+] %}
 
 {% set complete = record.contactDetails | sectionIsComplete %}
 {% set status  = record.contactDetails | getStatusText %}
@@ -129,10 +122,13 @@
 
 {% else %}
 
-  {{ appSummaryCard({
-    classes: "govuk-!-margin-bottom-6",
-    titleText: "Outcome details",
-    html: qualificationDetailsHtml
+  {{ govukSummaryList({
+    card: {
+      title: {
+        text: "Outcome details"
+      }
+    },
+    rows: qualificationDetailsRows
   }) }}
-  
+
 {% endif %}

@@ -1,12 +1,9 @@
-
-
 {% set statusTag %}
   {{ govukTag({
     text: "Deleted",
     classes: 'govuk-tag--red'
   })}}
 {% endset %}
-
 
 {% set revertRows = [
   {
@@ -49,17 +46,11 @@
   }
 ] | removeEmpty %}
 
-{% set revertHtml %}
-  {{ govukSummaryList({
-    rows: revertRows,
-    attributes: {
-      style: "overflow:hidden;"
+{{ govukSummaryList({
+  card: {
+    title: {
+      text: "Delete trainee record"
     }
-  }) }}
-{% endset %}
-
-{{ appSummaryCard({
-  classes: "govuk-!-margin-bottom-6",
-  titleText: "Delete trainee record",
-  html: revertHtml
+  },
+  rows: revertRows
 }) }}

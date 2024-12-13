@@ -6,7 +6,6 @@
   {% endif %}
 {% endset %}
 
-
 {% set withdrawalReason %}
   {% if record.withdraw.reasons | length > 1 %}
     <ul class="govuk-list">
@@ -26,7 +25,6 @@
     Could the Department for Education have done anything to avoid the candidate withdrawing?
   {% endif %}
 {% endset %}
-
 
 {% set suggestedSupportValue %}
   {% if record.withdraw.suggestedSupportBoolean == "Yes" %}
@@ -124,31 +122,20 @@
   }
 ] %}
 
-{% set withdrawDetailsHtml %}
-  {{ govukSummaryList({
-    rows: withdrawDetailsRows
-  }) }}
-{% endset %}
+{% set revertUrl = recordPath + "/admin/revert/withdraw/instructions" | addReferrer(referrer) %}
 
-
-
-{% set revertActionHtml %}
-  {% set revertUrl = recordPath + "/admin/revert/withdraw/instructions" | addReferrer(referrer) %}
-  {# <strong class="govuk-tag govuk-tag--purple govuk-!-margin-right-2">Admin</strong> #}
-  <a href="{{revertUrl}}" class="govuk-link">Undo withdrawal</a>
-{% endset %}
-
-
-{{ appSummaryCard({
-  classes: "govuk-!-margin-bottom-6",
-  titleText: "Withdrawal details",
-  actions: {
+{{ govukSummaryList({
+  card: {
+    title: {
+      text: "Withdrawal details"
+    },
+    actions: {
       items: [{
-        html: revertActionHtml,
         href: revertUrl,
         text: "Undo withdrawal",
-        classes: 'app-destructive-link'
+        classes: "app-destructive-link"
       }]
-    } if activeTab == 'trainee-details' and data.isAdmin,
-  html: withdrawDetailsHtml
+    } if activeTab == 'trainee-details' and data.isAdmin
+  },
+  rows: withdrawDetailsRows
 }) }}

@@ -1,4 +1,3 @@
-
 {% set bursaryDegree = record.degree.items | find('id', record.degree.degreeToBeUsedForBursaries) %}
 
 {% if bursaryDegree %}
@@ -9,7 +8,6 @@
 {% elseif record.degree.degreeToBeUsedForBursaries %}
   {% set bursaryHtml = "Not provided" %}
 {% endif %}
-
 
 {% set rows = [
   {
@@ -29,14 +27,7 @@
       ]
     } if canAmend
   }
-  ] %}
-
-
-{% set bursaryDetailsHtml %}
-  {{ govukSummaryList({
-    rows: rows
-  }) }}
-{% endset %}
+] %}
 
 {% set complete = record.contactDetails | sectionIsComplete %}
 {% set status  = record.contactDetails | getStatusText %}
@@ -62,11 +53,13 @@
 
 {% else %}
 
-  {{ appSummaryCard({
-    classes: "govuk-!-margin-bottom-6",
-    titleText: "Bursary details",
-    html: bursaryDetailsHtml
+  {{ govukSummaryList({
+    card: {
+      title: {
+        text: "Bursary details"
+      }
+    },
+    rows: rows
   }) }}
-  
-{% endif %}
 
+{% endif %}

@@ -53,15 +53,11 @@
   }
 ] %}
 
-{% set deferDetailsHtml %}
-  {{ govukSummaryList({
-    rows: deferDetailsRows
-  }) }}
-{% endset %}
-
-{{ appSummaryCard({
-  classes: "govuk-!-margin-bottom-6",
-  titleText: "Deferral details",
-  html: deferDetailsHtml
+{{ govukSummaryList({
+  card: {
+    title: {
+      text: "Defer details"
+    }
+  },
+  rows: deferDetailsRows
 }) }}
-

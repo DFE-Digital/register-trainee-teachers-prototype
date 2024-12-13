@@ -20,17 +20,14 @@
   placementsDetailsNotAvailableRow
 ] %}
 
-{% set placementDetailsHtml %}
-  {{ govukSummaryList({
-    rows: placementDetailsRows | highlightInvalidRows({
+{{ govukSummaryList({
+  card: {
+    title: {
+      text: "Placement details"
+    }
+  },
+  rows: placementDetailsRows | highlightInvalidRows({
       treatEmptyAsMissing: true,
       recordSource: record.source
     })
-  }) }}
-{% endset %}
-
-{{ appSummaryCard({
-  classes: "govuk-!-margin-bottom-6",
-  titleText: 'Placement details',
-  html: placementDetailsHtml
 }) }}

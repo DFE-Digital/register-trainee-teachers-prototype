@@ -1,4 +1,3 @@
-
 {% set iqtsRows = [
   {
     key: {
@@ -17,15 +16,7 @@
       ]
     } if canAmend
   }
-  ] %}
-
-
-
-{% set contactDetailsHtml %}
-  {{ govukSummaryList({
-    rows: iqtsRows | highlightInvalidRows
-  }) }}
-{% endset %}
+] %}
 
 {% set complete = record.iqts | sectionIsComplete %}
 {% set status  = record.iqts | getStatusText %}
@@ -55,11 +46,13 @@
 
 {% else %}
 
-  {{ appSummaryCard({
-    classes: "govuk-!-margin-bottom-6",
-    titleText: "International training details",
-    html: contactDetailsHtml
+  {{ govukSummaryList({
+    card: {
+      title: {
+        text: "International training details"
+      }
+    },
+    rows: iqtsRows | highlightInvalidRows
   }) }}
-  
-{% endif %}
 
+{% endif %}

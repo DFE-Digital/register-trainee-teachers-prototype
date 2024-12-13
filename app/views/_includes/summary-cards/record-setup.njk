@@ -34,16 +34,7 @@
       ]
     } if canAmend
   }
-  ] %}
-
-
-{% set recordBaseHtml %}
-  {{ govukSummaryList({
-    rows: recordBaseRows
-  }) }}
-{% endset %}
-
-
+] %}
 
 {% set complete = record.recordSetup | sectionIsComplete %}
 
@@ -55,10 +46,13 @@
 
 {% else %}
 
-  {{ appSummaryCard({
-    classes: "govuk-!-margin-bottom-6",
-    titleText: "Type of training",
-    html: recordBaseHtml
+  {{ govukSummaryList({
+    card: {
+      title: {
+        text: "Type of training"
+      }
+    },
+    rows: recordBaseRows
   }) }}
-  
+
 {% endif %}

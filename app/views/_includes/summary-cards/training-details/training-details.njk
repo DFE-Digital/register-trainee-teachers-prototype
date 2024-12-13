@@ -46,8 +46,6 @@
   {% endif %}
 {%- endset %}
 
-
-
 {% set traineeStarted = record.trainingDetails.traineeStarted | falsify %}
 
 {% set traineeStartDateRow = {
@@ -72,15 +70,6 @@
   regionRow if record | requiresField("region"),
   traineeIdRow if record | isDraft
 ] %}
-
-
-{% set trainingDetailsHtml %}
-  {{ govukSummaryList({
-    rows: trainingDetailsRows
-  }) }}
-{% endset %}
-
-
 
 {% set complete = record.trainingDetails | sectionIsComplete %}
 
@@ -107,10 +96,13 @@
 
 {% else %}
 
-  {{ appSummaryCard({
-    classes: "govuk-!-margin-bottom-6",
-    titleText: "Training details",
-    html: trainingDetailsHtml
+  {{ govukSummaryList({
+    card: {
+      title: {
+        text: "Training details"
+      }
+    },
+    rows: trainingDetailRows
   }) }}
 
 {% endif %}

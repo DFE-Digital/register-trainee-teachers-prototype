@@ -14,13 +14,8 @@ $app-assets-path: "/public/";
 $govuk-assets-path: "/dist/govuk/assets/";
 
 // Patterns that aren't in Frontend
-@import "components/autocomplete";
-@import "components/footer";
-@import "components/summary-card";
-@import "components/task-list";
 @import "patterns/related-items";
 @import "patterns/start-page";
-@import "patterns/task-list";
 
 // Misc
 @import "helpers";
@@ -37,9 +32,11 @@ $govuk-assets-path: "/dist/govuk/assets/";
 @import "components/all-records-header";
 @import "components/all-records-search";
 @import "components/application-card";
+@import "components/autocomplete";
 @import "components/banner";
 @import "components/button-as-link";
 @import "components/cookie-banner";
+@import "components/footer";
 @import "components/invalid-answer";
 @import "components/markdown";
 @import "components/organisation-switcher";
@@ -62,10 +59,8 @@ $govuk-assets-path: "/dist/govuk/assets/";
 @import "overrides/govuk-tag";
 @import "overrides/moj-button-menu";
 @import "overrides/moj-filter";
-@import "overrides/moj-pagination";
 @import "overrides/moj-primary-navigation";
 @import "overrides/status-grid";
-@import "overrides/summary-card";
 @import "overrides/tabs";
 
 // Add extra styles here, or re-organise the Sass files in whichever way makes most sense to you

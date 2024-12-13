@@ -30,14 +30,11 @@
   }
 ] %}
 
-{% set recordBaseHtml %}
-  {{ govukSummaryList({
-    rows: recordBaseRows
-  }) }}
-{% endset %}
-
-{{ appSummaryCard({
-  classes: "govuk-!-margin-bottom-6",
-  titleText: "Record",
-  html: recordBaseHtml
+{{ govukSummaryList({
+  card: {
+    title: {
+      text: "Record"
+    }
+  },
+  rows: recordBaseRows
 }) }}

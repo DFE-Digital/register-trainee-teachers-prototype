@@ -1,12 +1,9 @@
-
-
 {% set statusTag %}
   {{ govukTag({
     text: "TRN received",
     classes: "TRN received" | getStatusClass
   })}}
 {% endset %}
-
 
 {% set revertRows = [
   {
@@ -49,17 +46,14 @@
   }
 ] | removeEmpty %}
 
-{% set revertHtml %}
-  {{ govukSummaryList({
-    rows: revertRows,
-    attributes: {
-      style: "overflow:hidden;"
+{{ govukSummaryList({
+  card: {
+    title: {
+      text: "Remove " + qualification + " award"
     }
-  }) }}
-{% endset %}
-
-{{ appSummaryCard({
-  classes: "govuk-!-margin-bottom-6",
-  titleText: "Remove " + qualification + " award",
-  html: revertHtml
+  },
+  rows: revertRows,
+  attributes: {
+    style: "overflow:hidden;"
+  }
 }) }}

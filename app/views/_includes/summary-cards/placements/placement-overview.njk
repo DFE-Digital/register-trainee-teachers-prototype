@@ -77,15 +77,6 @@
   } if not record | isDraft ) %}
 {% endif %}
 
-{% set placementDetailsHtml %}
-  {{ govukSummaryList({
-    rows: placementRows | highlightInvalidRows({
-      treatEmptyAsMissing: true,
-      recordSource: record.source
-    })
-  }) }}
-{% endset %}
-
 {% set complete = record.placement | sectionIsComplete %}
 {% set status  = record.placement | getStatusText %}
 {% set sectionIsRequired = record | requiresSection("placement") %}
@@ -109,15 +100,21 @@
   {% include "_includes/incomplete.njk" %}
 
 {% else %}
-  {{ appSummaryCard({
-    classes: "govuk-!-margin-bottom-6",
-    titleText: 'Placement details',
-    actions: {
-      items: [{
-        href: recordPath + "/placements/confirm" | addReferrer(referrer),
-        text: "Manage placements"
-      }]
-    } if canAmend,
-    html: placementDetailsHtml
+  {{ govukSummaryList({
+    card: {
+      title: {
+        text: "Placement details"
+      },
+      actions: {
+        items: [{
+          href: recordPath + "/placements/confirm" | addReferrer(referrer),
+          text: "Manage placements"
+        }]
+      } if canAmend
+    },
+    rows: placementRows | highlightInvalidRows({
+        treatEmptyAsMissing: true,
+        recordSource: record.source
+      })
   }) }}
 {% endif %}

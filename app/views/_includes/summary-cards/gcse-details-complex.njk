@@ -89,14 +89,14 @@
     card: {
       title: {
         text: "GCSE or equivalent"
-      }
+      },
+      actions: {
+        items: [{
+          href: recordPath + "/degree/" + loop.index0 + "/delete" | addReferrer(referrer),
+          text: "Delete degree"
+        }]
+      } if false
     },
-    actions: {
-      items: [{
-        href: recordPath + "/degree/" + loop.index0 + "/delete" | addReferrer(referrer),
-        text: "Delete degree"
-      }]
-    } if false,
     rows: gcseRows
   }) }}
 

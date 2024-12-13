@@ -346,14 +346,14 @@
     card: {
       title: {
         text: "Course details"
-      }
+      },
+      actions: {
+        items: [{
+          href: recordPath + "/course-details/is-course-change" | addReferrer(referrer),
+          text: "Move the trainee to a new course"
+        }]
+      } if canAmend and showCourseChangeOption
     },
-    actions: {
-      items: [{
-        href: recordPath + "/course-details/is-course-change" | addReferrer(referrer),
-        text: "Move the trainee to a new course"
-      }]
-    } if canAmend and showCourseChangeOption,
     rows: courseDetailsRows | highlightInvalidRows({
         treatEmptyAsMissing: true,
         recordSource: record.source

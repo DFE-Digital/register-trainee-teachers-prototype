@@ -36,9 +36,6 @@
 
 {% set disabilities = record.diversity.disabilities %}
 
-{# {% set hasDisabilities = true if record.diversity.disabledAnswer == "They shared that they’re disabled" %} #}
-
-
 {% set hasDisabilities = false %}
 
 {% if disabilities | length > 0 %}

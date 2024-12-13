@@ -20,6 +20,8 @@ router.all('*', (req, res, next) => {
 
   if (req.query?.page) {
     res.locals.page = req.query.page
+    res.locals.nextPage = parseInt(req.query.page) + 1
+    res.locals.prevPage = parseInt(req.query.page) - 1
   }
 
   // Only search by the query if there is one

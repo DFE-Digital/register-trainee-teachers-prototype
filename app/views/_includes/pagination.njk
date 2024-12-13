@@ -3,12 +3,16 @@
   Showing 1 to 100 of 346 results
 </p>
 
+{% if not page %}
+  {% set page = 1 %}
+{% endif %}
+
 {{ govukPagination({
   previous: {
-    href: "?page=" + (page-1)
+    href: "?page=" + prevPage
   } if page > 1,
   next: {
-    href: "?page=" + (page+1)
+    href: "?page=" + nextPage
   } if page < 3,
   items: [
     {

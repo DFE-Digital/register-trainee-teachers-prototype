@@ -6,6 +6,12 @@ const url = require('url')
 const utils = require('./lib/utils')
 const permissions = require('./filters/permissions.js').filters
 
+/// ------------------------------------------------------------------------ ///
+/// Flash messaging
+/// ------------------------------------------------------------------------ ///
+const flash = require('connect-flash')
+router.use(flash())
+
 // =============================================================================
 // Catch all
 // Used to pass common data to views

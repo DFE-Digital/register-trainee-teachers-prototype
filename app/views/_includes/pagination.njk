@@ -1,35 +1,30 @@
+{# TODO: make pagination dynamic #}
+<p class="govuk-body">
+  Showing 1 to 100 of 346 results
+</p>
 
-
-{% set pagination = {
-  from: 1,
-  to: 100,
-  count: count or 346,
+{{ govukPagination({
+  previous: {
+    href: "?page=" + (page-1)
+  } if page > 1,
   next: {
-    text: 'Next',
-    href: '?page=' + 2
-  },
-  items: [{
-    text: '1',
-    href: '?page=1',
-    selected: true
-    }, {
-    text: '2',
-    href: '?page=2',
-    selected: false
-    }, {
-    text: '3',
-    href: '?page=3'
-    }]
-} %}
-
-{{ mojPagination({
-  results: {
-    from: pagination.from,
-    to: pagination.to,
-    count: pagination.count
-  },
-  previous: pagination.previous,
-  next: pagination.next,
-  items: pagination.items,
-  classes: 'govuk-!-margin-bottom-3'
+    href: "?page=" + (page+1)
+  } if page < 3,
+  items: [
+    {
+      number: 1,
+      href: "?page=1",
+      current: true if page == 1
+    },
+    {
+      number: 2,
+      href: "?page=2",
+      current: true if page == 2
+    },
+    {
+      number: 3,
+      href: "?page=3",
+      current: true if page == 3
+    }
+  ]
 }) }}

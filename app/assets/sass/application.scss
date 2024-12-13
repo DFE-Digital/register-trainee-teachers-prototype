@@ -15,7 +15,6 @@ $govuk-assets-path: "/dist/govuk/assets/";
 // Patterns that aren't in Frontend
 @import "patterns/related-items";
 @import "patterns/start-page";
-@import "patterns/task-list";
 
 // Misc
 @import "helpers";
@@ -46,7 +45,6 @@ $govuk-assets-path: "/dist/govuk/assets/";
 @import "components/spreadsheet";
 @import "components/status-card";
 @import "components/sub-navigation";
-@import "components/task-list";
 @import "components/timeline";
 @import "components/user-card";
 

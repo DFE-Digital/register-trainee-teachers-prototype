@@ -8,7 +8,6 @@
   {% endif %}
 {% endset %}
 
-
 {% set providerRow = {
   key: {
     text: "Accredited provider"
@@ -83,7 +82,6 @@
   }
 } %}
 
-
 {% set traineeIdRow = {
   key: {
     text: "Provider trainee ID"
@@ -142,8 +140,6 @@
     html: submittedDateHtml | safe
   }
 } %}
-
-
 
 {% set recommendedForAwardContentHtml %}
   {{govukTag({
@@ -210,7 +206,6 @@
     html: deferredContentHtml
   }
 } %}
-
 
 {% set withdrawalContentHtml %}
   {{govukTag({
@@ -340,17 +335,14 @@
   traineeStartDateRow
 ] | removeEmpty %}
 
-{% set traineeProgressHtml %}
-  {{ govukSummaryList({
-    rows: traineeProgressRows | highlightInvalidRows({
-        treatEmptyAsMissing: true,
-        recordSource: record.source
-      })
-  }) }}
-{% endset %}
-
-{{ appSummaryCard({
-  classes: "govuk-!-margin-bottom-6",
-  titleText: "Trainee progress",
-  html: traineeProgressHtml
+{{ govukSummaryList({
+  card: {
+    title: {
+      text: "Trainee progress"
+    }
+  },
+  rows: traineeProgressRows | highlightInvalidRows({
+    treatEmptyAsMissing: true,
+    recordSource: record.source
+  })
 }) }}

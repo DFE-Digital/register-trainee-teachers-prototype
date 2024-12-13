@@ -18,14 +18,11 @@
   }
 ] %}
 
-{% set recordBaseHtml %}
-  {{ govukSummaryList({
-    rows: recordBaseRows
-  }) }}
-{% endset %}
-
-{{ appSummaryCard({
-  classes: "govuk-!-margin-bottom-6",
-  titleText: "Training year",
-  html: recordBaseHtml
+{{ govukSummaryList({
+  card: {
+    title: {
+      text: "Training year"
+    }
+  },
+  rows: recordBaseRows
 }) }}

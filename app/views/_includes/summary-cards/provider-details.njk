@@ -20,16 +20,13 @@
   }
 ] %}
 
-{% set providerDetailsHtml %}
-  {{ govukSummaryList({
-    rows: providerRows
-  }) }}
-{% endset %}
-
 {% if data.signedInProviders | length > 1 %}
-  {{ appSummaryCard({
-    classes: "govuk-!-margin-bottom-6",
-    titleText: "Provider",
-    html: providerDetailsHtml
+  {{ govukSummaryList({
+    card: {
+      title: {
+        text: "Provider"
+      }
+    },
+    rows: providerRows
   }) }}
 {% endif %}

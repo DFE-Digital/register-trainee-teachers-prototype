@@ -83,16 +83,6 @@
   }
 ] | removeEmpty %}
 
-{% set personalDetailsHtml %}
-  {{ govukSummaryList({
-    rows: personalDetailsRows | highlightInvalidRows({
-        treatEmptyAsMissing: true,
-        recordSource: record.source
-      })
-  }) }}
-{% endset %}
-
-
 {% set complete = record.personalDetails | sectionIsComplete %}
 {% set status  = record.personalDetails | getStatusText %}
 {% set sectionIsRequired = record | requiresSection("personalDetails") %}
@@ -121,10 +111,16 @@
 
 {% else %}
 
-  {{ appSummaryCard({
-    classes: "govuk-!-margin-bottom-6",
-    titleText: "Personal details",
-    html: personalDetailsHtml
+  {{ govukSummaryList({
+    card: {
+      title: {
+        text: "Personal details"
+      }
+    },
+    rows: personalDetailsRows | highlightInvalidRows({
+        treatEmptyAsMissing: true,
+        recordSource: record.source
+      })
   }) }}
 
 {% endif %}

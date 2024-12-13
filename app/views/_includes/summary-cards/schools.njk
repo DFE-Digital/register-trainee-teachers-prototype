@@ -58,22 +58,10 @@
   } if canAmend
 } %}
 
-
 {% set schoolsRows = [
   leadPartnerRow if record | requiresField("leadPartner"),
   employingSchoolRow if record | requiresField("employingSchool")
 ] %}
-
-
-{% set schoolsHtml %}
-  {{ govukSummaryList({
-    rows: schoolsRows | highlightInvalidRows({
-      treatEmptyAsMissing: true
-    })
-  }) }}
-{% endset %}
-
-
 
 {% set complete = record.schools | sectionIsComplete %}
 {% set status  = record.schools | getStatusText %}
@@ -99,10 +87,15 @@
 
 {% else %}
 
-  {{ appSummaryCard({
-    classes: "govuk-!-margin-bottom-6",
-    titleText: "Schools",
-    html: schoolsHtml
+  {{ govukSummaryList({
+    card: {
+      title: {
+        text: "Schools"
+      }
+    },
+    rows: schoolsRows | highlightInvalidRows({
+      treatEmptyAsMissing: true
+    })
   }) }}
 
 {% endif %}

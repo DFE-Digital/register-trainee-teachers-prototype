@@ -171,15 +171,8 @@
     gradeRow,
     graduationRow,
     bursaryRow
-  ] %}  
+  ] %}
 {% endif %}
-
-
-{% set degreeDetailsHtml %}
-  {{ govukSummaryList({
-    rows: degreeDetailsRows | highlightInvalidRows
-  }) }}
-{% endset %}
 
 {# Generate title text for card #}
 {% if isInternational %}
@@ -193,16 +186,18 @@
   {% set titleText = degree.type + ": " + (degree.subject | lower) %}
 {% endif %}
 
-
-{{ appSummaryCard({
-  classes: "govuk-!-margin-bottom-6",
-  titleText: titleText | replace("**invalid**", ""),
-  actions: {
-    items: [{
-      href: recordPath + "/degree/" + loop.index0 + "/confirm-delete" | addReferrer(referrer),
-      text: "Delete degree"
-    }]
-  } if canAmend,
-  html: degreeDetailsHtml
+{{ govukSummaryList({
+  card: {
+    title: {
+      text: titleText | replace("**invalid**", "")
+    },
+    actions: {
+      items: [{
+        href: recordPath + "/degree/" + loop.index0 + "/confirm-delete" | addReferrer(referrer),
+        text: "Delete degree",
+        classes: "app-destructive-link"
+      }]
+    } if canAmend
+  },
+  rows: degreeDetailsRows | highlightInvalidRows
 }) }}
-

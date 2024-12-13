@@ -29,13 +29,11 @@
 
   {% endfor %}
 
-
   {% if selectedTrainees | length > 1 %}
     </ul>
   {% endif %}
 
 {% endset %}
-
 
 {% set rows = [
   {
@@ -54,16 +52,14 @@
         }
       ]
     } if canAmend
-  }] %}
+  }
+] %}
 
-{% set summaryListHtml %}
-  {{ govukSummaryList({
-    rows: rows
-  }) }}
-{% endset %}
-
-{{ appSummaryCard({
-  classes: "govuk-!-margin-bottom-6",
-  titleText: "Application import details",
-  html: summaryListHtml
+{{ govukSummaryList({
+  card: {
+    title: {
+      text: "Application import details"
+    }
+  },
+  rows: rows
 }) }}

@@ -27,13 +27,13 @@
       text: (outcomeDate or 'Not provided') if record | isAwarded else "Waiting for award - met standards on " + outcomeDate
     } if canAmend,
     actions: {
-        items: [
+      items: [
         {
-            href: recordPath + "/qualification/outcome-date-edit" | addReferrer(referrer),
-            text: "Change",
-            visuallyHiddenText: "award date"
+          href: recordPath + "/qualification/outcome-date-edit" | addReferrer(referrer),
+          text: "Change",
+          visuallyHiddenText: "award date"
         }
-        ]
+      ]
     }
   } if showAwardDateRow,
   {
@@ -70,14 +70,7 @@
       ]
     } if canAmend
   } if false
-  ] %}
-
-{% set qualificationDetailsHtml %}
-  {{ govukSummaryList({
-    rows: qualificationDetailsRows
-  }) }}
-
-{% endset %}
+] %}
 
 {% set complete = record.contactDetails | sectionIsComplete %}
 {% set status  = record.contactDetails | getStatusText %}
@@ -98,30 +91,22 @@
 
 {% else %}
 
-{#   {% if dqtAllowsReverts %}
-    {% set revertUrl = recordPath + "/revert/teaching-status/details" | addReferrer(referrer) %}
-  {% else %}
-    {% set revertUrl = recordPath + "/revert/teaching-status/cannot-revert" | addReferrer(referrer) %}
-  {% endif %} #}
+  {% set revertUrl = recordPath + "/admin/revert/teaching-status/instructions" | addReferrer(referrer) %}
 
-  {% set revertActionHtml %}
-    {% set revertUrl = recordPath + "/admin/revert/teaching-status/instructions" | addReferrer(referrer) %}
-    {# <strong class="govuk-tag govuk-tag--purple govuk-!-margin-right-2">Admin</strong> #}
-    <a href="{{revertUrl}}" class="govuk-link">Remove {{ record | getQualificationText }} award</a>
-  {% endset %}
-
-  {{ appSummaryCard({
-    classes: "govuk-!-margin-bottom-6",
-    titleText: (record | getQualificationText) + " details",
+  {{ govukSummaryList({
+  card: {
+    title: {
+      text: (record | getQualificationText) + " details"
+    },
     actions: {
       items: [{
-        html: revertActionHtml,
-        _href: revertUrl,
-        _text: "Remove " + (record | getQualificationText) + " award",
-        _classes: 'app-destructive-link'
+        href: revertUrl,
+        text: "Remove " + (record | getQualificationText) + " award",
+        classes: "app-destructive-link"
       }]
-    } if activeTab == 'trainee-details' and data.isAdmin,
-    html: qualificationDetailsHtml
-  }) }}
+    } if activeTab == 'trainee-details' and data.isAdmin
+  },
+  rows: qualificationDetailsRows
+}) }}
 
 {% endif %}

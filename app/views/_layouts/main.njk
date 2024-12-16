@@ -8,18 +8,11 @@
 {% from "_components/autocomplete/macro.njk" import appAutocomplete %}
 {% from "_components/banner/macro.njk" import appBanner %}
 {% from "_components/download-link-with-filename/macro.njk" import appDownloadLink %}
+{% from "_components/filter-page/macro.njk" import appFilterPage %}
 {% from "_components/footer/macro.njk" import appFooter %}
 {% from "_components/school-autocomplete/macro.njk" import appSchoolAutocomplete with context %}
 {% from "_components/sub-navigation/macro.njk" import appSubNavigation %}
 {% from "_components/timeline/macro.njk" import appTimeline %}
-
-{# Wrapper of moj’s filter stuff #}
-{% from "_components/filter-page/macro.njk" import appFilterPage %}
-
-{# moj components #}
-{%- from "moj/components/button-menu/macro.njk" import mojButtonMenu -%}
-{%- from "moj/components/filter/macro.njk" import mojFilter -%}
-{%- from "moj/components/primary-navigation/macro.njk" import mojPrimaryNavigation -%}
 
 {% block head %}
   {% include "_includes/head.njk" %}

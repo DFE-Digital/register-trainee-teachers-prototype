@@ -10,23 +10,20 @@
   items: [
     {
       text: "Added manually",
-      value: "Manual",
-      checked: checked(query.filterSource, "Manual")
+      value: "Manual"
     },
     {
       text: "Imported from Apply",
-      value: "Apply",
-      checked: checked(query.filterSource, "Apply")
+      value: "Apply"
     },
     {
       text: "Imported from DTTP",
-      value: "DTTP",
-      checked: checked(query.filterSource, "DTTP")
+      value: "DTTP"
     } if navActive !== "drafts",
     {
       text: "Imported from HESA",
-      value: "HESA",
-      checked: checked(query.filterSource, "HESA")
+      value: "HESA"
     } if navActive !== "drafts"
-  ]
-} | decorateAttributes(data, "data.filterSource"))}}
+  ],
+  values: data.filterSource
+}) }}

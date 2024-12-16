@@ -1,17 +1,17 @@
 {% set complete = {
   text: "Complete",
-  checked: checked(query.filterCompleteStatus, "Complete")
+  checked: true if query.filterCompleteStatus == "Complete"
 } %}
 
 {% set hasProblems = {
   text: "Has problems",
   value: "Has problems",
-  checked: checked(query.filterCompleteStatus, "Has problems")
+  checked: true if query.filterCompleteStatus == "Has problems"
 } %}
 
 {% set incomplete = {
   text: "Incomplete",
-  checked: checked(query.filterCompleteStatus, "Incomplete")
+  checked: true if query.filterCompleteStatus == "Incomplete"
 } %}
 
 {% set draftItems = [complete, incomplete, hasProblems] %}
@@ -31,5 +31,6 @@
       classes: "govuk-fieldset__legend--s"
     }
   },
-  items: draftItems if navActive == "drafts" else recordItems
-} | decorateAttributes(data, "data.filterCompleteStatus"))}}
+  items: draftItems if navActive == "drafts" else recordItems,
+  values: data.filterCompleteStatus
+}) }}

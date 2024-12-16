@@ -14,39 +14,40 @@
   items: [
     {
       text: "Draft",
-      checked: checked(query.filterStatus, "Draft")
+      value: "Draft"
     } if false,
     {
       text: "Pending TRN",
-      checked: checked(query.filterStatus, "Pending TRN")
+      value: "Pending TRN"
     },
     {
       text: "TRN received",
-      checked: checked(query.filterStatus, "TRN received")
+      value: "TRN received"
     },
     {
       text: "EYTS recommended",
-      checked: checked(query.filterStatus, "EYTS recommended")
+      value: "EYTS recommended"
     },
     {
       text: "EYTS awarded",
-      checked: checked(query.filterStatus, "EYTS awarded")
+      value: "EYTS awarded"
     },
     {
       text: "QTS recommended",
-      checked: checked(query.filterStatus, "QTS recommended")
+      value: "QTS recommended"
     },
     {
       text: "QTS awarded",
-      checked: checked(query.filterStatus, "QTS awarded")
+      value: "QTS awarded"
     },
     {
       text: "Deferred",
-      checked: checked(query.filterStatus, "Deferred")
+      value: "Deferred"
     },
     {
       text: "Withdrawn",
-      checked: checked(query.filterStatus, "Withdrawn")
+      value: "Withdrawn"
     }
-  ]
-} | decorateAttributes(data, "data.filterStatus"))}}
+  ],
+  values: data.filterStatus
+}) }}

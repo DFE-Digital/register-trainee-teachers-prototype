@@ -10,15 +10,16 @@
   items: [
     {
       text: "Early years",
-      checked: checked(query.filterPhase, "Early years")
+      value: "Early years"
     },
     {
       text: "Primary",
-      checked: checked(query.filterPhase, "Primary")
+      value: "Primary"
     },
     {
       text: "Secondary",
-      checked: checked(query.filterPhase, "Secondary")
+      value: "Secondary"
     }
-  ]
-} | decorateAttributes(data, "data.filterPhase"))}}
+  ],
+  values: data.filterPhase
+}) }}

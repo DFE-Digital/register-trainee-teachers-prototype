@@ -7,7 +7,6 @@ const permissions = require('./filters/permissions.js').filters
 const { fakerEN_GB: faker } = require('@faker-js/faker')
 faker.seed(123)
 
-
 // const functions = {}
 
 // Import functions from functions folder

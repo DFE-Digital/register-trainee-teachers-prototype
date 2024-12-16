@@ -4,6 +4,7 @@ const router = govukPrototypeKit.requests.setupRouter()
 const _ = require('lodash')
 const url = require('url')
 const utils = require('./lib/utils')
+const functions = require('./functions')
 const permissions = require('./filters/permissions.js').filters
 
 /// ------------------------------------------------------------------------ ///
@@ -30,6 +31,8 @@ router.all('*', (req, res, next) => {
     res.locals.nextPage = parseInt(req.query.page) + 1
     res.locals.prevPage = parseInt(req.query.page) - 1
   }
+
+  res.locals.isAuthorised = functions.isAuthorised
 
   // Only search by the query if there is one
   // (and get "undefined" instead of "{}" if there is no query)

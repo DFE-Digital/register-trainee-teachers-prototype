@@ -69,6 +69,6 @@ filters.tick = function (value) {
   keep the following line to return your filters to the app
 ------------------------------------------------------------------ */
 
-for (let filterName of Object.keys(filters)) {
+for (const filterName of Object.keys(filters)) {
   addFilter(filterName, filters[filterName])
 }

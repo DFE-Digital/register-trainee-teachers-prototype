@@ -3,7 +3,7 @@
 // const individualFunctionsFolder = path.join(__dirname, './functions')
 const moment = require('moment')
 const _ = require('lodash')
-const permissions = require('./filters/permissions.js').filters
+// const permissions = require('./filters/permissions.js').filters
 const { fakerEN_GB: faker } = require('@faker-js/faker')
 faker.seed(123)
 
@@ -69,7 +69,7 @@ exports.getContext = () => {
 // functions.faker = faker
 
 // Pass through to utility function. Done like this so we don't need to use filter syntax - as nothing really needs to get sent anyway
-exports.isAuthorised = (data, action) => {
+exports.isAuthorised = (action) => {
   // const data = this.ctx?.data
   // return permissions.providerIsAuthorised.apply(this, [data.signedInProviders, action])
   return true

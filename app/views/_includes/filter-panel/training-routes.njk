@@ -7,7 +7,7 @@
   {% for route in enabledTrainingRoutes %}
     {% set routeItems = routeItems | push({
       text: route,
-      checked: checked(query.filterTrainingRoutes, route)
+      checked: true if query.filterTrainingRoutes == route
     }) %}
   {% endfor %}
   {{ govukCheckboxes({
@@ -18,10 +18,8 @@
         classes: "govuk-fieldset__legend--s"
       }
     },
-    hint: {
-      text: ""
-    },
-    items: routeItems
-  } | decorateAttributes(data, "data.filterTrainingRoutes")) }}
+    items: routeItems,
+    values: data.filterTrainingRoutes
+  }) }}
 
 {% endif %}

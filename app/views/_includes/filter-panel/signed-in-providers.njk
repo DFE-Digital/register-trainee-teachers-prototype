@@ -8,7 +8,7 @@
   {% for provider in userProviders %}
     {% set providerItems = providerItems | push({
       text: provider,
-      checked: checked(query.filterUserProviders, provider)
+      value: provider
     }) %}
   {% endfor %}
   {{ govukCheckboxes({
@@ -19,10 +19,8 @@
         classes: "govuk-fieldset__legend--s"
       }
     },
-    hint: {
-      text: ""
-    },
-    items: providerItems
-  } | decorateAttributes(data, "data.filterUserProviders")) }}
+    items: providerItems,
+    values: data.filterUserProviders
+  }) }}
 
 {% endif %}

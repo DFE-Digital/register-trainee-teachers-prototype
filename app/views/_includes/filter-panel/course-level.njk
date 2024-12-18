@@ -10,11 +10,12 @@
   items: [
     {
       text: "Undergraduate",
-      checked: checked(query.filterCourseLevel, "Undergraduate")
+      value: "Undergraduate"
     },
     {
       text: "Postgraduate",
-      checked: checked(query.filterCourseLevel, "Postgraduate")
+      value: "Postgraduate"
     }
-  ]
-} | decorateAttributes(data, "data.filterCourseLevel"))}}
+  ],
+  values: data.filterCourseLevel
+}) }}

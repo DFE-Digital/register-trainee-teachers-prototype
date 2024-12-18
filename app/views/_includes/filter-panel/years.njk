@@ -155,25 +155,20 @@
     },
     items: [
       {
-        text: "2023 to 2024 academic year only",
         text: "2023 to 2024",
-        value: "2023 to 2024",
-        checked: checked(query.filterAcademicYears, "2023 to 2024")
+        value: "2023 to 2024"
       },
       {
-        text: "2022 to 2023 academic year only",
         text: "2022 to 2023",
-        value: "2022 to 2023",
-        checked: checked(query.filterAcademicYears, "2022 to 2023")
+        value: "2022 to 2023"
       },
       {
-        text: "2021 to 2022 academic year only",
         text: "2021 to 2022",
-        value: "2021 to 2022",
-        checked: checked(query.filterAcademicYears, "2021 to 2022")
+        value: "2021 to 2022"
       }
-    ]
-  } | decorateAttributes(data, "data.filterAcademicYears"))}}
+    ],
+    values: data.filterAcademicYears
+  }) }}
 {% endset %}
 
 
@@ -210,4 +205,3 @@
   }) }}
 
 {% endif %}
-

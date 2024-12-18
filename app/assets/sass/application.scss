@@ -1,16 +1,15 @@
 @use "sass:string";
 
+// For guidance on how to add CSS and SCSS see:
+// https://prototype-kit.service.gov.uk/docs/adding-css-javascript-and-images
+$govuk-new-typography-scale: true;
+
 // global styles for <a> and <p> tags
 $govuk-global-styles: true;
 
 // We can't mount GOV.UK Frontend's assets at root as it's done automatically by the extensions framework.
 $app-assets-path: "/public/";
-$govuk-assets-path: "/dist/govuk/assets/";
-
-// Import GOV.UK Frontend and any extension styles if extensions have been configured
-@import "lib/extensions/extensions";
-
-@import "node_modules/@ministryofjustice/frontend/moj/all";
+// $govuk-assets-path: "/dist/govuk/assets/";
 
 // Patterns that aren't in Frontend
 @import "patterns/related-items";

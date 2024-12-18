@@ -10,11 +10,11 @@
   items: [
     {
       text: "Full time",
-      checked: checked(query.filterStudyMode, "Full time")
+      checked: true if query.filterStudyMode == "Full time"
     },
     {
       text: "Part time",
-      checked: checked(query.filterStudyMode, "Part time")
+      checked: true if query.filterStudyMode == "Part time"
     }
   ]
 } | decorateAttributes(data, "data.filterStudyMode"))}}

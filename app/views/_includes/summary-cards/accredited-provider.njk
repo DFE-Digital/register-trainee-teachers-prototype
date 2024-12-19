@@ -8,7 +8,6 @@
   {% endif %}
 {% endset %}
 
-
 {% set recordBaseRows = [
   {
     key: {
@@ -57,20 +56,13 @@
       }]
     } if canAmend
   }
-  ] %}
+] %}
 
-
-{% set recordBaseHtml %}
-  {{ govukSummaryList({
-    rows: recordBaseRows
-  }) }}
-{% endset %}
-
-
-
-
-{{ appSummaryCard({
-  classes: "govuk-!-margin-bottom-6",
-  titleText: "Change of accredited provider details’",
-  html: recordBaseHtml
+{{ govukSummaryList({
+  card: {
+    title: {
+      text: "Change of accredited provider details"
+    }
+  },
+  rows: recordBaseRows
 }) }}

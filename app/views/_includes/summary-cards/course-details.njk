@@ -312,16 +312,6 @@
   ] | removeEmpty %}
 {% endif %}
 
-{% set courseDetailsHtml %}
-  {{ govukSummaryList({
-    rows: courseDetailsRows | highlightInvalidRows({
-        treatEmptyAsMissing: true,
-        recordSource: record.source
-      })
-  }) }}
-{% endset %}
-
-
 {% set complete = courseDetails | sectionIsComplete %}
 {% set status  = courseDetails | getStatusText %}
 {% set sectionIsRequired = record | requiresSection("courseDetails") %}
@@ -352,16 +342,22 @@
 
 {% else %}
 
-  {{ appSummaryCard({
-    classes: "govuk-!-margin-bottom-6",
-    titleText: "Course details",
-    actions: {
-      items: [{
-        href: recordPath + "/course-details/is-course-change" | addReferrer(referrer),
-        text: "Move the trainee to a new course"
-      }]
-    } if canAmend and showCourseChangeOption,
-    html: courseDetailsHtml
+  {{ govukSummaryList({
+    card: {
+      title: {
+        text: "Course details"
+      },
+      actions: {
+        items: [{
+          href: recordPath + "/course-details/is-course-change" | addReferrer(referrer),
+          text: "Move the trainee to a new course"
+        }]
+      } if canAmend and showCourseChangeOption
+    },
+    rows: courseDetailsRows | highlightInvalidRows({
+        treatEmptyAsMissing: true,
+        recordSource: record.source
+      })
   }) }}
-  
+
 {% endif %}

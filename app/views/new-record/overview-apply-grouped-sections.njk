@@ -7,11 +7,10 @@
 {% endif %}
 
 {% set hideReturnLink = true %}
-{% set backLink = '/drafts' %}
+{% set backLink = "/drafts" %}
 {% set backText = "All drafts" %}
 
-{% set gridColumn = 'govuk-grid-column-full' %}
-
+{% set gridColumn = "govuk-grid-column-full" %}
 
 {% block formContent %}
 {# Rendered from /new-record/overview #}
@@ -56,25 +55,33 @@
       {% set courseDetailsHref = "course-details/confirm" %}
     {% endif %}
 
-    {{ appTaskList({
+    {{ govukTaskList({
       classes: "govuk-!-margin-bottom-8",
       items: [
         {
-          text: "Course details",
+          idPrefix: "course-details",
+          title: {
+            text: "Course details"
+          },
           href: courseDetailsHref | addReferrer(referrer),
-          id: "course-details",
-          tag: {
-            classes: record.courseDetails | getStatusText('Review', 'Review') | getStatusClass,
-            text: record.courseDetails | getStatusText('Review', 'Review')
+          status: {
+            tag: {
+              classes: record.courseDetails | getStatusText('Review', 'Review') | getStatusClass,
+              text: record.courseDetails | getStatusText('Review', 'Review')
+            }
           }
         } if record | requiresSection("courseDetails"),
         {
-          text: "Trainee data",
+          idPrefix: "application-overview",
+          title: {
+            text: "Trainee data"
+          },
           href: "apply-trainee-application" | addReferrer(referrer),
-          id: "application-overview",
-          tag: {
-            classes: record.applyData | getStatusText('Review', 'Review') | getStatusClass,
-            text: record.applyData | getStatusText('Review', 'Review')
+          status: {
+            tag: {
+              classes: record.applyData | getStatusText('Review', 'Review') | getStatusClass,
+              text: record.applyData | getStatusText('Review', 'Review')
+            }
           }
         }
       ]
@@ -95,47 +102,64 @@ Lead partners and employing schools" %}
       {% endif %}
     {% endif %}
 
-    {{ appTaskList({
+    {{ govukTaskList({
       classes: "govuk-!-margin-bottom-8",
       items: [
         {
-          text: "Trainee ID",
+          idPrefix: "training-details",
+          title: {
+            text: "Trainee ID"
+          },
           href: "training-details" | reviewIfInProgress(record.trainingDetails) | addReferrer(referrer),
-          id: "training-details",
-          tag: {
-            classes: record.trainingDetails | getStatusText | getStatusClass,
-            text: record.trainingDetails | getStatusText
+          status: {
+            tag: {
+              classes: record.trainingDetails | getStatusText | getStatusClass,
+              text: record.trainingDetails | getStatusText
+            }
           }
         } if record | requiresSection("trainingDetails"),
         {
-          text: schoolSectionLabel,
+          idPrefix: "schools-details",
+          title: {
+            text: schoolSectionLabel
+          },
           href: "schools" | reviewIfInProgress(record.schools) | addReferrer(referrer),
-          id: "schools-details",
-          tag: {
-            classes: record.schools | getStatusText | getStatusClass,
-            text: record.schools | getStatusText
+          status: {
+            tag: {
+              classes: record.schools | getStatusText | getStatusClass,
+              text: record.schools | getStatusText
+            }
           }
         } if record | requiresSection("schools"),
         {
-          text: "Placements",
-          _href: "placements/confirm" if (record.placement) else "placements/can-add-placement",
+          idPrefix: "placement-details",
+          title: {
+            text: "Placements"
+          },
           href: "placements/can-add-placement" | reviewIfInProgress(record.placement, "placements") | addReferrer(referrer),
-          id: "placement-details",
-          tag: {
-            classes: record.placement | getStatusText | getStatusClass,
-            text: record.placement | getStatusText
+          status: {
+            tag: {
+              classes: record.placement | getStatusText | getStatusClass,
+              text: record.placement | getStatusText
+            }
           }
         } if record | requiresSection("placement"),
         {
-        text: "Funding",
-        href: "funding" | reviewIfInProgress(record.funding) if record | canStartFundingSection,
-        hint: "Complete course details first" if not record | canStartFundingSection,
-        id: "funding",
-        tag: {
-          classes: record.funding | getStatusText | getStatusClass,
-          text: record.funding | getStatusText("Cannot start yet" if not record | canStartFundingSection)
-        }
-      } if record | requiresSection("funding")
+          idPrefix: "funding",
+          title: {
+            text: "Funding"
+          },
+          href: "funding" | reviewIfInProgress(record.funding) if record | canStartFundingSection,
+          hint: {
+            text: "Complete course details first" if not record | canStartFundingSection
+          },
+          status: {
+            tag: {
+              classes: record.funding | getStatusText | getStatusClass,
+              text: record.funding | getStatusText("Cannot start yet" if not record | canStartFundingSection)
+            }
+          }
+        } if record | requiresSection("funding")
       ]
     }) if not closed }}
 
@@ -152,4 +176,5 @@ Lead partners and employing schools" %}
 
   </div>
 </div>
+
 {% endblock %}

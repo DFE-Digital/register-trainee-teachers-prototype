@@ -98,16 +98,13 @@
       ]
     } if canAmend
   } if data.bulk.action == 'Recommend a group of trainees for EYTS or QTS'
-  ] %}
+] %}
 
-{% set summaryListHtml %}
-  {{ govukSummaryList({
-    rows: rows
-  }) }}
-{% endset %}
-
-{{ appSummaryCard({
-  classes: "govuk-!-margin-bottom-6",
-  titleText: data.bulk.action,
-  html: summaryListHtml
+{{ govukSummaryList({
+  card: {
+    title: {
+      text: data.bulk.action
+    }
+  },
+  rows: rows
 }) }}

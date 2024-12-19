@@ -45,14 +45,11 @@
   }
 ] %}
 
-{% set reinstateDetailsHtml %}
-  {{ govukSummaryList({
-    rows: reinstateDetailsRows
-  }) }}
-{% endset %}
-
-{{ appSummaryCard({
-  classes: "govuk-!-margin-bottom-6",
-  titleText: "Reinstatement details",
-  html: reinstateDetailsHtml
+{{ govukSummaryList({
+  card: {
+    title: {
+      text: "Reinstatement details"
+    }
+  },
+  rows: reinstateDetailsRows
 }) }}

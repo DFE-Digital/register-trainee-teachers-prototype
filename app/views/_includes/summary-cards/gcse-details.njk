@@ -22,16 +22,15 @@
       {% elseif item.exam %}
         {% set grade = item.grade + " — " + item.exam + "" %}
       {% else %}
-        {% set grade = item.grade %}  
+        {% set grade = item.grade %}
       {% endif %}
 
       {% set grades = grades | push(grade) %}
     {% endfor %}
 
     {% set grades = grades | commaSeparateLines | safe %}
-    
-  {% endif %}
 
+  {% endif %}
 
   {% set gcseRow = {
       key: {
@@ -50,21 +49,10 @@
         ]
       } if canAmend
     } %}
-    
+
   {% set gcseRows = gcseRows | push(gcseRow) %}
 
 {% endfor %}
-
-
-
-
-{% set gcseDetailsHtml %}
-  {{ govukSummaryList({
-    rows: gcseRows
-  }) }}
-{% endset %}
-
-
 
 {% set complete = record.gcse | sectionIsComplete %}
 {% set status  = record.gcse | getStatusText %}
@@ -90,10 +78,13 @@
 
 {% else %}
 
-  {{ appSummaryCard({
-    classes: "govuk-!-margin-bottom-6",
-    titleText: "GCSE or equivalent",
-    html: gcseDetailsHtml
+  {{ govukSummaryList({
+    card: {
+      title: {
+        text: "GCSE or equivalent"
+      }
+    },
+    rows: gcseRows
   }) }}
-  
+
 {% endif %}

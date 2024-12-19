@@ -82,20 +82,18 @@
   placementDurationRow if false
 ] %}
 
-{% set placementDetailsHtml %}
-  {{ govukSummaryList({
-    rows: placementDetailsRows
-  }) }}
-{% endset %}
-
-{{ appSummaryCard({
-  classes: "govuk-!-margin-bottom-6",
-  titleText: ordinalCount + ' placement',
-  actions: {
-    items: [{
-      href: recordPath + "/placements/" + placement.id + "/confirm-delete" | addReferrer(referrer),
-      text: "Remove placement"
-    }]
-  } if canAmend,
-  html: placementDetailsHtml
+{{ govukSummaryList({
+  card: {
+    title: {
+      text: ordinalCount + " placement"
+    },
+    actions: {
+      items: [{
+        href: recordPath + "/placements/" + placement.id + "/confirm-delete" | addReferrer(referrer),
+        text: "Remove placement",
+        classes: "app-destructive-link"
+      }]
+    } if canAmend
+  },
+  rows: placementDetailsRows
 }) }}

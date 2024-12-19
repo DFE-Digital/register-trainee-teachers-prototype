@@ -28,12 +28,6 @@
   undergraduateQualificationRow
 ] %}
 
-{% set undergraduateQualificationDetailsHtml %}
-  {{ govukSummaryList({
-      rows: undergraduateQualificationRows
-  }) }}
-{% endset %}
-
 {% set complete = record.undergraduateQualification | sectionIsComplete %}
 {% set status  = record.undergraduateQualification | getStatusText %}
 {% set sectionIsRequired = record | requiresSection("undergraduateQualification") %}
@@ -58,10 +52,13 @@
 
 {% else %}
 
-  {{ appSummaryCard({
-    classes: "govuk-!-margin-bottom-6",
-    titleText: "Qualification on entry details",
-    html: undergraduateQualificationDetailsHtml
+  {{ govukSummaryList({
+    card: {
+      title: {
+        text: "Qualification on entry details"
+      }
+    },
+    rows: undergraduateQualificationRows
   }) }}
-  
+
 {% endif %}

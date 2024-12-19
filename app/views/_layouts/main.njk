@@ -43,13 +43,9 @@
     containerClasses: "govuk-width-container",
     navigation: [
       {
-        href: "#1",
+        href: "#",
         text: "Your account"
-      } if false,
-      {
-        href: "/select-organisation",
-        text: "Change organisation"
-      } if shouldShowOrganisationSwitchLink and false,
+      },
       {
         href: "/start-page",
         text: "Sign out"
@@ -60,27 +56,6 @@
   {% if shouldShowOrganisationSwitchLink %}
     {% include "_includes/organisation-switcher.njk" %}
   {% endif %}
-
-  {% set rightHandSideNavHtml %}
-
-    {% if not data.isAdmin and not data.isImpersonating | falsify and not isSupportUi %}
-      {% set providerName = data.settings.userActiveProvider %}
-
-      <nav class="moj-primary-navigation">
-        <ul class="moj-primary-navigation__list">
-          {% set ariaCurrent = "aria-current=page" if navActive == "provider" %}
-          <li class="moj-primary-navigation__item">
-            <a class="moj-primary-navigation__link" {{ ariaCurrent }} href="/organisations/{{activeProvider.id}}">
-              Organisation details
-            </a>
-          </li>
-
-        </ul>
-
-      </nav>
-    {% endif %}
-
-  {% endset %}
 
   {% set navItemsUser = [
     {
@@ -127,7 +102,12 @@
       text: 'Funding',
       href: '/funding/' + data.years.currentAcademicYearSimple + '/payment-schedule',
       active: true if navActive == 'Funding'
-    } if data.settings.showFundingInPrimaryNav
+    } if data.settings.showFundingInPrimaryNav,
+    {
+      text: 'Organisation details',
+      href: '/organisations/' + activeProvider.id,
+      active: true if navActive == 'provider'
+    } if not data.isAdmin and not data.isImpersonating | falsify and not isSupportUi
   ] | removeEmpty %}
 
   {% set navItemsSupport = [
@@ -192,11 +172,9 @@
 
   {% if not hidePrimaryNav %}
 
-    {{ mojPrimaryNavigation({
-    label: 'Primary navigation',
-    items: navItems,
-    containerClasses: "app-primary-navigation--support-ui" if isSupportUi,
-    searchHtml: rightHandSideNavHtml
+    {{ govukServiceNavigation({
+      ariaLabel: "Primary navigation",
+      navigation: navItems
     }) }}
 
   {% endif %}
@@ -210,7 +188,7 @@
       "role": "status"
     },
     tag: {
-      text: "prototype"
+      text: "Prototype"
     },
     classes: 'govuk-!-margin-top-1',
     html: 'This is a prototype of a new service – your <a href="#" class="govuk-link">feedback</a> will help us improve it'
@@ -232,20 +210,16 @@
       <h2 class="govuk-heading-s">
         Get support
       </h2>
-
       <ul class="govuk-footer__meta-custom govuk-list govuk-!-font-size-16">
         <li><a class="govuk-link govuk-footer__link" href="mailto:becomingateacher@digital.education.gov.uk">becomingateacher<wbr>@digital.education.gov.uk</a></li>
         <li>We aim to respond within 5 working days, or one working day for more urgent&nbsp;queries</li>
       </ul>
     </div>
-
     <div class="govuk-grid-column-one-half">
       <h2 class="govuk-heading-s">
         Give feedback
       </h2>
-
       <p class="govuk-body govuk-!-font-size-16"><a href="/guidance" class="govuk-link govuk-footer__link">Give feedback to help us improve <span class="app-nowrap">Register trainee teachers</span></a></p>
-
     </div>
   </div>
 {% endset %}
@@ -277,7 +251,6 @@
     {% include "_includes/footer-settings.njk" %}
   {% endblock %}
 {% endif %}
-
 
 {% block bodyEnd %}
   {% block scripts %}

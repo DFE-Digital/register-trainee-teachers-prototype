@@ -23,6 +23,7 @@
 {% from "govuk/components/phase-banner/macro.njk"     import govukPhaseBanner %}
 {% from "govuk/components/radios/macro.njk"           import govukRadios %}
 {% from "govuk/components/select/macro.njk"           import govukSelect %}
+{% from "govuk/components/service-navigation/macro.njk"  import govukServiceNavigation %}
 {% from "govuk/components/skip-link/macro.njk"        import govukSkipLink %}
 {% from "govuk/components/summary-list/macro.njk"     import govukSummaryList %}
 {% from "govuk/components/table/macro.njk"            import govukTable %}
@@ -52,7 +53,6 @@
 {# moj components #}
 {%- from "moj/components/filter/macro.njk" import mojFilter -%}
 {%- from "moj/components/button-menu/macro.njk" import mojButtonMenu -%}
-{%- from "moj/components/primary-navigation/macro.njk" import mojPrimaryNavigation -%}
 
 {% block head %}
   {% include "_includes/head.njk" %}
@@ -83,13 +83,9 @@
     containerClasses: "govuk-width-container",
     navigation: [
       {
-        href: "#1",
+        href: "#",
         text: "Your account"
-      } if false,
-      {
-        href: "/select-organisation",
-        text: "Change organisation"
-      } if shouldShowOrganisationSwitchLink and false,
+      },
       {
         href: "/start-page",
         text: "Sign out"
@@ -100,27 +96,6 @@
   {% if shouldShowOrganisationSwitchLink %}
     {% include "_includes/organisation-switcher.njk" %}
   {% endif %}
-
-  {% set rightHandSideNavHtml %}
-
-    {% if not data.isAdmin and not data.isImpersonating | falsify and not isSupportUi %}
-      {% set providerName = data.settings.userActiveProvider %}
-
-      <nav class="moj-primary-navigation">
-        <ul class="moj-primary-navigation__list">
-          {% set ariaCurrent = "aria-current=page" if navActive == "provider" %}
-          <li class="moj-primary-navigation__item">
-            <a class="moj-primary-navigation__link" {{ ariaCurrent }} href="/organisations/{{activeProvider.id}}">
-              Organisation details
-            </a>
-          </li>
-
-        </ul>
-
-      </nav>
-    {% endif %}
-
-  {% endset %}
 
   {% set navItemsUser = [
     {
@@ -166,8 +141,13 @@
     {
       text: 'Funding',
       href: '/funding/' + data.years.currentAcademicYearSimple + '/payment-schedule',
-      active: true if navActive == 'Funding'
-    } if data.settings.showFundingInPrimaryNav
+      active: true if navActive == 'funding'
+    } if data.settings.showFundingInPrimaryNav,
+    {
+      text: 'Organisation details',
+      href: '/organisations/' + activeProvider.id,
+      active: true if navActive == 'provider'
+    } if not data.isAdmin and not data.isImpersonating | falsify and not isSupportUi
   ] | removeEmpty %}
 
   {% set navItemsSupport = [
@@ -232,16 +212,12 @@
 
   {% if not hidePrimaryNav %}
 
-    {{ mojPrimaryNavigation({
-    label: 'Primary navigation',
-    items: navItems,
-    containerClasses: "app-primary-navigation--support-ui" if isSupportUi,
-    searchHtml: rightHandSideNavHtml
+    {{ govukServiceNavigation({
+      ariaLabel: "Primary navigation",
+      navigation: navItems
     }) }}
 
   {% endif %}
-
-
 
 {% endblock %}
 
@@ -252,7 +228,7 @@
       "role": "status"
     },
     tag: {
-      text: "prototype"
+      text: "Prototype"
     },
     classes: 'govuk-!-margin-top-1',
     html: 'This is a prototype of a new service – your <a href="#" class="govuk-link">feedback</a> will help us improve it'
@@ -285,9 +261,7 @@
       <h2 class="govuk-heading-s">
         Give feedback
       </h2>
-
       <p class="govuk-body govuk-!-font-size-16"><a href="/guidance" class="govuk-link govuk-footer__link">Give feedback to help us improve <span class="app-nowrap">Register trainee teachers</span></a></p>
-
     </div>
   </div>
 {% endset %}

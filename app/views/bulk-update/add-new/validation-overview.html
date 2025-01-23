@@ -1,0 +1,156 @@
+{% extends "_templates/_page.html" %}
+
+{% set pageHeading = "Status of new trainee files" %}
+{% set navActive = 'bulk' %}
+
+{% set filteredRecords = data.records | filterRecords(data) %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+
+<!--      <div class="govuk-error-summary" data-module="govuk-error-summary">-->
+<!--        <div role="alert">-->
+<!--          <h2 class="govuk-error-summary__title">-->
+<!--            There is a problem-->
+<!--          </h2>-->
+<!--          <div class="govuk-error-summary__body">-->
+<!--            <ul class="govuk-list govuk-error-summary__list">-->
+<!--              <li>-->
+<!--                <a href="#">The CSV template structure has been changed</a>-->
+<!--              </li>-->
+<!--            </ul>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+
+      <h1 class="govuk-heading-l">
+        <span class="govuk-caption-l">{{ data.signedInProviders | andSeparate }}</span>
+        {{ pageHeading }}
+      </h1>
+
+      <p class="govuk-body">
+        View the status of recently uploaded files containing new trainees.
+      </p>
+
+      <h2 class="govuk-heading-s">
+        Validated
+      </h2>
+      <p class="govuk-body">You can now submit and add trainees to Register.</p>
+
+      <h2 class="govuk-heading-s">
+        Succeeded
+      </h2>
+      <p class="govuk-body">This lists all successful new trainee uploads for the current academic year.</p>
+
+      <h2 class="govuk-heading-s">
+        Failed
+      </h2>
+      <p class="govuk-body">You need to review errors in the CSV file you uploaded. Failed uploads will be removed after 30 days.</p>
+
+      <hr class="govuk-!-margin-bottom-9 govuk-!-margin-top-9">
+
+      <p class="govuk-body">
+        View the status of recently uploaded files containing new trainees.
+      </p>
+
+      <h2 class="govuk-heading-s govuk-!-font-weight-regular govuk-!-margin-bottom-2">
+        <strong class="govuk-tag govuk-tag--blue">
+          Validated
+        </strong>
+      </h2>
+      <p class="govuk-body">You can now submit and add trainees to Register.</p>
+
+      <h2 class="govuk-heading-s govuk-!-font-weight-regular govuk-!-margin-bottom-2">
+        <strong class="govuk-tag govuk-tag--green">
+          Succeeded
+        </strong>
+      </h2>
+      <p class="govuk-body">This lists all successful new trainee uploads for the current academic year.</p>
+
+      <h2 class="govuk-heading-s govuk-!-font-weight-regular govuk-!-margin-bottom-2">
+        <strong class="govuk-tag govuk-tag--red">
+          Failed
+        </strong>
+      </h2>
+      <p class="govuk-body">You need to review errors in the CSV file you uploaded. Failed uploads will be removed after 30 days.</p>
+
+      <hr class="govuk-!-margin-bottom-9 govuk-!-margin-top-9">
+
+      <p class="govuk-body">
+        View the status of recently uploaded files containing new trainees.
+      </p>
+      <ul class="govuk-list govuk-list--spaced">
+        <li>
+          <strong class="govuk-tag govuk-tag--blue">Validated</strong> You can now submit and add trainees to Register
+        </li>
+        <li>
+          <strong class="govuk-tag govuk-tag--green">Succeeded</strong> This lists all successful new trainee uploads for the current academic year
+        </li>
+        <li>
+          <strong class="govuk-tag govuk-tag--red">Failed</strong> You need to review errors in the CSV file you uploaded. Failed uploads will be removed after 30 days
+        </li>
+      </ul>
+
+      <hr class="govuk-!-margin-bottom-9 govuk-!-margin-top-9">
+
+      <table class="govuk-table">
+        <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header" scope="col"> Uploaded </th>
+          <th class="govuk-table__header" scope="col"> Filename </th>
+          <th class="govuk-table__header" scope="col"> Validation status </th>
+        </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">
+            <a href="">22 January 2025 at 3:05pm</a>
+          </td>
+          <td class="govuk-table__cell">
+            trainees_with_invalid_data_5.csv
+          </td>
+          <td class="govuk-table__cell">
+            <strong class="govuk-tag govuk-tag--red">
+              Failed
+            </strong>
+          </td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">
+            <a href="">19 January 2025 at 10:27am</a>
+          </td>
+          <td class="govuk-table__cell">
+            trainees_5.csv
+          </td>
+          <td class="govuk-table__cell">
+            <strong class="govuk-tag govuk-tag--green">
+              Succeeded
+            </strong>
+          </td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">
+            <a href="">17 January 2025 at 4:24pm</a>
+          </td>
+          <td class="govuk-table__cell">
+            trainees_degree_5.csv
+          </td>
+          <td class="govuk-table__cell">
+            <strong class="govuk-tag govuk-tag--blue">
+              In progress
+            </strong>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+
+      <p class="govuk-body"><a href="/bulk-update/" class="govuk-link">Cancel reviewing uploads</a></p>
+
+    </div>
+  </div>
+
+{% endblock %}
+
+

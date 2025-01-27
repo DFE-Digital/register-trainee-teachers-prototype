@@ -1,0 +1,124 @@
+{% extends "_templates/_page.html" %}
+
+{% set navActive = 'bulk' %}
+
+{% set pageHeading = "File validation passed" %}
+
+{% set bulkPath =  "add-new" %}
+{% set bulkRoute = "add-new" %}
+
+{% set totalCount = data.bulkUpload.processedRows | length %}
+
+{# Sets numbers for errors summary #}
+{% set errorCount     = data.bulkUpload.processedRows | where("uploadStatus", "error") | length  %}
+{% set unchangedCount = data.bulkUpload.processedRows | where("uploadStatus", "unchanged") | length  %}
+{% set updatedCount   = data.bulkUpload.processedRows | where("uploadStatus", "updated") | length  %}
+
+{# {% set unchangedCount = 0 %} #}
+{# {% set updatedCount = 0 %} #}
+
+{% set simulateZeroTrainees = false %}
+
+{% if simulateZeroTrainees %}
+  {% set errorCount = 0 %}
+  {% set updatedCount = 0 %}
+{% endif %}
+
+{% set hasErrors = errorCount > 0 %}
+
+{% set hasUpdated = updatedCount > 0 %}
+
+{% set filteredRecords = data.records | filterRecords(data) %}
+
+{# Use the traineesThatCanBeAdded variable for New Trainees for the time being #}
+{% set traineesThatCanBeAdded = filteredRecords | filterByReadyToRecommend %}
+{% set qualifications = traineesThatCanBeAdded | getQualifications | orSeparate %}
+
+{% block content %}
+  {{super()}}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+
+      <span class="govuk-caption-l">{{ data.signedInProviders | andSeparate }}</span>
+      <h1 class="govuk-heading-l">{{pageHeading}}</h1>
+      {% set errorPluralisation = "error" | pluralise(errorCount) %}
+      <form action="/bulk-update/{{ bulkPath }}/errors-found-answer" method="post" novalidate>
+
+        <p class="govuk-body">You uploaded a CSV file with details of {{ totalCount }} {{ "trainee" | pluralise(totalCount) }}.</p>
+
+        {# Only show counts if there are at least some to add or address #}
+        {% if hasErrors or hasUpdated %}
+
+          <p class="govuk">
+            It included:
+          </p>
+          <ul class="govuk-list govuk-list--bullet">
+            {% if updatedCount %}
+            <li>
+              {{ updatedCount }} {{ "trainee" | pluralise(updatedCount) }} who can be added
+            </li>
+            {% endif %}
+            {% if unchangedCount %}
+            <li>
+              {{ unchangedCount }} {{ "trainee" | pluralise(unchangedCount) }} who will not be added, as they already exist in Register
+            </li>
+            {% endif %}
+            {% if errorCount %}
+            <li>
+              {{ errorCount }} {{ "trainee" | pluralise(errorCount) }} with errors in their details
+            </li>
+            {% endif %}
+
+
+          </ul>
+          {% if errorCount %}
+            <p class="govuk-body">
+              You need to review the errors before you can add new trainees.
+            </p>
+          {% endif %}
+
+          {% if hasErrors %}
+            {{ govukButton({
+              text: "Review errors",
+              href: '/bulk-update/add-new/fix-errors'
+            }) }}
+          {% elseif hasUpdated %}
+            {{ govukButton({
+              text: "Submit",
+              href: '/bulk-update/add-new/confirm-trainees-registered'
+            }) }}
+          {% endif %}
+
+        {# File only contains trainees that won't be added #}
+        {% else %}
+
+          <p class="govuk-body">You did not correct the errors with the uploaded CSV file. This means that you will not add any new trainees.</p>
+
+          <p class="govuk-body">If you want to bulk add new trainees, you need to correct the errors in the CSV file and upload it again.</p>
+          {{ govukButton({
+            text: "Return to upload CSV file again",
+            href: '/bulk-update/add-new/upload'
+          }) }}
+
+
+        {% endif %}
+
+
+
+        {# {% if hasErrors and hasUpdated %}
+          <p class="govuk-body">
+            <a href="/bulk-update/add-new/check-pending-updates" class="govuk-link">
+              Skip fixing errors and check pending updates to trainee records
+            </a>
+          </p>
+        {% endif %} #}
+
+
+      </form>
+      <p class="govuk-body">
+        <a href="/bulk-update/add-new/cancel-bulk-updates" class="govuk-link">Cancel bulk {{ "adding new trainees" if data.settings.bulkLinksInPrimaryNav == "Show bulk add new" else "updates to records" }}</a>
+      </p>
+    </div>
+  </div>
+
+{% endblock %}

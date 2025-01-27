@@ -61,6 +61,28 @@
 
       <p class="govuk-body">Use <a class="govuk-link" href="https://sandbox.register-trainee-teachers.service.gov.uk/">guidance on how to add trainee information to the CSV template</a>.</p>
 
+      <p class="govuk-body">If you're adapting the CSV file template for a direct extract from your student record system, you can go directly to step 3.</p>
+
+      <h2 class="govuk-heading-m">
+        2. Add new trainee details
+      </h2>
+      <p class="govuk-body">Open as a CSV file to add trainee details in bulk. There are 36 data fields. You will need to include trainee information such as:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>personal information</li>
+        <li>course details</li>
+        <li>funding (if applicable)</li>
+      </ul>
+      <p class="govuk-body">You can leave non mandatory rows or cells empty if you do not want to upload those fields.</p>
+
+      {{ govukDetails({
+      summaryText: "Help with copying data from Excel to CSV",
+      html: "If you're copying trainee data from Excel to CSV, be aware Excel removes the 'leading zeros' from any data that begins with a zero, for example, trainee IDs.
+      <br><br>
+      To prevent this, you can first apply the Text format to the cells before you type or paste the numbers in Excel."
+      }) }}
+
+      <!-- Placeholder link added, the guidance hasn't been written yet so we don't have a URL to point to -->
+      <p class="govuk-body">Check <a class="govuk-link" href="#">guidance on how add trainee information to the CSV template (opens in new tab)</a>.</p>
       <h2 class="govuk-heading-m">
         Upload your trainee records
       </h2>

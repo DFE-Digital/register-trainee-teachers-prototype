@@ -21,6 +21,9 @@
 {% set hasErrors = errorCount > 0 %}
 {% set hasUpdated = updatedCount > 0 %}
 
+{# Hardcode value prior to refactoring for discussion #}
+{% set errorCount = 7 %}
+
 {% set pageHeading %}
   Review errors for {{errorCount}} {{ "trainee" | pluralise(errorCount) }} in the CSV file you uploaded
 {% endset %}

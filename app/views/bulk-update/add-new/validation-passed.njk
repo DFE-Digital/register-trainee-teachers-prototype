@@ -28,6 +28,9 @@
 
 {% set hasUpdated = updatedCount > 0 %}
 
+{% set totalCount = 5 %}
+
+{# Hard code value prior to creating new upload functions #}
 {% set filteredRecords = data.records | filterRecords(data) %}
 
 {# Use the traineesThatCanBeAdded variable for New Trainees for the time being #}

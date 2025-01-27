@@ -30,6 +30,9 @@
 
 {% set filteredRecords = data.records | filterRecords(data) %}
 
+{# TODO: TODO create a new function to populate errors. Hard code response in the interim #}
+{% set updatedCount = 7 %}
+
 {# Use the traineesThatCanBeAdded variable for New Trainees for the time being #}
 {% set traineesThatCanBeAdded = filteredRecords | filterByReadyToRecommend %}
 {% set qualifications = traineesThatCanBeAdded | getQualifications | orSeparate %}

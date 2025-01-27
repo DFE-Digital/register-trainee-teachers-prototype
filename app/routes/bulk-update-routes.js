@@ -102,23 +102,29 @@ module.exports = router => {
 
   /* Clear review errors answer */
   router.post('/bulk-update/add-new/upload-answer', (req, res) => {
-    const data = req.session.data
+    // TODO create a new function to populate errors
 
-    data.bulkUpload = {
-      ...data?.bulkUpload,
-      processedRows: populateNewTraineeErrors(data)
-    }
+    // const data = req.session.data
+    //
+    // data.bulkUpload = {
+    //   ...data?.bulkUpload,
+    //   processedRows: populateNewTraineeErrors(data)
+    // }
+
     res.redirect('/bulk-update/add-new/upload-summary')
   })
 
   /* Set-up check updates page up as coming from upload */
   router.post('/bulk-update/add-new/fix-errors-answer', (req, res) => {
-    const data = req.session.data
 
-    data.bulkUpload = {
-      ...data?.bulkUpload,
-      processedRows: populateNewTraineeErrors(data)
-    }
+    // TODO create a new function to populate errors
+
+    // const data = req.session.data
+    //
+    // data.bulkUpload = {
+    //   ...data?.bulkUpload,
+    //   processedRows: populateNewTraineeErrors(data)
+    // }
 
     res.redirect('/bulk-update/add-new/upload-summary')
   })

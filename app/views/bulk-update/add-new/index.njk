@@ -44,13 +44,12 @@
       </p>
 
       {{ govukInsetText({
-      text: "You must only use this CSV file template to register new trainees. If you use this to update already existing trainees, it will come back as an error."
+      text: "You must only use this CSV file template to register new trainees. Using it to update already existing trainees will result in an error."
       }) }}
 
-      <p class="govuk-body">
-        The CSV template uses HESA reference data.
-      </p>
-
+      <h2 class="govuk-heading-m">
+        1. Download this CSV file template
+      </h2>
       {{ appDownloadLink({
         linkText: "Download empty CSV file to add new trainees",
         fileName: "bulk-update/add-new",
@@ -59,13 +58,13 @@
         fileType: "csv"
       })}}
 
-      <p class="govuk-body">Use <a class="govuk-link" href="https://sandbox.register-trainee-teachers.service.gov.uk/">guidance on how to add trainee information to the CSV template</a>.</p>
+      <p class="govuk-body">You can adapt this CSV file template to add trainee data directly from your student record system.</p>
 
       <p class="govuk-body">If you're adapting the CSV file template for a direct extract from your student record system, you can go directly to step 3.</p>
 
-      <h2 class="govuk-heading-m">
+      <h3 class="govuk-heading-m">
         2. Add new trainee details
-      </h2>
+      </h3>
       <p class="govuk-body">Open as a CSV file to add trainee details in bulk. There are 36 data fields. You will need to include trainee information such as:</p>
       <ul class="govuk-list govuk-list--bullet">
         <li>personal information</li>
@@ -83,8 +82,8 @@
 
       <!-- Placeholder link added, the guidance hasn't been written yet so we don't have a URL to point to -->
       <p class="govuk-body">Check <a class="govuk-link" rel="noreferrer noopener" target="_blank" href="https://staging.register-trainee-teachers.service.gov.uk/csv-docs">guidance on how add trainee information to the CSV template (opens in new tab)</a>.</p>
-      <h2 class="govuk-heading-m">
-        Upload your trainee records
+      <h4 class="govuk-heading-m">
+        3. Upload your trainee records
       </h2>
       <form action="/bulk-update/add-new/upload-answer" method="post" novalidate>
         {{ govukFileUpload({

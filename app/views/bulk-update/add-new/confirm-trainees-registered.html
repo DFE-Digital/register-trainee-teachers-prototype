@@ -38,86 +38,34 @@
   {{super()}}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds-from-desktop">
+      <table class="govuk-table">
+        <caption class="govuk-table__caption govuk-table__caption--l">Your new trainees have been registered</caption>
+        <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header">Submitted by</th>
+          <td class="govuk-table__cell">Jennifer Dawson</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header">Date and time</th>
+          <td class="govuk-table__cell">22 January 2025 at 4:27pm</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header">Number of registered trainees</th>
+          <td class="govuk-table__cell">5</td>
+        </tr>
+        </tbody>
+      </table>
 
-      <span class="govuk-caption-l">{{ data.signedInProviders | andSeparate }}</span>
-      <h1 class="govuk-heading-l">{{pageHeading}}</h1>
-      {% set errorPluralisation = "error" | pluralise(errorCount) %}
-      <form action="/bulk-update/{{ bulkPath }}/errors-found-answer" method="post" novalidate>
+      <p class="govuk-body">You can also check the <a href="/bulk-update/add-new/validation-overview" class="govuk-link">status of new trainee files</a>.</p>
 
-        <p class="govuk-body">You uploaded a CSV file with details of {{ totalCount }} {{ "trainee" | pluralise(totalCount) }}.</p>
+      <h2 class="govuk-heading-m">Check data submitted into Register from CSV bulk add new trainees</h2>
 
-        {# Only show counts if there are at least some to add or address #}
-        {% if hasErrors or hasUpdated %}
+      <p class="govuk-body">You can check your trainee data once it has been submitted into Register. At any time you can:</p>
 
-          <p class="govuk">
-            It included:
-          </p>
-          <ul class="govuk-list govuk-list--bullet">
-            {% if updatedCount %}
-            <li>
-              {{ updatedCount }} {{ "trainee" | pluralise(updatedCount) }} who can be added
-            </li>
-            {% endif %}
-            {% if unchangedCount %}
-            <li>
-              {{ unchangedCount }} {{ "trainee" | pluralise(unchangedCount) }} who will not be added, as they already exist in Register
-            </li>
-            {% endif %}
-            {% if errorCount %}
-            <li>
-              {{ errorCount }} {{ "trainee" | pluralise(errorCount) }} with errors in their details
-            </li>
-            {% endif %}
-
-
-          </ul>
-          {% if errorCount %}
-            <p class="govuk-body">
-              You need to review the errors before you can add new trainees.
-            </p>
-          {% endif %}
-
-          {% if hasErrors %}
-            {{ govukButton({
-              text: "Review errors",
-              href: '/bulk-update/add-new/fix-errors'
-            }) }}
-          {% elseif hasUpdated %}
-            {{ govukButton({
-              text: "Submit",
-              href: '/bulk-update/add-new/confirmation'
-            }) }}
-          {% endif %}
-
-        {# File only contains trainees that won't be added #}
-        {% else %}
-
-          <p class="govuk-body">You did not correct the errors with the uploaded CSV file. This means that you will not add any new trainees.</p>
-
-          <p class="govuk-body">If you want to bulk add new trainees, you need to correct the errors in the CSV file and upload it again.</p>
-          {{ govukButton({
-            text: "Return to upload CSV file again",
-            href: '/bulk-update/add-new/upload'
-          }) }}
-
-
-        {% endif %}
-
-
-
-        {# {% if hasErrors and hasUpdated %}
-          <p class="govuk-body">
-            <a href="/bulk-update/add-new/check-pending-updates" class="govuk-link">
-              Skip fixing errors and check pending updates to trainee records
-            </a>
-          </p>
-        {% endif %} #}
-
-
-      </form>
-      <p class="govuk-body">
-        <a href="/bulk-update/add-new/cancel-bulk-updates" class="govuk-link">Cancel bulk {{ "adding new trainees" if data.settings.bulkLinksInPrimaryNav == "Show bulk add new" else "updates to records" }}</a>
-      </p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>view 'Choose trainee status export' from the 'Registered trainees' section, using the 'academic year' or 'start year' filter to select the current academic year</li>
+        <li>check your trainees directly in the service one by one.</li>
+      </ul>
     </div>
   </div>
 

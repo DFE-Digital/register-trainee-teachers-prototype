@@ -2,7 +2,7 @@
 
 {% set navActive = 'bulk' %}
 
-{% set pageHeading = "Upload summary" %}
+{% set pageHeading = "Your file is being processed" %}
 
 {% set bulkPath =  "add-new" %}
 {% set bulkRoute = "add-new" %}
@@ -30,9 +30,6 @@
 
 {% set filteredRecords = data.records | filterRecords(data) %}
 
-{# TODO: TODO create a new function to populate errors. Hard code response in the interim #}
-{% set updatedCount = 7 %}
-
 {# Use the traineesThatCanBeAdded variable for New Trainees for the time being #}
 {% set traineesThatCanBeAdded = filteredRecords | filterByReadyToRecommend %}
 {% set qualifications = traineesThatCanBeAdded | getQualifications | orSeparate %}
@@ -44,26 +41,17 @@
 
       <span class="govuk-caption-l">{{ data.signedInProviders | andSeparate }}</span>
       <h1 class="govuk-heading-l">{{pageHeading}}</h1>
-      {% set errorPluralisation = "error" | pluralise(errorCount) %}
-      <form action="/bulk-update/add-new/confirmation" method="post" novalidate>
 
-        <p class="govuk-body">You uploaded a CSV file with details of:</p>
+      <p class="govuk-body">We are processing your trainee records to check if they are correct.</p>
 
-        <ul class="govuk-list govuk-list--bullet">
-          <li>
-            {{ updatedCount }} {{ "trainee" | pluralise(updatedCount) }} who can be added
-          </li>
-        </ul>
+      <p class="govuk-body">This may take several minutes.</p>
 
-        {{ govukButton({
-        text: "Process bulk upload",
-        href: '/bulk-update/add-new/confirmation'
-        }) }}
+      <p class="govuk-body">You’ll receive an email to tell you if the upload has been successful or if you need to fix any mistakes and upload an updated file.</p>
 
-      </form>
-      <p class="govuk-body">
-        <a href="/bulk-update/add-new/cancel-bulk-updates" class="govuk-link">Cancel bulk upload</a>
-      </p>
+      <p class="govuk-body">You can also check the <a href="/bulk-update/add-new/validation-overview" class="govuk-link">status of new trainee files</a></p>
+
+      <p class="govuk-body"><a href="/bulk-update/" class="govuk-link">Back to Bulk updates page</a></p>
+
     </div>
   </div>
 

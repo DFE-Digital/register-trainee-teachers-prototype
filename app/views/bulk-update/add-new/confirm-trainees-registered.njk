@@ -1,0 +1,80 @@
+{% extends "_templates/_page.njk" %}
+
+{% set navActive = 'bulk' %}
+
+{% set pageHeading = "Your new trainees have been registered" %}
+
+{% set bulkPath =  "add-new" %}
+{% set bulkRoute = "add-new" %}
+
+{% set totalCount = data.bulkUpload.processedRows | length %}
+
+{# Sets numbers for errors summary #}
+{% set errorCount     = data.bulkUpload.processedRows | where("uploadStatus", "error") | length  %}
+{% set unchangedCount = data.bulkUpload.processedRows | where("uploadStatus", "unchanged") | length  %}
+{% set updatedCount   = data.bulkUpload.processedRows | where("uploadStatus", "updated") | length  %}
+
+{# {% set unchangedCount = 0 %} #}
+{# {% set updatedCount = 0 %} #}
+
+{% set simulateZeroTrainees = false %}
+
+{% if simulateZeroTrainees %}
+  {% set errorCount = 0 %}
+  {% set updatedCount = 0 %}
+{% endif %}
+
+{% set hasErrors = errorCount > 0 %}
+
+{% set hasUpdated = updatedCount > 0 %}
+
+{% set filteredRecords = data.records | filterRecords(data) %}
+
+{# Use the traineesThatCanBeAdded variable for New Trainees for the time being #}
+{% set traineesThatCanBeAdded = filteredRecords | filterByReadyToRecommend %}
+{% set qualifications = traineesThatCanBeAdded | getQualifications | orSeparate %}
+
+{% block content %}
+  {{super()}}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+      <table class="govuk-table">
+        <caption class="govuk-table__caption govuk-table__caption--l">Your new trainees have been registered</caption>
+        <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header">Submitted by</th>
+          <td class="govuk-table__cell">Benjamin Woods</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header">Date and time</th>
+          <td class="govuk-table__cell">22 January 2025 at 4:27pm</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header">Number of registered trainees</th>
+          <td class="govuk-table__cell">5</td>
+        </tr>
+        </tbody>
+      </table>
+
+      <p class="govuk-body">You can also check the <a href="/bulk-update/add-new/validation-overview" class="govuk-link">status of new trainee files</a>.</p>
+
+      <h2 class="govuk-heading-m">Check data submitted into Register from CSV bulk add new trainees</h2>
+
+      <p class="govuk-body">You can check your trainee data once it has been submitted into Register. At any time you can:</p>
+
+      <ul class="govuk-list govuk-list--bullet">
+        <li>view 'Choose trainee status export' from the 'Registered trainees' section, using the 'academic year' or 'start year' filter to select the current academic year</li>
+        <li>check your trainees directly in the service one by one.</li>
+      </ul>
+
+
+      <h2 class="govuk-heading-m">View trainees' teacher reference number (TRN)</h2>
+
+      <p class="govuk-body">Once a trainee is registered, a TRN is created for each trainee record.</p>
+
+      <p class="govuk-body">This is when the trainee becomes registered with the Department for Education (DfE).</p>
+
+    </div>
+  </div>
+
+{% endblock %}

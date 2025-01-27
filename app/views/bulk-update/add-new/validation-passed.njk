@@ -2,7 +2,7 @@
 
 {% set navActive = 'bulk' %}
 
-{% set pageHeading = "Upload summary" %}
+{% set pageHeading = "Your file has been approved" %}
 
 {% set bulkPath =  "add-new" %}
 {% set bulkRoute = "add-new" %}
@@ -28,10 +28,10 @@
 
 {% set hasUpdated = updatedCount > 0 %}
 
-{% set filteredRecords = data.records | filterRecords(data) %}
+{% set totalCount = 5 %}
 
-{# TODO: TODO create a new function to populate errors. Hard code response in the interim #}
-{% set updatedCount = 7 %}
+{# Hard code value prior to creating new upload functions #}
+{% set filteredRecords = data.records | filterRecords(data) %}
 
 {# Use the traineesThatCanBeAdded variable for New Trainees for the time being #}
 {% set traineesThatCanBeAdded = filteredRecords | filterByReadyToRecommend %}
@@ -42,27 +42,25 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds-from-desktop">
 
-      <span class="govuk-caption-l">{{ data.signedInProviders | andSeparate }}</span>
+<!--      <span class="govuk-caption-l">{{ data.signedInProviders | andSeparate }}</span>-->
       <h1 class="govuk-heading-l">{{pageHeading}}</h1>
+
       {% set errorPluralisation = "error" | pluralise(errorCount) %}
-      <form action="/bulk-update/add-new/confirmation" method="post" novalidate>
+      <form action="/bulk-update/{{ bulkPath }}/errors-found-answer" method="post" novalidate>
 
-        <p class="govuk-body">You uploaded a CSV file with details of:</p>
+        <p class="govuk-body">Your trainees_5.csv file has {{ totalCount }} {{ "trainee" | pluralise(totalCount) }} that can now be submitted and added to the Register service.</p>
 
-        <ul class="govuk-list govuk-list--bullet">
-          <li>
-            {{ updatedCount }} {{ "trainee" | pluralise(updatedCount) }} who can be added
-          </li>
-        </ul>
+        <p class="govuk-body">Once a trainee has been registered, a TRN is created for each trainee record.</p>
 
         {{ govukButton({
-        text: "Process bulk upload",
-        href: '/bulk-update/add-new/confirmation'
+        text: "Submit trainees to Register",
+        href: '/bulk-update/add-new/confirm-trainees-registered'
         }) }}
+
 
       </form>
       <p class="govuk-body">
-        <a href="/bulk-update/add-new/cancel-bulk-updates" class="govuk-link">Cancel bulk upload</a>
+        <a href="/bulk-update/add-new/cancel-bulk-updates" class="govuk-link">Cancel trainee submission to Register</a>
       </p>
     </div>
   </div>

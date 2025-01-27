@@ -116,7 +116,6 @@ module.exports = router => {
 
   /* Set-up check updates page up as coming from upload */
   router.post('/bulk-update/add-new/fix-errors-answer', (req, res) => {
-
     // TODO create a new function to populate errors
 
     // const data = req.session.data

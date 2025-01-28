@@ -1,6 +1,6 @@
 {% extends "_templates/_page.njk" %}
 
-{% set pageHeading = "Bulk add placement details to trainee records" %}
+{% set pageHeading = "Bulk add new trainees" %}
 {% set navActive = 'bulk' %}
 
 {% set filteredRecords = data.records | filterRecords(data) %}
@@ -11,146 +11,89 @@
 
 {% set placementRowHeading = [] %}
 {% for i in range(0, data.settings.minPlacementsRequired) %}
-{% set placementRowHeading = placementRowHeading | push('<span class="app-nowrap">‘Placement ' + loop.index + ' URN’</span>') %}
+  {% set placementRowHeading = placementRowHeading | push('<span class="app-nowrap">‘Placement ' + loop.index + ' URN’</span>') %}
 {% endfor %}
 
 
 {% block content %}
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds-from-desktop">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+
     <div class="govuk-error-summary" data-module="govuk-error-summary">
       <div role="alert">
         <h2 class="govuk-error-summary__title">
-          There is a problem
+          There is a problem with the uploaded CSV file
         </h2>
         <div class="govuk-error-summary__body">
           <ul class="govuk-list govuk-error-summary__list">
             <li>
-              The CSV template structure has been changed
+              <a href="#file-upload-1">Your file needs to exactly match how the CSV template column headings are written</a>
             </li>
           </ul>
-          <details class="govuk-details">
-            <summary class="govuk-details__summary">
-              <span class="govuk-details__summary-text">
-                View the items that must be included
-              </span>
-            </summary>
-            <div class="govuk-details__text">
-              <ul class="govuk-list">
-                <li>Provider Trainee ID</li>
-                <li>Application ID</li>
-                <li>HESA ID</li>
-                <li>First Names</li>
-                <li>Last Name</li>
-                <li>Previous Last Name</li>
-                <li>Date of Birth</li>
-                <li>NI Number</li>
-                <li>Sex</li>
-                <li>Email</li>
-                <li>Nationality</li>
-                <li>Ethnicity</li>
-                <li>Disability 1</li>
-                <li>Disability 2</li>
-                <li>Disability 3</li>
-                <li>Disability 4</li>
-                <li>Disability 5</li>
-                <li>Disability 6</li>
-                <li>Disability 7</li>
-                <li>Disability 8</li>
-                <li>Disability 9</li>
-                <li>ITT Aim</li>
-                <li>Training Route</li>
-                <li>Qualification Aim</li>
-                <li>Course Subject One</li>
-                <li>Course Subject Two</li>
-                <li>Course Subject Three</li>
-                <li>Study Mode</li>
-                <li>ITT Start Date</li>
-                <li>ITT End Date</li>
-                <li>Course Age Range</li>
-                <li>Course Year</li>
-                <li>Lead Partner URN</li>
-                <li>Employing School URN</li>
-                <li>Trainee Start Date</li>
-                <li>PG Apprenticeship Start Date</li>
-                <li>First Placement URN</li>
-                <li>Fund Code</li>
-                <li>Funding Method</li>
-                <li>Training Initiative</li>
-                <li>Additional Training Initiative</li>
-                <li>UK Degree Type</li>
-                <li>Non-UK Degree Type</li>
-                <li>Degree Subject</li>
-                <li>Degree Grade</li>
-                <li>Degree Graduation Year</li>
-                <li>Degree UK Awarding Institution</li>
-                <li>Degree Country</li>
-              </ul>
-            </div>
-          </details>
         </div>
       </div>
     </div>
 
-    <h1 class="govuk-heading-l">
-      <span class="govuk-caption-l">{{ data.signedInProviders | andSeparate }}</span>
-      {{ pageHeading }}
-    </h1>
-    <p class="govuk-body">
-      You’ll be asked to include placement data as part of performance profile sign off for registered trainees with a course outcome in the previous academic year.
-    </p>
-    <p class="govuk-body">
-      You have trainee records that need additional details:
-    </p>
-    <ul class="govuk-list govuk-list--bullet">
-      <li>{{ traineesThatCanBeUpdated | length }} that can be bulk updated</li>
-    </ul>
-    <h2 class="govuk-heading-m">
-      1. Export a template file
-    </h2>
-    {{ appDownloadLink({
-        linkText: "Download trainees with missing details",
-        fileName: "bulk-update/add-details",
-        showDownloadedFileName: true,
-        downloadedFileName: (data.signedInProviders + "-trainees to add missing prepopulated") | slugify,
+      <h1 class="govuk-heading-l">
+        <span class="govuk-caption-l">{{ data.signedInProviders | andSeparate }}</span>
+        {{ pageHeading }}
+      </h1>
+      <p class="govuk-body">
+        Training providers can register their trainees in bulk by creating trainee records and adding the required data.
+      </p>
+
+      {{ govukInsetText({
+      text: "You must only use this CSV file template to register new trainees. Using it to update already existing trainees will result in an error."
+      }) }}
+
+      <h2 class="govuk-heading-m">
+        1. Download this CSV file template
+      </h2>
+      {{ appDownloadLink({
+        linkText: "Download empty CSV file to add new trainees",
+        fileName: "bulk-update/add-new",
+        showDownloadedFileName: false,
+        downloadedFileName: (data.signedInProviders + "-new trainees to add") | slugify,
         fileType: "csv"
       })}}
-    <h2 class="govuk-heading-m">
-      2. Add missing details
-    </h2>
-    <p class="govuk-body">
-      Open as a CSV file and add the missing information..
-    </p>
-    <p class="govuk-body">
-      You can leave rows or cells empty if you do not want to update those trainee records.
-    </p>
 
-    <h3 class="govuk-heading-s">Placement schools</h3>
-    <p class="govuk-body">
-      In the columns {{ placementRowHeading | joinify | safe }} add the school’s URN.
-    </p>
-    <p class="govuk-body">
-      You can find the URNs using <a href="https://www.get-information-schools.service.gov.uk/Search" target="_blank" class="govuk-link">Get information about schools (opens in a new tab)</a>.
-    </p>
-    <p class="govuk-body">
-      You cannot add information in bulk if the school or setting does not have a URN. Add those placements to the trainee record manually.
-    </p>
-    <p class="govuk-body">
-      If the trainee did more than {{ data.settings.minPlacementsRequired }} placements, add those extra placements to the trainee record manually.
-    </p>
-    <p class="govuk-body">
-      If you do not have the information for a placement, leave the cell empty.
-    </p>
-    <h2 class="govuk-heading-m">
-      3. Upload your trainee records
-    </h2>
-    <form action="/bulk-update/add-details/bulk-update-answer" method="post" novalidate>
-      {{ govukFileUpload({
+      <p class="govuk-body">You can adapt this CSV file template to add trainee data directly from your student record system.</p>
+
+      <p class="govuk-body">If you're adapting the CSV file template for a direct extract from your student record system, you can go directly to step 3.</p>
+
+      <h3 class="govuk-heading-m">
+        2. Add new trainee details
+      </h3>
+      <p class="govuk-body">Open as a CSV file to add trainee details in bulk. There are 47 data fields. You will need to include trainee information such as:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>personal information</li>
+        <li>course details</li>
+        <li>funding (if applicable)</li>
+      </ul>
+      <p class="govuk-body">You can leave non mandatory rows or cells empty if you do not want to upload those fields.</p>
+
+      {{ govukDetails({
+      summaryText: "Help with copying data from Excel to CSV",
+      html: "If you're copying trainee data from Excel to CSV, be aware Excel removes the 'leading zeros' from any data that begins with a zero, for example, trainee IDs.
+      <br><br>
+      To prevent this, you can first apply the Text format to the cells before you type or paste the numbers in Excel."
+      }) }}
+
+      <!-- Placeholder link added, the guidance hasn't been written yet so we don't have a URL to point to -->
+      <p class="govuk-body">Check <a class="govuk-link" rel="noreferrer noopener" target="_blank" href="https://staging.register-trainee-teachers.service.gov.uk/csv-docs">guidance on how add trainee information to the CSV template (opens in new tab)</a>.</p>
+      <h4 class="govuk-heading-m">
+        3. Upload your trainee records
+      </h2>
+      <form action="/bulk-update/add-new/upload-answer" method="post" novalidate>
+        {{ govukFileUpload({
           id: "file-upload-1",
           name: "file-upload-1",
           hint: {
             text: "File type must be ‘CSV’."
+          },
+          errorMessage: {
+            text: "Your file needs to exactly match how the CSV template column headings are written"
           },
           label: {
             text: "Upload a file"
@@ -159,11 +102,71 @@
             "accept": ".csv"
           }
         }) }}
-      {{ govukButton({
+        <details class="govuk-details">
+          <summary class="govuk-details__summary">
+            <span class="govuk-details__summary-text">
+              Help with the CSV file
+            </span>
+          </summary>
+          <div class="govuk-details__text">
+            <p class="govuk-body">The CSV file must include the following headers in the first row:</p>
+            <ul class="govuk-list govuk-list--bullet">
+              <li>Provider Trainee ID</li>
+              <li>Application ID</li>
+              <li>HESA ID</li>
+              <li>First Names</li>
+              <li>Last Name</li>
+              <li>Previous Last Name</li>
+              <li>Date of Birth</li>
+              <li>NI Number</li>
+              <li>Sex</li>
+              <li>Email</li>
+              <li>Nationality</li>
+              <li>Ethnicity</li>
+              <li>Disability 1</li>
+              <li>Disability 2</li>
+              <li>Disability 3</li>
+              <li>Disability 4</li>
+              <li>Disability 5</li>
+              <li>Disability 6</li>
+              <li>Disability 7</li>
+              <li>Disability 8</li>
+              <li>Disability 9</li>
+              <li>ITT Aim</li>
+              <li>Training Route</li>
+              <li>Qualification Aim</li>
+              <li>Course Subject One</li>
+              <li>Course Subject Two</li>
+              <li>Course Subject Three</li>
+              <li>Study Mode</li>
+              <li>ITT Start Date</li>
+              <li>ITT End Date</li>
+              <li>Course Age Range</li>
+              <li>Course Year</li>
+              <li>Lead Partner URN</li>
+              <li>Employing School URN</li>
+              <li>Trainee Start Date</li>
+              <li>PG Apprenticeship Start Date</li>
+              <li>First Placement URN</li>
+              <li>Fund Code</li>
+              <li>Funding Method</li>
+              <li>Training Initiative</li>
+              <li>Additional Training Initiative</li>
+              <li>UK Degree Type</li>
+              <li>Non-UK Degree Type</li>
+              <li>Degree Subject</li>
+              <li>Degree Grade</li>
+              <li>Degree Graduation Year</li>
+              <li>Degree UK Awarding Institution</li>
+              <li>Degree Country</li>
+            </ul>
+          </div>
+        </details>
+        {{ govukButton({
           text: "Upload records"
         }) }}
-    </form>
+      </form>
+    </div>
   </div>
-</div>
 
 {% endblock %}

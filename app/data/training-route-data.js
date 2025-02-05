@@ -26,15 +26,15 @@ const publishRoutes = [
 ]
 
 const nonPublishRoutes = [
-  'Primary and secondary (undergrad)',
   'Primary and secondary (postgraduate)',
+  'Primary and secondary (undergraduate)',
   'Assessment only',
   // 'Teach First (postgraduate)',
   'Early years graduate employment based',
   'Early years graduate entry',
   'Early years assessment only',
   'Early years undergraduate',
-  'Opt-in (undergrad)',
+  'Opt-in (undergraduate)',
   'High potential initial teacher training (HPITT)',
   'International qualified teacher status (iQTS)'
 ]
@@ -104,7 +104,7 @@ const baseRouteData = {
     ],
     financialSupportAvailable: false
   },
-  'Primary and secondary (undergrad)': {
+  'Primary and secondary (undergraduate)': {
     defaultEnabled: true,
     courseLevel: 'Undergraduate',
     qualifications: [
@@ -458,7 +458,7 @@ const baseRouteData = {
       }
     ]
   },
-  'Opt-in (undergrad)': {
+  'Opt-in (undergraduate)': {
     defaultEnabled: true,
     courseLevel: 'Undergraduate',
     qualifications: [

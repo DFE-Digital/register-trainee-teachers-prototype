@@ -219,7 +219,7 @@ module.exports = (params) => {
 
   const isEarlyYears = route.includes('Early years')
 
-  const isUndergrad = route.includes('undergrad')
+  const isUndergrad = route.includes('undergraduate')
 
   let phase, qualifications, qualificationsSummary, studyMode
 

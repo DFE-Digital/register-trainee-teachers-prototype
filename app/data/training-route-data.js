@@ -9,32 +9,32 @@ const modernLanguages = ittSubjects.modernLanguagesSubjects
 // Publish and non publish can overlap
 
 const applyRoutes = [
-  'Teaching apprenticeship (postgrad)',
-  'Primary and secondary (postgrad)',
+  'Teaching apprenticeship (postgraduate)',
+  'Primary and secondary (postgraduate)',
   'School direct (salaried)',
   'School direct (fee funded)'
 ]
 
 // Not all these routes will be enabled
 const publishRoutes = [
-  'Teaching apprenticeship (postgrad)',
+  'Teaching apprenticeship (postgraduate)',
   'Teacher degree apprenticeship (salaried)', // Publish refers to the TDA route as "Teaching apprenticeship (salaried)"
-  'Primary and secondary (postgrad)',
-  'Primary and secondary (postgrad salaried)', // New route as part of the ITT reforms
+  'Primary and secondary (postgraduate)',
+  'Primary and secondary (postgraduate salaried)', // New route as part of the ITT reforms
   'School direct (salaried)',
   'School direct (fee funded)'
 ]
 
 const nonPublishRoutes = [
-  'Primary and secondary (postgrad)',
-  'Primary and secondary (undergrad)',
+  'Primary and secondary (postgraduate)',
+  'Primary and secondary (undergraduate)',
   'Assessment only',
-  // 'Teach First (postgrad)',
+  // 'Teach First (postgraduate)',
   'Early years graduate employment based',
   'Early years graduate entry',
   'Early years assessment only',
   'Early years undergraduate',
-  'Opt-in (undergrad)',
+  'Opt-in (undergraduate)',
   'High potential initial teacher training (HPITT)',
   'International qualified teacher status (iQTS)'
 ]
@@ -104,7 +104,7 @@ const baseRouteData = {
     ],
     financialSupportAvailable: false
   },
-  'Primary and secondary (undergrad)': {
+  'Primary and secondary (undergraduate)': {
     defaultEnabled: true,
     courseLevel: 'Undergraduate',
     qualifications: [
@@ -138,7 +138,7 @@ const baseRouteData = {
       }
     ]
   },
-  'Primary and secondary (postgrad)': {
+  'Primary and secondary (postgraduate)': {
     defaultEnabled: true,
     courseLevel: 'Postgraduate',
     qualifications: [
@@ -335,8 +335,8 @@ const baseRouteData = {
       }
     ]
   },
-  'Teach first (postgrad)': {},
-  'Teaching apprenticeship (postgrad)': {
+  'Teach first (postgraduate)': {},
+  'Teaching apprenticeship (postgraduate)': {
     defaultEnabled: true,
     courseLevel: 'Postgraduate',
     qualifications: [
@@ -458,7 +458,7 @@ const baseRouteData = {
       }
     ]
   },
-  'Opt-in (undergrad)': {
+  'Opt-in (undergraduate)': {
     defaultEnabled: true,
     courseLevel: 'Undergraduate',
     qualifications: [

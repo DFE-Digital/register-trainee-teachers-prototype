@@ -85,7 +85,7 @@
       {
         text: 'Organisation settings',
         href: '/organisations/' + activeProvider.id
-      },
+      } if not data.isAdmin and not data.isImpersonating | falsify and not isSupportUi,
       {
         href: "#",
         text: "Your account"

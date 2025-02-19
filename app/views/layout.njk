@@ -83,6 +83,11 @@
     containerClasses: "govuk-width-container",
     navigation: [
       {
+        text: 'Organisation settings',
+        href: '/organisations/' + activeProvider.id,
+        active: true if navActive == 'provider'
+      } if not data.isAdmin and not data.isImpersonating | falsify and not isSupportUi,
+      {
         href: "#",
         text: "Your account"
       },
@@ -142,12 +147,7 @@
       text: 'Funding',
       href: '/funding/' + data.years.currentAcademicYearSimple + '/payment-schedule',
       active: true if navActive == 'funding'
-    } if data.settings.showFundingInPrimaryNav,
-    {
-      text: 'Organisation details',
-      href: '/organisations/' + activeProvider.id,
-      active: true if navActive == 'provider'
-    } if not data.isAdmin and not data.isImpersonating | falsify and not isSupportUi
+    } if data.settings.showFundingInPrimaryNav
   ] | removeEmpty %}
 
   {% set navItemsSupport = [

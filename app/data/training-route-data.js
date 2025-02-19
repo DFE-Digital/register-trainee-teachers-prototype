@@ -597,11 +597,13 @@ const baseRouteData = {
       'courseDetails',
       'personalDetails',
       'diversity',
+      'schools',
       // 'undergraduateQualification',
       'placement',
       'funding'
     ],
     fields: [
+      'leadPartner',
       'studyMode'
     ],
     qualifications: [

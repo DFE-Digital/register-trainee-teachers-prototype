@@ -84,7 +84,8 @@
     navigation: [
       {
         text: 'Organisation settings',
-        href: '/organisations/' + activeProvider.id
+        href: '/organisations/' + activeProvider.id,
+        active: true if navActive == 'provider'
       } if not data.isAdmin and not data.isImpersonating | falsify and not isSupportUi,
       {
         href: "#",

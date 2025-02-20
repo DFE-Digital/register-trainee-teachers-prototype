@@ -25,7 +25,7 @@ gulp.task('sass-extensions', (done) => {
 gulp.task('sass', () => {
   return gulp.src(config.paths.assets + '/sass/*.scss')
     .pipe(sourcemaps.init())
-    .pipe(sass({ outputStyle: 'expanded' }).on('error', (error) => {
+    .pipe(sass({ style: 'expanded' }).on('error', (error) => {
       // write a blank application.css to force browser refresh on error
       if (!fs.existsSync(stylesheetDirectory)) {
         fs.mkdirSync(stylesheetDirectory)

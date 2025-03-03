@@ -13,3 +13,4 @@ node_modules/*
 package-lock.json
 app/assets/data/search-index.json
 .idea
+.nova

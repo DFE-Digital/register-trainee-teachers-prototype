@@ -43,100 +43,44 @@
         {% from "govuk/components/table/macro.njk" import govukTable %}
 
         <table class="govuk-table govuk-!-margin-bottom-9">
-          <caption class="govuk-table__caption govuk-table__caption--m">Active tokens</caption>
+          <caption class="govuk-table__caption govuk-table__caption--m">Tokens</caption>
           <thead class="govuk-table__head">
           <tr class="govuk-table__row">
             <th scope="col" class="govuk-table__header">Token name</th>
-            <th scope="col" class="govuk-table__header">Description</th>
+            <th scope="col" class="govuk-table__header">Created by</th>
             <th scope="col" class="govuk-table__header">Last used</th>
             <th scope="col" class="govuk-table__header">Expiration date</th>
+            <th scope="col" class="govuk-table__header">Status</th>
             <th scope="col" class="govuk-table__header">Action</th>
           </tr>
           </thead>
           <tbody class="govuk-table__body">
           <tr class="govuk-table__row">
             <td class="govuk-table__cell">Bayer Group</td>
-            <td class="govuk-table__cell">Production access for Bayer Group vendor</td>
-            <td class="govuk-table__cell">24/02/2024</td>
+            <td class="govuk-table__cell">Shad Prosacco</td>
+            <td class="govuk-table__cell">03/03/2025</td>
             <td class="govuk-table__cell"></td>
-            <td class="govuk-table__cell"><a href="#" class="govuk-link govuk-link--no-visited-state">Revoke</a></td>
+            <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Active</strong></td>
+            <td class="govuk-table__cell"><a href="confirm-delete" class="govuk-link govuk-link--no-visited-state">Revoke</a></td>
+          </tr>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">Bayer Group Vendor Test</td>
+            <td class="govuk-table__cell">Stefanie Runte</td>
+            <td class="govuk-table__cell">19/01/2025</td>
+            <td class="govuk-table__cell">25/01/2024</td>
+            <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--red">Revoked</strong></td>
+            <td class="govuk-table__cell"></td>
+          </tr>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">Weimann-Reinger</td>
+            <td class="govuk-table__cell">Jedediah Littel</td>
+            <td class="govuk-table__cell">14/12/2024</td>
+            <td class="govuk-table__cell">31/12/2024</td>
+            <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--grey">Expired</strong></td>
+            <td class="govuk-table__cell"></td>
           </tr>
           </tbody>
         </table>
-
-        {{ govukTable({
-        caption: "Expired tokens",
-        captionClasses: "govuk-table__caption--m",
-        firstCellIsHeader: false,
-        head: [
-        {
-        text: "Token name"
-        },
-        {
-        text: "Description"
-        },
-        {
-        text: "Last used"
-        },
-        {
-        text: "Expiration date"
-        }
-        ],
-        rows: [
-        [
-        {
-        text: "Bayer Group Vendor Test"
-        },
-        {
-        text: "Test access for new vendor Bayer Group"
-        },
-        {
-        text: "15/01/2024"
-        },
-        {
-        text: "25/01/2024"
-        }
-        ]],
-        classes: "govuk-!-margin-bottom-9"
-        }) }}
-
-        {{ govukTable({
-        caption: "Revoked tokens",
-        captionClasses: "govuk-table__caption--m",
-        firstCellIsHeader: false,
-        head: [
-        {
-        text: "Token name"
-        },
-        {
-        text: "Description"
-        },
-        {
-        text: "Last used"
-        },
-        {
-        text: "Revoked date"
-        }
-        ],
-        rows: [
-        [
-        {
-        text: "Weimann-Reinger"
-        },
-        {
-        text: "Production access for vendor Weimann-Reinger plc"
-        },
-        {
-        text: "19/01/2024"
-        },
-        {
-        text: "30/01/2024"
-        }
-        ]
-        ]
-        }) }}
-
-
       </div>
     </div>
 

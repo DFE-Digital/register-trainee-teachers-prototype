@@ -1,0 +1,31 @@
+{% extends "_templates/_page.njk" %}
+
+{% set navActive = "provider" %}
+
+{% set backText = "Back" %}
+{% set backLink = 'token-manage' %}
+
+{% set pageHeading = "Are you sure you want to revoke this token?" %}
+
+{% set returnLink = {
+  href: 'javascript:history.back();',
+  text: "Cancel"
+} %}
+
+{% block content %}
+
+<h1 class="govuk-heading-l govuk-!-margin-bottom-8">
+  {{pageHeading}}
+</h1>
+
+{{ govukButton({
+  text: "Yes I’m sure — revoke this token",
+  href: "token-manage",
+  classes: "govuk-button--warning"
+}) }}
+
+<p class="govuk-body">
+  <a href="token-manage" class="govuk-link">Cancel revoking this API token</a>
+</p>
+
+{% endblock %}

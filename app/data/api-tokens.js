@@ -1,24 +1,20 @@
 // This is to simulate some fake API tokens for testing
 
-const generatedTokens = [
-  {
-    tokenName: 'Token 1',
-    tokenDescription: 'Maecenas at odio odio',
-    lastUsedDate: '01/02/2024',
-    expirationDate: '01/12/2024'
-  },
-  {
-    tokenName: 'For Ernest Ryan',
-    tokenDescription: 'Nulla dapibus vitae nisl vitae venenatis',
-    lastUsedDate: 'Never',
-    expirationDate: '01/12/2024'
-  },
-  {
-    tokenName: "Carlie Yundt's",
-    tokenDescription: 'Vestibulum lobortis neque libero.',
-    lastUsedDate: '19/02/2024',
-    expirationDate: '01/12/2024'
-  }
+const generatedTokens = [{
+  tokenName: 'Token 1',
+  lastUsedDate: '01/02/2024',
+  expirationDate: '01/12/2024'
+},
+{
+  tokenName: 'For Ernest Ryan',
+  lastUsedDate: 'Never',
+  expirationDate: '01/12/2024'
+},
+{
+  tokenName: "Carlie Yundt's",
+  lastUsedDate: '19/02/2024',
+  expirationDate: '01/12/2024'
+}
 ]
 
 function generateNewToken () {
@@ -29,10 +25,7 @@ function generateNewToken () {
   return token
 }
 
-const token = "Andrew's token"
-
 module.exports = {
   generatedTokens,
-  generateNewToken,
-  token
+  generateNewToken
 }

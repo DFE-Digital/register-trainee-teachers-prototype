@@ -26,10 +26,7 @@ function generateNewToken () {
   return token
 }
 
-const token = "Andrew's token"
-
 module.exports = {
   generatedTokens,
   generateNewToken,
-  token
 }

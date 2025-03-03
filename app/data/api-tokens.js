@@ -1,7 +1,6 @@
 // This is to simulate some fake API tokens for testing
 
-const generatedTokens = [
-  {
+const generatedTokens = [{
     tokenName: 'Token 1',
     lastUsedDate: '01/02/2024',
     expirationDate: '01/12/2024'
@@ -18,7 +17,7 @@ const generatedTokens = [
   }
 ]
 
-function generateNewToken () {
+function generateNewToken() {
   const part1 = 'yweuyi'
   const part2 = 172351273
   const token = (part1 + part2).toString()

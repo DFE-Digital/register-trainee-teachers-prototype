@@ -42,17 +42,6 @@
         value: ""
         }) }}
 
-        {% from "govuk/components/textarea/macro.njk" import govukTextarea %}
-
-        {{ govukTextarea({
-        name: "token_description",
-        id: "token_description",
-        label: {
-        text: "Description (optional)",
-        classes: "govuk-!-font-weight-bold"
-        }
-        }) }}
-
           {% from "govuk/components/date-input/macro.njk" import govukDateInput %}
 
           {{ govukDateInput({

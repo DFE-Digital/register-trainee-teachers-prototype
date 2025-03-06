@@ -1,0 +1,102 @@
+{{ govukSummaryList({
+  card: {
+    title: {
+      text: "Bayer Group Vendor Test"
+    },
+    actions: {
+      items: [
+        {
+          href: "#",
+          text: "Revoke",
+          visuallyHiddenText: "false"
+        }
+      ]
+    }
+  },
+  rows: [
+          {
+            key: {
+              text: "Status"
+            },
+            value: {
+               text: "Active"
+            },
+            actions: {
+              items: [
+                {
+                  href: "#",
+                  text: "",
+                  visuallyHiddenText: ""
+                }
+              ]
+            }
+          },
+    {
+      key: {
+        text: "Created by"
+      },
+      value: {
+        text: "Shad Prosacco"
+      }
+    },
+    {
+      key: {
+        text: "Created on"
+      },
+      value: {
+        text: "14th December 2024"
+      }
+    },
+        {
+          key: {
+            text: "Last used"
+          },
+          value: {
+             text: "3rd March 2025"
+          },
+          actions: {
+            items: [
+              {
+                href: "",
+                text: "",
+                visuallyHiddenText: ""
+              }
+            ]
+          }
+        },
+    {
+      key: {
+        text: "Revoked"
+      },
+      value: {
+        text: "4th March 2025"
+      },
+      actions: {
+        items: [
+          {
+            href: "#",
+            text: "",
+            visuallyHiddenText: "true"
+          }
+        ]
+      }
+    },
+    {
+      key: {
+        text: "Expired"
+      },
+      value: {
+        text: "4th March 2025"
+      },
+      actions: {
+        items: [
+          {
+            href: "#",
+            text: "",
+            visuallyHiddenText: ""
+          }
+        ]
+      }
+    }
+  ]
+}) }}

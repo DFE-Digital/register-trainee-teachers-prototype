@@ -30,6 +30,7 @@ module.exports = router => {
   // at once.
   router.get('/record/:uuid', (req, res) => {
     const data = req.session.data
+
     utils.deleteTempData(data)
     const records = req.session.data.records
     const record = records.find(record => record.id === req.params.uuid)
@@ -724,13 +725,13 @@ module.exports = router => {
     // invalid
     const isPrimary = (phase === 'Primary')
     if (isPrimary && record?.courseDetails?.subjects?.first &&
-        !record?.courseDetails?.subjects?.first.toLowerCase().includes('primary')) {
+      !record?.courseDetails?.subjects?.first.toLowerCase().includes('primary')) {
       delete record.courseDetails.subjects
       delete record.courseDetails.ageRange
     }
     const isSecondary = (phase === 'Secondary')
     if (isSecondary && record?.courseDetails?.subjects?.first &&
-        record?.courseDetails?.subjects?.first.toLowerCase().includes('primary')) {
+      record?.courseDetails?.subjects?.first.toLowerCase().includes('primary')) {
       delete record.courseDetails.subjects
       delete record.courseDetails.ageRange
     }

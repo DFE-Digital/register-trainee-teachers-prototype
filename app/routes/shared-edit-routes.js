@@ -22,7 +22,7 @@ module.exports = router => {
   })
 
   // Load up data for a record
-  // This implimentation makes a copy of the record and stores it in a temporary location
+  // This implementation makes a copy of the record and stores it in a temporary location
   // any edits happen on this temporary data - depending on the journey, some routes may then
   // copy this temp record back to the main records list. This means we can support things like
   // cancelling changes - as we just need to load the original record again.
@@ -30,7 +30,6 @@ module.exports = router => {
   // at once.
   router.get('/record/:uuid', (req, res) => {
     const data = req.session.data
-
     utils.deleteTempData(data)
     const records = req.session.data.records
     const record = records.find(record => record.id === req.params.uuid)

@@ -1,34 +1,34 @@
 // This is to simulate some fake API tokens for testing
 
 const tokens = [{
-   tokenName: 'Bayer Group Vendor Test',
+   tokenName: 'Bayer Group',
    tokenStatus: 'Active',
-   createdBy: 'John Doe',
-   dateCreated: '01/12/2024',
-   lastUsedDate: '01/02/2024',
-   dateRevoked: '01/12/2024',
-   dateExpired: '01/12/2024',
+   createdBy: 'Shad Prosacco',
+   dateCreated: '03/03/2025',
+   lastUsedDate: '05/03/2025',
+   dateRevoked: '',
+   dateExpired: '',
    tokenActions: 'Revoke'
   },
   {
-    tokenName: 'For Ernest Ryan',
-    tokenStatus: 'Expired',
-    createdBy: 'John Doe',
-    dateCreated: '01/12/2024',
-    lastUsedDate: '01/02/2024',
-    dateRevoked: '01/12/2024',
-    dateExpired: '01/12/2024',
-    tokenActions: 'Revoke'
+    tokenName: 'Bayer Group Vendor Test',
+    tokenStatus: 'Revoked',
+    createdBy: 'Stefanie Runte',
+    dateCreated: '31/12/2024',
+    lastUsedDate: '19/01/2025',
+    dateRevoked: '25/01/2025',
+    dateExpired: '',
+    tokenActions: ''
   },
   {
-    tokenName: 'Carlie Yundt\'s',
+    tokenName: 'Weimann-Reinger',
     tokenStatus: 'Expired',
-    createdBy: 'John Doe',
-    dateCreated: '01/12/2024',
-    lastUsedDate: '19/02/2024',
-    dateRevoked: '01/12/2024',
-    dateExpired: '01/12/2024',
-    tokenActions: 'Revoke'
+    createdBy: 'Jedediah Littel',
+    dateCreated: '01/09/2024',
+    lastUsedDate: '14/12/2024',
+    dateRevoked: '',
+    dateExpired: '31/12/2024',
+    tokenActions: ''
   }
 ]
 

@@ -1,8 +1,10 @@
 {% extends "_templates/_page.njk" %}
 
 {% set pageHeading %}
-  Organisation – {{ provider.name }}
+Organisation – {{ provider.name }}
 {% endset %}
+
+{% set tokens = tokens %}
 
 {% set navActive = "provider" %}
 
@@ -11,77 +13,164 @@
 
 {% block content %}
 
-    <div class="govuk-grid-row">
-      <div class="govuk-grid-column-two-thirds-from-desktop">
-        <h1 class="govuk-heading-l">{{provider.name}}</h1>
-        <h1 class="govuk-heading-l">{{ token }}</h1>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <h1 class="govuk-heading-l">{{provider.name}}</h1>
+    <h1 class="govuk-heading-l">{{ token }}</h1>
 
-        {% set shouldShowOrganisationSwitchLink = (data.settings.userProviders | length > 1) and not data.isAdmin and not data.isImpersonating | falsify  %}
+    {% set shouldShowOrganisationSwitchLink = (data.settings.userProviders | length > 1) and not data.isAdmin and not data.isImpersonating | falsify  %}
 
-        <h2 class="govuk-heading-l">Manage your API tokens</h2>
+    <h2 class="govuk-heading-l">Manage your API tokens</h2>
 
-        <p class="govuk-body">These API tokens are unique to your organisation.</p>
+    <p class="govuk-body">These API tokens are unique to your organisation.</p>
 
-        <p class="govuk-body">You must make sure the token is securely sent to the developers managing your Register API integration.</p>
+    <p class="govuk-body">You must make sure the token is securely sent to the developers managing your Register API integration.</p>
 
-        <form action="/organisations/:providerUuid/token-details" method="get" novalidate>
-          <div class="govuk-button-group">
-            {{ govukButton({
+    <form action="/organisations/:providerUuid/token-details" method="get" novalidate>
+      <div class="govuk-button-group">
+        {{ govukButton({
             text: "Generate a new token"
             }) }}
-
-            <a class="govuk-link" href="organisation.njk">Cancel</a>
-          </div>
-        </form>
-
+        <a class="govuk-link" href="organisation.njk">Cancel</a>
       </div>
-    </div>
-    <div class="govuk-grid-row">
-      <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
-      <div class="govuk-grid-column-full-from-desktop">
+    </form>
 
-        {% from "govuk/components/table/macro.njk" import govukTable %}
+  </div>
+</div>
+<div class="govuk-grid-row">
+  <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+  <div class="govuk-grid-column-full-from-desktop">
 
         <table class="govuk-table govuk-!-margin-bottom-9">
           <caption class="govuk-table__caption govuk-table__caption--m">Tokens</caption>
           <thead class="govuk-table__head">
-          <tr class="govuk-table__row">
-            <th scope="col" class="govuk-table__header">Token name</th>
-            <th scope="col" class="govuk-table__header">Created by</th>
-            <th scope="col" class="govuk-table__header">Last used</th>
-            <th scope="col" class="govuk-table__header">Expiration date</th>
-            <th scope="col" class="govuk-table__header">Status</th>
-            <th scope="col" class="govuk-table__header">Action</th>
-          </tr>
+            <tr class="govuk-table__row">
+              <th scope="col" class="govuk-table__header">Token name</th>
+              <th scope="col" class="govuk-table__header">Created by</th>
+              <th scope="col" class="govuk-table__header">Last used</th>
+              <th scope="col" class="govuk-table__header">Expiration date</th>
+              <th scope="col" class="govuk-table__header">Status</th>
+              <th scope="col" class="govuk-table__header">Action</th>
+            </tr>
           </thead>
           <tbody class="govuk-table__body">
-          <tr class="govuk-table__row">
-            <td class="govuk-table__cell">Bayer Group</td>
-            <td class="govuk-table__cell">Shad Prosacco</td>
-            <td class="govuk-table__cell">03/03/2025</td>
-            <td class="govuk-table__cell"></td>
-            <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Active</strong></td>
-            <td class="govuk-table__cell"><a href="confirm-delete" class="govuk-link govuk-link--no-visited-state">Revoke</a></td>
-          </tr>
-          <tr class="govuk-table__row">
-            <td class="govuk-table__cell">Bayer Group Vendor Test</td>
-            <td class="govuk-table__cell">Stefanie Runte</td>
-            <td class="govuk-table__cell">19/01/2025</td>
-            <td class="govuk-table__cell">25/01/2024</td>
-            <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--red">Revoked</strong></td>
-            <td class="govuk-table__cell"></td>
-          </tr>
-          <tr class="govuk-table__row">
-            <td class="govuk-table__cell">Weimann-Reinger</td>
-            <td class="govuk-table__cell">Jedediah Littel</td>
-            <td class="govuk-table__cell">14/12/2024</td>
-            <td class="govuk-table__cell">31/12/2024</td>
-            <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--grey">Expired</strong></td>
-            <td class="govuk-table__cell"></td>
-          </tr>
+            <!-- If there are no items in the list -->
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell" colspan="6">
+                No tokens have been created
+              </td>
+            </tr>
           </tbody>
         </table>
-      </div>
-    </div>
+
+    <table class="govuk-table govuk-!-margin-bottom-9">
+      <caption class="govuk-table__caption govuk-table__caption--m">Tokens</caption>
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">Token name</th>
+          <th scope="col" class="govuk-table__header">Created by</th>
+          <th scope="col" class="govuk-table__header">Last used</th>
+          <th scope="col" class="govuk-table__header">Expiration date</th>
+          <th scope="col" class="govuk-table__header">Status</th>
+          <th scope="col" class="govuk-table__header">Action</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Bayer Group</td>
+          <td class="govuk-table__cell">Shad Prosacco</td>
+          <td class="govuk-table__cell">03/03/2025</td>
+          <td class="govuk-table__cell"></td>
+          <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Active</strong></td>
+          <td class="govuk-table__cell"><a href="/token-revoke" class="govuk-link govuk-link--no-visited-state">Revoke</a></td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Bayer Group Vendor Test</td>
+          <td class="govuk-table__cell">Stefanie Runte</td>
+          <td class="govuk-table__cell">19/01/2025</td>
+          <td class="govuk-table__cell">25/01/2024</td>
+          <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--red">Revoked</strong></td>
+          <td class="govuk-table__cell"></td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Weimann-Reinger</td>
+          <td class="govuk-table__cell">Jedediah Littel</td>
+          <td class="govuk-table__cell">14/12/2024</td>
+          <td class="govuk-table__cell">31/12/2024</td>
+          <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--grey">Expired</strong></td>
+          <td class="govuk-table__cell"></td>
+        </tr>
+      </tbody>
+    </table>
+
+
+    <h3 class="govuk-heading-m govuk-!-margin-top-5" style="color:#1d70b8;">Option One <span class="govuk-!-font-size-19 govuk-!-font-weight-regular" style="color: #505a5f;">(Table)</span></h3>
+
+    <table class="govuk-table govuk-!-margin-bottom-9">
+      <caption class="govuk-table__caption govuk-table__caption--m">Tokens</caption>
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">Token name</th>
+          <th scope="col" class="govuk-table__header">User</th>
+          <th scope="col" class="govuk-table__header">Last used</th>
+          <th scope="col" class="govuk-table__header">Created</th>
+          <th scope="col" class="govuk-table__header">Revoked</th>
+          <th scope="col" class="govuk-table__header">Expired</th>
+          <th scope="col" class="govuk-table__header">Status</th>
+          <th scope="col" class="govuk-table__header">Action</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <!-- If there are no items in the list -->
+        {% if tokens.length == 0 %}
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell" colspan="6">
+            No tokens have been created
+          </td>
+        </tr>
+        {% else %}
+          {% for token in tokens %}
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">{{ token.tokenName }}</td>
+            <td class="govuk-table__cell">{{ token.createdBy }}</td>
+            <td class="govuk-table__cell">{{ token.lastUsedDate }}</td>
+            <td class="govuk-table__cell">{{ token.dateCreated }}</td>
+            <td class="govuk-table__cell">{{ token.dateRevoked }}</td>
+            <td class="govuk-table__cell">{{ token.dateExpired }}</td>
+            <td class="govuk-table__cell">
+              {% if token.tokenStatus == "Active" %}
+                <strong class="govuk-tag govuk-tag--green">{{ token.tokenStatus }}</strong>
+              {% elseif token.tokenStatus == "Revoked" %}
+                <strong class="govuk-tag govuk-tag--red">{{ token.tokenStatus }}</strong>
+              {% elseif token.tokenStatus == "Expired" %}
+                <strong class="govuk-tag govuk-tag--grey">{{ token.tokenStatus }}</strong>
+              {% endif %}
+            </td>
+            <td class="govuk-table__cell">
+              {% if token.tokenStatus == "Active" %}
+                <a href="/token-revoke" class="govuk-link govuk-link--no-visited-state">{{ token.tokenActions }}</a>
+              {% endif %}
+              </td>
+          </tr>
+          {% endfor %}
+        {% endif %}
+      </tbody>
+    </table>
+
+    <h3 class="govuk-heading-m govuk-!-margin-top-5" style="color:#1d70b8;">Option Two <span class="govuk-!-font-size-19 govuk-!-font-weight-regular" style="color: #505a5f;">(Application card)</span></h3>
+    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+    <!-- Experiment with a card style UI -->
+    {% for token in tokens %}
+      {% include "_includes/api-token-application-card.njk" %}
+    {% endfor %}
+
+    <h3 class="govuk-heading-m govuk-!-margin-top-9" style="color:#1d70b8;">Option Three <span class="govuk-!-font-size-19 govuk-!-font-weight-regular" style="color: #505a5f;">(Summary card)</span></h3>
+    <!-- Experiment with a summary card style UI -->
+    {% for token in tokens %}
+      {% include "_includes/api-token-summary-card.njk" %}
+    {% endfor %}
+
+  </div>
+</div>
 
 {% endblock %}

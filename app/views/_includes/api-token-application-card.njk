@@ -3,7 +3,7 @@
     <h3 class="app-application-card__trainee-name govuk-heading-m govuk-!-margin-bottom-0">
 
       <!--<a href="#" class="govuk-link govuk-link--no-visited-state">-->
-        Bayer Group Vendor Test
+        {{ token.tokenName }}
       <!-- </a> -->
     </h3>
 
@@ -11,10 +11,13 @@
       {# Status tag #}
       {{ miscTagsHtml | safe }}
       <span style="display: inline-block;">
-        {{govukTag({
-            text: "Active",
-            classes: "govuk-tag, govuk-tag--green"
-          })}}
+        {% if token.tokenStatus == "Active" %}
+          <strong class="govuk-tag govuk-tag--green">{{ token.tokenStatus }}</strong>
+        {% elseif token.tokenStatus == "Revoked" %}
+          <strong class="govuk-tag govuk-tag--red">{{ token.tokenStatus }}</strong>
+        {% elseif token.tokenStatus == "Expired" %}
+          <strong class="govuk-tag govuk-tag--grey">{{ token.tokenStatus }}</strong>
+        {% endif %}
       </span>
     </span>
   </div>
@@ -28,27 +31,25 @@
         </p>
         <p class="govuk-caption-m govuk-!-font-size-16 govuk-!-margin-bottom-1">
           Revoked:
-          <span class="app-nowrap">04/03/2025{{ token.dateRevoked }}</span>
+          <span class="app-nowrap">{{ token.dateRevoked }}</span>
         </p>
         <p class="govuk-caption-m govuk-!-font-size-16 govuk-!-margin-bottom-1">
           Expired:
-          <span class="app-nowrap">04/03/2025{{ token.dateExpired }}</span>
+          <span class="app-nowrap">{{ token.dateExpired }}</span>
         </p>
       </div>
 
       <div>
         <p class="govuk-body govuk-!-font-size-16 govuk-!-margin-bottom-1">
-        <p class="govuk-caption-m govuk-!-font-size-16 govuk-!-margin-bottom-1">Created by: Shad Prosacco{{ token.createdBy }}</p>
+        <p class="govuk-caption-m govuk-!-font-size-16 govuk-!-margin-bottom-1">Created by: {{ token.createdBy }}</p>
       </div>
-
     </div>
 
     <div class="app-application-card_col">
       <p class="govuk-caption-m govuk-!-font-size-16 govuk-!-margin-bottom-1">
         Last used:
-        <span class="app-nowrap">03/03/2025{{ token.dateLastUsed }}</span>
+        <span class="app-nowrap">{{ token.lastUsedDate }}</span>
       </p>
     </div>
   </div>
-
 </div>

@@ -43,7 +43,7 @@ Organisation – {{ provider.name }}
     <h3 class="govuk-heading-m govuk-!-margin-top-9" style="color:#1d70b8;">Option Three <span class="govuk-!-font-size-19 govuk-!-font-weight-regular" style="color: #505a5f;">(Summary card)</span></h3>
     <!-- Experiment with a summary card style UI -->
     {% for token in tokens %}
-      {% include "_includes/api-token-summary-card.njk" %}
+      {% include "_includes/summary-cards/api-token.njk" %}
     {% endfor %}
 
   </div>

@@ -1,11 +1,13 @@
-// This is to simulate some fake API tokens for testing
+// Accepted token statuses
+const tokenStatus = ["Active", "Expired", "Revoked"]
 
+// This is to simulate some fake API tokens for testing
 const tokens = [{
    tokenName: 'Bayer Group',
    tokenStatus: 'Active',
    createdBy: 'Shad Prosacco',
-   dateCreated: '03/03/2025',
-   lastUsedDate: '05/03/2025',
+   dateCreated: '3rd March 2025',
+   lastUsedDate: '5th March 2025',
    dateRevoked: '',
    dateExpired: '',
    tokenActions: 'Revoke'
@@ -14,9 +16,9 @@ const tokens = [{
     tokenName: 'Bayer Group Vendor Test',
     tokenStatus: 'Revoked',
     createdBy: 'Stefanie Runte',
-    dateCreated: '31/12/2024',
-    lastUsedDate: '19/01/2025',
-    dateRevoked: '25/01/2025',
+    dateCreated: '31st December 2024',
+    lastUsedDate: '19th January 2025',
+    dateRevoked: '25th January 2025',
     dateExpired: '',
     tokenActions: ''
   },
@@ -24,10 +26,10 @@ const tokens = [{
     tokenName: 'Weimann-Reinger',
     tokenStatus: 'Expired',
     createdBy: 'Jedediah Littel',
-    dateCreated: '01/09/2024',
-    lastUsedDate: '14/12/2024',
+    dateCreated: '1st September 2024',
+    lastUsedDate: '14th December 2024',
     dateRevoked: '',
-    dateExpired: '31/12/2024',
+    dateExpired: '31st December 2024',
     tokenActions: ''
   }
 ]
@@ -42,5 +44,6 @@ function generateNewToken () {
 
 module.exports = {
   tokens,
+  tokenStatus,
   generateNewToken
 }

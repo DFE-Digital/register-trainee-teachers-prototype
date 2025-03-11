@@ -8,6 +8,7 @@ const tokens = [{
    createdBy: 'Shad Prosacco',
    dateCreated: '3rd March 2025',
    lastUsedDate: '5th March 2025',
+   revokedBy: '',
    dateRevoked: '',
    dateExpired: '',
    tokenActions: 'Revoke'
@@ -18,6 +19,7 @@ const tokens = [{
     createdBy: 'Stefanie Runte',
     dateCreated: '31st December 2024',
     lastUsedDate: '19th January 2025',
+    revokedBy: 'Stefanie Runte',
     dateRevoked: '25th January 2025',
     dateExpired: '',
     tokenActions: ''
@@ -29,6 +31,7 @@ const tokens = [{
     dateCreated: '1st September 2024',
     lastUsedDate: '14th December 2024',
     dateRevoked: '',
+    revokedBy: '',
     dateExpired: '31st December 2024',
     tokenActions: ''
   }

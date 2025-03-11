@@ -32,7 +32,7 @@ const tokens = [{
   }
 ]
 
-function generateNewToken() {
+function generateNewToken () {
   const part1 = 'yweuyi'
   const part2 = 172351273
   const token = `${part1}${part2}`;

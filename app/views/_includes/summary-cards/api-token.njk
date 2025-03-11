@@ -1,6 +1,13 @@
 
 {% set createdText = token.createdBy ~ ' on ' ~ token.dateCreated %}
-{% set revokedText = token.revokedBy ~ ' on ' ~ token.dateRevoked %}
+
+{# Check to see if there is a revoked date and set value accordingly #}
+{% if token.dateRevoked | length %}
+  {% set revokedText = token.revokedBy ~ ' on ' ~ token.dateRevoked %}
+{% else %}
+  {% set revokedText = '' %}
+{% endif %}
+
 {{ govukSummaryList({
   card: {
     title: {

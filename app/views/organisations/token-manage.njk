@@ -1,87 +1,48 @@
 {% extends "_templates/_page.njk" %}
 
 {% set pageHeading %}
-  Organisation – {{ provider.name }}
+Organisation – {{ provider.name }}
 {% endset %}
+
+{% set tokens = tokens %}
 
 {% set navActive = "provider" %}
 
 {% set backText = "Back" %}
-{% set backLink = 'organisation' %}
+{% set backLink = 'javascript:history.back();' %}
 
 {% block content %}
 
-    <div class="govuk-grid-row">
-      <div class="govuk-grid-column-two-thirds-from-desktop">
-        <h1 class="govuk-heading-l">{{provider.name}}</h1>
-        <h1 class="govuk-heading-l">{{ token }}</h1>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <h1 class="govuk-heading-l">{{provider.name}}</h1>
+    <h1 class="govuk-heading-l">{{ token }}</h1>
 
-        {% set shouldShowOrganisationSwitchLink = (data.settings.userProviders | length > 1) and not data.isAdmin and not data.isImpersonating | falsify  %}
+    {% set shouldShowOrganisationSwitchLink = (data.settings.userProviders | length > 1) and not data.isAdmin and not data.isImpersonating | falsify  %}
 
-        <h2 class="govuk-heading-l">Manage your API tokens</h2>
+    <h2 class="govuk-heading-l">Manage your API tokens</h2>
 
-        <p class="govuk-body">These API tokens are unique to your organisation.</p>
+    <p class="govuk-body">These API tokens are unique to your organisation.</p>
 
-        <p class="govuk-body">You must make sure the token is securely sent to the developers managing your Register API integration.</p>
+    <p class="govuk-body">You must make sure the token is securely sent to the developers managing your Register API integration.</p>
 
-        <form action="/organisations/:providerUuid/token-details" method="get" novalidate>
-          <div class="govuk-button-group">
-            {{ govukButton({
+    <form action="/organisations/:providerUuid/token-details" method="get" novalidate>
+      <div class="govuk-button-group">
+        {{ govukButton({
             text: "Generate a new token"
             }) }}
-
-            <a class="govuk-link" href="organisation.njk">Cancel</a>
-          </div>
-        </form>
-
+        <a class="govuk-link" href='javascript:history.back();'>Cancel</a>
       </div>
-    </div>
-    <div class="govuk-grid-row">
-      <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
-      <div class="govuk-grid-column-full-from-desktop">
-
-        {% from "govuk/components/table/macro.njk" import govukTable %}
-
-        <table class="govuk-table govuk-!-margin-bottom-9">
-          <caption class="govuk-table__caption govuk-table__caption--m">Tokens</caption>
-          <thead class="govuk-table__head">
-          <tr class="govuk-table__row">
-            <th scope="col" class="govuk-table__header">Token name</th>
-            <th scope="col" class="govuk-table__header">Created by</th>
-            <th scope="col" class="govuk-table__header">Last used</th>
-            <th scope="col" class="govuk-table__header">Expiration date</th>
-            <th scope="col" class="govuk-table__header">Status</th>
-            <th scope="col" class="govuk-table__header">Action</th>
-          </tr>
-          </thead>
-          <tbody class="govuk-table__body">
-          <tr class="govuk-table__row">
-            <td class="govuk-table__cell">Bayer Group</td>
-            <td class="govuk-table__cell">Shad Prosacco</td>
-            <td class="govuk-table__cell">03/03/2025</td>
-            <td class="govuk-table__cell"></td>
-            <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Active</strong></td>
-            <td class="govuk-table__cell"><a href="confirm-delete" class="govuk-link govuk-link--no-visited-state">Revoke</a></td>
-          </tr>
-          <tr class="govuk-table__row">
-            <td class="govuk-table__cell">Bayer Group Vendor Test</td>
-            <td class="govuk-table__cell">Stefanie Runte</td>
-            <td class="govuk-table__cell">19/01/2025</td>
-            <td class="govuk-table__cell">25/01/2024</td>
-            <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--red">Revoked</strong></td>
-            <td class="govuk-table__cell"></td>
-          </tr>
-          <tr class="govuk-table__row">
-            <td class="govuk-table__cell">Weimann-Reinger</td>
-            <td class="govuk-table__cell">Jedediah Littel</td>
-            <td class="govuk-table__cell">14/12/2024</td>
-            <td class="govuk-table__cell">31/12/2024</td>
-            <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--grey">Expired</strong></td>
-            <td class="govuk-table__cell"></td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
+    </form>
+  </div>
+</div>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full-from-desktop">
+    <h3 class="govuk-heading-m govuk-!-margin-top-5">Previously created tokens</h3>
+    {% for token in tokens %}
+      {% include "_includes/summary-cards/api-token.njk" %}
+    {% endfor %}
+  </div>
+</div>
 
 {% endblock %}

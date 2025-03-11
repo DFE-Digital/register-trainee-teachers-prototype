@@ -1,0 +1,102 @@
+{{ govukSummaryList({
+  card: {
+    title: {
+      text: token.tokenName
+    },
+    actions: {
+      items: [
+        {
+          href: "/token-revoke",
+          text: "Revoke",
+          visuallyHiddenText: "false"
+        }
+      ]
+    }
+  },
+  rows: [
+          {
+            key: {
+              text: "Status"
+            },
+            value: {
+               text: token.tokenStatus
+            },
+            actions: {
+              items: [
+                {
+                  href: "#",
+                  text: "",
+                  visuallyHiddenText: ""
+                }
+              ]
+            }
+          },
+    {
+      key: {
+        text: "Created by"
+      },
+      value: {
+        text: token.createdBy
+      }
+    },
+    {
+      key: {
+        text: "Created on"
+      },
+      value: {
+        text: token.dateCreated
+      }
+    },
+        {
+          key: {
+            text: "Last used"
+          },
+          value: {
+             text: token.lastUsedDate
+          },
+          actions: {
+            items: [
+              {
+                href: "",
+                text: "",
+                visuallyHiddenText: ""
+              }
+            ]
+          }
+        },
+    {
+      key: {
+        text: "Revoked"
+      },
+      value: {
+        text: token.dateRevoked
+      },
+      actions: {
+        items: [
+          {
+            href: "#",
+            text: "",
+            visuallyHiddenText: "true"
+          }
+        ]
+      }
+    },
+    {
+      key: {
+        text: "Expired"
+      },
+      value: {
+        text: token.dateExpired
+      },
+      actions: {
+        items: [
+          {
+            href: "#",
+            text: "",
+            visuallyHiddenText: ""
+          }
+        ]
+      }
+    }
+  ]
+}) }}

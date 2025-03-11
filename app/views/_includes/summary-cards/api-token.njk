@@ -1,3 +1,5 @@
+
+{% set createdText = token.createdBy ~ ' on ' ~ token.dateCreated %}
 {% set revokedText = token.revokedBy ~ ' on ' ~ token.dateRevoked %}
 {{ govukSummaryList({
   card: {

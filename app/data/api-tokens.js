@@ -1,5 +1,7 @@
-// This is to simulate some fake API tokens for testing
+// Accepted token statuses
+const tokenStatus = ["Active", "Expired", "Revoked"]
 
+// This is to simulate some fake API tokens for testing
 const tokens = [{
    tokenName: 'Bayer Group',
    tokenStatus: 'Active',
@@ -42,5 +44,6 @@ function generateNewToken() {
 
 module.exports = {
   tokens,
+  tokenStatus,
   generateNewToken
 }

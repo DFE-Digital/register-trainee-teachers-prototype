@@ -1,3 +1,13 @@
+
+{% set createdText = token.createdBy ~ ' on ' ~ token.dateCreated %}
+
+{# Check to see if there is a revoked date and set value accordingly #}
+{% if token.dateRevoked | length %}
+  {% set revokedText = token.revokedBy ~ ' on ' ~ token.dateRevoked %}
+{% else %}
+  {% set revokedText = '' %}
+{% endif %}
+
 {{ govukSummaryList({
   card: {
     title: {
@@ -31,22 +41,14 @@
               ]
             }
           },
-    {
-      key: {
-        text: "Created by"
-      },
-      value: {
-        text: token.createdBy
-      }
-    },
-    {
-      key: {
-        text: "Created on"
-      },
-      value: {
-        text: token.dateCreated
-      }
-    },
+              {
+                key: {
+                  text: "Created by"
+                },
+                value: {
+                  text: createdText
+                }
+              },
         {
           key: {
             text: "Last used"
@@ -66,19 +68,10 @@
         },
     {
       key: {
-        text: "Revoked"
+        text: "Revoked by"
       },
       value: {
-        text: token.dateRevoked
-      },
-      actions: {
-        items: [
-          {
-            href: "#",
-            text: "",
-            visuallyHiddenText: "true"
-          }
-        ]
+        text: revokedText
       }
     },
     {

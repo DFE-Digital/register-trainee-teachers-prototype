@@ -3,7 +3,7 @@ const tokenStatus = ["Active", "Expired", "Revoked"]
 
 // This is to simulate some fake API tokens for testing
 const tokens = [{
-   tokenName: 'Bayer Group',
+   tokenName: 'ByteForge Solutions',
    tokenStatus: 'Active',
    createdBy: 'Shad Prosacco',
    dateCreated: '3rd March 2025',
@@ -14,7 +14,7 @@ const tokens = [{
    tokenActions: 'Revoke'
   },
   {
-    tokenName: 'Bayer Group Vendor Test',
+    tokenName: 'NexaTech Innovations Vendor Test',
     tokenStatus: 'Revoked',
     createdBy: 'Stefanie Runte',
     dateCreated: '31st December 2024',
@@ -25,7 +25,7 @@ const tokens = [{
     tokenActions: ''
   },
   {
-    tokenName: 'Weimann-Reinger',
+    tokenName: 'BayerGroup_Vendor_Integration_Token_External_API_Access_Production_2025',
     tokenStatus: 'Expired',
     createdBy: 'Jedediah Littel',
     dateCreated: '1st September 2024',

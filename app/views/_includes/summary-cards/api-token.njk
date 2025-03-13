@@ -1,55 +1,42 @@
-
 {% set createdText = token.createdBy ~ ' on ' ~ token.dateCreated %}
 
 {# Check to see if there is a revoked date and set value accordingly #}
 {% if token.dateRevoked | length %}
-  {% set revokedText = token.revokedBy ~ ' on ' ~ token.dateRevoked %}
+{% set revokedText = token.revokedBy ~ ' on ' ~ token.dateRevoked %}
 {% else %}
-  {% set revokedText = '' %}
+{% set revokedText = '' %}
 {% endif %}
 
-{{ govukSummaryList({
-  card: {
-    title: {
-      text: token.tokenName
-    },
-    actions: {
-      items: [
-        {
-          href: "/token-revoke",
-          text: "Revoke",
-          visuallyHiddenText: "false"
-        }
-      ]
-    }
-  },
-  rows: [
-          {
-            key: {
-              text: "Status"
-            },
-            value: {
-               text: token.tokenStatus
-            },
-            actions: {
-              items: [
-                {
-                  href: "#",
-                  text: "",
-                  visuallyHiddenText: ""
-                }
-              ]
-            }
-          },
-              {
-                key: {
-                  text: "Created by"
-                },
-                value: {
-                  text: createdText
-                }
-              },
-        {
+
+{% set apiTokenStatusRow = {
+               key: {
+                 text: "Status"
+               },
+               value: {
+                  text: token.tokenStatus
+               },
+               actions: {
+                 items: [
+                   {
+                     href: "#",
+                     text: "",
+                     visuallyHiddenText: ""
+                   }
+                 ]
+               }
+} %}
+
+
+{% set apiTokenCreatedRow = {
+                  key: {
+                    text: "Created by"
+                  },
+                  value: {
+                    text: createdText
+                  }
+} %}
+
+{% set apiTokenLastUsedRow   = {
           key: {
             text: "Last used"
           },
@@ -65,16 +52,18 @@
               }
             ]
           }
-        },
-    {
+} %}
+
+{% set apiTokenRevokedRow = {
       key: {
         text: "Revoked by"
       },
       value: {
         text: revokedText
       }
-    },
-    {
+} %}
+
+{% set apiTokenExpiredRow = {
       key: {
         text: "Expired"
       },
@@ -90,6 +79,28 @@
           }
         ]
       }
+} %}
+
+{% set apiTokenDetailsRows = [
+  apiTokenStatusRow,
+  apiTokenCreatedRow,
+  apiTokenLastUsedRow,
+  apiTokenRevokedRow,
+  apiTokenExpiredRow
+] %}
+
+{{ govukSummaryList({
+  card: {
+    title: {
+      text: token.tokenName
+    },
+    actions: {
+      items: [{
+        href: "/token-revoke" | addReferrer(referrer),
+        text: "Revoke token",
+        classes: "app-destructive-link"
+      }]
     }
-  ]
+  },
+  rows: apiTokenDetailsRows
 }) }}

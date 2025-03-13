@@ -39,9 +39,15 @@ Organisation – {{ provider.name }}
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full-from-desktop">
     <h3 class="govuk-heading-m govuk-!-margin-top-5">Previously created tokens</h3>
-    {% for token in tokens %}
-      {% include "_includes/summary-cards/api-token.njk" %}
-    {% endfor %}
+    <!-- Check to see if tokens exist -->
+    {% if tokens | length %}
+      <!-- Display the token summary cards as a list -->
+      {% for token in tokens %}
+        {% include "_includes/summary-cards/api-token.njk" %}
+      {% endfor %}
+    {% else %}
+        <p class="govuk-body">No tokens have been created yet.</p>
+    {% endif %}
   </div>
 </div>
 

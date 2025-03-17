@@ -497,8 +497,7 @@ module.exports = router => {
     const data = req.session.data
     const record = data.record
     const referrer = utils.getReferrer(req.query.referrer)
-    const deferralReason = data.record.deferralReason
-
+    const deferralReason = req.session.data['deferral-reason']
     res.redirect(`/record/${req.params.uuid}/defer/confirm${referrer}`)
   })
 

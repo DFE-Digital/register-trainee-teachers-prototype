@@ -481,11 +481,15 @@ module.exports = router => {
       record.trainingDetails.commencementDate = courseStartDate
     }
 
-    if (moment(dates.toDateObject(record?.deferredDate)).isAfter(dates.toDateObject(commencementDate))) {
-      res.redirect(`/record/${req.params.uuid}/defer/confirm${referrer}`)
-    } else {
-      res.redirect(`/record/${req.params.uuid}/defer${referrer}`)
-    }
+    res.redirect(`/record/${req.params.uuid}/defer/why-trainee-deferred${referrer}`)
+
+    // Commented out for the time being over Moment.js deprecation errors
+    // if (moment(dates.toDateObject(record?.deferredDate)).isAfter(dates.toDateObject(commencementDate))) {
+    //   res.redirect(`/record/${req.params.uuid}/defer/why-trainee-deferred${referrer}`)
+    // } else {
+    //   res.redirect(`/record/${req.params.uuid}/defer${referrer}`)
+    // }
+  })
   })
 
   /*

@@ -467,7 +467,7 @@ module.exports = router => {
 
   // Defer route
   // If trainee started 'on time', set trainee start date to same as ITT start date
-  // And skip deferal date question if deferral date is set (so ‘Change’ loop doesn't ask again)
+  // And skip deferral date question if deferral date is set (so ‘Change’ loop doesn't ask again)
   // unless new start date is after deferral date
   router.post('/record/:uuid/defer/when-did-the-trainee-start-answer', (req, res) => {
     const data = req.session.data

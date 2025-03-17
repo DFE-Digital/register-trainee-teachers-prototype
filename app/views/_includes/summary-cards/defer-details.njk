@@ -50,7 +50,24 @@
         }
       ]
     } if canAmend and not record | ittInTheFuture
-  }
+  },
+    {
+      key: {
+        text: "Reason for deferral"
+      },
+      value: {
+        text: data['deferral-reason'] or "Reason not given"
+      },
+      actions: {
+        items: [
+          {
+            href: recordPath + "/defer/why-trainee-deferred" | addReferrer(referrer),
+            text: "Change",
+            visuallyHiddenText: "deferral reason"
+          }
+        ]
+      } if canAmend and not record | ittInTheFuture
+    }
 ] %}
 
 {{ govukSummaryList({

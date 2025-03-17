@@ -312,7 +312,7 @@ module.exports = router => {
 
         req.flash('success', `${utils.getQualificationText(record)} award removed`)
       } else {
-        console.log("Error: can't un-award a trainee that is not awarded")
+        console.log('Error: can\'t un-award a trainee that is not awarded')
       }
       delete record?.revert
       if (referrer) {
@@ -467,7 +467,7 @@ module.exports = router => {
 
   // Defer route
   // If trainee started 'on time', set trainee start date to same as ITT start date
-  // And skip deferal date question if deferral date is set (so ‘Change’ loop doesn't ask again)
+  // And skip deferral date question if deferral date is set (so ‘Change’ loop doesn't ask again)
   // unless new start date is after deferral date
   router.post('/record/:uuid/defer/when-did-the-trainee-start-answer', (req, res) => {
     const data = req.session.data
@@ -481,11 +481,24 @@ module.exports = router => {
       record.trainingDetails.commencementDate = courseStartDate
     }
 
-    if (moment(dates.toDateObject(record?.deferredDate)).isAfter(dates.toDateObject(commencementDate))) {
-      res.redirect(`/record/${req.params.uuid}/defer/confirm${referrer}`)
-    } else {
-      res.redirect(`/record/${req.params.uuid}/defer${referrer}`)
-    }
+    res.redirect(`/record/${req.params.uuid}/defer/why-trainee-deferred${referrer}`)
+
+    // Commented out for the time being over Moment.js deprecation errors
+    // if (moment(dates.toDateObject(record?.deferredDate)).isAfter(dates.toDateObject(commencementDate))) {
+    //   res.redirect(`/record/${req.params.uuid}/defer/confirm${referrer}`)
+    // } else {
+    //   res.redirect(`/record/${req.params.uuid}/defer${referrer}`)
+    // }
+  })
+
+  // Defer route
+  // Ask the reason for deferral
+  router.post('/record/:uuid/defer/why-trainee-deferred-answer', (req, res) => {
+    const data = req.session.data
+    const record = data.record
+    const referrer = utils.getReferrer(req.query.referrer)
+    const deferralReason = req.session.data['deferral-reason']
+    res.redirect(`/record/${req.params.uuid}/defer/confirm${referrer}`)
   })
 
   /*

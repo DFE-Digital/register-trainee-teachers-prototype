@@ -1,0 +1,13 @@
+{% extends "_templates/_record-form.njk" %}
+
+{% set pageHeading %}
+  Why did the trainee defer?
+{% endset %}
+
+{% set formAction = "./why-trainee-deferred-answer" | addReferrer(referrer) %}
+
+{% block formContent %}
+
+  {% include "_includes/forms/why-trainee-deferred.njk" %}
+
+{% endblock %}

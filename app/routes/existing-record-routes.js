@@ -312,7 +312,7 @@ module.exports = router => {
 
         req.flash('success', `${utils.getQualificationText(record)} award removed`)
       } else {
-        console.log("Error: can't un-award a trainee that is not awarded")
+        console.log('Error: can\'t un-award a trainee that is not awarded')
       }
       delete record?.revert
       if (referrer) {

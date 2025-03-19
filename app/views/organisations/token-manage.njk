@@ -22,9 +22,30 @@ Organisation – {{ provider.name }}
 
     <h2 class="govuk-heading-l">Manage your API tokens</h2>
 
+
+    <p class="govuk-body">You can:</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>view a list of tokens, their description, expiry date, date last used</li>
+      <li>generate a new token, give it a name, set an expiry date (optional) and revoke a token</li>
+    </ul>
+
     <p class="govuk-body">These API tokens are unique to your organisation.</p>
 
+    <p class="govuk-body">You should let the developers managing your Register API integration know if you create, set an expiry date or revoke a token.</p>
+
     <p class="govuk-body">You must make sure the token is securely sent to the developers managing your Register API integration.</p>
+
+    <h3 class="govuk-heading-m">Revoking a token</h3>
+
+    <p class="govuk-body">Revoking a token removes access to the Register API. You may want to revoke a token:</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>for security reasons, for example, when a person leaves a provider organisation who’s had access to the Register API</li>
+      <li>If you change your student record system</li>
+    </ul>
+
+    <p class="govuk-body">Before revoking a current token, you should generate a new token if you want to continue transferring your trainee data to Register via the API.
 
     <form action="/organisations/:providerUuid/token-details" method="get" novalidate>
       <div class="govuk-button-group">

@@ -18,7 +18,10 @@
   {{pageHeading}}
 </h1>
 
-<p class="govuk-body">Revoking a token removes access to the Register API.</p>
+{{ govukWarningText({
+  text: "Revoking a token removes access to the Register API.",
+  iconFallbackText: "Warning"
+}) }}
 
 <p class="govuk-body">Before revoking a current token, you should generate a new token if you want to continue transferring your trainee data to Register via the API.</p>
 

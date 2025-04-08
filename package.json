@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@faker-js/faker": "^9.0.0",
-    "@ministryofjustice/frontend": "^3.2.0",
+    "@ministryofjustice/frontend": "^5.1.0",
     "ansi-colors": "^4.1.1",
     "basic-auth": "^2.0.0",
     "basic-auth-connect": "^1.0.0",

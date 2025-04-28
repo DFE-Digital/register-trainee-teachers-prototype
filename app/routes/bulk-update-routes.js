@@ -27,69 +27,69 @@ module.exports = router => {
   */
 
   // Generate somewhat realistic data
-  const populateNewTraineeErrors = (data, errorWeights, seed) => {
-    console.log('Bulk adding new trainees: populating errors')
+  // const populateNewTraineeErrors = (data, errorWeights, seed) => {
+  //   console.log('Bulk adding new trainees: populating errors')
 
-    seed = seed || faker.seed(5710407981811395)
+  //   seed = seed || faker.seed(5710407981811395)
 
-    const errorPercentage = 0.10 // 5%
-    const unchangedPercentage = 0.05 // 5%
-    const newlyAddedPercentage = 0.85 // 90%
+  //   const errorPercentage = 0.10 // 5%
+  //   const unchangedPercentage = 0.05 // 5%
+  //   const newlyAddedPercentage = 0.85 // 90%
 
-    errorWeights = errorWeights || [errorPercentage, unchangedPercentage, newlyAddedPercentage]
+  //   errorWeights = errorWeights || [errorPercentage, unchangedPercentage, newlyAddedPercentage]
 
-    let processedRows = data?.bulkUpload?.processedRows
+  //   let processedRows = data?.bulkUpload?.processedRows
 
-    if (!processedRows) {
-      console.log('Bulk adding new trainees: generating new errors')
-      const filteredRecords = utils.filterRecords(data.records, data)
+  //   if (!processedRows) {
+  //     console.log('Bulk adding new trainees: generating new errors')
+  //     const filteredRecords = utils.filterRecords(data.records, data)
 
-      const uploadedTrainees = utils.filterByReadyToRecommend(filteredRecords)
+  //     const uploadedTrainees = utils.filterByReadyToRecommend(filteredRecords)
 
-      uploadedTrainees.sort((a, b) => utils.sortAlphabetical(a.personalDetails.familyName, b.personalDetails.familyName))
+  //     uploadedTrainees.sort((a, b) => utils.sortAlphabetical(a.personalDetails.familyName, b.personalDetails.familyName))
 
-      /* For each record, randomly pick whether it's ok, in error, or unchanged. If in error, pick a random error */
-      processedRows = uploadedTrainees.map((trainee, index) => {
-        const selectedStatus = weighted.select(['error', 'unchanged', 'updated'], errorWeights, seed)
+  //     /* For each record, randomly pick whether it's ok, in error, or unchanged. If in error, pick a random error */
+  //     processedRows = uploadedTrainees.map((trainee, index) => {
+  //       const selectedStatus = weighted.select(['error', 'unchanged', 'updated'], errorWeights, seed)
 
-        const wildCardDate = utils.getRandomArbitrary(1, 28) + '/' + utils.getRandomArbitrary(1, 6) + '/' + data.years.endOfCurrentCycle
-        const assessmentDate = weighted.select(['28/6/' + data.years.endOfCurrentCycle, '19/6/' + data.years.endOfCurrentCycle, '6/5/' + data.years.endOfCurrentCycle, wildCardDate], [0.5, 0.2, 0.2, 0.1], seed)
+  //       const wildCardDate = utils.getRandomArbitrary(1, 28) + '/' + utils.getRandomArbitrary(1, 6) + '/' + data.years.endOfCurrentCycle
+  //       const assessmentDate = weighted.select(['28/6/' + data.years.endOfCurrentCycle, '19/6/' + data.years.endOfCurrentCycle, '6/5/' + data.years.endOfCurrentCycle, wildCardDate], [0.5, 0.2, 0.2, 0.1], seed)
 
-        const row = {
-          rowNumber: index + 3,
-          trainee,
-          uploadStatus: selectedStatus,
-          assessmentDate: (selectedStatus !== 'unchanged') ? assessmentDate : null
-        }
+  //       const row = {
+  //         rowNumber: index + 3,
+  //         trainee,
+  //         uploadStatus: selectedStatus,
+  //         assessmentDate: (selectedStatus !== 'unchanged') ? assessmentDate : null
+  //       }
 
-        if (selectedStatus === 'error') {
-          // row.errorMessage = utils.pickRandom(templateErrors, seed)
-          row.errorMessage = weighted.select([
-            'Date standards met provided without a TRN or Provider trainee ID - add a TRN or Provider trainee ID or remove the date standards met',
-            "Date standards met: '20/9/2023' - date standards met must be in the past",
-            'TRN and Provider trainee ID are not for the same trainee'
-          ],
-          [0.25, 0.5, 0.25], seed)
-        }
+  //       if (selectedStatus === 'error') {
+  //         // row.errorMessage = utils.pickRandom(templateErrors, seed)
+  //         row.errorMessage = weighted.select([
+  //           'Date standards met provided without a TRN or Provider trainee ID - add a TRN or Provider trainee ID or remove the date standards met',
+  //           "Date standards met: '20/9/2023' - date standards met must be in the past",
+  //           'TRN and Provider trainee ID are not for the same trainee'
+  //         ],
+  //         [0.25, 0.5, 0.25], seed)
+  //       }
 
-        return row
-      })
-    } else {
-      // Reduce errors by 100%
-      console.log('Bulk adding new trainees: reducing existing errors')
-      processedRows.forEach(row => {
-        if (row.uploadStatus === 'error') {
-          const errorFixed = weighted.select([true, false], [1, 0.0])
-          if (errorFixed) {
-            row.uploadStatus = 'updated'
-            delete row.errorMessage
-          }
-        }
-      })
-    }
+  //       return row
+  //     })
+  //   } else {
+  //     // Reduce errors by 100%
+  //     console.log('Bulk adding new trainees: reducing existing errors')
+  //     processedRows.forEach(row => {
+  //       if (row.uploadStatus === 'error') {
+  //         const errorFixed = weighted.select([true, false], [1, 0.0])
+  //         if (errorFixed) {
+  //           row.uploadStatus = 'updated'
+  //           delete row.errorMessage
+  //         }
+  //       }
+  //     })
+  //   }
 
-    return processedRows
-  }
+  //   return processedRows
+  // }
 
   /* Clear out existing data when startin a new journey */
   router.get('/bulk-update/add-new/start', (req, res) => {

@@ -23,7 +23,7 @@
     "ansi-colors": "^4.1.1",
     "basic-auth": "^2.0.0",
     "basic-auth-connect": "^1.0.0",
-    "body-parser": "^1.14.1",
+    "body-parser": "^2.2.0",
     "browser-sync": "^3.0.2",
     "client-sessions": "^0.8.0",
     "compression": "^1.7.4",
@@ -65,8 +65,8 @@
     "standard": "^17.1.2",
     "stylelint": "^16.11.0",
     "stylelint-config-recommended-scss": "^14.1.0",
-    "stylelint-config-standard": "^36.0.1",
-    "stylelint-order": "^6.0.4"
+    "stylelint-config-standard": "^38.0.0",
+    "stylelint-order": "^7.0.0"
   },
   "standard": {
     "ignore": [

@@ -19,6 +19,7 @@ module.exports = router => {
 
   // Placeholder for the copy token functionality to be decided upon so
   router.get('/copy-token', (req, res, next) => {
+    const providerUuid = req.params.providerUuid
     res.redirect(`/organisations/${providerUuid}/token-generated`)
   })
 

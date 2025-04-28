@@ -474,7 +474,7 @@ module.exports = router => {
     const record = data.record
     const courseStartDate = record?.courseDetails?.startDate
     const traineeStarted = record?.trainingDetails?.traineeStarted
-    const commencementDate = record?.trainingDetails?.commencementDate
+    // const commencementDate = record?.trainingDetails?.commencementDate
     const referrer = utils.getReferrer(req.query.referrer)
 
     if (traineeStarted === 'started-itt-on-time') {

@@ -6,9 +6,7 @@
 {% set academicYearShort = data.years.currentAcademicYear | academicYearToYear %}
 {% set nextAcademicYearSimple = data.years.nextAcademicYearSimple %}
 
-{% set pageHeading %}
-  Performance profile sign off
-{% endset %}
+{% set pageHeading = 'New trainees for the ' + academicYear + ' academic year' %}
 
 {% set backLink = '/reports' %}
 {% set backText = "Reports" %}

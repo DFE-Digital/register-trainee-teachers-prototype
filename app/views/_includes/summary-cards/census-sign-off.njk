@@ -1,0 +1,58 @@
+{% set censusSignOffRows = [
+  {
+    key: {
+      text: "Provider name"
+    },
+    value: {
+      text: providerName or "Not provided"
+    },
+    actions: {
+      items: [
+        {
+          href: "./change" | addReferrer(referrer),
+          text: "Change",
+          visuallyHiddenText: "provider name"
+        }
+      ]
+    } if canAmend
+  },
+  {
+    key: {
+      text: "UKPRN"
+    },
+    value: {
+      text: record.temp.auditLogComment or "Not provided"
+    },
+    actions: {
+      items: [{
+        href: "./details" | addReferrer(referrer),
+        text: "Change",
+        visuallyHiddenText: "UKPRN"
+      }]
+    } if canAmend
+  },
+  {
+    key: {
+      text: "Approver name"
+    },
+    value: {
+      text: approverName or "Not provided"
+    },
+    actions: {
+      items: [{
+        href: "./details" | addReferrer(referrer),
+        text: "Change",
+        visuallyHiddenText: "Approver name"
+      }]
+    } if canAmend
+  }
+] %}
+
+{{ govukSummaryList({
+  card: {
+    title: {
+      text: "Census sign off information"
+    }
+  },
+  rows: censusSignOffRows
+}) }}

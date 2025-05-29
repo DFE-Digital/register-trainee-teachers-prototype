@@ -1,6 +1,6 @@
 {% extends "_templates/_page.njk" %}
 
-{% set formAction = "./census-sign-off/confirm" | addReferrer(referrer) %}
+{% set formAction = "./census-sign-off/form" | addReferrer(referrer) %}
 {% set previousAcademicYear = data.years.previousAcademicYear %}
 {% set academicYear = data.years.currentAcademicYear %}
 {% set academicYearShort = data.years.currentAcademicYear | academicYearToYear %}
@@ -17,8 +17,8 @@
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds-from-desktop">
 
-
-      <h1 class="govuk-heading-l">ITT census sign-off for the 2023 to 2024 academic year</h1>
+      <h1 class="govuk-heading-l" style="color:red">Existing MS Forms content</h1>
+      <h1 class="govuk-heading-l">ITT census sign-off for the {{ previousAcademicYear }} academic year</h1>
 
       <p class="govuk-body">Use this form to sign off your new trainee data. Your organisation must sign off your new trainee data on or before 31 October 2023 so it will be included in the annual initial teacher training (ITT) census publication.</p>
 
@@ -35,7 +35,7 @@
 
       <p class="govuk-body">Once you submit this form, we’ll update our records to show your organisation has signed off your new trainee data and it’s in Register.</p>
 
-      <p class="govuk-body">If you have any questions or issues that prevent you from signing off, email becomingateacher@education.gov.uk with email subject line: 2023 to 2024 signing off new trainee data.</p>
+      <p class="govuk-body">If you have any questions or issues that prevent you from signing off, email <a href="mailto:becomingateacher@education.gov.uk?subject={{ previousAcademicYear }} signing off new trainee data">becomingateacher@education.gov.uk</a> with email subject line: {{ previousAcademicYear }} signing off new trainee data.</p>
 
       <h2 class="govuk-heading-m">Who should sign off your data</h2>
 
@@ -108,12 +108,12 @@
       }) }}
 
 
-        <h4 class="govuk-heading-m">Signing off your trainee data</h4>
+        <h4 class="govuk-heading-m">Sign off your new trainee data</h4>
         <p class="govuk-body">If you have checked your data.</p>
 
         <div class="govuk-form-group">
           {{ govukButton({
-          text: "Continue to performance profile sign off",
+          text: "Continue to census sign off",
           href: "form"
           }) }}
         </div>

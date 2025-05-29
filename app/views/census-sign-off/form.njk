@@ -1,6 +1,6 @@
 {% extends "_templates/_page.njk" %}
 
-{% set formAction = "./performance-profile/confirm" | addReferrer(referrer) %}
+{% set formAction = "./census-sign-off/confirm" | addReferrer(referrer) %}
 {% set previousAcademicYear = data.years.previousAcademicYear %}
 {% set academicYear = data.years.currentAcademicYear %}
 {% set academicYearShort = data.years.currentAcademicYear | academicYearToYear %}
@@ -12,7 +12,7 @@
 {% set approverName = "Jill Renner" %}
 
 {% set pageHeading %}
-  Performance profile sign off
+  census sign off
 {% endset %}
 
 {% set backLink = '/reports' %}
@@ -23,24 +23,24 @@
 
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds-from-desktop">
-          <h1 class="govuk-heading-l">ITT performance profile sign off for the {{ previousAcademicYear }} academic year</h1>
+          <h1 class="govuk-heading-l">Sign off your organisation’s new trainee data for the {{ previousAcademicYear }} academic year</h1>
 
           <p class="govuk-body">Once you've checked your data is correct, you can sign off on behalf of your organisation.</p>
 
-        {% include "_includes/summary-cards/performance-profiles.njk" %}
+        {% include "_includes/summary-cards/census-sign-off.njk" %}
 
         {{ govukCheckboxes({
-        name: "performance-profile-signed-off",
+        name: "census-sign-off",
         fieldset: {
         legend: {
-        text: "Confirm you have checked the trainee data is correct in Register, and you’re signing it off.",
+        text: "Confirm your organisation’s new trainee data is in Register, you’ve checked it’s correct and you’re signing it off",
         isPageHeading: false,
         classes: "govuk-fieldset__legend--s"
         }
         },
         items: [
         {
-        value: "performance-profile-signed-off",
+        value: "census-signed-off",
         text: "Yes, the trainee data is correct to the best of my knowledge"
         }
         ]
@@ -48,7 +48,7 @@
 
         <div class="govuk-form-group">
           {{ govukButton({
-          text: "Sign off performance profile",
+          text: "Sign off census",
           href: "confirmation"
           }) }}
         </div>

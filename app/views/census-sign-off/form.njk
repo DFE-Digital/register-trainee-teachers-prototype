@@ -4,6 +4,7 @@
 {% set previousAcademicYear = data.years.previousAcademicYear %}
 {% set academicYear = data.years.currentAcademicYear %}
 {% set academicYearShort = data.years.currentAcademicYear | academicYearToYear %}
+{% set nextAcademicYear = data.years.nextAcademicYear %}
 {% set nextAcademicYearShort = data.years.nextAcademicYear | academicYearToYear %}
 
 
@@ -12,7 +13,7 @@
 {% set approverName = "Jill Renner" %}
 
 {% set pageHeading %}
-  census sign off
+  Census sign off
 {% endset %}
 
 {% set backLink = '/reports' %}
@@ -21,15 +22,16 @@
 
 {% block content %}
 
-    <div class="govuk-grid-row">
-      <div class="govuk-grid-column-two-thirds-from-desktop">
-          <h1 class="govuk-heading-l">Sign off your organisation’s new trainee data for the {{ previousAcademicYear }} academic year</h1>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
 
-          <p class="govuk-body">Once you've checked your data is correct, you can sign off on behalf of your organisation.</p>
+    <h1 class="govuk-heading-l">Census sign off your organisation’s new trainee data for the {{ nextAcademicYear }} academic year</h1>
 
-        {% include "_includes/summary-cards/census-sign-off.njk" %}
+    <p class="govuk-body">Once you've checked your data is correct, you can sign off on behalf of your organisation.</p>
 
-        {{ govukCheckboxes({
+    {% include "_includes/summary-cards/census-sign-off.njk" %}
+
+    {{ govukCheckboxes({
         name: "census-sign-off",
         fieldset: {
         legend: {
@@ -46,14 +48,13 @@
         ]
         }) }}
 
-        <div class="govuk-form-group">
-          {{ govukButton({
+    <div class="govuk-form-group">
+      {{ govukButton({
           text: "Sign off census",
           href: "confirmation"
           }) }}
-        </div>
-
-
-      </div>
     </div>
+
+  </div>
+</div>
 {% endblock %}

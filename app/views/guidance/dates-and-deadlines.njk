@@ -1,22 +1,32 @@
 {% extends "_templates/_guidance-page.njk" %}
+{% set previousAcademicYear = data.years.previousAcademicYear %}
 
 {% set pageHeading = "Dates and deadlines for training providers for " + data.years.academicYears[0] + " academic year" %}
 
 {% set guidanceContent %}
-## Deadlines for all training providers
 
-| Date | What happens |
-| --- | --- |
-| 11&nbsp;October&nbsp;2023 | The second Wednesday of October every academic year is called the ‘census date’. If a new trainee starts their course after this date, they will not be included in the ITT census publication. This is why it’s important to add your new trainees as they start their training. |
-| 31&nbsp;October&nbsp;2023 | A senior person from your organisation must sign off your new trainee data on or before this date. This should be a different person to the one who submitted the data. This data will be used for the ITT census publication. |
-| 31&nbsp;January&nbsp;2024 | A senior person from your organisation must sign off your 2022 to 2023 trainee outcomes on or before this date. This should be a different person to the one who submitted the data. Some of this data will be used for the ITT performance profiles publication. |
+<p class="govuk-body">
+  All providers can add and update trainee data at any time.
+</p>
 
-## Deadlines for higher education institutions (HEIs) that use HESA
+<p class="govuk-body">
+  Guidance for the sign-off processes for each stage can be found below:
+</p>
 
-| Date | What happens |
-| --- | --- |
-| 1&nbsp;September&nbsp;2023 | HESA data collection system opens. Training providers can start submitting their ITT trainee data to the DfE through HESA. |
-| 17&nbsp;October&nbsp;2023 | First data submission required to HESA. Training providers should have started submitting data by this date. |
-| 31&nbsp;October&nbsp;2023 | HESA data collection system closes. ITT trainee data must be submitted and signed off on or before the data collection system closes. Not doing this, will mean the DfE has inaccurate data which could affect the ITT census publication. |
-| 15&nbsp;to&nbsp;31&nbsp;January&nbsp;2024<br>15 to 30 April 2024<br>15 to 31 July 2024 | ITT data collection update periods where you can update your trainee data through HESA if anything has changed. Data will be imported into Register. You do not need to sign off your data during these update periods. |
+<ul class="govuk-list">
+  <li>
+    <a class="govuk-link" href="https://www.register-trainee-teachers.service.gov.uk/guidance/census-sign-off">Census sign off process</a>
+  </li>
+  <li>
+    <a class="govuk-link" href="https://www.register-trainee-teachers.service.gov.uk/guidance/performance-profiles">Performance profile sign off process</a>
+  </li>
+</ul>
+
+
+| Date | Event name | What happens |
+| --- | --- | --- |
+| 8&nbsp;October&nbsp;2025 | Census date | This is the second Wednesday of October every academic year. If a new trainee starts their course after this date, they will not be included in the ITT census publication. |
+| 31&nbsp;October&nbsp;2025 | ITT census deadline | You need to submit and sign off ITT trainee data before this date. This data will be used for the ITT census publication.  |
+| 27&nbsp;January&nbsp;2026 | ITT performance profiles deadline | You need to check and sign off all the details for your trainees who had outcomes in the previous academic year ({{ previousAcademicYear }}). This data will be used for the ITT performance profiles publication. |
+
 {% endset %}

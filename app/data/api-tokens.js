@@ -1,38 +1,52 @@
-// This is to simulate some fake API tokens for testing
+// Accepted token statuses
+const tokenStatus = ['Active', 'Expired', 'Revoked']
 
-const generatedTokens = [
-  {
-    tokenName: 'Token 1',
-    tokenDescription: 'Maecenas at odio odio',
-    lastUsedDate: '01/02/2024',
-    expirationDate: '01/12/2024'
-  },
-  {
-    tokenName: 'For Ernest Ryan',
-    tokenDescription: 'Nulla dapibus vitae nisl vitae venenatis',
-    lastUsedDate: 'Never',
-    expirationDate: '01/12/2024'
-  },
-  {
-    tokenName: "Carlie Yundt's",
-    tokenDescription: 'Vestibulum lobortis neque libero.',
-    lastUsedDate: '19/02/2024',
-    expirationDate: '01/12/2024'
-  }
+// This is to simulate some fake API tokens for testing
+const tokens = [{
+  tokenName: 'ByteForge Solutions',
+  tokenStatus: 'Active',
+  createdBy: 'Shad Prosacco',
+  dateCreated: '3rd March 2025',
+  lastUsedDate: '5th March 2025',
+  revokedBy: '',
+  dateRevoked: '',
+  dateExpired: '',
+  tokenActions: 'Revoke'
+},
+{
+  tokenName: 'NexaTech Innovations Vendor Test',
+  tokenStatus: 'Revoked',
+  createdBy: 'Stefanie Runte',
+  dateCreated: '31st December 2024',
+  lastUsedDate: '19th January 2025',
+  revokedBy: 'Stefanie Runte',
+  dateRevoked: '25th January 2025',
+  dateExpired: '',
+  tokenActions: ''
+},
+{
+  tokenName: 'BayerGroup_Vendor_Integration_Token_External_API_Access_Production_2025',
+  tokenStatus: 'Expired',
+  createdBy: 'Jedediah Littel',
+  dateCreated: '1st September 2024',
+  lastUsedDate: '14th December 2024',
+  dateRevoked: '',
+  revokedBy: '',
+  dateExpired: '31st December 2024',
+  tokenActions: ''
+}
 ]
 
 function generateNewToken () {
   const part1 = 'yweuyi'
   const part2 = 172351273
-  const token = (part1 + part2).toString()
+  const token = `${part1}${part2}`
   console.log(token)
   return token
 }
 
-const token = "Andrew's token"
-
 module.exports = {
-  generatedTokens,
-  generateNewToken,
-  token
+  tokens,
+  tokenStatus,
+  generateNewToken
 }

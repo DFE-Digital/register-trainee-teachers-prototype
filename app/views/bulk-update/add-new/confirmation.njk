@@ -7,7 +7,7 @@
 {% set traineesThatCanBeUpdated = filteredRecords | filterByCanBulkUpdate %}
 
 {% set traineesThatCanBeRecommended = filteredRecords | filterByReadyToRecommend %}
-{% set pageHeading = "Trainees submitted" %}
+{% set pageHeading = "Your CSV is being checked" %}
 
 {% block content %}
 
@@ -18,23 +18,14 @@
         classes: "govuk-!-margin-bottom-7"
       }) }}
 
-      <p class="govuk-body govuk-body-lead">You can view your trainee records to check if they are correct.</p>
-      <p class="govuk-body">There are 3 ways to check trainee data in Register.</p>
-      <p class="govuk-body">Choose whichever one of the following that suits you:</p>
+      <p class="govuk-body">This may take several minutes.</p>
 
-      <ul class="govuk-list govuk-list--bullet">
-        <li><a href="/records" class="govuk-link">View your trainee records</a> to check your trainees directly in the service one by one</li>
-        <li><a href="/reports" class="govuk-link">Use the ‘Reports’ section</a> and export a CSV of your new trainees for the current academic year</li>
-        <li>Export a CSV of your trainees in the <a href="/records" class="govuk-link">‘Registered trainees’ section</a>, using the ‘start year’ filter to select the current academic year</li>
-      </ul>
+      <p class="govuk-body">You will receive an email telling you if errors have been found, or if you can complete the register process.</p>
 
+      <p class="govuk-body">You can also check the <a href="/bulk-update/add-new/validation-overview" class="govuk-link">status of new trainee files</a></p>
 
-      <h2 class="govuk-heading-m">View trainees' teacher reference number (TRN)</h2>
+      <p class="govuk-body"><a href="/bulk-update/" class="govuk-link">Back to Bulk updates page</a></p>
 
-      <p class="govuk-body">Once a trainee is registered, a TRN is created for each trainee record.</p>
-      <p class="govuk-body">This is when the trainee becomes registered with the Department for Education (DfE).</p>
-      <p class="govuk-body">You can view trainee TRNs in the Register service. This may take several minutes to appear after the bulk upload.</p>
-      <p class="govuk-body">Trainees will receive their TRN by email.</p>
     </div>
   </div>
 

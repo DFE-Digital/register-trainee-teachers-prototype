@@ -1,0 +1,19 @@
+
+{% include "_includes/trainee-name-caption.njk" %}
+
+{{ govukTextarea({
+  name: "deferral-reason",
+  id: "deferralReason",
+  label: {
+    text: "Why has the trainee deferred?",
+    classes: "govuk-label--l",
+    isPageHeading: true
+  },
+  hint: {
+    text: "Your answer will help us better understand deferral reasons and inform policy with the aim to increase trainee retention."
+  }
+}) }}
+
+{{ govukButton({
+  text: "Continue"
+}) }}

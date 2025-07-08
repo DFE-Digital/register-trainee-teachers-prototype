@@ -1,143 +1,75 @@
 {% extends "_templates/_page.njk" %}
 
 {% set pageHeading %}
-  Organisation – {{ provider.name }}
+Organisation – {{ provider.name }}
 {% endset %}
+
+{% set tokens = tokens %}
 
 {% set navActive = "provider" %}
 
 {% set backText = "Back" %}
-{% set backLink = 'organisation' %}
+{% set backLink = 'javascript:history.back();' %}
 
 {% block content %}
 
-    <div class="govuk-grid-row">
-      <div class="govuk-grid-column-two-thirds-from-desktop">
-        <h1 class="govuk-heading-l">{{provider.name}}</h1>
-        <h1 class="govuk-heading-l">{{ token }}</h1>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <h1 class="govuk-heading-l">{{provider.name}}</h1>
+    <h1 class="govuk-heading-l">{{ token }}</h1>
 
-        {% set shouldShowOrganisationSwitchLink = (data.settings.userProviders | length > 1) and not data.isAdmin and not data.isImpersonating | falsify  %}
+    {% set shouldShowOrganisationSwitchLink = (data.settings.userProviders | length > 1) and not data.isAdmin and not data.isImpersonating | falsify  %}
 
-        <h2 class="govuk-heading-l">Manage your API tokens</h2>
+    <h2 class="govuk-heading-l">Manage your API tokens</h2>
 
-        <p class="govuk-body">These API tokens are unique to your organisation.</p>
 
-        <p class="govuk-body">You must make sure the token is securely sent to the developers managing your Register API integration.</p>
+    <p class="govuk-body">You can:</p>
 
-        <form action="/organisations/:providerUuid/token-details" method="get" novalidate>
-          <div class="govuk-button-group">
-            {{ govukButton({
+    <ul class="govuk-list govuk-list--bullet">
+      <li>view a list of tokens, their name, expiry date and date last used</li>
+      <li>generate a new token, give it a name, set an expiry date (optional) and revoke a token</li>
+    </ul>
+
+    <p class="govuk-body">These API tokens are unique to your organisation.</p>
+
+    <p class="govuk-body">Your token will need to be set up in the student record system which is connecting to the Register API. Contact your student record system provider about this.
+
+    <p class="govuk-body">You must make sure the token is securely sent to those responsible for managing your Register API integration.</p>
+
+    <h3 class="govuk-heading-m">Revoking a token</h3>
+
+    <p class="govuk-body">Revoking a token removes access to the Register API. You may want to revoke a token:</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>for security reasons, for example, when a person leaves a provider organisation who’s had access to the Register API</li>
+      <li>If you change your student record system</li>
+    </ul>
+
+    <p class="govuk-body">Before revoking a current token, you should generate a new token if you want to continue transferring your trainee data to Register via the API.
+
+    <form action="/organisations/:providerUuid/token-details" method="get" novalidate>
+      <div class="govuk-button-group">
+        {{ govukButton({
             text: "Generate a new token"
             }) }}
-
-            <a class="govuk-link" href="organisation.njk">Cancel</a>
-          </div>
-        </form>
-
+        <a class="govuk-link" href='javascript:history.back();'>Cancel</a>
       </div>
-    </div>
-    <div class="govuk-grid-row">
-      <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
-      <div class="govuk-grid-column-full-from-desktop">
-
-        {% from "govuk/components/table/macro.njk" import govukTable %}
-
-        <table class="govuk-table govuk-!-margin-bottom-9">
-          <caption class="govuk-table__caption govuk-table__caption--m">Active tokens</caption>
-          <thead class="govuk-table__head">
-          <tr class="govuk-table__row">
-            <th scope="col" class="govuk-table__header">Token name</th>
-            <th scope="col" class="govuk-table__header">Description</th>
-            <th scope="col" class="govuk-table__header">Last used</th>
-            <th scope="col" class="govuk-table__header">Expiration date</th>
-            <th scope="col" class="govuk-table__header">Action</th>
-          </tr>
-          </thead>
-          <tbody class="govuk-table__body">
-          <tr class="govuk-table__row">
-            <td class="govuk-table__cell">Bayer Group</td>
-            <td class="govuk-table__cell">Production access for Bayer Group vendor</td>
-            <td class="govuk-table__cell">24/02/2024</td>
-            <td class="govuk-table__cell"></td>
-            <td class="govuk-table__cell"><a href="#" class="govuk-link govuk-link--no-visited-state">Revoke</a></td>
-          </tr>
-          </tbody>
-        </table>
-
-        {{ govukTable({
-        caption: "Expired tokens",
-        captionClasses: "govuk-table__caption--m",
-        firstCellIsHeader: false,
-        head: [
-        {
-        text: "Token name"
-        },
-        {
-        text: "Description"
-        },
-        {
-        text: "Last used"
-        },
-        {
-        text: "Expiration date"
-        }
-        ],
-        rows: [
-        [
-        {
-        text: "Bayer Group Vendor Test"
-        },
-        {
-        text: "Test access for new vendor Bayer Group"
-        },
-        {
-        text: "15/01/2024"
-        },
-        {
-        text: "25/01/2024"
-        }
-        ]],
-        classes: "govuk-!-margin-bottom-9"
-        }) }}
-
-        {{ govukTable({
-        caption: "Revoked tokens",
-        captionClasses: "govuk-table__caption--m",
-        firstCellIsHeader: false,
-        head: [
-        {
-        text: "Token name"
-        },
-        {
-        text: "Description"
-        },
-        {
-        text: "Last used"
-        },
-        {
-        text: "Revoked date"
-        }
-        ],
-        rows: [
-        [
-        {
-        text: "Weimann-Reinger"
-        },
-        {
-        text: "Production access for vendor Weimann-Reinger plc"
-        },
-        {
-        text: "19/01/2024"
-        },
-        {
-        text: "30/01/2024"
-        }
-        ]
-        ]
-        }) }}
-
-
-      </div>
-    </div>
+    </form>
+  </div>
+</div>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full-from-desktop">
+    <h3 class="govuk-heading-m govuk-!-margin-top-5">Previously created tokens</h3>
+    <!-- Check to see if tokens exist -->
+    {% if tokens | length %}
+      <!-- Display the token summary cards as a list -->
+      {% for token in tokens %}
+        {% include "_includes/summary-cards/api-token.njk" %}
+      {% endfor %}
+    {% else %}
+        <p class="govuk-body">No tokens have been created yet.</p>
+    {% endif %}
+  </div>
+</div>
 
 {% endblock %}

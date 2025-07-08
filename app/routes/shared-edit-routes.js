@@ -22,7 +22,7 @@ module.exports = router => {
   })
 
   // Load up data for a record
-  // This implimentation makes a copy of the record and stores it in a temporary location
+  // This implementation makes a copy of the record and stores it in a temporary location
   // any edits happen on this temporary data - depending on the journey, some routes may then
   // copy this temp record back to the main records list. This means we can support things like
   // cancelling changes - as we just need to load the original record again.
@@ -725,13 +725,13 @@ module.exports = router => {
     // invalid
     const isPrimary = (phase === 'Primary')
     if (isPrimary && record?.courseDetails?.subjects?.first &&
-        !record?.courseDetails?.subjects?.first.toLowerCase().includes('primary')) {
+      !record?.courseDetails?.subjects?.first.toLowerCase().includes('primary')) {
       delete record.courseDetails.subjects
       delete record.courseDetails.ageRange
     }
     const isSecondary = (phase === 'Secondary')
     if (isSecondary && record?.courseDetails?.subjects?.first &&
-        record?.courseDetails?.subjects?.first.toLowerCase().includes('primary')) {
+      record?.courseDetails?.subjects?.first.toLowerCase().includes('primary')) {
       delete record.courseDetails.subjects
       delete record.courseDetails.ageRange
     }

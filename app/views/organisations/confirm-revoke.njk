@@ -1,0 +1,43 @@
+{% extends "_templates/_page.njk" %}
+
+{% set navActive = "provider" %}
+
+{% set backText = "Back" %}
+{% set backLink = 'token-manage' %}
+
+{% set pageHeading = "Are you sure you want to revoke this token?" %}
+
+{% set returnLink = {
+  href: 'javascript:history.back();',
+  text: "Cancel"
+} %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+<h1 class="govuk-heading-l">
+  {{pageHeading}}
+</h1>
+
+{{ govukWarningText({
+  text: "Revoking a token removes access to the Register API.",
+  iconFallbackText: "Warning"
+}) }}
+
+<p class="govuk-body">Before revoking a current token, you should generate a new token if you want to continue transferring your trainee data to Register via the API.</p>
+
+{{ govukButton({
+  text: "Yes I’m sure — revoke this token",
+  href: "/token-manage",
+  classes: "govuk-button--warning"
+}) }}
+
+<p class="govuk-body">
+  <a href="/token-manage" class="govuk-link">Cancel revoking this API token</a>
+</p>
+
+      </div>
+    </div>
+
+{% endblock %}

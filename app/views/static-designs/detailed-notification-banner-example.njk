@@ -20,50 +20,80 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds-from-desktop">
 
-<!--      <div class="govuk-error-summary" data-module="govuk-error-summary">-->
-<!--        <div role="alert">-->
-<!--          <h2 class="govuk-error-summary__title">-->
-<!--            There is a problem-->
-<!--          </h2>-->
-<!--          <div class="govuk-error-summary__body">-->
-<!--            <ul class="govuk-list govuk-error-summary__list">-->
-<!--              <li>-->
-<!--                <a href="#">The CSV template structure has been changed</a>-->
-<!--              </li>-->
-<!--            </ul>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
+    <div class="govuk-error-summary" data-module="govuk-error-summary">
+      <div role="alert">
+        <h2 class="govuk-error-summary__title">
+          There is a problem
+        </h2>
+        <div class="govuk-error-summary__body">
+          <ul class="govuk-list govuk-error-summary__list">
+            <li>
+              <a href="#file-upload-1">Your file’s column names need to match the CSV template</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
 
       <h1 class="govuk-heading-l">
         <span class="govuk-caption-l">{{ data.signedInProviders | andSeparate }}</span>
         {{ pageHeading }}
       </h1>
+      <p class="govuk-body">
+        Training providers can register their trainees in bulk by creating trainee records and adding the required data.
+      </p>
 
-      <p class="govuk-body">You can register new trainees in bulk with a CSV file. <a class="govuk-link" rel="noreferrer noopener" target="_blank" href="https://sandbox.register-trainee-teachers.service.gov.uk/bulk-update/add-trainees/empty-template.csv">This is the template CSV file to add new trainees.</a></p>
+      {{ govukInsetText({
+      text: "You must only use this CSV file template to register new trainees. Using it to update already existing trainees will result in an error."
+      }) }}
 
-      <p class="govuk-body">You can leave non mandatory fields empty if you do not want to upload those fields.</p>
+      <h2 class="govuk-heading-m">
+        1. Download this CSV file template
+      </h2>
+      {{ appDownloadLink({
+        linkText: "Download empty CSV file to add new trainees",
+        fileName: "bulk-update/add-new",
+        showDownloadedFileName: false,
+        downloadedFileName: (data.signedInProviders + "-new trainees to add") | slugify,
+        fileType: "csv"
+      })}}
 
-      <p class="govuk-body">You can also add trainee data directly from your student record system.</p>
+      <p class="govuk-body">You can adapt this CSV file template to add trainee data directly from your student record system.</p>
 
-      <p class="govuk-body">Check <a class="govuk-link" rel="noreferrer noopener" target="_blank" href="https://staging.register-trainee-teachers.service.gov.uk/csv-docs">guidance on how to add trainee information to the CSV template (opens in new tab)</a>.</p>
+      <p class="govuk-body">If you're adapting the CSV file template for a direct extract from your student record system, you can go directly to step 3.</p>
 
-      <h2 class="govuk-heading-m">Checking your trainee records before adding to Register</h2>
-      <p class="govuk-body">Uploaded CSVs are checked for errors before the final submission stage.</p>
+      <h3 class="govuk-heading-m">
+        2. Add new trainee details
+      </h3>
+      <p class="govuk-body">Open as a CSV file to add trainee details in bulk. There are 47 data fields. You will need to include trainee information such as:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>personal information</li>
+        <li>course details</li>
+        <li>funding (if applicable)</li>
+      </ul>
+      <p class="govuk-body">You can leave non mandatory rows or cells empty if you do not want to upload those fields.</p>
 
-       {{ govukInsetText({
-         text: "These tests can also be used as a tool to check your file is valid without having to submit it."
-       }) }}
+      {{ govukDetails({
+      summaryText: "Help with copying data from Excel to CSV",
+      html: "If you're copying trainee data from Excel to CSV, be aware Excel removes the 'leading zeros' from any data that begins with a zero, for example, trainee IDs.
+      <br><br>
+      To prevent this, you can first apply the Text format to the cells before you type or paste the numbers in Excel."
+      }) }}
 
-      <p class="govuk-body">We will send you an email to tell you if the file is valid and ready for final submission. At this point trainees can be added to the database.</p>
-
-      <h3 class="govuk-heading-m">Upload your trainee records</h3>
+      <!-- Placeholder link added, the guidance hasn't been written yet so we don't have a URL to point to -->
+      <p class="govuk-body">Check <a class="govuk-link" rel="noreferrer noopener" target="_blank" href="https://staging.register-trainee-teachers.service.gov.uk/csv-docs">guidance on how add trainee information to the CSV template (opens in new tab)</a>.</p>
+      <h4 class="govuk-heading-m">
+        3. Upload your trainee records
+      </h2>
       <form action="/bulk-update/add-new/upload-answer" method="post" novalidate>
         {{ govukFileUpload({
           id: "file-upload-1",
           name: "file-upload-1",
           hint: {
             text: "File type must be ‘CSV’."
+          },
+          errorMessage: {
+            text: "Your file’s column names need to match the CSV template"
           },
           label: {
             text: "Upload a file"
@@ -133,10 +163,9 @@
           </div>
         </details>
         {{ govukButton({
-          text: "Upload CSV"
+          text: "Upload records"
         }) }}
       </form>
-
     </div>
   </div>
 

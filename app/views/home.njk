@@ -5,6 +5,7 @@
 {% set filteredRecords = data.records | filterRecords(data) %}
 
 {% set previousAcademicYear = data.years.previousAcademicYear %}
+{% set nextAcademicYear = data.years.nextAcademicYear %}
 {% set nextAcademicYearSimple = data.years.nextAcademicYearSimple %}
 
 {% set draftRecords = filteredRecords | filterByStatus("Draft") %}
@@ -22,9 +23,10 @@
 
 {# set newAcademicYearUpcoming = true #}
 {# set newAcademicYear = false #}
-{% set performanceProfileDue = true %}
-{% set performanceProfileOutstanding = true %}
-
+{# set performanceProfileDue = true #}
+{# set performanceProfileOutstanding = true #}
+{% set censusSignOffDue = true %}
+{% set censusSignOffOutstanding = true %}
 
 {% block content %}
 
@@ -54,6 +56,19 @@
   {{ govukNotificationBanner({
     html: html
   }) }}
+
+  <!-- Show banner if the Census sign off window is open (Between 1st September and 31 October) and it hasn't been completed, variables need to be set -->
+  {% elseif censusSignOffDue and censusSignOffOutstanding %}
+    {% set html %}
+      <h3 class="govuk-notification-banner__heading">
+        The {{ nextAcademicYear }} ITT census sign off is due
+      </h3>
+      <p class="govuk-body"><a class="govuk-notification-banner__link" href="/census-sign-off/">Sign off your census trainee data</a> by the 31 October {{ nextAcademicYearSimple }} deadline.</p>
+    {% endset %}
+
+    {{ govukNotificationBanner({
+      html: html
+    }) }}
 
 {% elseif newAcademicYear %}
   {% set html %}

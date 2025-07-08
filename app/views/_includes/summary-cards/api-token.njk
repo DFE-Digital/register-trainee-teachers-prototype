@@ -1,0 +1,106 @@
+{% set createdText = token.createdBy ~ ' on ' ~ token.dateCreated %}
+
+{# Check to see if there is a revoked date and set value accordingly #}
+{% if token.dateRevoked | length %}
+{% set revokedText = token.revokedBy ~ ' on ' ~ token.dateRevoked %}
+{% else %}
+{% set revokedText = '' %}
+{% endif %}
+
+
+{% set apiTokenStatusRow = {
+               key: {
+                 text: "Status"
+               },
+               value: {
+                  text: token.tokenStatus
+               },
+               actions: {
+                 items: [
+                   {
+                     href: "#",
+                     text: "",
+                     visuallyHiddenText: ""
+                   }
+                 ]
+               }
+} %}
+
+
+{% set apiTokenCreatedRow = {
+                  key: {
+                    text: "Created by"
+                  },
+                  value: {
+                    text: createdText
+                  }
+} %}
+
+{% set apiTokenLastUsedRow   = {
+          key: {
+            text: "Last used"
+          },
+          value: {
+             text: token.lastUsedDate
+          },
+          actions: {
+            items: [
+              {
+                href: "",
+                text: "",
+                visuallyHiddenText: ""
+              }
+            ]
+          }
+} %}
+
+{% set apiTokenRevokedRow = {
+      key: {
+        text: "Revoked by"
+      },
+      value: {
+        text: revokedText
+      }
+} %}
+
+{% set apiTokenExpiredRow = {
+      key: {
+        text: "Expired"
+      },
+      value: {
+        text: token.dateExpired
+      },
+      actions: {
+        items: [
+          {
+            href: "#",
+            text: "",
+            visuallyHiddenText: ""
+          }
+        ]
+      }
+} %}
+
+{% set apiTokenDetailsRows = [
+  apiTokenStatusRow,
+  apiTokenCreatedRow,
+  apiTokenLastUsedRow,
+  apiTokenRevokedRow,
+  apiTokenExpiredRow
+] %}
+
+{{ govukSummaryList({
+  card: {
+    title: {
+      text: token.tokenName
+    },
+    actions: {
+      items: [{
+        href: "/token-revoke" | addReferrer(referrer),
+        text: "Revoke token",
+        classes: "app-destructive-link"
+      }]
+    }
+  },
+  rows: apiTokenDetailsRows
+}) }}

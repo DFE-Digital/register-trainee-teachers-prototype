@@ -1,4 +1,4 @@
-{% set performanceProfileRows = [
+{% set censusSignOffRows = [
   {
     key: {
       text: "Provider name"
@@ -51,8 +51,8 @@
 {{ govukSummaryList({
   card: {
     title: {
-      text: "Performance profile information"
+      text: "Census sign off information"
     }
   },
-  rows: performanceProfileRows
+  rows: censusSignOffRows
 }) }}

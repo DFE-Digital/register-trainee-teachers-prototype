@@ -21,6 +21,9 @@
 {% set hasErrors = errorCount > 0 %}
 {% set hasUpdated = updatedCount > 0 %}
 
+{# Hardcode value prior to refactoring for discussion #}
+{% set errorCount = 7 %}
+
 {% set pageHeading %}
   Review errors for {{errorCount}} {{ "trainee" | pluralise(errorCount) }} in the CSV file you uploaded
 {% endset %}
@@ -44,10 +47,11 @@
 
         <p class="govuk-body">You cannot add new trainees if there’s an error in their row in the CSV file. You need to fix the errors if you want to add them.</p>
 
+        <p class="govuk-body">For full detail relating to CSV uploads visit <a class="govuk-link" target="_blank" href="https://sandbox.register-trainee-teachers.service.gov.uk/csv-docs/">this guidance page (opens in new tab)</a>.</p>
+
         <ol class="govuk-list govuk-list--number">
 
           <li>
-
             <a class="govuk-link--no-visited-state" href="/public/downloads/bulk-update/add-new-with-errors.csv" download="{{ (data.signedInProviders + '-fix-errors') | slugify }}.csv">Download your CSV file with errors indicated</a>.
             {# <a href="#">Download your CSV file with errors indicated</a>. #}
           </li>
@@ -76,7 +80,7 @@
         <input name="successFlash" type="hidden" value="File uploaded">
 
         {{ govukButton({
-          text: "Upload file"
+          text: "Upload records"
         }) }}
 
         <p class="govuk-body">

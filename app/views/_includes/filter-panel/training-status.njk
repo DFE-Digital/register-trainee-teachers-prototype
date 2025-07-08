@@ -10,13 +10,11 @@
 
 {% set coursenNotYetStarted = registeredTrainees | filterByFunction('ittInTheFuture') %}
 
-
 {{ govukCheckboxes({
   classes: "govuk-checkboxes--small js-auto-submit",
   attributes: {
     "id": 'filterTrainingStatusCheckboxes'
-  }
-  ,
+  },
   fieldset: {
     legend: {
       text: "Training status",
@@ -27,24 +25,24 @@
   items: [
     {
       text: "Course not started yet",
-      checked: checked(query.filterTrainingStatus, "Course not started yet")
+      value: "Course not started yet"
     } if coursenNotYetStarted | length,
     {
       text: "Actively training",
-      _checked: checkedStatus,
-      checked: checked(query.filterTrainingStatus, "Actively training")
+      value: "Actively training"
     },
     {
       text: "Deferred",
-      checked: checked(query.filterTrainingStatus, "Deferred")
+      value: "Deferred"
     },
     {
       text: "Awarded",
-      checked: checked(query.filterTrainingStatus, "Awarded")
+      value: "Awarded"
     },
     {
       text: "Withdrawn",
-      checked: checked(query.filterTrainingStatus, "Withdrawn")
+      value: "Withdrawn"
     }
-  ]
-} | decorateAttributes(data, "data.filterTrainingStatus"))}}
+  ],
+  values: data.filterTrainingStatus
+}) }}

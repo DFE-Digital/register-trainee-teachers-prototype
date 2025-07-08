@@ -1,58 +1,18 @@
-{#- We can't mount GOV.UK Frontend's assets at root as it's done automatically by the extensions framework. -#}
-{%- set assetPath = '/dist/govuk/assets' -%}
-
-{% extends "govuk/template.njk" %}
-
-{% from "govuk/components/accordion/macro.njk"        import govukAccordion %}
-{% from "govuk/components/back-link/macro.njk"        import govukBackLink %}
-{% from "govuk/components/breadcrumbs/macro.njk"      import govukBreadcrumbs %}
-{% from "govuk/components/button/macro.njk"           import govukButton %}
-{% from "govuk/components/character-count/macro.njk"  import govukCharacterCount %}
-{% from "govuk/components/checkboxes/macro.njk"       import govukCheckboxes %}
-{% from "govuk/components/date-input/macro.njk"       import govukDateInput %}
-{% from "govuk/components/details/macro.njk"          import govukDetails %}
-{% from "govuk/components/error-message/macro.njk"    import govukErrorMessage %}
-{% from "govuk/components/error-summary/macro.njk"    import govukErrorSummary %}
-{% from "govuk/components/fieldset/macro.njk"         import govukFieldset %}
-{% from "govuk/components/file-upload/macro.njk"      import govukFileUpload %}
-{% from "govuk/components/input/macro.njk"            import govukInput %}
-{% from "govuk/components/inset-text/macro.njk"       import govukInsetText %}
-{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
-{% from "govuk/components/panel/macro.njk"            import govukPanel %}
-{% from "govuk/components/pagination/macro.njk"       import govukPagination %}
-{% from "govuk/components/phase-banner/macro.njk"     import govukPhaseBanner %}
-{% from "govuk/components/radios/macro.njk"           import govukRadios %}
-{% from "govuk/components/select/macro.njk"           import govukSelect %}
-{% from "govuk/components/service-navigation/macro.njk"  import govukServiceNavigation %}
-{% from "govuk/components/skip-link/macro.njk"        import govukSkipLink %}
-{% from "govuk/components/summary-list/macro.njk"     import govukSummaryList %}
-{% from "govuk/components/table/macro.njk"            import govukTable %}
-{% from "govuk/components/tabs/macro.njk"             import govukTabs %}
-{% from "govuk/components/tag/macro.njk"              import govukTag %}
-{% from "govuk/components/task-list/macro.njk"        import govukTaskList %}
-{% from "govuk/components/textarea/macro.njk"         import govukTextarea %}
-{% from "govuk/components/warning-text/macro.njk"     import govukWarningText %}
+{% extends "govuk-prototype-kit/layouts/govuk-branded.njk" %}
 
 {# custom components #}
-{# Most of these copied from the Apply for teacher training prototype #}
-{% from "_components/admin-feature/macro.njk"   import appAdminFeature %}
-{% from "_components/admin-banner/macro.njk"   import appAdminBanner %}
-{% from "_components/autocomplete/macro.njk"   import appAutocomplete %}
-{% from "_components/autocomplete-new/macro.njk"   import appAutocompleteFromSelect %}
-{% from "_components/autocomplete-new/macro.njk"   import appAutocompleteFromInput %}
-{% from "_components/banner/macro.njk"         import appBanner %}
-{% from "_components/footer/macro.njk"   import appFooter %}
-{% from "_components/school-autocomplete/macro.njk"   import appSchoolAutocomplete with context %}
-{% from "_components/sub-navigation/macro.njk"   import appSubNavigation %}
-{% from "_components/timeline/macro.njk"   import appTimeline %}
+{% from "_components/admin-banner/macro.njk" import appAdminBanner %}
+{% from "_components/admin-feature/macro.njk" import appAdminFeature %}
+{% from "_components/autocomplete-new/macro.njk" import appAutocompleteFromInput %}
+{% from "_components/autocomplete-new/macro.njk" import appAutocompleteFromSelect %}
+{% from "_components/autocomplete/macro.njk" import appAutocomplete %}
+{% from "_components/banner/macro.njk" import appBanner %}
 {% from "_components/download-link-with-filename/macro.njk" import appDownloadLink %}
-
-{# Wrapper of moj’s filter stuff #}
-{% from "_components/filter-page/macro.njk"         import appFilterPage %}
-
-{# moj components #}
-{%- from "moj/components/filter/macro.njk" import mojFilter -%}
-{%- from "moj/components/button-menu/macro.njk" import mojButtonMenu -%}
+{% from "_components/filter-page/macro.njk" import appFilterPage %}
+{% from "_components/footer/macro.njk" import appFooter %}
+{% from "_components/school-autocomplete/macro.njk" import appSchoolAutocomplete with context %}
+{% from "_components/sub-navigation/macro.njk" import appSubNavigation %}
+{% from "_components/timeline/macro.njk" import appTimeline %}
 
 {% block head %}
   {% include "_includes/head.njk" %}
@@ -82,11 +42,6 @@
     classes: headerClass,
     containerClasses: "govuk-width-container",
     navigation: [
-      {
-        text: 'Organisation settings',
-        href: '/organisations/' + activeProvider.id,
-        active: true if navActive == 'provider'
-      } if not data.isAdmin and not data.isImpersonating | falsify and not isSupportUi,
       {
         href: "#",
         text: "Your account"
@@ -146,8 +101,13 @@
     {
       text: 'Funding',
       href: '/funding/' + data.years.currentAcademicYearSimple + '/payment-schedule',
-      active: true if navActive == 'funding'
-    } if data.settings.showFundingInPrimaryNav
+      active: true if navActive == 'Funding'
+    } if data.settings.showFundingInPrimaryNav,
+    {
+      text: 'Organisation details',
+      href: '/organisations/' + activeProvider.id,
+      active: true if navActive == 'provider'
+    } if not data.isAdmin and not data.isImpersonating | falsify and not isSupportUi
   ] | removeEmpty %}
 
   {% set navItemsSupport = [
@@ -250,13 +210,11 @@
       <h2 class="govuk-heading-s">
         Get support
       </h2>
-
       <ul class="govuk-footer__meta-custom govuk-list govuk-!-font-size-16">
         <li><a class="govuk-link govuk-footer__link" href="mailto:becomingateacher@digital.education.gov.uk">becomingateacher<wbr>@digital.education.gov.uk</a></li>
         <li>We aim to respond within 5 working days, or one working day for more urgent&nbsp;queries</li>
       </ul>
     </div>
-
     <div class="govuk-grid-column-one-half">
       <h2 class="govuk-heading-s">
         Give feedback
@@ -365,7 +323,6 @@
     {% include "_includes/footer-settings.njk" %}
   {% endblock %}
 {% endif %}
-
 
 {% block bodyEnd %}
   {% block scripts %}

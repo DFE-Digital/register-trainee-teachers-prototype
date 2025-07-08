@@ -1,4 +1,4 @@
-const filters = require('./../filters.js')()
+const filters = require('./../filters.js')
 const utils = require('./../lib/utils')
 const weighted = require('weighted')
 const { fakerEN_GB: faker } = require('@faker-js/faker')

@@ -19,7 +19,7 @@ filters.getHighestLevel = array => {
 // Returns an array of the access levels of each signed-in providers
 // This is mostly an internal utility function
 // eg ['accreditingProvider', 'leadPartner', 'admin']
-filters.getAccessLevels = function (providers, data) {
+filters.getAccessLevels = (providers, data) => {
   data = data || this?.ctx?.data || false
 
   // Loop through each signed-in provider and get their type
@@ -29,7 +29,7 @@ filters.getAccessLevels = function (providers, data) {
 }
 
 // Get the highest level of access the signed-in providers have
-filters.getAccessLevel = function (providers, data) {
+filters.getAccessLevel = (providers, data) => {
   data = data || this?.ctx?.data || false
   // Get all access levels
   const accessLevels = filters.getAccessLevels.apply(this, [providers, data])
@@ -39,7 +39,7 @@ filters.getAccessLevel = function (providers, data) {
 
 // Check if a provider (or providers) have auth to do an action
 // Usually this will be called via the `isAuthorised(action)` function
-filters.providerIsAuthorised = function (providers, action) {
+filters.providerIsAuthorised = (providers, action) => {
   const data = this?.ctx?.data || false
 
   const record = data?.record || false
@@ -96,7 +96,7 @@ filters.providerIsAuthorised = function (providers, action) {
 
 // Returns an array of the access levels of each signed-in provider
 // eg ['accreditingProvider', 'leadPartner', 'admin']
-filters.getRecordAccessLevels = function (record, data = false) {
+filters.getRecordAccessLevels = (record, data = false) => {
   data = data || this?.ctx?.data || false
 
   const signedInProviders = data.signedInProviders

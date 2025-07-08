@@ -31,7 +31,7 @@
     "cookie-parser": "^1.4.5",
     "cross-spawn": "^7.0.2",
     "csv-string": "^4.0.1",
-    "dotenv": "^16.4.5",
+    "dotenv": "^17.1.0",
     "express": "^5.1.0",
     "express-session": "^1.17.2",
     "fancy-log": "^2.0.0",
@@ -44,7 +44,7 @@
     "js-yaml": "^4.1.0",
     "lodash": "^4.17.21",
     "lunr": "^2.3.9",
-    "marked": "^15.0.3",
+    "marked": "^16.0.0",
     "marked-gfm-heading-id": "^4.1.1",
     "moment": "^2.27.0",
     "npm-run-all": "^4.1.5",
@@ -61,10 +61,10 @@
     "weighted": "^1.0.0"
   },
   "devDependencies": {
-    "markdownlint-cli": "^0.44.0",
+    "markdownlint-cli": "^0.45.0",
     "standard": "^17.1.2",
     "stylelint": "^16.11.0",
-    "stylelint-config-recommended-scss": "^14.1.0",
+    "stylelint-config-recommended-scss": "^15.0.1",
     "stylelint-config-standard": "^38.0.0",
     "stylelint-order": "^7.0.0"
   },

@@ -1,0 +1,9 @@
+{
+  "serviceName": "Register trainee teachers",
+  "useNjkExtensions": true,
+  "plugins": {
+    "govuk-frontend": {
+      "reband": true
+    }
+  }
+}

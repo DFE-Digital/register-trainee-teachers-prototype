@@ -1,0 +1,50 @@
+{% extends "layouts/main.njk" %}
+
+{% set primaryNavId = "SOMETHING" %}
+{% set secondaryNavId = "about" %}
+
+{% set title = "Withdraw the trainee" %}
+{% set caption = "Gladia Delmarre" %}
+
+{% block beforeContent %}
+{{ govukBackLink({
+  text: "Back",
+  href: "#"
+}) }}
+{% endblock %}
+
+{% block content %}
+
+{% include "_includes/notification-banner.njk" %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    {% include "_includes/page-heading.njk" %}
+
+    <h2 class="govuk-heading-m">Before you start</h2>
+
+    <p class="govuk-body">
+      Make sure you have all the background information to why this trainee has withdrawn.
+    </p>
+
+    <h2 class="govuk-heading-m">How your answers will help us</h2>
+
+    <p class="govuk-body">
+      Your answers will help us better understand withdrawal reasons and inform policy with the aim to increase trainee retention.
+    </p>
+
+    {{ govukButton({
+      text: "Continue",
+      href: actions.next
+    }) }}
+
+    <p class="govuk-body">
+      <a class="govuk-link" href="{{ actions.cancel }}">Cancel and return to record</a>
+    </p>
+
+
+  </div>
+</div>
+
+{% endblock %}

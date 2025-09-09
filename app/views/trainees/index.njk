@@ -1,0 +1,45 @@
+{% extends "layouts/main.njk" %}
+
+{% set primaryNavId = "SOMETHING" %}
+{% set secondaryNavId = "about" %}
+
+{% set title = "Gladia Delmarre" %}
+
+{% block beforeContent %}
+{{ govukBackLink({
+  text: "All records",
+  href: "#"
+}) }}
+{% endblock %}
+
+{% block content %}
+
+{% include "_includes/notification-banner.njk" %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    {% include "_includes/page-heading.njk" %}
+
+
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    {% include "./_secondary-navigation.njk" %}
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <p class="govuk-body">
+      <a href="#" class="govuk-link">Defer</a> or <a href="{{ actions.withdraw }}" class="govuk-link">withdraw</a> this trainee
+    </p>
+
+
+  </div>
+</div>
+
+{% endblock %}

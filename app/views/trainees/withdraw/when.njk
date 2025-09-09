@@ -38,27 +38,28 @@
           hint: {
             text: "For example, 21 3 2023"
           },
+          errorMessage: errors | getErrorMessage("withdrawalDate"),
           items: [
             {
               id: "withdrawalDate",
               name: "withdrawal[anotherDate][day]",
               label: "Day",
               value: data.withdrawal.anotherDate.day,
-              classes: "govuk-input--width-2"
+              classes: "govuk-input--width-2" + (" govuk-input--error" if errors | getErrorMessage("withdrawalDate"))
             },
             {
               id: "withdrawalDate",
               name: "withdrawal[anotherDate][month]",
               label: "Month",
               value: data.withdrawal.anotherDate.month,
-              classes: "govuk-input--width-2"
+              classes: "govuk-input--width-2" + (" govuk-input--error" if errors | getErrorMessage("withdrawalDate"))
             },
             {
               id: "withdrawalDate",
               name: "withdrawal[anotherDate][year]",
               label: "Year",
               value: data.withdrawal.anotherDate.year,
-              classes: "govuk-input--width-4"
+              classes: "govuk-input--width-4" + (" govuk-input--error" if errors | getErrorMessage("withdrawalDate"))
             }
           ]
         }) }}

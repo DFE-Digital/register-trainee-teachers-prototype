@@ -39,6 +39,14 @@ exports.when_post = async (req, res) => {
     error.href = "#withdrawal[when]"
     error.text = "Select when the trainee withdrew"
     errors.push(error)
+  } else {
+    if (withdrawal.when === 'Another date') {
+      const error = {}
+      error.fieldName = "withdrawalDate"
+      error.href = "#withdrawalDate"
+      error.text = "Enter the date the trainee withdrew"
+      errors.push(error)
+    }
   }
 
   if (errors.length) {

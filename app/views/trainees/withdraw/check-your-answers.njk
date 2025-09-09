@@ -23,7 +23,7 @@
     <form action="{{ actions.next }}" method="post" accept-charset="utf-8" novalidate>
 
       {% set reasonsWhyHtml %}
-        <ul class="govuk-list govuk-list--bullet">
+        <ul class="govuk-list govuk-list--spaced govuk-list--bullet">
           {% for reason in data.withdrawal.why %}
             <li>
               {{ reason }}
@@ -120,7 +120,7 @@
       }) }}
 
       {{ govukButton({
-        text: "Withdraw this trainee"
+        text: "Withdraw trainee"
       }) }}
 
     </form>

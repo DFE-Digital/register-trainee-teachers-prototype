@@ -29,8 +29,17 @@ exports.when_get = async (req, res) => {
 
 exports.when_post = async (req, res) => {
   const { traineeId } = req.params
+  const { withdrawal } = req.session.data
 
   const errors = []
+
+  if (!withdrawal.when) {
+    const error = {}
+    error.fieldName = "when"
+    error.href = "#withdrawal[when]"
+    error.text = "Select when the trainee withdrew"
+    errors.push(error)
+  }
 
   if (errors.length) {
     let back = `/trainees/${traineeId}`
@@ -76,8 +85,17 @@ exports.who_get = async (req, res) => {
 
 exports.who_post = async (req, res) => {
   const { traineeId } = req.params
+  const { withdrawal } = req.session.data
 
   const errors = []
+
+  if (!withdrawal.who) {
+    const error = {}
+    error.fieldName = "who"
+    error.href = "#withdrawal[who]"
+    error.text = "Select why you are withdrawing the trainee"
+    errors.push(error)
+  }
 
   if (errors.length) {
     let back = `/trainees/${traineeId}/withdraw/when`
@@ -123,8 +141,21 @@ exports.why_get = async (req, res) => {
 
 exports.why_post = async (req, res) => {
   const { traineeId } = req.params
+  const { withdrawal } = req.session.data
 
   const errors = []
+
+  if (!withdrawal.why) {
+    const error = {}
+    error.fieldName = "why"
+    error.href = "#withdrawal[why]"
+    if (withdrawal.who === 'The trainee chose to withdraw') {
+      error.text = "Select why the trainee chose to withdraw"
+    } else {
+      error.text = "Select why you had to withdraw the trainee"
+    }
+    errors.push(error)
+  }
 
   if (errors.length) {
     let back = `/trainees/${traineeId}/withdraw/who`
@@ -170,8 +201,17 @@ exports.interested_get = async (req, res) => {
 
 exports.interested_post = async (req, res) => {
   const { traineeId } = req.params
+  const { withdrawal } = req.session.data
 
   const errors = []
+
+  if (!withdrawal.interested) {
+    const error = {}
+    error.fieldName = "interested"
+    error.href = "#withdrawal[interested]"
+    error.text = "Select if this trainee would be interested in becoming a teacher in the future"
+    errors.push(error)
+  }
 
   if (errors.length) {
     let back = `/trainees/${traineeId}/withdraw/why`

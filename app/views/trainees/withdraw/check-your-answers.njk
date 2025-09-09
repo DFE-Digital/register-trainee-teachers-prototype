@@ -37,6 +37,15 @@
         </ul>
       {% endset %}
 
+      {% set withdrawWhenText %}
+        {% if data.withdrawal.when == "Another date" %}
+          {% set withdrawalDate = [data.withdrawal.anotherDate.day, data.withdrawal.anotherDate.month, data.withdrawal.anotherDate.year] | arrayToDateObject | govukDate %}
+          {{ withdrawalDate }}
+        {% else %}
+          {{ data.withdrawal.when }}
+        {% endif %}
+      {% endset %}
+
       {{ govukSummaryList({
         rows: [
           {
@@ -44,7 +53,7 @@
               text: "When did the trainee withdraw?"
             },
             value: {
-              text: data.withdrawal.when
+              text: withdrawWhenText
             },
             actions: {
               items: [

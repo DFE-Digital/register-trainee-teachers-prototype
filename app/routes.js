@@ -70,7 +70,6 @@ router.get('/trainees/:traineeId', checkIsAuthenticated, traineeController.show)
 /// ------------------------------------------------------------------------ ///
 
 router.get('/trainees/:traineeId/withdraw', checkIsAuthenticated, traineeWithdrawalController.start_get)
-// router.post('/trainees/:traineeId/withdraw', checkIsAuthenticated, traineeWithdrawalController.start_post)
 
 router.get('/trainees/:traineeId/withdraw/when', checkIsAuthenticated, traineeWithdrawalController.when_get)
 router.post('/trainees/:traineeId/withdraw/when', checkIsAuthenticated, traineeWithdrawalController.when_post)

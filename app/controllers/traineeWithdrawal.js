@@ -9,24 +9,6 @@ exports.start_get = async (req, res) => {
   })
 }
 
-// exports.start_post = async (req, res) => {
-//   const { traineeId } = req.params
-
-//   const errors = []
-
-//   if (errors.length) {
-//     res.render('trainees/withdraw/index', {
-//       errors,
-//       actions: {
-//         back: `/trainees/${traineeId}`,
-//         next: `/trainees/${traineeId}/withdraw/when`
-//       }
-//     })
-//   } else {
-//     res.redirect(`/trainees/${traineeId}/withdraw/when`)
-//   }
-// }
-
 exports.when_get = async (req, res) => {
   const { traineeId } = req.params
 

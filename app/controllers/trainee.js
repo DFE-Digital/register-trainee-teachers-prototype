@@ -1,4 +1,6 @@
 exports.show = async (req, res) => {
+  delete req.session.data.withdrawal
+
   const { traineeId } = req.params
 
   res.render('trainees/index', {

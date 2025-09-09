@@ -1,5 +1,6 @@
 exports.show = async (req, res) => {
   delete req.session.data.withdrawal
+  delete req.session.data.referrer
 
   const { traineeId } = req.params
 

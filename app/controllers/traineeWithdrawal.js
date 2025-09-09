@@ -155,6 +155,22 @@ exports.why_post = async (req, res) => {
       error.text = "Select why you had to withdraw the trainee"
     }
     errors.push(error)
+  } else {
+    if (withdrawal.why.includes('Safeguarding') && !withdrawal.safeguardingReason.length) {
+      const error = {}
+      error.fieldName = "safeguardingReason"
+      error.href = "#withdrawal-safeguarding-reason"
+      error.text = "Enter why you are withdrawing for safeguarding reasons"
+      errors.push(error)
+    }
+
+    if (withdrawal.why.includes('Another reason') && !withdrawal.anotherReason.length) {
+      const error = {}
+      error.fieldName = "anotherReason"
+      error.href = "#withdrawal-another-reason"
+      error.text = "Enter why you are withdrawing for another reason"
+      errors.push(error)
+    }
   }
 
   if (errors.length) {
@@ -183,6 +199,15 @@ exports.why_post = async (req, res) => {
 
 exports.interested_get = async (req, res) => {
   const { traineeId } = req.params
+  const { withdrawal } = req.session.data
+
+  if (!withdrawal.why.includes('Safeguarding')) {
+    delete req.session.data.withdrawal.safeguardingReason
+  }
+
+  if (!withdrawal.why.includes('Another reason')) {
+    delete req.session.data.withdrawal.anotherReason
+  }
 
   let back = `/trainees/${traineeId}/withdraw/why`
   let next = `/trainees/${traineeId}/withdraw/interested`
@@ -235,6 +260,15 @@ exports.interested_post = async (req, res) => {
 
 exports.check_get = async (req, res) => {
   const { traineeId } = req.params
+  const { withdrawal } = req.session.data
+
+  if (!withdrawal.why.includes('Safeguarding')) {
+    delete req.session.data.withdrawal.safeguardingReason
+  }
+
+  if (!withdrawal.why.includes('Another reason')) {
+    delete req.session.data.withdrawal.anotherReason
+  }
 
   res.render('trainees/withdraw/check-your-answers', {
     actions: {

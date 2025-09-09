@@ -22,6 +22,93 @@
 
     <form action="{{ actions.next }}" method="post" accept-charset="utf-8" novalidate>
 
+      {% set reasonsWhyHtml %}
+        <ul class="govuk-list govuk-list--bullet">
+          {% for reason in data.withdrawal.why %}
+            <li>
+              {{ reason }}
+              {% if reason == "Safeguarding" %}
+                <p class="govuk-body">{{ data.withdrawal.safeguardingReason }}</p>
+              {% elif reason == "Another reason" %}
+                <p class="govuk-body">{{ data.withdrawal.anotherReason }}</p>
+              {% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+      {% endset %}
+
+      {{ govukSummaryList({
+        rows: [
+          {
+            key: {
+              text: "When did the trainee withdraw?"
+            },
+            value: {
+              text: data.withdrawal.when
+            },
+            actions: {
+              items: [
+                {
+                  href: actions.change + "/when?referrer=check",
+                  text: "Change",
+                  visuallyHiddenText: "when the trainee withdrew"
+                }
+              ]
+            }
+          },
+          {
+            key: {
+              text: "Why are you withdrawing the trainee?"
+            },
+            value: {
+              text: data.withdrawal.who
+            },
+            actions: {
+              items: [
+                {
+                  href: actions.change + "/who?referrer=check",
+                  text: "Change",
+                  visuallyHiddenText: "why you are withdrawing the trainee"
+                }
+              ]
+            }
+          },
+          {
+            key: {
+              text: "Why did you have to withdraw the trainee?"
+            },
+            value: {
+              html: reasonsWhyHtml
+            },
+            actions: {
+              items: [
+                {
+                  href: actions.change + "/why?referrer=check",
+                  text: "Change",
+                  visuallyHiddenText: "the reasons why you had to withraw the trainee"
+                }
+              ]
+            }
+          },
+          {
+            key: {
+              text: "Would this trainee be interested in becoming a teacher in the future?"
+            },
+            value: {
+              text: data.withdrawal.interested
+            },
+            actions: {
+              items: [
+                {
+                  href: actions.change + "/interested?referrer=check",
+                  text: "Change",
+                  visuallyHiddenText: "if this trainee would be interested in becoming a teacher in the future"
+                }
+              ]
+            }
+          }
+        ]
+      }) }}
 
       {{ govukButton({
         text: "Withdraw this trainee"

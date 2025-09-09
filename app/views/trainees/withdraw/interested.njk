@@ -20,10 +20,37 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
-    {% include "_includes/page-heading.njk" %}
+    {% set headingHtml %}
+      {% include "_includes/page-heading-legend.njk" %}
+    {% endset %}
 
     <form action="{{ actions.next }}" method="post" accept-charset="utf-8" novalidate>
 
+      {{ govukRadios({
+        name: "withdrawal[interested]",
+        fieldset: {
+          legend: {
+            html: headingHtml,
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--l"
+          }
+        },
+        value: data.withdrawal.interested,
+        items: [
+          {
+            value: "Yes",
+            text: "Yes"
+          },
+          {
+            value: "No",
+            text: "No"
+          },
+          {
+            value: "I don’t know",
+            text: "I don’t know"
+          }
+        ]
+      }) }}
 
       {{ govukButton({
         text: "Continue"

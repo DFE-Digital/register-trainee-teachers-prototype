@@ -20,10 +20,111 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
-    {% include "_includes/page-heading.njk" %}
+    {% set headingHtml %}
+      {% include "_includes/page-heading-legend.njk" %}
+    {% endset %}
 
     <form action="{{ actions.next }}" method="post" accept-charset="utf-8" novalidate>
 
+      {% set safeguardingHtml %}
+        {{ govukTextarea({
+          id: "withdrawal-safeguarding-reason",
+          name: "withdrawal[safeguardingReason]",
+          label: {
+            text: "Enter the reason",
+            isPageHeading: false,
+            classes: "govuk-label--s"
+          },
+          hint: {
+            text: "We may contact you to discuss this further"
+          },
+          value: data.withdrawal.safeguardingReason
+        }) }}
+      {% endset %}
+
+      {% set anotherReasonHtml %}
+        {{ govukTextarea({
+          id: "withdrawal-another-reason",
+          name: "withdrawal[anotherReason]",
+          label: {
+            text: "Enter the reason",
+            isPageHeading: false,
+            classes: "govuk-label--s"
+          },
+          hint: {
+            text: "We may contact you to discuss this further"
+          },
+          value: data.withdrawal.anotherReason
+        }) }}
+      {% endset %}
+
+      {{ govukCheckboxes({
+        name: "withdrawal[why]",
+        fieldset: {
+          legend: {
+            html: headingHtml,
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--l"
+          }
+        },
+        hint: {
+          text: "Select all that apply"
+        },
+        values: data.withdrawal.why,
+        items: [
+          {
+            value: "This training record was added in error",
+            text: "This training record was added in error"
+          },
+          {
+            value: "Trainee removed for mandatory reasons",
+            text: "Trainee removed for mandatory reasons",
+            hint: {
+              text: "For example, lack of right to work, DBS issues"
+            }
+          },
+          {
+            value: "They stopped attending/communicating",
+            text: "They stopped attending/communicating"
+          },
+          {
+            value: "Trainee behaviour or attitude",
+            text: "Trainee behaviour or attitude",
+            hint: {
+              text: "For example, fitness to practise"
+            }
+          },
+          {
+            value: "Lack of progress during placements",
+            text: "Lack of progress during placements"
+          },
+          {
+            value: "Lack of academic progress",
+            text: "Lack of academic progress"
+          },
+          {
+            value: "Not meeting QTS standards",
+            text: "Not meeting QTS standards"
+          },
+          {
+            value: "Safeguarding",
+            text: "Safeguarding",
+            conditional: {
+              html: safeguardingHtml
+            }
+          },
+          {
+            divider: "or"
+          },
+          {
+            value: "Another reason",
+            text: "Another reason",
+            conditional: {
+              html: anotherReasonHtml
+            }
+          }
+        ]
+      }) }}
 
       {{ govukButton({
         text: "Continue"

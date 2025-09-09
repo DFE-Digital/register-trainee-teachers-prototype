@@ -131,6 +131,7 @@ exports.check_get = async (req, res) => {
   res.render('trainees/withdraw/check-your-answers', {
     actions: {
       back: `/trainees/${traineeId}/withdraw/interested`,
+      change: `/trainees/${traineeId}/withdraw`,
       next: `/trainees/${traineeId}/withdraw/check`
     }
   })

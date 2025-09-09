@@ -3,7 +3,11 @@
 {% set primaryNavId = "SOMETHING" %}
 {% set secondaryNavId = "about" %}
 
-{% set title = "Why did you have to withdraw the trainee?" %}
+{% if data.withdrawal.who == "The trainee chose to withdraw" %}
+  {% set title = "Why did the trainee choose to withdraw?" %}
+{% else %}
+  {% set title = "Why did you have to withdraw the trainee?" %}
+{% endif %}
 {% set caption = "Gladia Delmarre" %}
 
 {% block beforeContent %}
@@ -38,6 +42,7 @@
           hint: {
             text: "We may contact you to discuss this further"
           },
+          errorMessage: errors | getErrorMessage("safeguardingReason"),
           value: data.withdrawal.safeguardingReason
         }) }}
       {% endset %}
@@ -54,6 +59,7 @@
           hint: {
             text: "We may contact you to discuss this further"
           },
+          errorMessage: errors | getErrorMessage("anotherReason"),
           value: data.withdrawal.anotherReason
         }) }}
       {% endset %}
@@ -70,6 +76,7 @@
         hint: {
           text: "Select all that apply"
         },
+        errorMessage: errors | getErrorMessage("why"),
         values: data.withdrawal.why,
         items: [
           {

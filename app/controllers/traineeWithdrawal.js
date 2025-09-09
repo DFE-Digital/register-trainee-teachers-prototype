@@ -12,10 +12,17 @@ exports.start_get = async (req, res) => {
 exports.when_get = async (req, res) => {
   const { traineeId } = req.params
 
+  let back = `/trainees/${traineeId}`
+  let next = `/trainees/${traineeId}/withdraw/when`
+  if (req.query?.referrer === 'check') {
+    back = `/trainees/${traineeId}/withdrawal/check`
+    next += '?referrer=check'
+  }
+
   res.render('trainees/withdraw/when', {
     actions: {
-      back: `/trainees/${traineeId}`,
-      next: `/trainees/${traineeId}/withdraw/when`
+      back,
+      next
     }
   })
 }
@@ -26,25 +33,43 @@ exports.when_post = async (req, res) => {
   const errors = []
 
   if (errors.length) {
+    let back = `/trainees/${traineeId}`
+    let next = `/trainees/${traineeId}/withdraw/when`
+    if (req.query?.referrer === 'check') {
+      back = `/trainees/${traineeId}/withdrawal/check`
+      next += '?referrer=check'
+    }
+
     res.render('trainees/withdraw/when', {
       errors,
       actions: {
-        back: `/trainees/${traineeId}`,
-        next: `/trainees/${traineeId}/withdraw/when`
+        back,
+        next
       }
     })
   } else {
-    res.redirect(`/trainees/${traineeId}/withdraw/who`)
+    if (req.query?.referrer === 'check') {
+      res.redirect(`/trainees/${traineeId}/withdraw/check`)
+    } else {
+      res.redirect(`/trainees/${traineeId}/withdraw/who`)
+    }
   }
 }
 
 exports.who_get = async (req, res) => {
   const { traineeId } = req.params
 
+  let back = `/trainees/${traineeId}/withdraw/when`
+  let next = `/trainees/${traineeId}/withdraw/who`
+  if (req.query?.referrer === 'check') {
+    back = `/trainees/${traineeId}/withdrawal/check`
+    next += '?referrer=check'
+  }
+
   res.render('trainees/withdraw/who', {
     actions: {
-      back: `/trainees/${traineeId}/withdraw/when`,
-      next: `/trainees/${traineeId}/withdraw/who`
+      back,
+      next
     }
   })
 }
@@ -55,25 +80,43 @@ exports.who_post = async (req, res) => {
   const errors = []
 
   if (errors.length) {
+    let back = `/trainees/${traineeId}/withdraw/when`
+    let next = `/trainees/${traineeId}/withdraw/who`
+    if (req.query?.referrer === 'check') {
+      back = `/trainees/${traineeId}/withdrawal/check`
+      next += '?referrer=check'
+    }
+
     res.render('trainees/withdraw/who', {
       errors,
       actions: {
-        back: `/trainees/${traineeId}/withdraw/when`,
-        next: `/trainees/${traineeId}/withdraw/who`
+        back,
+        next
       }
     })
   } else {
-    res.redirect(`/trainees/${traineeId}/withdraw/why`)
+    if (req.query?.referrer === 'check') {
+      res.redirect(`/trainees/${traineeId}/withdraw/check`)
+    } else {
+      res.redirect(`/trainees/${traineeId}/withdraw/why`)
+    }
   }
 }
 
 exports.why_get = async (req, res) => {
   const { traineeId } = req.params
 
+  let back = `/trainees/${traineeId}/withdraw/who`
+  let next = `/trainees/${traineeId}/withdraw/why`
+  if (req.query?.referrer === 'check') {
+    back = `/trainees/${traineeId}/withdrawal/check`
+    next += '?referrer=check'
+  }
+
   res.render('trainees/withdraw/why', {
     actions: {
-      back: `/trainees/${traineeId}/withdraw/who`,
-      next: `/trainees/${traineeId}/withdraw/why`
+      back,
+      next
     }
   })
 }
@@ -84,25 +127,43 @@ exports.why_post = async (req, res) => {
   const errors = []
 
   if (errors.length) {
+    let back = `/trainees/${traineeId}/withdraw/who`
+    let next = `/trainees/${traineeId}/withdraw/why`
+    if (req.query?.referrer === 'check') {
+      back = `/trainees/${traineeId}/withdrawal/check`
+      next += '?referrer=check'
+    }
+
     res.render('trainees/withdraw/why', {
       errors,
       actions: {
-        back: `/trainees/${traineeId}/withdraw/who`,
-        next: `/trainees/${traineeId}/withdraw/why`
+        back,
+        next
       }
     })
   } else {
-    res.redirect(`/trainees/${traineeId}/withdraw/interested`)
+    if (req.query?.referrer === 'check') {
+      res.redirect(`/trainees/${traineeId}/withdraw/check`)
+    } else {
+      res.redirect(`/trainees/${traineeId}/withdraw/interested`)
+    }
   }
 }
 
 exports.interested_get = async (req, res) => {
   const { traineeId } = req.params
 
+  let back = `/trainees/${traineeId}/withdraw/why`
+  let next = `/trainees/${traineeId}/withdraw/interested`
+  if (req.query?.referrer === 'check') {
+    back = `/trainees/${traineeId}/withdrawal/check`
+    next += '?referrer=check'
+  }
+
   res.render('trainees/withdraw/interested', {
     actions: {
-      back: `/trainees/${traineeId}/withdraw/why`,
-      next: `/trainees/${traineeId}/withdraw/interested`
+      back,
+      next
     }
   })
 }
@@ -113,11 +174,18 @@ exports.interested_post = async (req, res) => {
   const errors = []
 
   if (errors.length) {
+    let back = `/trainees/${traineeId}/withdraw/why`
+    let next = `/trainees/${traineeId}/withdraw/interested`
+    if (req.query?.referrer === 'check') {
+      back = `/trainees/${traineeId}/withdrawal/check`
+      next += '?referrer=check'
+    }
+
     res.render('trainees/withdraw/interested', {
       errors,
       actions: {
-        back: `/trainees/${traineeId}/withdraw/why`,
-        next: `/trainees/${traineeId}/withdraw/interested`
+        back,
+        next
       }
     })
   } else {

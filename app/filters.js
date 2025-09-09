@@ -101,6 +101,15 @@ addFilter('getMonth', getMonth)
 addFilter('getYear', getYear)
 
 /* ------------------------------------------------------------------
+ convert array to JavaScript date object
+ example: {{ [1,2,2023] | arrayToDateObject }}
+ outputs: 2023-02-01T00:00:00.000Z
+------------------------------------------------------------------ */
+addFilter('arrayToDateObject', (array) => {
+  return new Date(array[2], array[1] - 1, array[0])
+})
+
+/* ------------------------------------------------------------------
 utility function to parse markdown as HTML
 example: {{ "## Title" | markdownToHtml }}
 outputs: "<h2>Title</h2>"

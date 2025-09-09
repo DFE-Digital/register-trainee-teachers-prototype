@@ -4,6 +4,7 @@ exports.start_get = async (req, res) => {
   res.render('trainees/withdraw/index', {
     actions: {
       back: `/trainees/${traineeId}`,
+      cancel: `/trainees/${traineeId}`,
       next: `/trainees/${traineeId}/withdraw/when`
     }
   })
@@ -22,6 +23,7 @@ exports.when_get = async (req, res) => {
   res.render('trainees/withdraw/when', {
     actions: {
       back,
+      cancel: `/trainees/${traineeId}`,
       next
     }
   })
@@ -61,6 +63,7 @@ exports.when_post = async (req, res) => {
       errors,
       actions: {
         back,
+        cancel: `/trainees/${traineeId}`,
         next
       }
     })
@@ -86,6 +89,7 @@ exports.who_get = async (req, res) => {
   res.render('trainees/withdraw/who', {
     actions: {
       back,
+      cancel: `/trainees/${traineeId}`,
       next
     }
   })
@@ -117,6 +121,7 @@ exports.who_post = async (req, res) => {
       errors,
       actions: {
         back,
+        cancel: `/trainees/${traineeId}`,
         next
       }
     })
@@ -142,6 +147,7 @@ exports.why_get = async (req, res) => {
   res.render('trainees/withdraw/why', {
     actions: {
       back,
+      cancel: `/trainees/${traineeId}`,
       next
     }
   })
@@ -193,6 +199,7 @@ exports.why_post = async (req, res) => {
       errors,
       actions: {
         back,
+        cancel: `/trainees/${traineeId}`,
         next
       }
     })
@@ -227,6 +234,7 @@ exports.interested_get = async (req, res) => {
   res.render('trainees/withdraw/interested', {
     actions: {
       back,
+      cancel: `/trainees/${traineeId}`,
       next
     }
   })
@@ -258,6 +266,7 @@ exports.interested_post = async (req, res) => {
       errors,
       actions: {
         back,
+        cancel: `/trainees/${traineeId}`,
         next
       }
     })
@@ -281,6 +290,7 @@ exports.check_get = async (req, res) => {
   res.render('trainees/withdraw/check-your-answers', {
     actions: {
       back: `/trainees/${traineeId}/withdraw/interested`,
+      cancel: `/trainees/${traineeId}`,
       change: `/trainees/${traineeId}/withdraw`,
       next: `/trainees/${traineeId}/withdraw/check`
     }

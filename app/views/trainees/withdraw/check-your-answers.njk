@@ -27,7 +27,7 @@
           {% for reason in data.withdrawal.why %}
             <li>
               {{ reason }}
-              {% if reason == "Safeguarding" %}
+              {% if reason == "Safeguarding concerns" %}
                 <p class="govuk-body">{{ data.withdrawal.safeguardingReason }}</p>
               {% elif reason == "Another reason" %}
                 <p class="govuk-body">{{ data.withdrawal.anotherReason }}</p>

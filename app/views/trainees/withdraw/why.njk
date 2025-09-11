@@ -8,7 +8,7 @@
 {% else %}
   {% set title = "Why did you have to withdraw the trainee?" %}
 {% endif %}
-{% set caption = "Gladia Delmarre" %}
+{% set caption = "Withdraw trainee - Gladia Delmarre" %}
 
 {% block beforeContent %}
 {{ govukBackLink({
@@ -114,8 +114,8 @@
             text: "Not meeting QTS standards"
           },
           {
-            value: "Safeguarding",
-            text: "Safeguarding",
+            value: "Safeguarding concerns",
+            text: "Safeguarding concerns",
             conditional: {
               html: safeguardingHtml
             }

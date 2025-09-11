@@ -28,6 +28,8 @@
 
       {% set anotherDateHtml %}
         {{ govukDateInput({
+          id: "withdrawalDate",
+          namePrefix: "withdrawal[anotherDate]",
           fieldset: {
             legend: {
               text: "Date trainee withdrew",
@@ -41,28 +43,26 @@
           errorMessage: errors | getErrorMessage("withdrawalDate"),
           items: [
             {
-              id: "withdrawalDate",
-              name: "withdrawal[anotherDate][day]",
+              name: "day",
               label: "Day",
-              value: data.withdrawal.anotherDate.day,
+              value: data.withdrawal.anotherDate[0],
               classes: "govuk-input--width-2" + (" govuk-input--error" if errors | getErrorMessage("withdrawalDate"))
             },
             {
-              id: "withdrawalDate",
-              name: "withdrawal[anotherDate][month]",
+              name: "month",
               label: "Month",
-              value: data.withdrawal.anotherDate.month,
+              value: data.withdrawal.anotherDate[1],
               classes: "govuk-input--width-2" + (" govuk-input--error" if errors | getErrorMessage("withdrawalDate"))
             },
             {
-              id: "withdrawalDate",
-              name: "withdrawal[anotherDate][year]",
+              name: "year",
               label: "Year",
-              value: data.withdrawal.anotherDate.year,
+              value: data.withdrawal.anotherDate[2],
               classes: "govuk-input--width-4" + (" govuk-input--error" if errors | getErrorMessage("withdrawalDate"))
             }
           ]
         }) }}
+
       {% endset %}
 
       {{ govukRadios({

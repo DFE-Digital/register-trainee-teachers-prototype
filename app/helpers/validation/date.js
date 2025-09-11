@@ -297,19 +297,19 @@ const validateDateInput = (parts, opts) => {
  * Normalise date input that may arrive as an array [d, m, y] or an object
  * { day, month, year } into a consistent object shape.
  *
- * @param {unknown} anotherDate - e.g. ['1','9','2025'] or {day:'1', month:'9', year:'2025'}
+ * @param {unknown} inputDate - e.g. ['1','9','2025'] or {day:'1', month:'9', year:'2025'}
  * @returns {DateParts} - Always returns an object with day/month/year (possibly undefined).
  *
  * @example
  * getDateParts(['1','9','2025']); // { day:'1', month:'9', year:'2025' }
  */
-const getDateParts = (anotherDate) => {
-  if (Array.isArray(anotherDate)) {
-    return { day: anotherDate[0], month: anotherDate[1], year: anotherDate[2] }
+const getDateParts = (inputDate) => {
+  if (Array.isArray(inputDate)) {
+    return { day: inputDate[0], month: inputDate[1], year: inputDate[2] }
   }
-  if (anotherDate && typeof anotherDate === 'object') {
+  if (inputDate && typeof inputDate === 'object') {
     // @ts-ignore - index access ok at runtime
-    return { day: anotherDate.day, month: anotherDate.month, year: anotherDate.year }
+    return { day: inputDate.day, month: inputDate.month, year: inputDate.year }
   }
   return { day: undefined, month: undefined, year: undefined }
 }

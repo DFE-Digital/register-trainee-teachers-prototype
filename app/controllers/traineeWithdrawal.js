@@ -50,8 +50,8 @@ exports.when_post = async (req, res) => {
     });
   }
 
-  let isoDate = null;
-  let fieldFlags = null;
+  let isoDate = null
+  let fieldFlags = null
 
   if (withdrawal.when === 'Another date') {
     const { day, month, year } = getDateParts(withdrawal.anotherDate);
@@ -68,22 +68,22 @@ exports.when_post = async (req, res) => {
     );
 
     if (!result.valid) {
-      errors.push(result.summaryError);
-      fieldFlags = result.fieldFlags || null;
+      errors.push(result.summaryError)
+      fieldFlags = result.fieldFlags || null
     } else {
-      isoDate = result.iso;
+      isoDate = result.iso
     }
   }
 
   // Today / Yesterday
   if (withdrawal.when === 'Today') {
-    const t = todayUTC();
-    isoDate = toISO(t.getUTCFullYear(), t.getUTCMonth()+1, t.getUTCDate());
+    const t = todayUTC()
+    isoDate = toISO(t.getUTCFullYear(), t.getUTCMonth()+1, t.getUTCDate())
   }
   if (withdrawal.when === 'Yesterday') {
-    const t = todayUTC();
-    t.setUTCDate(t.getUTCDate() - 1);
-    isoDate = toISO(t.getUTCFullYear(), t.getUTCMonth()+1, t.getUTCDate());
+    const t = todayUTC()
+    t.setUTCDate(t.getUTCDate() - 1)
+    isoDate = toISO(t.getUTCFullYear(), t.getUTCMonth()+1, t.getUTCDate())
   }
 
   if (errors.length) {

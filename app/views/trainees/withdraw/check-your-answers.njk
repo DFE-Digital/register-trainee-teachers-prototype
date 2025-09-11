@@ -39,7 +39,7 @@
 
       {% set withdrawWhenText %}
         {% if data.withdrawal.when == "Another date" %}
-          {% set withdrawalDate = [data.withdrawal.anotherDate.day, data.withdrawal.anotherDate.month, data.withdrawal.anotherDate.year] | arrayToDateObject | govukDate %}
+          {% set withdrawalDate = data.withdrawal.anotherDate | arrayToDateObject | govukDate %}
           {{ withdrawalDate }}
         {% else %}
           {{ data.withdrawal.when }}

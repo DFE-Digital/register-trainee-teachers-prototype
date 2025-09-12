@@ -67,7 +67,7 @@
           },
           {
             key: {
-              text: "Why are you withdrawing the trainee?"
+              text: "Who chose to withdraw the trainee?"
             },
             value: {
               text: data.withdrawal.who
@@ -84,7 +84,7 @@
           },
           {
             key: {
-              text: "Why did the trainee choose to withdraw" if data.withdrawal.who == "The trainee chose to withdraw" else "Why did you have to withdraw the trainee?"
+              text: "Why did the trainee withdraw?" if data.withdrawal.who == "The trainee chose to withdraw" else "Why did you withdraw the trainee?"
             },
             value: {
               html: reasonsWhyHtml
@@ -101,7 +101,7 @@
           },
           {
             key: {
-              text: "Would this trainee be interested in becoming a teacher in the future?"
+              text: "Would the trainee be interested in becoming a teacher in the future?"
             },
             value: {
               text: data.withdrawal.interested

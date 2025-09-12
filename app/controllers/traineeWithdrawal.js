@@ -23,7 +23,7 @@ exports.when_get = async (req, res) => {
   let back = `/trainees/${traineeId}`
   let next = `/trainees/${traineeId}/withdraw/when`
   if (req.query?.referrer === 'check') {
-    back = `/trainees/${traineeId}/withdrawal/check`
+    back = `/trainees/${traineeId}/withdraw/check`
     next += '?referrer=check'
   }
 
@@ -91,7 +91,7 @@ exports.when_post = async (req, res) => {
     let back = `/trainees/${traineeId}`
     let next = `/trainees/${traineeId}/withdraw/when`
     if (req.query?.referrer === 'check') {
-      back = `/trainees/${traineeId}/withdrawal/check`
+      back = `/trainees/${traineeId}/withdraw/check`
       next += '?referrer=check'
     }
 
@@ -115,11 +115,12 @@ exports.when_post = async (req, res) => {
 
 exports.who_get = async (req, res) => {
   const { traineeId } = req.params
+  req.session.data.tempWithdrawal = req.session.data.withdrawal
 
   let back = `/trainees/${traineeId}/withdraw/when`
   let next = `/trainees/${traineeId}/withdraw/who`
   if (req.query?.referrer === 'check') {
-    back = `/trainees/${traineeId}/withdrawal/check`
+    back = `/trainees/${traineeId}/withdraw/check`
     next += '?referrer=check'
   }
 
@@ -135,6 +136,7 @@ exports.who_get = async (req, res) => {
 exports.who_post = async (req, res) => {
   const { traineeId } = req.params
   const { withdrawal } = req.session.data
+  const { tempWithdrawal } = req.session.data
 
   const errors = []
 
@@ -150,7 +152,7 @@ exports.who_post = async (req, res) => {
     let back = `/trainees/${traineeId}/withdraw/when`
     let next = `/trainees/${traineeId}/withdraw/who`
     if (req.query?.referrer === 'check') {
-      back = `/trainees/${traineeId}/withdrawal/check`
+      back = `/trainees/${traineeId}/withdraw/check`
       next += '?referrer=check'
     }
 
@@ -164,7 +166,11 @@ exports.who_post = async (req, res) => {
     })
   } else {
     if (req.query?.referrer === 'check') {
-      res.redirect(`/trainees/${traineeId}/withdraw/check`)
+      if (withdrawal.who === tempWithdrawal.who) {
+        res.redirect(`/trainees/${traineeId}/withdraw/check`)
+      } else {
+        res.redirect(`/trainees/${traineeId}/withdraw/why?referrer=check`)
+      }
     } else {
       res.redirect(`/trainees/${traineeId}/withdraw/why`)
     }
@@ -173,11 +179,17 @@ exports.who_post = async (req, res) => {
 
 exports.why_get = async (req, res) => {
   const { traineeId } = req.params
+  const { withdrawal } = req.session.data
+  const { tempWithdrawal } = req.session.data
 
   let back = `/trainees/${traineeId}/withdraw/who`
   let next = `/trainees/${traineeId}/withdraw/why`
   if (req.query?.referrer === 'check') {
-    back = `/trainees/${traineeId}/withdrawal/check`
+    // if (withdrawal.who === tempWithdrawal.who) {
+      back = `/trainees/${traineeId}/withdraw/check`
+    // } else {
+    //   back = `/trainees/${traineeId}/withdraw/who?referrer=check`
+    // }
     next += '?referrer=check'
   }
 
@@ -228,7 +240,7 @@ exports.why_post = async (req, res) => {
     let back = `/trainees/${traineeId}/withdraw/who`
     let next = `/trainees/${traineeId}/withdraw/why`
     if (req.query?.referrer === 'check') {
-      back = `/trainees/${traineeId}/withdrawal/check`
+      back = `/trainees/${traineeId}/withdraw/check`
       next += '?referrer=check'
     }
 
@@ -264,7 +276,7 @@ exports.interested_get = async (req, res) => {
   let back = `/trainees/${traineeId}/withdraw/why`
   let next = `/trainees/${traineeId}/withdraw/interested`
   if (req.query?.referrer === 'check') {
-    back = `/trainees/${traineeId}/withdrawal/check`
+    back = `/trainees/${traineeId}/withdraw/check`
     next += '?referrer=check'
   }
 
@@ -295,7 +307,7 @@ exports.interested_post = async (req, res) => {
     let back = `/trainees/${traineeId}/withdraw/why`
     let next = `/trainees/${traineeId}/withdraw/interested`
     if (req.query?.referrer === 'check') {
-      back = `/trainees/${traineeId}/withdrawal/check`
+      back = `/trainees/${traineeId}/withdraw/check`
       next += '?referrer=check'
     }
 

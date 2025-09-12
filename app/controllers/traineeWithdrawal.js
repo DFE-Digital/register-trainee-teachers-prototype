@@ -50,7 +50,7 @@ exports.when_post = async (req, res) => {
     });
   }
 
-  let isoDate = null
+  // let isoDate = null
   let fieldFlags = null
 
   if (withdrawal.when === 'Another date') {
@@ -70,21 +70,22 @@ exports.when_post = async (req, res) => {
     if (!result.valid) {
       errors.push(result.summaryError)
       fieldFlags = result.fieldFlags || null
-    } else {
-      isoDate = result.iso
     }
+    // else {
+    //   isoDate = result.iso
+    // }
   }
 
   // Today / Yesterday
-  if (withdrawal.when === 'Today') {
-    const t = todayUTC()
-    isoDate = toISO(t.getUTCFullYear(), t.getUTCMonth()+1, t.getUTCDate())
-  }
-  if (withdrawal.when === 'Yesterday') {
-    const t = todayUTC()
-    t.setUTCDate(t.getUTCDate() - 1)
-    isoDate = toISO(t.getUTCFullYear(), t.getUTCMonth()+1, t.getUTCDate())
-  }
+  // if (withdrawal.when === 'Today') {
+  //   const t = todayUTC()
+  //   isoDate = toISO(t.getUTCFullYear(), t.getUTCMonth()+1, t.getUTCDate())
+  // }
+  // if (withdrawal.when === 'Yesterday') {
+  //   const t = todayUTC()
+  //   t.setUTCDate(t.getUTCDate() - 1)
+  //   isoDate = toISO(t.getUTCFullYear(), t.getUTCMonth()+1, t.getUTCDate())
+  // }
 
   if (errors.length) {
     let back = `/trainees/${traineeId}`
@@ -141,7 +142,7 @@ exports.who_post = async (req, res) => {
     const error = {}
     error.fieldName = "who"
     error.href = "#withdrawal[who]"
-    error.text = "Select why you are withdrawing the trainee"
+    error.text = "Select who chose to withdraw the trainee"
     errors.push(error)
   }
 

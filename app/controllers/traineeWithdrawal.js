@@ -203,7 +203,7 @@ exports.why_post = async (req, res) => {
     if (withdrawal.who === 'The trainee chose to withdraw') {
       error.text = "Select why the trainee chose to withdraw"
     } else {
-      error.text = "Select why you had to withdraw the trainee"
+      error.text = "Select why you withdrew the trainee"
     }
     errors.push(error)
   } else {

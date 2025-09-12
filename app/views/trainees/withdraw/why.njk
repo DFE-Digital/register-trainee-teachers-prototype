@@ -64,74 +64,157 @@
         }) }}
       {% endset %}
 
-      {{ govukCheckboxes({
-        name: "withdrawal[why]",
-        fieldset: {
-          legend: {
-            html: headingHtml,
-            isPageHeading: true,
-            classes: "govuk-fieldset__legend--l"
-          }
-        },
-        hint: {
-          text: "Select all that apply"
-        },
-        errorMessage: errors | getErrorMessage("why"),
-        values: data.withdrawal.why,
-        items: [
-          {
-            value: "This training record was added in error",
-            text: "This training record was added in error"
-          },
-          {
-            value: "Trainee removed for mandatory reasons",
-            text: "Trainee removed for mandatory reasons",
-            hint: {
-              text: "For example, lack of right to work, DBS issues"
+      {% if data.withdrawal.who == "The trainee chose to withdraw" %}
+
+        {{ govukCheckboxes({
+          name: "withdrawal[why]",
+          fieldset: {
+            legend: {
+              html: headingHtml,
+              isPageHeading: true,
+              classes: "govuk-fieldset__legend--l"
             }
           },
-          {
-            value: "They stopped attending/communicating",
-            text: "They stopped attending/communicating"
+          hint: {
+            text: "Select all that apply"
           },
-          {
-            value: "Trainee behaviour or attitude",
-            text: "Trainee behaviour or attitude",
-            hint: {
-              text: "For example, fitness to practise"
+          errorMessage: errors | getErrorMessage("why"),
+          values: data.withdrawal.why,
+          items: [
+            {
+              value: "Trainee behaviour or attitude",
+              text: "Trainee behaviour or attitude",
+              hint: {
+                text: "For example, fitness to practise"
+              }
+            },
+            {
+              value: "Lack of academic progress",
+              text: "Lack of academic progress"
+            },
+            {
+              value: "Lack of progress during placements",
+              text: "Lack of progress during placements"
+            },
+            {
+              value: "Trainee workload issues",
+              text: "Trainee workload issues"
+            },
+            {
+              value: "Not meeting QTS standards",
+              text: "Not meeting QTS standards"
+            },
+            {
+              value: "Change in their personal or health situation",
+              text: "Change in their personal or health situation",
+              hint: {
+                text: "For example, financial or mental health issues"
+              }
+            },
+            {
+              value: "No longer want to pursue a teaching career",
+              text: "No longer want to pursue a teaching career"
+            },
+            {
+              value: "They never intended to obtain QTS",
+              text: "They never intended to obtain QTS"
+            },
+            {
+              value: "They moved to a different ITT course",
+              text: "They moved to a different ITT course"
+            },
+            {
+              value: "Safeguarding concerns",
+              text: "Safeguarding concerns",
+              conditional: {
+                html: safeguardingHtml
+              }
+            },
+            {
+              divider: "or"
+            },
+            {
+              value: "Another reason",
+              text: "Another reason",
+              conditional: {
+                html: anotherReasonHtml
+              }
+            }
+          ]
+        }) }}
+
+      {% else %}
+
+        {{ govukCheckboxes({
+          name: "withdrawal[why]",
+          fieldset: {
+            legend: {
+              html: headingHtml,
+              isPageHeading: true,
+              classes: "govuk-fieldset__legend--l"
             }
           },
-          {
-            value: "Lack of progress during placements",
-            text: "Lack of progress during placements"
+          hint: {
+            text: "Select all that apply"
           },
-          {
-            value: "Lack of academic progress",
-            text: "Lack of academic progress"
-          },
-          {
-            value: "Not meeting QTS standards",
-            text: "Not meeting QTS standards"
-          },
-          {
-            value: "Safeguarding concerns",
-            text: "Safeguarding concerns",
-            conditional: {
-              html: safeguardingHtml
+          errorMessage: errors | getErrorMessage("why"),
+          values: data.withdrawal.why,
+          items: [
+            {
+              value: "This training record was added in error",
+              text: "This training record was added in error"
+            },
+            {
+              value: "Trainee removed for mandatory reasons",
+              text: "Trainee removed for mandatory reasons",
+              hint: {
+                text: "For example, lack of right to work, DBS issues"
+              }
+            },
+            {
+              value: "They stopped attending/communicating",
+              text: "They stopped attending/communicating"
+            },
+            {
+              value: "Trainee behaviour or attitude",
+              text: "Trainee behaviour or attitude",
+              hint: {
+                text: "For example, fitness to practise"
+              }
+            },
+            {
+              value: "Lack of progress during placements",
+              text: "Lack of progress during placements"
+            },
+            {
+              value: "Lack of academic progress",
+              text: "Lack of academic progress"
+            },
+            {
+              value: "Not meeting QTS standards",
+              text: "Not meeting QTS standards"
+            },
+            {
+              value: "Safeguarding concerns",
+              text: "Safeguarding concerns",
+              conditional: {
+                html: safeguardingHtml
+              }
+            },
+            {
+              divider: "or"
+            },
+            {
+              value: "Another reason",
+              text: "Another reason",
+              conditional: {
+                html: anotherReasonHtml
+              }
             }
-          },
-          {
-            divider: "or"
-          },
-          {
-            value: "Another reason",
-            text: "Another reason",
-            conditional: {
-              html: anotherReasonHtml
-            }
-          }
-        ]
-      }) }}
+          ]
+        }) }}
+
+      {% endif %}
 
       {{ govukButton({
         text: "Continue"

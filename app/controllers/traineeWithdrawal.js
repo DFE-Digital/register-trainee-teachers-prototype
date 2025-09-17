@@ -219,7 +219,7 @@ exports.why_post = async (req, res) => {
     }
     errors.push(error)
   } else {
-    if (withdrawal.why.includes('Safeguarding') && !withdrawal.safeguardingReason.length) {
+    if (withdrawal.why.includes('Safeguarding concerns') && !withdrawal.safeguardingReason.length) {
       const error = {}
       error.fieldName = "safeguardingReason"
       error.href = "#withdrawal-safeguarding-reason"
@@ -265,7 +265,7 @@ exports.interested_get = async (req, res) => {
   const { traineeId } = req.params
   const { withdrawal } = req.session.data
 
-  if (!withdrawal.why.includes('Safeguarding')) {
+  if (!withdrawal.why.includes('Safeguarding concerns')) {
     delete req.session.data.withdrawal.safeguardingReason
   }
 
@@ -328,7 +328,7 @@ exports.check_get = async (req, res) => {
   const { traineeId } = req.params
   const { withdrawal } = req.session.data
 
-  if (!withdrawal.why.includes('Safeguarding')) {
+  if (!withdrawal.why.includes('Safeguarding concerns')) {
     delete req.session.data.withdrawal.safeguardingReason
   }
 

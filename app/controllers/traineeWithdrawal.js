@@ -299,7 +299,7 @@ exports.interested_post = async (req, res) => {
     const error = {}
     error.fieldName = "interested"
     error.href = "#withdrawal[interested]"
-    error.text = "Select if this trainee would be interested in becoming a teacher in the future"
+    error.text = "Select if the trainee would be interested in becoming a teacher in the future"
     errors.push(error)
   }
 

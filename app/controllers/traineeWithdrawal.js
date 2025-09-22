@@ -223,7 +223,7 @@ exports.why_post = async (req, res) => {
       const error = {}
       error.fieldName = "safeguardingReason"
       error.href = "#withdrawal-safeguarding-reason"
-      error.text = "Enter why you are withdrawing for safeguarding reasons"
+      error.text = "Enter why you are withdrawing for safeguarding concerns"
       errors.push(error)
     }
 

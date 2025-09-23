@@ -1,0 +1,135 @@
+{% extends "layouts/main.njk" %}
+
+{% set primaryNavId = "SOMETHING" %}
+{% set secondaryNavId = "about" %}
+
+{% set title = "Check withdrawal details" %}
+{% set caption = "Withdraw trainee - Gladia Delmarre" %}
+
+{% block beforeContent %}
+{{ govukBackLink({
+  text: "Back",
+  href: actions.back
+}) }}
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    {% include "_includes/page-heading.njk" %}
+
+    <form action="{{ actions.next }}" method="post" accept-charset="utf-8" novalidate>
+
+      {% set reasonsWhyHtml %}
+        <ul class="govuk-list govuk-list--spaced govuk-list--bullet">
+          {% for reason in data.withdrawal.why %}
+            <li>
+              {{ reason }}
+              {% if reason == "Safeguarding concerns" %}
+                <p class="govuk-body">{{ data.withdrawal.safeguardingReason }}</p>
+              {% elif reason == "Another reason" %}
+                <p class="govuk-body">{{ data.withdrawal.anotherReason }}</p>
+              {% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+      {% endset %}
+
+      {% set withdrawWhenText %}
+        {% if data.withdrawal.when == "Another date" %}
+          {% set withdrawalDate = data.withdrawal.anotherDate | arrayToDateObject | govukDate %}
+          {{ withdrawalDate }}
+        {% else %}
+          {{ data.withdrawal.when }}
+        {% endif %}
+      {% endset %}
+
+      {{ govukSummaryList({
+        rows: [
+          {
+            key: {
+              text: "When did the trainee withdraw?"
+            },
+            value: {
+              text: withdrawWhenText
+            },
+            actions: {
+              items: [
+                {
+                  href: actions.change + "/when?referrer=check",
+                  text: "Change",
+                  visuallyHiddenText: "when the trainee withdrew"
+                }
+              ]
+            }
+          },
+          {
+            key: {
+              text: "Who chose to withdraw the trainee?"
+            },
+            value: {
+              text: data.withdrawal.who
+            },
+            actions: {
+              items: [
+                {
+                  href: actions.change + "/who?referrer=check",
+                  text: "Change",
+                  visuallyHiddenText: "why you are withdrawing the trainee"
+                }
+              ]
+            }
+          },
+          {
+            key: {
+              text: "Why did the trainee withdraw?" if data.withdrawal.who == "The trainee chose to withdraw" else "Why did you withdraw the trainee?"
+            },
+            value: {
+              html: reasonsWhyHtml
+            },
+            actions: {
+              items: [
+                {
+                  href: actions.change + "/why?referrer=check",
+                  text: "Change",
+                  visuallyHiddenText: "the reasons why you had to withraw the trainee"
+                }
+              ]
+            }
+          },
+          {
+            key: {
+              text: "Would the trainee be interested in becoming a teacher in the future?"
+            },
+            value: {
+              text: data.withdrawal.interested
+            },
+            actions: {
+              items: [
+                {
+                  href: actions.change + "/interested?referrer=check",
+                  text: "Change",
+                  visuallyHiddenText: "if this trainee would be interested in becoming a teacher in the future"
+                }
+              ]
+            }
+          }
+        ]
+      }) }}
+
+      {{ govukButton({
+        text: "Withdraw trainee"
+      }) }}
+
+    </form>
+
+    <p class="govuk-body">
+      <a class="govuk-link" href="{{ actions.cancel }}">Cancel and return to record</a>
+    </p>
+
+  </div>
+</div>
+
+{% endblock %}

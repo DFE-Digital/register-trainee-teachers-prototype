@@ -1,0 +1,111 @@
+{% extends "layouts/main.njk" %}
+
+{% set primaryNavId = "SOMETHING" %}
+{% set secondaryNavId = "about" %}
+
+{% set title = "When did the trainee withdraw?" %}
+{% set caption = "Withdraw trainee - Gladia Delmarre" %}
+
+{% block beforeContent %}
+{{ govukBackLink({
+  text: "Back",
+  href: actions.back
+}) }}
+{% endblock %}
+
+{% block content %}
+
+{% include "_includes/error-summary.njk" %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    {% set headingHtml %}
+      {% include "_includes/page-heading-legend.njk" %}
+    {% endset %}
+
+    <form action="{{ actions.next }}" method="post" accept-charset="utf-8" novalidate>
+
+      {% set anotherDateHtml %}
+        {{ govukDateInput({
+          id: "withdrawalDate",
+          namePrefix: "withdrawal[anotherDate]",
+          fieldset: {
+            legend: {
+              text: "Date trainee withdrew",
+              isPageHeading: false,
+              classes: "govuk-fieldset__legend--s"
+            }
+          },
+          hint: { text: "For example, 21 3 2023" },
+          errorMessage: errors | getErrorMessage("withdrawalDate"),
+          items: [
+            {
+              name: "day",
+              label: "Day",
+              value: (data.withdrawal.anotherDate and data.withdrawal.anotherDate[0]) or '',
+              classes: "govuk-input--width-2" + (" govuk-input--error" if withdrawalDateFieldErrors.day else "")
+            },
+            {
+              name: "month",
+              label: "Month",
+              value: (data.withdrawal.anotherDate and data.withdrawal.anotherDate[1]) or '',
+              classes: "govuk-input--width-2" + (" govuk-input--error" if withdrawalDateFieldErrors.month else "")
+            },
+            {
+              name: "year",
+              label: "Year",
+              value: (data.withdrawal.anotherDate and data.withdrawal.anotherDate[2]) or '',
+              classes: "govuk-input--width-4" + (" govuk-input--error" if withdrawalDateFieldErrors.year else "")
+            }
+          ]
+        }) }}
+      {% endset %}
+
+      {{ govukRadios({
+        name: "withdrawal[when]",
+        fieldset: {
+          legend: {
+            html: headingHtml,
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--l"
+          }
+        },
+        hint: {
+          text: "This is the last day they trained for QTS"
+        },
+        errorMessage: errors | getErrorMessage("when"),
+        value: data.withdrawal.when,
+        items: [
+          {
+            value: "Today",
+            text: "Today"
+          },
+          {
+            value: "Yesterday",
+            text: "Yesterday"
+          },
+          {
+            value: "Another date",
+            text: "Another date",
+            conditional: {
+              html: anotherDateHtml
+            }
+          }
+        ]
+      }) }}
+
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+
+    </form>
+
+    <p class="govuk-body">
+      <a class="govuk-link" href="{{ actions.cancel }}">Cancel and return to record</a>
+    </p>
+
+  </div>
+</div>
+
+{% endblock %}

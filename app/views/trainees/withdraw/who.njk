@@ -1,0 +1,65 @@
+{% extends "layouts/main.njk" %}
+
+{% set primaryNavId = "SOMETHING" %}
+{% set secondaryNavId = "about" %}
+
+{% set title = "Who chose to withdraw the trainee?" %}
+{% set caption = "Withdraw trainee - Gladia Delmarre" %}
+
+{% block beforeContent %}
+{{ govukBackLink({
+  text: "Back",
+  href: actions.back
+}) }}
+{% endblock %}
+
+{% block content %}
+
+{% include "_includes/error-summary.njk" %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    {% set headingHtml %}
+      {% include "_includes/page-heading-legend.njk" %}
+    {% endset %}
+
+    <form action="{{ actions.next }}" method="post" accept-charset="utf-8" novalidate>
+
+      {{ govukRadios({
+        name: "withdrawal[who]",
+        fieldset: {
+          legend: {
+            html: headingHtml,
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--l"
+          }
+        },
+        errorMessage: errors | getErrorMessage("who"),
+        value: data.withdrawal.who,
+        items: [
+          {
+            value: "We chose to withdraw the trainee",
+            text: "We chose to withdraw the trainee"
+          },
+          {
+            value: "The trainee chose to withdraw",
+            text: "The trainee chose to withdraw"
+          }
+        ]
+      }) }}
+
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+
+    </form>
+
+    <p class="govuk-body">
+      <a class="govuk-link" href="{{ actions.cancel }}">Cancel and return to record</a>
+    </p>
+
+  </div>
+</div>
+
+{% endblock %}

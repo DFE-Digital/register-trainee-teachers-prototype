@@ -2,6 +2,8 @@
 
 {% set govukRebrand = true %}
 
+{% from "_components/secondary-navigation/macro.njk" import appSecondaryNavigation %}
+
 {% block pageTitle -%}
   {{ "Error: " if errors }}{{ subtitle + " - " if subtitle }}{{ title + " - " if title }}{{ caption + " - " if caption }}{{ serviceName }} - GOV.UK
 {%- endblock %}
@@ -17,10 +19,44 @@
     containerClasses: "govuk-width-container"
   }) }}
 
+  {% set navigationEndHtml %}
+    <li class="govuk-service-navigation__item {{- ' govuk-service-navigation__item--active' if primaryNavId == 'account' }} app-service-navigation__align-right">
+      <a class="govuk-service-navigation__link" href="#" {{- ' aria-current="true"' if primaryNavId == "account" }}>Support</a>
+    </li>
+    <li class="govuk-service-navigation__item">
+      <a class="govuk-service-navigation__link" href="/">Sign out</a>
+    </li>
+  {% endset %}
+
   {{ govukServiceNavigation({
     navigationId: "primaryNavigation",
     serviceName: serviceName,
-    serviceUrl: "/"
+    serviceUrl: "/",
+    navigation: [
+      {
+        text: "Home",
+        href: "#",
+        active: primaryNavId == "home"
+      },
+      {
+        text: "Draft trainees",
+        href: "#",
+        active: primaryNavId == "draftTrainees"
+      },
+      {
+        text: "Registered trainees",
+        href: "#",
+        active: primaryNavId == "registeredTrainees"
+      },
+      {
+        text: "Reports",
+        href: "#",
+        active: primaryNavId == "reports"
+      }
+    ],
+    slots: {
+      navigationEnd: navigationEndHtml
+    }
   }) }}
 
   {% include "_includes/phase-banner.njk" %}

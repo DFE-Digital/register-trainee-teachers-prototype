@@ -1,0 +1,50 @@
+{% extends "govuk-prototype-kit/layouts/govuk-branded.njk" %}
+
+{% set govukRebrand = true %}
+
+{% from "_components/secondary-navigation/macro.njk" import appSecondaryNavigation %}
+
+{% block pageTitle -%}
+  {{ "Error: " if errors }}{{ subtitle + " - " if subtitle }}{{ title + " - " if title }}{{ caption + " - " if caption }}{{ serviceName }} - GOV.UK
+{%- endblock %}
+
+{% block head %}
+  {% include "_includes/head.njk" %}
+{% endblock %}
+
+{% block header %}
+  {{ govukHeader({
+    rebrand: true,
+    homepageUrl: "/",
+    containerClasses: "govuk-width-container"
+  }) }}
+
+  {{ govukServiceNavigation({
+    navigationId: "primaryNavigation",
+    serviceName: serviceName,
+    serviceUrl: "/",
+    navigation: [
+      {
+        text: "API documentation",
+        href: "/docs/api",
+        active: primaryNavId == "api"
+      },
+      {
+        text: "CSV documentation",
+        href: "/docs/csv",
+        active: primaryNavId == "csv"
+      },
+      {
+        text: "Reference data",
+        href: "/docs/reference-data",
+        active: primaryNavId == "referenceData"
+      }
+    ]
+  }) }}
+
+  {% include "_includes/phase-banner.njk" %}
+{% endblock %}
+
+{% block footer %}
+  {% include "_includes/footer.njk" %}
+{% endblock %}

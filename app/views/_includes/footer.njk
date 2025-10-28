@@ -1,4 +1,19 @@
 
 {{ govukFooter({
-  rebrand: true
+  rebrand: true,
+  meta: {
+    items: [
+    {
+      href: "/docs/api",
+      text: "API documentation"
+    },
+    {
+      href: "/docs/csv",
+      text: "CSV documentation"
+    },
+    {
+      href: "/docs/reference-data",
+      text: "Reference data"
+    }] if not hideFooterLinks
+  }
 }) }}

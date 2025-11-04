@@ -7,7 +7,9 @@
   "scripts": {
     "dev": "govuk-prototype-kit dev",
     "serve": "govuk-prototype-kit serve",
-    "start": "govuk-prototype-kit start"
+    "start": "govuk-prototype-kit start",
+    "lint:md": "markdownlint --config .markdownlintrc 'app/views/docs/**/*.md'",
+    "lint:md:fix": "markdownlint --config .markdownlintrc --fix 'app/views/docs/**/*.md'"
   },
   "dependencies": {
     "connect-flash": "^0.1.1",
@@ -19,5 +21,8 @@
     "marked": "^16.4.1",
     "marked-gfm-heading-id": "^4.1.2",
     "numeral": "^2.0.6"
+  },
+  "devDependencies": {
+    "markdownlint-cli": "^0.45.0"
   }
 }

@@ -5,6 +5,7 @@ $app-assets-path: "/public/";
 
 // Styles that aren't in the GOV.UK Frontend or local components
 @import "core/markdown";
+@import "core/documentation";
 
 // Utilities
 @import "utilities/overrides";

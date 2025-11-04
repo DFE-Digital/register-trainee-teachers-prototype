@@ -1,0 +1,29 @@
+// Documentation navigation styles
+
+.app-docs-nav {
+  // Ensure navigation items wrap within their container
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+
+  // Prevent horizontal overflow
+  max-width: 100%;
+  overflow: hidden;
+
+  .govuk-list {
+    margin: 0;
+    padding: 0;
+  }
+
+  .govuk-list li {
+    // Add consistent spacing between list items
+    margin-bottom: govuk-spacing(2);
+  }
+
+  .govuk-link {
+    // Ensure links wrap properly
+    word-break: break-word;
+    hyphens: auto;
+    display: inline-block;
+    max-width: 100%;
+  }
+}

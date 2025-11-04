@@ -27,3 +27,30 @@
     max-width: 100%;
   }
 }
+
+// Documentation content styles
+
+.app-docs-content {
+  // Prevent horizontal overflow in content area
+  max-width: 100%;
+  overflow: hidden;
+
+  // Ensure headings wrap properly
+  h1, h2, h3, h4, h5, h6 {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    hyphens: auto;
+  }
+
+  // Specifically target long technical headings (like API endpoints)
+  .govuk-heading-xl,
+  .govuk-heading-l,
+  .govuk-heading-m,
+  .govuk-heading-s {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    hyphens: auto;
+  }
+}

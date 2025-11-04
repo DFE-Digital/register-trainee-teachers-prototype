@@ -5,7 +5,7 @@
 {% from "_components/secondary-navigation/macro.njk" import appSecondaryNavigation %}
 
 {% block pageTitle -%}
-  {{ "Error: " if errors }}{{ pageTitle + " - " if pageTitle }}{{ title + " - " if title }}{{ caption + " - " if caption }}{{ serviceName }} - GOV.UK
+  {{ "Error: " if errors }}{{ subtitle + " - " if subtitle }}{{ title + " - " if title }}{{ caption + " - " if caption }}{{ serviceName }} - GOV.UK
 {%- endblock %}
 
 {% block head %}

@@ -69,7 +69,7 @@ const renderDocPage = (docType, req, res, subPath = '') => {
     const currentSection = docType
 
     res.render(`docs/${docType}/index`, {
-      pageTitle: frontmatter.title,
+      subtitle: frontmatter.title,
       content: html,
       docType,
       currentSection,
@@ -153,7 +153,7 @@ const renderDocSubPage = (docType, req, res) => {
     }
 
     res.render(`docs/${docType}/index`, {
-      pageTitle: frontmatter.title,
+      subtitle: frontmatter.title,
       content: html,
       docType,
       versions,

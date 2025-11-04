@@ -1,17 +1,80 @@
 {% extends "layouts/docs.njk" %}
 
 {% set primaryNavId = "api" %}
+{% set title = "API documentation" %}
+
+{% block beforeContent %}
+  {{ govukBreadcrumbs({
+    items: [
+      {
+        text: "Home",
+        href: "/"
+      },
+      {
+        text: "API documentation"
+      }
+    ]
+  }) }}
+{% endblock %}
 
 {% block content %}
-
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-
-    <h1 class="govuk-heading-l">
-      API
-    </h1>
-
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <h1 class="govuk-heading-xl">{{ title }}</h1>
+    </div>
   </div>
-</div>
 
+  {# Version navigation #}
+  {% if versionNavigation.length > 0 %}
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+        {{ appSecondaryNavigation({
+          label: "API version navigation",
+          items: versionNavigation
+        }) }}
+      </div>
+    </div>
+  {% endif %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-third">
+      {# All sub-pages navigation #}
+      {% if allSubPages.length > 0 %}
+        <nav class="app-docs-nav" aria-label="API pages navigation">
+          <h2 class="govuk-heading-s">API pages</h2>
+          {% macro renderNavItems(items, depth) %}
+            <ul class="govuk-list govuk-list--spaced">
+              {% for item in items %}
+                <li>
+                  {% if item.isFile %}
+                    <a href="{{ item.href }}" class="govuk-link {% if item.href == currentPath %}govuk-!-font-weight-bold{% endif %}">
+                      {{ item.text }}
+                    </a>
+                  {% elif item.isDirectory %}
+                    <h3 class="govuk-heading-s govuk-!-margin-top-5">{{ item.text | capitalize }}</h3>
+                    {% if item.items and item.items.length > 0 %}
+                      {{ renderNavItems(item.items, depth + 1) }}
+                    {% endif %}
+                  {% else %}
+                    <a href="{{ item.href }}" class="govuk-link {% if item.href == currentPath %}govuk-!-font-weight-bold{% endif %}">
+                      {{ item.text }}
+                    </a>
+                  {% endif %}
+                </li>
+              {% endfor %}
+            </ul>
+          {% endmacro %}
+          {{ renderNavItems(allSubPages, 0) }}
+        </nav>
+      {% endif %}
+    </div>
+
+    <div class="govuk-grid-column-two-thirds">
+      <h2 class="govuk-heading-l">{{ pageTitle }}</h2>
+      {# Rendered markdown content #}
+      <div class="app-markdown">
+        {{ content | safe }}
+      </div>
+    </div>
+  </div>
 {% endblock %}

@@ -40,6 +40,7 @@ For instructions on how to authenticate, see the [API reference](/api-docs/v2025
 ## Design principles
 
 ### Trainee identifiers
+
 Trainees are identified in the API by an internally generated unique `id`
 value. The API uses the `id` to specify a particular trainee record. For
 example, the API endpoint that updates a single trainee record requires that

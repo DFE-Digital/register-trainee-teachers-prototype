@@ -5,7 +5,6 @@ weight: 16
 
 Updates an existing degree for this trainee.
 
-
 ## Request
 
 ```text

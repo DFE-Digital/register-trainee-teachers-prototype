@@ -47,7 +47,7 @@ const getMarkdownFiles = (dirPath, extension = '.md') => {
   try {
     const files = fs.readdirSync(dirPath)
     return files
-      .filter(file => file.endsWith(extension) || file.endsWith('.html.md'))
+      .filter(file => file.endsWith(extension))
       .map(file => path.join(dirPath, file))
   } catch (error) {
     console.error(`Error reading directory ${dirPath}:`, error)
@@ -84,7 +84,7 @@ const buildNavigationFromFiles = (dirPath, baseUrl, currentPath = '') => {
 
   return files.map(filePath => {
     const { frontmatter } = parseMarkdownFile(filePath)
-    const fileName = path.basename(filePath, '.html.md').replace('.md', '')
+    const fileName = path.basename(filePath, '.md')
     const href = fileName === 'index' ? baseUrl : `${baseUrl}/${fileName}`
 
     return {
@@ -134,12 +134,12 @@ const getAllMarkdownFilesRecursive = (dirPath, baseUrl, basePath) => {
 
     // First, process markdown files in the current directory
     const markdownFiles = entries
-      .filter(entry => entry.isFile() && (entry.name.endsWith('.md') || entry.name.endsWith('.html.md')))
+      .filter(entry => entry.isFile() && entry.name.endsWith('.md'))
       .map(entry => {
         const filePath = path.join(dirPath, entry.name)
         try {
           const { frontmatter } = parseMarkdownFile(filePath)
-          const fileName = entry.name.replace('.html.md', '').replace('.md', '')
+          const fileName = entry.name.replace('.md', '')
 
           // Calculate relative path from basePath
           const relativePath = path.relative(basePath, dirPath)

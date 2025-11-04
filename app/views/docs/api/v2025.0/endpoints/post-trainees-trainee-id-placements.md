@@ -7,7 +7,9 @@ Create a placement for this trainee.
 
 ## Request
 
-    POST /api/v2025.0/trainees/{trainee_id}/placements
+```text
+POST /api/v2025.0/trainees/{trainee_id}/placements
+```
 
 ## Parameters
 
@@ -33,14 +35,14 @@ Placement details
 <details class="govuk-details">
   <summary class="govuk-details__summary">Example request body</summary>
   <div class="govuk-details__text">
-    <pre class="json-code-sample">
-    {
-      "data": {
-        "urn": "343452",
-        "name": "Oxford School",
-        "postcode": "OX1 1AA"
-      }
-    }</pre>
+<pre class="json-code-sample">
+{
+  "data": {
+    "urn": "343452",
+    "name": "Oxford School",
+    "postcode": "OX1 1AA"
+  }
+}</pre>
   </div>
 </details>
 
@@ -49,57 +51,57 @@ Placement details
 <details class="govuk-details">
   <summary class="govuk-details__summary">HTTP 201<span> - A placement</span></summary>
   <div class="govuk-details__text">
-    <pre class="json-code-sample">
-    {
-      "data": {
-        "placement_id": "AXsRAS4LfwZZXvSX7aAfNUb4",
-        "school_id": 26214,
-        "urn": "123456",
-        "name": "Meadow Creek School",
-        "postcode": "AB1 2CD",
-        "created_at": "2024-01-18T08:02:42.672Z",
-        "updated_at": "2024-01-18T08:02:42.672Z"
-      }
-    }</pre>
+<pre class="json-code-sample">
+{
+  "data": {
+    "placement_id": "AXsRAS4LfwZZXvSX7aAfNUb4",
+    "school_id": 26214,
+    "urn": "123456",
+    "name": "Meadow Creek School",
+    "postcode": "AB1 2CD",
+    "created_at": "2024-01-18T08:02:42.672Z",
+    "updated_at": "2024-01-18T08:02:42.672Z"
+  }
+}</pre>
   </div>
 </details>
 
 <details class="govuk-details">
   <summary class="govuk-details__summary">HTTP 401<span> - Unauthorized</span></summary>
   <div class="govuk-details__text">
-    <pre class="json-code-sample">
-    {
-      "error": "Unauthorized"
-    }</pre>
+<pre class="json-code-sample">
+{
+  "error": "Unauthorized"
+}</pre>
   </div>
 </details>
 
 <details class="govuk-details">
   <summary class="govuk-details__summary">HTTP 404<span> - Not found</span></summary>
   <div class="govuk-details__text">
-    <pre class="json-code-sample">
+<pre class="json-code-sample">
+{
+  "errors": [
     {
-      "errors": [
-        {
-          "error": "NotFound",
-          "message": "Trainee(s) not found"
-        }
-      ]
-    }</pre>
+      "error": "NotFound",
+      "message": "Trainee(s) not found"
+    }
+  ]
+}</pre>
   </div>
 </details>
 
 <details class="govuk-details">
   <summary class="govuk-details__summary">HTTP 422<span> - Unprocessable Entity</span></summary>
   <div class="govuk-details__text">
-    <pre class="json-code-sample">
+<pre class="json-code-sample">
+{
+  "errors": [
     {
-      "errors": [
-        {
-          "error": "UnprocessableEntity",
-          "message": "Name can't be blank"
-        }
-      ]
-    }</pre>
+      "error": "UnprocessableEntity",
+      "message": "Name can't be blank"
+    }
+  ]
+}</pre>
   </div>
 </details>

@@ -7,7 +7,9 @@ Create a degree for this trainee.
 
 ## Request
 
-    POST /api/v2025.0/trainees/{trainee_id}/degrees
+```text
+POST /api/v2025.0/trainees/{trainee_id}/degrees
+```
 
 ## Parameters
 
@@ -33,17 +35,17 @@ Degree details
 <details class="govuk-details">
   <summary class="govuk-details__summary">Example request body</summary>
   <div class="govuk-details__text">
-    <pre class="json-code-sample">
-    {
-    "data": {
-      "grade": "02",
-      "subject": "100425",
-      "institution": "0117",
-      "uk_degree": "083",
-      "graduation_year": "2015-01-01",
-      "country": "GB"
-      }
-    }</pre>
+<pre class="json-code-sample">
+{
+"data": {
+  "grade": "02",
+  "subject": "100425",
+  "institution": "0117",
+  "uk_degree": "083",
+  "graduation_year": "2015-01-01",
+  "country": "GB"
+  }
+}</pre>
   </div>
 </details>
 
@@ -52,116 +54,115 @@ Degree details
 <details class="govuk-details">
   <summary class="govuk-details__summary">HTTP 201<span> - A degree</span></summary>
   <div class="govuk-details__text">
-    <pre class="json-code-sample">
+<pre class="json-code-sample">
+{
+  "data": [
     {
-      "data": [
-        {
-          "degree_id": "E1phsAcP3hDFMhx19qVGhchR",
-          "uk_degree": "083",
-          "non_uk_degree": null,
-          "created_at": "2024-01-18T08:02:41.955Z",
-          "updated_at": "2024-01-18T08:02:41.955Z",
-          "subject": "100425",
-          "institution": "0116",
-          "graduation_year": 2022,
-          "grade": "02",
-          "country": null,
-          "other_grade": null,
-          "institution_uuid": "0271f34a-2887-e711-80d8-005056ac45bb",
-          "uk_degree_uuid": "db695652-c197-e711-80d8-005056ac45bb",
-          "subject_uuid": "bf8170f0-5dce-e911-a985-000d3ab79618",
-          "grade_uuid": "e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f"
-        }
-      ]
-    }</pre>
+      "degree_id": "E1phsAcP3hDFMhx19qVGhchR",
+      "uk_degree": "083",
+      "non_uk_degree": null,
+      "created_at": "2024-01-18T08:02:41.955Z",
+      "updated_at": "2024-01-18T08:02:41.955Z",
+      "subject": "100425",
+      "institution": "0116",
+      "graduation_year": 2022,
+      "grade": "02",
+      "country": null,
+      "other_grade": null,
+      "institution_uuid": "0271f34a-2887-e711-80d8-005056ac45bb",
+      "uk_degree_uuid": "db695652-c197-e711-80d8-005056ac45bb",
+      "subject_uuid": "bf8170f0-5dce-e911-a985-000d3ab79618",
+      "grade_uuid": "e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f"
+    }
+  ]
+}</pre>
   </div>
 </details>
 
 <details class="govuk-details">
   <summary class="govuk-details__summary">HTTP 401<span> - Unauthorized</span></summary>
   <div class="govuk-details__text">
-    <pre class="json-code-sample">
-    {
-      "error": "Unauthorized"
-    }</pre>
+<pre class="json-code-sample">
+{
+  "error": "Unauthorized"
+}</pre>
   </div>
 </details>
 
 <details class="govuk-details">
   <summary class="govuk-details__summary">HTTP 404<span> - Not found</span></summary>
   <div class="govuk-details__text">
-    <pre class="json-code-sample">
+<pre class="json-code-sample">
+{
+  "errors": [
     {
-      "errors": [
-        {
-          "error": "NotFound",
-          "message": "Trainee(s) not found"
-        }
-      ]
-    }</pre>
+      "error": "NotFound",
+      "message": "Trainee(s) not found"
+    }
+  ]
+}</pre>
   </div>
 </details>
 
 <details class="govuk-details">
   <summary class="govuk-details__summary">HTTP 409<span> - Conflict</span></summary>
   <div class="govuk-details__text">
-    <pre class="json-code-sample">
+<pre class="json-code-sample">
+{
+  "errors": [
     {
-      "errors": [
-        {
-          "error": "Conflict",
-          "message": "This is a duplicate degree"
-        }
-      ],
-      "data": [
-        {
-          "uk_degree": null,
-          "non_uk_degree": null,
-          "created_at": "2025-02-17T15:43:01.197Z",
-          "updated_at": "2025-02-17T15:43:01.197Z",
-          "subject": "100734",
-          "institution": "0023",
-          "graduation_year": 2022,
-          "grade": "01",
-          "country": null,
-          "other_grade": null,
-          "institution_uuid": "dc70f34a-2887-e711-80d8-005056ac45bb",
-          "uk_degree_uuid": "3e042de2-a453-47dc-9452-90a23399e9ee",
-          "subject_uuid": "338370f0-5dce-e911-a985-000d3ab79618",
-          "grade_uuid": "8741765a-13d8-4550-a413-c5a860a59d25",
-          "degree_id": "ao53fi469ar7kjfc04uys0dc"
-        }
-      ]
-    }</pre>
+      "error": "Conflict",
+      "message": "This is a duplicate degree"
+    }
+  ],
+  "data": [
+    {
+      "uk_degree": null,
+      "non_uk_degree": null,
+      "created_at": "2025-02-17T15:43:01.197Z",
+      "updated_at": "2025-02-17T15:43:01.197Z",
+      "subject": "100734",
+      "institution": "0023",
+      "graduation_year": 2022,
+      "grade": "01",
+      "country": null,
+      "other_grade": null,
+      "institution_uuid": "dc70f34a-2887-e711-80d8-005056ac45bb",
+      "uk_degree_uuid": "3e042de2-a453-47dc-9452-90a23399e9ee",
+      "subject_uuid": "338370f0-5dce-e911-a985-000d3ab79618",
+      "grade_uuid": "8741765a-13d8-4550-a413-c5a860a59d25",
+      "degree_id": "ao53fi469ar7kjfc04uys0dc"
+    }
+  ]
+}</pre>
   </div>
 </details>
 
 <details class="govuk-details">
   <summary class="govuk-details__summary">HTTP 422<span> - Unprocessable Entity</span></summary>
   <div class="govuk-details__text">
-    <pre class="json-code-sample">
+<pre class="json-code-sample">
+{
+  "errors": [
     {
-      "errors": [
-        {
-          "error": "UnprocessableEntity",
-          "message": "Param is missing or the value is empty: data"
-        }
-      ]
-    }</pre>
+      "error": "UnprocessableEntity",
+      "message": "Param is missing or the value is empty: data"
+    }
+  ]
+}</pre>
   </div>
 </details>
 
 ## Degree duplication validations
+
 When creating a degree, a duplication validation is performed to ensure that duplicate degrees are not created. This validation checks the following fields:
 
-<ul class='govuk-list govuk-list--bullet'>
-  <li><code>subject</code></li>
-  <li><code>graduation_year</code></li>
-  <li><code>country</code></li>
-  <li><code>uk_degree</code></li>
-  <li><code>non_uk_degree</code></li>
-  <li><code>grade</code></li>
-</ul>
+- `subject`
+- `graduation_year`
+- `country`
+- `uk_degree`
+- `non_uk_degree`
+- `grade`
 
 If a degree with these exact fields already exists, it is considered a duplicate.
 

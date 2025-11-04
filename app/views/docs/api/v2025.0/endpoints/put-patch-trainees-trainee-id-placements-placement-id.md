@@ -7,11 +7,15 @@ Updates an existing placement for this trainee.
 
 ## Request
 
-    PUT /api/v2025.0/trainees/{trainee_id}/placements/{placement_id}
+```text
+PUT /api/v2025.0/trainees/{trainee_id}/placements/{placement_id}
+```
 
 or
 
-    PATCH /api/v2025.0/trainees/{trainee_id}/placements/{placement_id}
+```text
+PATCH /api/v2025.0/trainees/{trainee_id}/placements/{placement_id}
+```
 
 ## Parameters
 
@@ -38,13 +42,13 @@ Placement details
 <details class="govuk-details">
   <summary class="govuk-details__summary">Example request body</summary>
   <div class="govuk-details__text">
-    <pre class="json-code-sample">
-    {
-      "data": {
-        "urn": "137523",
-        "name": "Wellsway School"
-      }
-    }</pre>
+<pre class="json-code-sample">
+{
+  "data": {
+    "urn": "137523",
+    "name": "Wellsway School"
+  }
+}</pre>
   </div>
 </details>
 
@@ -53,57 +57,57 @@ Placement details
 <details class="govuk-details">
   <summary class="govuk-details__summary">HTTP 200<span> - A placement</span></summary>
   <div class="govuk-details__text">
-    <pre class="json-code-sample">
-    {
-      "data": {
-        "urn": "137523",
-        "name": "Wellsway School",
-        "address": "URN 137523",
-        "postcode": null,
-        "placement_id": 4fjxTZgHxFgzYrwB8L3UNRvM,
-        "created_at": "2024-03-19T22:23:48.619Z",
-        "updated_at": "2024-03-19T22:23:48.619Z"
-      }
-    }</pre>
+<pre class="json-code-sample">
+{
+  "data": {
+    "urn": "137523",
+    "name": "Wellsway School",
+    "address": "URN 137523",
+    "postcode": null,
+    "placement_id": 4fjxTZgHxFgzYrwB8L3UNRvM,
+    "created_at": "2024-03-19T22:23:48.619Z",
+    "updated_at": "2024-03-19T22:23:48.619Z"
+  }
+}</pre>
   </div>
 </details>
 
 <details class="govuk-details">
   <summary class="govuk-details__summary">HTTP 401<span> - Unauthorized</span></summary>
   <div class="govuk-details__text">
-    <pre class="json-code-sample">
-    {
-      "error": "Unauthorized"
-    }</pre>
+<pre class="json-code-sample">
+{
+  "error": "Unauthorized"
+}</pre>
   </div>
 </details>
 
 <details class="govuk-details">
   <summary class="govuk-details__summary">HTTP 404<span> - Not found</span></summary>
   <div class="govuk-details__text">
-    <pre class="json-code-sample">
+<pre class="json-code-sample">
+{
+  "errors": [
     {
-      "errors": [
-        {
-          "error": "NotFound",
-          "message": "Placement(s) not found"
-        }
-      ]
-    }</pre>
+      "error": "NotFound",
+      "message": "Placement(s) not found"
+    }
+  ]
+}</pre>
   </div>
 </details>
 
 <details class="govuk-details">
   <summary class="govuk-details__summary">HTTP 422<span> - Unprocessable Entity</span></summary>
   <div class="govuk-details__text">
-    <pre class="json-code-sample">
+<pre class="json-code-sample">
+{
+  "errors": [
     {
-      "errors": [
-        {
-          "error": "UnprocessableEntity",
-          "message": "Name can't be blank"
-        }
-      ]
-    }</pre>
+      "error": "UnprocessableEntity",
+      "message": "Name can't be blank"
+    }
+  ]
+}</pre>
   </div>
 </details>

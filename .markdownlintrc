@@ -1,0 +1,36 @@
+# Markdownlint configuration
+# For all rules, see: https://github.com/DavidAnson/markdownlint/blob/main/doc/Rules.md
+
+# Enable all rules by default
+default: true
+
+# MD003: Heading style - enforce ATX style headings (# Heading) rather than Setext (underlined)
+MD003:
+  style: "atx"
+
+# MD007: Unordered list indentation - enforce 2 space indent for nested lists
+MD007:
+  indent: 2
+
+# MD013: Line length - allow longer lines for readability, disable for code blocks and tables
+MD013:
+  line_length: 120
+  code_blocks: false
+  tables: false
+
+# MD024: Multiple headings with the same content - allow if not siblings (can repeat in different sections)
+MD024:
+  siblings_only: true
+
+# MD025: Multiple top-level headings in the same document - disabled as frontmatter contains title
+# Note: Files have YAML frontmatter with 'title' field followed by H1 in content
+MD025: false
+
+# MD033: Inline HTML - disabled as we may need HTML for prototypes
+MD033: false
+
+# MD034: Bare URLs - disabled as we sometimes need plain URLs without angle brackets
+MD034: false
+
+# MD041: First line in file should be a top-level heading - disabled due to frontmatter
+MD041: false

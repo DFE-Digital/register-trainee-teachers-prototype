@@ -1,0 +1,70 @@
+{% extends "layouts/docs.njk" %}
+
+{% set primaryNavId = "csv" %}
+{% set title = subtitle %}
+
+{% block beforeContent %}
+  {{ govukBreadcrumbs({
+    items: [
+      {
+        text: "Home",
+        href: "/"
+      },
+      {
+        text: "CSV documentation"
+      }
+    ]
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <h1 class="govuk-heading-xl">{{ subtitle }}</h1>
+    </div>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-quarter">
+      {# Version selector #}
+      {% if versions.length > 0 %}
+        <div class="govuk-form-group">
+          <label class="govuk-label govuk-label--s" for="version-select">
+            Version
+          </label>
+          <select class="govuk-select" id="version-select" name="version" onchange="window.location.href=this.value">
+            <option value="/docs/csv">Latest</option>
+            {% for version in versions %}
+              <option value="{{ version.path }}" {% if currentPath.includes(version.name) %}selected{% endif %}>
+                {{ version.name }}
+              </option>
+            {% endfor %}
+          </select>
+        </div>
+      {% endif %}
+
+      {# Sub-navigation #}
+      {% if subNavigation.length > 0 %}
+        <nav class="govuk-!-margin-top-6" aria-label="Section navigation">
+          <h2 class="govuk-heading-s">In this section</h2>
+          <ul class="govuk-list govuk-list--spaced">
+            {% for item in subNavigation %}
+              <li>
+                <a href="{{ item.href }}" class="govuk-link {% if item.href == currentPath %}govuk-!-font-weight-bold{% endif %}">
+                  {{ item.text }}
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
+        </nav>
+      {% endif %}
+    </div>
+
+    <div class="govuk-grid-column-three-quarters">
+      {# Rendered markdown content #}
+      <div class="app-markdown">
+        {{ content | safe }}
+      </div>
+    </div>
+  </div>
+{% endblock %}

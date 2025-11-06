@@ -1,0 +1,71 @@
+---
+title: CSV documentation
+weight: 1
+---
+
+## How to add trainee information to the bulk add new trainee CSV template
+
+Accredited higher education institution (HEI) training providers can register their trainees in bulk by creating
+trainee records and adding the required data.
+
+CSV bulk add new trainees is available in Register trainee teachers (Register) from the start of the 2025 to
+2026 academic year.
+
+### Download an empty CSV file template
+
+You must only use this CSV file template to register new trainees in Register trainee teachers (Register).
+
+If you use this to update already existing trainees, it will come back as an error.
+
+The CSV template uses HESA reference data.
+
+[Download empty bulk add new trainees CSV template](/bulk-update/add-trainees/empty-template.csv)
+
+### Use this guidance to complete the CSV file template
+
+Use the guidance to check how new trainee data maps between your student record system and Register, using the CSV
+upload found in the ‘Bulk updates section’ in Register.
+
+If mandatory fields are not filled in correctly, the CSV upload will come back as an error.
+
+#### 1. Download the CSV file template
+
+You can adapt this CSV file template to add trainee data directly from your student record system.
+
+If you’re adapting the CSV file template for a direct extract from your student record system, you can go directly
+to step 3.
+
+#### 2. Add new trainee details
+
+Open as a CSV file to add trainee details in bulk. There are 36 data fields. You will need to include trainee
+information such as:
+
+- personal information
+- course details
+- funding (if applicable)
+
+You can leave non mandatory rows or cells empty if you do not want to upload those fields.
+
+#### 3. Upload your trainee records
+
+Your trainee data is checked for the following, after you upload the file:
+
+- it’s contained within a valid CSV file structure
+- it does not contain duplicate trainee records
+- it matches valid reference data
+- it’s cross checked for invalid combinations of reference data between fields
+- mandatory fields are completed
+- conditional fields are completed if required
+
+This may take several minutes.
+
+We will notify you by email whether the upload has passed or failed. Emails are not currently sent from the CSV
+sandbox environment.
+
+You can also go back and check the status of new trainee files in Register.
+
+### Notification of changes
+
+Find out more on [Register’s news and updates](/service-updates) about any changes to trainee data fields when submitting trainee data directly to Register via the API or ‘Bulk add new trainees’ CSV template, for the upcoming 2025 to 2026 academic year.
+
+### Version

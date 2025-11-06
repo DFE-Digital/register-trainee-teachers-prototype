@@ -28,6 +28,7 @@ const passport = {
 /// ------------------------------------------------------------------------ ///
 /// Controller modules
 /// ------------------------------------------------------------------------ ///
+const documentationController = require('./controllers/documentation')
 const traineeController = require('./controllers/trainee')
 const traineeWithdrawalController = require('./controllers/traineeWithdrawal')
 
@@ -85,6 +86,22 @@ router.post('/trainees/:traineeId/withdraw/interested', checkIsAuthenticated, tr
 
 router.get('/trainees/:traineeId/withdraw/check', checkIsAuthenticated, traineeWithdrawalController.check_get)
 router.post('/trainees/:traineeId/withdraw/check', checkIsAuthenticated, traineeWithdrawalController.check_post)
+
+/// ------------------------------------------------------------------------ ///
+/// Documentation routes
+/// ------------------------------------------------------------------------ ///
+
+// API documentation routes (with wildcard for versioned pages)
+router.get('/docs/api', documentationController.api_get)
+router.get('/docs/api/*', documentationController.api_page_get)
+
+// CSV documentation routes
+router.get('/docs/csv', documentationController.csv_get)
+router.get('/docs/csv/*', documentationController.csv_page_get)
+
+// Reference data documentation routes
+router.get('/docs/reference-data', documentationController.referenceData_get)
+router.get('/docs/reference-data/*', documentationController.referenceData_page_get)
 
 /// ------------------------------------------------------------------------ ///
 ///

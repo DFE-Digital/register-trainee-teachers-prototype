@@ -66,6 +66,8 @@ You can also go back and check the status of new trainee files in Register.
 
 ### Notification of changes
 
-Find out more on [Register’s news and updates](/service-updates) about any changes to trainee data fields when submitting trainee data directly to Register via the API or ‘Bulk add new trainees’ CSV template, for the upcoming 2025 to 2026 academic year.
+Find out more on [Register’s news and updates](/service-updates) about any changes to trainee data fields when
+submitting trainee data directly to Register via the API or ‘Bulk add new trainees’ CSV template, for the upcoming
+2025 to 2026 academic year.
 
 ### Version

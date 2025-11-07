@@ -11,7 +11,9 @@ weight: 3
         string (limited to 24 characters)
       </p>
       <p class="govuk-body">
-        The unique ID of the degree in the Register system. Used to identify the degree when <a href="/api-docs/v2025.0/endpoints/put-patch-trainees-trainee-id-degrees-degree-id.html">updating</a> or <a href="/api-docs/v2025.0/endpoints/delete-trainees-trainee-id-degrees-degree-id.html">deleting</a>.
+        The unique ID of the degree in the Register system. Used to identify the degree when
+        <a href="/api-docs/v2025.0/endpoints/put-patch-trainees-trainee-id-degrees-degree-id.html">updating</a> or
+        <a href="/api-docs/v2025.0/endpoints/delete-trainees-trainee-id-degrees-degree-id.html">deleting</a>.
       </p>
       <p class="govuk-body">
         Example: <code>37T2Vm9aipqSVokbhWUMjedu</code>
@@ -86,7 +88,8 @@ weight: 3
         string (limited to 6 characters), required
       </p>
       <p class="govuk-body">
-        The degree subject. For those with complex previous degrees, return the major subject that you would have previously returned as degree subject 1. Coded according to
+        The degree subject. For those with complex previous degrees, return the major subject that you would have
+        previously returned as degree subject 1. Coded according to
         <a href="/reference-data/v2025.0/subject.html">Degree Subject reference data specification</a>.
       </p>
       <p class="govuk-body">

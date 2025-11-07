@@ -3,9 +3,12 @@ title: API documentation
 weight: 1
 ---
 
-This is Application Programming Interface (API) documentation for the Department for Education (DfE)’s Register trainee teachers (Register) service.
+This is Application Programming Interface (API) documentation for the Department for Education (DfE)’s Register trainee
+teachers (Register) service.
 
-The Register API has replaced the Higher Education Statistics Agency (HESA) service for teacher trainees from the 2025/26 collection cycle. All vendors of student record systems (SRS) and some training providers will need to make changes to integrate with Register.
+The Register API has replaced the Higher Education Statistics Agency (HESA) service for teacher trainees from the
+2025/26 collection cycle. All vendors of student record systems (SRS) and some training providers will need to make
+changes to integrate with Register.
 
 ## What this API is for
 

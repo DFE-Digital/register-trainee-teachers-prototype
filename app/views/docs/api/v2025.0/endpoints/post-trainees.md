@@ -84,7 +84,7 @@ Trainee details
   </div>
 </details>
 
-#### Possible responses
+### Possible responses
 
 <details class="govuk-details">
   <summary class="govuk-details__summary">HTTP 201<span> - A trainee</span></summary>
@@ -379,12 +379,15 @@ Trainee details
 
 ## Trainee duplication validations
 
-When creating a trainee, a duplication validation is performed to ensure that duplicate trainees are not created. A trainee will be flagged as a duplicate if:
+When creating a trainee, a duplication validation is performed to ensure that duplicate trainees are not created.
+A trainee will be flagged as a duplicate if:
 
 - there is an exact match on `date_of_birth` and `training_route` and `last_name` (ignoring case)
 - **and** their start date (based on `trainee_start_date` or `itt_start_date`) is in the same academic year
-- **and** there is a match on either `first_names` (ignoring case, punctuation, and special characters) or `email` (ignoring case)
+- **and** there is a match on either `first_names` (ignoring case, punctuation, and special characters) or `email`
+- (ignoring case)
 
 If the new trainee is flagged as a duplicate, an error message will be returned indicating it is a duplicate.
 
-This validation ensures that duplicate trainee records are not created, and helps to maintain the data accuracy and data integrity.
+This validation ensures that duplicate trainee records are not created, and helps to maintain the data accuracy and
+data integrity.

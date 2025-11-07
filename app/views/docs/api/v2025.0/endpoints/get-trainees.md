@@ -27,7 +27,7 @@ GET /api/v2025.0/trainees
 | **per_page** | query | integer | false | Number of records to return per page (default is 50) |
 | **sort_order** | query | string | false | Sort in ascending or descending order. Valid values are `asc` or `desc` (default is `desc`) |
 
-#### Possible responses
+### Possible responses
 
 <details class="govuk-details">
   <summary class="govuk-details__summary">HTTP 200<span> - An array of trainees</span></summary>

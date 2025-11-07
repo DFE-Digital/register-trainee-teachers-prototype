@@ -15,7 +15,8 @@ Originally released for testing as v2025.0-rc on 13 May 2025.
 
 - Checks for uniqueness of disabilities
 - Adds support for deferral reason to `POST /trainees/{trainee_id}/defer` endpoint
-- Updated `POST /trainees/{trainee_id}/withdraw` endpoint with new data requirements to support the new withdrawal journey
+- Updated `POST /trainees/{trainee_id}/withdraw` endpoint with new data requirements to support the new withdrawal
+journey
 - Added degree validation for `POST /trainees/{trainee_id}/recommend-for-qts` endpoint
 - Added support for Lead Partner UKPRN
 - Fixed placement creation when creating trainees
@@ -43,7 +44,8 @@ yet live but is available for testing.
 
 ## v0.1 — 22 April 2024
 
-The draft version of the Register API was released on 22 April 2024. This is the first version of the API and will be subject to changes which may not be backward compatible.
+The draft version of the Register API was released on 22 April 2024. This is the first version of the API and will be
+subject to changes which may not be backward compatible.
 
 ### Known issues
 

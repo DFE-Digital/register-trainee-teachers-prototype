@@ -33,21 +33,6 @@ The following new value has been added:
 | --- | --- |
 | 14 | Teacher Degree Apprenticeship |
 
-{# <table class="govuk-table">
-  <thead class="govuk-table__head">
-    <tr class="govuk-table__row">
-      <th scope="col" class="govuk-table__header">Code</th>
-      <th scope="col" class="govuk-table__header">Label</th>
-    </tr>
-  </thead>
-  <tbody class="govuk-table__body">
-    <tr class="govuk-table__row">
-      <td class="govuk-table__cell">14</td>
-      <td class="govuk-table__cell">Teacher Degree Apprenticeship </td>
-    </tr>
-  </tbody>
-</table> #}
-
 ### Removed values
 
 The following value has been removed and must no longer be used:
@@ -58,24 +43,10 @@ The following value has been removed and must no longer be used:
 | --- | --- |
 | 13 | Provider-led salaried postgraduate |
 
-{# <table class="govuk-table">
-  <thead class="govuk-table__head">
-    <tr class="govuk-table__row">
-      <th scope="col" class="govuk-table__header">Code</th>
-      <th scope="col" class="govuk-table__header">Label</th>
-    </tr>
-  </thead>
-  <tbody class="govuk-table__body">
-    <tr class="govuk-table__row">
-      <td class="govuk-table__cell">13</td>
-      <td class="govuk-table__cell">Provider-led salaried postgraduate</td>
-    </tr>
-  </tbody>
-</table> #}
-
 ### Updated values
 
-The following existing values have had their labels updated to improve clarity or reflect current policy. The codes have not changed.
+The following existing values have had their labels updated to improve clarity or reflect current policy. The codes
+have not changed.
 
 #### Fund code
 
@@ -84,28 +55,10 @@ The following existing values have had their labels updated to improve clarity o
 | 2 | Not eligible for student finance |
 | 7 | Eligible for student finance |
 
-{# <table class="govuk-table">
-  <thead class="govuk-table__head">
-    <tr class="govuk-table__row">
-      <th scope="col" class="govuk-table__header">Code</th>
-      <th scope="col" class="govuk-table__header">Label</th>
-    </tr>
-  </thead>
-  <tbody class="govuk-table__body">
-    <tr class="govuk-table__row">
-      <td class="govuk-table__cell">2</td>
-      <td class="govuk-table__cell">Not eligible for student finance</td>
-    </tr>
-    <tr class="govuk-table__row">
-      <td class="govuk-table__cell">7</td>
-      <td class="govuk-table__cell">Eligible for student finance</td>
-    </tr>
-  </tbody>
-</table> #}
-
 ### Unsupported values
 
-The following values are not currently supported by the Register service and must not be used. These have either never been accepted or are now explicitly excluded.
+The following values are not currently supported by the Register service and must not be used. These have either never
+been accepted or are now explicitly excluded.
 
 #### Nationality
 
@@ -175,28 +128,10 @@ The following values are not currently supported by the Register service and mus
 | 99801 | Teacher training qualification for further education or higher education |
 | 99803 | Teacher training qualification described as other |
 
-{# <table class="govuk-table">
-  <thead class="govuk-table__head">
-    <tr class="govuk-table__row">
-      <th scope="col" class="govuk-table__header">Code</th>
-      <th scope="col" class="govuk-table__header">Label</th>
-    </tr>
-  </thead>
-  <tbody class="govuk-table__body">
-    <tr class="govuk-table__row">
-      <td class="govuk-table__cell">99801</td>
-      <td class="govuk-table__cell">Teacher training qualification for further education or higher education </td>
-    </tr>
-    <tr class="govuk-table__row">
-      <td class="govuk-table__cell">99803</td>
-      <td class="govuk-table__cell">Teacher training qualification described as other </td>
-    </tr>
-  </tbody>
-</table> #}
-
 ### No changes
 
-The following reference data items have not changed. All existing values under these categories remain valid and supported:
+The following reference data items have not changed. All existing values under these categories remain valid and
+supported:
 
 - Age ranges (excluding unsupported codes listed above)
 - Awarding institution

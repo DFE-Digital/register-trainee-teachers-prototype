@@ -42,7 +42,8 @@ Withdraw details
       string, required
     </p>
     <p class="govuk-body">
-      Whether the trainee would be interested in resuming training in the future. Must be either <code>yes</code>, <code>no</code> or <code>unknown</code>.
+      Whether the trainee would be interested in resuming training in the future. Must be either <code>yes</code>,
+      <code>no</code> or <code>unknown</code>.
     </p>
     <p class="govuk-body">
       Example: <code>no</code>
@@ -70,8 +71,16 @@ Withdraw details
       array, required
     </p>
     <p class="govuk-body">
-      The reason(s) for the withdrawal. Valid values with trigger <code>trainee</code> are <code>unacceptable_behaviour</code>, <code>did_not_make_progress</code>, <code>lack_of_progress_during_placements</code>, <code>trainee_workload_issues</code>, <code>not_meeting_qts_standards</code>, <code>change_in_personal_or_health_circumstances</code>, <code>does_not_want_to_become_a_teacher</code>, <code>never_intended_to_obtain_qts</code>, <code>moved_to_different_itt_course</code>, <code>trainee_chose_to_withdraw_another_reason</code>.
-      Valid values with trigger <code>provider</code> are <code>record_added_in_error</code>, <code>mandatory_reasons</code>, <code>stopped_responding_to_messages</code>, <code>unacceptable_behaviour</code>, <code>lack_of_progress_during_placements</code>, <code>did_not_make_progress</code>, <code>not_meeting_qts_standards</code>, <code>had_to_withdraw_trainee_another_reason</code>.
+      The reason(s) for the withdrawal. Valid values with trigger <code>trainee</code> are
+      <code>unacceptable_behaviour</code>, <code>did_not_make_progress</code>,
+      <code>lack_of_progress_during_placements</code>, <code>trainee_workload_issues</code>,
+      <code>not_meeting_qts_standards</code>, <code>change_in_personal_or_health_circumstances</code>,
+      <code>does_not_want_to_become_a_teacher</code>, <code>never_intended_to_obtain_qts</code>,
+      <code>moved_to_different_itt_course</code>, <code>trainee_chose_to_withdraw_another_reason</code>.
+      Valid values with trigger <code>provider</code> are <code>record_added_in_error</code>,
+      <code>mandatory_reasons</code>, <code>stopped_responding_to_messages</code>, <code>unacceptable_behaviour</code>,
+      <code>lack_of_progress_during_placements</code>, <code>did_not_make_progress</code>,
+      <code>not_meeting_qts_standards</code>, <code>had_to_withdraw_trainee_another_reason</code>.
     </p>
     <p class="govuk-body">
       Example: <code>[`unacceptable_behaviour`]</code>
@@ -85,7 +94,9 @@ Withdraw details
       string, conditional
     </p>
     <p class="govuk-body">
-       The reason a trainee withdrew if the other values do not sufficiently describe why the trainee withdrew. Required if <code>reasons</code> include <code>trainee_chose_to_withdraw_another_reason</code> or <code>had_to_withdraw_trainee_another_reason</code>.
+       The reason a trainee withdrew if the other values do not sufficiently describe why the trainee withdrew.
+       Required if <code>reasons</code> include <code>trainee_chose_to_withdraw_another_reason</code> or
+       <code>had_to_withdraw_trainee_another_reason</code>.
     </p>
     <p class="govuk-body">
       Example: <code>Bespoke reason</code>

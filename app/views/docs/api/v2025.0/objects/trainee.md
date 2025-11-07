@@ -11,7 +11,8 @@ weight: 1
         string (limited to 24 characters)
       </p>
       <p class="govuk-body">
-        The unique ID of the trainee in the Register system. Used to identify the trainee when using endpoints which require a <code>trainee_id</code>.
+        The unique ID of the trainee in the Register system. Used to identify the trainee when using endpoints which
+        require a <code>trainee_id</code>.
       </p>
       <p class="govuk-body">
         Example: <code>37T2Vm9aipqSVokbhWUMjedu</code>
@@ -153,7 +154,8 @@ weight: 1
         string (limited to 80 characters), required
       </p>
       <p class="govuk-body">
-        This must be a trainee’s personal email address. DfE uses this to communicate to trainees after they have left their training course, for example, regarding their QTS.
+        This must be a trainee’s personal email address. DfE uses this to communicate to trainees after they have left
+        their training course, for example, regarding their QTS.
       </p>
       <p class="govuk-body">
         Example: <code>trainee123@example.com</code>
@@ -203,7 +205,8 @@ weight: 1
         string (limited to 3 characters), required
       </p>
       <p class="govuk-body">
-        The general qualification aim of the course in terms of qualifications and professional statuses. Coded according to the <a
+        The general qualification aim of the course in terms of qualifications and professional statuses. Coded
+        according to the <a
           href="/reference-data/v2025.0/itt-aim.html">ITT Aim reference data specification</a>
       </p>
       <p class="govuk-body">
@@ -260,8 +263,10 @@ weight: 1
       <p class="govuk-body">
         Notes:
         Where the course maximum age is 11 or less as stated in <code>course_age_range</code>,
-        we expect <code>course_subject_one</code> to be “Primary Teaching”. We will automatically apply HESA code <code>100511</code> if you have not already done so.
-        Any subjects provided in the trainee details will be shifted to <code>course_subject_two</code> and <code>course_subject_three</code>.
+        we expect <code>course_subject_one</code> to be “Primary Teaching”. We will automatically apply HESA code
+        <code>100511</code> if you have not already done so.
+        Any subjects provided in the trainee details will be shifted to <code>course_subject_two</code> and
+        <code>course_subject_three</code>.
         Where trainees study a primary specialism, a valid HECoS code should be used in this field.
       </p>
       <p class="govuk-body">
@@ -445,7 +450,8 @@ weight: 1
       </p>
       <p class="govuk-body">
        Note: If <code>trainee_start_date</code> is not provided, it will be automatically
-        set to the value of <code>itt_start_date</code>. The <code>trainee_start_date</code> is validated to ensure it is not
+        set to the value of <code>itt_start_date</code>. The <code>trainee_start_date</code> is validated to ensure
+        it is not
         more than 10 years in the past, and cannot be in the future unless it matches <code>itt_start_date</code>.
       </p>
       <p class="govuk-body">

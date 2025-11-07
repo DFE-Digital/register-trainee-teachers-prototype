@@ -18,7 +18,7 @@ GET /api/v2025.0/trainees/{trainee_id}/degrees/{degree_id}
 | **trainee_id** | path    | string   | true         | The unique ID of the trainee |
 | **degree_id**  | path    | string   | true         | The unique ID of the degree  |
 
-#### Possible responses
+### Possible responses
 
 <details class="govuk-details">
   <summary class="govuk-details__summary">HTTP 200<span> - A degree</span></summary>

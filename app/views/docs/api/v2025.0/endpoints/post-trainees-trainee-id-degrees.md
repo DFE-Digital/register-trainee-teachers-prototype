@@ -155,7 +155,8 @@ Degree details
 
 ## Degree duplication validations
 
-When creating a degree, a duplication validation is performed to ensure that duplicate degrees are not created. This validation checks the following fields:
+When creating a degree, a duplication validation is performed to ensure that duplicate degrees are not created.
+This validation checks the following fields:
 
 - `subject`
 - `graduation_year`
@@ -166,4 +167,5 @@ When creating a degree, a duplication validation is performed to ensure that dup
 
 If a degree with these exact fields already exists, it is considered a duplicate.
 
-This validation ensures that duplicate degree records for the same trainee are not created, and helps to maintain the data accuracy and data integrity.
+This validation ensures that duplicate degree records for the same trainee are not created, and helps to maintain the
+data accuracy and data integrity.

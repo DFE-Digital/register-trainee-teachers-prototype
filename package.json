@@ -9,7 +9,9 @@
     "serve": "govuk-prototype-kit serve",
     "start": "govuk-prototype-kit start",
     "lint:md": "markdownlint --config .markdownlintrc 'app/views/docs/**/*.md'",
-    "lint:md:fix": "markdownlint --config .markdownlintrc --fix 'app/views/docs/**/*.md'"
+    "lint:md:fix": "markdownlint --config .markdownlintrc --fix 'app/views/docs/**/*.md'",
+    "lint": "npm run lint:md",
+    "lint:fix": "npm run lint:md:fix"
   },
   "dependencies": {
     "connect-flash": "^0.1.1",

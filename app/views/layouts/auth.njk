@@ -1,0 +1,45 @@
+{% extends "govuk-prototype-kit/layouts/govuk-branded.njk" %}
+
+{% set govukRebrand = true %}
+
+{% set hidePrimaryNavigation = true %}
+
+{% block pageTitle %}
+  {{ title + " - " if title }}{{ caption + " - " if caption }}{{ serviceName }} - GOV.UK
+{% endblock %}
+
+{% block head %}
+  {% include "_includes/head.njk" %}
+{% endblock %}
+
+{% block header %}
+  {{ govukHeader({
+    rebrand: true,
+    homepageUrl: "/",
+    containerClasses: "govuk-width-container"
+  }) }}
+
+  {% set navigationEndHtml %}
+    <li class="govuk-service-navigation__item {{- ' govuk-service-navigation__item--active' if primaryNavId == 'account' }} app-service-navigation__align-right">
+      <a class="govuk-service-navigation__link" href="/account" {{- ' aria-current="true"' if primaryNavId == "account" }}>Your account</a>
+    </li>
+    <li class="govuk-service-navigation__item">
+      <a class="govuk-service-navigation__link" href="/">Sign out</a>
+    </li>
+  {% endset %}
+
+  {{ govukServiceNavigation({
+    navigationId: "primaryNavigation",
+    serviceName: serviceName,
+    serviceUrl: "/",
+    slots: {
+      navigationEnd: navigationEndHtml
+    } if not hideAccountNavigation
+  }) }}
+
+  {% include "_includes/phase-banner.njk" %}
+{% endblock %}
+
+{% block footer %}
+  {% include "_includes/footer.njk" %}
+{% endblock %}

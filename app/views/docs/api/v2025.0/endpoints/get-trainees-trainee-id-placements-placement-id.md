@@ -13,8 +13,8 @@ GET /api/v2025.0/trainees/{trainee_id}/placements/{placement_id}
 
 ## Parameters
 
-| **Parameter** | **In**  | **Type** | **Required** | **Description** |
-| ------------- | ------- | -------- | ------------ | --------------- |
+| **Parameter** | **In** | **Type** | **Required** | **Description** |
+| --- | --- | --- | --- | --- |
 | **trainee_id** | path | string | true | The unique ID of the trainee |
 | **placement_id** | path | string | true | The unique ID of the placement |
 

@@ -17,8 +17,8 @@ GET /api/v2025.0/trainees
 
 ## Parameters
 
-| **Parameter** | **In**  | **Type** | **Required** | **Description** |
-| ------------- | ------- | -------- | ------------ | --------------- |
+| **Parameter** | **In** | **Type** | **Required** | **Description** |
+| --- | --- | --- | --- | --- |
 | **academic_cycle** | query | string | false | The academic cycle year (default is the current academic cycle). |
 | **status** | query | string | false | Include only trainees with a particular status. Valid values are `course_not_yet_started`, `in_training`,  `deferred`, `awarded`,  `withdrawn` |
 | **since** | query | string | false | Include only trainees changed or created on or since a date and time. DateTimes should be in ISO 8601 format. |

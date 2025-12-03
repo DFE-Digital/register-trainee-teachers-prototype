@@ -14,7 +14,7 @@ POST /api/v2025.0/trainees/{trainee_id}/recommend-for-qts
 ## Parameters
 
 | **Parameter** | **In** | **Type** | **Required** | **Description** |
-| ------------- | ------- | -------- | ------------ | --------------- |
+| --- | --- | --- | --- | --- |
 | **trainee_id** | path | string | true | The unique ID of the trainee |
 
 ## Request body

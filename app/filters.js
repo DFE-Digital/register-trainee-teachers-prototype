@@ -16,6 +16,10 @@ const {
   getYear
 } = require('./helpers/date')
 
+const {
+  getFeedbackRatingLabel
+} = require('./helpers/content')
+
 /* ------------------------------------------------------------------
   numeral filter for use in Nunjucks
   example: {{ params.number | numeral("0,00.0") }}
@@ -134,3 +138,10 @@ addFilter('markdownToHtml', (markdown) => {
 
   return govukHtml
 })
+
+/* ------------------------------------------------------------------
+utility function to get the feedback rating label
+example: {{ 5 | getFeedbackRatingLabel }}
+outputs: "Very satisfiled"
+------------------------------------------------------------------ */
+addFilter('getFeedbackRatingLabel', getFeedbackRatingLabel)

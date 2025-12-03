@@ -29,6 +29,7 @@ const passport = {
 /// Controller modules
 /// ------------------------------------------------------------------------ ///
 const documentationController = require('./controllers/documentation')
+const feedbackController = require('./controllers/feedback')
 const traineeController = require('./controllers/trainee')
 const traineeWithdrawalController = require('./controllers/traineeWithdrawal')
 
@@ -102,6 +103,18 @@ router.get('/docs/csv/*', documentationController.csv_page_get)
 // Reference data documentation routes
 router.get('/docs/reference-data', documentationController.referenceData_get)
 router.get('/docs/reference-data/*', documentationController.referenceData_page_get)
+
+/// ------------------------------------------------------------------------ ///
+/// FEEDBACK ROUTES
+/// ------------------------------------------------------------------------ ///
+
+router.get('/feedback', feedbackController.newFeedback_get)
+router.post('/feedback', feedbackController.newFeedback_post)
+
+router.get('/feedback/check', feedbackController.newFeedbackCheck_get)
+router.post('/feedback/check', feedbackController.newFeedbackCheck_post)
+
+router.get('/feedback/confirmation', feedbackController.newFeedbackConfirmation_get)
 
 /// ------------------------------------------------------------------------ ///
 ///

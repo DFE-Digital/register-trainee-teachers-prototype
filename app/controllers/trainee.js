@@ -8,7 +8,8 @@ exports.show = async (req, res) => {
     actions: {
       back: '#',
       defer: `/trainees/${traineeId}/defer`,
-      withdraw: `/trainees/${traineeId}/withdraw`
+      withdraw: `/trainees/${traineeId}/withdraw`,
+      outcome: `/trainees/${traineeId}/outcome/when`
     }
   })
 }

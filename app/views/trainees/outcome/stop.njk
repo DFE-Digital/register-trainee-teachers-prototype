@@ -1,0 +1,37 @@
+{% extends "layouts/main.njk" %}
+
+{% set primaryNavId = "" %}
+{% set secondaryNavId = "" %}
+
+{% set title = "You cannot update the QTS status" %}
+{% set caption = "Update QTS status - Gladia Delmarre" %}
+
+{% block beforeContent %}
+{{ govukBackLink({
+  text: "Back",
+  href: actions.back
+}) }}
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    {% include "_includes/page-heading.njk" %}
+
+    <p class="govuk-body">
+      You cannot update the QTS status for Gladia Delmarre because the trainee is missing placement information.
+    </p>
+
+    <p class="govuk-body">
+      <a class="govuk-link" href="#">Add placement details</a>
+    </p>
+
+    <p class="govuk-body">
+      <a class="govuk-link" href="{{ actions.cancel }}">Cancel and return to record</a>
+    </p>
+
+  </div>
+</div>
+
+{% endblock %}

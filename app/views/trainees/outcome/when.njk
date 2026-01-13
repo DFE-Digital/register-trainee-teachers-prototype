@@ -1,0 +1,111 @@
+{% extends "layouts/main.njk" %}
+
+{% set primaryNavId = "" %}
+{% set secondaryNavId = "" %}
+
+{% set title = "QUESTION TEXT" %}
+{% set caption = "Update QTS status - Gladia Delmarre" %}
+
+{% block beforeContent %}
+{{ govukBackLink({
+  text: "Back",
+  href: actions.back
+}) }}
+{% endblock %}
+
+{% block content %}
+
+{% include "_includes/error-summary.njk" %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    {% set headingHtml %}
+      {% include "_includes/page-heading-legend.njk" %}
+    {% endset %}
+
+    <form action="{{ actions.next }}" method="post" accept-charset="utf-8" novalidate>
+
+      {% set anotherDateHtml %}
+        {{ govukDateInput({
+          id: "outcomeDate",
+          namePrefix: "outcome[anotherDate]",
+          fieldset: {
+            legend: {
+              text: "Date trainee TEXT",
+              isPageHeading: false,
+              classes: "govuk-fieldset__legend--s"
+            }
+          },
+          hint: { text: "For example, 21 3 2023" },
+          errorMessage: errors | getErrorMessage("outcomeDate"),
+          items: [
+            {
+              name: "day",
+              label: "Day",
+              value: (data.outcome.anotherDate and data.outcome.anotherDate[0]) or '',
+              classes: "govuk-input--width-2" + (" govuk-input--error" if outcomeDateFieldErrors.day else "")
+            },
+            {
+              name: "month",
+              label: "Month",
+              value: (data.outcome.anotherDate and data.outcome.anotherDate[1]) or '',
+              classes: "govuk-input--width-2" + (" govuk-input--error" if outcomeDateFieldErrors.month else "")
+            },
+            {
+              name: "year",
+              label: "Year",
+              value: (data.outcome.anotherDate and data.outcome.anotherDate[2]) or '',
+              classes: "govuk-input--width-4" + (" govuk-input--error" if outcomeDateFieldErrors.year else "")
+            }
+          ]
+        }) }}
+      {% endset %}
+
+      {{ govukRadios({
+        name: "outcome[when]",
+        fieldset: {
+          legend: {
+            html: headingHtml,
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--l"
+          }
+        },
+        hint: {
+          text: "HINT TEXT"
+        },
+        errorMessage: errors | getErrorMessage("when"),
+        value: data.outcome.when,
+        items: [
+          {
+            value: "Today",
+            text: "Today"
+          },
+          {
+            value: "Yesterday",
+            text: "Yesterday"
+          },
+          {
+            value: "Another date",
+            text: "Another date",
+            conditional: {
+              html: anotherDateHtml
+            }
+          }
+        ]
+      }) }}
+
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+
+    </form>
+
+    <p class="govuk-body">
+      <a class="govuk-link" href="{{ actions.cancel }}">Cancel and return to record</a>
+    </p>
+
+  </div>
+</div>
+
+{% endblock %}

@@ -34,10 +34,20 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
-    <p class="govuk-body">
-      <a href="#" class="govuk-link">Defer</a> or <a href="{{ actions.withdraw }}" class="govuk-link">withdraw</a> this trainee
-    </p>
+    <div class="govuk-button-group">
+      {{ govukButton({
+        text: "Update QTS status",
+        href: actions.outcome
+      }) }}
 
+      <a href="#" class="govuk-link">Defer trainee</a>
+
+      <a href="{{ actions.withdraw }}" class="govuk-link">Withdraw trainee</a>
+    </div>
+
+    {# <p class="govuk-body">
+      <a href="#" class="govuk-link">Defer</a> or <a href="{{ actions.withdraw }}" class="govuk-link">withdraw</a> this trainee
+    </p> #}
 
   </div>
 </div>

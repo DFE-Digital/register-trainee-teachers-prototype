@@ -31,6 +31,7 @@ const passport = {
 const documentationController = require('./controllers/documentation')
 const feedbackController = require('./controllers/feedback')
 const traineeController = require('./controllers/trainee')
+const traineeOutcomeController = require('./controllers/traineeOutcome')
 const traineeWithdrawalController = require('./controllers/traineeWithdrawal')
 
 /// ------------------------------------------------------------------------ ///
@@ -66,6 +67,18 @@ router.get('/', (req, res) => {
 /// ------------------------------------------------------------------------ ///
 
 router.get('/trainees/:traineeId', checkIsAuthenticated, traineeController.show)
+
+/// ------------------------------------------------------------------------ ///
+/// Trainee outcome routes
+/// ------------------------------------------------------------------------ ///
+
+router.get('/trainees/:traineeId/outcome/stop', checkIsAuthenticated, traineeOutcomeController.stop_get)
+
+router.get('/trainees/:traineeId/outcome/when', checkIsAuthenticated, traineeOutcomeController.when_get)
+router.post('/trainees/:traineeId/outcome/when', checkIsAuthenticated, traineeOutcomeController.when_post)
+
+router.get('/trainees/:traineeId/outcome/check', checkIsAuthenticated, traineeOutcomeController.check_get)
+router.post('/trainees/:traineeId/outcome/check', checkIsAuthenticated, traineeOutcomeController.check_post)
 
 /// ------------------------------------------------------------------------ ///
 /// Trainee withdrawal routes

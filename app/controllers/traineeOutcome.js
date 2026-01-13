@@ -1,0 +1,116 @@
+const {
+  validateDateInput,
+  getDateParts
+} = require('../helpers/validation/date')
+
+exports.stop_get = async (req, res) => {
+  const { traineeId } = req.params
+
+  res.render('trainees/outcome/stop', {
+    actions: {
+      back: `/trainees/${traineeId}`,
+      cancel: `/trainees/${traineeId}`,
+      placements: `/trainees/${traineeId}/placements`
+    }
+  })
+}
+
+exports.when_get = async (req, res) => {
+  const { traineeId } = req.params
+
+  let back = `/trainees/${traineeId}`
+  let next = `/trainees/${traineeId}/outcome/when`
+  if (req.query?.referrer === 'check') {
+    back = `/trainees/${traineeId}/outcome/check`
+    next += '?referrer=check'
+  }
+
+  res.render('trainees/outcome/when', {
+    actions: {
+      back,
+      cancel: `/trainees/${traineeId}`,
+      next
+    }
+  })
+}
+
+exports.when_post = async (req, res) => {
+  const { traineeId } = req.params
+  const { outcome } = req.session.data
+
+  const errors = []
+
+  if (!outcome.when) {
+    errors.push({
+      fieldName: 'when',
+      href: '#outcome[when]',
+      text: 'Select when the trainee OUTCOME'
+    });
+  }
+
+  // let isoDate = null
+  let fieldFlags = null
+
+  if (outcome.when === 'Another date') {
+    const { day, month, year } = getDateParts(outcome.anotherDate);
+
+    const result = validateDateInput(
+      { day, month, year },
+      {
+        label: 'the date the trainee OUTCOME',
+        baseId: 'outcomeDate',
+        constraint: 'todayOrPast',
+        minYear: 1990,
+        maxYear: 2100
+      }
+    );
+
+    if (!result.valid) {
+      errors.push(result.summaryError)
+      fieldFlags = result.fieldFlags || null
+    }
+  }
+
+  if (errors.length) {
+    let back = `/trainees/${traineeId}`
+    let next = `/trainees/${traineeId}/outcome/when`
+    if (req.query?.referrer === 'check') {
+      back = `/trainees/${traineeId}/outcome/check`
+      next += '?referrer=check'
+    }
+
+    res.render('trainees/outcome/when', {
+      errors,
+      outcomeDateFieldErrors: fieldFlags,
+      actions: {
+        back,
+        cancel: `/trainees/${traineeId}`,
+        next
+      }
+    })
+  } else {
+    res.redirect(`/trainees/${traineeId}/outcome/check`)
+  }
+}
+
+exports.check_get = async (req, res) => {
+  const { traineeId } = req.params
+  const { outcome } = req.session.data
+
+  res.render('trainees/outcome/check-your-answers', {
+    outcome,
+    actions: {
+      back: `/trainees/${traineeId}/outcome/when`,
+      cancel: `/trainees/${traineeId}`,
+      change: `/trainees/${traineeId}/outcome`,
+      next: `/trainees/${traineeId}/outcome/check`
+    }
+  })
+}
+
+exports.check_post = async (req, res) => {
+  const { traineeId } = req.params
+
+  req.flash('success', 'Trainee QTS status updated')
+  res.redirect(`/trainees/${traineeId}`)
+}

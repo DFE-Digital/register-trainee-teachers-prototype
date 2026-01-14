@@ -169,7 +169,20 @@
       "startDate": "2025-09-25",
       "endDate": "2027-07-16"
     },
-    "placementDetails": [],
+    "placementDetails": [
+      {
+        "id": "c879c6b8-affc-462c-a590-90806b4a2c5a",
+        "urn": 142849,
+        "name": "Montpelier Primary School",
+        "address": {
+          "line1": "North Down Road",
+          "line2": "Beacon Park",
+          "line3": "",
+          "town": "Plymouth",
+          "postcode": "PL2 3HN"
+        }
+      }
+    ],
     "fundingDetails": {
       "trainingInitiative": "Not on a training initiative",
       "fundingMethod": "Not applicable",

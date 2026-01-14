@@ -1,4 +1,26 @@
-const { findOne } = require('../models/trainee')
+const { findMany, findOne } = require('../models/trainee')
+
+exports.draft = async (req, res) => {
+  const trainees = []
+
+  res.render('trainees/draft-list', {
+    trainees,
+    actions: {
+
+    }
+  })
+}
+
+exports.registered = async (req, res) => {
+  const trainees = findMany()
+
+  res.render('trainees/registered-list', {
+    trainees,
+    actions: {
+
+    }
+  })
+}
 
 exports.show = async (req, res) => {
   delete req.session.data.withdrawal
@@ -6,6 +28,9 @@ exports.show = async (req, res) => {
 
   const { traineeId } = req.params
   const trainee = findOne({ traineeId })
+
+  console.log(trainee);
+
 
   res.render('trainees/index', {
     trainee,
@@ -25,10 +50,7 @@ exports.personal = async (req, res) => {
   res.render('trainees/personal', {
     trainee,
     actions: {
-      back: '#',
-      defer: `/trainees/${traineeId}/defer`,
-      withdraw: `/trainees/${traineeId}/withdraw`,
-      outcome: `/trainees/${traineeId}/outcome/when`
+
     }
   })
 }

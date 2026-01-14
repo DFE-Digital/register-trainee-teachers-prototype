@@ -29,9 +29,6 @@ exports.show = async (req, res) => {
   const { traineeId } = req.params
   const trainee = findOne({ traineeId })
 
-  console.log(trainee);
-
-
   res.render('trainees/index', {
     trainee,
     actions: {

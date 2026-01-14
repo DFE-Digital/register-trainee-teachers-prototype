@@ -1,0 +1,77 @@
+{{ govukSummaryList({
+  card: {
+    title: {
+      text: "Funding"
+    }
+  },
+  rows: [
+    {
+      key: {
+        text: "Training initiative"
+      },
+      value: {
+        text: trainee.fundingDetails.trainingInitiative
+      },
+      actions: {
+        items: [
+          {
+            href: "Item URL",
+            text: "Change",
+            visuallyHiddenText: "Item label"
+          }
+        ]
+      }
+    },
+    {
+      key: {
+        text: "Funding method"
+      },
+      value: {
+        text: trainee.fundingDetails.fundingMethod
+      },
+      actions: {
+        items: [
+          {
+            href: "Item URL",
+            text: "Change",
+            visuallyHiddenText: "Item label"
+          }
+        ]
+      } if 1==0
+    },
+    {
+      key: {
+        text: "Funding code"
+      },
+      value: {
+        text: trainee.fundingDetails.fundingCode
+      },
+      actions: {
+        items: [
+          {
+            href: "Item URL",
+            text: "Change",
+            visuallyHiddenText: "Item label"
+          }
+        ]
+      } if 1==0
+    },
+    {
+      key: {
+        text: "Applying for a bursary"
+      },
+      value: {
+        text: trainee.fundingDetails.applyingForBursary
+      },
+      actions: {
+        items: [
+          {
+            href: "Item URL",
+            text: "Change",
+            visuallyHiddenText: "Item label"
+          }
+        ]
+      } if 1==0
+    }
+  ]
+}) }}

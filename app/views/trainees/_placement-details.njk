@@ -1,0 +1,51 @@
+{{ govukSummaryList({
+  card: {
+    title: {
+      text: "Placement details"
+    },
+    actions: {
+      items: [
+        {
+          href: "#",
+          text: "Management placements"
+        }
+      ]
+    }
+  },
+  rows: [
+    {
+      key: {
+        text: "First placement"
+      },
+      value: {
+        text: "Item value"
+      },
+      actions: {
+        items: [
+          {
+            href: "Item URL",
+            text: "Change",
+            visuallyHiddenText: "Item label"
+          }
+        ]
+      } if 1==0
+    },
+    {
+      key: {
+        text: "Second placement"
+      },
+      value: {
+        text: "Item value"
+      },
+      actions: {
+        items: [
+          {
+            href: "Item URL",
+            text: "Change",
+            visuallyHiddenText: "Item label"
+          }
+        ]
+      } if 1==0
+    }
+  ]
+}) }}

@@ -1,7 +1,7 @@
 {% extends "layouts/main.njk" %}
 
 {% set primaryNavId = "registeredTrainees" %}
-{% set secondaryNavId = "about" %}
+{% set secondaryNavId = "personalDetails" %}
 
 {% set title = trainee.personalDetails.firstName + " " + trainee.personalDetails.lastName %}
 {% set caption = "TRN: " + trainee.trainingDetails.trn %}
@@ -39,36 +39,13 @@
 </div>
 
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-
-    <div class="govuk-button-group">
-      {{ govukButton({
-        text: "Update QTS status",
-        href: actions.outcome
-      }) }}
-
-      <a href="#" class="govuk-link">Defer trainee</a>
-
-      <a href="{{ actions.withdraw }}" class="govuk-link">Withdraw trainee</a>
-    </div>
-
-    {# <p class="govuk-body">
-      <a href="#" class="govuk-link">Defer</a> or <a href="{{ actions.withdraw }}" class="govuk-link">withdraw</a> this trainee
-    </p> #}
-
-  </div>
-</div>
-
-<div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
 
-    {% include "./_training-overview.njk" %}
+    {% include "./_personal-details.njk" %}
 
-    {% include "./_course-details.njk" %}
+    {% include "./_contact-details.njk" %}
 
-    {% include "./_placement-details.njk" %}
-
-    {% include "./_funding.njk" %}
+    {% include "./_diversity-information.njk" %}
 
   </div>
 </div>

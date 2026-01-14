@@ -1,0 +1,187 @@
+{{ govukSummaryList({
+  card: {
+    title: {
+      text: "Training overview"
+    }
+  },
+  rows: [
+    {
+      key: {
+        text: "Accredited provider"
+      },
+      value: {
+        text: trainee.trainingDetails.accreditedProvider.name
+      },
+      actions: {
+        items: [
+          {
+            href: "#",
+            text: "Change",
+            visuallyHiddenText: "accredited provider"
+          }
+        ]
+      }
+    },
+    {
+      key: {
+        text: "Training partner"
+      },
+      value: {
+        text: trainee.trainingDetails.trainingPartner.name
+      },
+      actions: {
+        items: [
+          {
+            href: "#",
+            text: "Change",
+            visuallyHiddenText: "training partner"
+          }
+        ]
+      }
+    },
+    {
+      key: {
+        text: "Trainee ID"
+      },
+      value: {
+        text: trainee.trainingDetails.traineeId
+      },
+      actions: {
+        items: [
+          {
+            href: "#",
+            text: "Change",
+            visuallyHiddenText: "trainee ID"
+          }
+        ]
+      }
+    },
+    {
+      key: {
+        text: "TRN"
+      },
+      value: {
+        text: trainee.trainingDetails.trn
+      },
+      actions: {
+        items: [
+          {
+            href: "#",
+            text: "Change",
+            visuallyHiddenText: "teacher reference number (TRN)"
+          }
+        ]
+      } if 1==0
+    },
+    {
+      key: {
+        text: "HESA ID"
+      },
+      value: {
+        text: trainee.trainingDetails.hesaId
+      },
+      actions: {
+        items: [
+          {
+            href: "#",
+            text: "Change",
+            visuallyHiddenText: "HESA ID"
+          }
+        ]
+      }
+    },
+    {
+      key: {
+        text: "Trainee start date"
+      },
+      value: {
+        text: trainee.trainingDetails.traineeStartDate | govukDate
+      },
+      actions: {
+        items: [
+          {
+            href: "#",
+            text: "Change",
+            visuallyHiddenText: "trainee start date"
+          }
+        ]
+      }
+    },
+    {
+      key: {
+        text: "Start year"
+      },
+      value: {
+        text: trainee.trainingDetails.startYear.label
+      },
+      actions: {
+        items: [
+          {
+            href: "#",
+            text: "Change",
+            visuallyHiddenText: "start year"
+          }
+        ]
+      } if 1==0
+    },
+    {
+      key: {
+        text: "End year"
+      },
+      value: {
+        text: trainee.trainingDetails.endYear.label
+      },
+      actions: {
+        items: [
+          {
+            href: "#",
+            text: "Change",
+            visuallyHiddenText: "end year"
+          }
+        ]
+      } if 1==0
+    },
+    {
+      key: {
+        text: "Record source"
+      },
+      value: {
+        text: trainee.trainingDetails.recordSource
+      },
+      actions: {
+        items: [
+          {
+            href: "#",
+            text: "Change",
+            visuallyHiddenText: "Item label"
+          }
+        ]
+      } if 1==0
+    },
+    {
+      key: {
+        text: "Recorded created on"
+      },
+      value: {
+        text: trainee.trainingDetails.createdAt | govukDate
+      },
+      actions: {
+        items: [
+          {
+            href: "#",
+            text: "Change",
+            visuallyHiddenText: "record source"
+          }
+        ]
+      } if 1==0
+    },
+    {
+      key: {
+        text: "Last updated on"
+      },
+      value: {
+        text: trainee.trainingDetails.updatedAt | govukDate
+      }
+    }
+  ]
+}) }}

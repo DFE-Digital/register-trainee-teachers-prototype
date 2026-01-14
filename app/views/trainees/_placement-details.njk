@@ -1,11 +1,38 @@
+{# TODO: fix this hack #}
 {% set firstPlacementHtml %}
-  <p class="govuk-body">{{ trainee.placementDetails[0].name }}</p>
-  <p class="govuk-hint">URN: {{ trainee.placementDetails[0].urn }}, {{ trainee.placementDetails[0].address.town }}, {{ trainee.placementDetails[0].address.postcode }}</p>
+  {% if trainee.placementDetails[0].name | length %}
+    <p class="govuk-body">{{ trainee.placementDetails[0].name }}</p>
+    <p class="govuk-hint">URN: {{ trainee.placementDetails[0].urn }}, {{ trainee.placementDetails[0].address.town }}, {{ trainee.placementDetails[0].address.postcode }}</p>
+  {% else %}
+    {% set missingPlacementHtml -%}
+      <p class="govuk-body govuk-!-font-weight-bold app-inset-text__title">First placement is missing</p>
+      <p class="govuk-body">
+        <a href="#" class="govuk-link">Enter first placement</a>
+      </p>
+    {%- endset %}
+    {{ govukInsetText({
+      html: missingPlacementHtml,
+      classes: "app-inset-text--narrow-border app-inset-text--important govuk-!-margin-top-0"
+    }) }}
+  {% endif %}
 {% endset %}
 
 {% set secondPlacementHtml %}
-  <p class="govuk-body">{{ trainee.placementDetails[1].name }}</p>
-  <p class="govuk-hint">URN: {{ trainee.placementDetails[1].urn }}, {{ trainee.placementDetails[1].address.town }}, {{ trainee.placementDetails[1].address.postcode }}</p>
+  {% if trainee.placementDetails[1].name | length %}
+    <p class="govuk-body">{{ trainee.placementDetails[1].name }}</p>
+    <p class="govuk-hint">URN: {{ trainee.placementDetails[1].urn }}, {{ trainee.placementDetails[1].address.town }}, {{ trainee.placementDetails[1].address.postcode }}</p>
+  {% else %}
+    {% set missingPlacementHtml -%}
+      <p class="govuk-body govuk-!-font-weight-bold app-inset-text__title">Second placement is missing</p>
+      <p class="govuk-body">
+        <a href="#" class="govuk-link">Enter second placement</a>
+      </p>
+    {%- endset %}
+    {{ govukInsetText({
+      html: missingPlacementHtml,
+      classes: "app-inset-text--narrow-border app-inset-text--important govuk-!-margin-top-0"
+    }) }}
+  {% endif %}
 {% endset %}
 
 {{ govukSummaryList({

@@ -32,6 +32,32 @@
   </div>
 </div>
 
+{# TODO: fix this hack #}
+{% if not (trainee.placementDetails[0].name | length and trainee.placementDetails[1].name | length) %}
+  {% set missingInfo %}
+    <p class="govuk-body">
+      You need to enter:
+    </p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>
+        <a href="#" class="govuk-link">Training partner</a>
+      </li>
+      <li>
+        <a href="#" class="govuk-link">Placements</a>
+      </li>
+    </ul>
+  {% endset %}
+  {{ appNotice({
+    heading: {
+      text: "Trainee has missing information"
+    },
+    description: {
+      html: missingInfo
+    },
+    classes: "govuk-!-margin-bottom-5"
+  }) }}
+{% endif %}
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
     {% include "./_secondary-navigation.njk" %}

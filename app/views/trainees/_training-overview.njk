@@ -1,3 +1,21 @@
+{# TODO: fix this hack #}
+{% set trainingPartnerHtml %}
+  {% if trainee.trainingDetails.trainingPartner.name | length %}
+    <p class="govuk-body">{{ trainee.trainingDetails.trainingPartner.name }}</p>
+  {% else %}
+    {% set missingTrainingPartnerHtml -%}
+      <p class="govuk-body govuk-!-font-weight-bold app-inset-text__title">Training partner is missing</p>
+      <p class="govuk-body">
+        <a href="#" class="govuk-link">Enter training partner</a>
+      </p>
+    {%- endset %}
+    {{ govukInsetText({
+      html: missingTrainingPartnerHtml,
+      classes: "app-inset-text--narrow-border app-inset-text--important govuk-!-margin-top-0"
+    }) }}
+  {% endif %}
+{% endset %}
+
 {{ govukSummaryList({
   card: {
     title: {
@@ -10,7 +28,7 @@
         text: "Accredited provider"
       },
       value: {
-        text: trainee.trainingDetails.accreditedProvider.name
+        text: trainee.trainingDetails.accreditedProvider.name + " (" + trainee.trainingDetails.accreditedProvider.code + ")"
       },
       actions: {
         items: [
@@ -27,7 +45,7 @@
         text: "Training partner"
       },
       value: {
-        text: trainee.trainingDetails.trainingPartner.name
+        html: trainingPartnerHtml
       },
       actions: {
         items: [
@@ -37,7 +55,7 @@
             visuallyHiddenText: "training partner"
           }
         ]
-      }
+      } if trainee.trainingDetails.trainingPartner.name | length
     },
     {
       key: {
@@ -89,7 +107,7 @@
           }
         ]
       }
-    },
+    } if trainee.trainingDetails.hesaId | length,
     {
       key: {
         text: "Trainee start date"

@@ -59,8 +59,11 @@ router.all('*', (req, res, next) => {
 /// HOMEPAGE ROUTE
 /// ------------------------------------------------------------------------ ///
 router.get('/', (req, res) => {
-  res.redirect('/trainees/6a4c4cef-e15f-4a3b-8888-15629dbf8b20')
+  res.redirect('/trainees/registered')
 })
+
+router.get('/trainees/draft', checkIsAuthenticated, traineeController.draft)
+router.get('/trainees/registered', checkIsAuthenticated, traineeController.registered)
 
 /// ------------------------------------------------------------------------ ///
 /// Trainee routes

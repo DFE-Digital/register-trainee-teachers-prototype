@@ -67,6 +67,7 @@ router.get('/', (req, res) => {
 /// ------------------------------------------------------------------------ ///
 
 router.get('/trainees/:traineeId', checkIsAuthenticated, traineeController.show)
+router.get('/trainees/:traineeId/personal', checkIsAuthenticated, traineeController.personal)
 
 /// ------------------------------------------------------------------------ ///
 /// Trainee outcome routes

@@ -11,7 +11,7 @@ $app-assets-path: "/public/";
 @import "utilities/overrides";
 
 // Components that aren’t in GOV.UK Frontend
-
+@import "components/inset-text";
 
 // Other
 .js-enabled-only {

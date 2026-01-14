@@ -47,6 +47,10 @@
 
     {% include "./_diversity-information.njk" %}
 
+    {% if trainee.degreeDetails | length %}
+      {% include "./_degree-details.njk" %}
+    {% endif %}
+
   </div>
 </div>
 

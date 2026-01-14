@@ -1,3 +1,13 @@
+{% set firstPlacementHtml %}
+  <p class="govuk-body">{{ trainee.placementDetails[0].name }}</p>
+  <p class="govuk-hint">URN: {{ trainee.placementDetails[0].urn }}, {{ trainee.placementDetails[0].address.town }}, {{ trainee.placementDetails[0].address.postcode }}</p>
+{% endset %}
+
+{% set secondPlacementHtml %}
+  <p class="govuk-body">{{ trainee.placementDetails[1].name }}</p>
+  <p class="govuk-hint">URN: {{ trainee.placementDetails[1].urn }}, {{ trainee.placementDetails[1].address.town }}, {{ trainee.placementDetails[1].address.postcode }}</p>
+{% endset %}
+
 {{ govukSummaryList({
   card: {
     title: {
@@ -18,7 +28,7 @@
         text: "First placement"
       },
       value: {
-        text: "Item value"
+        html: firstPlacementHtml
       },
       actions: {
         items: [
@@ -35,7 +45,7 @@
         text: "Second placement"
       },
       value: {
-        text: "Item value"
+        html: secondPlacementHtml
       },
       actions: {
         items: [

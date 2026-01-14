@@ -1,7 +1,7 @@
 
-{% for degree in degree %}
+{% for degree in trainee.degreeDetails %}
 
-  {% set cardTitle = degree.degreeType.name + ": " degree.subject.name %}
+  {% set cardTitle = degree.degreeType.name + ": " + degree.subject.name %}
 
   {{ govukSummaryList({
     card: {
@@ -40,7 +40,7 @@
           text: "Subject"
         },
         value: {
-          text: degree.degreeSubject.name
+          text: degree.subject.name
         },
         actions: {
           items: [

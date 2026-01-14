@@ -17,7 +17,9 @@
       "email": "gladia.delmare@example.com"
     },
     "diversityDetails": {
-
+      "hasShared": "Yes",
+      "ethnicity": "Mixed or multiple ethnic groups",
+      "disability": "They shared that they’re not disabled"
     },
     "trainingDetails": {
       "accreditedProvider": {
@@ -85,7 +87,10 @@
       }
     ],
     "fundingDetails": {
-
+      "trainingInitiative": "Not on a training initiative",
+      "fundingMethod": "Not applicable",
+      "fundingCode": "Eligible for funding from the DfE",
+      "applyingForBursary": "No"
     }
   }
 ]

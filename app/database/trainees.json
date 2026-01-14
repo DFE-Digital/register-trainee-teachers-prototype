@@ -92,5 +92,88 @@
       "fundingCode": "Eligible for funding from the DfE",
       "applyingForBursary": "No"
     }
+  },
+  {
+    "id": "a7ca2133-3819-4c2f-a6e2-e0677c99936f",
+    "personalDetails": {
+      "firstName": "Elijah",
+      "lastName": "Bailey",
+      "dateOfBirth": "1984-08-08",
+      "sex": "Male",
+      "nationality": [
+        {
+          "id": "a7ca2133-3819-4c2f-a6e2-e0677c99936f",
+          "label": "British"
+        }
+      ]
+    },
+    "contactDetails": {
+      "email": "elijah.bailey@example.com"
+    },
+    "diversityDetails": {
+      "hasShared": "No"
+    },
+    "degreeDetails": [
+      {
+        "id": "fe298446-47ab-4812-a6d5-95a537070e7b",
+        "awardingInstitution": {
+          "id": "b3aaedb3-df83-4f38-97ab-f8eeb3490b69",
+          "name": "University of Brighton"
+        },
+        "subject": {
+          "id": "8a5d16bf-45e7-4119-bbe3-b207842d5a91",
+          "name": "English literature"
+        },
+        "degreeType": {
+          "id": "78b4668d-1d91-4472-a7cf-b6fec8bb111c",
+          "name": "Bachelor of Arts"
+        },
+        "degreeGrade": {
+          "id": "1de89e52-6985-4b84-afc4-9ba68dbe0f66",
+          "name": "Upper second-class honours (2:1)"
+        },
+        "graduationYear": "2012"
+      }
+    ],
+    "trainingDetails": {
+      "accreditedProvider": {
+        "id": "566f604b-4ed5-46c5-8e86-c6505b23da49",
+        "code": "P63",
+        "name": "Plymouth Marjon University"
+      },
+      "trainingPartner": {},
+      "traineeId": 20235022,
+      "trn": 2375113,
+      "traineeStartDate": "2025-09-02",
+      "startYear": {
+        "code": 2025,
+        "label": "2025 to 2026"
+      },
+      "endYear": {
+        "code": 2026,
+        "label": "2026 to 2027"
+      },
+      "recordSource": "Added with API",
+      "createdAt": "2025-09-02",
+      "updatedAt": "2026-01-13"
+    },
+    "courseDetails": {
+      "course": {
+        "id": "8d517d01-23f4-476c-8ccb-440a020b63d2",
+        "name": "Primary and secondary (postgraduate)"
+      },
+      "educationPhase": "Primary",
+      "subject": "Primary",
+      "ageRange": "3 to 7",
+      "studyMode": "Part time",
+      "startDate": "2025-09-25",
+      "endDate": "2027-07-16"
+    },
+    "placementDetails": [],
+    "fundingDetails": {
+      "trainingInitiative": "Not on a training initiative",
+      "fundingMethod": "Not applicable",
+      "fundingCode": "Eligible for funding from the DfE"
+    }
   }
 ]

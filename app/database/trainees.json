@@ -1,0 +1,91 @@
+[
+  {
+    "id": "6a4c4cef-e15f-4a3b-8888-15629dbf8b20",
+    "personalDetails": {
+      "firstName": "Gladia",
+      "lastName": "Delmare",
+      "dateOfBirth": "2005-07-31",
+      "sex": "Female",
+      "nationality": [
+        {
+          "id": "a7ca2133-3819-4c2f-a6e2-e0677c99936f",
+          "label": "British"
+        }
+      ]
+    },
+    "contactDetails": {
+      "email": "gladia.delmare@example.com"
+    },
+    "diversityDetails": {
+
+    },
+    "trainingDetails": {
+      "accreditedProvider": {
+        "id": "1dbcbd9d-bc52-4feb-9698-612e7d007b1d",
+        "code": "D39",
+        "name": "University of Derby"
+      },
+      "trainingPartner": {
+        "id": "3f0c7b81-85e4-46d3-8f65-d27608e7bf9f",
+        "code": "14D",
+        "name": "BTSA"
+      },
+      "traineeId": 100720745,
+      "trn": 2258291,
+      "hesaId": 23100078511105884,
+      "traineeStartDate": "2023-09-25",
+      "startYear": {
+        "code": 2023,
+        "label": "2023 to 2024"
+      },
+      "endYear": {
+        "code": 2025,
+        "label": "2025 to 2026"
+      },
+      "recordSource": "Imported from HESA",
+      "createdAt": "2024-10-14",
+      "updatedAt": "2026-01-13"
+    },
+    "courseDetails": {
+      "course": {
+        "id": "b0654595-d73d-4c27-b186-4fdb4f4030ed",
+        "name": "Primary and secondary (undergraduate)"
+      },
+      "educationPhase": "Primary",
+      "subject": "Primary",
+      "ageRange": "5 to 11",
+      "studyMode": "Part time",
+      "startDate": "2023-09-23",
+      "endDate": "2026-07-31"
+    },
+    "placementDetails": [
+      {
+        "id": "5b410164-17a7-4893-bc19-0aab4803db7b",
+        "urn": 138899,
+        "name": "The Mosley Academy",
+        "address": {
+          "line1": "Main Road",
+          "line2": "Anslow",
+          "line3": "",
+          "town": "Burton-on-Trent",
+          "postcode": "DE13 9QD"
+        }
+      },
+      {
+        "id": "398db9dc-3af9-4b94-aa10-476f3b3c680e",
+        "urn": 137543,
+        "name": "Pennine Way Junior Academy",
+        "address": {
+          "line1": "Pennine Way",
+          "line2": "",
+          "line3": "",
+          "town": "Swadlincote",
+          "postcode": "DE11 9EY"
+        }
+      }
+    ],
+    "fundingDetails": {
+
+    }
+  }
+]

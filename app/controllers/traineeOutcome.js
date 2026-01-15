@@ -1,41 +1,34 @@
-const {
-  validateDateInput,
-  getDateParts
-} = require('../helpers/validation/date')
-
-exports.stop_get = async (req, res) => {
-  const { traineeId } = req.params
-
-  res.render('trainees/outcome/stop', {
-    actions: {
-      back: `/trainees/${traineeId}`,
-      cancel: `/trainees/${traineeId}`,
-      placements: `/trainees/${traineeId}/placements`
-    }
-  })
-}
+const { findOne } = require('../models/trainee')
+const { validateDateInput, getDateParts } = require('../helpers/validation/date')
 
 exports.when_get = async (req, res) => {
   const { traineeId } = req.params
+  const trainee = findOne({ traineeId })
 
-  let back = `/trainees/${traineeId}`
-  let next = `/trainees/${traineeId}/outcome/when`
-  if (req.query?.referrer === 'check') {
-    back = `/trainees/${traineeId}/outcome/check`
-    next += '?referrer=check'
-  }
-
-  res.render('trainees/outcome/when', {
-    actions: {
-      back,
-      cancel: `/trainees/${traineeId}`,
-      next
+  if (trainee.placementDetails.length < 2) {
+    res.redirect(`/trainees/${traineeId}/outcome/stop`)
+  } else {
+    let back = `/trainees/${traineeId}`
+    let next = `/trainees/${traineeId}/outcome/when`
+    if (req.query?.referrer === 'check') {
+      back = `/trainees/${traineeId}/outcome/check`
+      next += '?referrer=check'
     }
-  })
+
+    res.render('trainees/outcome/when', {
+      trainee,
+      actions: {
+        back,
+        cancel: `/trainees/${traineeId}`,
+        next
+      }
+    })
+  }
 }
 
 exports.when_post = async (req, res) => {
   const { traineeId } = req.params
+  const trainee = findOne({ traineeId })
   const { outcome } = req.session.data
 
   const errors = []
@@ -80,6 +73,7 @@ exports.when_post = async (req, res) => {
     }
 
     res.render('trainees/outcome/when', {
+      trainee,
       errors,
       outcomeDateFieldErrors: fieldFlags,
       actions: {
@@ -95,9 +89,11 @@ exports.when_post = async (req, res) => {
 
 exports.check_get = async (req, res) => {
   const { traineeId } = req.params
+  const trainee = findOne({ traineeId })
   const { outcome } = req.session.data
 
   res.render('trainees/outcome/check-your-answers', {
+    trainee,
     outcome,
     actions: {
       back: `/trainees/${traineeId}/outcome/when`,
@@ -113,4 +109,18 @@ exports.check_post = async (req, res) => {
 
   req.flash('success', 'Trainee QTS status updated')
   res.redirect(`/trainees/${traineeId}`)
+}
+
+exports.stop_get = async (req, res) => {
+  const { traineeId } = req.params
+  const trainee = findOne({ traineeId })
+
+  res.render('trainees/outcome/stop', {
+    trainee,
+    actions: {
+      back: `/trainees/${traineeId}`,
+      cancel: `/trainees/${traineeId}`,
+      placements: `/trainees/${traineeId}/placements`
+    }
+  })
 }

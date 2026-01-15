@@ -4,7 +4,7 @@
 {% set secondaryNavId = "about" %}
 
 {% set title = "QUESTION TEXT" %}
-{% set caption = "Update QTS status - Gladia Delmarre" %}
+{% set caption = "Update QTS status - " + trainee.personalDetails.firstName + " " + trainee.personalDetails.lastName  %}
 
 {% block beforeContent %}
 {{ govukBackLink({

@@ -3,8 +3,10 @@
 {% set primaryNavId = "registeredTrainees" %}
 {% set secondaryNavId = "about" %}
 
+{% set fullName = trainee.personalDetails.firstName + " " + trainee.personalDetails.lastName %}
+
 {% set title = "You cannot update the QTS status" %}
-{% set caption = "Update QTS status - Gladia Delmarre" %}
+{% set caption = "Update QTS status - " + fullName  %}
 
 {% block beforeContent %}
 {{ govukBackLink({
@@ -20,7 +22,7 @@
     {% include "_includes/page-heading.njk" %}
 
     <p class="govuk-body">
-      You cannot update the QTS status for Gladia Delmarre because the trainee is missing placement information.
+      You cannot update the QTS status for {{ fullName }} because the trainee is missing placement information.
     </p>
 
     <p class="govuk-body">

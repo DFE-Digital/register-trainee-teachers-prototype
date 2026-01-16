@@ -37,7 +37,7 @@ exports.when_post = async (req, res) => {
     errors.push({
       fieldName: 'when',
       href: '#outcome[when]',
-      text: 'Select when the trainee OUTCOME'
+      text: 'Select when the trainee’s QTS status changed'
     });
   }
 
@@ -50,7 +50,7 @@ exports.when_post = async (req, res) => {
     const result = validateDateInput(
       { day, month, year },
       {
-        label: 'the date the trainee OUTCOME',
+        label: 'the date the trainee’s QTS status changed',
         baseId: 'outcomeDate',
         constraint: 'todayOrPast',
         minYear: 1990,
@@ -106,6 +106,7 @@ exports.check_get = async (req, res) => {
 
 exports.check_post = async (req, res) => {
   const { traineeId } = req.params
+  delete req.session.data.outcome
 
   req.flash('success', 'Trainee’s QTS status updated')
   res.redirect(`/trainees/${traineeId}`)

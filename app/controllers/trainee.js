@@ -24,6 +24,7 @@ exports.registered = async (req, res) => {
 
 exports.show = async (req, res) => {
   delete req.session.data.withdrawal
+  delete req.session.data.outcome
   delete req.session.data.referrer
 
   const { traineeId } = req.params

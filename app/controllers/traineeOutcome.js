@@ -107,7 +107,7 @@ exports.check_get = async (req, res) => {
 exports.check_post = async (req, res) => {
   const { traineeId } = req.params
 
-  req.flash('success', 'Trainee QTS status updated')
+  req.flash('success', 'Trainee’s QTS status updated')
   res.redirect(`/trainees/${traineeId}`)
 }
 

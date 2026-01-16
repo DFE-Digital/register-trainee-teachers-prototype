@@ -1,0 +1,192 @@
+[
+  {
+    "id": "6a4c4cef-e15f-4a3b-8888-15629dbf8b20",
+    "personalDetails": {
+      "firstName": "Gladia",
+      "lastName": "Delmare",
+      "dateOfBirth": "2005-07-31",
+      "sex": "Female",
+      "nationality": [
+        {
+          "id": "a7ca2133-3819-4c2f-a6e2-e0677c99936f",
+          "label": "British"
+        }
+      ]
+    },
+    "contactDetails": {
+      "email": "gladia.delmare@example.com"
+    },
+    "diversityDetails": {
+      "hasShared": "Yes",
+      "ethnicity": "Mixed or multiple ethnic groups",
+      "disability": "They shared that they’re not disabled"
+    },
+    "trainingDetails": {
+      "accreditedProvider": {
+        "id": "1dbcbd9d-bc52-4feb-9698-612e7d007b1d",
+        "code": "D39",
+        "name": "University of Derby"
+      },
+      "trainingPartner": {
+        "id": "3f0c7b81-85e4-46d3-8f65-d27608e7bf9f",
+        "code": "14D",
+        "name": "BTSA"
+      },
+      "traineeId": 100720745,
+      "trn": 2258291,
+      "hesaId": 23100078511105884,
+      "traineeStartDate": "2023-09-25",
+      "startYear": {
+        "code": 2023,
+        "label": "2023 to 2024"
+      },
+      "endYear": {
+        "code": 2025,
+        "label": "2025 to 2026"
+      },
+      "recordSource": "Imported from HESA",
+      "createdAt": "2024-10-14",
+      "updatedAt": "2026-01-13"
+    },
+    "courseDetails": {
+      "course": {
+        "id": "b0654595-d73d-4c27-b186-4fdb4f4030ed",
+        "name": "Primary and secondary (undergraduate)"
+      },
+      "educationPhase": "Primary",
+      "subject": "Primary",
+      "ageRange": "5 to 11",
+      "studyMode": "Part time",
+      "startDate": "2023-09-23",
+      "endDate": "2026-07-31"
+    },
+    "placementDetails": [
+      {
+        "id": "5b410164-17a7-4893-bc19-0aab4803db7b",
+        "urn": 138899,
+        "name": "The Mosley Academy",
+        "address": {
+          "line1": "Main Road",
+          "line2": "Anslow",
+          "line3": "",
+          "town": "Burton-on-Trent",
+          "postcode": "DE13 9QD"
+        }
+      },
+      {
+        "id": "398db9dc-3af9-4b94-aa10-476f3b3c680e",
+        "urn": 137543,
+        "name": "Pennine Way Junior Academy",
+        "address": {
+          "line1": "Pennine Way",
+          "line2": "",
+          "line3": "",
+          "town": "Swadlincote",
+          "postcode": "DE11 9EY"
+        }
+      }
+    ],
+    "fundingDetails": {
+      "trainingInitiative": "Not on a training initiative",
+      "fundingMethod": "Not applicable",
+      "fundingCode": "Eligible for funding from the DfE",
+      "applyingForBursary": "No"
+    }
+  },
+  {
+    "id": "a7ca2133-3819-4c2f-a6e2-e0677c99936f",
+    "personalDetails": {
+      "firstName": "Elijah",
+      "lastName": "Bailey",
+      "dateOfBirth": "1984-08-08",
+      "sex": "Male",
+      "nationality": [
+        {
+          "id": "a7ca2133-3819-4c2f-a6e2-e0677c99936f",
+          "label": "British"
+        }
+      ]
+    },
+    "contactDetails": {
+      "email": "elijah.bailey@example.com"
+    },
+    "diversityDetails": {
+      "hasShared": "No"
+    },
+    "degreeDetails": [
+      {
+        "id": "fe298446-47ab-4812-a6d5-95a537070e7b",
+        "awardingInstitution": {
+          "id": "b3aaedb3-df83-4f38-97ab-f8eeb3490b69",
+          "name": "University of Brighton"
+        },
+        "subject": {
+          "id": "8a5d16bf-45e7-4119-bbe3-b207842d5a91",
+          "name": "English literature"
+        },
+        "degreeType": {
+          "id": "78b4668d-1d91-4472-a7cf-b6fec8bb111c",
+          "name": "Bachelor of Arts"
+        },
+        "degreeGrade": {
+          "id": "1de89e52-6985-4b84-afc4-9ba68dbe0f66",
+          "name": "Upper second-class honours (2:1)"
+        },
+        "graduationYear": "2012"
+      }
+    ],
+    "trainingDetails": {
+      "accreditedProvider": {
+        "id": "566f604b-4ed5-46c5-8e86-c6505b23da49",
+        "code": "P63",
+        "name": "Plymouth Marjon University"
+      },
+      "trainingPartner": {},
+      "traineeId": 20235022,
+      "trn": 2375113,
+      "traineeStartDate": "2025-09-02",
+      "startYear": {
+        "code": 2025,
+        "label": "2025 to 2026"
+      },
+      "endYear": {
+        "code": 2026,
+        "label": "2026 to 2027"
+      },
+      "recordSource": "Added with API",
+      "createdAt": "2025-09-02",
+      "updatedAt": "2026-01-13"
+    },
+    "courseDetails": {
+      "course": {
+        "id": "8d517d01-23f4-476c-8ccb-440a020b63d2",
+        "name": "Primary and secondary (postgraduate)"
+      },
+      "educationPhase": "Primary",
+      "subject": "Primary",
+      "ageRange": "3 to 7",
+      "studyMode": "Part time",
+      "startDate": "2025-09-25",
+      "endDate": "2027-07-16"
+    },
+    "placementDetails": [
+      {
+        "id": "c879c6b8-affc-462c-a590-90806b4a2c5a",
+        "urn": 142849,
+        "name": "Montpelier Primary School",
+        "address": {
+          "line1": "North Down Road",
+          "line2": "Beacon Park",
+          "line3": "",
+          "town": "Plymouth",
+          "postcode": "PL2 3HN"
+        }
+      }
+    ],
+    "fundingDetails": {
+      "trainingInitiative": "Not on a training initiative",
+      "fundingMethod": "Not applicable",
+      "fundingCode": "Eligible for funding from the DfE"
+    }
+  }
+]

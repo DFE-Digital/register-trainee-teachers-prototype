@@ -1,0 +1,128 @@
+{{ govukSummaryList({
+  card: {
+    title: {
+      text: "Course details"
+    }
+  },
+  rows: [
+    {
+      key: {
+        text: "Course"
+      },
+      value: {
+        text: trainee.courseDetails.course.name
+      },
+      actions: {
+        items: [
+          {
+            href: "#",
+            text: "Change",
+            visuallyHiddenText: "course"
+          }
+        ]
+      }
+    },
+    {
+      key: {
+        text: "Education phase"
+      },
+      value: {
+        text: trainee.courseDetails.educationPhase
+      },
+      actions: {
+        items: [
+          {
+            href: "#",
+            text: "Change",
+            visuallyHiddenText: "education phase"
+          }
+        ]
+      }
+    },
+    {
+      key: {
+        text: "Subject"
+      },
+      value: {
+        text: trainee.courseDetails.subject
+      },
+      actions: {
+        items: [
+          {
+            href: "#",
+            text: "Change",
+            visuallyHiddenText: "subject"
+          }
+        ]
+      }
+    },
+    {
+      key: {
+        text: "Age range"
+      },
+      value: {
+        text: trainee.courseDetails.ageRange
+      },
+      actions: {
+        items: [
+          {
+            href: "#",
+            text: "Change",
+            visuallyHiddenText: "age range"
+          }
+        ]
+      }
+    },
+    {
+      key: {
+        text: "Full time or part time"
+      },
+      value: {
+        text: trainee.courseDetails.studyMode
+      },
+      actions: {
+        items: [
+          {
+            href: "#",
+            text: "Change",
+            visuallyHiddenText: "full time or part time"
+          }
+        ]
+      }
+    },
+    {
+      key: {
+        text: "ITT start date"
+      },
+      value: {
+        text: trainee.courseDetails.startDate | govukDate
+      },
+      actions: {
+        items: [
+          {
+            href: "#",
+            text: "Change",
+            visuallyHiddenText: "ITT start date"
+          }
+        ]
+      }
+    },
+    {
+      key: {
+        text: "Expected end date"
+      },
+      value: {
+        text: trainee.courseDetails.endDate | govukDate
+      },
+      actions: {
+        items: [
+          {
+            href: "#",
+            text: "Change",
+            visuallyHiddenText: "expected end date"
+          }
+        ]
+      }
+    }
+  ]
+}) }}

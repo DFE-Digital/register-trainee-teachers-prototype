@@ -3,8 +3,8 @@
 {% set primaryNavId = "registeredTrainees" %}
 {% set secondaryNavId = "about" %}
 
-{% set title = "When did the trainee withdraw?" %}
-{% set caption = "Withdraw trainee - Gladia Delmarre" %}
+{% set title = "When did the trainee’s QTS status change?" %}
+{% set caption = "Update QTS status - " + trainee.personalDetails.firstName + " " + trainee.personalDetails.lastName  %}
 
 {% block beforeContent %}
 {{ govukBackLink({
@@ -28,42 +28,42 @@
 
       {% set anotherDateHtml %}
         {{ govukDateInput({
-          id: "withdrawalDate",
-          namePrefix: "withdrawal[anotherDate]",
+          id: "outcomeDate",
+          namePrefix: "outcome[anotherDate]",
           fieldset: {
             legend: {
-              text: "Date trainee withdrew",
+              text: "Date trainee TEXT",
               isPageHeading: false,
               classes: "govuk-fieldset__legend--s"
             }
           },
           hint: { text: "For example, 21 3 2023" },
-          errorMessage: errors | getErrorMessage("withdrawalDate"),
+          errorMessage: errors | getErrorMessage("outcomeDate"),
           items: [
             {
               name: "day",
               label: "Day",
-              value: (data.withdrawal.anotherDate and data.withdrawal.anotherDate[0]) or '',
-              classes: "govuk-input--width-2" + (" govuk-input--error" if withdrawalDateFieldErrors.day else "")
+              value: (data.outcome.anotherDate and data.outcome.anotherDate[0]) or '',
+              classes: "govuk-input--width-2" + (" govuk-input--error" if outcomeDateFieldErrors.day else "")
             },
             {
               name: "month",
               label: "Month",
-              value: (data.withdrawal.anotherDate and data.withdrawal.anotherDate[1]) or '',
-              classes: "govuk-input--width-2" + (" govuk-input--error" if withdrawalDateFieldErrors.month else "")
+              value: (data.outcome.anotherDate and data.outcome.anotherDate[1]) or '',
+              classes: "govuk-input--width-2" + (" govuk-input--error" if outcomeDateFieldErrors.month else "")
             },
             {
               name: "year",
               label: "Year",
-              value: (data.withdrawal.anotherDate and data.withdrawal.anotherDate[2]) or '',
-              classes: "govuk-input--width-4" + (" govuk-input--error" if withdrawalDateFieldErrors.year else "")
+              value: (data.outcome.anotherDate and data.outcome.anotherDate[2]) or '',
+              classes: "govuk-input--width-4" + (" govuk-input--error" if outcomeDateFieldErrors.year else "")
             }
           ]
         }) }}
       {% endset %}
 
       {{ govukRadios({
-        name: "withdrawal[when]",
+        name: "outcome[when]",
         fieldset: {
           legend: {
             html: headingHtml,
@@ -72,10 +72,10 @@
           }
         },
         hint: {
-          text: "This is the last day they trained for QTS"
-        },
+          text: "HINT TEXT"
+        } if 1==0,
         errorMessage: errors | getErrorMessage("when"),
-        value: data.withdrawal.when,
+        value: data.outcome.when,
         items: [
           {
             value: "Today",

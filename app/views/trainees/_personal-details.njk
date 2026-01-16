@@ -1,0 +1,85 @@
+{{ govukSummaryList({
+  card: {
+    title: {
+      text: "Personal details"
+    },
+    actions: {
+      items: [
+        {
+          href: "#",
+          text: "Change"
+        }
+      ]
+    } if 1==0
+  },
+  rows: [
+    {
+      key: {
+        text: "Full name"
+      },
+      value: {
+        text: trainee.personalDetails.firstName + " " + trainee.personalDetails.lastName
+      },
+      actions: {
+        items: [
+          {
+            href: "#",
+            text: "Change",
+            visuallyHiddenText: "full name"
+          }
+        ]
+      }
+    },
+    {
+      key: {
+        text: "Date of birth"
+      },
+      value: {
+        text: trainee.personalDetails.dateOfBirth | govukDate
+      },
+      actions: {
+        items: [
+          {
+            href: "#",
+            text: "Change",
+            visuallyHiddenText: "date of birth"
+          }
+        ]
+      }
+    },
+    {
+      key: {
+        text: "Sex"
+      },
+      value: {
+        text: trainee.personalDetails.sex
+      },
+      actions: {
+        items: [
+          {
+            href: "#",
+            text: "Change",
+            visuallyHiddenText: "sex"
+          }
+        ]
+      }
+    },
+    {
+      key: {
+        text: "Nationality"
+      },
+      value: {
+        text: trainee.personalDetails.nationality[0].label
+      },
+      actions: {
+        items: [
+          {
+            href: "#",
+            text: "Change",
+            visuallyHiddenText: "nationality"
+          }
+        ]
+      }
+    }
+  ]
+}) }}

@@ -1,0 +1,205 @@
+{# TODO: fix this hack #}
+{% set trainingPartnerHtml %}
+  {% if trainee.trainingDetails.trainingPartner.name | length %}
+    <p class="govuk-body">{{ trainee.trainingDetails.trainingPartner.name }}</p>
+  {% else %}
+    {% set missingTrainingPartnerHtml -%}
+      <p class="govuk-body govuk-!-font-weight-bold app-inset-text__title">Training partner is missing</p>
+      <p class="govuk-body">
+        <a href="#" class="govuk-link">Enter training partner</a>
+      </p>
+    {%- endset %}
+    {{ govukInsetText({
+      html: missingTrainingPartnerHtml,
+      classes: "app-inset-text--narrow-border app-inset-text--important govuk-!-margin-top-0"
+    }) }}
+  {% endif %}
+{% endset %}
+
+{{ govukSummaryList({
+  card: {
+    title: {
+      text: "Training overview"
+    }
+  },
+  rows: [
+    {
+      key: {
+        text: "Accredited provider"
+      },
+      value: {
+        text: trainee.trainingDetails.accreditedProvider.name + " (" + trainee.trainingDetails.accreditedProvider.code + ")"
+      },
+      actions: {
+        items: [
+          {
+            href: "#",
+            text: "Change",
+            visuallyHiddenText: "accredited provider"
+          }
+        ]
+      }
+    },
+    {
+      key: {
+        text: "Training partner"
+      },
+      value: {
+        html: trainingPartnerHtml
+      },
+      actions: {
+        items: [
+          {
+            href: "#",
+            text: "Change",
+            visuallyHiddenText: "training partner"
+          }
+        ]
+      } if trainee.trainingDetails.trainingPartner.name | length
+    },
+    {
+      key: {
+        text: "Trainee ID"
+      },
+      value: {
+        text: trainee.trainingDetails.traineeId
+      },
+      actions: {
+        items: [
+          {
+            href: "#",
+            text: "Change",
+            visuallyHiddenText: "trainee ID"
+          }
+        ]
+      }
+    },
+    {
+      key: {
+        text: "TRN"
+      },
+      value: {
+        text: trainee.trainingDetails.trn
+      },
+      actions: {
+        items: [
+          {
+            href: "#",
+            text: "Change",
+            visuallyHiddenText: "teacher reference number (TRN)"
+          }
+        ]
+      } if 1==0
+    },
+    {
+      key: {
+        text: "HESA ID"
+      },
+      value: {
+        text: trainee.trainingDetails.hesaId
+      },
+      actions: {
+        items: [
+          {
+            href: "#",
+            text: "Change",
+            visuallyHiddenText: "HESA ID"
+          }
+        ]
+      }
+    } if trainee.trainingDetails.hesaId | length,
+    {
+      key: {
+        text: "Trainee start date"
+      },
+      value: {
+        text: trainee.trainingDetails.traineeStartDate | govukDate
+      },
+      actions: {
+        items: [
+          {
+            href: "#",
+            text: "Change",
+            visuallyHiddenText: "trainee start date"
+          }
+        ]
+      }
+    },
+    {
+      key: {
+        text: "Start year"
+      },
+      value: {
+        text: trainee.trainingDetails.startYear.label
+      },
+      actions: {
+        items: [
+          {
+            href: "#",
+            text: "Change",
+            visuallyHiddenText: "start year"
+          }
+        ]
+      } if 1==0
+    },
+    {
+      key: {
+        text: "End year"
+      },
+      value: {
+        text: trainee.trainingDetails.endYear.label
+      },
+      actions: {
+        items: [
+          {
+            href: "#",
+            text: "Change",
+            visuallyHiddenText: "end year"
+          }
+        ]
+      } if 1==0
+    },
+    {
+      key: {
+        text: "Record source"
+      },
+      value: {
+        text: trainee.trainingDetails.recordSource
+      },
+      actions: {
+        items: [
+          {
+            href: "#",
+            text: "Change",
+            visuallyHiddenText: "Item label"
+          }
+        ]
+      } if 1==0
+    },
+    {
+      key: {
+        text: "Recorded created on"
+      },
+      value: {
+        text: trainee.trainingDetails.createdAt | govukDate
+      },
+      actions: {
+        items: [
+          {
+            href: "#",
+            text: "Change",
+            visuallyHiddenText: "record source"
+          }
+        ]
+      } if 1==0
+    },
+    {
+      key: {
+        text: "Last updated on"
+      },
+      value: {
+        text: trainee.trainingDetails.updatedAt | govukDate
+      }
+    }
+  ]
+}) }}

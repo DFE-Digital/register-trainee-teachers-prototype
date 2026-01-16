@@ -3,7 +3,7 @@
 {% set primaryNavId = "registeredTrainees" %}
 {% set secondaryNavId = "about" %}
 
-{% set title = "Check QTS details" %}
+{% set title = "Check your answers" %}
 {% set caption = "Update QTS status - " + trainee.personalDetails.firstName + " " + trainee.personalDetails.lastName  %}
 
 {% block beforeContent %}
@@ -35,7 +35,7 @@
         rows: [
           {
             key: {
-              text: "QUESTION TEXT"
+              text: "When did the trainee’s QTS status change?"
             },
             value: {
               text: outcomeWhenText

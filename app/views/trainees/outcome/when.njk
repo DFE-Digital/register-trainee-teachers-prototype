@@ -3,7 +3,7 @@
 {% set primaryNavId = "registeredTrainees" %}
 {% set secondaryNavId = "about" %}
 
-{% set title = "QUESTION TEXT" %}
+{% set title = "When did the trainee’s QTS status change?" %}
 {% set caption = "Update QTS status - " + trainee.personalDetails.firstName + " " + trainee.personalDetails.lastName  %}
 
 {% block beforeContent %}
@@ -73,7 +73,7 @@
         },
         hint: {
           text: "HINT TEXT"
-        },
+        } if 1==0,
         errorMessage: errors | getErrorMessage("when"),
         value: data.outcome.when,
         items: [

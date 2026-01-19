@@ -22,7 +22,7 @@ exports.registered = async (req, res) => {
   })
 }
 
-exports.show = async (req, res) => {
+exports.about = async (req, res) => {
   delete req.session.data.withdrawal
   delete req.session.data.outcome
   delete req.session.data.referrer
@@ -33,7 +33,7 @@ exports.show = async (req, res) => {
   res.render('trainees/index', {
     trainee,
     actions: {
-      back: '#',
+      back: '/trainees/registered',
       defer: `/trainees/${traineeId}/defer`,
       withdraw: `/trainees/${traineeId}/withdraw`,
       outcome: `/trainees/${traineeId}/outcome/when`
@@ -48,7 +48,7 @@ exports.personal = async (req, res) => {
   res.render('trainees/personal', {
     trainee,
     actions: {
-
+      back: '/trainees/registered'
     }
   })
 }

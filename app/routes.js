@@ -69,7 +69,7 @@ router.get('/trainees/registered', checkIsAuthenticated, traineeController.regis
 /// Trainee routes
 /// ------------------------------------------------------------------------ ///
 
-router.get('/trainees/:traineeId', checkIsAuthenticated, traineeController.show)
+router.get('/trainees/:traineeId', checkIsAuthenticated, traineeController.about)
 router.get('/trainees/:traineeId/personal', checkIsAuthenticated, traineeController.personal)
 
 /// ------------------------------------------------------------------------ ///

@@ -30,6 +30,7 @@ const passport = {
 /// ------------------------------------------------------------------------ ///
 const documentationController = require('./controllers/documentation')
 const feedbackController = require('./controllers/feedback')
+const traineeBulkUpdateController = require('./controllers/traineeBulkUpdate')
 const traineeController = require('./controllers/trainee')
 const traineeOutcomeController = require('./controllers/traineeOutcome')
 const traineeWithdrawalController = require('./controllers/traineeWithdrawal')
@@ -64,6 +65,8 @@ router.get('/', (req, res) => {
 
 router.get('/trainees/draft', checkIsAuthenticated, traineeController.draft)
 router.get('/trainees/registered', checkIsAuthenticated, traineeController.registered)
+
+router.get('/trainees/bulk', checkIsAuthenticated, traineeBulkUpdateController.show_get)
 
 /// ------------------------------------------------------------------------ ///
 /// Trainee routes

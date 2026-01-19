@@ -1,0 +1,85 @@
+{% extends "layouts/main.njk" %}
+
+{% set primaryNavId = "bulkUpdates" %}
+
+{% set title = "Bulk updates" %}
+{% set caption = "Provider A" %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    {% include "_includes/page-heading.njk" %}
+
+    <p class="govuk-body">
+      Make changes to multiple trainee records at the same time. You can:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>
+        add new trainees
+      </li>
+      <li>
+        add missing placement data
+      </li>
+      <li>
+        update trainees’ QTS status
+      </li>
+    </ul>
+
+    <h2 class="govuk-heading-m">
+      Add new trainees
+    </h2>
+
+    <p class="govuk-body">
+      You can bulk add new trainees.
+    </p>
+
+    <p class="govuk-body">
+      <a href="#" class="govuk-link">
+        Bulk add new trainees
+      </a>
+    </p>
+
+    <p class="govuk-body">
+      <a href="#" class="govuk-link">
+        View status of previously uploaded new trainee files
+      </a>
+    </p>
+
+    <h2 class="govuk-heading-m">
+      Update trainees’ QTS or EYTS status
+    </h2>
+
+    <p class="govuk-body">
+      You do not have any trainees who can be bulk updated for qualified teacher status (QTS) or early years teacher status (EYTS).
+    </p>
+
+    <p class="govuk-body">
+      You can only bulk update trainees if they have a TRN and either:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>
+        an expected end date in the past 6 months or the next 6 months
+      </li>
+      <li>
+        no expected end date
+      </li>
+    </ul>
+
+    <p class="govuk-body">
+      You cannot bulk update trainees who have deferred or withdrawn from their course.
+    </p>
+
+    <p class="govuk-body">
+      <a href="#" class="govuk-link">
+        Read guidance about how to bulk update trainees for QTS or EYTS.
+      </a>
+    </p>
+
+  </div>
+</div>
+
+{% endblock %}

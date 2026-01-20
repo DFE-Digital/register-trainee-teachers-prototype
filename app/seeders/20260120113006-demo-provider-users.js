@@ -1,3 +1,5 @@
+const fs = require('fs')
+const path = require('path')
 const { v4: uuidv4 } = require('uuid')
 
 module.exports = {
@@ -7,13 +9,37 @@ module.exports = {
     try {
       await queryInterface.bulkDelete('provider_users', null, { transaction })
 
+      const dataPath = path.join(__dirname, '/data/20260120113006-demo-provider-users.json')
+      const rawData = fs.readFileSync(dataPath, 'utf8')
+      const providerUsersData = JSON.parse(rawData)
+
+      if (providerUsersData.length === 0) {
+        await transaction.commit()
+        return
+      }
+
+      const providerIds = [...new Set(
+        providerUsersData.map(providerUser => providerUser.providerId)
+      )]
+      const userIds = [...new Set([
+        ...providerUsersData.map(providerUser => providerUser.userId),
+        '354751f2-c5f7-483c-b9e4-b6103f50f970'
+      ])]
       const providers = await queryInterface.sequelize.query(
-        'SELECT id FROM providers',
-        { type: queryInterface.sequelize.QueryTypes.SELECT, transaction }
+        'SELECT id FROM providers WHERE id IN (:ids)',
+        {
+          replacements: { ids: providerIds },
+          type: queryInterface.sequelize.QueryTypes.SELECT,
+          transaction
+        }
       )
       const users = await queryInterface.sequelize.query(
-        'SELECT id FROM users',
-        { type: queryInterface.sequelize.QueryTypes.SELECT, transaction }
+        'SELECT id FROM users WHERE id IN (:ids)',
+        {
+          replacements: { ids: userIds },
+          type: queryInterface.sequelize.QueryTypes.SELECT,
+          transaction
+        }
       )
 
       if (providers.length === 0 || users.length === 0) {
@@ -22,13 +48,29 @@ module.exports = {
       }
 
       const createdAt = new Date()
-      const systemUserId = users[0].id
-      const providerId = providers[0].id
+      const providerById = providers.reduce((acc, provider) => {
+        acc[provider.id] = provider.id
+        return acc
+      }, {})
+      const userById = users.reduce((acc, user) => {
+        acc[user.id] = user.id
+        return acc
+      }, {})
 
-      const providerUsers = users.slice(0, 2).map(user => ({
+      const systemUserId = userById['354751f2-c5f7-483c-b9e4-b6103f50f970']
+      const missingAssociation = providerUsersData.find(({ userId, providerId }) => (
+        !userById[userId] || !providerById[providerId]
+      ))
+
+      if (!systemUserId || missingAssociation) {
+        await transaction.commit()
+        return
+      }
+
+      const providerUsers = providerUsersData.map(({ userId, providerId }) => ({
         id: uuidv4(),
-        provider_id: providerId,
-        user_id: user.id,
+        provider_id: providerById[providerId],
+        user_id: userById[userId],
         created_at: createdAt,
         created_by_id: systemUserId,
         updated_at: createdAt,

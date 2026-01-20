@@ -1,4 +1,4 @@
-const { findMany, findOne } = require('../models/trainee')
+const { findMany, findOne } = require('../services/trainee')
 
 exports.draft = async (req, res) => {
   const trainees = []

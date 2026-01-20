@@ -1,4 +1,4 @@
-const { findOne } = require('../models/trainee')
+const { findOne } = require('../services/trainee')
 const { validateDateInput, getDateParts } = require('../helpers/validation/date')
 
 exports.when_get = async (req, res) => {

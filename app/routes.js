@@ -46,6 +46,7 @@ const accountController = require('./controllers/account')
 const authenticationController = require('./controllers/authentication')
 const documentationController = require('./controllers/documentation')
 const feedbackController = require('./controllers/feedback')
+const providerController = require('./controllers/provider')
 const traineeBulkUpdateController = require('./controllers/traineeBulkUpdate')
 const traineeController = require('./controllers/trainee')
 const traineeOutcomeController = require('./controllers/traineeOutcome')
@@ -55,7 +56,7 @@ const userController = require('./controllers/user')
 /// ------------------------------------------------------------------------ ///
 /// Middleware
 /// ------------------------------------------------------------------------ ///
-const { checkIsAuthenticated } = require('./middleware/auth')
+const { checkIsAuthenticated, checkProviderAccess } = require('./middleware/auth')
 
 /// ------------------------------------------------------------------------ ///
 /// ALL ROUTES
@@ -91,53 +92,63 @@ router.get('/sign-out', (req, res) => {
 /// HOMEPAGE ROUTE
 /// ------------------------------------------------------------------------ ///
 router.get('/', (req, res) => {
-  res.redirect('/trainees/registered')
+  res.redirect('/providers')
 })
 
-router.get('/trainees/draft', checkIsAuthenticated, traineeController.draft)
-router.get('/trainees/registered', checkIsAuthenticated, traineeController.registered)
+router.get('/account-not-authorised', (req, res) => {
+  res.render('errors/unauthorised')
+})
 
-router.get('/trainees/bulk', checkIsAuthenticated, traineeBulkUpdateController.show_get)
+/// ------------------------------------------------------------------------ ///
+/// Provider routes
+/// ------------------------------------------------------------------------ ///
+router.get('/providers', checkIsAuthenticated, providerController.list)
+router.get('/providers/:providerId', checkIsAuthenticated, checkProviderAccess, providerController.home)
+
+router.get('/providers/:providerId/trainees/draft', checkIsAuthenticated, checkProviderAccess, traineeController.draft)
+router.get('/providers/:providerId/trainees/registered', checkIsAuthenticated, checkProviderAccess, traineeController.registered)
+
+router.get('/providers/:providerId/trainees/bulk', checkIsAuthenticated, checkProviderAccess, traineeBulkUpdateController.show_get)
 
 /// ------------------------------------------------------------------------ ///
 /// Trainee routes
 /// ------------------------------------------------------------------------ ///
 
-router.get('/trainees/:traineeId', checkIsAuthenticated, traineeController.about)
-router.get('/trainees/:traineeId/personal', checkIsAuthenticated, traineeController.personal)
+router.get('/providers/:providerId/trainees/:traineeId', checkIsAuthenticated, checkProviderAccess, traineeController.about)
+router.get('/providers/:providerId/trainees/:traineeId/personal', checkIsAuthenticated, checkProviderAccess, traineeController.personal)
 
 /// ------------------------------------------------------------------------ ///
 /// Trainee outcome routes
 /// ------------------------------------------------------------------------ ///
 
-router.get('/trainees/:traineeId/outcome/stop', checkIsAuthenticated, traineeOutcomeController.stop_get)
+router.get('/providers/:providerId/trainees/:traineeId/outcome/stop', checkIsAuthenticated, checkProviderAccess, traineeOutcomeController.stop_get)
 
-router.get('/trainees/:traineeId/outcome/when', checkIsAuthenticated, traineeOutcomeController.when_get)
-router.post('/trainees/:traineeId/outcome/when', checkIsAuthenticated, traineeOutcomeController.when_post)
+router.get('/providers/:providerId/trainees/:traineeId/outcome/when', checkIsAuthenticated, checkProviderAccess, traineeOutcomeController.when_get)
+router.post('/providers/:providerId/trainees/:traineeId/outcome/when', checkIsAuthenticated, checkProviderAccess, traineeOutcomeController.when_post)
 
-router.get('/trainees/:traineeId/outcome/check', checkIsAuthenticated, traineeOutcomeController.check_get)
-router.post('/trainees/:traineeId/outcome/check', checkIsAuthenticated, traineeOutcomeController.check_post)
+router.get('/providers/:providerId/trainees/:traineeId/outcome/check', checkIsAuthenticated, checkProviderAccess, traineeOutcomeController.check_get)
+router.post('/providers/:providerId/trainees/:traineeId/outcome/check', checkIsAuthenticated, checkProviderAccess, traineeOutcomeController.check_post)
 
 /// ------------------------------------------------------------------------ ///
 /// Trainee withdrawal routes
 /// ------------------------------------------------------------------------ ///
 
-router.get('/trainees/:traineeId/withdraw', checkIsAuthenticated, traineeWithdrawalController.start_get)
+router.get('/providers/:providerId/trainees/:traineeId/withdraw', checkIsAuthenticated, checkProviderAccess, traineeWithdrawalController.start_get)
 
-router.get('/trainees/:traineeId/withdraw/when', checkIsAuthenticated, traineeWithdrawalController.when_get)
-router.post('/trainees/:traineeId/withdraw/when', checkIsAuthenticated, traineeWithdrawalController.when_post)
+router.get('/providers/:providerId/trainees/:traineeId/withdraw/when', checkIsAuthenticated, checkProviderAccess, traineeWithdrawalController.when_get)
+router.post('/providers/:providerId/trainees/:traineeId/withdraw/when', checkIsAuthenticated, checkProviderAccess, traineeWithdrawalController.when_post)
 
-router.get('/trainees/:traineeId/withdraw/who', checkIsAuthenticated, traineeWithdrawalController.who_get)
-router.post('/trainees/:traineeId/withdraw/who', checkIsAuthenticated, traineeWithdrawalController.who_post)
+router.get('/providers/:providerId/trainees/:traineeId/withdraw/who', checkIsAuthenticated, checkProviderAccess, traineeWithdrawalController.who_get)
+router.post('/providers/:providerId/trainees/:traineeId/withdraw/who', checkIsAuthenticated, checkProviderAccess, traineeWithdrawalController.who_post)
 
-router.get('/trainees/:traineeId/withdraw/why', checkIsAuthenticated, traineeWithdrawalController.why_get)
-router.post('/trainees/:traineeId/withdraw/why', checkIsAuthenticated, traineeWithdrawalController.why_post)
+router.get('/providers/:providerId/trainees/:traineeId/withdraw/why', checkIsAuthenticated, checkProviderAccess, traineeWithdrawalController.why_get)
+router.post('/providers/:providerId/trainees/:traineeId/withdraw/why', checkIsAuthenticated, checkProviderAccess, traineeWithdrawalController.why_post)
 
-router.get('/trainees/:traineeId/withdraw/interested', checkIsAuthenticated, traineeWithdrawalController.interested_get)
-router.post('/trainees/:traineeId/withdraw/interested', checkIsAuthenticated, traineeWithdrawalController.interested_post)
+router.get('/providers/:providerId/trainees/:traineeId/withdraw/interested', checkIsAuthenticated, checkProviderAccess, traineeWithdrawalController.interested_get)
+router.post('/providers/:providerId/trainees/:traineeId/withdraw/interested', checkIsAuthenticated, checkProviderAccess, traineeWithdrawalController.interested_post)
 
-router.get('/trainees/:traineeId/withdraw/check', checkIsAuthenticated, traineeWithdrawalController.check_get)
-router.post('/trainees/:traineeId/withdraw/check', checkIsAuthenticated, traineeWithdrawalController.check_post)
+router.get('/providers/:providerId/trainees/:traineeId/withdraw/check', checkIsAuthenticated, checkProviderAccess, traineeWithdrawalController.check_get)
+router.post('/providers/:providerId/trainees/:traineeId/withdraw/check', checkIsAuthenticated, checkProviderAccess, traineeWithdrawalController.check_post)
 
 /// ------------------------------------------------------------------------ ///
 /// Documentation routes

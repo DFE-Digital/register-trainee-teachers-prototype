@@ -1,13 +1,15 @@
 {% extends "layouts/main.njk" %}
 
 {% set primaryNavId = "home" %}
-{% set title = "Provider home" %}
-{% set caption = provider.operatingName %}
+
+{% set title = provider.operatingName %}
 
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <h1 class="govuk-heading-l">{{ title }}</h1>
+
+      {% include "_includes/page-heading.njk" %}
+
       <p class="govuk-body">Manage trainees for {{ provider.operatingName }}.</p>
 
       <ul class="govuk-list govuk-list--spaced">

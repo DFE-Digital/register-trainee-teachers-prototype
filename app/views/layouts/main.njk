@@ -6,6 +6,8 @@
 {% from "_components/secondary-navigation/macro.njk" import appSecondaryNavigation %}
 {% from "_components/organisation-actions/macro.njk" import appOrganisationActions %}
 
+{% set navigationBaseUrl = baseUrl if baseUrl else "" %}
+
 {% block pageTitle -%}
   {{ "Error: " if errors }}{{ subtitle + " - " if subtitle }}{{ title + " - " if title }}{{ caption + " - " if caption }}{{ serviceName }} - GOV.UK
 {%- endblock %}
@@ -30,58 +32,62 @@
     </li>
   {% endset %}
 
-  {% set organisationHtml %}
-    Provider A
-  {% endset %}
+  {% if currentProvider and hasMultipleProviders and not hidePrimaryNavigation %}
+    {% set organisationHtml %}
+      {{ currentProvider.operatingName }}
+    {% endset %}
 
-  {{ appOrganisationActions({
-    html: organisationHtml,
-    actions: {
-      items: [
+    {{ appOrganisationActions({
+      html: organisationHtml,
+      actions: {
+        items: [
+          {
+            text: "Change provider",
+            href: "/providers"
+          }
+        ]
+      },
+      classes: "govuk-width-container"
+    }) }}
+  {% endif %}
+
+  {% if not hidePrimaryNavigation and navigationBaseUrl %}
+    {{ govukServiceNavigation({
+      navigationId: "primaryNavigation",
+      serviceName: serviceName,
+      serviceUrl: navigationBaseUrl or "/providers",
+      navigation: [
         {
-          text: "Change organisation",
-          href: "#"
+          text: "Home",
+          href: navigationBaseUrl or "/providers",
+          active: primaryNavId == "home"
+        },
+        {
+          text: "Draft trainees",
+          href: navigationBaseUrl + "/trainees/draft",
+          active: primaryNavId == "draftTrainees"
+        },
+        {
+          text: "Registered trainees",
+          href: navigationBaseUrl + "/trainees/registered",
+          active: primaryNavId == "registeredTrainees"
+        },
+        {
+          text: "Bulk updates",
+          href: navigationBaseUrl + "/trainees/bulk",
+          active: primaryNavId == "bulkUpdates"
+        },
+        {
+          text: "Reports",
+          href: "#",
+          active: primaryNavId == "reports"
         }
-      ]
-    },
-    classes: "govuk-width-container"
-  }) }}
-
-  {{ govukServiceNavigation({
-    navigationId: "primaryNavigation",
-    serviceName: serviceName,
-    serviceUrl: "/",
-    navigation: [
-      {
-        text: "Home",
-        href: "/",
-        active: primaryNavId == "home"
-      },
-      {
-        text: "Draft trainees",
-        href: "/trainees/draft",
-        active: primaryNavId == "draftTrainees"
-      },
-      {
-        text: "Registered trainees",
-        href: "/trainees/registered",
-        active: primaryNavId == "registeredTrainees"
-      },
-      {
-        text: "Bulk updates",
-        href: "/trainees/bulk",
-        active: primaryNavId == "bulkUpdates"
-      },
-      {
-        text: "Reports",
-        href: "#",
-        active: primaryNavId == "reports"
+      ],
+      slots: {
+        navigationEnd: navigationEndHtml
       }
-    ],
-    slots: {
-      navigationEnd: navigationEndHtml
-    }
-  }) }}
+    }) }}
+  {% endif %}
 
   {% include "_includes/phase-banner.njk" %}
 {% endblock %}

@@ -1,0 +1,23 @@
+{% extends "layouts/main.njk" %}
+
+{% set title = "Choose a provider" %}
+{% set hidePrimaryNavigation = true %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-l">{{ title }}</h1>
+      <p class="govuk-body">Select the provider you want to manage.</p>
+
+      <ul class="govuk-list govuk-list--spaced">
+        {% for provider in providers %}
+          <li>
+            <a href="/providers/{{ provider.id }}" class="govuk-link">
+              {{ provider.operatingName }}
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+{% endblock %}

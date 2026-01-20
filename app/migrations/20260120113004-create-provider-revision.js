@@ -23,7 +23,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       type: {
-        type: Sequelize.ENUM('hei','other','school')
+        type: Sequelize.ENUM('hei','other','school','scitt')
       },
       ukprn: {
         type: Sequelize.STRING,
@@ -34,6 +34,10 @@ module.exports = {
       },
       code: {
         type: Sequelize.STRING,
+        allowNull: false
+      },
+      is_accredited: {
+        type: Sequelize.BOOLEAN,
         allowNull: false
       },
       website: {

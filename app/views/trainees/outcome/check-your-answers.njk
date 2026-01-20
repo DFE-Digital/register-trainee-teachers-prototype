@@ -1,0 +1,69 @@
+{% extends "layouts/main.njk" %}
+
+{% set primaryNavId = "registeredTrainees" %}
+{% set secondaryNavId = "about" %}
+
+{% set title = "Check your answers" %}
+{% set caption = "Update QTS status - " + trainee.personalDetails.firstName + " " + trainee.personalDetails.lastName  %}
+
+{% block beforeContent %}
+{{ govukBackLink({
+  text: "Back",
+  href: actions.back
+}) }}
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    {% include "_includes/page-heading.njk" %}
+
+    <form action="{{ actions.next }}" method="post" accept-charset="utf-8" novalidate>
+
+      {% set outcomeWhenText %}
+        {% if data.outcome.when == "Another date" %}
+          {% set outcomeDate = data.outcome.anotherDate | arrayToDateObject | govukDate %}
+          {{ outcomeDate }}
+        {% else %}
+          {{ data.outcome.when }}
+        {% endif %}
+      {% endset %}
+
+      {{ govukSummaryList({
+        rows: [
+          {
+            key: {
+              text: "When did the trainee’s QTS status change?"
+            },
+            value: {
+              text: outcomeWhenText
+            },
+            actions: {
+              items: [
+                {
+                  href: actions.change + "/when?referrer=check",
+                  text: "Change",
+                  visuallyHiddenText: "QUESTION TEXT"
+                }
+              ]
+            }
+          }
+        ]
+      }) }}
+
+      {{ govukButton({
+        text: "Update QTS status"
+      }) }}
+
+    </form>
+
+    <p class="govuk-body">
+      <a class="govuk-link" href="{{ actions.cancel }}">Cancel and return to record</a>
+    </p>
+
+  </div>
+</div>
+
+{% endblock %}

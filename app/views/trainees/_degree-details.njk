@@ -1,0 +1,114 @@
+
+{% for degree in trainee.degreeDetails %}
+
+  {% set cardTitle = degree.degreeType.name + ": " + degree.subject.name %}
+
+  {{ govukSummaryList({
+    card: {
+      title: {
+        text: cardTitle
+      },
+      actions: {
+        items: [
+          {
+            href: "#",
+            text: "Delete degree"
+          }
+        ]
+      }
+    },
+    rows: [
+      {
+        key: {
+          text: "Awarding institution"
+        },
+        value: {
+          text: degree.awardingInstitution.name
+        },
+        actions: {
+          items: [
+            {
+              href: "Item URL",
+              text: "Change",
+              visuallyHiddenText: "Item label"
+            }
+          ]
+        }
+      },
+      {
+        key: {
+          text: "Subject"
+        },
+        value: {
+          text: degree.subject.name
+        },
+        actions: {
+          items: [
+            {
+              href: "Item URL",
+              text: "Change",
+              visuallyHiddenText: "degree subject"
+            }
+          ]
+        }
+      },
+      {
+        key: {
+          text: "Degree type"
+        },
+        value: {
+          text: degree.degreeType.name
+        },
+        actions: {
+          items: [
+            {
+              href: "Item URL",
+              text: "Change",
+              visuallyHiddenText: "degree type"
+            }
+          ]
+        }
+      },
+      {
+        key: {
+          text: "Grade"
+        },
+        value: {
+          text: degree.degreeGrade.name
+        },
+        actions: {
+          items: [
+            {
+              href: "Item URL",
+              text: "Change",
+              visuallyHiddenText: "degree graded"
+            }
+          ]
+        }
+      },
+      {
+        key: {
+          text: "Graduation year"
+        },
+        value: {
+          text: degree.graduationYear
+        },
+        actions: {
+          items: [
+            {
+              href: "Item URL",
+              text: "Change",
+              visuallyHiddenText: "graduation year"
+            }
+          ]
+        }
+      }
+    ]
+  }) }}
+
+{% endfor %}
+
+{{ govukButton({
+  text: "Add another degree",
+  classes: "govuk-button--secondary"
+}) }}

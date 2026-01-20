@@ -30,7 +30,9 @@ const passport = {
 /// ------------------------------------------------------------------------ ///
 const documentationController = require('./controllers/documentation')
 const feedbackController = require('./controllers/feedback')
+const traineeBulkUpdateController = require('./controllers/traineeBulkUpdate')
 const traineeController = require('./controllers/trainee')
+const traineeOutcomeController = require('./controllers/traineeOutcome')
 const traineeWithdrawalController = require('./controllers/traineeWithdrawal')
 
 /// ------------------------------------------------------------------------ ///
@@ -58,14 +60,32 @@ router.all('*', (req, res, next) => {
 /// HOMEPAGE ROUTE
 /// ------------------------------------------------------------------------ ///
 router.get('/', (req, res) => {
-  res.redirect('/trainees/6a4c4cef-e15f-4a3b-8888-15629dbf8b20')
+  res.redirect('/trainees/registered')
 })
+
+router.get('/trainees/draft', checkIsAuthenticated, traineeController.draft)
+router.get('/trainees/registered', checkIsAuthenticated, traineeController.registered)
+
+router.get('/trainees/bulk', checkIsAuthenticated, traineeBulkUpdateController.show_get)
 
 /// ------------------------------------------------------------------------ ///
 /// Trainee routes
 /// ------------------------------------------------------------------------ ///
 
-router.get('/trainees/:traineeId', checkIsAuthenticated, traineeController.show)
+router.get('/trainees/:traineeId', checkIsAuthenticated, traineeController.about)
+router.get('/trainees/:traineeId/personal', checkIsAuthenticated, traineeController.personal)
+
+/// ------------------------------------------------------------------------ ///
+/// Trainee outcome routes
+/// ------------------------------------------------------------------------ ///
+
+router.get('/trainees/:traineeId/outcome/stop', checkIsAuthenticated, traineeOutcomeController.stop_get)
+
+router.get('/trainees/:traineeId/outcome/when', checkIsAuthenticated, traineeOutcomeController.when_get)
+router.post('/trainees/:traineeId/outcome/when', checkIsAuthenticated, traineeOutcomeController.when_post)
+
+router.get('/trainees/:traineeId/outcome/check', checkIsAuthenticated, traineeOutcomeController.check_get)
+router.post('/trainees/:traineeId/outcome/check', checkIsAuthenticated, traineeOutcomeController.check_post)
 
 /// ------------------------------------------------------------------------ ///
 /// Trainee withdrawal routes

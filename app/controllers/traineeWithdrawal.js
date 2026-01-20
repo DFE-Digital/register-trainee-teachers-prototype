@@ -348,6 +348,7 @@ exports.check_get = async (req, res) => {
 
 exports.check_post = async (req, res) => {
   const { traineeId } = req.params
+  delete req.session.data.withdrawal
 
   req.flash('success', 'Trainee withdrawn')
   res.redirect(`/trainees/${traineeId}`)

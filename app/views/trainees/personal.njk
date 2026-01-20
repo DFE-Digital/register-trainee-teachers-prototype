@@ -1,0 +1,57 @@
+{% extends "layouts/main.njk" %}
+
+{% set primaryNavId = "registeredTrainees" %}
+{% set secondaryNavId = "personalDetails" %}
+
+{% set title = trainee.personalDetails.firstName + " " + trainee.personalDetails.lastName %}
+{% set caption = "TRN: " + trainee.trainingDetails.trn %}
+
+{% block beforeContent %}
+{{ govukBackLink({
+  text: "All records",
+  href: actions.back
+}) }}
+{% endblock %}
+
+{% block content %}
+
+{% include "_includes/notification-banner.njk" %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    {% set headingTag %}
+      {{ govukTag({
+        text: "TRN received",
+        classes: "govuk-tag__heading"
+      }) }}
+    {% endset %}
+
+    {% include "_includes/page-heading.njk" %}
+
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    {% include "./_secondary-navigation.njk" %}
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+
+    {% include "./_personal-details.njk" %}
+
+    {% include "./_contact-details.njk" %}
+
+    {% include "./_diversity-information.njk" %}
+
+    {% if trainee.degreeDetails | length %}
+      {% include "./_degree-details.njk" %}
+    {% endif %}
+
+  </div>
+</div>
+
+{% endblock %}

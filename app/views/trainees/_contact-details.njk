@@ -1,0 +1,26 @@
+{{ govukSummaryList({
+  card: {
+    title: {
+      text: "Contact details"
+    }
+  },
+  rows: [
+    {
+      key: {
+        text: "Email address"
+      },
+      value: {
+        text: trainee.contactDetails.email
+      },
+      actions: {
+        items: [
+          {
+            href: "#",
+            text: "Change",
+            visuallyHiddenText: "email address"
+          }
+        ]
+      }
+    }
+  ]
+}) }}

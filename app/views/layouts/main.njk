@@ -2,6 +2,7 @@
 
 {% set govukRebrand = true %}
 
+{% from "_components/notice/macro.njk" import appNotice %}
 {% from "_components/secondary-navigation/macro.njk" import appSecondaryNavigation %}
 
 {% block pageTitle -%}
@@ -35,18 +36,23 @@
     navigation: [
       {
         text: "Home",
-        href: "#",
+        href: "/",
         active: primaryNavId == "home"
       },
       {
         text: "Draft trainees",
-        href: "#",
+        href: "/trainees/draft",
         active: primaryNavId == "draftTrainees"
       },
       {
         text: "Registered trainees",
-        href: "#",
+        href: "/trainees/registered",
         active: primaryNavId == "registeredTrainees"
+      },
+      {
+        text: "Bulk updates",
+        href: "/trainees/bulk",
+        active: primaryNavId == "bulkUpdates"
       },
       {
         text: "Reports",

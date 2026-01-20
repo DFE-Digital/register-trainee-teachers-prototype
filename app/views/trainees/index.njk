@@ -1,14 +1,15 @@
 {% extends "layouts/main.njk" %}
 
-{% set primaryNavId = "SOMETHING" %}
+{% set primaryNavId = "registeredTrainees" %}
 {% set secondaryNavId = "about" %}
 
-{% set title = "Gladia Delmarre" %}
+{% set title = trainee.personalDetails.firstName + " " + trainee.personalDetails.lastName %}
+{% set caption = "TRN: " + trainee.trainingDetails.trn %}
 
 {% block beforeContent %}
 {{ govukBackLink({
   text: "All records",
-  href: "#"
+  href: actions.back
 }) }}
 {% endblock %}
 
@@ -19,11 +20,43 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
-    {% include "_includes/page-heading.njk" %}
+    {% set headingTag %}
+      {{ govukTag({
+        text: "TRN received",
+        classes: "govuk-tag__heading"
+      }) }}
+    {% endset %}
 
+    {% include "_includes/page-heading.njk" %}
 
   </div>
 </div>
+
+{# TODO: fix this hack #}
+{% if not (trainee.placementDetails[0].name | length and trainee.placementDetails[1].name | length) %}
+  {% set missingInfo %}
+    <p class="govuk-body">
+      You need to enter:
+    </p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>
+        <a href="#" class="govuk-link">Training partner</a>
+      </li>
+      <li>
+        <a href="#" class="govuk-link">Placements</a>
+      </li>
+    </ul>
+  {% endset %}
+  {{ appNotice({
+    heading: {
+      text: "Trainee has missing information"
+    },
+    description: {
+      html: missingInfo
+    },
+    classes: "govuk-!-margin-bottom-5"
+  }) }}
+{% endif %}
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
@@ -34,10 +67,34 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
-    <p class="govuk-body">
-      <a href="#" class="govuk-link">Defer</a> or <a href="{{ actions.withdraw }}" class="govuk-link">withdraw</a> this trainee
-    </p>
+    <div class="govuk-button-group">
+      {{ govukButton({
+        text: "Update QTS status",
+        href: actions.outcome
+      }) }}
 
+      <a href="#" class="govuk-link">Defer trainee</a>
+
+      <a href="{{ actions.withdraw }}" class="govuk-link">Withdraw trainee</a>
+    </div>
+
+    {# <p class="govuk-body">
+      <a href="#" class="govuk-link">Defer</a> or <a href="{{ actions.withdraw }}" class="govuk-link">withdraw</a> this trainee
+    </p> #}
+
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+
+    {% include "./_training-overview.njk" %}
+
+    {% include "./_course-details.njk" %}
+
+    {% include "./_placement-details.njk" %}
+
+    {% include "./_funding.njk" %}
 
   </div>
 </div>

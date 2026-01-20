@@ -1,0 +1,60 @@
+{{ govukSummaryList({
+  card: {
+    title: {
+      text: "Diversity information"
+    }
+  },
+  rows: [
+    {
+      key: {
+        text: "Has the trainee shared diversity information?"
+      },
+      value: {
+        text: trainee.diversityDetails.hasShared
+      },
+      actions: {
+        items: [
+          {
+            href: "Item URL",
+            text: "Change",
+            visuallyHiddenText: "whether the trainee has shared diversity information"
+          }
+        ]
+      }
+    },
+    {
+      key: {
+        text: "Ethnicity"
+      },
+      value: {
+        text: trainee.diversityDetails.ethnicity
+      },
+      actions: {
+        items: [
+          {
+            href: "Item URL",
+            text: "Change",
+            visuallyHiddenText: "ethnicity"
+          }
+        ]
+      }
+    } if trainee.diversityDetails.hasShared != "No",
+    {
+      key: {
+        text: "Disability"
+      },
+      value: {
+        text: trainee.diversityDetails.disability
+      },
+      actions: {
+        items: [
+          {
+            href: "Item URL",
+            text: "Change",
+            visuallyHiddenText: "disability"
+          }
+        ]
+      }
+    } if trainee.diversityDetails.hasShared != "No"
+  ]
+}) }}

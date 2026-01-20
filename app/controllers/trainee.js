@@ -27,28 +27,31 @@ exports.about = async (req, res) => {
   delete req.session.data.outcome
   delete req.session.data.referrer
 
-  const { traineeId } = req.params
+  const { providerId, traineeId } = req.params
+  const baseUrl = `/providers/${providerId}`
+  const traineeBaseUrl = `${baseUrl}/trainees/${traineeId}`
   const trainee = findOne({ traineeId })
 
   res.render('trainees/index', {
     trainee,
     actions: {
-      back: '/trainees/registered',
-      defer: `/trainees/${traineeId}/defer`,
-      withdraw: `/trainees/${traineeId}/withdraw`,
-      outcome: `/trainees/${traineeId}/outcome/when`
+      back: `${baseUrl}/trainees/registered`,
+      defer: `${traineeBaseUrl}/defer`,
+      withdraw: `${traineeBaseUrl}/withdraw`,
+      outcome: `${traineeBaseUrl}/outcome/when`
     }
   })
 }
 
 exports.personal = async (req, res) => {
-  const { traineeId } = req.params
+  const { providerId, traineeId } = req.params
+  const baseUrl = `/providers/${providerId}`
   const trainee = findOne({ traineeId })
 
   res.render('trainees/personal', {
     trainee,
     actions: {
-      back: '/trainees/registered'
+      back: `${baseUrl}/trainees/registered`
     }
   })
 }

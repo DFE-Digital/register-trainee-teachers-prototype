@@ -6,38 +6,44 @@ const {
 } = require('../helpers/validation/date')
 
 exports.start_get = async (req, res) => {
-  const { traineeId } = req.params
+  const { providerId, traineeId } = req.params
+  const baseUrl = `/providers/${providerId}`
+  const traineeBaseUrl = `${baseUrl}/trainees/${traineeId}`
 
   res.render('trainees/withdraw/index', {
     actions: {
-      back: `/trainees/${traineeId}`,
-      cancel: `/trainees/${traineeId}`,
-      next: `/trainees/${traineeId}/withdraw/when`
+      back: traineeBaseUrl,
+      cancel: traineeBaseUrl,
+      next: `${traineeBaseUrl}/withdraw/when`
     }
   })
 }
 
 exports.when_get = async (req, res) => {
-  const { traineeId } = req.params
+  const { providerId, traineeId } = req.params
+  const baseUrl = `/providers/${providerId}`
+  const traineeBaseUrl = `${baseUrl}/trainees/${traineeId}`
 
-  let back = `/trainees/${traineeId}`
-  let next = `/trainees/${traineeId}/withdraw/when`
+  let back = traineeBaseUrl
+  let next = `${traineeBaseUrl}/withdraw/when`
   if (req.query?.referrer === 'check') {
-    back = `/trainees/${traineeId}/withdraw/check`
+    back = `${traineeBaseUrl}/withdraw/check`
     next += '?referrer=check'
   }
 
   res.render('trainees/withdraw/when', {
     actions: {
       back,
-      cancel: `/trainees/${traineeId}`,
+      cancel: traineeBaseUrl,
       next
     }
   })
 }
 
 exports.when_post = async (req, res) => {
-  const { traineeId } = req.params
+  const { providerId, traineeId } = req.params
+  const baseUrl = `/providers/${providerId}`
+  const traineeBaseUrl = `${baseUrl}/trainees/${traineeId}`
   const { withdrawal } = req.session.data
 
   const errors = []
@@ -88,10 +94,10 @@ exports.when_post = async (req, res) => {
   // }
 
   if (errors.length) {
-    let back = `/trainees/${traineeId}`
-    let next = `/trainees/${traineeId}/withdraw/when`
+    let back = traineeBaseUrl
+    let next = `${traineeBaseUrl}/withdraw/when`
     if (req.query?.referrer === 'check') {
-      back = `/trainees/${traineeId}/withdraw/check`
+      back = `${traineeBaseUrl}/withdraw/check`
       next += '?referrer=check'
     }
 
@@ -100,41 +106,45 @@ exports.when_post = async (req, res) => {
       withdrawalDateFieldErrors: fieldFlags,
       actions: {
         back,
-        cancel: `/trainees/${traineeId}`,
+        cancel: traineeBaseUrl,
         next
       }
     })
   } else {
     if (req.query?.referrer === 'check') {
-      res.redirect(`/trainees/${traineeId}/withdraw/check`)
+      res.redirect(`${traineeBaseUrl}/withdraw/check`)
     } else {
-      res.redirect(`/trainees/${traineeId}/withdraw/who`)
+      res.redirect(`${traineeBaseUrl}/withdraw/who`)
     }
   }
 }
 
 exports.who_get = async (req, res) => {
-  const { traineeId } = req.params
+  const { providerId, traineeId } = req.params
+  const baseUrl = `/providers/${providerId}`
+  const traineeBaseUrl = `${baseUrl}/trainees/${traineeId}`
   req.session.data.tempWithdrawal = req.session.data.withdrawal
 
-  let back = `/trainees/${traineeId}/withdraw/when`
-  let next = `/trainees/${traineeId}/withdraw/who`
+  let back = `${traineeBaseUrl}/withdraw/when`
+  let next = `${traineeBaseUrl}/withdraw/who`
   if (req.query?.referrer === 'check') {
-    back = `/trainees/${traineeId}/withdraw/check`
+    back = `${traineeBaseUrl}/withdraw/check`
     next += '?referrer=check'
   }
 
   res.render('trainees/withdraw/who', {
     actions: {
       back,
-      cancel: `/trainees/${traineeId}`,
+      cancel: traineeBaseUrl,
       next
     }
   })
 }
 
 exports.who_post = async (req, res) => {
-  const { traineeId } = req.params
+  const { providerId, traineeId } = req.params
+  const baseUrl = `/providers/${providerId}`
+  const traineeBaseUrl = `${baseUrl}/trainees/${traineeId}`
   const { withdrawal } = req.session.data
   const { tempWithdrawal } = req.session.data
 
@@ -149,10 +159,10 @@ exports.who_post = async (req, res) => {
   }
 
   if (errors.length) {
-    let back = `/trainees/${traineeId}/withdraw/when`
-    let next = `/trainees/${traineeId}/withdraw/who`
+    let back = `${traineeBaseUrl}/withdraw/when`
+    let next = `${traineeBaseUrl}/withdraw/who`
     if (req.query?.referrer === 'check') {
-      back = `/trainees/${traineeId}/withdraw/check`
+      back = `${traineeBaseUrl}/withdraw/check`
       next += '?referrer=check'
     }
 
@@ -160,33 +170,35 @@ exports.who_post = async (req, res) => {
       errors,
       actions: {
         back,
-        cancel: `/trainees/${traineeId}`,
+        cancel: traineeBaseUrl,
         next
       }
     })
   } else {
     if (req.query?.referrer === 'check') {
       if (withdrawal.who === tempWithdrawal.who) {
-        res.redirect(`/trainees/${traineeId}/withdraw/check`)
+        res.redirect(`${traineeBaseUrl}/withdraw/check`)
       } else {
-        res.redirect(`/trainees/${traineeId}/withdraw/why?referrer=check`)
+        res.redirect(`${traineeBaseUrl}/withdraw/why?referrer=check`)
       }
     } else {
-      res.redirect(`/trainees/${traineeId}/withdraw/why`)
+      res.redirect(`${traineeBaseUrl}/withdraw/why`)
     }
   }
 }
 
 exports.why_get = async (req, res) => {
-  const { traineeId } = req.params
+  const { providerId, traineeId } = req.params
+  const baseUrl = `/providers/${providerId}`
+  const traineeBaseUrl = `${baseUrl}/trainees/${traineeId}`
   const { withdrawal } = req.session.data
   const { tempWithdrawal } = req.session.data
 
-  let back = `/trainees/${traineeId}/withdraw/who`
-  let next = `/trainees/${traineeId}/withdraw/why`
+  let back = `${traineeBaseUrl}/withdraw/who`
+  let next = `${traineeBaseUrl}/withdraw/why`
   if (req.query?.referrer === 'check') {
     // if (withdrawal.who === tempWithdrawal.who) {
-      back = `/trainees/${traineeId}/withdraw/check`
+      back = `${traineeBaseUrl}/withdraw/check`
     // } else {
     //   back = `/trainees/${traineeId}/withdraw/who?referrer=check`
     // }
@@ -196,14 +208,16 @@ exports.why_get = async (req, res) => {
   res.render('trainees/withdraw/why', {
     actions: {
       back,
-      cancel: `/trainees/${traineeId}`,
+      cancel: traineeBaseUrl,
       next
     }
   })
 }
 
 exports.why_post = async (req, res) => {
-  const { traineeId } = req.params
+  const { providerId, traineeId } = req.params
+  const baseUrl = `/providers/${providerId}`
+  const traineeBaseUrl = `${baseUrl}/trainees/${traineeId}`
   const { withdrawal } = req.session.data
 
   const errors = []
@@ -237,10 +251,10 @@ exports.why_post = async (req, res) => {
   }
 
   if (errors.length) {
-    let back = `/trainees/${traineeId}/withdraw/who`
-    let next = `/trainees/${traineeId}/withdraw/why`
+    let back = `${traineeBaseUrl}/withdraw/who`
+    let next = `${traineeBaseUrl}/withdraw/why`
     if (req.query?.referrer === 'check') {
-      back = `/trainees/${traineeId}/withdraw/check`
+      back = `${traineeBaseUrl}/withdraw/check`
       next += '?referrer=check'
     }
 
@@ -248,21 +262,23 @@ exports.why_post = async (req, res) => {
       errors,
       actions: {
         back,
-        cancel: `/trainees/${traineeId}`,
+        cancel: traineeBaseUrl,
         next
       }
     })
   } else {
     if (req.query?.referrer === 'check') {
-      res.redirect(`/trainees/${traineeId}/withdraw/check`)
+      res.redirect(`${traineeBaseUrl}/withdraw/check`)
     } else {
-      res.redirect(`/trainees/${traineeId}/withdraw/interested`)
+      res.redirect(`${traineeBaseUrl}/withdraw/interested`)
     }
   }
 }
 
 exports.interested_get = async (req, res) => {
-  const { traineeId } = req.params
+  const { providerId, traineeId } = req.params
+  const baseUrl = `/providers/${providerId}`
+  const traineeBaseUrl = `${baseUrl}/trainees/${traineeId}`
   const { withdrawal } = req.session.data
 
   if (!withdrawal.why.includes('Safeguarding concerns')) {
@@ -273,24 +289,26 @@ exports.interested_get = async (req, res) => {
     delete req.session.data.withdrawal.anotherReason
   }
 
-  let back = `/trainees/${traineeId}/withdraw/why`
-  let next = `/trainees/${traineeId}/withdraw/interested`
+  let back = `${traineeBaseUrl}/withdraw/why`
+  let next = `${traineeBaseUrl}/withdraw/interested`
   if (req.query?.referrer === 'check') {
-    back = `/trainees/${traineeId}/withdraw/check`
+    back = `${traineeBaseUrl}/withdraw/check`
     next += '?referrer=check'
   }
 
   res.render('trainees/withdraw/interested', {
     actions: {
       back,
-      cancel: `/trainees/${traineeId}`,
+      cancel: traineeBaseUrl,
       next
     }
   })
 }
 
 exports.interested_post = async (req, res) => {
-  const { traineeId } = req.params
+  const { providerId, traineeId } = req.params
+  const baseUrl = `/providers/${providerId}`
+  const traineeBaseUrl = `${baseUrl}/trainees/${traineeId}`
   const { withdrawal } = req.session.data
 
   const errors = []
@@ -304,10 +322,10 @@ exports.interested_post = async (req, res) => {
   }
 
   if (errors.length) {
-    let back = `/trainees/${traineeId}/withdraw/why`
-    let next = `/trainees/${traineeId}/withdraw/interested`
+    let back = `${traineeBaseUrl}/withdraw/why`
+    let next = `${traineeBaseUrl}/withdraw/interested`
     if (req.query?.referrer === 'check') {
-      back = `/trainees/${traineeId}/withdraw/check`
+      back = `${traineeBaseUrl}/withdraw/check`
       next += '?referrer=check'
     }
 
@@ -315,17 +333,19 @@ exports.interested_post = async (req, res) => {
       errors,
       actions: {
         back,
-        cancel: `/trainees/${traineeId}`,
+        cancel: traineeBaseUrl,
         next
       }
     })
   } else {
-    res.redirect(`/trainees/${traineeId}/withdraw/check`)
+    res.redirect(`${traineeBaseUrl}/withdraw/check`)
   }
 }
 
 exports.check_get = async (req, res) => {
-  const { traineeId } = req.params
+  const { providerId, traineeId } = req.params
+  const baseUrl = `/providers/${providerId}`
+  const traineeBaseUrl = `${baseUrl}/trainees/${traineeId}`
   const { withdrawal } = req.session.data
 
   if (!withdrawal.why.includes('Safeguarding concerns')) {
@@ -338,18 +358,20 @@ exports.check_get = async (req, res) => {
 
   res.render('trainees/withdraw/check-your-answers', {
     actions: {
-      back: `/trainees/${traineeId}/withdraw/interested`,
-      cancel: `/trainees/${traineeId}`,
-      change: `/trainees/${traineeId}/withdraw`,
-      next: `/trainees/${traineeId}/withdraw/check`
+      back: `${traineeBaseUrl}/withdraw/interested`,
+      cancel: traineeBaseUrl,
+      change: `${traineeBaseUrl}/withdraw`,
+      next: `${traineeBaseUrl}/withdraw/check`
     }
   })
 }
 
 exports.check_post = async (req, res) => {
-  const { traineeId } = req.params
+  const { providerId, traineeId } = req.params
+  const baseUrl = `/providers/${providerId}`
+  const traineeBaseUrl = `${baseUrl}/trainees/${traineeId}`
   delete req.session.data.withdrawal
 
   req.flash('success', 'Trainee withdrawn')
-  res.redirect(`/trainees/${traineeId}`)
+  res.redirect(traineeBaseUrl)
 }

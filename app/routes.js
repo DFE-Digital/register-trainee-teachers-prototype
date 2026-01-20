@@ -100,6 +100,34 @@ router.get('/account-not-authorised', (req, res) => {
 })
 
 /// ------------------------------------------------------------------------ ///
+/// USER ROUTES
+/// ------------------------------------------------------------------------ ///
+router.get('/providers/:providerId/users/new', checkIsAuthenticated, userController.newUser_get)
+router.post('/providers/:providerId/users/new', checkIsAuthenticated, userController.newUser_post)
+
+router.get('/providers/:providerId/users/new/check', checkIsAuthenticated, userController.newUserCheck_get)
+router.post('/providers/:providerId/users/new/check', checkIsAuthenticated, userController.newUserCheck_post)
+
+router.get('/providers/:providerId/users/:userId/edit', checkIsAuthenticated, userController.editUser_get)
+router.post('/providers/:providerId/users/:userId/edit', checkIsAuthenticated, userController.editUser_post)
+
+router.get('/providers/:providerId/users/:userId/edit/check', checkIsAuthenticated, userController.editUserCheck_get)
+router.post('/providers/:providerId/users/:userId/edit/check', checkIsAuthenticated, userController.editUserCheck_post)
+
+router.get('/providers/:providerId/users/:userId/delete', checkIsAuthenticated, userController.deleteUser_get)
+router.post('/providers/:providerId/users/:userId/delete', checkIsAuthenticated, userController.deleteUser_post)
+
+router.get('/providers/:providerId/users/:userId', checkIsAuthenticated, userController.userDetails)
+
+router.get('/providers/:providerId/users', checkIsAuthenticated, userController.usersList)
+
+/// ------------------------------------------------------------------------ ///
+/// MY ACCOUNT ROUTES
+/// ------------------------------------------------------------------------ ///
+
+router.get('/account', checkIsAuthenticated, accountController.userAccount)
+
+/// ------------------------------------------------------------------------ ///
 /// Provider routes
 /// ------------------------------------------------------------------------ ///
 router.get('/providers', checkIsAuthenticated, providerController.list)

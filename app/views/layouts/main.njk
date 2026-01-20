@@ -4,6 +4,7 @@
 
 {% from "_components/notice/macro.njk" import appNotice %}
 {% from "_components/secondary-navigation/macro.njk" import appSecondaryNavigation %}
+{% from "_components/organisation-actions/macro.njk" import appOrganisationActions %}
 
 {% block pageTitle -%}
   {{ "Error: " if errors }}{{ subtitle + " - " if subtitle }}{{ title + " - " if title }}{{ caption + " - " if caption }}{{ serviceName }} - GOV.UK
@@ -28,6 +29,23 @@
       <a class="govuk-service-navigation__link" href="/sign-out">Sign out</a>
     </li>
   {% endset %}
+
+  {% set organisationHtml %}
+    Provider A
+  {% endset %}
+
+  {{ appOrganisationActions({
+    html: organisationHtml,
+    actions: {
+      items: [
+        {
+          text: "Change organisation",
+          href: "#"
+        }
+      ]
+    },
+    classes: "govuk-width-container"
+  }) }}
 
   {{ govukServiceNavigation({
     navigationId: "primaryNavigation",

@@ -3,7 +3,7 @@
 {% set primaryNavId = "bulkUpdates" %}
 
 {% set title = "Bulk updates" %}
-{% set caption = "Provider A" %}
+{% set caption = currentProvider.operatingName if currentProvider %}
 
 {% block content %}
 

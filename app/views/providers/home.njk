@@ -1,0 +1,28 @@
+{% extends "layouts/main.njk" %}
+
+{% set primaryNavId = "home" %}
+
+{% set title = provider.operatingName %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      {% include "_includes/page-heading.njk" %}
+
+      <p class="govuk-body">Manage trainees for {{ provider.operatingName }}.</p>
+
+      <ul class="govuk-list govuk-list--spaced">
+        <li>
+          <a class="govuk-link" href="{{ baseUrl }}/trainees/registered">Registered trainees</a>
+        </li>
+        <li>
+          <a class="govuk-link" href="{{ baseUrl }}/trainees/draft">Draft trainees</a>
+        </li>
+        <li>
+          <a class="govuk-link" href="{{ baseUrl }}/trainees/bulk">Bulk updates</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+{% endblock %}

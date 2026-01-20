@@ -1,17 +1,19 @@
-const { findOne } = require('../models/trainee')
+const { findOne } = require('../services/trainee')
 const { validateDateInput, getDateParts } = require('../helpers/validation/date')
 
 exports.when_get = async (req, res) => {
-  const { traineeId } = req.params
+  const { providerId, traineeId } = req.params
+  const baseUrl = `/providers/${providerId}`
+  const traineeBaseUrl = `${baseUrl}/trainees/${traineeId}`
   const trainee = findOne({ traineeId })
 
   if (trainee.placementDetails.length < 2) {
-    res.redirect(`/trainees/${traineeId}/outcome/stop`)
+    res.redirect(`${traineeBaseUrl}/outcome/stop`)
   } else {
-    let back = `/trainees/${traineeId}`
-    let next = `/trainees/${traineeId}/outcome/when`
+    let back = traineeBaseUrl
+    let next = `${traineeBaseUrl}/outcome/when`
     if (req.query?.referrer === 'check') {
-      back = `/trainees/${traineeId}/outcome/check`
+      back = `${traineeBaseUrl}/outcome/check`
       next += '?referrer=check'
     }
 
@@ -19,7 +21,7 @@ exports.when_get = async (req, res) => {
       trainee,
       actions: {
         back,
-        cancel: `/trainees/${traineeId}`,
+        cancel: traineeBaseUrl,
         next
       }
     })
@@ -27,7 +29,9 @@ exports.when_get = async (req, res) => {
 }
 
 exports.when_post = async (req, res) => {
-  const { traineeId } = req.params
+  const { providerId, traineeId } = req.params
+  const baseUrl = `/providers/${providerId}`
+  const traineeBaseUrl = `${baseUrl}/trainees/${traineeId}`
   const trainee = findOne({ traineeId })
   const { outcome } = req.session.data
 
@@ -65,10 +69,10 @@ exports.when_post = async (req, res) => {
   }
 
   if (errors.length) {
-    let back = `/trainees/${traineeId}`
-    let next = `/trainees/${traineeId}/outcome/when`
+    let back = traineeBaseUrl
+    let next = `${traineeBaseUrl}/outcome/when`
     if (req.query?.referrer === 'check') {
-      back = `/trainees/${traineeId}/outcome/check`
+      back = `${traineeBaseUrl}/outcome/check`
       next += '?referrer=check'
     }
 
@@ -78,17 +82,19 @@ exports.when_post = async (req, res) => {
       outcomeDateFieldErrors: fieldFlags,
       actions: {
         back,
-        cancel: `/trainees/${traineeId}`,
+        cancel: traineeBaseUrl,
         next
       }
     })
   } else {
-    res.redirect(`/trainees/${traineeId}/outcome/check`)
+    res.redirect(`${traineeBaseUrl}/outcome/check`)
   }
 }
 
 exports.check_get = async (req, res) => {
-  const { traineeId } = req.params
+  const { providerId, traineeId } = req.params
+  const baseUrl = `/providers/${providerId}`
+  const traineeBaseUrl = `${baseUrl}/trainees/${traineeId}`
   const trainee = findOne({ traineeId })
   const { outcome } = req.session.data
 
@@ -96,32 +102,36 @@ exports.check_get = async (req, res) => {
     trainee,
     outcome,
     actions: {
-      back: `/trainees/${traineeId}/outcome/when`,
-      cancel: `/trainees/${traineeId}`,
-      change: `/trainees/${traineeId}/outcome`,
-      next: `/trainees/${traineeId}/outcome/check`
+      back: `${traineeBaseUrl}/outcome/when`,
+      cancel: traineeBaseUrl,
+      change: `${traineeBaseUrl}/outcome`,
+      next: `${traineeBaseUrl}/outcome/check`
     }
   })
 }
 
 exports.check_post = async (req, res) => {
-  const { traineeId } = req.params
+  const { providerId, traineeId } = req.params
+  const baseUrl = `/providers/${providerId}`
+  const traineeBaseUrl = `${baseUrl}/trainees/${traineeId}`
   delete req.session.data.outcome
 
   req.flash('success', 'Trainee’s QTS status updated')
-  res.redirect(`/trainees/${traineeId}`)
+  res.redirect(traineeBaseUrl)
 }
 
 exports.stop_get = async (req, res) => {
-  const { traineeId } = req.params
+  const { providerId, traineeId } = req.params
+  const baseUrl = `/providers/${providerId}`
+  const traineeBaseUrl = `${baseUrl}/trainees/${traineeId}`
   const trainee = findOne({ traineeId })
 
   res.render('trainees/outcome/stop', {
     trainee,
     actions: {
-      back: `/trainees/${traineeId}`,
-      cancel: `/trainees/${traineeId}`,
-      placements: `/trainees/${traineeId}/placements`
+      back: traineeBaseUrl,
+      cancel: traineeBaseUrl,
+      placements: `${traineeBaseUrl}/placements`
     }
   })
 }

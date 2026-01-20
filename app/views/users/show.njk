@@ -1,0 +1,143 @@
+{% extends "layouts/main.njk" %}
+
+{% set primaryNavId = "users" %}
+
+{% block pageTitle -%}
+  View user - {{ serviceName }} - GOV.UK
+{%- endblock %}
+
+{% set title = user.firstName + " " + user.lastName %}
+{% set caption = "User" %}
+
+{% block beforeContent %}
+{{ govukBackLink({
+  text: "Back",
+  href: actions.back
+}) }}
+{% endblock %}
+
+{% block content %}
+
+{% include "_includes/notification-banner.njk" %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <h1 class="govuk-heading-l govuk-!-margin-bottom-2">
+      {% if caption.length %}
+        <span class="govuk-caption-l">
+          {{ caption }}
+        </span>
+      {% endif %}
+      {{ title }}
+    </h1>
+
+    <p class="govuk-hint govuk-!-font-size-16">
+      {% if user.lastSignedInAt %}
+        Last signed in on {{ user.lastSignedInAt | govukDateTime }}
+      {% else %}
+        User has never signed in
+      {% endif %}
+    </p>
+
+    {# only show delete link if it's not the signed in user #}
+    {% if showDeleteLink %}
+      <p class="govuk-body">
+        <a href="{{ actions.delete }}" class="govuk-link">Delete user</a>
+      </p>
+    {% endif %}
+
+    {{ govukSummaryList({
+      rows: [
+        {
+          key: {
+            text: "First name"
+          },
+          value: {
+            text: user.firstName
+          },
+          actions: {
+            items: [
+              {
+                href: actions.change,
+                text: "Change",
+                visuallyHiddenText: "first name"
+              }
+            ]
+          } if showChangeLink
+        },
+        {
+          key: {
+            text: "Last name"
+          },
+          value: {
+            text: user.lastName
+          },
+          actions: {
+            items: [
+              {
+                href: actions.change,
+                text: "Change",
+                visuallyHiddenText: "last name"
+              }
+            ]
+          } if showChangeLink
+        },
+        {
+          key: {
+            text: "Email address"
+          },
+          value: {
+            text: user.email
+          },
+          actions: {
+            items: [
+              {
+                href: actions.change,
+                text: "Change",
+                visuallyHiddenText: "email"
+              }
+            ]
+          } if showChangeLink
+        },
+        {
+          key: {
+            text: "Is the account an API user?"
+          },
+          value: {
+            text: "Yes" if user.isApiUser else "No"
+          },
+          actions: {
+            items: [
+              {
+                href: actions.change,
+                text: "Change",
+                visuallyHiddenText: "account type"
+              }
+            ]
+          } if showStatusChangeLink
+        },
+        {
+          key: {
+            text: "Is the account active?"
+          },
+          value: {
+            text: "Yes" if user.isActive else "No"
+          },
+          actions: {
+            items: [
+              {
+                href: actions.change,
+                text: "Change",
+                visuallyHiddenText: "account active status"
+              }
+            ]
+          } if showStatusChangeLink
+        }
+      ]
+    }) }}
+
+  </div>
+</div>
+
+{% endblock %}

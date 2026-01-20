@@ -3,7 +3,7 @@
 {% set primaryNavId = "draftTrainees" %}
 
 {% set title = "Draft trainees" %}
-{% set caption = "Provider A" %}
+{% set caption = currentProvider.operatingName if currentProvider %}
 
 {% block beforeContent %}
 
@@ -21,7 +21,7 @@
     <ul class="govuk-list govuk-list--spaced">
       {% for trainee in trainees %}
         <li>
-          <a href="/trainees/{{ trainee.id }}" class="govuk-link">
+          <a href="{{ baseUrl }}/trainees/{{ trainee.id }}" class="govuk-link">
             {{ trainee.personalDetails.firstName }} {{ trainee.personalDetails.lastName }}
           </a>
         </li>

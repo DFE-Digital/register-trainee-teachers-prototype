@@ -1,3 +1,5 @@
+// TODO: move trainee information to models
+
 const trainees = require('../database/trainees.json')
 
 const findMany = (params) => {

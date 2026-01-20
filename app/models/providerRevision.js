@@ -3,12 +3,20 @@ const { Model, DataTypes } = require('sequelize')
 module.exports = (sequelize) => {
   class ProviderRevision extends Model {
     static associate(models) {
-      if (models.Provider) {
-        ProviderRevision.belongsTo(models.Provider, {
-          foreignKey: 'providerId',
-          as: 'provider'
-        })
-      }
+      ProviderRevision.belongsTo(models.Provider, {
+        foreignKey: 'providerId',
+        as: 'provider'
+      })
+
+      ProviderRevision.belongsTo(models.User, {
+        foreignKey: 'userId',
+        as: 'user'
+      })
+
+      ProviderRevision.belongsTo(models.User, {
+        foreignKey: 'revisionById',
+        as: 'revisionByUser'
+      })
     }
   }
 
@@ -34,7 +42,7 @@ module.exports = (sequelize) => {
         field: 'legal_name'
       },
       type: {
-        type: DataTypes.ENUM('hei', 'other', 'school')
+        type: DataTypes.ENUM('hei', 'other', 'school', 'scitt')
       },
       ukprn: {
         type: DataTypes.STRING,
@@ -45,6 +53,10 @@ module.exports = (sequelize) => {
       },
       code: {
         type: DataTypes.STRING,
+        allowNull: false
+      },
+      is_accredited: {
+        type: DataTypes.BOOLEAN,
         allowNull: false
       },
       website: {

@@ -3,12 +3,64 @@ const { Model, DataTypes } = require('sequelize')
 module.exports = (sequelize) => {
   class User extends Model {
     /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
+     * Wire up User associations.
+     * @param {object} models
      */
     static associate(models) {
-      // define association here
+      /**
+       * One user → many UserRevision rows (revision history).
+       * FK lives on UserRevision.userId.
+       */
+      User.hasMany(models.UserRevision, {
+        foreignKey: 'userId',
+        as: 'revisions'
+      })
+
+      /**
+       * One user → many ProviderUser rows (membership links).
+       * FK lives on ProviderUser.userId.
+       */
+      User.hasMany(models.ProviderUser, {
+        foreignKey: 'userId',
+        as: 'providerUsers'
+      })
+
+      /**
+       * Users ↔ providers via ProviderUser join rows.
+       */
+      User.belongsToMany(models.Provider, {
+        through: models.ProviderUser,
+        foreignKey: 'userId',
+        otherKey: 'providerId',
+        as: 'providers'
+      })
+
+      /**
+       * User was created by another User.
+       * FK lives on User.createdById.
+       */
+      User.belongsTo(models.User, {
+        foreignKey: 'createdById',
+        as: 'createdByUser'
+      })
+
+      /**
+       * User was last updated by another User.
+       * FK lives on User.updatedById.
+       */
+      User.belongsTo(models.User, {
+        foreignKey: 'updatedById',
+        as: 'updatedByUser'
+      })
+
+      /**
+       * User was deleted by another User.
+       * FK lives on User.deletedById.
+       */
+      User.belongsTo(models.User, {
+        foreignKey: 'deletedById',
+        as: 'deletedByUser'
+      })
     }
   }
 

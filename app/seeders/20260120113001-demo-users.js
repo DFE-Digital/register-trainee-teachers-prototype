@@ -36,7 +36,7 @@ module.exports = {
           first_name: 'Mary',
           last_name: 'Lawson',
           email: 'test4@education.gov.uk',
-          is_active: false
+          is_active: true
         }
       ]
 

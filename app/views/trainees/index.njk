@@ -6,9 +6,9 @@
 {% set title = trainee.personalDetails.firstName + " " + trainee.personalDetails.lastName %}
 {% set caption = "TRN: " + trainee.trainingDetails.trn %}
 
-{% set incomplete = true %}
+{% set isIncomplete = true %}
 {% if trainee.placementDetails[0].name | length and trainee.placementDetails[1].name | length %}
-  {% set incomplete = false %}
+  {% set isIncomplete = false %}
 {% endif%}
 
 
@@ -27,7 +27,7 @@
   <div class="govuk-grid-column-two-thirds">
 
     {% set headingTag %}
-      {% if incomplete %}
+      {% if isIncomplete %}
         {{ govukTag({
           text: "Incomplete",
           classes: "govuk-tag--grey govuk-tag__heading"
@@ -45,7 +45,7 @@
 </div>
 
 {# TODO: fix this hack #}
-{% if incomplete %}
+{% if isIncomplete %}
   {% set missingInfo %}
     <p class="govuk-body">
       You need to enter:

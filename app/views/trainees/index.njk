@@ -6,6 +6,12 @@
 {% set title = trainee.personalDetails.firstName + " " + trainee.personalDetails.lastName %}
 {% set caption = "TRN: " + trainee.trainingDetails.trn %}
 
+{% set isIncomplete = true %}
+{% if trainee.placementDetails[0].name | length and trainee.placementDetails[1].name | length %}
+  {% set isIncomplete = false %}
+{% endif%}
+
+
 {% block beforeContent %}
 {{ govukBackLink({
   text: "All records",
@@ -21,6 +27,12 @@
   <div class="govuk-grid-column-two-thirds">
 
     {% set headingTag %}
+      {% if isIncomplete %}
+        {{ govukTag({
+          text: "Incomplete",
+          classes: "govuk-tag--grey govuk-tag__heading"
+        }) }}
+      {% endif %}
       {{ govukTag({
         text: "TRN received",
         classes: "govuk-tag__heading"
@@ -33,7 +45,7 @@
 </div>
 
 {# TODO: fix this hack #}
-{% if not (trainee.placementDetails[0].name | length and trainee.placementDetails[1].name | length) %}
+{% if isIncomplete %}
   {% set missingInfo %}
     <p class="govuk-body">
       You need to enter:

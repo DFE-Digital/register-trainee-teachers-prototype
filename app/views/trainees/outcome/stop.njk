@@ -22,12 +22,17 @@
     {% include "_includes/page-heading.njk" %}
 
     <p class="govuk-body">
-      You cannot update the QTS status for {{ fullName }} because the trainee is missing placement information.
+      You cannot update the QTS status for {{ fullName }} because the trainee record is missing:
     </p>
 
-    <p class="govuk-body">
-      <a class="govuk-link" href="#">Add placement details</a>
-    </p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>
+        <a class="govuk-link" href="#">Training partner</a>
+      </li>
+      <li>
+        <a class="govuk-link" href="#">Placement details</a>
+      </li>
+    </ul>
 
     <p class="govuk-body">
       <a class="govuk-link" href="{{ actions.cancel }}">Cancel and return to record</a>

@@ -39,6 +39,6 @@
     "uuid": "^14.0.1"
   },
   "devDependencies": {
-    "markdownlint-cli": "^0.49.0"
+    "markdownlint-cli": "^0.49.1"
   }
 }
